@@ -22,7 +22,7 @@ HEADERS = {"User-Agent": "Skog-Grasmyr-monitor/0.1"}
 
 
 def cutting_notifications():
-    base = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSkogsbruk/MapServer/5/query"
+    base = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query"
     params = {
         "where": "1=1",
         "geometry": json.dumps({"xmin": BBOX[0], "ymin": BBOX[1], "xmax": BBOX[2], "ymax": BBOX[3], "spatialReference": {"wkid": 4326}}),
@@ -41,7 +41,7 @@ def cutting_notifications():
 
 
 def sentinel2_scenes():
-    url = "https://catalogue.dataspace.copernicus.eu/stac/search"
+    url = "https://stac.dataspace.copernicus.eu/v1/search"
     now = datetime.now(timezone.utc)
     start = (now - timedelta(days=550)).isoformat().replace("+00:00", "Z")
     end = now.isoformat().replace("+00:00", "Z")
@@ -54,12 +54,12 @@ def sentinel2_scenes():
         items = []
         for f in data.get("features", []):
             p = f.get("properties", {})
-            items.append({"id": f.get("id"), "acquired_at": p.get("datetime"), "published_at": p.get("created"),
+            items.append({"id": f.get("id"), "acquired_at": p.get("datetime"), "published_at": p.get("created") or p.get("published"),
                           "cloud_cover_percent": p.get("eo:cloud_cover"), "geometry": f.get("geometry"),
                           "links": f.get("links", [])})
         items.sort(key=lambda x: x.get("acquired_at") or "", reverse=True)
         return {"status": "ok", "url": url, "items": items, "count": len(items),
-                "note": "Scene-level cloud cover is not necessarily cloud cover over Gräsmyr itself."}
+                "note": "Uses the current Copernicus Data Space STAC v1 endpoint. Scene-level cloud cover is not necessarily cloud cover over Gräsmyr itself."}
     except Exception as e:
         return {"status": "error", "url": url, "error": str(e), "items": [], "count": 0}
 
