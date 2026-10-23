@@ -40,13 +40,19 @@ def cutting_notifications():
         return {"status": "error", "url": base, "error": str(e), "features": [], "count": 0}
 
 
-def sentinel2_scenes():
+def query_scenes(collection):
+    """Search the current Copernicus Data Space STAC v1 catalogue."""
     url = "https://stac.dataspace.copernicus.eu/v1/search"
     now = datetime.now(timezone.utc)
-    start = (now - timedelta(days=550)).isoformat().replace("+00:00", "Z")
-    end = now.isoformat().replace("+00:00", "Z")
-    body = {"collections": ["sentinel-2-l2a"], "bbox": BBOX, "datetime": f"{start}/{end}", "limit": 100,
-            "sortby": [{"field": "properties.datetime", "direction": "desc"}]}
+    start_time = (now - timedelta(days=550)).isoformat().replace("+00:00", "Z")
+    end_time = now.isoformat().replace("+00:00", "Z")
+    body = {
+        "collections": [collection],
+        "bbox": BBOX,
+        "datetime": f"{start_time}/{end_time}",
+        "limit": 100,
+        "sortby": [{"field": "properties.datetime", "direction": "desc"}]
+    }
     try:
         r = requests.post(url, json=body, headers={**HEADERS, "Content-Type": "application/json"}, timeout=45)
         r.raise_for_status()
@@ -54,27 +60,38 @@ def sentinel2_scenes():
         items = []
         for f in data.get("features", []):
             p = f.get("properties", {})
-            items.append({"id": f.get("id"), "acquired_at": p.get("datetime"), "published_at": p.get("created") or p.get("published"),
-                          "cloud_cover_percent": p.get("eo:cloud_cover"), "geometry": f.get("geometry"),
-                          "links": f.get("links", [])})
+            items.append({
+                "id": f.get("id"),
+                "collection": f.get("collection") or collection,
+                "acquired_at": p.get("datetime") or p.get("start_datetime"),
+                "published_at": p.get("created") or p.get("published"),
+                "cloud_cover_percent": p.get("eo:cloud_cover"),
+                "geometry": f.get("geometry"),
+                "links": f.get("links", [])
+            })
         items.sort(key=lambda x: x.get("acquired_at") or "", reverse=True)
-        return {"status": "ok", "url": url, "items": items, "count": len(items),
-                "note": "Uses the current Copernicus Data Space STAC v1 endpoint. Scene-level cloud cover is not necessarily cloud cover over Gräsmyr itself."}
+        return {
+            "status": "ok", "url": url, "collection": collection,
+            "items": items, "count": len(items),
+            "note": "Cloud cover is scene-level and may not describe Gräsmyr itself; radar scenes do not have optical cloud cover."
+        }
     except Exception as e:
-        return {"status": "error", "url": url, "error": str(e), "items": [], "count": 0}
+        return {"status": "error", "url": url, "collection": collection, "error": str(e), "items": [], "count": 0}
 
 
 def main():
     old_path = DATA / "latest.json"
     old = json.loads(old_path.read_text(encoding="utf-8")) if old_path.exists() else {}
-    old_ids = {x.get("id") for x in old.get("sentinel2", {}).get("items", [])}
+    old_ids = {x.get("id") for source in ("sentinel1", "sentinel2") for x in old.get(source, {}).get("items", []) if x.get("id")}
     cuts = cutting_notifications()
-    scenes = sentinel2_scenes()
-    new_scenes = [x for x in scenes.get("items", []) if x.get("id") not in old_ids]
+    sentinel1 = query_scenes("sentinel-1-grd")
+    sentinel2 = query_scenes("sentinel-2-l2a")
+    all_scenes = sentinel1.get("items", []) + sentinel2.get("items", [])
+    new_scenes = [x for x in all_scenes if x.get("id") and x.get("id") not in old_ids]
     result = {
         "checked_at": datetime.now(timezone.utc).isoformat(),
         "area": CONFIG, "bbox_wgs84": BBOX,
-        "cutting_notifications": cuts, "sentinel2": scenes,
+        "cutting_notifications": cuts, "sentinel1": sentinel1, "sentinel2": sentinel2,
         "new_scenes_since_previous_run": new_scenes,
         "commercial_imagery": {
             "status": "manual_verification_required",
@@ -91,8 +108,10 @@ def main():
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     (SNAPSHOTS / f"{stamp}.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"checked_at": result["checked_at"], "cutting_status": cuts["status"], "cutting_count": cuts["count"],
-                      "sentinel2_status": scenes["status"], "sentinel2_count": scenes["count"], "new_scenes": len(new_scenes),
-                      "latest_scene": (scenes.get("items") or [{}])[0].get("acquired_at")}, ensure_ascii=False))
+                      "sentinel1_status": sentinel1["status"], "sentinel1_count": sentinel1["count"],
+                      "sentinel2_status": sentinel2["status"], "sentinel2_count": sentinel2["count"], "new_scenes": len(new_scenes),
+                      "latest_sentinel1": (sentinel1.get("items") or [{}])[0].get("acquired_at"),
+                      "latest_sentinel2": (sentinel2.get("items") or [{}])[0].get("acquired_at")}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
