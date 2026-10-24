@@ -48,6 +48,9 @@ class SnapshotStoreTests(unittest.TestCase):
             self.assertEqual(second_result["added"], 1)
             self.assertEqual(second_result["updated"], 1)
             self.assertEqual(second_result["removed"], 1)
+            raw_delta = json.loads((directory / second_result["filename"]).read_text(encoding="utf-8"))
+            self.assertIn("1", raw_delta["feature_delta"]["geometry_unchanged"])
+            self.assertNotIn("geometry", raw_delta["feature_delta"]["features"]["1"])
 
             rows = read_snapshot_rows(directory)
             self.assertEqual(len(rows), 2)
