@@ -177,8 +177,8 @@ def main():
             ),
         })
 
-    # Build relationships between notifications. These are evidence signals, not proof
-    # of shared ownership, contractor, or cost-sharing.
+    # Link notifications using independent signals. Shared sample lookups are weak
+    # evidence because the queried endpoint uses a buffer and may return neighbours.
     from shapely.ops import transform as shapely_transform
 
     feature_by_id = {str(feature.get("id")): feature for _, feature in selected}
@@ -206,26 +206,38 @@ def main():
             right_dt = datetime.fromisoformat(right["notification_date"])
             days_between = abs((left_dt - right_dt).total_seconds()) / 86400
             same_day = left_dt.date() == right_dt.date()
-            # Keep links that contain at least one useful signal.
-            if not shared_properties and polygon_distance_m > 250 and not (same_day and polygon_distance_m <= 1000):
+
+            # Candidate rule: strong geometry/date signal, or shared sampled candidates
+            # only when the polygons are also geographically close.
+            close_pair = polygon_distance_m <= 250
+            same_day_close = same_day and polygon_distance_m <= 1000
+            shared_close = bool(shared_properties) and close_pair and days_between <= 180
+            if not (intersects or same_day_close or shared_close):
                 continue
+
             signals = []
-            if shared_properties:
-                signals.append("shared_sampled_property_candidates")
             if intersects:
                 signals.append("notification_polygons_intersect")
-            elif polygon_distance_m <= 250:
+            if close_pair:
                 signals.append("notification_polygons_within_250m")
             if same_day:
                 signals.append("same_notification_date")
             elif days_between <= 30:
                 signals.append("notification_dates_within_30_days")
-            # Stronger investigation priority only; never state that coordination is confirmed.
-            priority = (
-                "high_review_priority"
-                if (shared_properties and days_between <= 180) or (intersects and days_between <= 90)
-                else "review_candidate"
-            )
+            if shared_properties:
+                signals.append("shared_sampled_property_candidates")
+
+            # Confidence only describes how strong the observed link is for review,
+            # not probability of a shared operation.
+            if intersects and days_between <= 90:
+                priority = "high_review_priority"
+            elif same_day_close and (shared_properties or close_pair):
+                priority = "high_review_priority"
+            elif shared_close:
+                priority = "review_candidate"
+            else:
+                priority = "review_candidate"
+
             notification_links.append({
                 "notification_a": left["notification_id"],
                 "notification_b": right["notification_id"],
@@ -236,7 +248,7 @@ def main():
                 "shared_property_candidates": shared_properties,
                 "signals": signals,
                 "review_priority": priority,
-                "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing.",
+                "interpretation": "Spatial/temporal link for manual review only. Sampled property candidates are not confirmed parcel intersections and do not prove a shared harvesting operation, ownership, contractor, or cost-sharing.",
             })
     notification_links.sort(
         key=lambda x: (
