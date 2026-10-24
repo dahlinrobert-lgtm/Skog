@@ -138,7 +138,7 @@ function renderHistory(){
   const byYear=new Map();
   for(const feature of allFeatures){
     const p=feature.properties||{};
-    const year=Number(p.ArendeAr||p.Beteckn?.match(/-(\\d{4})$/)?.[1]||"");
+    const year=Number(p.ArendeAr||String(p.Beteckn||"").split("-").pop()||"");
     if(!Number.isFinite(year)||year<1900) continue;
     if(!byYear.has(year)) byYear.set(year,[]);
     byYear.get(year).push(Number.isFinite(Number(p.AnmaldHa))&&p.AnmaldHa!==null?Number(p.AnmaldHa):null);
