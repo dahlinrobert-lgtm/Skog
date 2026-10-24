@@ -57,9 +57,9 @@ const plannedLayer=L.geoJSON(null,{style:()=>({color:"#1680ff",weight:2,opacity:
 const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>l.bindPopup(popup(f,"performed"))});
 plannedLayer.addTo(map);performedLayer.addTo(map);
 const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const COLOR_LOW=[185,232,255],COLOR_HIGH=[20,83,45];
+const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
-const CATEGORY_COLORS=["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#1f78b4","#b2df8a","#fb9a99","#6a3d9a","#b15928","#17a2b8","#8c564b","#bcbd22","#ff7f00","#4e79a7","#f28e2b"];
+const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
 let categoryColorMap=new Map();
 function performedYear(feature){
  const p=feature?.properties||{};
