@@ -173,7 +173,9 @@ def write_completed_archive(collection: dict[str, Any], snapshots_dir: Path,
             except ValueError:
                 full_checkpoint = True
         else:
-            full_checkpoint = True
+            # No on-disk checkpoint chain yet (e.g. unit test with an in-memory base).
+            # Production has a checkpoint in the archive directory before writing a delta.
+            full_checkpoint = not prefer_delta
 
     # Test hook may bypass cadence checkpoints only for controlled reconstruction tests;
     # a query-scope transition always forces a full baseline.
