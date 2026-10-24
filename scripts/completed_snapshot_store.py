@@ -175,6 +175,7 @@ def write_completed_archive(collection: dict[str, Any], snapshots_dir: Path,
         else:
             full_checkpoint = True
 
+    # Test hook bypasses only compression-size fallback, never checkpoint rules.
     if full_checkpoint:
         archive_bytes = _write_gzip(destination, full_collection)
         return {
