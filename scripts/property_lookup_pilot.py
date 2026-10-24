@@ -181,7 +181,7 @@ def main():
     # of shared ownership, contractor, or cost-sharing.
     from shapely.ops import transform as shapely_transform
 
-    feature_by_id = {str(f.get("id")): f for f in selected and [pair[1] for pair in selected]}
+    feature_by_id = {str(feature.get("id")): feature for _, feature in selected}
     projected_geometries = {}
     for result in results:
         source_feature = feature_by_id.get(str(result["objectid"]))
@@ -275,6 +275,9 @@ def main():
         "features_tested": len(results),
         "request_count": request_count,
         "target_tract_matches_total": report["target_tract_matches_total"],
+        "notification_relationship_links_count": len(notification_links),
+        "high_review_priority_links_count": sum(x["review_priority"] == "high_review_priority" for x in notification_links),
+        "sample_relationship_examples": notification_links[:10],
         "results": [{
             "notification_id": r["notification_id"],
             "distance_from_grasmyr_center_km": r["distance_from_grasmyr_center_km"],
