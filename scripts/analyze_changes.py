@@ -203,7 +203,8 @@ def evidence_transition_events(planned_map, planned_history):
 
 
 def canonical_feature_hash(feature):
-    return canonical_hash(feature)
+    """Deterministic representation used to detect any archived feature change."""
+    return json.dumps(feature, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
 
 
 def query_scope(snapshot):
