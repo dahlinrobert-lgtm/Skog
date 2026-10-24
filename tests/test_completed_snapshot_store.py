@@ -46,6 +46,7 @@ class CompletedSnapshotStoreTests(unittest.TestCase):
             result = write_completed_archive(
                 second, directory,
                 previous_collection=first, previous_filename=first_result["filename"],
+                prefer_delta=True,
             )
             self.assertEqual(result["format"], "delta")
             self.assertEqual(result["added"], 1)
@@ -90,6 +91,7 @@ class CompletedSnapshotStoreTests(unittest.TestCase):
             second_result = write_completed_archive(
                 second, directory,
                 previous_collection=first, previous_filename=first_result["filename"],
+                prefer_delta=True,
             )
             # If the declared base goes missing, the delta must be skipped.
             (directory / first_result["filename"]).unlink()
