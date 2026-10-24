@@ -3,7 +3,8 @@
 
 A feature missing from a later successful query is recorded as "not_returned".
 It is never inferred to be felled, cancelled, or deleted from the source.
-Snapshots whose source query failed or whose scope changed are not compared.
+Attribute and geometry changes are logged only across consecutive successful
+snapshots with the same query scope.
 """
 from __future__ import annotations
 
@@ -18,6 +19,20 @@ DATA = ROOT / "data"
 SNAPSHOTS = DATA / "snapshots"
 HISTORY_PATH = DATA / "notification_history.json"
 EVENTS_PATH = DATA / "notification_history_events.jsonl"
+
+# Keep this allow-list intentionally narrow and human-readable. We record changed
+# keys and old/new values, but never infer what the change means operationally.
+TRACKED_ATTRIBUTES = (
+    "Beteckn",
+    "Kommun",
+    "Kommunnr",
+    "ArendeStatus",
+    "Avverktyp",
+    "Inkomdatum",
+    "AnmaldHa",
+    "SkogsodlHa",
+    "AvvHa",
+)
 
 
 def now_utc() -> datetime:
@@ -64,6 +79,38 @@ def read_json(path: Path, default: Any) -> Any:
         return default
 
 
+def observed_attributes(feature: dict[str, Any]) -> dict[str, Any]:
+    props = feature.get("properties") or {}
+    return {key: props.get(key) for key in TRACKED_ATTRIBUTES if key in props}
+
+
+def change_details(previous: dict[str, Any], current: dict[str, Any]) -> dict[str, Any] | None:
+    """Return a compact, explicit delta without assuming the change's meaning."""
+    old_props = previous.get("properties") or {}
+    new_props = current.get("properties") or {}
+    changed = {}
+    for key in TRACKED_ATTRIBUTES:
+        if key not in old_props and key not in new_props:
+            continue
+        old_value = old_props.get(key)
+        new_value = new_props.get(key)
+        if old_value != new_value:
+            changed[key] = {"old": old_value, "new": new_value}
+
+    old_geometry_hash = canonical_hash(previous.get("geometry"))
+    new_geometry_hash = canonical_hash(current.get("geometry"))
+    geometry_changed = old_geometry_hash != new_geometry_hash
+    if not changed and not geometry_changed:
+        return None
+    return {
+        "changed_attributes": changed,
+        "geometry_changed": geometry_changed,
+        "previous_geometry_sha256": old_geometry_hash,
+        "current_geometry_sha256": new_geometry_hash,
+        "meaning": "Source record changed between comparable successful observations; operational meaning is not inferred.",
+    }
+
+
 def read_snapshots() -> list[tuple[str, dict[str, Any]]]:
     rows = []
     for path in SNAPSHOTS.glob("*.json"):
@@ -84,6 +131,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
             cases[str(key)] = value
 
     prior_ids: set[str] | None = None
+    prior_features: dict[str, dict[str, Any]] = {}
     prior_scope = None
     prior_time = None
     for filename, snapshot in snapshots:
@@ -105,7 +153,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                 "observed_at": checked_at,
                 "previous_observed_at": prior_time,
                 "snapshot": filename,
-                "meaning": "Query scope changed; presence/absence differences were not interpreted.",
+                "meaning": "Query scope changed; presence/absence and record-change differences were not interpreted.",
             })
 
         if comparable:
@@ -127,11 +175,25 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                     "snapshot": filename,
                     "meaning": "Absent from this successful query only; not evidence of felling, cancellation, deletion, or expiry.",
                 })
+            for key in sorted(ids & (prior_ids or set())):
+                delta = change_details(prior_features[key], current_features[key])
+                if delta:
+                    events.append({
+                        "event_type": "record_changed",
+                        "notification_id": key,
+                        "observed_at": checked_at,
+                        "previous_observed_at": prior_time,
+                        "previous_snapshot": None,
+                        "snapshot": filename,
+                        **delta,
+                    })
 
         for key, feature in current_features.items():
             props = feature.get("properties") or {}
             record = cases.get(key, {})
             was_missing = record.get("observation_status") == "not_returned"
+            old_hash = record.get("attribute_sha256")
+            current_hash = canonical_hash(props)
             record.update({
                 "notification_id": key,
                 "first_seen_at": record.get("first_seen_at") or checked_at,
@@ -140,12 +202,15 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                 "last_query_scope_hash": scope,
                 "last_snapshot": filename,
                 "attributes": props,
+                "tracked_attributes": observed_attributes(feature),
                 "geometry_sha256": canonical_hash(feature.get("geometry")),
-                "attribute_sha256": canonical_hash(props),
+                "attribute_sha256": current_hash,
                 "status_interpretation": "current_source_observation_only",
             })
             if was_missing:
                 record["last_reappeared_at"] = checked_at
+            if old_hash and old_hash != current_hash:
+                record["last_attributes_changed_at"] = checked_at
             cases[key] = record
 
         if comparable:
@@ -159,7 +224,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                 record["last_not_returned_at"] = checked_at
                 record["last_snapshot"] = filename
 
-        prior_ids, prior_scope, prior_time = ids, scope, checked_at
+        prior_ids, prior_features, prior_scope, prior_time = ids, current_features, scope, checked_at
 
     for key, record in cases.items():
         record.setdefault("notification_id", key)
@@ -168,12 +233,13 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
 
     result = {
         "generated_at": iso(now_utc()),
-        "schema_version": 1,
+        "schema_version": 2,
         "snapshot_count_compared": len(snapshots),
         "case_count": len(cases),
         "source_status_semantics": {
             "observed": "Returned by a successful query in the configured search area.",
             "not_returned": "Previously observed but absent from a later comparable successful query.",
+            "record_changed": "Selected source attributes or geometry changed between comparable successful observations; cause is not inferred.",
             "absence_never_means": ["felled", "cancelled", "deleted", "expired"],
         },
         "cases": dict(sorted(cases.items())),
@@ -217,7 +283,8 @@ def main() -> None:
         "known_notifications": history["case_count"],
         "currently_observed": sum(x.get("observation_status") == "observed" for x in history["cases"].values()),
         "not_returned": sum(x.get("observation_status") == "not_returned" for x in history["cases"].values()),
-        "new_event_rows_appended": added,
+        "changed_records_in_this_rebuild": sum(e.get("event_type") == "record_changed" for e in events),
+        "new_events_appended": added,
     }, ensure_ascii=False))
 
 
