@@ -29,7 +29,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <body>
 <header>
 <h1>Gräsmyr – skogs- och bildbevakning</h1>
-<p>Avverkningsanmälningar och nya satellitobservationer kring Gräsmyr, Nordmalings kommun.</p>
+<p>Avverkningsanmälningar och nya satellitobservationer kring Gräsmyr, Nordmalings kommun.</p><p><a style="color:#e1eee5" href="utforda.html">Gå till sidan Utförda avverkningar →</a></p>
 </header>
 <main>
 <section class="panel">
@@ -49,8 +49,8 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <div class="summary" id="summary"></div>
 <div class="tablewrap" style="margin-top:13px">
 <table>
-<thead><tr><th><button class="sort" data-sort="date" type="button">Inkomdatum <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="case" type="button">Ärendenummer <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="municipality" type="button">Kommun <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="type" type="button">Typ <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="area" type="button">Areal <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="status" type="button">Status <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="property" type="button">Fastighet / karta <span class="arrow" aria-hidden="true"></span></button></th></tr></thead>
-<tbody id="rows"><tr><td colspan="7">Laddar…</td></tr></tbody>
+<thead><tr><th><button class="sort" data-sort="date" type="button">Inkomdatum <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="case" type="button">Ärendenummer <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="municipality" type="button">Kommun <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="type" type="button">Typ <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="area" type="button">Areal <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="status" type="button">Status <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="property" type="button">Fastighet / karta <span class="arrow" aria-hidden="true"></span></button></th><th>Utförd?</th></tr></thead>
+<tbody id="rows"><tr><td colspan="8">Laddar…</td></tr></tbody>
 </table>
 </div>
 <p class="hint">Viktigt: Skogsstyrelsens öppna lager ger ärendenummer, datum, areal, typ och status men inte fastighetsbeteckningen i dessa data. Därför hittar du inte säkert exempelvis ”Gräsmyr 6:43” här. Länkad kartpunkt är en ungefärlig mittpunkt av ärendets geometri.</p>
@@ -103,6 +103,8 @@ if (typeof proj4 !== "undefined") {
   proj4.defs("EPSG:3006", "+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs");
 }
 let allFeatures = [];
+let performedFeatures = [];
+let performedLoadState = "loading";
 let sortKey = "date";
 let sortDirection = -1; // newest first for dates by default
 const fmtDate = value => {
@@ -210,6 +212,11 @@ async function renderPropertyPilot(){
     tbody.innerHTML='<tr><td colspan="5">Data kunde inte laddas: '+escapeHtml(e?.message||e)+'</td></tr>';
   }
 }
+function coords(value,out=[]){if(Array.isArray(value)&&typeof value[0]==="number")out.push([value[0],value[1]]);else if(Array.isArray(value))value.forEach(v=>coords(v,out));return out}
+function inside(point,geom){const polys=geom?.type==="Polygon"?[geom.coordinates]:geom?.type==="MultiPolygon"?geom.coordinates:[];return polys.some(poly=>{const ring=poly[0]||[];let hit=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if(((a[1]>point[1])!==(b[1]>point[1]))&&(point[0]<(b[0]-a[0])*(point[1]-a[1])/(b[1]-a[1]+1e-15)+a[0]))hit=!hit}return hit&&!poly.slice(1).some(r=>{let h=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const a=r[i],b=r[j];if(((a[1]>point[1])!==(b[1]>point[1]))&&(point[0]<(b[0]-a[0])*(point[1]-a[1])/(b[1]-a[1]+1e-15)+a[0]))h=!h}return h})})}
+function overlaps(a,b){const av=coords(a?.coordinates),bv=coords(b?.coordinates);return av.some(p=>inside(p,b))||bv.some(p=>inside(p,a))}
+async function loadPerformed(){const lat=63.74646,lon=19.66455,r=10000,dy=r/110574,dx=r/(111320*Math.cos(lat*Math.PI/180)),bbox=[lon-dx,lat-dy,lon+dx,lat+dy];const base="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query";const p=new URLSearchParams({where:"1=1",geometry:bbox.join(","),geometryType:"esriGeometryEnvelope",inSR:"4326",spatialRel:"esriSpatialRelIntersects",outFields:"OBJECTID,Arendear,Beteckn,Avvdatum,Arealha",returnGeometry:"true",outSR:"4326",f:"geojson",resultRecordCount:"2000"});const res=await fetch(base+"?"+p);if(!res.ok)throw new Error("HTTP "+res.status);const d=await res.json();if(d.error)throw new Error(d.error.message||"Fel i utfört-lagret");performedFeatures=d.features||[];performedLoadState="ok"}
+function hasPerformed(f){return performedFeatures.some(done=>overlaps(f.geometry,done.geometry))}
 function render(){
   const municipality=document.getElementById("municipality").value;
   const q=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
@@ -230,9 +237,9 @@ function render(){
     const center=centerOf(f.geometry);
     const map=lantmaterietUrl(center);
     const caseNo=p.Beteckn||("OBJECTID "+(f.id??p.OBJECTID??""));
-    return '<tr><td>'+fmtDate(p.Inkomdatum)+'</td><td><a href="'+arcUrl(f.id??p.OBJECTID)+'" target="_blank" rel="noopener">'+caseNo+'</a></td><td>'+ (p.Kommun||"–")+'</td><td>'+ (p.Avverktyp||"–")+'</td><td>'+ (p.AnmaldHa==null?"–":Number(p.AnmaldHa).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+'</td><td class="status">'+(p.ArendeStatus||"–")+'</td><td>'+(map?'<a href="'+map+'" target="_blank" rel="noopener">Visa ungefärlig plats</a>':"Fastighet saknas i källan")+'</td></tr>';
+    const matched=performedLoadState==="ok"&&hasPerformed(f);const mark=performedLoadState==="ok"?(matched?"✓":"–"):"?";const tip=performedLoadState!=="ok"?"Utfört-lagret kunde inte läsas":(matched?"Utförd yta överlappar anmäld yta – preliminär träff":"Ingen tydlig överlappning hittad");return '<tr><td>'+fmtDate(p.Inkomdatum)+'</td><td><a href="'+arcUrl(f.id??p.OBJECTID)+'" target="_blank" rel="noopener">'+caseNo+'</a></td><td>'+ (p.Kommun||"–")+'</td><td>'+ (p.Avverktyp||"–")+'</td><td>'+ (p.AnmaldHa==null?"–":Number(p.AnmaldHa).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+'</td><td class="status">'+(p.ArendeStatus||"–")+'</td><td>'+(map?'<a href="'+map+'" target="_blank" rel="noopener">Visa ungefärlig plats</a>':"Fastighet saknas i källan")+'</td><td title="'+tip+'">'+mark+'</td></tr>';
   });
-  document.getElementById("rows").innerHTML=rows.length?rows.join(""):'<tr><td colspan="7">Inga ärenden matchar filtret.</td></tr>';
+  document.getElementById("rows").innerHTML=rows.length?rows.join(""):'<tr><td colspan="8">Inga ärenden matchar filtret.</td></tr>';
 }
 async function init(){
   try{
@@ -242,12 +249,13 @@ async function init(){
     allFeatures=data.cutting_notifications?.features||[];
     document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen.";
     document.getElementById("checked").textContent=" Senast kontrollerad: "+(data.checked_at||"okänt datum")+".";
+    try { await loadPerformed(); } catch(e) { performedLoadState="error"; document.getElementById("loadstatus").textContent += " Utförda avverkningar kunde inte hämtas; statuskolumnen visar ?."; }
     render();
     renderHistory();
     renderPropertyPilot();
   }catch(e){
     document.getElementById("loadstatus").innerHTML='<span class="error">Kunde inte läsa senaste data ('+String(e?.message||e||"okänt fel")+' ). Kontrollera nätverksåtkomst till data/latest.json på GitHub.</span>';
-    document.getElementById("rows").innerHTML='<tr><td colspan="7">Data kunde inte laddas.</td></tr>';
+    document.getElementById("rows").innerHTML='<tr><td colspan="8">Data kunde inte laddas.</td></tr>';
   }
 }
 ["municipality","search","limit"].forEach(id=>document.getElementById(id).addEventListener("input",render));
