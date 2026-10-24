@@ -225,6 +225,49 @@ def main():
         else:
             counts["planned_without_current_overlap"] += 1
             status = "no_current_geometric_overlap"
+        # Match score ranks candidates; it is a transparent heuristic, not a probability.
+        for candidate in candidates:
+            score = 0
+            if candidate["meaningful"]:
+                score += 25
+                score += min(30, candidate["completed_overlap_pct"] * 0.30)
+                score += min(20, candidate["planned_overlap_pct"] * 0.20)
+            if candidate["within_3_year_window"]:
+                score += 15
+            if props.get("Kommun") and candidate.get("completed_municipality") and str(props.get("Kommun")).casefold() == str(candidate["completed_municipality"]).casefold():
+                score += 10
+            candidate["match_score"] = round(min(100, score), 1)
+        candidates.sort(key=lambda x: (x["match_score"], x["intersection_ha"]), reverse=True)
+        strong_candidates = [c for c in candidates if c["meaningful"] and c["within_3_year_window"] and c["match_score"] >= 65]
+        best = strong_candidates[0] if strong_candidates else (candidates[0] if candidates else None)
+        age_days = max(0, (datetime.now(timezone.utc) - received_dt).days) if received_dt else None
+        strong_ids = {c["completed_object_id"] for c in strong_candidates}
+        if strong_candidates:
+            total_overlap_ha = sum(c["intersection_ha"] for c in strong_candidates)
+            covered_pct = min(100.0, sum(c["planned_overlap_pct"] for c in strong_candidates))
+            if len(strong_candidates) > 1:
+                follow_status = "likely_multiple_or_partial"
+            elif best and best["planned_overlap_pct"] < 80:
+                follow_status = "likely_partial"
+            else:
+                follow_status = "likely_completed"
+        elif age_days is not None and age_days >= 730:
+            follow_status = "old_no_detection"
+            total_overlap_ha = 0
+            covered_pct = 0
+        elif age_days is not None and age_days >= 365:
+            follow_status = "follow_up_no_detection"
+            total_overlap_ha = 0
+            covered_pct = 0
+        else:
+            follow_status = "awaiting_evidence"
+            total_overlap_ha = 0
+            covered_pct = 0
+        first_seen = None
+        for snap_name, snap_data, snap_map in planned_history:
+            if object_id in snap_map:
+                first_seen = snap_data.get("checked_at")
+                break
         planned_checks.append({
             "planned_object_id": object_id,
             "case_number": props.get("Beteckn"),
@@ -232,6 +275,15 @@ def main():
             "received_date": date_value,
             "planned_area_ha": props.get("AnmaldHa"),
             "status": status,
+            "follow_up_status": follow_status,
+            "match_score": best["match_score"] if best else 0,
+            "best_match_id": best["completed_object_id"] if best and strong_candidates else None,
+            "strong_match_count": len(strong_candidates),
+            "age_days": age_days,
+            "first_seen_at": first_seen,
+            "last_checked_at": current.get("checked_at"),
+            "completed_overlap_ha_sum": round(total_overlap_ha, 3),
+            "estimated_plan_coverage_pct": round(covered_pct, 1),
             "completed_candidate_count": len(candidates),
             "best_candidates": candidates[:5],
         })
@@ -246,6 +298,8 @@ def main():
             "meaningful_overlap_threshold": "intersection >= 0.02 ha and overlap share >= 15% of at least one polygon",
             "completed_layer_warning": "Satellite-based change-detection layer. Spatial overlaps are candidates for manual review, not proof that a planned case was executed.",
             "missing_planned_id_warning": "An ID missing from a later query is only not returned by the current query; it does not prove deletion, expiry, or felling.",
+            "follow_up_status_method": "Follow-up status is a heuristic: strong match requires meaningful overlap, date within 3 years and score >=65; no-detection labels depend on age since notification, not proof that felling did not occur. Candidate score is a ranking aid, not a probability.",
+            "match_score_formula": "0-100 heuristic: meaningful overlap +25, completed polygon coverage up to +30, planned polygon coverage up to +20, plausible timing +15, same municipality +10."
         },
         "sources": {
             "latest_planned_checked_at": current.get("checked_at"),
@@ -257,14 +311,20 @@ def main():
         "counts": {
             "current_planned_features": len(planned_map),
             "current_completed_features": len(completed_map),
+            "likely_completed": sum(r["follow_up_status"] == "likely_completed" for r in planned_checks),
+            "likely_partial": sum(r["follow_up_status"] == "likely_partial" for r in planned_checks),
+            "likely_multiple_or_partial": sum(r["follow_up_status"] == "likely_multiple_or_partial" for r in planned_checks),
+            "follow_up_no_detection": sum(r["follow_up_status"] == "follow_up_no_detection" for r in planned_checks),
+            "old_no_detection": sum(r["follow_up_status"] == "old_no_detection" for r in planned_checks),
+            "awaiting_evidence": sum(r["follow_up_status"] == "awaiting_evidence" for r in planned_checks),
             "completed_geometries_loaded": len(completed_geometries),
             **dict(counts),
         },
         "planned_persistence_events": persistence_events,
         "incomparable_snapshot_pairs": incomparable_snapshot_pairs,
         "planned_vs_completed": sorted(planned_checks, key=lambda row: (
-            row["status"] != "meaningful_overlap_candidate",
-            -(row["best_candidates"][0]["intersection_ha"] if row["best_candidates"] else 0),
+            {"likely_completed": 0, "likely_partial": 1, "likely_multiple_or_partial": 2, "follow_up_no_detection": 3, "old_no_detection": 4, "awaiting_evidence": 5}.get(row.get("follow_up_status"), 6),
+            -row.get("match_score", 0),
             row["case_number"] or "",
         )),
     }
@@ -280,6 +340,7 @@ def main():
         "planned_with_meaningful_overlap_outside_3_years": counts["planned_with_meaningful_overlap_outside_3_years"],
         "planned_with_only_weak_overlap": counts["planned_with_only_weak_overlap"],
         "planned_without_current_overlap": counts["planned_without_current_overlap"],
+        "follow_up_status_counts": {key: sum(r["follow_up_status"] == key for r in planned_checks) for key in ["likely_completed", "likely_partial", "likely_multiple_or_partial", "follow_up_no_detection", "old_no_detection", "awaiting_evidence"]},
         "persistence_change_events": len(persistence_events),
     }, ensure_ascii=False))
 
