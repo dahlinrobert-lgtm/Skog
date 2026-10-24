@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -152,7 +152,7 @@ def write_snapshot(snapshot: dict[str, Any], snapshots_dir: Path,
                 dt = datetime.fromisoformat(str(latest_checkpoint_time).replace("Z", "+00:00"))
                 if dt.tzinfo is None:
                     dt = dt.replace(tzinfo=timezone.utc)
-                force_checkpoint = parsed - dt >= __import__("datetime").timedelta(days=checkpoint_days)
+                force_checkpoint = parsed - dt >= timedelta(days=checkpoint_days)
             except ValueError:
                 force_checkpoint = True
         else:
