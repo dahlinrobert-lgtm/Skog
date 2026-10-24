@@ -169,7 +169,7 @@ function renderHistory(){
   document.getElementById("historyNote").textContent='Historiken omfattar '+total+' ärenden i aktuell datamängd. Jämförelse med det uppladdade GeoPackage-uttaget visade samma 164 ärenden inom 10 km, med inkomdatum från 2021-11-01 till 2026-10-13. Detta är en ögonblicksbild; äldre poster kan saknas om källan gallrar data.';
 }
 function escapeHtml(value){
-  return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;","'":"&#39;"}[ch]));
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 }
 async function renderPropertyPilot(){
   const tbody=document.getElementById("propertyRows");
