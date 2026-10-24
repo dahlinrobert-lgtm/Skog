@@ -1,0 +1,42 @@
+name: Nationwide planned harvest archive
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/monitor_national.py"
+      - "tests/test_monitor_national.py"
+      - ".github/workflows/national-monitor.yml"
+  schedule:
+    - cron: "47 5 * * *"
+permissions:
+  contents: write
+concurrency:
+  group: national-planned-harvest-archive
+  cancel-in-progress: false
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements.txt
+      - name: Test national archive delta logic
+        run: python -m unittest tests.test_monitor_national -v
+      - name: Fetch all planned notifications nationwide
+        run: python scripts/monitor_national.py
+      - name: Commit nationwide compressed archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/national/latest.json.gz data/national/snapshots
+          if ! git diff --cached --quiet; then
+            git commit -m "Update nationwide planned harvest archive"
+            git fetch origin main
+            git rebase --strategy-option=theirs origin/main
+            git push origin HEAD:main
+          fi
