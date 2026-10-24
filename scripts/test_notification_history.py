@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Regression tests for durable cutting-notification history."""
+"""Regression tests for durable cutting-notification history and change events."""
 import unittest
 from scripts.notification_history import build_history, canonical_hash
 
 
-def feature(oid, designation=None):
-    return {"type": "Feature", "id": oid,
-            "properties": {"OBJECTID": oid, "Beteckn": designation or f"case-{oid}"},
-            "geometry": {"type": "Point", "coordinates": [19.6, 63.7]}}
+def feature(oid, designation=None, area=1.0, x=19.6, status="Anmält för avverkning"):
+    return {
+        "type": "Feature", "id": oid,
+        "properties": {"OBJECTID": oid, "Beteckn": designation or f"case-{oid}",
+                       "AnmaldHa": area, "ArendeStatus": status},
+        "geometry": {"type": "Point", "coordinates": [x, 63.7]},
+    }
 
 
 def snapshot(at, features, radius=10, status="ok"):
@@ -42,12 +45,12 @@ class NotificationHistoryTests(unittest.TestCase):
         self.assertEqual(case["last_reappeared_at"], "2026-10-26T05:00:00Z")
         self.assertTrue(any(e["event_type"] == "reappeared_or_newly_observed" for e in events))
 
-    def test_changed_scope_does_not_emit_missing_case(self):
+    def test_changed_scope_does_not_emit_missing_case_or_record_change(self):
         _, events = build_history([
             ("a.json", snapshot("2026-10-24T05:00:00Z", [feature("1")], radius=10)),
-            ("b.json", snapshot("2026-10-25T05:00:00Z", [], radius=12)),
+            ("b.json", snapshot("2026-10-25T05:00:00Z", [feature("1", area=2)], radius=12)),
         ])
-        self.assertFalse(any(e["event_type"] == "not_returned" for e in events))
+        self.assertFalse(any(e["event_type"] in {"not_returned", "record_changed"} for e in events))
         self.assertTrue(any(e["event_type"] == "comparison_skipped_scope_changed" for e in events))
 
     def test_failed_snapshot_is_not_compared(self):
@@ -57,15 +60,35 @@ class NotificationHistoryTests(unittest.TestCase):
             ("b.json", snapshot("2026-10-26T05:00:00Z", [feature("1")])),
         ])
         self.assertFalse(any(e["event_type"] == "not_returned" for e in events))
+        self.assertFalse(any(e["event_type"] == "record_changed" for e in events))
 
-    def test_attribute_correction_does_not_split_identity(self):
+    def test_attribute_change_emits_old_and_new_values_without_splitting_identity(self):
         history, events = build_history([
-            ("a.json", snapshot("2026-10-24T05:00:00Z", [feature("1", "old")])),
-            ("b.json", snapshot("2026-10-25T05:00:00Z", [feature("1", "corrected")])),
+            ("a.json", snapshot("2026-10-24T05:00:00Z", [feature("1", area=1.0)])),
+            ("b.json", snapshot("2026-10-25T05:00:00Z", [feature("1", area=2.5)])),
         ])
         self.assertEqual(history["case_count"], 1)
-        self.assertEqual(history["cases"]["1"]["attributes"]["Beteckn"], "corrected")
-        self.assertFalse(events)
+        self.assertEqual(history["cases"]["1"]["attributes"]["AnmaldHa"], 2.5)
+        changed = [e for e in events if e["event_type"] == "record_changed"]
+        self.assertEqual(len(changed), 1)
+        self.assertEqual(changed[0]["changed_attributes"]["AnmaldHa"], {"old": 1.0, "new": 2.5})
+        self.assertFalse(changed[0]["geometry_changed"])
+
+    def test_geometry_change_is_logged(self):
+        _, events = build_history([
+            ("a.json", snapshot("2026-10-24T05:00:00Z", [feature("1", x=19.6)])),
+            ("b.json", snapshot("2026-10-25T05:00:00Z", [feature("1", x=19.61)])),
+        ])
+        changed = [e for e in events if e["event_type"] == "record_changed"]
+        self.assertEqual(len(changed), 1)
+        self.assertTrue(changed[0]["geometry_changed"])
+
+    def test_no_change_emits_no_record_change(self):
+        _, events = build_history([
+            ("a.json", snapshot("2026-10-24T05:00:00Z", [feature("1")])),
+            ("b.json", snapshot("2026-10-25T05:00:00Z", [feature("1")])),
+        ])
+        self.assertFalse(any(e["event_type"] == "record_changed" for e in events))
 
     def test_hash_is_order_independent(self):
         self.assertEqual(canonical_hash({"a": 1, "b": 2}), canonical_hash({"b": 2, "a": 1}))
