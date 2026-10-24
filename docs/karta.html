@@ -61,56 +61,75 @@ function popup(f,type){
 }
 function date(v){if(v==null||v==="")return "–";let n=Number(v);if(Number.isFinite(n)&&n>100000000000)return new Date(n).toISOString().slice(0,10);return String(v)}
 function ha(v){if(v==null||v==="")return "–";let n=Number(v);return Number.isFinite(n)?n.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha":String(v)}
-function queryUrl(base,fields,offset){
+function queryUrl(base,fields,bounds,offset){
  const params=new URLSearchParams({where:"1=1",outFields:fields,returnGeometry:"true",outSR:"4326",f:"geojson",resultRecordCount:"300",orderByFields:"OBJECTID"});
- const latDelta=RADIUS/111000,lonDelta=RADIUS/(111000*Math.cos(CENTER[0]*Math.PI/180));
- params.set("geometry",JSON.stringify({xmin:CENTER[1]-lonDelta,ymin:CENTER[0]-latDelta,xmax:CENTER[1]+lonDelta,ymax:CENTER[0]+latDelta,spatialReference:{wkid:4326}}));
+ params.set("geometry",JSON.stringify({xmin:bounds.getWest(),ymin:bounds.getSouth(),xmax:bounds.getEast(),ymax:bounds.getNorth(),spatialReference:{wkid:4326}}));
  params.set("geometryType","esriGeometryEnvelope");params.set("inSR","4326");params.set("spatialRel","esriSpatialRelIntersects");
  params.set("geometryPrecision","5");params.set("maxAllowableOffset","0.00003");
  params.set("resultOffset",String(offset));
  return base+"?"+params.toString();
 }
-async function getLayer(base,fields){
- const all=[];
- let offset=0, pages=0, hasMore=true;
- const pageSize=300, maxPages=20;
- while(hasMore && pages<maxPages){
-  const res=await fetch(queryUrl(base,fields,offset),{mode:"cors"});
+async function getLayer(base,fields,bounds,signal){
+ const all=[],seen=new Set();
+ let offset=0,pages=0,hasMore=true,truncated=false;
+ const pageSize=300,maxPages=20;
+ while(hasMore&&pages<maxPages){
+  const res=await fetch(queryUrl(base,fields,bounds,offset),{mode:"cors",signal});
   if(!res.ok)throw new Error("HTTP "+res.status);
   const json=await res.json();
   if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");
   if(!Array.isArray(json.features))throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
-  all.push(...json.features);
+  let added=0;
+  for(const feature of json.features){
+   const id=feature.id??feature.properties?.OBJECTID;
+   const key=id===undefined?JSON.stringify(feature.geometry):String(id);
+   if(!seen.has(key)){seen.add(key);all.push(feature);added++;}
+  }
   pages++;
   hasMore=Boolean(json.exceededTransferLimit)||json.features.length===pageSize;
   offset+=json.features.length;
-  if(json.features.length===0)hasMore=false;
+  if(json.features.length===0||added===0){hasMore=false;truncated=json.features.length===pageSize;}
  }
- return {type:"FeatureCollection",features:all,truncated:hasMore};
+ if(hasMore)truncated=true;
+ return {type:"FeatureCollection",features:all,truncated,pages};
 }
+let viewRequestId=0,viewAbortController=null,viewDebounce=null;
 async function load(){
- document.getElementById("status").textContent="Hämtar polygoner i mindre delar från Skogsstyrelsen…";
+ const requestId=++viewRequestId;
+ if(viewAbortController)viewAbortController.abort();
+ viewAbortController=new AbortController();
+ const signal=viewAbortController.signal;
+ const bounds=map.getBounds();
+ document.getElementById("status").textContent="Hämtar polygoner för den synliga kartvyn…";
  document.getElementById("reload").disabled=true;
  try{
   const [planned,performed]=await Promise.all([
-   getLayer(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa"),
-   getLayer(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha")
+   getLayer(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal),
+   getLayer(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal)
   ]);
+  if(requestId!==viewRequestId)return;
   plannedLayer.clearLayers();performedLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);
   document.getElementById("plannedCount").textContent=planned.features.length.toLocaleString("sv-SE");
   document.getElementById("performedCount").textContent=performed.features.length.toLocaleString("sv-SE");
   const dates=performed.features.map(f=>Number(f.properties?.Avvdatum)).filter(n=>Number.isFinite(n)&&n>100000000000).sort((a,b)=>a-b);
   document.getElementById("dateRange").textContent=dates.length?new Date(dates[0]).toISOString().slice(0,10)+"–"+new Date(dates[dates.length-1]).toISOString().slice(0,10):"saknas";
-  document.getElementById("status").textContent="Data laddad. Klicka på en polygon för detaljer."+
-   ((planned.truncated||performed.truncated)?" Varning: en eller flera källor överskred sidgränsen; visat urval kan vara ofullständigt.":"")+
-   " Polygoner hämtas i sidor om "+300+" objekt för att undvika en enda stor begäran.";
+  document.getElementById("status").textContent="Visar polygoner i aktuell kartvy ("+planned.pages+" + "+performed.pages+" sidor). Panorera eller zooma för att hämta ett nytt urval."+
+   ((planned.truncated||performed.truncated)?" Varning: källans sidgräns kan ha nåtts; visat urval kan vara ofullständigt.":"");
  }catch(e){
-  document.getElementById("status").textContent="Kunde inte hämta kartdata: "+e.message+". Kontrollera att Skogsstyrelsens tjänst är tillgänglig och tillåter anrop från webbläsaren.";
- }finally{document.getElementById("reload").disabled=false;applyVisibility()}
+  if(e?.name==="AbortError")return;
+  if(requestId===viewRequestId)document.getElementById("status").textContent="Kunde inte hämta kartdata: "+e.message+". Kontrollera att Skogsstyrelsens tjänst är tillgänglig och tillåter anrop från webbläsaren.";
+ }finally{
+  if(requestId===viewRequestId){document.getElementById("reload").disabled=false;applyVisibility()}
+ }
+}
+function scheduleViewLoad(){
+ if(viewDebounce)clearTimeout(viewDebounce);
+ viewDebounce=setTimeout(load,250);
 }
 function applyVisibility(){if(document.getElementById("showPlanned").checked){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map)}else map.removeLayer(plannedLayer);if(document.getElementById("showPerformed").checked){if(!map.hasLayer(performedLayer))performedLayer.addTo(map)}else map.removeLayer(performedLayer)}
 document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);document.getElementById("reload").addEventListener("click",load);document.getElementById("home").addEventListener("click",()=>map.setView(CENTER,11));
+map.on("moveend",scheduleViewLoad);
 map.on("baselayerchange",applyVisibility);
 load();
 })();
