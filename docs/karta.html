@@ -6,7 +6,7 @@
 <title>Gräsmyr – karta över avverkningar</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f5f7f4;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:white;padding:24px max(18px,calc((100% - 1250px)/2))}header h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem)}header p{margin:0;color:#e1eee5}header a{color:#e1eee5}main{max-width:1250px;margin:auto;padding:20px 16px 40px}.panel{background:#fff;border:1px solid #dce4dd;border-radius:12px;padding:15px;margin-bottom:14px}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.controls label{display:inline-flex;gap:7px;align-items:center;background:#f0f5f0;padding:8px 10px;border-radius:8px}.controls button{font:inherit;border:1px solid #c8d4ca;border-radius:8px;background:white;padding:8px 11px;cursor:pointer}.controls button:hover{background:#edf4ed}.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#eef4ee;padding:7px 10px;border-radius:8px}.pill strong{display:block;font-size:1.2rem;color:#145b37}.muted{color:#5d6b62;font-size:.9rem}#map{height:min(72vh,780px);min-height:480px;border-radius:10px;border:1px solid #dce4dd;z-index:1}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.9rem}.swatch{display:inline-block;width:14px;height:14px;border:3px solid;border-radius:3px;vertical-align:-2px;margin-right:5px}.planned{border-color:#1680ff}.performed{border-color:#e03131}.status{font-weight:600}.color-legend{display:none;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:.85rem}.color-gradient{height:12px;width:180px;border:1px solid #cbd5cc;border-radius:3px;background:linear-gradient(to right,#b9e8ff,#14532d)}footer{font-size:.85rem;color:#5d6b62;margin-top:12px}@media(max-width:600px){#map{min-height:430px;height:65vh}.panel{padding:11px}}
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f5f7f4;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:white;padding:24px max(18px,calc((100% - 1250px)/2))}header h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem)}header p{margin:0;color:#e1eee5}header a{color:#e1eee5}main{max-width:1250px;margin:auto;padding:20px 16px 40px}.panel{background:#fff;border:1px solid #dce4dd;border-radius:12px;padding:15px;margin-bottom:14px}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.controls label{display:inline-flex;gap:7px;align-items:center;background:#f0f5f0;padding:8px 10px;border-radius:8px}.controls button{font:inherit;border:1px solid #c8d4ca;border-radius:8px;background:white;padding:8px 11px;cursor:pointer}.controls button:hover{background:#edf4ed}.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.duration-row{display:grid;grid-template-columns:minmax(88px,120px) minmax(90px,1fr) minmax(78px,110px);gap:10px;align-items:center;margin:9px 0;font-size:.9rem}.duration-track{height:20px;background:#f0f2ef;border-radius:4px;overflow:hidden}.duration-bar{height:100%;background:#c2185b;min-width:0}.duration-value{text-align:right;font-variant-numeric:tabular-nums}@media(max-width:520px){.duration-row{grid-template-columns:82px minmax(60px,1fr) 82px;gap:6px;font-size:.82rem}}.pill{background:#eef4ee;padding:7px 10px;border-radius:8px}.pill strong{display:block;font-size:1.2rem;color:#145b37}.muted{color:#5d6b62;font-size:.9rem}#map{height:min(72vh,780px);min-height:480px;border-radius:10px;border:1px solid #dce4dd;z-index:1}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.9rem}.swatch{display:inline-block;width:14px;height:14px;border:3px solid;border-radius:3px;vertical-align:-2px;margin-right:5px}.planned{border-color:#1680ff}.performed{border-color:#e03131}.status{font-weight:600}.color-legend{display:none;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:.85rem}.color-gradient{height:12px;width:180px;border:1px solid #cbd5cc;border-radius:3px;background:linear-gradient(to right,#b9e8ff,#14532d)}footer{font-size:.85rem;color:#5d6b62;margin-top:12px}@media(max-width:600px){#map{min-height:430px;height:65vh}.panel{padding:11px}}
 </style>
 </head>
 <body>
@@ -36,6 +36,13 @@
 <p id="status" class="muted" aria-live="polite">Laddar avverkningsdata från Skogsstyrelsen…</p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span>Välj en polygon för attribut och datum.</span></div>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
+</section>
+<section class="panel" aria-labelledby="durationTitle">
+<h2 id="durationTitle">Tid från ärendeår till utförd avverkning</h2>
+<p class="muted">För utförda polygoner i valt område. Skillnaden beräknas som ärendeår minus året för avverkningsdatumet. Exempel: samma år = under 1 år; ett års skillnad = 1–2 år.</p>
+<div id="durationSummary" class="muted">Inväntar data…</div>
+<div id="durationHistogram" role="img" aria-label="Histogram över tiden mellan ärendeår och avverkningsår"></div>
+<p id="durationFootnote" class="muted"></p>
 </section>
 <section class="panel">
 <div id="map" aria-label="Karta över planerade och utförda avverkningar"></div>
@@ -181,6 +188,56 @@ function popup(f,type){
  ];
  return '<div style="width:260px;max-width:260px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:6px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
 }
+function yearFromDateValue(value){
+ if(value==null||value==="")return null;
+ if(typeof value==="number"||/^\\d+(\\.\\d+)?$/.test(String(value).trim())){
+  const n=Number(value);
+  if(!Number.isFinite(n))return null;
+  if(n>=100000000000)return new Date(n).getUTCFullYear();
+  if(n>=1000000000)return new Date(n*1000).getUTCFullYear();
+  if(n>=1900&&n<=2100)return Math.trunc(n);
+ }
+ const parsed=Date.parse(String(value));
+ return Number.isFinite(parsed)?new Date(parsed).getUTCFullYear():null;
+}
+function updateDurationHistogram(features){
+ const histogram=document.getElementById("durationHistogram");
+ const summary=document.getElementById("durationSummary");
+ const footnote=document.getElementById("durationFootnote");
+ const records=[];
+ let excluded=0;
+ for(const feature of features){
+  const p=feature?.properties||{};
+  const issueYear=Number(p.Arendear);
+  const harvestYear=yearFromDateValue(p.Avvdatum);
+  if(!Number.isFinite(issueYear)||issueYear<1900||issueYear>2100||harvestYear===null||harvestYear<1900||harvestYear>2100){excluded++;continue;}
+  const gap=issueYear-harvestYear;
+  if(gap<0){excluded++;continue;}
+  records.push(gap);
+ }
+ if(!records.length){
+  summary.textContent="Inga utförda avverkningar med giltigt ärendeår och avverkningsdatum i det valda området.";
+  histogram.innerHTML="";
+  footnote.textContent=excluded?excluded.toLocaleString("sv-SE")+" polygoner kunde inte klassificeras.":"";
+  return;
+ }
+ const buckets=[
+  {label:"< 1 år",count:records.filter(n=>n===0).length},
+  {label:"1–2 år",count:records.filter(n=>n===1).length},
+  {label:"2–3 år",count:records.filter(n=>n===2).length},
+  {label:"3–4 år",count:records.filter(n=>n===3).length},
+  {label:"4–5 år",count:records.filter(n=>n===4).length},
+  {label:"5+ år",count:records.filter(n=>n>=5).length}
+ ];
+ const max=Math.max(1,...buckets.map(b=>b.count));
+ summary.textContent=records.length.toLocaleString("sv-SE")+" avverkningar med användbara årtal; andelar beräknas av dessa.";
+ histogram.innerHTML=buckets.map(bucket=>{
+  const pct=bucket.count/records.length*100;
+  const width=bucket.count/max*100;
+  return '<div class="duration-row"><div>'+bucket.label+'</div><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%"></div></div><div class="duration-value">'+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' % ('+bucket.count.toLocaleString("sv-SE")+')</div></div>';
+ }).join("");
+ footnote.textContent="Andelarna summerar till 100 % över klassificerade polygoner. "+(excluded?excluded.toLocaleString("sv-SE")+" polygoner uteslutna eftersom årtal saknades, var ogiltiga eller avverkningsåret låg efter ärendeåret.":"");
+}
 function featureTouchesRadius(feature){
  const geometry=feature?.geometry;
  if(!geometry||!geometry.coordinates)return false;
@@ -288,6 +345,7 @@ async function load(){
   plannedLayer.clearLayers();performedLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);
   refreshPerformedColors();
+  updateDurationHistogram(performed.features);
   document.getElementById("plannedCount").textContent=planned.features.length.toLocaleString("sv-SE");
   document.getElementById("performedCount").textContent=performed.features.length.toLocaleString("sv-SE");
   const dates=performed.features.map(f=>Number(f.properties?.Avvdatum)).filter(n=>Number.isFinite(n)&&n>100000000000).sort((a,b)=>a-b);
