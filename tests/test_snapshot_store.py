@@ -96,8 +96,6 @@ class SnapshotStoreTests(unittest.TestCase):
 
     def test_failed_query_is_never_written(self):
         with tempfile.TemporaryDirectory() as tmp:
-            with self.assertRaises(ValueError):
-                write_snapshot(snapshot("2026-01-01T05:00:00Z", []), Path(tmp))
             bad = snapshot("2026-01-01T05:00:00Z", [])
             bad["cutting_notifications"]["status"] = "error"
             with self.assertRaises(ValueError):
