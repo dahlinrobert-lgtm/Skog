@@ -64,6 +64,19 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <p class="hint" id="historyNote">Historiken kontrolleras mot det uppladdade GeoPackage-uttaget från Skogsstyrelsen.</p>
 </section>
 <section class="panel">
+<h2>Fastighetskandidater – pilot</h2>
+<p>Preliminära kopplingar mellan avverkningsanmälningar och fastighetsbeteckningar som innehåller traktnamnet Gräsmyr. Tabellen visar endast resultat från de ärenden som hittills testats, inte samtliga anmälningar.</p>
+<div class="summary" id="propertySummary"><span class="pill">Läser pilotrapport …</span></div>
+<div class="tablewrap" style="margin-top:13px">
+<table>
+<thead><tr><th>Ärende</th><th>Datum</th><th>Fastighetskandidat</th><th>Provpunkter</th><th>Evidensnivå</th></tr></thead>
+<tbody id="propertyRows"><tr><td colspan="5">Läser pilotrapport …</td></tr></tbody>
+</table>
+</div>
+<p class="hint" id="propertyNote">En punktträff är inte ett bevis på att avverkningsytan ligger inom fastigheten. Min kartas uppslag använder en buffert och detta är en kandidatlista, inte en officiell fastighetsöverlappning. Gränsnära träffar är särskilt osäkra.</p>
+</section>
+
+<section class="panel">
 <h2>Vad betyder uppgifterna?</h2>
 <p><strong>Inkomdatum</strong> är datumet då anmälan kom in – inte datumet då avverkningen faktiskt genomfördes.</p>
 <p><strong>Anmäld areal</strong> är anmäld hektaryta. Den kan skilja sig från slutligt avverkad areal.</p>
@@ -155,6 +168,44 @@ function renderHistory(){
   const total=allFeatures.length;
   document.getElementById("historyNote").textContent='Historiken omfattar '+total+' ärenden i aktuell datamängd. Jämförelse med det uppladdade GeoPackage-uttaget visade samma 164 ärenden inom 10 km, med inkomdatum från 2021-11-01 till 2026-10-13. Detta är en ögonblicksbild; äldre poster kan saknas om källan gallrar data.';
 }
+function escapeHtml(value){
+  return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;","'":"&#39;"}[ch]));
+}
+async function renderPropertyPilot(){
+  const tbody=document.getElementById("propertyRows");
+  try{
+    const response=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/property_lookup_pilot.json?v="+Date.now(),{cache:"no-store"});
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    const report=await response.json();
+    const relations=report.notification_property_relations||[];
+    const rank={"interior_and_boundary_samples":0,"interior_sample_only":1,"boundary_sample_only":2};
+    relations.sort((a,b)=>(rank[a.evidence_class]??9)-(rank[b.evidence_class]??9)
+      || Number(b.sample_count||0)-Number(a.sample_count||0)
+      || String(a.notification_id||"").localeCompare(String(b.notification_id||""),"sv",{numeric:true}));
+    document.getElementById("propertySummary").innerHTML=
+      '<span class="pill"><strong>'+Number(report.features_tested||0)+'</strong> testade ärenden av '+Number(report.candidate_notifications_in_radius||0)+' Nordmaling-ärenden i radien</span>'+
+      '<span class="pill"><strong>'+relations.length+'</strong> kandidatkopplingar</span>'+
+      '<span class="pill"><strong>'+relations.filter(x=>x.evidence_class==="interior_and_boundary_samples").length+'</strong> med inre punkt + gränspunkter</span>';
+    const date=report.checked_at?fmtDate(report.checked_at):"okänt datum";
+    document.getElementById("propertyNote").textContent=
+      "Pilotrapport kontrollerad "+date+". "+Number(report.features_tested||0)+" av "+Number(report.candidate_notifications_in_radius||0)+
+      " närliggande Nordmaling-ärenden har provats. Kandidaterna bygger på punktuppslag med buffert i Min karta; det är inte en bekräftad fastighetsöverlappning. Gränsnära träffar är särskilt osäkra.";
+    tbody.innerHTML=relations.length?relations.map(x=>{
+      const evidence=x.evidence_class;
+      const label=evidence==="interior_and_boundary_samples"?"Inre punkt + gränspunkter":
+        evidence==="interior_sample_only"?"Endast inre punkt":"Endast gränspunkter";
+      const obj=Number(x.objectid);
+      const caseLink=Number.isFinite(obj)&&obj>0
+        ? '<a href="'+arcUrl(obj)+'" target="_blank" rel="noopener">'+escapeHtml(x.notification_id||("OBJECTID "+obj))+'</a>'
+        : escapeHtml(x.notification_id||"–");
+      return '<tr><td>'+caseLink+'</td><td>'+escapeHtml(fmtDate(x.notification_date))+'</td><td>'+escapeHtml(x.property_candidate||"–")+'</td>'+
+        '<td>'+Number(x.interior_sample_count||0)+' inre / '+Number(x.boundary_sample_count||0)+' gräns</td><td>'+label+'</td></tr>';
+    }).join(""):'<tr><td colspan="5">Inga fastighetskandidater i pilotrapporten.</td></tr>';
+  }catch(e){
+    document.getElementById("propertySummary").textContent="Pilotrapporten kunde inte läsas.";
+    tbody.innerHTML='<tr><td colspan="5">Data kunde inte laddas: '+escapeHtml(e?.message||e)+'</td></tr>';
+  }
+}
 function render(){
   const municipality=document.getElementById("municipality").value;
   const q=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
@@ -189,6 +240,7 @@ async function init(){
     document.getElementById("checked").textContent=" Senast kontrollerad: "+(data.checked_at||"okänt datum")+".";
     render();
     renderHistory();
+    renderPropertyPilot();
   }catch(e){
     document.getElementById("loadstatus").innerHTML='<span class="error">Kunde inte läsa senaste data ('+String(e?.message||e||"okänt fel")+' ). Kontrollera nätverksåtkomst till data/latest.json på GitHub.</span>';
     document.getElementById("rows").innerHTML='<tr><td colspan="7">Data kunde inte laddas.</td></tr>';
