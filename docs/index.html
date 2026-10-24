@@ -14,7 +14,7 @@ h2{font-size:1.25rem;margin:0 0 10px}p{margin:7px 0}.muted,.hint{color:#5d6b62;f
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
 input,select{font:inherit;padding:9px 11px;border:1px solid #c8d4ca;border-radius:8px;background:white;max-width:100%}
 table{border-collapse:collapse;width:100%;font-size:.93rem}th,td{text-align:left;vertical-align:top;padding:10px 9px;border-bottom:1px solid #e3e9e4}
-th{background:#f0f5f0;white-space:nowrap}td a{color:#246342}tbody tr:hover{background:#f8faf8}
+th{background:#f0f5f0;white-space:nowrap}th button.sort{font:inherit;font-weight:700;color:inherit;background:transparent;border:0;padding:0;cursor:pointer;text-align:left;white-space:nowrap}th button.sort:hover,th button.sort:focus{text-decoration:underline;color:#246342}th button.sort .arrow{display:inline-block;min-width:1em;color:#246342}td a{color:#246342}tbody tr:hover{background:#f8faf8}
 .tablewrap{overflow-x:auto;border:1px solid #e1e8e1;border-radius:9px}
 .status{font-weight:600}.error{color:#a12c24}.summary{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .pill{background:#eef4ee;border-radius:8px;padding:8px 11px}.links{display:flex;gap:12px;flex-wrap:wrap}
@@ -45,7 +45,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <div class="summary" id="summary"></div>
 <div class="tablewrap" style="margin-top:13px">
 <table>
-<thead><tr><th>Inkomdatum</th><th>Ärendenummer</th><th>Kommun</th><th>Typ</th><th>Areal</th><th>Status</th><th>Fastighet / karta</th></tr></thead>
+<thead><tr><th><button class="sort" data-sort="date" type="button">Inkomdatum <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="case" type="button">Ärendenummer <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="municipality" type="button">Kommun <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="type" type="button">Typ <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="area" type="button">Areal <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="status" type="button">Status <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="property" type="button">Fastighet / karta <span class="arrow" aria-hidden="true"></span></button></th></tr></thead>
 <tbody id="rows"><tr><td colspan="7">Laddar…</td></tr></tbody>
 </table>
 </div>
@@ -55,7 +55,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <h2>Vad betyder uppgifterna?</h2>
 <p><strong>Inkomdatum</strong> är datumet då anmälan kom in – inte datumet då avverkningen faktiskt genomfördes.</p>
 <p><strong>Anmäld areal</strong> är anmäld hektaryta. Den kan skilja sig från slutligt avverkad areal.</p>
-<p><strong>Ärendedetaljer</strong> öppnar Skogsstyrelsens registertjänst för det enskilda objektet. Kartlänken visar en ungefärlig position.</p>
+<p><strong>Ärendenummer</strong> öppnar Skogsstyrelsens registertjänst i HTML-format om tjänsten stöder det. Kartlänken visar en ungefärlig position.</p>
 <div class="links">
 <a href="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0">Skogsstyrelsens avverkningslager</a>
 <a href="https://geolex.lantmateriet.se/">Lantmäteriets GeoLex</a>
@@ -74,6 +74,8 @@ if (typeof proj4 !== "undefined") {
   proj4.defs("EPSG:3006", "+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs");
 }
 let allFeatures = [];
+let sortKey = "date";
+let sortDirection = -1; // newest first for dates by default
 const fmtDate = value => {
   if (value === null || value === undefined || value === "") return "–";
   let d;
@@ -89,7 +91,7 @@ function centerOf(geometry) {
   return [points.reduce((s,p)=>s+p[0],0)/points.length,points.reduce((s,p)=>s+p[1],0)/points.length];
 }
 function arcUrl(id){
-  return "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query?where="+encodeURIComponent("OBJECTID="+Number(id))+"&outFields=*&returnGeometry=true&outSR=4326&f=pjson";
+  return "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query?where="+encodeURIComponent("OBJECTID="+Number(id))+"&outFields=*&returnGeometry=true&outSR=4326&f=html";
 }
 function lantmaterietUrl(center){
   if(!center) return "";
@@ -99,6 +101,27 @@ function lantmaterietUrl(center){
   const params=new URLSearchParams({e:String(Math.round(e)),n:String(Math.round(n)),z:"15",mapprofile:"flygbild"});
   return "https://minkarta.lantmateriet.se/plats/3006/v2.0/?"+params.toString();
 }
+function sortValue(feature,key){
+  const p=feature.properties||{};
+  switch(key){
+    case "date": return Number(p.Inkomdatum||0);
+    case "case": return String(p.Beteckn||feature.id||"").toLocaleLowerCase("sv");
+    case "municipality": return String(p.Kommun||"").toLocaleLowerCase("sv");
+    case "type": return String(p.Avverktyp||"").toLocaleLowerCase("sv");
+    case "area": return p.AnmaldHa==null ? -Infinity : Number(p.AnmaldHa);
+    case "status": return String(p.ArendeStatus||"").toLocaleLowerCase("sv");
+    case "property": return String(p.Fastighet||"").toLocaleLowerCase("sv");
+    default: return "";
+  }
+}
+function updateSortIndicators(){
+  document.querySelectorAll("button.sort").forEach(button=>{
+    const active=button.dataset.sort===sortKey;
+    button.querySelector(".arrow").textContent=active?(sortDirection===1?"▲":"▼"):"↕";
+    button.setAttribute("aria-label",button.textContent.trim()+(active?(sortDirection===1?", stigande":", fallande"):""));
+    button.setAttribute("aria-sort",active?(sortDirection===1?"ascending":"descending"):"none");
+  });
+}
 function render(){
   const municipality=document.getElementById("municipality").value;
   const q=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
@@ -107,7 +130,12 @@ function render(){
     const p=f.properties||{};
     return (!municipality||p.Kommun===municipality) &&
       (!q||[p.Beteckn,p.Avverktyp,p.ArendeStatus,p.Kommun,p.AnamaldHa,p.AnmaldHa].some(v=>String(v??"").toLocaleLowerCase("sv").includes(q)));
-  }).sort((a,b)=>Number(b.properties?.Inkomdatum||0)-Number(a.properties?.Inkomdatum||0));
+  }).sort((a,b)=>{
+    const av=sortValue(a,sortKey), bv=sortValue(b,sortKey);
+    const cmp=typeof av==="number"&&typeof bv==="number" ? av-bv : String(av).localeCompare(String(bv),"sv",{numeric:true,sensitivity:"base"});
+    return cmp*sortDirection;
+  });
+  updateSortIndicators();
   document.getElementById("summary").innerHTML='<span class="pill"><strong>'+selected.length+'</strong> ärenden matchar filtret</span><span class="pill">Senaste inkomdatum: <strong>'+(selected.length?fmtDate(selected[0].properties?.Inkomdatum):"–")+'</strong></span>';
   const rows=selected.slice(0,limit).map(f=>{
     const p=f.properties||{};
@@ -133,6 +161,11 @@ async function init(){
   }
 }
 ["municipality","search","limit"].forEach(id=>document.getElementById(id).addEventListener("input",render));
+document.querySelectorAll("button.sort").forEach(button=>button.addEventListener("click",()=>{
+  if(sortKey===button.dataset.sort) sortDirection*=-1;
+  else { sortKey=button.dataset.sort; sortDirection=sortKey==="date"?-1:1; }
+  render();
+}));
 init();
 </script>
 </body>
