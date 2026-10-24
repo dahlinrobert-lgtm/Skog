@@ -18,6 +18,11 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / "config/area.json").read_text(encoding="utf-8"))
 LATEST = json.loads((ROOT / "data/latest.json").read_text(encoding="utf-8"))
 PREFIX = str(CONFIG.get("property_tract_prefix", "Gräsmyr")).casefold()
+
+def is_grasmyr_designation(value):
+    parts = str(value or "").split()
+    tract = " ".join(parts[1:]) if len(parts) > 1 else str(value or "")
+    return tract.casefold().startswith(PREFIX)
 BASE = "https://minkarta.lantmateriet.se/api/positionsinformation/positionsinformation/registerenhetermedbuffer/v1"
 DELAY_SECONDS = 3
 MAX_FEATURES = 3
@@ -106,7 +111,7 @@ def main():
                     "sample_kind": sample_kind, "wgs84": {"lon": lon, "lat": lat},
                     "sweref99tm": {"east": east, "north": north},
                     "properties": found,
-                    "grasmyr_matches": [x for x in found if x["designation"].split()[0].casefold().startswith(PREFIX)],
+                    "grasmyr_matches": [x for x in found if is_grasmyr_designation(x["designation"])],
                     "status": "ok"
                 })
             except Exception as exc:
@@ -122,8 +127,7 @@ def main():
             for item in obs.get("properties", []):
                 unique[item.get("designation")] = item
         grasmyr = [item for item in unique.values()
-                   if item.get("designation", "").split() and
-                   item["designation"].split()[0].casefold().startswith(PREFIX)]
+                   if is_grasmyr_designation(item.get("designation"))]
         results.append({
             "notification_id": props.get("Beteckn") or feature.get("id"),
             "objectid": feature.get("id"),
