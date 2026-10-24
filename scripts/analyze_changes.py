@@ -9,7 +9,7 @@ planned-object persistence across saved daily snapshots where available.
 import gzip
 import json
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 from shapely.geometry import shape
@@ -48,6 +48,18 @@ def valid_geometry(feature):
             return None
         return transform(TO_TM, geometry)
     except Exception:
+        return None
+
+
+def parse_epoch_ms(value):
+    if value is None or value == "":
+        return None
+    try:
+        if isinstance(value, (int, float)):
+            return datetime.fromtimestamp(float(value) / 1000, tz=timezone.utc)
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError, OverflowError):
         return None
 
 
@@ -147,6 +159,7 @@ def main():
             counts["zero_area_planned"] += 1
             continue
         candidates = []
+        received_dt = parse_epoch_ms(date_value)
         for done in completed_index:
             if not planned_geom.intersects(done["geometry"]):
                 continue
@@ -156,23 +169,33 @@ def main():
             planned_share = intersection_area / planned_geom.area
             done_share = intersection_area / done["geometry"].area if done["geometry"].area > 0 else 0
             meaningful = intersection_area >= threshold_area_ha * 10000 and max(planned_share, done_share) >= min_overlap_share
+            completed_dt = parse_epoch_ms(done["date"])
+            within_time_window = bool(
+                received_dt and completed_dt and
+                received_dt <= completed_dt <= received_dt + timedelta(days=3 * 365 + 1)
+            )
             candidates.append({
                 "completed_object_id": done["id"],
                 "intersection_ha": round(intersection_area / 10000, 4),
                 "planned_overlap_pct": round(planned_share * 100, 1),
                 "completed_overlap_pct": round(done_share * 100, 1),
                 "meaningful": meaningful,
+                "within_3_year_window": within_time_window,
                 "completed_date": done["date"],
                 "completed_area_ha": done["area_ha"],
                 "completed_municipality": done["municipality"],
                 "forebild": done["image_before"],
                 "efterbild": done["image_after"],
             })
-        candidates.sort(key=lambda x: (x["meaningful"], x["intersection_ha"]), reverse=True)
+        candidates.sort(key=lambda x: (x["within_3_year_window"], x["meaningful"], x["intersection_ha"]), reverse=True)
+        temporal_good = [candidate for candidate in candidates if candidate["meaningful"] and candidate["within_3_year_window"]]
         good = [candidate for candidate in candidates if candidate["meaningful"]]
-        if good:
-            counts["planned_with_meaningful_completed_overlap"] += 1
-            status = "meaningful_overlap_candidate"
+        if temporal_good:
+            counts["planned_with_meaningful_overlap_within_3_years"] += 1
+            status = "meaningful_overlap_within_3_years"
+        elif good:
+            counts["planned_with_meaningful_overlap_outside_3_years"] += 1
+            status = "meaningful_overlap_outside_3_years"
         elif candidates:
             counts["planned_with_only_weak_overlap"] += 1
             status = "weak_overlap_only"
@@ -196,6 +219,7 @@ def main():
         "method": {
             "projection": "EPSG:3006",
             "spatial_test": "polygon intersection",
+            "time_window": "A completed polygon is temporally plausible when its Avvdatum is between the planned Inkomdatum and three years after it. Missing/unparseable dates are not counted as time-window matches.",
             "meaningful_overlap_threshold": "intersection >= 0.02 ha and overlap share >= 15% of at least one polygon",
             "completed_layer_warning": "Satellite-based change-detection layer. Spatial overlaps are candidates for manual review, not proof that a planned case was executed.",
             "missing_planned_id_warning": "An ID missing from a later query is only not returned by the current query; it does not prove deletion, expiry, or felling.",
