@@ -313,7 +313,9 @@ function render(){
   document.getElementById("summary").innerHTML=
     countPill(selected.length,"ärenden i urvalet")+
     countPill(matchCounts.case,"träff via år + beteckning")+
-    countPill(matchCounts.spatial,"geografisk överlappning")+
+    countPill(matchCounts.spatial,"meningsfull geometrisk överlappning")+
+    countPill(matchCounts.sample,"träff via stickprovspunkter")+
+    countPill(matchCounts.weak,"svag överlappning")+
     countPill(matchCounts.near,"närliggande kandidat inom tre år")+
     countPill(matchCounts.coordinate,"närmaste koordinatkandidat – kontrollera avstånd")+
     countPill(matchCounts.none,"ingen koppling hittad i nuvarande underlag")+
