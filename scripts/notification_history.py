@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Maintain durable history for cutting notifications.
 
-A feature missing from a later successful query is recorded as "not_returned".
-It is never inferred to be felled, cancelled, or deleted from the source.
-Attribute and geometry changes are logged only across consecutive successful
-snapshots with the same query scope.
+A feature missing from a later successful query is recorded as "not_returned"
+only when consecutive successful queries have the same spatial/query scope. If
+the scope changes, IDs omitted by the new query become "scope_changed", not
+"not_returned". Attribute and geometry changes are logged only across comparable
+snapshots. The event JSONL is derived from saved snapshots and rewritten on each
+run so obsolete events from earlier faulty comparability logic can be corrected.
 """
 from __future__ import annotations
 
@@ -13,6 +15,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -20,8 +23,26 @@ SNAPSHOTS = DATA / "snapshots"
 HISTORY_PATH = DATA / "notification_history.json"
 EVENTS_PATH = DATA / "notification_history_events.jsonl"
 
-# Keep this allow-list intentionally narrow and human-readable. We record changed
-# keys and old/new values, but never infer what the change means operationally.
+# Query parameters that can change which features are returned or which parts
+# of a source record are comparable. Tracking these prevents bbox/radius (or
+# other query) transitions from being mistaken for source-register changes.
+SCOPE_QUERY_KEYS = (
+    "where",
+    "geometry",
+    "geometryType",
+    "inSR",
+    "spatialRel",
+    "distance",
+    "units",
+    "relation",
+    "time",
+    "objectIds",
+    "historicMoment",
+    "outFields",
+    "returnGeometry",
+)
+
+# Keep the attribute change log intentionally narrow and human-readable.
 TRACKED_ATTRIBUTES = (
     "Beteckn",
     "Kommun",
@@ -31,6 +52,7 @@ TRACKED_ATTRIBUTES = (
     "Inkomdatum",
     "AnmaldHa",
     "SkogsodlHa",
+    "NatforHa",
     "AvvHa",
 )
 
@@ -59,12 +81,32 @@ def successful(snapshot: dict[str, Any]) -> bool:
     return cuts.get("status") == "ok" and isinstance(cuts.get("features"), list)
 
 
+def _normalized_query_parameters(url: str) -> dict[str, Any]:
+    parsed = urlparse(url)
+    parsed_values = parse_qs(parsed.query, keep_blank_values=True)
+    normalized: dict[str, Any] = {}
+    for key in SCOPE_QUERY_KEYS:
+        if key not in parsed_values:
+            continue
+        values: list[Any] = []
+        for value in parsed_values[key]:
+            if key == "geometry":
+                try:
+                    values.append(json.loads(value))
+                    continue
+                except (ValueError, TypeError):
+                    pass
+            values.append(value)
+        normalized[key] = values[0] if len(values) == 1 else values
+    return {"endpoint": f"{parsed.scheme.lower()}://{parsed.netloc.lower()}{parsed.path}", "parameters": normalized}
+
+
 def scope_hash(snapshot: dict[str, Any]) -> str:
+    """Fingerprint configured area plus query filters/geometry, not query ordering."""
     cuts = snapshot.get("cutting_notifications") or {}
     area = snapshot.get("area") or {}
-    query_url = str(cuts.get("url") or "").split("?")[0]
     scope = {
-        "query_url": query_url,
+        "query": _normalized_query_parameters(str(cuts.get("url") or "")),
         "latitude": area.get("latitude"),
         "longitude": area.get("longitude"),
         "radius_km": area.get("radius_km"),
@@ -134,6 +176,8 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
     prior_features: dict[str, dict[str, Any]] = {}
     prior_scope = None
     prior_time = None
+    prior_filename = None
+
     for filename, snapshot in snapshots:
         if not successful(snapshot):
             continue
@@ -148,13 +192,37 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
         comparable = prior_ids is not None and scope == prior_scope
 
         if prior_ids is not None and not comparable:
+            missing_due_to_scope = sorted((prior_ids or set()) - ids)
             events.append({
                 "event_type": "comparison_skipped_scope_changed",
                 "observed_at": checked_at,
                 "previous_observed_at": prior_time,
+                "previous_snapshot": prior_filename,
                 "snapshot": filename,
-                "meaning": "Query scope changed; presence/absence and record-change differences were not interpreted.",
+                "previous_scope_sha256": prior_scope,
+                "current_scope_sha256": scope,
+                "omitted_previous_ids_count": len(missing_due_to_scope),
+                "meaning": "Query filters or spatial scope changed; omitted IDs are not treated as source-register changes.",
             })
+            # These IDs were present in the old query but not the new one. Record
+            # the scope transition explicitly instead of leaving a stale 'observed'
+            # state or falsely labelling them as not_returned.
+            for key in missing_due_to_scope:
+                record = cases.get(key)
+                if record is not None:
+                    record["observation_status"] = "scope_changed"
+                    record["scope_changed_at"] = checked_at
+                    record["current_query_scope_hash"] = scope
+                    record["status_interpretation"] = "search_scope_changed_not_source_absence"
+                events.append({
+                    "event_type": "scope_changed",
+                    "notification_id": key,
+                    "observed_at": checked_at,
+                    "previous_observed_at": prior_time,
+                    "previous_snapshot": prior_filename,
+                    "snapshot": filename,
+                    "meaning": "ID was omitted after a query-scope change; this is not evidence of source disappearance or felling.",
+                })
 
         if comparable:
             for key in sorted(ids - (prior_ids or set())):
@@ -163,8 +231,9 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                     "notification_id": key,
                     "observed_at": checked_at,
                     "previous_observed_at": prior_time,
+                    "previous_snapshot": prior_filename,
                     "snapshot": filename,
-                    "meaning": "Returned after a previous comparable successful query; application date is not inferred.",
+                    "meaning": "Returned in the current query after being absent from the prior comparable query; application date is not inferred.",
                 })
             for key in sorted((prior_ids or set()) - ids):
                 events.append({
@@ -172,8 +241,9 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                     "notification_id": key,
                     "observed_at": checked_at,
                     "previous_observed_at": prior_time,
+                    "previous_snapshot": prior_filename,
                     "snapshot": filename,
-                    "meaning": "Absent from this successful query only; not evidence of felling, cancellation, deletion, or expiry.",
+                    "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry.",
                 })
             for key in sorted(ids & (prior_ids or set())):
                 delta = change_details(prior_features[key], current_features[key])
@@ -183,7 +253,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                         "notification_id": key,
                         "observed_at": checked_at,
                         "previous_observed_at": prior_time,
-                        "previous_snapshot": None,
+                        "previous_snapshot": prior_filename,
                         "snapshot": filename,
                         **delta,
                     })
@@ -191,7 +261,6 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
         for key, feature in current_features.items():
             props = feature.get("properties") or {}
             record = cases.get(key, {})
-            was_missing = record.get("observation_status") == "not_returned"
             old_hash = record.get("attribute_sha256")
             current_hash = canonical_hash(props)
             record.update({
@@ -207,8 +276,6 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                 "attribute_sha256": current_hash,
                 "status_interpretation": "current_source_observation_only",
             })
-            if was_missing:
-                record["last_reappeared_at"] = checked_at
             if old_hash and old_hash != current_hash:
                 record["last_attributes_changed_at"] = checked_at
             cases[key] = record
@@ -223,8 +290,10 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                 record["observation_status"] = "not_returned"
                 record["last_not_returned_at"] = checked_at
                 record["last_snapshot"] = filename
+                record["last_query_scope_hash"] = scope
+                record["status_interpretation"] = "not_returned_is_not_felling_or_cancellation"
 
-        prior_ids, prior_features, prior_scope, prior_time = ids, current_features, scope, checked_at
+        prior_ids, prior_features, prior_scope, prior_time, prior_filename = ids, current_features, scope, checked_at, filename
 
     for key, record in cases.items():
         record.setdefault("notification_id", key)
@@ -233,12 +302,14 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
 
     result = {
         "generated_at": iso(now_utc()),
-        "schema_version": 2,
+        "schema_version": 3,
         "snapshot_count_compared": len(snapshots),
         "case_count": len(cases),
+        "event_log_semantics": "Derived from successful saved snapshots and rewritten on each run; saved snapshots are the source of truth.",
         "source_status_semantics": {
-            "observed": "Returned by a successful query in the configured search area.",
-            "not_returned": "Previously observed but absent from a later comparable successful query.",
+            "observed": "Returned by the latest processed successful query.",
+            "not_returned": "Absent from a later comparable successful query; not proof of source deletion or felling.",
+            "scope_changed": "Absent after a query-scope change; not comparable as a source-register disappearance.",
             "record_changed": "Selected source attributes or geometry changed between comparable successful observations; cause is not inferred.",
             "absence_never_means": ["felled", "cancelled", "deleted", "expired"],
         },
@@ -248,24 +319,21 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
     return result, events
 
 
-def append_events(events: list[dict[str, Any]]) -> int:
-    known = set()
-    if EVENTS_PATH.exists():
-        with EVENTS_PATH.open(encoding="utf-8") as handle:
-            for line in handle:
-                try:
-                    known.add(canonical_hash(json.loads(line)))
-                except json.JSONDecodeError:
-                    continue
-    added = 0
-    with EVENTS_PATH.open("a", encoding="utf-8") as handle:
-        for event in events:
-            digest = canonical_hash(event)
-            if digest not in known:
-                handle.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
-                known.add(digest)
-                added += 1
-    return added
+def write_event_log(events: list[dict[str, Any]], path: Path = EVENTS_PATH) -> int:
+    """Write a complete event ledger derived from snapshots, removing obsolete derived events."""
+    serialized = "".join(
+        json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n"
+        for event in events
+    )
+    old_content = None
+    try:
+        old_content = path.read_text(encoding="utf-8")
+    except OSError:
+        pass
+    if old_content != serialized:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(serialized, encoding="utf-8")
+    return len(events)
 
 
 def main() -> None:
@@ -274,7 +342,7 @@ def main() -> None:
     previous = read_json(HISTORY_PATH, {})
     snapshots = read_snapshots()
     history, events = build_history(snapshots, previous)
-    added = append_events(events)
+    written = write_event_log(events)
     HISTORY_PATH.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({
         "output": str(HISTORY_PATH.relative_to(ROOT)),
@@ -282,9 +350,10 @@ def main() -> None:
         "successful_snapshots": len(snapshots),
         "known_notifications": history["case_count"],
         "currently_observed": sum(x.get("observation_status") == "observed" for x in history["cases"].values()),
+        "scope_changed": sum(x.get("observation_status") == "scope_changed" for x in history["cases"].values()),
         "not_returned": sum(x.get("observation_status") == "not_returned" for x in history["cases"].values()),
-        "changed_records_in_this_rebuild": sum(e.get("event_type") == "record_changed" for e in events),
-        "new_events_appended": added,
+        "record_changed_events": sum(e.get("event_type") == "record_changed" for e in events),
+        "derived_events_written": written,
     }, ensure_ascii=False))
 
 
