@@ -1,32 +1,35 @@
 #!/usr/bin/env python3
-"""Small, rate-limited polygon-to-property pilot for Skogsstyrelsen notifications.
+"""Rate-limited Gräsmyr-focused polygon-to-property pilot.
 
-Uses a few interior and boundary samples per notification. This is an approximation,
-not a cadastral intersection; a full polygon may cross additional properties.
-Min karta endpoint is an observed internal web-app endpoint, not a documented public API.
+Samples interior points and polygon boundary vertices. This is a candidate finder,
+not an exact cadastral overlay. The Min karta endpoint is an observed internal
+web-app endpoint, not a documented public API.
 """
 import json
+import math
 import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
-from shapely.geometry import shape
+from pyproj import Transformer
+from shapely.geometry import Point, shape
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / "config/area.json").read_text(encoding="utf-8"))
 LATEST = json.loads((ROOT / "data/latest.json").read_text(encoding="utf-8"))
-PREFIX = str(CONFIG.get("property_tract_prefix", "Gräsmyr")).casefold()
-
-def is_grasmyr_designation(value):
-    parts = str(value or "").split()
-    tract = " ".join(parts[1:]) if len(parts) > 1 else str(value or "")
-    return tract.casefold().startswith(PREFIX)
+PREFIX = str(CONFIG.get("property_tract_prefix", "Gräsmyr")).strip().casefold()
+CENTER_LON = float(CONFIG["longitude"])
+CENTER_LAT = float(CONFIG["latitude"])
+RADIUS_KM = float(CONFIG.get("radius_km", 10))
 BASE = "https://minkarta.lantmateriet.se/api/positionsinformation/positionsinformation/registerenhetermedbuffer/v1"
 DELAY_SECONDS = 3
-MAX_FEATURES = 3
-MAX_SAMPLES_PER_FEATURE = 5
+MAX_FEATURES = 10
+MAX_SAMPLES_PER_FEATURE = 4
+TO_SWEREF = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True)
+TO_WGS84 = Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True)
+CENTER_E, CENTER_N = TO_SWEREF.transform(CENTER_LON, CENTER_LAT)
 
 
 def feature_date(feature):
@@ -36,18 +39,40 @@ def feature_date(feature):
     return datetime.min.replace(tzinfo=timezone.utc)
 
 
+def tract_from_designation(value):
+    """Min karta usually returns 'NORDMALING GRÄSMYR 6:43'; tolerate no municipality."""
+    parts = str(value or "").strip().split()
+    if not parts:
+        return ""
+    if len(parts) > 1 and parts[0].casefold() in {
+        "nordmaling", "umeå", "umea", "bjurholm", "vännäs", "vannas"
+    }:
+        return " ".join(parts[1:])
+    return " ".join(parts)
+
+
+def is_target_tract(value):
+    return tract_from_designation(value).casefold().startswith(PREFIX)
+
+
+def distance_to_center_km(geom):
+    # Use projected geometry centroid for ranking, not for property attribution.
+    projected = shape(geom)
+    transformer = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True)
+    from shapely.ops import transform
+    projected = transform(transformer.transform, projected)
+    return projected.centroid.distance(Point(CENTER_E, CENTER_N)) / 1000
+
+
 def sample_points(geometry, limit=MAX_SAMPLES_PER_FEATURE):
-    """Return representative interior point plus evenly spaced exterior vertices."""
     geom = shape(geometry)
     points = []
     components = list(geom.geoms) if hasattr(geom, "geoms") else [geom]
-    # One point safely inside each polygon component where possible.
     for component in components:
         if len(points) >= limit:
             break
         p = component.representative_point()
         points.append((p.x, p.y, "interior"))
-    # Sample exterior vertices spread across all polygon components.
     vertices = []
     for component in components:
         if not hasattr(component, "exterior"):
@@ -60,7 +85,6 @@ def sample_points(geometry, limit=MAX_SAMPLES_PER_FEATURE):
         indexes = sorted(set(round(i * (len(vertices) - 1) / max(1, remaining - 1)) for i in range(remaining)))
         for idx in indexes:
             x, y = vertices[idx]
-            candidate = (x, y)
             if all(abs(x - px) > 1e-8 or abs(y - py) > 1e-8 for px, py, _ in points):
                 points.append((x, y, "boundary_sample"))
     return points[:limit]
@@ -81,53 +105,56 @@ def lookup(east, north, session):
 
 def main():
     all_features = LATEST.get("cutting_notifications", {}).get("features", [])
-    features = [
-        f for f in all_features
-        if f.get("geometry") and str(f.get("properties", {}).get("Kommunnr", "")) == "2401"
-    ]
-    features.sort(key=feature_date, reverse=True)
-    features = features[:MAX_FEATURES]
+    candidates = []
+    for feature in all_features:
+        if not feature.get("geometry"):
+            continue
+        props = feature.get("properties", {})
+        if str(props.get("Kommunnr", "")) != "2401":
+            continue
+        distance = distance_to_center_km(feature["geometry"])
+        if distance <= RADIUS_KM:
+            candidates.append((distance, feature))
+    # Prefer spatial relevance to Gräsmyr, then newest notification.
+    candidates.sort(key=lambda pair: (pair[0], -feature_date(pair[1]).timestamp()))
+    selected = candidates[:MAX_FEATURES]
+
     session = requests.Session()
     session.headers.update({
         "Accept": "application/json, text/plain, */*",
-        "User-Agent": "Skog-Grasmyr-monitor/0.3 (limited polygon pilot)",
+        "User-Agent": "Skog-Grasmyr-monitor/0.4 (limited property pilot)",
         "Referer": "https://minkarta.lantmateriet.se/",
     })
     results = []
     request_count = 0
-    for feature in features:
+    for distance_km, feature in selected:
         props = feature.get("properties", {})
-        samples = sample_points(feature["geometry"])
         observations = []
-        for i, (lon, lat, sample_kind) in enumerate(samples):
-            # Skogsstyrelsen geometry is WGS84; Min karta endpoint expects SWEREF99 TM.
-            from pyproj import Transformer
-            transformer = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True)
-            east, north = transformer.transform(lon, lat)
+        for sample_index, (lon, lat, sample_kind) in enumerate(sample_points(feature["geometry"])):
+            east, north = TO_SWEREF.transform(lon, lat)
             try:
                 found = lookup(east, north, session)
-                request_count += 1
-                observations.append({
-                    "sample_kind": sample_kind, "wgs84": {"lon": lon, "lat": lat},
-                    "sweref99tm": {"east": east, "north": north},
-                    "properties": found,
-                    "grasmyr_matches": [x for x in found if is_grasmyr_designation(x["designation"])],
-                    "status": "ok"
-                })
+                status, error = "ok", None
             except Exception as exc:
-                request_count += 1
-                observations.append({
-                    "sample_kind": sample_kind, "wgs84": {"lon": lon, "lat": lat},
-                    "status": "error", "error": str(exc), "properties": [], "grasmyr_matches": []
-                })
-            if request_count < MAX_FEATURES * MAX_SAMPLES_PER_FEATURE:
+                found, status, error = [], "error", str(exc)
+            request_count += 1
+            observations.append({
+                "sample_kind": sample_kind,
+                "wgs84": {"lon": lon, "lat": lat},
+                "sweref99tm": {"east": east, "north": north},
+                "properties": found,
+                "grasmyr_matches": [x for x in found if is_target_tract(x["designation"])],
+                "status": status,
+                **({"error": error} if error else {}),
+            })
+            if request_count < len(selected) * MAX_SAMPLES_PER_FEATURE:
                 time.sleep(DELAY_SECONDS)
+
         unique = {}
         for obs in observations:
-            for item in obs.get("properties", []):
-                unique[item.get("designation")] = item
-        grasmyr = [item for item in unique.values()
-                   if is_grasmyr_designation(item.get("designation"))]
+            for item in obs["properties"]:
+                unique[item["designation"]] = item
+        target = [item for item in unique.values() if is_target_tract(item["designation"])]
         results.append({
             "notification_id": props.get("Beteckn") or feature.get("id"),
             "objectid": feature.get("id"),
@@ -135,45 +162,56 @@ def main():
             "notification_date": feature_date(feature).isoformat(),
             "reported_area_ha": props.get("AnmaldHa"),
             "geometry_type": feature["geometry"].get("type"),
+            "distance_from_grasmyr_center_km": round(distance_km, 3),
             "sample_count": len(observations),
-            "unique_properties_observed": sorted(unique.keys()),
+            "successful_samples": sum(o["status"] == "ok" for o in observations),
+            "unique_properties_observed": sorted(unique),
             "unique_property_count": len(unique),
-            "grasmyr_matches": sorted(x["designation"] for x in grasmyr),
-            "grasmyr_match_count": len(grasmyr),
+            "target_tract_matches": sorted(x["designation"] for x in target),
+            "target_tract_match_count": len(target),
             "observations": observations,
             "interpretation": (
-                "Gräsmyr match observed in one or more samples; candidate only, not proof the full polygon belongs to that property."
-                if grasmyr else
-                "No Gräsmyr-prefixed designation observed in these samples; not proof there is no intersection."
-            )
+                "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+                if target else
+                "No Gräsmyr candidate observed in samples; this does not rule out polygon intersection."
+            ),
         })
+
     report = {
         "checked_at": datetime.now(timezone.utc).isoformat(),
-        "method": "Up to 5 samples per polygon: representative interior point(s) and evenly spaced exterior vertices. Min karta results are aggregated.",
-        "limitations": [
-            "Sampling is approximate and does not calculate exact polygon-to-cadastral-parcel intersections.",
-            "A sample may fall on a neighbouring property, especially near boundaries.",
-            "No Gräsmyr match among samples does not prove that a polygon does not intersect a Gräsmyr property.",
-            "Min karta endpoint is an observed internal web-app endpoint, not a documented public API."
-        ],
+        "area_name": CONFIG.get("name"),
+        "target_tract_prefix": CONFIG.get("property_tract_prefix"),
+        "selection": f"Up to {MAX_FEATURES} Nordmaling notifications within {RADIUS_KM} km, ranked by polygon-centroid distance to configured Gräsmyr point.",
+        "method": f"Up to {MAX_SAMPLES_PER_FEATURE} interior/boundary samples per polygon; Min karta results aggregated by designation.",
         "request_count": request_count,
         "delay_seconds_between_requests": DELAY_SECONDS,
+        "candidate_notifications_in_radius": len(candidates),
         "features_tested": len(results),
-        "results": results
+        "target_tract_matches_total": sorted({d for r in results for d in r["target_tract_matches"]}),
+        "limitations": [
+            "Centroid distance is only used to rank notifications; it does not establish cadastral ownership.",
+            "Sampling does not calculate exact polygon-to-cadastral-parcel intersections and may miss properties.",
+            "A boundary sample can return a neighbouring property; results are candidate matches only.",
+            "The Min karta endpoint is an observed internal web-app endpoint, not a documented public API; continued use should be checked against applicable terms.",
+        ],
+        "results": results,
     }
     out = ROOT / "data" / "property_lookup_pilot.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({
-        "checked_at": report["checked_at"], "features_tested": len(results),
-        "request_count": request_count, "report_path": str(out),
+        "checked_at": report["checked_at"],
+        "candidate_notifications_in_radius": len(candidates),
+        "features_tested": len(results),
+        "request_count": request_count,
+        "target_tract_matches_total": report["target_tract_matches_total"],
         "results": [{
-            "notification_id": x["notification_id"],
-            "unique_property_count": x["unique_property_count"],
-            "unique_properties_observed": x["unique_properties_observed"],
-            "grasmyr_matches": x["grasmyr_matches"],
-            "sample_count": x["sample_count"]
-        } for x in results],
-        "limitations": report["limitations"]
+            "notification_id": r["notification_id"],
+            "distance_from_grasmyr_center_km": r["distance_from_grasmyr_center_km"],
+            "unique_property_count": r["unique_property_count"],
+            "unique_properties_observed": r["unique_properties_observed"],
+            "target_tract_matches": r["target_tract_matches"],
+            "successful_samples": r["successful_samples"],
+        } for r in results],
     }, ensure_ascii=False, indent=2))
 
 
