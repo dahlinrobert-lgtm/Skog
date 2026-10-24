@@ -177,6 +177,75 @@ def main():
             ),
         })
 
+    # Build relationships between notifications. These are evidence signals, not proof
+    # of shared ownership, contractor, or cost-sharing.
+    from shapely.ops import transform as shapely_transform
+
+    feature_by_id = {str(f.get("id")): f for f in selected and [pair[1] for pair in selected]}
+    projected_geometries = {}
+    for result in results:
+        source_feature = feature_by_id.get(str(result["objectid"]))
+        if source_feature and source_feature.get("geometry"):
+            projected_geometries[str(result["objectid"])] = shapely_transform(
+                TO_SWEREF.transform, shape(source_feature["geometry"])
+            )
+
+    notification_links = []
+    for i, left in enumerate(results):
+        for right in results[i + 1:]:
+            left_geom = projected_geometries.get(str(left["objectid"]))
+            right_geom = projected_geometries.get(str(right["objectid"]))
+            if left_geom is None or right_geom is None:
+                continue
+            polygon_distance_m = float(left_geom.distance(right_geom))
+            intersects = bool(left_geom.intersects(right_geom))
+            shared_properties = sorted(
+                set(left["target_tract_matches"]) & set(right["target_tract_matches"])
+            )
+            left_dt = datetime.fromisoformat(left["notification_date"])
+            right_dt = datetime.fromisoformat(right["notification_date"])
+            days_between = abs((left_dt - right_dt).total_seconds()) / 86400
+            same_day = left_dt.date() == right_dt.date()
+            # Keep links that contain at least one useful signal.
+            if not shared_properties and polygon_distance_m > 250 and not (same_day and polygon_distance_m <= 1000):
+                continue
+            signals = []
+            if shared_properties:
+                signals.append("shared_sampled_property_candidates")
+            if intersects:
+                signals.append("notification_polygons_intersect")
+            elif polygon_distance_m <= 250:
+                signals.append("notification_polygons_within_250m")
+            if same_day:
+                signals.append("same_notification_date")
+            elif days_between <= 30:
+                signals.append("notification_dates_within_30_days")
+            # Stronger investigation priority only; never state that coordination is confirmed.
+            priority = (
+                "high_review_priority"
+                if (shared_properties and days_between <= 180) or (intersects and days_between <= 90)
+                else "review_candidate"
+            )
+            notification_links.append({
+                "notification_a": left["notification_id"],
+                "notification_b": right["notification_id"],
+                "days_between_notification_dates": round(days_between, 1),
+                "same_notification_date": same_day,
+                "polygon_distance_m": round(polygon_distance_m, 1),
+                "notification_polygons_intersect": intersects,
+                "shared_property_candidates": shared_properties,
+                "signals": signals,
+                "review_priority": priority,
+                "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing.",
+            })
+    notification_links.sort(
+        key=lambda x: (
+            0 if x["review_priority"] == "high_review_priority" else 1,
+            x["polygon_distance_m"],
+            x["days_between_notification_dates"],
+        )
+    )
+
     report = {
         "checked_at": datetime.now(timezone.utc).isoformat(),
         "area_name": CONFIG.get("name"),
@@ -188,6 +257,8 @@ def main():
         "candidate_notifications_in_radius": len(candidates),
         "features_tested": len(results),
         "target_tract_matches_total": sorted({d for r in results for d in r["target_tract_matches"]}),
+        "notification_relationship_links_count": len(notification_links),
+        "notification_relationship_links": notification_links,
         "limitations": [
             "Centroid distance is only used to rank notifications; it does not establish cadastral ownership.",
             "Sampling does not calculate exact polygon-to-cadastral-parcel intersections and may miss properties.",
