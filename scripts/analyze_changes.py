@@ -79,6 +79,7 @@ def completed_archive_rows():
             rows.append({
                 "filename": path.name,
                 "checked_at": checked_at,
+                "query_scope_sha256": value.get("query_scope_sha256"),
                 "features_by_id": features_by_id,
             })
         except (OSError, EOFError, json.JSONDecodeError):
