@@ -17,7 +17,10 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-from snapshot_store import read_snapshot_rows
+try:
+    from scripts.snapshot_store import read_snapshot_rows
+except ModuleNotFoundError:  # Direct execution as `python scripts/<name>.py`.
+    from snapshot_store import read_snapshot_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
