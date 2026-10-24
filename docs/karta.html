@@ -58,6 +58,7 @@ const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>l
 plannedLayer.addTo(map);performedLayer.addTo(map);
 const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const COLOR_LOW=[185,232,255],COLOR_HIGH=[20,83,45];
+let performedScaleCache={mode:"none",min:null,max:null};
 function performedYear(feature){
  const p=feature?.properties||{};
  const direct=Number(p.Arendear);
@@ -90,7 +91,7 @@ function currentColorScale(){
 function performedStyle(feature){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  if(mode==="none")return {color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22};
- const scale=currentColorScale();
+ const scale=performedScaleCache;
  const value=mode==="year"?performedYear(feature):performedHectares(feature);
  if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};
  const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min);
@@ -102,6 +103,7 @@ function refreshPerformedColors(){
  const legend=document.getElementById("performedColorLegend");
  const minLabel=document.getElementById("legendMin"),maxLabel=document.getElementById("legendMax"),note=document.getElementById("legendNote");
  const scale=currentColorScale();
+ performedScaleCache=scale;
  legend.style.display=mode==="none"?"none":"flex";
  const gradient=document.querySelector(".color-gradient");
  if(mode==="year"){
