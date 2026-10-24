@@ -1,14 +1,126 @@
 <!doctype html>
 <html lang="sv">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Gräsmyr monitoring</title></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gräsmyr – skogs- och bildbevakning</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f5f7f4;line-height:1.5}
+*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:white;padding:30px max(18px,calc((100% - 1150px)/2))}
+header h1{margin:0 0 6px;font-size:clamp(1.7rem,4vw,2.5rem)}header p{margin:0;color:#e1eee5}
+main{max-width:1150px;margin:auto;padding:22px 18px 45px}
+.panel{background:white;border:1px solid #dce4dd;border-radius:13px;padding:18px;margin-bottom:17px}
+h2{font-size:1.25rem;margin:0 0 10px}p{margin:7px 0}.muted,.hint{color:#5d6b62;font-size:.92rem}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+input,select{font:inherit;padding:9px 11px;border:1px solid #c8d4ca;border-radius:8px;background:white;max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:.93rem}th,td{text-align:left;vertical-align:top;padding:10px 9px;border-bottom:1px solid #e3e9e4}
+th{background:#f0f5f0;white-space:nowrap}td a{color:#246342}tbody tr:hover{background:#f8faf8}
+.tablewrap{overflow-x:auto;border:1px solid #e1e8e1;border-radius:9px}
+.status{font-weight:600}.error{color:#a12c24}.summary{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pill{background:#eef4ee;border-radius:8px;padding:8px 11px}.links{display:flex;gap:12px;flex-wrap:wrap}
+a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
+@media(max-width:650px){th,td{padding:8px 7px}.wide-hide{display:none}}
+</style>
+</head>
 <body>
+<header>
 <h1>Gräsmyr – skogs- och bildbevakning</h1>
-<p>Översikt för bevakningen kring Gräsmyr, Nordmalings kommun.</p>
-<p>Bevakningscentrum: 63.74646 N, 19.66455 E. Standardradie: 10 km.</p>
-<h2>Körningar och loggar</h2>
-<p><a href="https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/monitor.yml">Öppna GitHub Actions</a></p>
-<h2>Dokumentation</h2>
-<p><a href="https://github.com/dahlinrobert-lgtm/Skog/blob/main/docs/first-run-status.md">Statusrapport för första körningen</a></p>
-<p><a href="https://github.com/dahlinrobert-lgtm/Skog">Källkod och README</a></p>
-<p>Obs: en lyckad körning betyder att arbetsflödet avslutades utan tekniskt fel; det garanterar inte att nya avverkningar eller bilder hittades. Sidan visar inte live-data från den senaste körningen.</p>
-</body></html>
+<p>Avverkningsanmälningar och nya satellitobservationer kring Gräsmyr, Nordmalings kommun.</p>
+</header>
+<main>
+<section class="panel">
+<h2>Bevakningsområde</h2>
+<p>Mittpunkt: 63,74646° N, 19,66455° E · sökradie 10 km.</p>
+<p class="muted">Radien är en sökavgränsning – inte en verifierad bygräns eller fastighetsgräns. Därför kan listan innehålla ärenden från flera kommuner.</p>
+</section>
+<section class="panel">
+<h2>Avverkningsanmälningar</h2>
+<p>Sorteras med nyaste inkomstdatum först. Välj kommun eller sök på ärendenummer, status eller avverkningstyp.</p>
+<div class="controls">
+<select id="municipality" aria-label="Filtrera kommun"><option value="NORDMALING">Nordmaling</option><option value="">Alla kommuner inom sökradien</option><option value="UMEÅ">Umeå</option><option value="VÄNNÄS">Vännäs</option></select>
+<input id="search" type="search" placeholder="Sök ärendenummer eller typ…" aria-label="Sök i tabellen">
+<select id="limit" aria-label="Antal rader"><option value="25">Visa 25</option><option value="50">Visa 50</option><option value="100">Visa 100</option></select>
+</div>
+<div id="loadstatus" class="muted">Hämtar senaste publicerade data …</div>
+<div class="summary" id="summary"></div>
+<div class="tablewrap" style="margin-top:13px">
+<table>
+<thead><tr><th>Inkomdatum</th><th>Ärendenummer</th><th>Kommun</th><th>Typ</th><th>Areal</th><th>Status</th><th>Fastighet / karta</th></tr></thead>
+<tbody id="rows"><tr><td colspan="7">Laddar…</td></tr></tbody>
+</table>
+</div>
+<p class="hint">Viktigt: Skogsstyrelsens öppna lager ger ärendenummer, datum, areal, typ och status men inte fastighetsbeteckningen i dessa data. Därför hittar du inte säkert exempelvis ”Gräsmyr 6:43” här. Länkad kartpunkt är en ungefärlig mittpunkt av ärendets geometri.</p>
+</section>
+<section class="panel">
+<h2>Vad betyder uppgifterna?</h2>
+<p><strong>Inkomdatum</strong> är datumet då anmälan kom in – inte datumet då avverkningen faktiskt genomfördes.</p>
+<p><strong>Anmäld areal</strong> är anmäld hektaryta. Den kan skilja sig från slutligt avverkad areal.</p>
+<p><strong>Ärendedetaljer</strong> öppnar Skogsstyrelsens registertjänst för det enskilda objektet. Kartlänken visar en ungefärlig position.</p>
+<div class="links">
+<a href="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0">Skogsstyrelsens avverkningslager</a>
+<a href="https://geolex.lantmateriet.se/">Lantmäteriets GeoLex</a>
+<a href="https://minkarta.lantmateriet.se/">Min karta</a>
+<a href="https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/monitor.yml">Körningar och loggar</a>
+<a href="https://github.com/dahlinrobert-lgtm/Skog">Källkod och dokumentation</a>
+</div>
+</section>
+<footer>Datat uppdateras när den schemalagda bevakningen körs och publicerar en ny snapshot. <span id="checked"></span></footer>
+</main>
+<script>
+const dataUrl = "data/latest.json";
+let allFeatures = [];
+const fmtDate = value => {
+  if (value === null || value === undefined || value === "") return "–";
+  let d;
+  if (typeof value === "number" || /^\d{10,}$/.test(String(value))) d = new Date(Number(value));
+  else d = new Date(value);
+  return Number.isNaN(d.getTime()) ? String(value) : new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
+};
+function centerOf(geometry) {
+  const points=[];
+  function walk(v){ if(Array.isArray(v)&&v.length>=2&&typeof v[0]==="number"&&typeof v[1]==="number") points.push(v); else if(Array.isArray(v)) v.forEach(walk); }
+  if(geometry) walk(geometry.coordinates);
+  if(!points.length) return null;
+  return [points.reduce((s,p)=>s+p[0],0)/points.length,points.reduce((s,p)=>s+p[1],0)/points.length];
+}
+function arcUrl(id){
+  return "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query?where="+encodeURIComponent("OBJECTID="+Number(id))+"&outFields=*&returnGeometry=true&outSR=4326&f=pjson";
+}
+function render(){
+  const municipality=document.getElementById("municipality").value;
+  const q=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
+  const limit=Number(document.getElementById("limit").value);
+  const selected=allFeatures.filter(f=>{
+    const p=f.properties||{};
+    return (!municipality||p.Kommun===municipality) &&
+      (!q||[p.Beteckn,p.Avverktyp,p.ArendeStatus,p.Kommun,p.AnamaldHa,p.AnmaldHa].some(v=>String(v??"").toLocaleLowerCase("sv").includes(q)));
+  }).sort((a,b)=>Number(b.properties?.Inkomdatum||0)-Number(a.properties?.Inkomdatum||0));
+  document.getElementById("summary").innerHTML='<span class="pill"><strong>'+selected.length+'</strong> ärenden matchar filtret</span><span class="pill">Senaste inkomdatum: <strong>'+(selected.length?fmtDate(selected[0].properties?.Inkomdatum):"–")+'</strong></span>';
+  const rows=selected.slice(0,limit).map(f=>{
+    const p=f.properties||{};
+    const center=centerOf(f.geometry);
+    const map=center?"https://www.google.com/maps/search/?api=1&query="+center[1].toFixed(6)+","+center[0].toFixed(6):"";
+    const caseNo=p.Beteckn||("OBJECTID "+(f.id??p.OBJECTID??""));
+    return '<tr><td>'+fmtDate(p.Inkomdatum)+'</td><td><a href="'+arcUrl(f.id??p.OBJECTID)+'" target="_blank" rel="noopener">'+caseNo+'</a></td><td>'+ (p.Kommun||"–")+'</td><td>'+ (p.Avverktyp||"–")+'</td><td>'+ (p.AnmaldHa==null?"–":Number(p.AnmaldHa).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+'</td><td class="status">'+(p.ArendeStatus||"–")+'</td><td>'+(map?'<a href="'+map+'" target="_blank" rel="noopener">Visa ungefärlig plats</a>':"Fastighet saknas i källan")+'</td></tr>';
+  });
+  document.getElementById("rows").innerHTML=rows.length?rows.join(""):'<tr><td colspan="7">Inga ärenden matchar filtret.</td></tr>';
+}
+async function init(){
+  try{
+    const response=await fetch(dataUrl+"?v="+Date.now(),{cache:"no-store"});
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    const data=await response.json();
+    allFeatures=data.cutting_notifications?.features||[];
+    document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen.";
+    document.getElementById("checked").textContent=" Senast kontrollerad: "+(data.checked_at||"okänt datum")+".";
+    render();
+  }catch(e){
+    document.getElementById("loadstatus").innerHTML='<span class="error">Kunde inte läsa senaste data ('+String(e.message)+'). Kör bevakningen och kontrollera att docs/data/latest.json publicerats.</span>';
+    document.getElementById("rows").innerHTML='<tr><td colspan="7">Data kunde inte laddas.</td></tr>';
+  }
+}
+["municipality","search","limit"].forEach(id=>document.getElementById(id).addEventListener("input",render));
+init();
+</script>
+</body>
+</html>
