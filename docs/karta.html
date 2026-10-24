@@ -196,6 +196,7 @@ function applyArea(){
  CENTER=[lat,lon];RADIUS=radius;searchCircle.setLatLng(CENTER).setRadius(RADIUS);map.fitBounds(searchCircle.getBounds(),{padding:[20,20]});load();
 }
 document.getElementById("applyArea").addEventListener("click",applyArea);
+document.getElementById("radius").addEventListener("change",applyArea);
 map.on("click",e=>{document.getElementById("lat").value=e.latlng.lat.toFixed(5);document.getElementById("lon").value=e.latlng.lng.toFixed(5);applyArea();});
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
