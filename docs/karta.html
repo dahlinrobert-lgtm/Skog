@@ -161,12 +161,17 @@ function refreshPerformedColors(){
 }
 function popup(f,type){
  const p=f.properties||{};
+ const ratio=()=>{
+  const registered=Number(p.Arealha),reported=Number(p.AnmaldHa);
+  if(p.Arealha==null||p.Arealha===""||p.AnmaldHa==null||p.AnmaldHa===""||!Number.isFinite(registered)||!Number.isFinite(reported)||registered<=0)return "–";
+  return (reported/registered*100).toLocaleString("sv-SE",{maximumFractionDigits:1})+" %";
+ };
  const fields=type==="planned"?[
  ["Ärende",p.Beteckn],["Inkomdatum",date(p.Inkomdatum)],["Kommun",p.Kommun],["Avverkningstyp",p.Avverktyp],["Anmäld areal",ha(p.AnmaldHa)],["Status",p.ArendeStatus],["Skogstyp",p.Skogstyp],["Ändamål",p.Andamal],["Areal plantering",ha(p.SkogsodlHa)],["Areal naturlig föryngring",ha(p.NatforHa)],["Län",p.Lan]
  ]:[
- ["Ärendeår",p.Arendear],["Beteckning",p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp],["Källdatum",p.KallaDatum],["Källa areal",p.KallaAreal],["Förebild",p.Forebild],["Efterbild",p.Efterbild]
+ ["Ärendeår",p.Arendear],["Beteckning",p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (anmäld/registrerad)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
  ];
- return '<div style="min-width:220px;max-width:310px"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;font-size:12px;margin-top:6px">'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e">'+esc(k)+'</td><td style="padding:3px 0"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
+ return '<div style="width:260px;max-width:260px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:6px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
 }
 function featureTouchesRadius(feature){
  const geometry=feature?.geometry;
