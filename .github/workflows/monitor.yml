@@ -37,6 +37,6 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "Update Gräsmyr monitoring snapshot"
             git fetch origin main
-            git rebase origin/main
+            git rebase --strategy-option=theirs origin/main
             git push origin HEAD:main
           fi
