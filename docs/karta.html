@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gräsmyr – karta över avverkningar</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f5f7f4;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:white;padding:24px max(18px,calc((100% - 1250px)/2))}header h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem)}header p{margin:0;color:#e1eee5}header a{color:#e1eee5}main{max-width:1250px;margin:auto;padding:20px 16px 40px}.panel{background:#fff;border:1px solid #dce4dd;border-radius:12px;padding:15px;margin-bottom:14px}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.controls label{display:inline-flex;gap:7px;align-items:center;background:#f0f5f0;padding:8px 10px;border-radius:8px}.controls button{font:inherit;border:1px solid #c8d4ca;border-radius:8px;background:white;padding:8px 11px;cursor:pointer}.controls button:hover{background:#edf4ed}.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{background:#eef4ee;padding:7px 10px;border-radius:8px}.pill strong{display:block;font-size:1.2rem;color:#145b37}.muted{color:#5d6b62;font-size:.9rem}#map{height:min(72vh,780px);min-height:480px;border-radius:10px;border:1px solid #dce4dd;z-index:1}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.9rem}.swatch{display:inline-block;width:14px;height:14px;border:3px solid;border-radius:3px;vertical-align:-2px;margin-right:5px}.planned{border-color:#1680ff}.performed{border-color:#e03131}.status{font-weight:600}footer{font-size:.85rem;color:#5d6b62;margin-top:12px}@media(max-width:600px){#map{min-height:430px;height:65vh}.panel{padding:11px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Gräsmyr – karta över avverkningar</h1>
+<p>Planerade avverkningar och registrerade utförda avverkningar inom cirka 10 km från Gräsmyr.</p>
+<p style="margin-top:8px"><a href="index.html">← Till bevakningen</a> · <a href="utforda.html">Utförda avverkningar</a></p>
+</header>
+<main>
+<section class="panel">
+<div class="controls">
+<label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
+<label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
+<button id="reload">Ladda om data</button>
+<button id="home">Visa hela området</button>
+</div>
+<div class="stats">
+<div class="pill"><strong id="plannedCount">–</strong><span>planerade polygoner</span></div>
+<div class="pill"><strong id="performedCount">–</strong><span>utförda polygoner</span></div>
+<div class="pill"><strong id="dateRange">–</strong><span>datumintervall för utförda</span></div>
+</div>
+<p id="status" class="muted" aria-live="polite">Laddar avverkningsdata från Skogsstyrelsen…</p>
+<div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning</span><span>Välj en polygon för attribut och datum.</span></div>
+</section>
+<section class="panel">
+<div id="map" aria-label="Karta över planerade och utförda avverkningar"></div>
+<footer>Datakälla: Skogsstyrelsens öppna geodatatjänster. Planerade anmälningar och utförda ytor är separata register och en geometrisk närhet innebär inte i sig att en viss anmälan säkert har lett till en viss avverkning.</footer>
+</section>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+(function(){
+"use strict";
+const CENTER=[63.74646,19.66455], RADIUS=10000;
+const PLANNED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query";
+const PERFORMED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query";
+const map=L.map("map",{preferCanvas:true}).setView(CENTER,11);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false}).addTo(map);
+const plannedLayer=L.geoJSON(null,{style:()=>({color:"#1680ff",weight:2,opacity:.9,fillColor:"#1680ff",fillOpacity:.08}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"planned"))});
+const performedLayer=L.geoJSON(null,{style:()=>({color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"performed"))});
+plannedLayer.addTo(map);performedLayer.addTo(map);
+const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function popup(f,type){
+ const p=f.properties||{};
+ const fields=type==="planned"?[
+ ["Ärende",p.Beteckn],["Inkomdatum",date(p.Inkomdatum)],["Kommun",p.Kommun],["Avverkningstyp",p.Avverktyp],["Anmäld areal",ha(p.AnmaldHa)],["Status",p.ArendeStatus],["Skogstyp",p.Skogstyp],["Ändamål",p.Andamal],["Areal plantering",ha(p.SkogsodlHa)],["Areal naturlig föryngring",ha(p.NatforHa)],["Län",p.Lan]
+ ]:[
+ ["Ärendeår",p.Arendear],["Beteckning",p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp],["Källdatum",p.KallaDatum],["Källa areal",p.KallaAreal],["Förebild",p.Forebild],["Efterbild",p.Efterbild]
+ ];
+ return '<div style="min-width:220px;max-width:310px"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;font-size:12px;margin-top:6px">'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e">'+esc(k)+'</td><td style="padding:3px 0"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
+}
+function date(v){if(v==null||v==="")return "–";let n=Number(v);if(Number.isFinite(n)&&n>100000000000)return new Date(n).toISOString().slice(0,10);return String(v)}
+function ha(v){if(v==null||v==="")return "–";let n=Number(v);return Number.isFinite(n)?n.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha":String(v)}
+function queryUrl(base,fields){
+ const params=new URLSearchParams({where:"1=1",outFields:fields,returnGeometry:"true",outSR:"4326",f:"geojson",resultRecordCount:"2000",orderByFields:"OBJECTID"});
+ // Use a geographic envelope around the 10 km study area; the circle is shown on the map for orientation.
+ const latDelta=RADIUS/111000,lonDelta=RADIUS/(111000*Math.cos(CENTER[0]*Math.PI/180));
+ params.set("geometry",JSON.stringify({xmin:CENTER[1]-lonDelta,ymin:CENTER[0]-latDelta,xmax:CENTER[1]+lonDelta,ymax:CENTER[0]+latDelta,spatialReference:{wkid:4326}}));
+ params.set("geometryType","esriGeometryEnvelope");params.set("inSR","4326");params.set("spatialRel","esriSpatialRelIntersects");
+ return base+"?"+params.toString();
+}
+async function getLayer(base,fields){
+ const url=queryUrl(base,fields);
+ const res=await fetch(url,{mode:"cors",cache:"no-store"});
+ if(!res.ok)throw new Error("HTTP "+res.status);
+ const json=await res.json();
+ if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");
+ if(!json.features)throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
+ return json;
+}
+async function load(){
+ document.getElementById("status").textContent="Hämtar planerade och utförda polygoner från Skogsstyrelsen…";
+ document.getElementById("reload").disabled=true;
+ try{
+  const [planned,performed]=await Promise.all([
+   getLayer(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa"),
+   getLayer(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha")
+  ]);
+  plannedLayer.clearLayers();performedLayer.clearLayers();
+  plannedLayer.addData(planned);performedLayer.addData(performed);
+  document.getElementById("plannedCount").textContent=planned.features.length.toLocaleString("sv-SE");
+  document.getElementById("performedCount").textContent=performed.features.length.toLocaleString("sv-SE");
+  const dates=performed.features.map(f=>Number(f.properties?.Avvdatum)).filter(n=>Number.isFinite(n)&&n>100000000000).sort((a,b)=>a-b);
+  document.getElementById("dateRange").textContent=dates.length?new Date(dates[0]).toISOString().slice(0,10)+"–"+new Date(dates[dates.length-1]).toISOString().slice(0,10):"saknas";
+  document.getElementById("status").textContent="Data laddad. Klicka på en polygon för detaljer. Urvalet hämtas via en rektangel runt cirka 10 km-området, så polygoner i hörnen kan också visas.";
+ }catch(e){
+  document.getElementById("status").textContent="Kunde inte hämta kartdata: "+e.message+". Kontrollera att Skogsstyrelsens tjänst är tillgänglig och tillåter anrop från webbläsaren.";
+ }finally{document.getElementById("reload").disabled=false;applyVisibility()}
+}
+function applyVisibility(){if(document.getElementById("showPlanned").checked){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map)}else map.removeLayer(plannedLayer);if(document.getElementById("showPerformed").checked){if(!map.hasLayer(performedLayer))performedLayer.addTo(map)}else map.removeLayer(performedLayer)}
+document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);document.getElementById("reload").addEventListener("click",load);document.getElementById("home").addEventListener("click",()=>map.setView(CENTER,11));
+map.on("baselayerchange",applyVisibility);
+load();
+})();
+</script>
+</body>
+</html>
