@@ -3,5 +3,11 @@
   "latitude": 63.74646,
   "longitude": 19.66455,
   "radius_km": 10,
-  "property_tract_prefix": "Gräsmyr"
+  "property_tract_prefix": "Gräsmyr",
+  "source_filters": {
+    "recent_cutting_notification_days": 60,
+    "alert_only_on_new_ids": true,
+    "catalogue_page_size": 100,
+    "catalogue_history_days": 550
+  }
 }
