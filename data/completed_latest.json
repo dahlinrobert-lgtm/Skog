@@ -1,11 +1,19 @@
 {
-  "checked_at": "2026-10-24T21:47:56.320981Z",
+  "checked_at": "2026-10-24T21:54:44.875056Z",
   "source": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query",
   "request_url": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query?where=1%3D1&geometry=%7B%22x%22%3A+19.66455%2C+%22y%22%3A+63.74646%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&inSR=4326&distance=10000&units=esriSRUnit_Meter&spatialRel=esriSpatialRelIntersects&outFields=OBJECTID%2CLannr%2CLan%2CKommunnr%2CKommun%2CArendear%2CBeteckn%2CAvverktyp%2CSkogstyp%2CAnmaldHa%2CSkogsodlHa%2CNatforha%2CAvvdatum%2CKallaDatum%2CKallaAreal%2CForebild%2CEfterbild%2CArealha&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount=2000",
   "area": {
     "latitude": 63.74646,
     "longitude": 19.66455,
     "radius_m": 10000
+  },
+  "query_scope_sha256": "35078c26165a03b506f0cd0c7c32ed8dca9beab6ddc10413447d01b47a17bbca",
+  "query_scope": {
+    "latitude": 63.74646,
+    "longitude": 19.66455,
+    "radius_m": 10000,
+    "geometry_type": "esriGeometryPoint",
+    "spatial_reference": 4326
   },
   "count": 1631,
   "baseline": false,
