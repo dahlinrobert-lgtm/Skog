@@ -16,8 +16,6 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-import requests
-
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "national"
 SNAPSHOTS = DATA / "snapshots"
@@ -26,8 +24,7 @@ BASE_URL = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataporta
 BATCH_SIZE = 250
 CHECKPOINT_DAYS = 30
 HEADERS = {"User-Agent": "Skog-National-Notification-Archive/1.0"}
-SESSION = requests.Session()
-SESSION.headers.update(HEADERS)
+SESSION = None
 
 
 def now_utc() -> datetime:
@@ -160,6 +157,11 @@ def read_archive_rows(directory: Path) -> list[tuple[str, dict[str, Any]]]:
 
 
 def get_json(params: dict[str, Any], timeout: int = 90) -> dict[str, Any]:
+    global SESSION
+    if SESSION is None:
+        import requests
+        SESSION = requests.Session()
+        SESSION.headers.update(HEADERS)
     response = SESSION.get(BASE_URL, params=params, timeout=timeout)
     response.raise_for_status()
     data = response.json()
