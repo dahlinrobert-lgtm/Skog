@@ -79,6 +79,7 @@ def completed_archive_rows():
             rows.append({
                 "filename": path.name,
                 "checked_at": checked_at,
+                "query_scope_sha256": value.get("query_scope_sha256"),
                 "features_by_id": features_by_id,
             })
         except (OSError, EOFError, json.JSONDecodeError):
@@ -104,10 +105,24 @@ def evidence_transition_events(planned_map, planned_history):
             "note": "At least two completed-layer archives are required to detect transitions.",
         }
 
-    # Snapshot scope should be stable for the same configured centre/radius.
+    # Only compare archives with the same known query fingerprint. Older archives
+    # without scope metadata are deliberately treated as incomparable to avoid
+    # converting a search-area change into apparent source additions/removals.
     comparable_pairs = 0
+    skipped_scope_pairs = []
     for before, after in zip(archives, archives[1:]):
         if before.get("checked_at") == after.get("checked_at"):
+            continue
+        before_scope = before.get("query_scope_sha256")
+        after_scope = after.get("query_scope_sha256")
+        if not before_scope or not after_scope or before_scope != after_scope:
+            skipped_scope_pairs.append({
+                "before_snapshot": before["filename"],
+                "after_snapshot": after["filename"],
+                "before_scope_sha256": before_scope,
+                "after_scope_sha256": after_scope,
+                "reason": "Completed-layer query scope is missing or changed; source differences are not interpreted as evidence transitions.",
+            })
             continue
         comparable_pairs += 1
         before_ids = set(before["features_by_id"])
@@ -197,8 +212,9 @@ def evidence_transition_events(planned_map, planned_history):
     return {
         "snapshot_count": len(archives),
         "comparable_pairs": comparable_pairs,
+        "skipped_scope_pairs": skipped_scope_pairs,
         "events": ordered,
-        "note": "Transitions require meaningful spatial overlap and completed date within three years of notification. The source is satellite-based guidance, not ground truth.",
+        "note": "Only archives with matching, known query-scope fingerprints are compared. Transitions require meaningful spatial overlap and completed date within three years of notification. The source is satellite-based guidance, not ground truth.",
     }
 
 

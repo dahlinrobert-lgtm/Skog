@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - "scripts/analyze_changes.py"
+      - "scripts/snapshot_completed.py"
       - "scripts/test_completed_evidence_transitions.py"
       - ".github/workflows/test-completed-evidence-transitions.yml"
   workflow_dispatch:

@@ -54,6 +54,31 @@ def fetch():
     return data, response.url
 
 
+def scope_metadata():
+    """Stable fingerprint for the exact completed-layer query scope."""
+    return {
+        "query_scope_sha256": canonical_hash({
+            "source": URL,
+            "geometry": {"x": LON, "y": LAT, "spatialReference": {"wkid": 4326}},
+            "geometryType": "esriGeometryPoint",
+            "inSR": "4326",
+            "distance": str(RADIUS_M),
+            "units": "esriSRUnit_Meter",
+            "spatialRel": "esriSpatialRelIntersects",
+            "outFields": FIELDS,
+            "returnGeometry": "true",
+            "outSR": "4326",
+        }),
+        "query_scope": {
+            "latitude": LAT,
+            "longitude": LON,
+            "radius_m": RADIUS_M,
+            "geometry_type": "esriGeometryPoint",
+            "spatial_reference": 4326,
+        },
+    }
+
+
 def main():
     now = datetime.now(timezone.utc)
     stamp = now.strftime("%Y%m%dT%H%M%SZ")
@@ -85,6 +110,7 @@ def main():
         "source": URL,
         "request_url": request_url,
         "area": {"latitude": LAT, "longitude": LON, "radius_m": RADIUS_M},
+        **scope_metadata(),
         "count": len(features),
         "baseline": is_baseline,
         "new_ids": [] if is_baseline else sorted(current_ids - old_ids),
@@ -106,6 +132,7 @@ def main():
             "name": "Skogsstyrelsen Utförda avverkningar",
             "checked_at": result["checked_at"],
             "source": URL,
+            **scope_metadata(),
             "features": features,
         }, stream, ensure_ascii=False, separators=(",", ":"))
     print(json.dumps({
