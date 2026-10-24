@@ -25,8 +25,8 @@ CENTER_LAT = float(CONFIG["latitude"])
 RADIUS_KM = float(CONFIG.get("radius_km", 10))
 BASE = "https://minkarta.lantmateriet.se/api/positionsinformation/positionsinformation/registerenhetermedbuffer/v1"
 DELAY_SECONDS = 3
-MAX_FEATURES = 10
-MAX_SAMPLES_PER_FEATURE = 4
+MAX_FEATURES = 20
+MAX_SAMPLES_PER_FEATURE = 6
 TO_SWEREF = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True)
 TO_WGS84 = Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True)
 CENTER_E, CENTER_N = TO_SWEREF.transform(CENTER_LON, CENTER_LAT)
