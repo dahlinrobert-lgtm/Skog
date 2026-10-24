@@ -1,0 +1,30 @@
+name: Test Min karta property lookup
+on:
+  workflow_dispatch:
+    inputs:
+      east:
+        description: "SWEREF 99 TM east coordinate (E)"
+        required: true
+        default: "733554.2119081585"
+        type: string
+      north:
+        description: "SWEREF 99 TM north coordinate (N)"
+        required: true
+        default: "7078894.089177589"
+        type: string
+permissions:
+  contents: read
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install requests
+      - name: Query one coordinate
+        run: python scripts/test_property_lookup.py "$EAST" "$NORTH"
+        env:
+          EAST: ${{ inputs.east }}
+          NORTH: ${{ inputs.north }}
