@@ -1,16 +1,20 @@
 {
-  "checked_at": "2026-10-24T11:59:05.242500+00:00",
+  "checked_at": "2026-10-24T12:07:10.040394+00:00",
   "area_name": "Gräsmyr, Nordmalings kommun",
   "target_tract_prefix": "Gräsmyr",
-  "selection": "Up to 10 Nordmaling notifications within 10.0 km, ranked by polygon-centroid distance to configured Gräsmyr point.",
-  "method": "Up to 4 interior/boundary samples per polygon; Min karta results aggregated by designation.",
-  "request_count": 40,
+  "selection": "Up to 20 Nordmaling notifications within 10.0 km, ranked by polygon-centroid distance to configured Gräsmyr point.",
+  "method": "Up to 6 interior/boundary samples per polygon; Min karta results aggregated by designation.",
+  "request_count": 117,
   "delay_seconds_between_requests": 3,
   "candidate_notifications_in_radius": 109,
-  "features_tested": 10,
+  "features_tested": 20,
   "target_tract_matches_total": [
     "NORDMALING GRÄSMYR 14:1",
+    "NORDMALING GRÄSMYR 16:1",
     "NORDMALING GRÄSMYR 17:1",
+    "NORDMALING GRÄSMYR 2:25",
+    "NORDMALING GRÄSMYR 2:27",
+    "NORDMALING GRÄSMYR 2:40",
     "NORDMALING GRÄSMYR 3:14",
     "NORDMALING GRÄSMYR 3:28",
     "NORDMALING GRÄSMYR 3:40",
@@ -18,8 +22,13 @@
     "NORDMALING GRÄSMYR 4:60",
     "NORDMALING GRÄSMYR 4:89",
     "NORDMALING GRÄSMYR 5:34",
+    "NORDMALING GRÄSMYR 5:35",
     "NORDMALING GRÄSMYR 5:36",
-    "NORDMALING GRÄSMYR 5:51"
+    "NORDMALING GRÄSMYR 5:39",
+    "NORDMALING GRÄSMYR 5:48",
+    "NORDMALING GRÄSMYR 5:51",
+    "NORDMALING GRÄSMYR 5:61",
+    "NORDMALING GRÄSMYR 9:1"
   ],
   "limitations": [
     "Centroid distance is only used to rank notifications; it does not establish cadastral ownership.",
@@ -36,18 +45,20 @@
       "reported_area_ha": 2,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 0.497,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 4:89",
+        "NORDMALING GRÄSMYR 5:35",
         "NORDMALING GRÄSMYR 5:36"
       ],
-      "unique_property_count": 2,
+      "unique_property_count": 3,
       "target_tract_matches": [
         "NORDMALING GRÄSMYR 4:89",
+        "NORDMALING GRÄSMYR 5:35",
         "NORDMALING GRÄSMYR 5:36"
       ],
-      "target_tract_match_count": 2,
+      "target_tract_match_count": 3,
       "observations": [
         {
           "sample_kind": "interior",
@@ -114,6 +125,32 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.676258299813966,
+            "lat": 63.74579789557944
+          },
+          "sweref99tm": {
+            "east": 730645.5000085643,
+            "north": 7077135.989916906
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.674623201239164,
             "lat": 63.747367705604276
           },
@@ -133,6 +170,32 @@
               "designation": "NORDMALING GRÄSMYR 5:36",
               "type": "fastighet",
               "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.674039154833512,
+            "lat": 63.74725412423755
+          },
+          "sweref99tm": {
+            "east": 730524.3200085527,
+            "north": 7077289.909916911
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:35",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb99-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:35",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb99-90ec-e040-ed8f66444c3f"
             }
           ],
           "status": "ok"
@@ -174,8 +237,8 @@
       "reported_area_ha": 3.2,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 0.771,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 14:1",
         "NORDMALING GRÄSMYR 3:40",
@@ -254,12 +317,64 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.670942326644354,
+            "lat": 63.73932127583446
+          },
+          "sweref99tm": {
+            "east": 730436.4300085388,
+            "north": 7076396.571916896
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.670819792315193,
             "lat": 63.74005214873096
           },
           "sweref99tm": {
             "east": 730424.4380085384,
             "north": 7076477.4049168965
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.66825231977859,
+            "lat": 63.74037111730765
+          },
+          "sweref99tm": {
+            "east": 730295.3510085252,
+            "north": 7076503.609916896
           },
           "properties": [
             {
@@ -314,16 +429,18 @@
       "reported_area_ha": 1.2,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 0.783,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 14:1",
         "NORDMALING GRÄSMYR 3:40"
       ],
-      "unique_property_count": 1,
+      "unique_property_count": 2,
       "target_tract_matches": [
+        "NORDMALING GRÄSMYR 14:1",
         "NORDMALING GRÄSMYR 3:40"
       ],
-      "target_tract_match_count": 1,
+      "target_tract_match_count": 2,
       "observations": [
         {
           "sample_kind": "interior",
@@ -380,6 +497,32 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.665560843187013,
+            "lat": 63.73906126162587
+          },
+          "sweref99tm": {
+            "east": 730173.4140085123,
+            "north": 7076348.24191689
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.667128091873273,
             "lat": 63.73943211254135
           },
@@ -399,6 +542,42 @@
               "designation": "NORDMALING GRÄSMYR 3:40",
               "type": "fastighet",
               "object_id": "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.66387949461681,
+            "lat": 63.73941945517653
+          },
+          "sweref99tm": {
+            "east": 730087.6630085034,
+            "north": 7076382.012916892
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
             }
           ],
           "status": "ok"
@@ -440,8 +619,8 @@
       "reported_area_ha": 2.2,
       "geometry_type": "MultiPolygon",
       "distance_from_grasmyr_center_km": 0.872,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 5:36"
       ],
@@ -554,6 +733,58 @@
             }
           ],
           "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.680753116237476,
+            "lat": 63.74830171931782
+          },
+          "sweref99tm": {
+            "east": 730846.4500085865,
+            "north": 7077430.669916918
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.679048279043762,
+            "lat": 63.747160508086544
+          },
+          "sweref99tm": {
+            "east": 730771.800008578,
+            "north": 7077297.599916914
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
         }
       ],
       "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
@@ -566,8 +797,8 @@
       "reported_area_ha": 3.3,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 1.239,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 14:1",
         "NORDMALING GRÄSMYR 5:51",
@@ -645,12 +876,64 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.69139164057797,
+            "lat": 63.744922120052024
+          },
+          "sweref99tm": {
+            "east": 731398.068008642,
+            "north": 7077093.373916912
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.69121517436109,
             "lat": 63.744963402981405
           },
           "sweref99tm": {
             "east": 731389.0380086408,
             "north": 7077097.3249169085
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.6913354508074,
+            "lat": 63.74575633538883
+          },
+          "sweref99tm": {
+            "east": 731388.4730086417,
+            "north": 7077185.935916912
           },
           "properties": [
             {
@@ -710,8 +993,8 @@
       "reported_area_ha": 2.5,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 1.328,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 3:14",
         "NORDMALING GRÄSMYR 3:28",
@@ -792,12 +1075,84 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.651168321888452,
+            "lat": 63.75623771426702
+          },
+          "sweref99tm": {
+            "east": 729324.9460084355,
+            "north": 7078206.53391693
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:14",
+              "type": "fastighet",
+              "object_id": "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 4:60",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb37-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:14",
+              "type": "fastighet",
+              "object_id": "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 4:60",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb37-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.650154170685468,
             "lat": 63.756797125583525
           },
           "sweref99tm": {
             "east": 729270.4720084298,
             "north": 7078265.09991693
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:14",
+              "type": "fastighet",
+              "object_id": "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 3:28",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:14",
+              "type": "fastighet",
+              "object_id": "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 3:28",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.644808710310453,
+            "lat": 63.75544203928781
+          },
+          "sweref99tm": {
+            "east": 729018.2540084034,
+            "north": 7078095.215916925
           },
           "properties": [
             {
@@ -872,8 +1227,8 @@
       "reported_area_ha": 8.4,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 1.335,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 5:34",
         "NORDMALING GRÄSMYR 5:36"
@@ -950,12 +1305,64 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.649213919259534,
+            "lat": 63.739481368304084
+          },
+          "sweref99tm": {
+            "east": 729364.6200084304,
+            "north": 7076336.119916892
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.644125529817174,
             "lat": 63.73779946726621
           },
           "sweref99tm": {
             "east": 729127.5500084055,
             "north": 7076130.809916884
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:36",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.64337112701139,
+            "lat": 63.73765251061
+          },
+          "sweref99tm": {
+            "east": 729091.5700084025,
+            "north": 7076111.759916888
           },
           "properties": [
             {
@@ -1010,8 +1417,8 @@
       "reported_area_ha": 4.3,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 1.362,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 3:40",
         "NORDMALING GRÄSMYR 5:34"
@@ -1088,12 +1495,64 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.652057343137514,
+            "lat": 63.7363911284662
+          },
+          "sweref99tm": {
+            "east": 729529.7870084451,
+            "north": 7076002.6899168845
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.650577273901394,
             "lat": 63.73717968876678
           },
           "sweref99tm": {
             "east": 729450.4620084382,
             "north": 7076085.060916886
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.64765236257915,
+            "lat": 63.73602980595714
+          },
+          "sweref99tm": {
+            "east": 729315.6680084234,
+            "north": 7075946.677916881
           },
           "properties": [
             {
@@ -1148,8 +1607,8 @@
       "reported_area_ha": 5,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 1.392,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 6,
+      "successful_samples": 6,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 14:1",
         "NORDMALING GRÄSMYR 17:1",
@@ -1228,6 +1687,42 @@
         {
           "sample_kind": "boundary_sample",
           "wgs84": {
+            "lon": 19.69443974622353,
+            "lat": 63.74392540528106
+          },
+          "sweref99tm": {
+            "east": 731556.3700086584,
+            "north": 7076993.5919169085
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:51",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba9-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 17:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:51",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba9-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 17:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
             "lon": 19.695572137073942,
             "lat": 63.74422567859497
           },
@@ -1257,6 +1752,42 @@
               "designation": "NORDMALING GRÄSMYR 17:1",
               "type": "fastighet",
               "object_id": "909a6a84-ebd6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.694707752038163,
+            "lat": 63.745465778485524
+          },
+          "sweref99tm": {
+            "east": 731556.9560086592,
+            "north": 7077165.8549169125
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:51",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba9-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:51",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba9-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 14:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
             }
           ],
           "status": "ok"
@@ -1308,8 +1839,8 @@
       "reported_area_ha": 3.5,
       "geometry_type": "Polygon",
       "distance_from_grasmyr_center_km": 1.519,
-      "sample_count": 4,
-      "successful_samples": 4,
+      "sample_count": 5,
+      "successful_samples": 5,
       "unique_properties_observed": [
         "NORDMALING GRÄSMYR 3:14",
         "NORDMALING GRÄSMYR 3:28",
@@ -1358,6 +1889,42 @@
           "sweref99tm": {
             "east": 729781.0370084818,
             "north": 7078518.641916934
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:14",
+              "type": "fastighet",
+              "object_id": "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 4:60",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb37-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:14",
+              "type": "fastighet",
+              "object_id": "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 4:60",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb37-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.66888386202944,
+            "lat": 63.76081348253575
+          },
+          "sweref99tm": {
+            "east": 730159.9560085223,
+            "north": 7078779.147916936
           },
           "properties": [
             {
@@ -1453,6 +2020,1882 @@
               "designation": "NORDMALING GRÄSMYR 3:28",
               "type": "fastighet",
               "object_id": "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 12375-2024",
+      "objectid": 5090061,
+      "municipality": "NORDMALING",
+      "notification_date": "2024-03-27T00:00:00+00:00",
+      "reported_area_ha": 5.7,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 1.56,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 3:40",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "unique_property_count": 2,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 3:40",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "target_tract_match_count": 2,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.644339047081193,
+            "lat": 63.735422199105784
+          },
+          "sweref99tm": {
+            "east": 729157.3295500053,
+            "north": 7075867.21069143
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.642416866890226,
+            "lat": 63.73324922708925
+          },
+          "sweref99tm": {
+            "east": 729080.2100083986,
+            "north": 7075618.664916876
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.647133266788252,
+            "lat": 63.736874581738626
+          },
+          "sweref99tm": {
+            "east": 729283.2420084204,
+            "north": 7076038.756916884
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.643275490451924,
+            "lat": 63.735234462896514
+          },
+          "sweref99tm": {
+            "east": 729106.4430084024,
+            "north": 7075842.515916882
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.643777424665195,
+            "lat": 63.73427834722927
+          },
+          "sweref99tm": {
+            "east": 729138.9210084054,
+            "north": 7075737.991916876
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.64239164910009,
+            "lat": 63.73339275819134
+          },
+          "sweref99tm": {
+            "east": 729077.8050083983,
+            "north": 7075634.535916874
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 38260-2025",
+      "objectid": 6010956,
+      "municipality": "NORDMALING",
+      "notification_date": "2025-08-14T09:29:29+00:00",
+      "reported_area_ha": 1.4,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 1.602,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 16:1",
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "unique_property_count": 3,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 16:1",
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "target_tract_match_count": 3,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.651491036679875,
+            "lat": 63.75961611526238
+          },
+          "sweref99tm": {
+            "east": 729313.4189246281,
+            "north": 7078583.388773697
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.65076291438425,
+            "lat": 63.75890223659445
+          },
+          "sweref99tm": {
+            "east": 729283.3640084319,
+            "north": 7078501.385916935
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.65315860370701,
+            "lat": 63.75947912168315
+          },
+          "sweref99tm": {
+            "east": 729396.6300084438,
+            "north": 7078574.146916935
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.652332864459037,
+            "lat": 63.76033884586142
+          },
+          "sweref99tm": {
+            "east": 729348.9980084391,
+            "north": 7078666.784916937
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 16:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd5-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 16:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd5-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.65007260247985,
+            "lat": 63.75933599961741
+          },
+          "sweref99tm": {
+            "east": 729245.8580084285,
+            "north": 7078547.142916935
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.65034097183402,
+            "lat": 63.75930034507966
+          },
+          "sweref99tm": {
+            "east": 729259.3600084304,
+            "north": 7078544.141916935
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 63253-2025",
+      "objectid": 6162571,
+      "municipality": "NORDMALING",
+      "notification_date": "2025-12-19T13:09:13+00:00",
+      "reported_area_ha": 4.8,
+      "geometry_type": "MultiPolygon",
+      "distance_from_grasmyr_center_km": 1.669,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 2:40",
+        "NORDMALING GRÄSMYR 3:28"
+      ],
+      "unique_property_count": 2,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 2:40",
+        "NORDMALING GRÄSMYR 3:28"
+      ],
+      "target_tract_match_count": 2,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.661886128856306,
+            "lat": 63.76143221586216
+          },
+          "sweref99tm": {
+            "east": 729810.424254988,
+            "north": 7078822.737002858
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.65819939596736,
+            "lat": 63.761101421759335
+          },
+          "sweref99tm": {
+            "east": 729631.6176449535,
+            "north": 7078772.681395182
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.65999912883166,
+            "lat": 63.7601455402988
+          },
+          "sweref99tm": {
+            "east": 729727.990008478,
+            "north": 7078672.859916936
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 3:28",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 3:28",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.662809290873287,
+            "lat": 63.7623836968702
+          },
+          "sweref99tm": {
+            "east": 729848.130008491,
+            "north": 7078931.869916945
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.65929135273122,
+            "lat": 63.761010950899596
+          },
+          "sweref99tm": {
+            "east": 729686.1100084743,
+            "north": 7078766.549916939
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.657850625856643,
+            "lat": 63.76204862588611
+          },
+          "sweref99tm": {
+            "east": 729606.7500084667,
+            "north": 7078876.7599169435
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 45326-2025",
+      "objectid": 6463502,
+      "municipality": "NORDMALING",
+      "notification_date": "2025-09-22T07:44:28+00:00",
+      "reported_area_ha": 1.7,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 1.736,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 2:27",
+        "NORDMALING GRÄSMYR 5:39",
+        "NORDMALING MULLSJÖ 1:27"
+      ],
+      "unique_property_count": 3,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 2:27",
+        "NORDMALING GRÄSMYR 5:39"
+      ],
+      "target_tract_match_count": 2,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.689082445347797,
+            "lat": 63.73483557828771
+          },
+          "sweref99tm": {
+            "east": 731366.8299125631,
+            "north": 7075963.36787061
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.689097315254372,
+            "lat": 63.73405870025442
+          },
+          "sweref99tm": {
+            "east": 731373.9170086341,
+            "north": 7075877.031916886
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING MULLSJÖ 1:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-f7f3-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.689249342634408,
+            "lat": 63.735383235045475
+          },
+          "sweref99tm": {
+            "east": 731370.5740086341,
+            "north": 7076024.8729168875
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.685915496118145,
+            "lat": 63.73542331589684
+          },
+          "sweref99tm": {
+            "east": 731205.9760086166,
+            "north": 7076017.250916885
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:39",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9d-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:39",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9d-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.687757703572274,
+            "lat": 63.73501497997346
+          },
+          "sweref99tm": {
+            "east": 731300.087008627,
+            "north": 7075978.516916887
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.68902956255685,
+            "lat": 63.73410056635544
+          },
+          "sweref99tm": {
+            "east": 731370.236008633,
+            "north": 7075881.441916889
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:27",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 20481-2025",
+      "objectid": 5143974,
+      "municipality": "NORDMALING",
+      "notification_date": "2025-04-28T00:00:00+00:00",
+      "reported_area_ha": 1.1,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 1.919,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 16:1",
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "unique_property_count": 3,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 16:1",
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "target_tract_match_count": 3,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.63006005933941,
+            "lat": 63.754608248404125
+          },
+          "sweref99tm": {
+            "east": 728298.75576764,
+            "north": 7077949.656054797
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.630118653685876,
+            "lat": 63.75390931173575
+          },
+          "sweref99tm": {
+            "east": 728307.2870083316,
+            "north": 7077872.13891692
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.631140420235184,
+            "lat": 63.75444454591749
+          },
+          "sweref99tm": {
+            "east": 728353.2780083369,
+            "north": 7077935.315916921
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.628952846862607,
+            "lat": 63.75474345281888
+          },
+          "sweref99tm": {
+            "east": 728243.1420083262,
+            "north": 7077960.731916921
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 16:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd5-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 16:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebd5-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.62903629511774,
+            "lat": 63.75447304398938
+          },
+          "sweref99tm": {
+            "east": 728249.4350083264,
+            "north": 7077930.958916918
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.629455485602406,
+            "lat": 63.75409170959283
+          },
+          "sweref99tm": {
+            "east": 728273.1570083287,
+            "north": 7077890.0509169195
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 2724-2026",
+      "objectid": 6210885,
+      "municipality": "NORDMALING",
+      "notification_date": "2026-01-15T19:36:42+00:00",
+      "reported_area_ha": 0.5,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 2.114,
+      "sample_count": 4,
+      "successful_samples": 4,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 5:48",
+        "NORDMALING GRÄSMYR 9:1",
+        "NORDMALING TORRBÖLE 10:1"
+      ],
+      "unique_property_count": 3,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 5:48",
+        "NORDMALING GRÄSMYR 9:1"
+      ],
+      "target_tract_match_count": 2,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.6508937878385,
+            "lat": 63.72872512508623
+          },
+          "sweref99tm": {
+            "east": 729534.6459504381,
+            "north": 7075146.008967258
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.65126130881567,
+            "lat": 63.728135677298724
+          },
+          "sweref99tm": {
+            "east": 729557.5420084444,
+            "north": 7075081.780916866
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.651472087882652,
+            "lat": 63.72903146571177
+          },
+          "sweref99tm": {
+            "east": 729560.6630084446,
+            "north": 7075182.154916866
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 9:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebc9-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 9:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebc9-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.64930305164091,
+            "lat": 63.72841878446068
+          },
+          "sweref99tm": {
+            "east": 729458.7280084344,
+            "north": 7075106.223916867
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING TORRBÖLE 10:1",
+              "type": "fastighet",
+              "object_id": "909a6a85-01ef-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:48",
+              "type": "fastighet",
+              "object_id": "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 21622-2023",
+      "objectid": 5133782,
+      "municipality": "NORDMALING",
+      "notification_date": "2023-05-16T00:00:00+00:00",
+      "reported_area_ha": 1.7,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 2.126,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 5:39",
+        "NORDMALING HÖRNSJÖ 4:38",
+        "NORDMALING MULLSJÖ 4:1"
+      ],
+      "unique_property_count": 3,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 5:39"
+      ],
+      "target_tract_match_count": 1,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.670285472963727,
+            "lat": 63.72761593956138
+          },
+          "sweref99tm": {
+            "east": 730499.4260217333,
+            "north": 7075092.530994392
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING MULLSJÖ 4:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-f847-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.670178447399028,
+            "lat": 63.725981725480835
+          },
+          "sweref99tm": {
+            "east": 730507.4630085398,
+            "north": 7074910.414916863
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING HÖRNSJÖ 4:38",
+              "type": "fastighet",
+              "object_id": "909a6a84-ef2f-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING MULLSJÖ 4:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-f847-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.669576442535107,
+            "lat": 63.72859194337667
+          },
+          "sweref99tm": {
+            "east": 730456.5300085363,
+            "north": 7075198.505916871
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:39",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9d-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING MULLSJÖ 4:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-f847-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:39",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb9d-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.669810564602468,
+            "lat": 63.72776495972126
+          },
+          "sweref99tm": {
+            "east": 730474.8050085369,
+            "north": 7075107.3879168695
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING MULLSJÖ 4:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-f847-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.66982399347887,
+            "lat": 63.72729890737829
+          },
+          "sweref99tm": {
+            "east": 730479.2630085376,
+            "north": 7075055.609916866
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING MULLSJÖ 4:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-f847-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.669537032764186,
+            "lat": 63.72602546290709
+          },
+          "sweref99tm": {
+            "east": 730475.4910085369,
+            "north": 7074912.962916863
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING MULLSJÖ 4:1",
+              "type": "fastighet",
+              "object_id": "909a6a84-f847-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 20489-2025",
+      "objectid": 5199946,
+      "municipality": "NORDMALING",
+      "notification_date": "2025-04-28T13:31:02+00:00",
+      "reported_area_ha": 1.1,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 2.159,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34",
+        "NORDMALING GRÄSMYR 5:61"
+      ],
+      "unique_property_count": 3,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34",
+        "NORDMALING GRÄSMYR 5:61"
+      ],
+      "target_tract_match_count": 3,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.623167538409646,
+            "lat": 63.75287220683725
+          },
+          "sweref99tm": {
+            "east": 727973.3525975686,
+            "north": 7077731.959685278
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.622928081260998,
+            "lat": 63.75217083931309
+          },
+          "sweref99tm": {
+            "east": 727967.2170082983,
+            "north": 7077653.106916916
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.62442278068743,
+            "lat": 63.7527220939817
+          },
+          "sweref99tm": {
+            "east": 728036.3790083048,
+            "north": 7077719.749916916
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.624024809992058,
+            "lat": 63.75321676083613
+          },
+          "sweref99tm": {
+            "east": 728012.790008303,
+            "north": 7077773.338916918
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.623727106140183,
+            "lat": 63.75350021649631
+          },
+          "sweref99tm": {
+            "east": 727995.8430083018,
+            "north": 7077803.797916918
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:61",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebb3-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:61",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebb3-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.621786139402527,
+            "lat": 63.75303535536787
+          },
+          "sweref99tm": {
+            "east": 727904.0090082919,
+            "north": 7077745.1699169185
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:61",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebb3-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:61",
+              "type": "fastighet",
+              "object_id": "909a6a84-ebb3-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 63266-2025",
+      "objectid": 6161943,
+      "municipality": "NORDMALING",
+      "notification_date": "2025-12-19T13:29:27+00:00",
+      "reported_area_ha": 6,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 2.21,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 2:40"
+      ],
+      "unique_property_count": 1,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 2:40"
+      ],
+      "target_tract_match_count": 1,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.671210735416214,
+            "lat": 63.76610901370867
+          },
+          "sweref99tm": {
+            "east": 730231.3479781114,
+            "north": 7079376.421225266
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.66520150604177,
+            "lat": 63.7642415698525
+          },
+          "sweref99tm": {
+            "east": 729950.770008502,
+            "north": 7079147.089916949
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.669971924626886,
+            "lat": 63.76544174172357
+          },
+          "sweref99tm": {
+            "east": 730175.8100085258,
+            "north": 7079297.74991695
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.672247902506754,
+            "lat": 63.76500721591717
+          },
+          "sweref99tm": {
+            "east": 730291.3800085378,
+            "north": 7079257.639916952
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.671991493607475,
+            "lat": 63.767207830366836
+          },
+          "sweref99tm": {
+            "east": 730260.8200085361,
+            "north": 7079501.4299169555
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.6648185656384,
+            "lat": 63.76439884594938
+          },
+          "sweref99tm": {
+            "east": 729930.6400085001,
+            "north": 7079163.199916948
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:40",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "Gräsmyr candidate observed in sample(s); full polygon-to-property intersection is unverified."
+    },
+    {
+      "notification_id": "A 29579-2025",
+      "objectid": 5353374,
+      "municipality": "NORDMALING",
+      "notification_date": "2025-06-17T09:05:13+00:00",
+      "reported_area_ha": 1.9,
+      "geometry_type": "Polygon",
+      "distance_from_grasmyr_center_km": 2.446,
+      "sample_count": 6,
+      "successful_samples": 6,
+      "unique_properties_observed": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 3:28",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "unique_property_count": 3,
+      "target_tract_matches": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 3:28",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "target_tract_match_count": 3,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.616053250937338,
+            "lat": 63.74938924032213
+          },
+          "sweref99tm": {
+            "east": 727651.0516784873,
+            "north": 7077319.234061598
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.61479107039482,
+            "lat": 63.74860937955428
+          },
+          "sweref99tm": {
+            "east": 727595.1650082602,
+            "north": 7077228.005916904
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:28",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 3:28",
+              "type": "fastighet",
+              "object_id": "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.6149534748512,
+            "lat": 63.74963732158047
+          },
+          "sweref99tm": {
+            "east": 727594.888008261,
+            "north": 7077342.900916907
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.61413906100289,
+            "lat": 63.75007170924846
+          },
+          "sweref99tm": {
+            "east": 727551.280008257,
+            "north": 7077388.304916908
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 2:25",
+              "type": "fastighet",
+              "object_id": "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.614039017161648,
+            "lat": 63.74945362449917
+          },
+          "sweref99tm": {
+            "east": 727551.3280082559,
+            "north": 7077319.211916909
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.614684766155296,
+            "lat": 63.74868069632917
+          },
+          "sweref99tm": {
+            "east": 727589.3550082599,
+            "north": 7077235.557916903
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [
+            {
+              "designation": "NORDMALING GRÄSMYR 5:34",
+              "type": "fastighet",
+              "object_id": "909a6a84-eb98-90ec-e040-ed8f66444c3f"
             }
           ],
           "status": "ok"
