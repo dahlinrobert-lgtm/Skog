@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gräsmyr – matchningshistorik</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f5f7f4;line-height:1.5}
+*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:white;padding:28px max(18px,calc((100% - 1150px)/2))}
+header h1{margin:0 0 5px;font-size:clamp(1.7rem,4vw,2.4rem)}header p{margin:0;color:#e1eee5}
+main{max-width:1150px;margin:auto;padding:22px 18px 45px}.panel{background:white;border:1px solid #dce4dd;border-radius:13px;padding:18px;margin-bottom:17px}
+h2{font-size:1.2rem;margin:0 0 9px}p{margin:7px 0}.muted,.hint{color:#5d6b62;font-size:.92rem}
+a{color:#246342}.links{display:flex;gap:13px;flex-wrap:wrap;margin-top:8px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:13px 0}
+input,select{font:inherit;padding:9px 11px;border:1px solid #c8d4ca;border-radius:8px;background:white;max-width:100%}
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:13px}
+.metric{background:#f2f5f2;border:1px solid #dce5dc;border-radius:10px;padding:13px}.metric strong{display:block;font-size:1.65rem;line-height:1.2;color:#205b3c}.metric span{font-size:.9rem}
+table{border-collapse:collapse;width:100%;font-size:.91rem}th,td{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #e3e9e4}th{background:#f0f5f0;white-space:nowrap}
+.tablewrap{overflow-x:auto;border:1px solid #e1e8e1;border-radius:9px}.tablewrap table{min-width:1200px}
+.status{display:inline-block;padding:3px 7px;border-radius:6px;background:#edf1ee;color:#35453b;font-size:.84rem}.status.good{background:#e4f2e8;color:#1e5a38}.status.weak{background:#fff2dc;color:#725018}.status.none{background:#f2eeee;color:#6e4b4b}
+.alert{border-left:4px solid #c6a15c;background:#fcf8ef;padding:11px 13px;border-radius:4px}
+footer{color:#5d6b62;font-size:.88rem;margin-top:18px}
+@media(max-width:650px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:11px}.metric strong{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<header>
+<h1>Gräsmyr – matchningshistorik</h1>
+<p>Förändringar i Skogsstyrelsens planerade och satellitdetekterade utförda avverkningar.</p>
+<p style="margin-top:9px"><a style="color:#e1eee5" href="./">← Planerade avverkningsanmälningar</a> · <a style="color:#e1eee5" href="karta.html">Karta</a> · <a style="color:#e1eee5" href="utforda.html">Utförda avverkningar</a></p>
+</header>
+<main>
+<section class="panel">
+<h2>Aktuell diagnostik</h2>
+<p id="status" class="muted">Läser analysresultat…</p>
+<div class="summary" id="summary"></div>
+<p class="hint" id="range"></p>
+</section>
+<section class="panel">
+<h2>Hur ska resultaten tolkas?</h2>
+<p>En meningsfull geometrisk överlappning betyder här minst 0,02 ha skärningsyta och minst 15 % överlapp av minst en av polygonerna. För att klassas som en tidsmässigt rimlig kandidat ska utförd-lagrets datum dessutom ligga mellan anmälans inkomdatum och tre år därefter.</p>
+<p class="alert"><strong>Viktig begränsning:</strong> det utförda lagret är satellitbaserad förändringsanalys. En överlappning bevisar inte att ärendet genomförts, och att en planerad polygon saknas i ett senare urval bevisar inte att den gallrats eller avverkats.</p>
+<p id="historyNote" class="hint"></p>
+<div class="links">
+<a href="https://github.com/dahlinrobert-lgtm/Skog/blob/main/data/change_analysis.json">Rådata: change_analysis.json</a>
+<a href="https://github.com/dahlinrobert-lgtm/Skog/blob/main/scripts/analyze_changes.py">Analyskod</a>
+<a href="https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/monitor.yml">Daglig körning och loggar</a>
+</div>
+</section>
+<section class="panel">
+<h2>Ärenden och bästa utförda kandidater</h2>
+<p class="hint">Listan rangordnar tidsmässigt rimliga kandidater först, därefter tydliga överlapp utanför tidsfönstret, svaga överlapp och ärenden utan aktuell geometrisk överlappning. Använd sökning och statusfilter för att undersöka en viss grupp.</p>
+<div class="controls">
+<input id="search" type="search" placeholder="Sök ärendenummer, kommun eller objekt-ID" aria-label="Sök ärenden">
+<select id="filter" aria-label="Filtrera matchningsstatus">
+<option value="">Alla statusar</option>
+<option value="meaningful_overlap_within_3_years">Meningsfull överlappning inom 3 år</option>
+<option value="meaningful_overlap_outside_3_years">Meningsfull överlappning utanför 3 år</option>
+<option value="weak_overlap_only">Endast svag överlappning</option>
+<option value="no_current_geometric_overlap">Ingen aktuell överlappning</option>
+</select>
+</div>
+<p id="tableStatus" class="muted"></p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Planerat ärende</th><th>Kommun</th><th>Inkomdatum</th><th>Anmäld ha</th><th>Bedömning</th><th>Utförd objekt-ID</th><th>Utfört datum</th><th>Skärning ha</th><th>Överlapp planerad</th><th>Utförd areal ha</th><th>Bild före / efter (källnamn)</th></tr></thead>
+<tbody id="rows"><tr><td colspan="11">Läser…</td></tr></tbody>
+</table>
+</div>
+</section>
+<footer>Avgränsning: sökradie 10 km från Gräsmyr, mittpunkt 63,74646° N, 19,66455° E. Sökurvalet är inte en by- eller fastighetsgräns.</footer>
+</main>
+<script>
+const dataUrl="https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/change_analysis.json";
+let report=null;
+const $=id=>document.getElementById(id);
+function fmtDate(v){
+  if(v===null||v===undefined||v==="")return "–";
+  let d;
+  if(typeof v==="number"||/^\\d{10,}$/.test(String(v)))d=new Date(Number(v));
+  else d=new Date(v);
+  return Number.isNaN(d.getTime())?String(v):new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
+}
+function num(v,digits=2){return v===null||v===undefined||v===""?"–":Number(v).toLocaleString("sv-SE",{maximumFractionDigits:digits});}
+const labels={
+  meaningful_overlap_within_3_years:"Överlapp inom 3 år",
+  meaningful_overlap_outside_3_years:"Överlapp utanför 3 år",
+  weak_overlap_only:"Svag överlappning",
+  no_current_geometric_overlap:"Ingen aktuell överlappning"
+};
+function renderSummary(){
+  const c=report.counts||{};
+  const metrics=[
+    ["current_planned_features","Planerade objekt"],
+    ["current_completed_features","Utförda polygoner"],
+    ["planned_with_meaningful_overlap_within_3_years","Meningsfull överlapp inom 3 år"],
+    ["planned_with_meaningful_overlap_outside_3_years","Meningsfull överlapp utanför 3 år"],
+    ["planned_with_only_weak_overlap","Svag överlappning"],
+    ["planned_without_current_overlap","Ingen aktuell överlappning"]
+  ];
+  $("summary").innerHTML=metrics.map(([key,label])=>'<div class="metric"><strong>'+num(c[key]||0,0)+'</strong><span>'+label+'</span></div>').join("");
+  $("range").textContent="Senaste planerade data: "+fmtDate(report.sources?.latest_planned_checked_at)+" · utfört-lagret: "+fmtDate(report.sources?.latest_completed_checked_at)+" · analys skapad: "+fmtDate(report.generated_at)+".";
+  const n=report.sources?.planned_snapshots_read??0;
+  $("historyNote").textContent="Tillgängliga planerade snapshots: "+n+". "+(report.sources?.unreadable_snapshots?.length?"Oläsbara snapshots: "+report.sources.unreadable_snapshots.join(", ")+". ":"")+"En historikjämförelse görs bara när sökgeografin i de två snapshotsen är jämförbar.";
+  const bad=report.incomparable_snapshot_pairs||[];
+  if(bad.length)$("historyNote").textContent+=" Överhoppade jämförelser med ändrad sökmetod: "+bad.length+".";
+}
+function renderRows(){
+  const q=$("search").value.trim().toLocaleLowerCase("sv"),status=$("filter").value;
+  const rows=(report.planned_vs_completed||[]).filter(r=>{
+    if(status&&r.status!==status)return false;
+    const best=r.best_candidates?.[0]||{};
+    return !q||[r.case_number,r.municipality,r.planned_object_id,best.completed_object_id,best.completed_date].some(v=>String(v??"").toLocaleLowerCase("sv").includes(q));
+  });
+  $("tableStatus").textContent="Visar "+rows.length+" av "+(report.planned_vs_completed||[]).length+" ärenden.";
+  $("rows").innerHTML=rows.map(r=>{
+    const best=r.best_candidates?.[0]||{};
+    const label=labels[r.status]||r.status||"Okänd";
+    const cls=r.status==="meaningful_overlap_within_3_years"?"good":r.status==="weak_overlap_only"?"weak":r.status==="no_current_geometric_overlap"?"none":"";
+    const pct=best.planned_overlap_pct==null?"–":num(best.planned_overlap_pct,1)+" %";
+    const dates=[best.forebild,best.efterbild].filter(Boolean).join(" / ")||"–";
+    return '<tr><td><strong>'+String(r.case_number||r.planned_object_id||"–")+'</strong><br><span class="muted">ID '+String(r.planned_object_id||"–")+'</span></td>'+
+      '<td>'+String(r.municipality||"–")+'</td><td>'+fmtDate(r.received_date)+'</td><td>'+num(r.planned_area_ha)+'</td>'+
+      '<td><span class="status '+cls+'">'+label+'</span></td><td>'+String(best.completed_object_id||"–")+'</td><td>'+fmtDate(best.completed_date)+'</td>'+
+      '<td>'+num(best.intersection_ha,4)+'</td><td>'+pct+'</td><td>'+num(best.completed_area_ha)+'</td><td style="min-width:290px;overflow-wrap:anywhere">'+dates+'</td></tr>';
+  }).join("")||'<tr><td colspan="11">Inga ärenden matchar filtret.</td></tr>';
+}
+async function init(){
+ try{
+  const res=await fetch(dataUrl+"?v="+Date.now(),{cache:"no-store"});
+  if(!res.ok)throw new Error("HTTP "+res.status);
+  report=await res.json();
+  $("status").textContent="Analysen lästes in. Geometriska kandidater är diagnostik, inte en verifierad klassificering av utförda ärenden.";
+  renderSummary();renderRows();
+ }catch(e){
+  $("status").textContent="Kunde inte läsa analysresultatet: "+(e?.message||e);
+  $("rows").innerHTML='<tr><td colspan="11">Analysdata saknas ännu. Kontrollera senaste körningen i GitHub Actions.</td></tr>';
+  $("summary").innerHTML="";
+ }
+}
+$("search").addEventListener("input",renderRows);
+$("filter").addEventListener("change",renderRows);
+init();
+</script>
+</body>
+</html>
