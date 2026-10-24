@@ -153,6 +153,10 @@ def main():
     index_is_baseline = prior_index is not None
 
     cuts = cutting_notifications()
+    if cuts.get("status") != "ok":
+        # Preserve the last known-good dataset instead of publishing an empty list
+        # when Skogsstyrelsen is temporarily unavailable.
+        raise RuntimeError(f"Skogsstyrelsen cutting-notification query failed: {cuts.get('error', 'unknown error')}")
     sentinel1 = query_scenes("sentinel-1-grd")
     sentinel2 = query_scenes("sentinel-2-l2a")
     all_scenes = sentinel1.get("items", []) + sentinel2.get("items", [])
