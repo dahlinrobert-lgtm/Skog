@@ -38,7 +38,7 @@ footer{color:#5d6b62;font-size:.88rem;margin-top:18px}
 <section class="panel">
 <h2>Hur ska resultaten tolkas?</h2>
 <p>En meningsfull geometrisk överlappning betyder här minst 0,02 ha skärningsyta och minst 15 % överlapp av minst en av polygonerna. För att klassas som en tidsmässigt rimlig kandidat ska utförd-lagrets datum dessutom ligga mellan anmälans inkomdatum och tre år därefter.</p>
-<p class="alert"><strong>Viktig begränsning:</strong> det utförda lagret är satellitbaserad förändringsanalys. En överlappning bevisar inte att ärendet genomförts, och att en planerad polygon saknas i ett senare urval bevisar inte att den gallrats eller avverkats.</p>
+<p class="alert"><strong>Viktig begränsning:</strong> det utförda lagret är satellitbaserad förändringsanalys. En överlappning bevisar inte att ärendet genomförts, och att en planerad polygon saknas i ett senare urval bevisar inte att den gallrats eller avverkats. Uppföljningsstatusen är en heuristik: matchningspoängen är en rangordning, inte en sannolikhet. ”Ingen upptäckt” betyder att aktuell analys inte hittat en tillräckligt stark matchning – inte att ärendet säkert ställts in.</p>
 <p id="historyNote" class="hint"></p>
 <div class="links">
 <a href="https://github.com/dahlinrobert-lgtm/Skog/blob/main/data/change_analysis.json">Rådata: change_analysis.json</a>
@@ -58,12 +58,21 @@ footer{color:#5d6b62;font-size:.88rem;margin-top:18px}
 <option value="weak_overlap_only">Endast svag överlappning</option>
 <option value="no_current_geometric_overlap">Ingen aktuell överlappning</option>
 </select>
+<select id="followFilter" aria-label="Filtrera uppföljningsstatus">
+<option value="">Alla uppföljningsstatusar</option>
+<option value="likely_completed">Sannolikt genomförd</option>
+<option value="likely_partial">Sannolikt delvis genomförd</option>
+<option value="likely_multiple_or_partial">Flera ytor / delvis genomförd</option>
+<option value="follow_up_no_detection">Uppföljning – ingen upptäckt</option>
+<option value="old_no_detection">Äldre ärende utan upptäckt</option>
+<option value="awaiting_evidence">Avvaktar evidens</option>
+</select>
 </div>
 <p id="tableStatus" class="muted"></p>
 <div class="tablewrap">
 <table>
-<thead><tr><th>Planerat ärende</th><th>Kommun</th><th>Inkomdatum</th><th>Anmäld ha</th><th>Bedömning</th><th>Utförd objekt-ID</th><th>Utfört datum</th><th>Skärning ha</th><th>Överlapp planerad</th><th>Utförd areal ha</th><th>Bild före / efter (källnamn)</th></tr></thead>
-<tbody id="rows"><tr><td colspan="11">Läser…</td></tr></tbody>
+<thead><tr><th>Planerat ärende</th><th>Kommun</th><th>Inkomdatum</th><th>Anmäld ha</th><th>Geometrisk bedömning</th><th>Uppföljningsstatus</th><th>Matchningspoäng</th><th>Ålder dagar</th><th>Utförd objekt-ID</th><th>Utfört datum</th><th>Skärning ha</th><th>Överlapp planerad</th><th>Utförd areal ha</th><th>Bild före / efter (källnamn)</th></tr></thead>
+<tbody id="rows"><tr><td colspan="14">Läser…</td></tr></tbody>
 </table>
 </div>
 </section>
@@ -81,6 +90,14 @@ function fmtDate(v){
   return Number.isNaN(d.getTime())?String(v):new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
 }
 function num(v,digits=2){return v===null||v===undefined||v===""?"–":Number(v).toLocaleString("sv-SE",{maximumFractionDigits:digits});}
+const followLabels={
+  likely_completed:"Sannolikt genomförd",
+  likely_partial:"Sannolikt delvis genomförd",
+  likely_multiple_or_partial:"Flera ytor / delvis",
+  follow_up_no_detection:"Uppföljning – ingen upptäckt",
+  old_no_detection:"Äldre utan upptäckt",
+  awaiting_evidence:"Avvaktar evidens"
+};
 const labels={
   meaningful_overlap_within_3_years:"Överlapp inom 3 år",
   meaningful_overlap_outside_3_years:"Överlapp utanför 3 år",
@@ -108,6 +125,8 @@ function renderRows(){
   const q=$("search").value.trim().toLocaleLowerCase("sv"),status=$("filter").value;
   const rows=(report.planned_vs_completed||[]).filter(r=>{
     if(status&&r.status!==status)return false;
+    const follow=$("followFilter").value;
+    if(follow&&r.follow_up_status!==follow)return false;
     const best=r.best_candidates?.[0]||{};
     return !q||[r.case_number,r.municipality,r.planned_object_id,best.completed_object_id,best.completed_date].some(v=>String(v??"").toLocaleLowerCase("sv").includes(q));
   });
@@ -120,9 +139,9 @@ function renderRows(){
     const dates=[best.forebild,best.efterbild].filter(Boolean).join(" / ")||"–";
     return '<tr><td><strong>'+String(r.case_number||r.planned_object_id||"–")+'</strong><br><span class="muted">ID '+String(r.planned_object_id||"–")+'</span></td>'+
       '<td>'+String(r.municipality||"–")+'</td><td>'+fmtDate(r.received_date)+'</td><td>'+num(r.planned_area_ha)+'</td>'+
-      '<td><span class="status '+cls+'">'+label+'</span></td><td>'+String(best.completed_object_id||"–")+'</td><td>'+fmtDate(best.completed_date)+'</td>'+
+      '<td><span class="status '+cls+'">'+label+'</span></td><td><span class="status">'+(followLabels[r.follow_up_status]||r.follow_up_status||"–")+'</span></td><td>'+num(r.match_score,1)+'</td><td>'+num(r.age_days,0)+'</td><td>'+String(best.completed_object_id||"–")+'</td><td>'+fmtDate(best.completed_date)+'</td>'+
       '<td>'+num(best.intersection_ha,4)+'</td><td>'+pct+'</td><td>'+num(best.completed_area_ha)+'</td><td style="min-width:290px;overflow-wrap:anywhere">'+dates+'</td></tr>';
-  }).join("")||'<tr><td colspan="11">Inga ärenden matchar filtret.</td></tr>';
+  }).join("")||'<tr><td colspan="14">Inga ärenden matchar filtret.</td></tr>';
 }
 async function init(){
  try{
@@ -139,6 +158,7 @@ async function init(){
 }
 $("search").addEventListener("input",renderRows);
 $("filter").addEventListener("change",renderRows);
+$("followFilter").addEventListener("change",renderRows);
 init();
 </script>
 </body>
