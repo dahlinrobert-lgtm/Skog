@@ -243,9 +243,11 @@ def main():
 
         # Do not add pairwise intersection areas: completed polygons may overlap.
         # Compute unique coverage by unioning eligible polygons and clipping to plan.
+        # Use only confident candidates for coverage so weak spatial coincidences
+        # don't count as completed felling. Union prevents overlapping detections
+        # from double-counting the same ground area.
         eligible_ids = {
-            c["completed_object_id"] for c in candidates
-            if c["meaningful"] and c["within_3_year_window"]
+            c["completed_object_id"] for c in strong_candidates
         }
         eligible_geometries = [
             done["geometry"] for done in completed_index
