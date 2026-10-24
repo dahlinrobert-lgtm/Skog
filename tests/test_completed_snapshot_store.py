@@ -77,6 +77,7 @@ class CompletedSnapshotStoreTests(unittest.TestCase):
             result = write_completed_archive(
                 second, directory,
                 previous_collection=first, previous_filename=first_result["filename"],
+                prefer_delta=True,
             )
             self.assertEqual(result["format"], "full")
             rows = read_completed_archives(directory)
