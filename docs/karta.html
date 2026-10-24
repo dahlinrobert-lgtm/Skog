@@ -67,11 +67,14 @@ function queryUrl(base,fields){
  const latDelta=RADIUS/111000,lonDelta=RADIUS/(111000*Math.cos(CENTER[0]*Math.PI/180));
  params.set("geometry",JSON.stringify({xmin:CENTER[1]-lonDelta,ymin:CENTER[0]-latDelta,xmax:CENTER[1]+lonDelta,ymax:CENTER[0]+latDelta,spatialReference:{wkid:4326}}));
  params.set("geometryType","esriGeometryEnvelope");params.set("inSR","4326");params.set("spatialRel","esriSpatialRelIntersects");
+ // Generalize returned vertices for display; full-resolution geometry remains in the analysis archive.
+ params.set("geometryPrecision","5");
+ params.set("maxAllowableOffset","0.00003");
  return base+"?"+params.toString();
 }
 async function getLayer(base,fields){
  const url=queryUrl(base,fields);
- const res=await fetch(url,{mode:"cors",cache:"no-store"});
+ const res=await fetch(url,{mode:"cors"});
  if(!res.ok)throw new Error("HTTP "+res.status);
  const json=await res.json();
  if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");

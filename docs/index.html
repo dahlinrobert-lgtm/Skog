@@ -101,7 +101,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.12.1/proj4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/turf.min.js"></script>
 <script>
-const dataUrl = "https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/latest.json";
+const dataUrl = "https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/latest_web.json";
 // Define SWEREF 99 TM explicitly; proj4js does not bundle EPSG:3006 by default.
 if (typeof proj4 !== "undefined") {
   proj4.defs("EPSG:3006", "+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs");
@@ -186,7 +186,7 @@ function escapeHtml(value){
 async function renderPropertyPilot(){
   const tbody=document.getElementById("propertyRows");
   try{
-    const response=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/property_lookup_pilot.json?v="+Date.now(),{cache:"no-store"});
+    const response=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/property_lookup_pilot.json");
     if(!response.ok) throw new Error("HTTP "+response.status);
     const report=await response.json();
     const relations=report.notification_property_relations||[];
@@ -380,12 +380,12 @@ function render(){
 }
 async function init(){
   try{
-    const response=await fetch(dataUrl+"?v="+Date.now(),{cache:"no-store"});
+    const response=await fetch(dataUrl);
     if(!response.ok) throw new Error("HTTP "+response.status);
     const data=await response.json();
     allFeatures=data.cutting_notifications?.features||[];
     try {
-      const ar=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/change_analysis.json?v="+Date.now(),{cache:"no-store"});
+      const ar=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/change_analysis.json");
       if(ar.ok){const analysis=await ar.json();followUpById=Object.fromEntries((analysis.planned_vs_completed||[]).map(x=>[String(x.planned_object_id),x]));}
     } catch(e) { followUpById={}; }
     document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen.";
