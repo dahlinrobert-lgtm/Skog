@@ -38,9 +38,12 @@ def make_feature(oid, geom, date_ms=1735689600000, municipality="NORDMALING"):
     }
 
 
-def archive(path, stamp, features):
+def archive(path, stamp, features, scope="test-scope-a"):
     with gzip.open(path, "wt", encoding="utf-8") as handle:
-        json.dump({"type": "FeatureCollection", "checked_at": stamp, "features": features}, handle)
+        payload = {"type": "FeatureCollection", "checked_at": stamp, "features": features}
+        if scope is not None:
+            payload["query_scope_sha256"] = scope
+        json.dump(payload, handle)
 
 
 class EvidenceTransitionTests(unittest.TestCase):
@@ -97,6 +100,30 @@ class EvidenceTransitionTests(unittest.TestCase):
             self.assertEqual(len(result["events"]), 1)
             self.assertEqual(result["events"][0]["event_type"], "completed_detection_changed_overlap")
             self.assertTrue(result["events"][0]["geometry_changed"])
+
+    def test_scope_change_is_skipped_and_reported(self):
+        planned = make_feature("1", box(0, 0, 100, 100))
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive(root / "completed_20261024T000000Z.geojson.gz", "2026-10-24T00:00:00Z", [])
+            archive(root / "completed_20261025T000000Z.geojson.gz", "2026-10-25T00:00:00Z", [make_feature("10", box(0, 0, 60, 100))], scope="test-scope-b")
+            with patch.object(ac, "SNAPSHOTS", root):
+                result = ac.evidence_transition_events({"1": planned}, [])
+            self.assertEqual(result["comparable_pairs"], 0)
+            self.assertEqual(result["events"], [])
+            self.assertEqual(len(result["skipped_scope_pairs"]), 1)
+
+    def test_legacy_archives_without_scope_are_not_compared(self):
+        planned = make_feature("1", box(0, 0, 100, 100))
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive(root / "completed_20261024T000000Z.geojson.gz", "2026-10-24T00:00:00Z", [], scope=None)
+            archive(root / "completed_20261025T000000Z.geojson.gz", "2026-10-25T00:00:00Z", [make_feature("10", box(0, 0, 60, 100))], scope=None)
+            with patch.object(ac, "SNAPSHOTS", root):
+                result = ac.evidence_transition_events({"1": planned}, [])
+            self.assertEqual(result["comparable_pairs"], 0)
+            self.assertEqual(result["events"], [])
+            self.assertEqual(len(result["skipped_scope_pairs"]), 1)
 
     def test_outside_three_year_window_not_counted(self):
         planned = make_feature("1", box(0, 0, 100, 100))
