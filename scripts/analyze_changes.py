@@ -14,7 +14,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 from shapely.geometry import shape
-from shapely.ops import transform
+from shapely.ops import transform, unary_union
 from pyproj import Transformer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -240,6 +240,24 @@ def main():
         candidates.sort(key=lambda x: (x["match_score"], x["intersection_ha"]), reverse=True)
         strong_candidates = [c for c in candidates if c["meaningful"] and c["within_3_year_window"] and c["match_score"] >= 65]
         best = strong_candidates[0] if strong_candidates else (candidates[0] if candidates else None)
+
+        # Do not add pairwise intersection areas: completed polygons may overlap.
+        # Compute unique coverage by unioning eligible polygons and clipping to plan.
+        eligible_ids = {
+            c["completed_object_id"] for c in candidates
+            if c["meaningful"] and c["within_3_year_window"]
+        }
+        eligible_geometries = [
+            done["geometry"] for done in completed_index
+            if done["id"] in eligible_ids and done["geometry"].intersects(planned_geom)
+        ]
+        if eligible_geometries:
+            covered_geometry = unary_union(eligible_geometries).intersection(planned_geom)
+            unique_covered_ha = covered_geometry.area / 10000
+            unique_covered_pct = min(100.0, unique_covered_ha / (planned_geom.area / 10000) * 100)
+        else:
+            unique_covered_ha = 0.0
+            unique_covered_pct = 0.0
         age_days = max(0, (datetime.now(timezone.utc) - received_dt).days) if received_dt else None
         strong_ids = {c["completed_object_id"] for c in strong_candidates}
         if strong_candidates:
@@ -284,6 +302,9 @@ def main():
             "last_checked_at": current.get("checked_at"),
             "completed_overlap_ha_sum": round(total_overlap_ha, 3),
             "estimated_plan_coverage_pct": round(covered_pct, 1),
+            "unique_union_covered_ha": round(unique_covered_ha, 3),
+            "unique_union_plan_coverage_pct": round(unique_covered_pct, 1),
+            "union_candidate_count": len(eligible_geometries),
             "completed_candidate_count": len(candidates),
             "best_candidates": candidates[:5],
         })
@@ -293,7 +314,8 @@ def main():
         "area": current.get("area"),
         "method": {
             "projection": "EPSG:3006",
-            "spatial_test": "polygon intersection",
+            "spatial_test": "polygon intersection; unique coverage uses union of eligible completed polygons clipped to each planned polygon",
+            "area_accounting": "Pairwise overlap sums are diagnostic only. unique_union_covered_ha and unique_union_plan_coverage_pct are the deduplicated union measures. Only meaningful spatial candidates within the three-year window contribute.",
             "time_window": "A completed polygon is temporally plausible when its Avvdatum is between the planned Inkomdatum and three years after it. Missing/unparseable dates are not counted as time-window matches.",
             "meaningful_overlap_threshold": "intersection >= 0.02 ha and overlap share >= 15% of at least one polygon",
             "completed_layer_warning": "Satellite-based change-detection layer. Spatial overlaps are candidates for manual review, not proof that a planned case was executed.",
