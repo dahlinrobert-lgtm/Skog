@@ -12,12 +12,16 @@
 <body>
 <header>
 <h1>Gräsmyr – karta över avverkningar</h1>
-<p>Planerade avverkningar och registrerade utförda avverkningar inom cirka 10 km från Gräsmyr.</p>
+<p>Undersök planerade och registrerade utförda avverkningar kring valfri plats i Sverige.</p>
 <p style="margin-top:8px"><a href="index.html">← Till bevakningen</a> · <a href="utforda.html">Utförda avverkningar</a> · <a href="historik.html">Matchningshistorik</a></p>
 </header>
 <main>
 <section class="panel">
 <div class="controls">
+<label>Latitud <input id="lat" type="number" step="0.00001" min="-90" max="90" value="63.74646" style="width:125px" aria-label="Latitud"></label>
+<label>Longitud <input id="lon" type="number" step="0.00001" min="-180" max="180" value="19.66455" style="width:125px" aria-label="Longitud"></label>
+<label>Radie <select id="radius"><option value="1000">1 km</option><option value="2500">2,5 km</option><option value="5000">5 km</option><option value="10000" selected>10 km</option><option value="20000">20 km</option><option value="50000">50 km</option></select></label>
+<button id="applyArea">Använd koordinater och radie</button>
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <button id="reload">Ladda om data</button>
@@ -40,12 +44,13 @@
 <script>
 (function(){
 "use strict";
-const CENTER=[63.74646,19.66455], RADIUS=10000;
+let CENTER=[63.74646,19.66455], RADIUS=10000;
+let searchCircle=null;
 const PLANNED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query";
 const PERFORMED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query";
 const map=L.map("map",{preferCanvas:true}).setView(CENTER,11);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
-L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false}).addTo(map);
+searchCircle=L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false}).addTo(map);
 const plannedLayer=L.geoJSON(null,{style:()=>({color:"#1680ff",weight:2,opacity:.9,fillColor:"#1680ff",fillOpacity:.08}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"planned"))});
 const performedLayer=L.geoJSON(null,{style:()=>({color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"performed"))});
 plannedLayer.addTo(map);performedLayer.addTo(map);
@@ -99,8 +104,8 @@ async function load(){
  if(viewAbortController)viewAbortController.abort();
  viewAbortController=new AbortController();
  const signal=viewAbortController.signal;
- const bounds=map.getBounds();
- document.getElementById("status").textContent="Hämtar polygoner för den synliga kartvyn…";
+ const bounds=searchCircle.getBounds();
+ document.getElementById("status").textContent="Hämtar polygoner inom "+(RADIUS/1000).toLocaleString("sv-SE")+" km från "+CENTER[0].toFixed(5)+", "+CENTER[1].toFixed(5)+"…";
  document.getElementById("reload").disabled=true;
  try{
   const [planned,performed]=await Promise.all([
@@ -114,7 +119,7 @@ async function load(){
   document.getElementById("performedCount").textContent=performed.features.length.toLocaleString("sv-SE");
   const dates=performed.features.map(f=>Number(f.properties?.Avvdatum)).filter(n=>Number.isFinite(n)&&n>100000000000).sort((a,b)=>a-b);
   document.getElementById("dateRange").textContent=dates.length?new Date(dates[0]).toISOString().slice(0,10)+"–"+new Date(dates[dates.length-1]).toISOString().slice(0,10):"saknas";
-  document.getElementById("status").textContent="Visar polygoner i aktuell kartvy ("+planned.pages+" + "+performed.pages+" sidor). Panorera eller zooma för att hämta ett nytt urval."+
+  document.getElementById("status").textContent="Visar polygoner inom sökradien ("+planned.pages+" + "+performed.pages+" sidor). Panorera eller zooma för att hämta ett nytt urval."+
    ((planned.truncated||performed.truncated)?" Varning: källans sidgräns kan ha nåtts; visat urval kan vara ofullständigt.":"");
  }catch(e){
   if(e?.name==="AbortError")return;
@@ -128,8 +133,17 @@ function scheduleViewLoad(){
  viewDebounce=setTimeout(load,250);
 }
 function applyVisibility(){if(document.getElementById("showPlanned").checked){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map)}else map.removeLayer(plannedLayer);if(document.getElementById("showPerformed").checked){if(!map.hasLayer(performedLayer))performedLayer.addTo(map)}else map.removeLayer(performedLayer)}
-document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);document.getElementById("reload").addEventListener("click",load);document.getElementById("home").addEventListener("click",()=>map.setView(CENTER,11));
-map.on("moveend",scheduleViewLoad);
+document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);document.getElementById("reload").addEventListener("click",load);document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
+function radiusZoom(radius){return radius<=2500?13:radius<=5000?12:radius<=10000?11:radius<=20000?10:radius<=50000?8:7;}
+function applyArea(){
+ const lat=Number(document.getElementById("lat").value),lon=Number(document.getElementById("lon").value),radius=Number(document.getElementById("radius").value);
+ if(!Number.isFinite(lat)||lat < -90||lat>90||!Number.isFinite(lon)||lon < -180||lon>180||!Number.isFinite(radius)||radius<500||radius>100000){document.getElementById("status").textContent="Ange giltig latitud, longitud och radie.";return;}
+ CENTER=[lat,lon];RADIUS=radius;searchCircle.setLatLng(CENTER).setRadius(RADIUS);map.fitBounds(searchCircle.getBounds(),{padding:[20,20]});load();
+}
+document.getElementById("applyArea").addEventListener("click",applyArea);
+map.on("click",e=>{document.getElementById("lat").value=e.latlng.lat.toFixed(5);document.getElementById("lon").value=e.latlng.lng.toFixed(5);applyArea();});
+// Area selection, not incidental pan/zoom, controls the query extent.
+// This makes the returned features match the explicitly selected center and radius.
 map.on("baselayerchange",applyVisibility);
 load();
 })();
