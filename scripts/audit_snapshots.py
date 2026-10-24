@@ -1,64 +1,95 @@
 #!/usr/bin/env python3
-"""Report storage and repetition metrics for planned-notification snapshots."""
+"""Measure full/delta storage for both planned and completed layer history."""
+import gzip
 import json
 from pathlib import Path
 
-from snapshot_store import feature_id, read_snapshot_rows
+try:
+    from scripts.completed_snapshot_store import read_completed_archives
+    from scripts.snapshot_store import feature_id, read_snapshot_rows
+except ModuleNotFoundError:
+    from completed_snapshot_store import read_completed_archives
+    from snapshot_store import feature_id, read_snapshot_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOTS = ROOT / "data" / "snapshots"
 
 
-def main():
-    paths = [
-        path for path in SNAPSHOTS.glob("*.json")
-        if not path.name.startswith("completed_")
-    ]
-    stored_bytes = sum(path.stat().st_size for path in paths)
-    rows = read_snapshot_rows(SNAPSHOTS)
-    unchanged = added = updated = removed = possible_full_bytes = 0
-    comparable_pairs = 0
-    previous = None
-
-    for _, snapshot in rows:
-        features = {
-            feature_id(item): item
-            for item in (snapshot.get("cutting_notifications") or {}).get("features", [])
-            if feature_id(item)
-        }
-        possible_full_bytes += len(json.dumps(snapshot, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
-        if previous is not None:
-            old_features = previous
-            old_ids, new_ids = set(old_features), set(features)
-            added += len(new_ids - old_ids)
-            removed += len(old_ids - new_ids)
-            updated += sum(
-                old_features[key] != features[key]
-                for key in old_ids & new_ids
-            )
-            unchanged += sum(
-                old_features[key] == features[key]
-                for key in old_ids & new_ids
-            )
-            comparable_pairs += 1
-        previous = features
-
-    unchanged_candidates = unchanged + updated
-    print(json.dumps({
-        "snapshot_files": len(paths),
-        "reconstructable_snapshots": len(rows),
-        "stored_snapshot_bytes": stored_bytes,
-        "stored_snapshot_mib": round(stored_bytes / (1024 * 1024), 3),
-        "average_file_bytes": round(stored_bytes / len(paths)) if paths else 0,
-        "full_snapshot_equivalent_bytes": possible_full_bytes,
-        "full_snapshot_equivalent_mib": round(possible_full_bytes / (1024 * 1024), 3),
-        "comparable_pairs": comparable_pairs,
-        "unchanged_feature_observations": unchanged,
+def compare_states(states):
+    unchanged = updated = added = removed = 0
+    for old, new in zip(states, states[1:]):
+        old_ids, new_ids = set(old), set(new)
+        added += len(new_ids - old_ids)
+        removed += len(old_ids - new_ids)
+        for key in old_ids & new_ids:
+            if old[key] == new[key]:
+                unchanged += 1
+            else:
+                updated += 1
+    total = unchanged + updated
+    return {
+        "comparable_pairs": max(0, len(states) - 1),
+        "unchanged_existing_feature_observations": unchanged,
         "changed_existing_feature_observations": updated,
         "added_feature_observations": added,
         "not_returned_feature_observations": removed,
-        "unchanged_share_of_existing_feature_observations_pct": round(100 * unchanged / unchanged_candidates, 1) if unchanged_candidates else None,
-        "note": "Missing IDs mean not returned by the query, not proof of felling or deletion. Full-snapshot equivalent is a reconstructed-data estimate, not a Git repository-size estimate."
+        "unchanged_share_pct": round(100 * unchanged / total, 1) if total else None,
+    }
+
+
+def main():
+    planned_paths = [p for p in SNAPSHOTS.glob("*.json") if not p.name.startswith("completed_")]
+    completed_paths = list(SNAPSHOTS.glob("completed_*.geojson.gz"))
+    planned_rows = read_snapshot_rows(SNAPSHOTS)
+    completed_rows = read_completed_archives(SNAPSHOTS)
+
+    planned_states = []
+    planned_full_equivalent = 0
+    for _, snapshot in planned_rows:
+        fmap = {
+            feature_id(feature): feature
+            for feature in (snapshot.get("cutting_notifications") or {}).get("features", [])
+            if feature_id(feature)
+        }
+        planned_states.append(fmap)
+        planned_full_equivalent += len(
+            json.dumps(snapshot, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        )
+
+    completed_states = []
+    completed_full_equivalent = 0
+    for _, collection in completed_rows:
+        fmap = {
+            str(feature.get("id") or (feature.get("properties") or {}).get("OBJECTID") or ""): feature
+            for feature in collection.get("features", [])
+            if feature.get("id") is not None or (feature.get("properties") or {}).get("OBJECTID") is not None
+        }
+        completed_states.append(fmap)
+        serialized = json.dumps(collection, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        completed_full_equivalent += len(gzip.compress(serialized, mtime=0))
+
+    planned_bytes = sum(p.stat().st_size for p in planned_paths)
+    completed_bytes = sum(p.stat().st_size for p in completed_paths)
+    print(json.dumps({
+        "generated_from": "current committed data/snapshots",
+        "planned": {
+            "files": len(planned_paths),
+            "reconstructable_states": len(planned_rows),
+            "stored_bytes": planned_bytes,
+            "stored_mib": round(planned_bytes / (1024 * 1024), 3),
+            "full_equivalent_bytes_uncompressed": planned_full_equivalent,
+            "repetition": compare_states(planned_states),
+        },
+        "completed": {
+            "files": len(completed_paths),
+            "reconstructable_states": len(completed_rows),
+            "stored_compressed_bytes": completed_bytes,
+            "stored_compressed_mib": round(completed_bytes / (1024 * 1024), 3),
+            "full_equivalent_compressed_bytes": completed_full_equivalent,
+            "full_equivalent_compressed_mib": round(completed_full_equivalent / (1024 * 1024), 3),
+            "repetition": compare_states(completed_states),
+        },
+        "note": "Repetition metrics are feature-level comparisons between consecutive reconstructable states. IDs missing from a query mean not returned, not proof of deletion or felling. Full-equivalent figures are estimates, not Git historical-storage measurements."
     }, ensure_ascii=False, indent=2))
 
 
