@@ -17,6 +17,11 @@ from shapely.geometry import shape
 from shapely.ops import transform, unary_union
 from pyproj import Transformer
 
+try:
+    from scripts.snapshot_store import read_snapshot_rows
+except ModuleNotFoundError:  # Direct execution as `python scripts/<name>.py`.
+    from snapshot_store import read_snapshot_rows
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SNAPSHOTS = DATA / "snapshots"
@@ -251,17 +256,17 @@ def main():
     # Read all complete planned snapshots; the initial 09:31 file was an
     # interrupted/incomplete upload in the early project setup, so unreadable
     # files are counted and skipped instead of aborting the report.
-    planned_history = []
-    unreadable_snapshots = []
-    for path in sorted(SNAPSHOTS.glob("*.json")):
-        try:
-            value = load_json(path)
-            if value.get("cutting_notifications", {}).get("status") != "ok":
-                continue
-            planned_history.append((path.name, value, get_notification_map(value)))
-        except (OSError, json.JSONDecodeError):
-            unreadable_snapshots.append(path.name)
-    planned_history.sort(key=lambda item: item[1].get("checked_at") or "")
+    planned_history = [
+        (filename, value, get_notification_map(value))
+        for filename, value in read_snapshot_rows(SNAPSHOTS)
+        if value.get("cutting_notifications", {}).get("status") == "ok"
+    ]
+    reconstructed_names = {item[0] for item in planned_history}
+    unreadable_snapshots = [
+        path.name for path in SNAPSHOTS.glob("*.json")
+        if path.name not in reconstructed_names
+        and not path.name.startswith("completed_")
+    ]
 
     # Consecutive saved history comparisons: new/missing identities in the
     # planned layer. Missing is intentionally called "not returned", not deleted.

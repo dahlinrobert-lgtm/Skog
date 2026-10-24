@@ -88,3 +88,18 @@ The notification-history builder compares the complete query scope, including sp
 - `record_changed` events compare tracked attributes and geometry only across consecutive successful snapshots with a matching query scope.
 - `data/notification_history_events.jsonl` is rebuilt from the saved successful snapshots each run. The dated snapshots are the source of truth, allowing stale derived events from older comparison logic to be corrected rather than preserved indefinitely.
 - A query-scope transition does not establish that an application was removed, expired, cancelled, or felled.
+
+
+## Planned snapshot storage optimization
+
+New planned-notification snapshots use a backwards-compatible mixed archive:
+
+- `data/latest.json` remains the complete current state for the dashboard and other direct consumers.
+- Historical `data/snapshots/YYYYMMDDTHHMMSSZ.json` files are full checkpoints when establishing a baseline, when the query scope changes, or at least every 30 days.
+- Between checkpoints, the snapshot stores only added, updated, and no-longer-returned feature IDs. Unchanged features are omitted; for an attribute-only update, the geometry is omitted and reused from the base snapshot. Geometry and attribute hashes are stored separately for changed features.
+- `scripts/snapshot_store.py` reconstructs legacy full snapshots and new delta snapshots for the notification-history and change-analysis pipelines.
+- Failed notification queries are rejected before snapshot persistence. A query-scope change forces a full checkpoint rather than a delta, so IDs from different search areas are not compared as if the source register changed.
+- `python scripts/audit_snapshots.py` reports current stored bytes, reconstructable snapshots, unchanged-feature share and a reconstructed full-snapshot equivalent. The equivalent is an estimate and does not measure Git's historical object storage.
+- `python -m unittest discover -s tests -v` validates delta reconstruction and the main safety cases.
+
+This reduces repetition in future commits, but it does **not** erase bytes already stored in Git history. Existing full snapshots are intentionally retained for auditability; historical compaction should only be considered separately after measuring repository growth and agreeing how to preserve the old history.

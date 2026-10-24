@@ -17,6 +17,11 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
+try:
+    from scripts.snapshot_store import read_snapshot_rows
+except ModuleNotFoundError:  # Direct execution as `python scripts/<name>.py`.
+    from snapshot_store import read_snapshot_rows
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SNAPSHOTS = DATA / "snapshots"
@@ -154,13 +159,12 @@ def change_details(previous: dict[str, Any], current: dict[str, Any]) -> dict[st
 
 
 def read_snapshots() -> list[tuple[str, dict[str, Any]]]:
-    rows = []
-    for path in SNAPSHOTS.glob("*.json"):
-        snapshot = read_json(path, None)
-        if isinstance(snapshot, dict) and successful(snapshot):
-            rows.append((path.name, snapshot))
-    rows.sort(key=lambda row: str(row[1].get("checked_at") or row[0]))
-    return rows
+    # Reconstruct both legacy full snapshots and new delta snapshots.
+    return [
+        (filename, snapshot)
+        for filename, snapshot in read_snapshot_rows(SNAPSHOTS)
+        if successful(snapshot)
+    ]
 
 
 def build_history(snapshots: list[tuple[str, dict[str, Any]]],

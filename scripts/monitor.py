@@ -8,6 +8,8 @@ from urllib.parse import urljoin
 
 import requests
 
+from snapshot_store import read_snapshot_rows, write_snapshot
+
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / "config/area.json").read_text(encoding="utf-8"))
 DATA = ROOT / "data"
@@ -224,8 +226,15 @@ def main():
     }
     old_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     SCENE_INDEX_PATH.write_text(json.dumps(current_index, ensure_ascii=False, indent=2), encoding="utf-8")
-    stamp = now.strftime("%Y%m%dT%H%M%SZ")
-    (SNAPSHOTS / f"{stamp}.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    history_rows = read_snapshot_rows(SNAPSHOTS)
+    previous_filename = history_rows[-1][0] if history_rows else None
+    previous_snapshot = old if old.get("cutting_notifications", {}).get("status") == "ok" else None
+    storage_result = write_snapshot(
+        result,
+        SNAPSHOTS,
+        previous_snapshot=previous_snapshot,
+        previous_filename=previous_filename,
+    )
     print(json.dumps({
         "checked_at": result["checked_at"],
         "initial_run": initial_run,
@@ -239,6 +248,7 @@ def main():
         "sentinel2_status": sentinel2["status"],
         "sentinel2_count": sentinel2["count"],
         "new_scenes": len(result["new_scenes_since_previous_run"]),
+        "snapshot_storage": storage_result,
         "latest_sentinel1": (sentinel1.get("items") or [{}])[0].get("acquired_at"),
         "latest_sentinel2": (sentinel2.get("items") or [{}])[0].get("acquired_at")
     }, ensure_ascii=False))

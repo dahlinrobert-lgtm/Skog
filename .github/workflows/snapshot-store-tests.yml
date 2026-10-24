@@ -1,0 +1,28 @@
+name: Snapshot storage tests
+on:
+  pull_request:
+    paths:
+      - "scripts/snapshot_store.py"
+      - "scripts/monitor.py"
+      - "scripts/notification_history.py"
+      - "scripts/analyze_changes.py"
+      - "tests/**"
+      - ".github/workflows/snapshot-store-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/snapshot_store.py"
+      - "scripts/monitor.py"
+      - "scripts/notification_history.py"
+      - "scripts/analyze_changes.py"
+      - "tests/**"
+      - ".github/workflows/snapshot-store-tests.yml"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -v
