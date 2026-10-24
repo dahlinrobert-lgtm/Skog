@@ -1,0 +1,375 @@
+{
+  "checked_at": "2026-10-24T11:54:29.231083+00:00",
+  "method": "Up to 5 samples per polygon: representative interior point(s) and evenly spaced exterior vertices. Min karta results are aggregated.",
+  "limitations": [
+    "Sampling is approximate and does not calculate exact polygon-to-cadastral-parcel intersections.",
+    "A sample may fall on a neighbouring property, especially near boundaries.",
+    "No Gräsmyr match among samples does not prove that a polygon does not intersect a Gräsmyr property.",
+    "Min karta endpoint is an observed internal web-app endpoint, not a documented public API."
+  ],
+  "request_count": 15,
+  "delay_seconds_between_requests": 3,
+  "features_tested": 3,
+  "results": [
+    {
+      "notification_id": "A 42369-2026",
+      "objectid": 6542638,
+      "municipality": "NORDMALING",
+      "notification_date": "2026-10-12T15:13:02+00:00",
+      "reported_area_ha": 6.8,
+      "geometry_type": "Polygon",
+      "sample_count": 5,
+      "unique_properties_observed": [
+        "NORDMALING TORRBÖLE 3:11",
+        "NORDMALING TORRBÖLE 3:27"
+      ],
+      "unique_property_count": 2,
+      "grasmyr_matches": [],
+      "grasmyr_match_count": 0,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.569837721942584,
+            "lat": 63.737534730337735
+          },
+          "sweref99tm": {
+            "east": 725469.2958721609,
+            "north": 7075836.858157439
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:27",
+              "type": "fastighet",
+              "object_id": "909a6a85-01da-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.56836930583403,
+            "lat": 63.73554171712229
+          },
+          "sweref99tm": {
+            "east": 725412.8220080461,
+            "north": 7075610.023916869
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:27",
+              "type": "fastighet",
+              "object_id": "909a6a85-01da-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.572062063379047,
+            "lat": 63.73906789964076
+          },
+          "sweref99tm": {
+            "east": 725566.6720080628,
+            "north": 7076015.223916876
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:11",
+              "type": "fastighet",
+              "object_id": "909a6a85-01ca-90ec-e040-ed8f66444c3f"
+            },
+            {
+              "designation": "NORDMALING TORRBÖLE 3:27",
+              "type": "fastighet",
+              "object_id": "909a6a85-01da-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.569799393681077,
+            "lat": 63.74034288034169
+          },
+          "sweref99tm": {
+            "east": 725445.0220080515,
+            "north": 7076149.024916881
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:27",
+              "type": "fastighet",
+              "object_id": "909a6a85-01da-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.568159563346455,
+            "lat": 63.73600156103471
+          },
+          "sweref99tm": {
+            "east": 725398.8220080452,
+            "north": 7075660.423916871
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:27",
+              "type": "fastighet",
+              "object_id": "909a6a85-01da-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "No Gräsmyr-prefixed designation observed in these samples; not proof there is no intersection."
+    },
+    {
+      "notification_id": "A 40418-2026",
+      "objectid": 6525147,
+      "municipality": "NORDMALING",
+      "notification_date": "2026-09-29T15:14:36+00:00",
+      "reported_area_ha": 5.5,
+      "geometry_type": "Polygon",
+      "sample_count": 5,
+      "unique_properties_observed": [
+        "NORDMALING TORRBÖLE 3:11"
+      ],
+      "unique_property_count": 1,
+      "grasmyr_matches": [],
+      "grasmyr_match_count": 0,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.54793881237171,
+            "lat": 63.70014151367602
+          },
+          "sweref99tm": {
+            "east": 724686.8248973548,
+            "north": 7071601.022612905
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:11",
+              "type": "fastighet",
+              "object_id": "909a6a85-01ca-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.548397134445132,
+            "lat": 63.698018182028505
+          },
+          "sweref99tm": {
+            "east": 724726.2800079663,
+            "north": 7071366.489916781
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:11",
+              "type": "fastighet",
+              "object_id": "909a6a85-01ca-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.54934620179135,
+            "lat": 63.70054195288231
+          },
+          "sweref99tm": {
+            "east": 724753.0900079696,
+            "north": 7071650.50991679
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:11",
+              "type": "fastighet",
+              "object_id": "909a6a85-01ca-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.55078082975223,
+            "lat": 63.70180015349119
+          },
+          "sweref99tm": {
+            "east": 724813.8900079757,
+            "north": 7071795.489916788
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:11",
+              "type": "fastighet",
+              "object_id": "909a6a85-01ca-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.544055433374638,
+            "lat": 63.69908837433574
+          },
+          "sweref99tm": {
+            "east": 724503.5600079459,
+            "north": 7071470.239916785
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING TORRBÖLE 3:11",
+              "type": "fastighet",
+              "object_id": "909a6a85-01ca-90ec-e040-ed8f66444c3f"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "No Gräsmyr-prefixed designation observed in these samples; not proof there is no intersection."
+    },
+    {
+      "notification_id": "A 40124-2026",
+      "objectid": 6524962,
+      "municipality": "NORDMALING",
+      "notification_date": "2026-09-28T13:28:50+00:00",
+      "reported_area_ha": 0.5,
+      "geometry_type": "Polygon",
+      "sample_count": 5,
+      "unique_properties_observed": [
+        "NORDMALING HÖRNSJÖ 3:75"
+      ],
+      "unique_property_count": 1,
+      "grasmyr_matches": [],
+      "grasmyr_match_count": 0,
+      "observations": [
+        {
+          "sample_kind": "interior",
+          "wgs84": {
+            "lon": 19.555745951680258,
+            "lat": 63.76950689687476
+          },
+          "sweref99tm": {
+            "east": 724520.8078291625,
+            "north": 7079342.922286241
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING HÖRNSJÖ 3:75",
+              "type": "fastighet",
+              "object_id": "75d865a4-023e-4e96-9788-9994a88af8a6"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.555870551502085,
+            "lat": 63.7690956122291
+          },
+          "sweref99tm": {
+            "east": 724530.2100079801,
+            "north": 7079297.619916946
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING HÖRNSJÖ 3:75",
+              "type": "fastighet",
+              "object_id": "75d865a4-023e-4e96-9788-9994a88af8a6"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.556671780742782,
+            "lat": 63.769545473196494
+          },
+          "sweref99tm": {
+            "east": 724566.0700079838,
+            "north": 7079350.469916945
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING HÖRNSJÖ 3:75",
+              "type": "fastighet",
+              "object_id": "75d865a4-023e-4e96-9788-9994a88af8a6"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.55481858904941,
+            "lat": 63.76946832055302
+          },
+          "sweref99tm": {
+            "east": 724475.4700079749,
+            "north": 7079335.369916945
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING HÖRNSJÖ 3:75",
+              "type": "fastighet",
+              "object_id": "75d865a4-023e-4e96-9788-9994a88af8a6"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        },
+        {
+          "sample_kind": "boundary_sample",
+          "wgs84": {
+            "lon": 19.555186626656464,
+            "lat": 63.76913423997369
+          },
+          "sweref99tm": {
+            "east": 724496.2400079774,
+            "north": 7079299.5099169435
+          },
+          "properties": [
+            {
+              "designation": "NORDMALING HÖRNSJÖ 3:75",
+              "type": "fastighet",
+              "object_id": "75d865a4-023e-4e96-9788-9994a88af8a6"
+            }
+          ],
+          "grasmyr_matches": [],
+          "status": "ok"
+        }
+      ],
+      "interpretation": "No Gräsmyr-prefixed designation observed in these samples; not proof there is no intersection."
+    }
+  ]
+}
