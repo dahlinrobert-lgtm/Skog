@@ -87,6 +87,8 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
     prior_scope = None
     prior_time = None
     for filename, snapshot in snapshots:
+        if not successful(snapshot):
+            continue
         checked_at = str(snapshot.get("checked_at") or filename)
         scope = scope_hash(snapshot)
         current_features = {}
