@@ -139,7 +139,7 @@ def write_completed_archive(collection: dict[str, Any], snapshots_dir: Path,
             observed = observed.replace(tzinfo=timezone.utc)
     except ValueError:
         observed = datetime.now(timezone.utc)
-    filename = observed.strftime("%Y%m%dT%H%M%SZ") + SUFFIX
+    filename = PREFIX + observed.strftime("%Y%m%dT%H%M%SZ") + SUFFIX
     destination = snapshots_dir / filename
 
     full_collection = json.loads(json.dumps(collection))
