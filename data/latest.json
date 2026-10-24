@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-24T13:46:51.397454Z",
+  "checked_at": "2026-10-24T18:51:02.662525Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -20,7 +20,7 @@
     63.83689717329571
   ],
   "initial_run": false,
-  "scene_index_baseline_available": false,
+  "scene_index_baseline_available": true,
   "cutting_notifications": {
     "status": "ok",
     "url": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query?where=1%3D1&geometry=%7B%22x%22%3A+19.66455%2C+%22y%22%3A+63.74646%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&inSR=4326&distance=10000&units=esriSRUnit_Meter&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount=2000",
@@ -27815,6 +27815,19 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1C_IW_GRDH_1SDV_20261024T161328_20261024T161353_010029_014036_1DB4_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-10-24T16:13:28.637139Z",
+        "published_at": "2026-10-24T14:55:00.229810Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          16.918116,
+          62.887123,
+          22.941055,
+          64.840065
+        ]
+      },
+      {
         "id": "S1C_IW_GRDH_1SDV_20261024T045656_20261024T045721_010022_013FF4_4709_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-10-24T04:56:56.728249Z",
@@ -30400,19 +30413,6 @@
           20.989569,
           64.008057
         ]
-      },
-      {
-        "id": "S1C_IW_GRDH_1SDV_20260605T051254_20260605T051319_007966_01032D_76E6_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-05T05:12:54.500057Z",
-        "published_at": "2026-06-05T04:25:33.560877Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          15.664704,
-          63.539528,
-          21.833612,
-          65.495468
-        ]
       }
     ],
     "count": 200,
@@ -30424,6 +30424,19 @@
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
     "collection": "sentinel-2-l2a",
     "items": [
+      {
+        "id": "S2C_MSIL2A_20261024T101101_N0513_R022_T34VDR_20261024T140910",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-10-24T10:11:01.025000Z",
+        "published_at": "2026-10-24T15:03:30.000000Z",
+        "cloud_cover_percent": 94.7,
+        "bbox": [
+          18.95539461240213,
+          63.02793322568484,
+          21.199734465434084,
+          64.02701663648664
+        ]
+      },
       {
         "id": "S2A_MSIL2A_20261022T103031_N0513_R108_T34VDR_20261022T170604",
         "collection": "sentinel-2-l2a",
@@ -33010,26 +33023,40 @@
           20.463347421678233,
           64.02233620316824
         ]
-      },
-      {
-        "id": "S2B_MSIL2A_20260316T101649_N0512_R065_T34VDR_20260316T155405",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-03-16T10:16:49.024000Z",
-        "published_at": "2026-03-16T16:26:44.000000Z",
-        "cloud_cover_percent": 100.0,
-        "bbox": [
-          18.953501523280057,
-          63.02793322568484,
-          21.199734465434084,
-          64.02701663648664
-        ]
       }
     ],
     "count": 200,
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [],
+  "new_scenes_since_previous_run": [
+    {
+      "id": "S1C_IW_GRDH_1SDV_20261024T161328_20261024T161353_010029_014036_1DB4_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-10-24T16:13:28.637139Z",
+      "published_at": "2026-10-24T14:55:00.229810Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        16.918116,
+        62.887123,
+        22.941055,
+        64.840065
+      ]
+    },
+    {
+      "id": "S2C_MSIL2A_20261024T101101_N0513_R022_T34VDR_20261024T140910",
+      "collection": "sentinel-2-l2a",
+      "acquired_at": "2026-10-24T10:11:01.025000Z",
+      "published_at": "2026-10-24T15:03:30.000000Z",
+      "cloud_cover_percent": 94.7,
+      "bbox": [
+        18.95539461240213,
+        63.02793322568484,
+        21.199734465434084,
+        64.02701663648664
+      ]
+    }
+  ],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
