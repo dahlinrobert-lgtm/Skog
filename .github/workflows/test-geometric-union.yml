@@ -1,0 +1,21 @@
+name: Test geometric union coverage
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/analyze_changes.py"
+      - "scripts/test_geometric_union.py"
+      - ".github/workflows/test-geometric-union.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest scripts.test_geometric_union -v
