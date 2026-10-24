@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-24T12:07:10.040394+00:00",
+  "checked_at": "2026-10-24T12:16:42.910507+00:00",
   "area_name": "Gräsmyr, Nordmalings kommun",
   "target_tract_prefix": "Gräsmyr",
   "selection": "Up to 20 Nordmaling notifications within 10.0 km, ranked by polygon-centroid distance to configured Gräsmyr point.",
@@ -29,6 +29,724 @@
     "NORDMALING GRÄSMYR 5:51",
     "NORDMALING GRÄSMYR 5:61",
     "NORDMALING GRÄSMYR 9:1"
+  ],
+  "notification_relationship_links_count": 43,
+  "notification_relationship_links": [
+    {
+      "notification_a": "A 12374-2024",
+      "notification_b": "A 12375-2024",
+      "days_between_notification_dates": 0.0,
+      "same_notification_date": true,
+      "polygon_distance_m": 0.3,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:40",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_within_250m",
+        "same_notification_date"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 53777-2025",
+      "notification_b": "A 63253-2025",
+      "days_between_notification_dates": 49.9,
+      "same_notification_date": false,
+      "polygon_distance_m": 80.0,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:28"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_within_250m"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 494-2026",
+      "notification_b": "A 501-2026",
+      "days_between_notification_dates": 0.0,
+      "same_notification_date": true,
+      "polygon_distance_m": 188.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:36"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_within_250m",
+        "same_notification_date"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 63253-2025",
+      "notification_b": "A 63266-2025",
+      "days_between_notification_dates": 0.0,
+      "same_notification_date": true,
+      "polygon_distance_m": 190.1,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 2:40"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_within_250m",
+        "same_notification_date"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 20481-2025",
+      "notification_b": "A 20489-2025",
+      "days_between_notification_dates": 0.6,
+      "same_notification_date": true,
+      "polygon_distance_m": 283.4,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "same_notification_date"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 20489-2025",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 49.8,
+      "same_notification_date": false,
+      "polygon_distance_m": 326.3,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 53776-2025",
+      "notification_b": "A 63253-2025",
+      "days_between_notification_dates": 49.9,
+      "same_notification_date": false,
+      "polygon_distance_m": 520.3,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:28"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 53776-2025",
+      "notification_b": "A 53777-2025",
+      "days_between_notification_dates": 0.0,
+      "same_notification_date": true,
+      "polygon_distance_m": 552.7,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:14",
+        "NORDMALING GRÄSMYR 3:28",
+        "NORDMALING GRÄSMYR 4:60"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "same_notification_date"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 20481-2025",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 50.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 700.5,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 55792-2025",
+      "notification_b": "A 404-2026",
+      "days_between_notification_dates": 56.0,
+      "same_notification_date": false,
+      "polygon_distance_m": 933.7,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 14:1",
+        "NORDMALING GRÄSMYR 5:51"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 38260-2025",
+      "notification_b": "A 20481-2025",
+      "days_between_notification_dates": 108.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 1042.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 16:1",
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 494-2026",
+      "notification_b": "A 511-2026",
+      "days_between_notification_dates": 0.0,
+      "same_notification_date": true,
+      "polygon_distance_m": 1370.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:36"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "same_notification_date"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 53776-2025",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 135.3,
+      "same_notification_date": false,
+      "polygon_distance_m": 1413.0,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:28"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 38260-2025",
+      "notification_b": "A 20489-2025",
+      "days_between_notification_dates": 107.8,
+      "same_notification_date": false,
+      "polygon_distance_m": 1454.3,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 501-2026",
+      "notification_b": "A 511-2026",
+      "days_between_notification_dates": 0.0,
+      "same_notification_date": true,
+      "polygon_distance_m": 1703.5,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:36"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "same_notification_date"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 38260-2025",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 58.0,
+      "same_notification_date": false,
+      "polygon_distance_m": 1860.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 2:25",
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 511-2026",
+      "notification_b": "A 38260-2025",
+      "days_between_notification_dates": 146.0,
+      "same_notification_date": false,
+      "polygon_distance_m": 2134.0,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 53777-2025",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 135.3,
+      "same_notification_date": false,
+      "polygon_distance_m": 2285.3,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:28"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "high_review_priority",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 35785-2026",
+      "notification_b": "A 404-2026",
+      "days_between_notification_dates": 236.9,
+      "same_notification_date": false,
+      "polygon_distance_m": 0.0,
+      "notification_polygons_intersect": true,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 14:1",
+        "NORDMALING GRÄSMYR 5:51"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_intersect"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 511-2026",
+      "notification_b": "A 12375-2024",
+      "days_between_notification_dates": 651.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 0.0,
+      "notification_polygons_intersect": true,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_intersect"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 55792-2025",
+      "notification_b": "A 20008-2025",
+      "days_between_notification_dates": 200.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 0.4,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 14:1",
+        "NORDMALING GRÄSMYR 3:40"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_within_250m"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 511-2026",
+      "notification_b": "A 12374-2024",
+      "days_between_notification_dates": 651.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 87.0,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates",
+        "notification_polygons_within_250m"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 53776-2025",
+      "notification_b": "A 38260-2025",
+      "days_between_notification_dates": 77.3,
+      "same_notification_date": false,
+      "polygon_distance_m": 236.6,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [],
+      "signals": [
+        "notification_polygons_within_250m"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 20008-2025",
+      "notification_b": "A 12374-2024",
+      "days_between_notification_dates": 394.3,
+      "same_notification_date": false,
+      "polygon_distance_m": 610.1,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:40"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 55792-2025",
+      "notification_b": "A 12374-2024",
+      "days_between_notification_dates": 594.7,
+      "same_notification_date": false,
+      "polygon_distance_m": 785.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:40"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 20008-2025",
+      "notification_b": "A 12375-2024",
+      "days_between_notification_dates": 394.3,
+      "same_notification_date": false,
+      "polygon_distance_m": 841.2,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:40"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 55792-2025",
+      "notification_b": "A 35785-2026",
+      "days_between_notification_dates": 292.9,
+      "same_notification_date": false,
+      "polygon_distance_m": 892.1,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 14:1",
+        "NORDMALING GRÄSMYR 5:51"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 55792-2025",
+      "notification_b": "A 12375-2024",
+      "days_between_notification_dates": 594.7,
+      "same_notification_date": false,
+      "polygon_distance_m": 982.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:40"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 45326-2025",
+      "notification_b": "A 21622-2023",
+      "days_between_notification_dates": 860.3,
+      "same_notification_date": false,
+      "polygon_distance_m": 1000.6,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:39"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 20008-2025",
+      "notification_b": "A 35785-2026",
+      "days_between_notification_dates": 493.3,
+      "same_notification_date": false,
+      "polygon_distance_m": 1098.4,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 14:1"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 20008-2025",
+      "notification_b": "A 404-2026",
+      "days_between_notification_dates": 256.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 1139.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 14:1"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 511-2026",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 204.1,
+      "same_notification_date": false,
+      "polygon_distance_m": 1692.1,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 511-2026",
+      "notification_b": "A 20481-2025",
+      "days_between_notification_dates": 254.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 1818.4,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 511-2026",
+      "notification_b": "A 20489-2025",
+      "days_between_notification_dates": 253.9,
+      "same_notification_date": false,
+      "polygon_distance_m": 1824.7,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12375-2024",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 447.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 1888.6,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12374-2024",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 447.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 2015.9,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12375-2024",
+      "notification_b": "A 20489-2025",
+      "days_between_notification_dates": 397.6,
+      "same_notification_date": false,
+      "polygon_distance_m": 2018.0,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12375-2024",
+      "notification_b": "A 20481-2025",
+      "days_between_notification_dates": 397.0,
+      "same_notification_date": false,
+      "polygon_distance_m": 2020.5,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12374-2024",
+      "notification_b": "A 20489-2025",
+      "days_between_notification_dates": 397.6,
+      "same_notification_date": false,
+      "polygon_distance_m": 2109.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12374-2024",
+      "notification_b": "A 20481-2025",
+      "days_between_notification_dates": 397.0,
+      "same_notification_date": false,
+      "polygon_distance_m": 2112.7,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 63253-2025",
+      "notification_b": "A 29579-2025",
+      "days_between_notification_dates": 185.2,
+      "same_notification_date": false,
+      "polygon_distance_m": 2229.4,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 3:28"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12375-2024",
+      "notification_b": "A 38260-2025",
+      "days_between_notification_dates": 505.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 2400.9,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    },
+    {
+      "notification_a": "A 12374-2024",
+      "notification_b": "A 38260-2025",
+      "days_between_notification_dates": 505.4,
+      "same_notification_date": false,
+      "polygon_distance_m": 2413.8,
+      "notification_polygons_intersect": false,
+      "shared_property_candidates": [
+        "NORDMALING GRÄSMYR 5:34"
+      ],
+      "signals": [
+        "shared_sampled_property_candidates"
+      ],
+      "review_priority": "review_candidate",
+      "interpretation": "Possible spatial/temporal relationship for manual review only; does not prove a shared harvesting operation, owner group, contractor, or cost-sharing."
+    }
   ],
   "limitations": [
     "Centroid distance is only used to rank notifications; it does not establish cadastral ownership.",
