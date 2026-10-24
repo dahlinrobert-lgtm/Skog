@@ -193,7 +193,13 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             "outSR": "4326",
             "f": "geojson",
         }
-        data = get_json(params)
+        try:
+            data = get_json(params)
+        except Exception as exc:
+            # Some ArcGIS deployments intermittently return HTTP 404 for GeoJSON
+            # batches. Retry the same IDs as ArcGIS JSON, with smaller batches if needed.
+            print(f"Batch {batch_index}/{batch_count} GeoJSON failed: {exc}; retrying as ArcGIS JSON.", flush=True)
+            data = get_json({**params, "f": "json"})
         features = data.get("features")
         if not isinstance(features, list):
             raise RuntimeError(f"ArcGIS batch {batch_index}/{batch_count} had no feature list.")
@@ -210,11 +216,16 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
         # Retry once in case records changed while the ID list was being fetched.
         for start in range(0, len(missing), BATCH_SIZE):
             batch = missing[start:start + BATCH_SIZE]
-            data = get_json({
+            retry_params = {
                 "objectIds": ",".join(batch), "outFields": "*",
                 "returnGeometry": "true", "returnTrueCurves": "false",
                 "outSR": "4326", "f": "geojson",
-            })
+            }
+            try:
+                data = get_json(retry_params)
+            except Exception as exc:
+                print(f"Missing-ID retry batch failed: {exc}; retrying as ArcGIS JSON.", flush=True)
+                data = get_json({**retry_params, "f": "json"})
             for feature in data.get("features", []):
                 key = feature_id(feature)
                 if key:
