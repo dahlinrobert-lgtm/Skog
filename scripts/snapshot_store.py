@@ -100,10 +100,15 @@ def read_snapshot_rows(snapshots_dir: Path) -> list[tuple[str, dict[str, Any]]]:
             feature = (delta.get("features") or {}).get(str(key))
             if isinstance(feature, dict):
                 base_features[str(key)] = feature
+        geometry_unchanged = {str(key) for key in delta.get("geometry_unchanged", [])}
         for key in delta.get("updated", []):
-            feature = (delta.get("features") or {}).get(str(key))
+            key = str(key)
+            feature = (delta.get("features") or {}).get(key)
             if isinstance(feature, dict):
-                base_features[str(key)] = feature
+                if key in geometry_unchanged and key in base_features:
+                    feature = dict(feature)
+                    feature["geometry"] = base_features[key].get("geometry")
+                base_features[key] = feature
         current_cuts["features"] = [base_features[key] for key in sorted(base_features)]
         current_cuts["count"] = len(current_cuts["features"])
         current["cutting_notifications"] = current_cuts
@@ -172,6 +177,22 @@ def write_snapshot(snapshot: dict[str, Any], snapshots_dir: Path,
         if canonical_hash(current_features[key]) != canonical_hash(previous_features[key])
     )
     changed_ids = set(added) | set(updated)
+    geometry_unchanged = sorted(
+        key for key in updated
+        if canonical_hash(current_features[key].get("geometry")) ==
+        canonical_hash(previous_features[key].get("geometry"))
+    )
+    feature_payloads = {}
+    feature_hashes = {}
+    for key in sorted(changed_ids):
+        feature = json.loads(json.dumps(current_features[key]))
+        if key in geometry_unchanged:
+            feature.pop("geometry", None)
+        feature_payloads[key] = feature
+        feature_hashes[key] = {
+            "attributes_sha256": canonical_hash(current_features[key].get("properties") or {}),
+            "geometry_sha256": canonical_hash(current_features[key].get("geometry")),
+        }
     compact = json.loads(json.dumps(snapshot))
     compact_cuts = dict(compact.get("cutting_notifications") or {})
     compact_cuts.pop("features", None)
@@ -183,7 +204,9 @@ def write_snapshot(snapshot: dict[str, Any], snapshots_dir: Path,
         "added": added,
         "updated": updated,
         "removed": removed,
-        "features": {key: current_features[key] for key in sorted(changed_ids)},
+        "geometry_unchanged": geometry_unchanged,
+        "features": feature_payloads,
+        "feature_hashes": feature_hashes,
         "feature_count_before": len(previous_features),
         "feature_count_after": len(current_features),
     }
