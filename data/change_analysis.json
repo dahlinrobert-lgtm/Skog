@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-24T19:01:01.045984Z",
+  "generated_at": "2026-10-24T19:03:02.219799Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -22,10 +22,10 @@
     "missing_planned_id_warning": "An ID missing from a later query is only not returned by the current query; it does not prove deletion, expiry, or felling."
   },
   "sources": {
-    "latest_planned_checked_at": "2026-10-24T19:00:38.296945Z",
-    "latest_completed_checked_at": "2026-10-24T19:00:49.915428Z",
-    "completed_archive": "completed_20261024T190049Z.geojson.gz",
-    "planned_snapshots_read": 6,
+    "latest_planned_checked_at": "2026-10-24T19:02:39.954353Z",
+    "latest_completed_checked_at": "2026-10-24T19:02:49.773250Z",
+    "completed_archive": "completed_20261024T190249Z.geojson.gz",
+    "planned_snapshots_read": 7,
     "unreadable_snapshots": []
   },
   "counts": {
