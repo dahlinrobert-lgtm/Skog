@@ -7,12 +7,21 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from pyproj import Transformer
+from shapely.affinity import translate
 from shapely.geometry import mapping, box
+from shapely.ops import transform
 
 from scripts import analyze_changes as ac
 
 
+TO_WGS84 = Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True).transform
+
+
 def make_feature(oid, geom, date_ms=1735689600000, municipality="NORDMALING"):
+    # Test geometries are authored in local metre offsets, moved to a valid
+    # SWEREF99 TM location and transformed to the same WGS84 format as source data.
+    geom_wgs84 = transform(TO_WGS84, translate(geom, xoff=700000, yoff=7080000))
     return {
         "type": "Feature",
         "id": str(oid),
@@ -25,7 +34,7 @@ def make_feature(oid, geom, date_ms=1735689600000, municipality="NORDMALING"):
             "Avvdatum": date_ms,
             "Arealha": geom.area / 10000,
         },
-        "geometry": mapping(geom),
+        "geometry": mapping(geom_wgs84),
     }
 
 
