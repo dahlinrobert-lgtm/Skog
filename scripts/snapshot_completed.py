@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Daily snapshot of Skogsstyrelsen completed-harvest polygons for Gräsmyr."""
-import gzip
 import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
+
+try:
+    from scripts.completed_snapshot_store import read_completed_archives, write_completed_archive
+except ModuleNotFoundError:  # Direct execution as `python scripts/snapshot_completed.py`.
+    from completed_snapshot_store import read_completed_archives, write_completed_archive
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / "config/area.json").read_text(encoding="utf-8"))
@@ -123,18 +127,19 @@ def main():
         "note": "Current public-layer snapshot. Missing IDs mean absent from this query, not proof of deletion or felling; service coverage, filtering and source revisions may also explain changes."
     }
     current_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    # Keep the full geometry as a compressed daily archive so later work can compare
-    # actual shapes, not only attributes and hashes.
-    archive_path = SNAPSHOTS / f"completed_{stamp}.geojson.gz"
-    with gzip.open(archive_path, "wt", encoding="utf-8") as stream:
-        json.dump({
-            "type": "FeatureCollection",
-            "name": "Skogsstyrelsen Utförda avverkningar",
-            "checked_at": result["checked_at"],
-            "source": URL,
-            **scope_metadata(),
-            "features": features,
-        }, stream, ensure_ascii=False, separators=(",", ":"))
+    # Keep reconstructable feature geometry history, but only persist the features
+    # that changed between comparable runs. Full compressed checkpoints are retained.
+    previous_archives = read_completed_archives(SNAPSHOTS)
+    previous_filename = previous_archives[-1][0] if previous_archives else None
+    previous_collection = previous_archives[-1][1] if previous_archives else None
+    archive_result = write_completed_archive({
+        "type": "FeatureCollection",
+        "name": "Skogsstyrelsen Utförda avverkningar",
+        "checked_at": result["checked_at"],
+        "source": URL,
+        **scope_metadata(),
+        "features": features,
+    }, SNAPSHOTS, previous_collection=previous_collection, previous_filename=previous_filename)
     print(json.dumps({
         "checked_at": result["checked_at"],
         "count": len(features),
@@ -142,8 +147,15 @@ def main():
         "new_ids": len(result["new_ids"]),
         "missing_ids": len(result["missing_ids"]),
         "changed_geometry_ids": len(result["changed_geometry_ids"]),
-        "archive": str(archive_path.relative_to(ROOT)),
-        "archive_bytes": archive_path.stat().st_size,
+        "archive": str((SNAPSHOTS / archive_result["filename"]).relative_to(ROOT)),
+        "archive_format": archive_result["format"],
+        "archive_bytes": archive_result["archive_bytes"],
+        "full_compressed_bytes": archive_result["full_compressed_bytes"],
+        "estimated_savings_pct": archive_result["estimated_savings_pct"],
+        "added_features": archive_result["added"],
+        "updated_features": archive_result["updated"],
+        "removed_features": archive_result["removed"],
+        "geometry_omitted_for_attribute_updates": archive_result["geometry_omitted"],
     }, ensure_ascii=False))
 
 

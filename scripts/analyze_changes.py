@@ -18,6 +18,11 @@ from shapely.ops import transform, unary_union
 from pyproj import Transformer
 
 try:
+    from scripts.completed_snapshot_store import read_completed_archives
+except ModuleNotFoundError:  # Direct execution as `python scripts/analyze_changes.py`.
+    from completed_snapshot_store import read_completed_archives
+
+try:
     from scripts.snapshot_store import read_snapshot_rows
 except ModuleNotFoundError:  # Direct execution as `python scripts/<name>.py`.
     from snapshot_store import read_snapshot_rows
@@ -70,26 +75,20 @@ def parse_epoch_ms(value):
 
 
 def completed_archive_rows():
-    """Return valid archived completed-change snapshots in chronological order."""
+    """Return reconstructed full completed-layer states in chronological order."""
     rows = []
-    for path in sorted(SNAPSHOTS.glob("completed_*.geojson.gz")):
-        try:
-            value = load_gzip_geojson(path)
-            checked_at = value.get("checked_at")
-            features_by_id = {}
-            for feature in value.get("features", []):
-                oid = feature_id(feature)
-                if oid:
-                    features_by_id[oid] = feature
-            rows.append({
-                "filename": path.name,
-                "checked_at": checked_at,
-                "query_scope_sha256": value.get("query_scope_sha256"),
-                "features_by_id": features_by_id,
-            })
-        except (OSError, EOFError, json.JSONDecodeError):
-            continue
-    rows.sort(key=lambda row: str(row.get("checked_at") or row["filename"]))
+    for filename, value in read_completed_archives(SNAPSHOTS):
+        features_by_id = {}
+        for feature in value.get("features", []):
+            oid = feature_id(feature)
+            if oid:
+                features_by_id[oid] = feature
+        rows.append({
+            "filename": filename,
+            "checked_at": value.get("checked_at"),
+            "query_scope_sha256": value.get("query_scope_sha256"),
+            "features_by_id": features_by_id,
+        })
     return rows
 
 
@@ -309,11 +308,10 @@ def main():
         # Full geometry comes from latest compressed archive, loaded below.
         if not geometry_hash:
             skipped_completed += 1
-    archives = sorted(SNAPSHOTS.glob("completed_*.geojson.gz"))
-    latest_archive = archives[-1] if archives else None
+    archive_rows = completed_archive_rows()
+    latest_archive = archive_rows[-1] if archive_rows else None
     if latest_archive:
-        archived = load_gzip_geojson(latest_archive)
-        for feature in archived.get("features", []):
+        for feature in latest_archive.get("features_by_id", {}).values():
             oid = feature_id(feature)
             geom = valid_geometry(feature)
             if oid and geom is not None:
@@ -493,7 +491,7 @@ def main():
         "sources": {
             "latest_planned_checked_at": current.get("checked_at"),
             "latest_completed_checked_at": completed.get("checked_at"),
-            "completed_archive": latest_archive.name if latest_archive else None,
+            "completed_archive": latest_archive["filename"] if latest_archive else None,
             "planned_snapshots_read": len(planned_history),
             "unreadable_snapshots": unreadable_snapshots,
         },
