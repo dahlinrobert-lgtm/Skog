@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-24T12:26:32.151057+00:00",
+  "checked_at": "2026-10-24T13:25:37.389667+00:00",
   "area_name": "Gräsmyr, Nordmalings kommun",
   "target_tract_prefix": "Gräsmyr",
   "selection": "Up to 20 Nordmaling notifications within 10.0 km, ranked by polygon-centroid distance to configured Gräsmyr point.",
@@ -29,6 +29,1627 @@
     "NORDMALING GRÄSMYR 5:51",
     "NORDMALING GRÄSMYR 5:61",
     "NORDMALING GRÄSMYR 9:1"
+  ],
+  "notification_property_relations_count": 47,
+  "notification_property_relations": [
+    {
+      "notification_id": "A 21622-2023",
+      "objectid": 5133782,
+      "notification_date": "2023-05-16T00:00:00+00:00",
+      "reported_area_ha": 1.7,
+      "property_candidate": "NORDMALING GRÄSMYR 5:39",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        3
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.669576442535107,
+          "lat": 63.72859194337667
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb9d-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 12374-2024",
+      "objectid": 4936018,
+      "notification_date": "2024-03-27T00:00:00+00:00",
+      "reported_area_ha": 4.3,
+      "property_candidate": "NORDMALING GRÄSMYR 3:40",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.649059423615938,
+          "lat": 63.734890864029474
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 12374-2024",
+      "objectid": 4936018,
+      "notification_date": "2024-03-27T00:00:00+00:00",
+      "reported_area_ha": 4.3,
+      "property_candidate": "NORDMALING GRÄSMYR 5:34",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.65048389886326,
+          "lat": 63.73607488812737
+        },
+        {
+          "lon": 19.649059423615938,
+          "lat": 63.734890864029474
+        },
+        {
+          "lon": 19.652057343137514,
+          "lat": 63.7363911284662
+        },
+        {
+          "lon": 19.650577273901394,
+          "lat": 63.73717968876678
+        },
+        {
+          "lon": 19.64765236257915,
+          "lat": 63.73602980595714
+        },
+        {
+          "lon": 19.648907891057345,
+          "lat": 63.7349203456674
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 12375-2024",
+      "objectid": 5090061,
+      "notification_date": "2024-03-27T00:00:00+00:00",
+      "reported_area_ha": 5.7,
+      "property_candidate": "NORDMALING GRÄSMYR 3:40",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.642416866890226,
+          "lat": 63.73324922708925
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 12375-2024",
+      "objectid": 5090061,
+      "notification_date": "2024-03-27T00:00:00+00:00",
+      "reported_area_ha": 5.7,
+      "property_candidate": "NORDMALING GRÄSMYR 5:34",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.644339047081193,
+          "lat": 63.735422199105784
+        },
+        {
+          "lon": 19.642416866890226,
+          "lat": 63.73324922708925
+        },
+        {
+          "lon": 19.647133266788252,
+          "lat": 63.736874581738626
+        },
+        {
+          "lon": 19.643275490451924,
+          "lat": 63.735234462896514
+        },
+        {
+          "lon": 19.643777424665195,
+          "lat": 63.73427834722927
+        },
+        {
+          "lon": 19.64239164910009,
+          "lat": 63.73339275819134
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20008-2025",
+      "objectid": 4928107,
+      "notification_date": "2025-04-25T06:32:13+00:00",
+      "reported_area_ha": 1.2,
+      "property_candidate": "NORDMALING GRÄSMYR 14:1",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        5
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.66387949461681,
+          "lat": 63.73941945517653
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20008-2025",
+      "objectid": 4928107,
+      "notification_date": "2025-04-25T06:32:13+00:00",
+      "reported_area_ha": 1.2,
+      "property_candidate": "NORDMALING GRÄSMYR 3:40",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.665506425012406,
+          "lat": 63.7394008452919
+        },
+        {
+          "lon": 19.66431411666447,
+          "lat": 63.73865398044435
+        },
+        {
+          "lon": 19.665560843187013,
+          "lat": 63.73906126162587
+        },
+        {
+          "lon": 19.667128091873273,
+          "lat": 63.73943211254135
+        },
+        {
+          "lon": 19.66387949461681,
+          "lat": 63.73941945517653
+        },
+        {
+          "lon": 19.664261850857024,
+          "lat": 63.73871628419469
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20481-2025",
+      "objectid": 5143974,
+      "notification_date": "2025-04-28T00:00:00+00:00",
+      "reported_area_ha": 1.1,
+      "property_candidate": "NORDMALING GRÄSMYR 16:1",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        4
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.628952846862607,
+          "lat": 63.75474345281888
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebd5-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20481-2025",
+      "objectid": 5143974,
+      "notification_date": "2025-04-28T00:00:00+00:00",
+      "reported_area_ha": 1.1,
+      "property_candidate": "NORDMALING GRÄSMYR 2:25",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.63006005933941,
+          "lat": 63.754608248404125
+        },
+        {
+          "lon": 19.630118653685876,
+          "lat": 63.75390931173575
+        },
+        {
+          "lon": 19.631140420235184,
+          "lat": 63.75444454591749
+        },
+        {
+          "lon": 19.628952846862607,
+          "lat": 63.75474345281888
+        },
+        {
+          "lon": 19.62903629511774,
+          "lat": 63.75447304398938
+        },
+        {
+          "lon": 19.629455485602406,
+          "lat": 63.75409170959283
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20481-2025",
+      "objectid": 5143974,
+      "notification_date": "2025-04-28T00:00:00+00:00",
+      "reported_area_ha": 1.1,
+      "property_candidate": "NORDMALING GRÄSMYR 5:34",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.630118653685876,
+          "lat": 63.75390931173575
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20489-2025",
+      "objectid": 5199946,
+      "notification_date": "2025-04-28T13:31:02+00:00",
+      "reported_area_ha": 1.1,
+      "property_candidate": "NORDMALING GRÄSMYR 2:25",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.623167538409646,
+          "lat": 63.75287220683725
+        },
+        {
+          "lon": 19.622928081260998,
+          "lat": 63.75217083931309
+        },
+        {
+          "lon": 19.62442278068743,
+          "lat": 63.7527220939817
+        },
+        {
+          "lon": 19.624024809992058,
+          "lat": 63.75321676083613
+        },
+        {
+          "lon": 19.623727106140183,
+          "lat": 63.75350021649631
+        },
+        {
+          "lon": 19.621786139402527,
+          "lat": 63.75303535536787
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20489-2025",
+      "objectid": 5199946,
+      "notification_date": "2025-04-28T13:31:02+00:00",
+      "reported_area_ha": 1.1,
+      "property_candidate": "NORDMALING GRÄSMYR 5:34",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.622928081260998,
+          "lat": 63.75217083931309
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 20489-2025",
+      "objectid": 5199946,
+      "notification_date": "2025-04-28T13:31:02+00:00",
+      "reported_area_ha": 1.1,
+      "property_candidate": "NORDMALING GRÄSMYR 5:61",
+      "sample_count": 2,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 2,
+      "sample_indices": [
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.623727106140183,
+          "lat": 63.75350021649631
+        },
+        {
+          "lon": 19.621786139402527,
+          "lat": 63.75303535536787
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebb3-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 29579-2025",
+      "objectid": 5353374,
+      "notification_date": "2025-06-17T09:05:13+00:00",
+      "reported_area_ha": 1.9,
+      "property_candidate": "NORDMALING GRÄSMYR 2:25",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        4
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.61413906100289,
+          "lat": 63.75007170924846
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 29579-2025",
+      "objectid": 5353374,
+      "notification_date": "2025-06-17T09:05:13+00:00",
+      "reported_area_ha": 1.9,
+      "property_candidate": "NORDMALING GRÄSMYR 3:28",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.61479107039482,
+          "lat": 63.74860937955428
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 29579-2025",
+      "objectid": 5353374,
+      "notification_date": "2025-06-17T09:05:13+00:00",
+      "reported_area_ha": 1.9,
+      "property_candidate": "NORDMALING GRÄSMYR 5:34",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.616053250937338,
+          "lat": 63.74938924032213
+        },
+        {
+          "lon": 19.61479107039482,
+          "lat": 63.74860937955428
+        },
+        {
+          "lon": 19.6149534748512,
+          "lat": 63.74963732158047
+        },
+        {
+          "lon": 19.61413906100289,
+          "lat": 63.75007170924846
+        },
+        {
+          "lon": 19.614039017161648,
+          "lat": 63.74945362449917
+        },
+        {
+          "lon": 19.614684766155296,
+          "lat": 63.74868069632917
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 38260-2025",
+      "objectid": 6010956,
+      "notification_date": "2025-08-14T09:29:29+00:00",
+      "reported_area_ha": 1.4,
+      "property_candidate": "NORDMALING GRÄSMYR 16:1",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        4
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.652332864459037,
+          "lat": 63.76033884586142
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebd5-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 38260-2025",
+      "objectid": 6010956,
+      "notification_date": "2025-08-14T09:29:29+00:00",
+      "reported_area_ha": 1.4,
+      "property_candidate": "NORDMALING GRÄSMYR 2:25",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.651491036679875,
+          "lat": 63.75961611526238
+        },
+        {
+          "lon": 19.65076291438425,
+          "lat": 63.75890223659445
+        },
+        {
+          "lon": 19.65315860370701,
+          "lat": 63.75947912168315
+        },
+        {
+          "lon": 19.652332864459037,
+          "lat": 63.76033884586142
+        },
+        {
+          "lon": 19.65007260247985,
+          "lat": 63.75933599961741
+        },
+        {
+          "lon": 19.65034097183402,
+          "lat": 63.75930034507966
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ea9e-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 38260-2025",
+      "objectid": 6010956,
+      "notification_date": "2025-08-14T09:29:29+00:00",
+      "reported_area_ha": 1.4,
+      "property_candidate": "NORDMALING GRÄSMYR 5:34",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        3
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.65315860370701,
+          "lat": 63.75947912168315
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 45326-2025",
+      "objectid": 6463502,
+      "notification_date": "2025-09-22T07:44:28+00:00",
+      "reported_area_ha": 1.7,
+      "property_candidate": "NORDMALING GRÄSMYR 2:27",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.689082445347797,
+          "lat": 63.73483557828771
+        },
+        {
+          "lon": 19.689097315254372,
+          "lat": 63.73405870025442
+        },
+        {
+          "lon": 19.689249342634408,
+          "lat": 63.735383235045475
+        },
+        {
+          "lon": 19.685915496118145,
+          "lat": 63.73542331589684
+        },
+        {
+          "lon": 19.687757703572274,
+          "lat": 63.73501497997346
+        },
+        {
+          "lon": 19.68902956255685,
+          "lat": 63.73410056635544
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaa0-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 45326-2025",
+      "objectid": 6463502,
+      "notification_date": "2025-09-22T07:44:28+00:00",
+      "reported_area_ha": 1.7,
+      "property_candidate": "NORDMALING GRÄSMYR 5:39",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        4
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.685915496118145,
+          "lat": 63.73542331589684
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb9d-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 53776-2025",
+      "objectid": 6121794,
+      "notification_date": "2025-10-30T16:42:39+00:00",
+      "reported_area_ha": 2.5,
+      "property_candidate": "NORDMALING GRÄSMYR 3:14",
+      "sample_count": 5,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 4,
+      "sample_indices": [
+        1,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.64798338450293,
+          "lat": 63.755839876777415
+        },
+        {
+          "lon": 19.651168321888452,
+          "lat": 63.75623771426702
+        },
+        {
+          "lon": 19.650154170685468,
+          "lat": 63.756797125583525
+        },
+        {
+          "lon": 19.644808710310453,
+          "lat": 63.75544203928781
+        },
+        {
+          "lon": 19.645129719637676,
+          "lat": 63.75514917767019
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 53776-2025",
+      "objectid": 6121794,
+      "notification_date": "2025-10-30T16:42:39+00:00",
+      "reported_area_ha": 2.5,
+      "property_candidate": "NORDMALING GRÄSMYR 3:28",
+      "sample_count": 2,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 2,
+      "sample_indices": [
+        4,
+        5
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.650154170685468,
+          "lat": 63.756797125583525
+        },
+        {
+          "lon": 19.644808710310453,
+          "lat": 63.75544203928781
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 53776-2025",
+      "objectid": 6121794,
+      "notification_date": "2025-10-30T16:42:39+00:00",
+      "reported_area_ha": 2.5,
+      "property_candidate": "NORDMALING GRÄSMYR 3:45",
+      "sample_count": 2,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 2,
+      "sample_indices": [
+        2,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.645488561193645,
+          "lat": 63.754807236993656
+        },
+        {
+          "lon": 19.645129719637676,
+          "lat": 63.75514917767019
+        }
+      ],
+      "property_object_ids": [
+        "909a6a87-c96d-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 53776-2025",
+      "objectid": 6121794,
+      "notification_date": "2025-10-30T16:42:39+00:00",
+      "reported_area_ha": 2.5,
+      "property_candidate": "NORDMALING GRÄSMYR 4:60",
+      "sample_count": 2,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 2,
+      "sample_indices": [
+        2,
+        3
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.645488561193645,
+          "lat": 63.754807236993656
+        },
+        {
+          "lon": 19.651168321888452,
+          "lat": 63.75623771426702
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb37-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 53777-2025",
+      "objectid": 6122989,
+      "notification_date": "2025-10-30T16:44:09+00:00",
+      "reported_area_ha": 3.5,
+      "property_candidate": "NORDMALING GRÄSMYR 3:14",
+      "sample_count": 5,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 4,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.664561809658984,
+          "lat": 63.760095356071176
+        },
+        {
+          "lon": 19.66084305230688,
+          "lat": 63.75873142134048
+        },
+        {
+          "lon": 19.66888386202944,
+          "lat": 63.76081348253575
+        },
+        {
+          "lon": 19.668061851468504,
+          "lat": 63.76140386968138
+        },
+        {
+          "lon": 19.66024232688654,
+          "lat": 63.75937722960659
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eadd-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 53777-2025",
+      "objectid": 6122989,
+      "notification_date": "2025-10-30T16:44:09+00:00",
+      "reported_area_ha": 3.5,
+      "property_candidate": "NORDMALING GRÄSMYR 3:28",
+      "sample_count": 2,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 2,
+      "sample_indices": [
+        4,
+        5
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.668061851468504,
+          "lat": 63.76140386968138
+        },
+        {
+          "lon": 19.66024232688654,
+          "lat": 63.75937722960659
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 53777-2025",
+      "objectid": 6122989,
+      "notification_date": "2025-10-30T16:44:09+00:00",
+      "reported_area_ha": 3.5,
+      "property_candidate": "NORDMALING GRÄSMYR 4:60",
+      "sample_count": 2,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 2,
+      "sample_indices": [
+        2,
+        3
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.66084305230688,
+          "lat": 63.75873142134048
+        },
+        {
+          "lon": 19.66888386202944,
+          "lat": 63.76081348253575
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb37-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 55792-2025",
+      "objectid": 6131449,
+      "notification_date": "2025-11-11T15:37:27+00:00",
+      "reported_area_ha": 3.2,
+      "property_candidate": "NORDMALING GRÄSMYR 14:1",
+      "sample_count": 5,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 4,
+      "sample_indices": [
+        1,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.66960315313593,
+          "lat": 63.73975738186056
+        },
+        {
+          "lon": 19.670942326644354,
+          "lat": 63.73932127583446
+        },
+        {
+          "lon": 19.670819792315193,
+          "lat": 63.74005214873096
+        },
+        {
+          "lon": 19.66825231977859,
+          "lat": 63.74037111730765
+        },
+        {
+          "lon": 19.666763489879465,
+          "lat": 63.7401837620408
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 55792-2025",
+      "objectid": 6131449,
+      "notification_date": "2025-11-11T15:37:27+00:00",
+      "reported_area_ha": 3.2,
+      "property_candidate": "NORDMALING GRÄSMYR 3:40",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.6686444579335,
+          "lat": 63.73869135806713
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaf7-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 55792-2025",
+      "objectid": 6131449,
+      "notification_date": "2025-11-11T15:37:27+00:00",
+      "reported_area_ha": 3.2,
+      "property_candidate": "NORDMALING GRÄSMYR 5:51",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.6686444579335,
+          "lat": 63.73869135806713
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eba9-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 63253-2025",
+      "objectid": 6162571,
+      "notification_date": "2025-12-19T13:09:13+00:00",
+      "reported_area_ha": 4.8,
+      "property_candidate": "NORDMALING GRÄSMYR 2:40",
+      "sample_count": 6,
+      "interior_sample_count": 2,
+      "boundary_sample_count": 4,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.661886128856306,
+          "lat": 63.76143221586216
+        },
+        {
+          "lon": 19.65819939596736,
+          "lat": 63.761101421759335
+        },
+        {
+          "lon": 19.65999912883166,
+          "lat": 63.7601455402988
+        },
+        {
+          "lon": 19.662809290873287,
+          "lat": 63.7623836968702
+        },
+        {
+          "lon": 19.65929135273122,
+          "lat": 63.761010950899596
+        },
+        {
+          "lon": 19.657850625856643,
+          "lat": 63.76204862588611
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 63253-2025",
+      "objectid": 6162571,
+      "notification_date": "2025-12-19T13:09:13+00:00",
+      "reported_area_ha": 4.8,
+      "property_candidate": "NORDMALING GRÄSMYR 3:28",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        3
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.65999912883166,
+          "lat": 63.7601455402988
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaeb-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 63266-2025",
+      "objectid": 6161943,
+      "notification_date": "2025-12-19T13:29:27+00:00",
+      "reported_area_ha": 6,
+      "property_candidate": "NORDMALING GRÄSMYR 2:40",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.671210735416214,
+          "lat": 63.76610901370867
+        },
+        {
+          "lon": 19.66520150604177,
+          "lat": 63.7642415698525
+        },
+        {
+          "lon": 19.669971924626886,
+          "lat": 63.76544174172357
+        },
+        {
+          "lon": 19.672247902506754,
+          "lat": 63.76500721591717
+        },
+        {
+          "lon": 19.671991493607475,
+          "lat": 63.767207830366836
+        },
+        {
+          "lon": 19.6648185656384,
+          "lat": 63.76439884594938
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eaad-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 404-2026",
+      "objectid": 6193975,
+      "notification_date": "2026-01-06T16:03:45+00:00",
+      "reported_area_ha": 5,
+      "property_candidate": "NORDMALING GRÄSMYR 14:1",
+      "sample_count": 2,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 2,
+      "sample_indices": [
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.694707752038163,
+          "lat": 63.745465778485524
+        },
+        {
+          "lon": 19.688471930895897,
+          "lat": 63.7438511459794
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 404-2026",
+      "objectid": 6193975,
+      "notification_date": "2026-01-06T16:03:45+00:00",
+      "reported_area_ha": 5,
+      "property_candidate": "NORDMALING GRÄSMYR 17:1",
+      "sample_count": 3,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 3,
+      "sample_indices": [
+        2,
+        3,
+        4
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.68996155863497,
+          "lat": 63.742763219356505
+        },
+        {
+          "lon": 19.69443974622353,
+          "lat": 63.74392540528106
+        },
+        {
+          "lon": 19.695572137073942,
+          "lat": 63.74422567859497
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebd6-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 404-2026",
+      "objectid": 6193975,
+      "notification_date": "2026-01-06T16:03:45+00:00",
+      "reported_area_ha": 5,
+      "property_candidate": "NORDMALING GRÄSMYR 5:51",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.692509859323575,
+          "lat": 63.74416711979315
+        },
+        {
+          "lon": 19.68996155863497,
+          "lat": 63.742763219356505
+        },
+        {
+          "lon": 19.69443974622353,
+          "lat": 63.74392540528106
+        },
+        {
+          "lon": 19.695572137073942,
+          "lat": 63.74422567859497
+        },
+        {
+          "lon": 19.694707752038163,
+          "lat": 63.745465778485524
+        },
+        {
+          "lon": 19.688471930895897,
+          "lat": 63.7438511459794
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eba9-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 494-2026",
+      "objectid": 6381821,
+      "notification_date": "2026-01-07T10:17:11+00:00",
+      "reported_area_ha": 2,
+      "property_candidate": "NORDMALING GRÄSMYR 4:89",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.673924073507127,
+          "lat": 63.74515224989681
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb54-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 494-2026",
+      "objectid": 6381821,
+      "notification_date": "2026-01-07T10:17:11+00:00",
+      "reported_area_ha": 2,
+      "property_candidate": "NORDMALING GRÄSMYR 5:35",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        5
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.674039154833512,
+          "lat": 63.74725412423755
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb99-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 494-2026",
+      "objectid": 6381821,
+      "notification_date": "2026-01-07T10:17:11+00:00",
+      "reported_area_ha": 2,
+      "property_candidate": "NORDMALING GRÄSMYR 5:36",
+      "sample_count": 5,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 4,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.67453158044408,
+          "lat": 63.74664706492376
+        },
+        {
+          "lon": 19.673924073507127,
+          "lat": 63.74515224989681
+        },
+        {
+          "lon": 19.676258299813966,
+          "lat": 63.74579789557944
+        },
+        {
+          "lon": 19.674623201239164,
+          "lat": 63.747367705604276
+        },
+        {
+          "lon": 19.67333954007298,
+          "lat": 63.746040005609984
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 501-2026",
+      "objectid": 6200131,
+      "notification_date": "2026-01-07T10:27:27+00:00",
+      "reported_area_ha": 2.2,
+      "property_candidate": "NORDMALING GRÄSMYR 5:36",
+      "sample_count": 6,
+      "interior_sample_count": 3,
+      "boundary_sample_count": 3,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.68354179126258,
+          "lat": 63.74885529014699
+        },
+        {
+          "lon": 19.68110191853784,
+          "lat": 63.74795841254959
+        },
+        {
+          "lon": 19.680374408088362,
+          "lat": 63.74721681986621
+        },
+        {
+          "lon": 19.68107664443134,
+          "lat": 63.74802303657424
+        },
+        {
+          "lon": 19.680753116237476,
+          "lat": 63.74830171931782
+        },
+        {
+          "lon": 19.679048279043762,
+          "lat": 63.747160508086544
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 511-2026",
+      "objectid": 6200299,
+      "notification_date": "2026-01-07T10:35:36+00:00",
+      "reported_area_ha": 8.4,
+      "property_candidate": "NORDMALING GRÄSMYR 5:34",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.64195907915191,
+          "lat": 63.73611820961798
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb98-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 511-2026",
+      "objectid": 6200299,
+      "notification_date": "2026-01-07T10:35:36+00:00",
+      "reported_area_ha": 8.4,
+      "property_candidate": "NORDMALING GRÄSMYR 5:36",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.64669834763578,
+          "lat": 63.737921899553555
+        },
+        {
+          "lon": 19.64195907915191,
+          "lat": 63.73611820961798
+        },
+        {
+          "lon": 19.649213919259534,
+          "lat": 63.739481368304084
+        },
+        {
+          "lon": 19.644125529817174,
+          "lat": 63.73779946726621
+        },
+        {
+          "lon": 19.64337112701139,
+          "lat": 63.73765251061
+        },
+        {
+          "lon": 19.640245338309853,
+          "lat": 63.73771522225808
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eb9a-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 2724-2026",
+      "objectid": 6210885,
+      "notification_date": "2026-01-15T19:36:42+00:00",
+      "reported_area_ha": 0.5,
+      "property_candidate": "NORDMALING GRÄSMYR 5:48",
+      "sample_count": 4,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 3,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.6508937878385,
+          "lat": 63.72872512508623
+        },
+        {
+          "lon": 19.65126130881567,
+          "lat": 63.728135677298724
+        },
+        {
+          "lon": 19.651472087882652,
+          "lat": 63.72903146571177
+        },
+        {
+          "lon": 19.64930305164091,
+          "lat": 63.72841878446068
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eba6-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 2724-2026",
+      "objectid": 6210885,
+      "notification_date": "2026-01-15T19:36:42+00:00",
+      "reported_area_ha": 0.5,
+      "property_candidate": "NORDMALING GRÄSMYR 9:1",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        3
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.651472087882652,
+          "lat": 63.72903146571177
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebc9-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 35785-2026",
+      "objectid": 6542977,
+      "notification_date": "2026-08-31T13:34:28+00:00",
+      "reported_area_ha": 3.3,
+      "property_candidate": "NORDMALING GRÄSMYR 14:1",
+      "sample_count": 6,
+      "interior_sample_count": 1,
+      "boundary_sample_count": 5,
+      "sample_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.68874478432665,
+          "lat": 63.74426341403337
+        },
+        {
+          "lon": 19.687734922537526,
+          "lat": 63.74367088749126
+        },
+        {
+          "lon": 19.69139164057797,
+          "lat": 63.744922120052024
+        },
+        {
+          "lon": 19.69121517436109,
+          "lat": 63.744963402981405
+        },
+        {
+          "lon": 19.6913354508074,
+          "lat": 63.74575633538883
+        },
+        {
+          "lon": 19.687082824903865,
+          "lat": 63.745057442292705
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-ebd1-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "interior_and_boundary_samples",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    },
+    {
+      "notification_id": "A 35785-2026",
+      "objectid": 6542977,
+      "notification_date": "2026-08-31T13:34:28+00:00",
+      "reported_area_ha": 3.3,
+      "property_candidate": "NORDMALING GRÄSMYR 5:51",
+      "sample_count": 1,
+      "interior_sample_count": 0,
+      "boundary_sample_count": 1,
+      "sample_indices": [
+        2
+      ],
+      "sample_coordinates_wgs84": [
+        {
+          "lon": 19.687734922537526,
+          "lat": 63.74367088749126
+        }
+      ],
+      "property_object_ids": [
+        "909a6a84-eba9-90ec-e040-ed8f66444c3f"
+      ],
+      "evidence_class": "boundary_sample_only",
+      "interpretation": "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+    }
   ],
   "notification_relationship_links_count": 8,
   "notification_relationship_links": [
