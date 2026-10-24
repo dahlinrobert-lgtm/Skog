@@ -52,3 +52,16 @@ Run details: https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40082300173
 - Copernicus STAC requests follow `rel=next` links and persist compact scene metadata instead of full scene geometries.
 - `data/scene_index.json` stores scene IDs and acquisition/publication timestamps for delta detection. When this index is first created, the run establishes a baseline and intentionally emits no satellite-scene alerts. This avoids treating the older archive as newly acquired imagery.
 - The next scheduled run is needed to verify these changes against the live services. Until then, pagination and distance-query behavior are implemented but not yet live-run validated.
+
+## Daily history of completed-harvest polygons
+
+The scheduled workflow now also runs `scripts/snapshot_completed.py` against Skogsstyrelsen's public completed-harvest layer.
+
+- `data/completed_latest.json` stores the latest feature attributes, geometry hashes, and ID-level change diagnostics.
+- `data/snapshots/completed_YYYYMMDDTHHMMSSZ.geojson.gz` stores the full daily GeoJSON geometry in compressed form.
+- The first successful run establishes a baseline; it does not label all existing polygons as new.
+- Later runs report IDs newly present, IDs no longer returned by the query, and IDs whose geometry changed.
+
+**Interpretation:** a missing ID is not proof that Skogsstyrelsen deleted a case or that felling occurred. It means only that the ID was not returned in the current query. Changes can also reflect source revisions, service/query behavior, or spatial filtering. The completed-harvest product is based on satellite change detection and Skogsstyrelsen cautions that it is a guidance layer, not a direct statistical ground truth.
+
+The daily archive lets us compare full polygon geometries across observation dates. The existing notification snapshots and these completed-layer snapshots can then be used to investigate whether a planned polygon disappears around the time a nearby completed polygon appears.
