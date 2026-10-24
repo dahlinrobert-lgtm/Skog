@@ -69,6 +69,10 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.12.1/proj4.min.js"></script>
 <script>
 const dataUrl = "https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/latest.json";
+// Define SWEREF 99 TM explicitly; proj4js does not bundle EPSG:3006 by default.
+if (typeof proj4 !== "undefined") {
+  proj4.defs("EPSG:3006", "+proj=utm +zone=33 +ellps=GRS80 +units=m +no_defs");
+}
 let allFeatures = [];
 const fmtDate = value => {
   if (value === null || value === undefined || value === "") return "–";
