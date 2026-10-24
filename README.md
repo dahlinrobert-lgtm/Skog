@@ -96,7 +96,7 @@ New planned-notification snapshots use a backwards-compatible mixed archive:
 
 - `data/latest.json` remains the complete current state for the dashboard and other direct consumers.
 - Historical `data/snapshots/YYYYMMDDTHHMMSSZ.json` files are full checkpoints when establishing a baseline, when the query scope changes, or at least every 30 days.
-- Between checkpoints, the snapshot stores only added, updated, and no-longer-returned feature IDs plus the full feature records for additions/updates. Unchanged feature geometries and attributes are not repeated.
+- Between checkpoints, the snapshot stores only added, updated, and no-longer-returned feature IDs. Unchanged features are omitted; for an attribute-only update, the geometry is omitted and reused from the base snapshot. Geometry and attribute hashes are stored separately for changed features.
 - `scripts/snapshot_store.py` reconstructs legacy full snapshots and new delta snapshots for the notification-history and change-analysis pipelines.
 - Failed notification queries are rejected before snapshot persistence. A query-scope change forces a full checkpoint rather than a delta, so IDs from different search areas are not compared as if the source register changed.
 - `python scripts/audit_snapshots.py` reports current stored bytes, reconstructable snapshots, unchanged-feature share and a reconstructed full-snapshot equivalent. The equivalent is an estimate and does not measure Git's historical object storage.
