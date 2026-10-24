@@ -1,0 +1,3775 @@
+{
+  "generated_at": "2026-10-24T18:56:25.343268Z",
+  "area": {
+    "name": "Gräsmyr, Nordmalings kommun",
+    "latitude": 63.74646,
+    "longitude": 19.66455,
+    "radius_km": 10,
+    "property_tract_prefix": "Gräsmyr",
+    "source_filters": {
+      "recent_cutting_notification_days": 60,
+      "alert_only_on_new_ids": true,
+      "catalogue_page_size": 100,
+      "catalogue_history_days": 550
+    }
+  },
+  "method": {
+    "projection": "EPSG:3006",
+    "spatial_test": "polygon intersection",
+    "time_window": "A completed polygon is temporally plausible when its Avvdatum is between the planned Inkomdatum and three years after it. Missing/unparseable dates are not counted as time-window matches.",
+    "meaningful_overlap_threshold": "intersection >= 0.02 ha and overlap share >= 15% of at least one polygon",
+    "completed_layer_warning": "Satellite-based change-detection layer. Spatial overlaps are candidates for manual review, not proof that a planned case was executed.",
+    "missing_planned_id_warning": "An ID missing from a later query is only not returned by the current query; it does not prove deletion, expiry, or felling."
+  },
+  "sources": {
+    "latest_planned_checked_at": "2026-10-24T18:56:02.286600Z",
+    "latest_completed_checked_at": "2026-10-24T18:56:12.300557Z",
+    "completed_archive": "completed_20261024T185612Z.geojson.gz",
+    "planned_snapshots_read": 5,
+    "unreadable_snapshots": []
+  },
+  "counts": {
+    "current_planned_features": 164,
+    "current_completed_features": 1631,
+    "completed_geometries_loaded": 1631,
+    "planned_with_only_weak_overlap": 53,
+    "planned_without_current_overlap": 71,
+    "planned_with_meaningful_overlap_within_3_years": 28,
+    "planned_with_meaningful_overlap_outside_3_years": 12
+  },
+  "planned_persistence_events": [
+    {
+      "from_snapshot": "20261024T093149Z.json",
+      "to_snapshot": "20261024T110200Z.json",
+      "from_checked_at": "2026-10-24T09:31:49.412209+00:00",
+      "to_checked_at": "2026-10-24T11:02:00.501300Z",
+      "appeared_count": 0,
+      "not_returned_count": 89,
+      "appeared_ids": [],
+      "not_returned_ids": [
+        "3308454",
+        "3952679",
+        "4760022",
+        "4980968",
+        "4987900",
+        "5002053",
+        "5002914",
+        "5008914",
+        "5023611",
+        "5033130",
+        "5081913",
+        "5089146",
+        "5089157",
+        "5089499",
+        "5091645",
+        "5092481",
+        "5094549",
+        "5114353",
+        "5114878",
+        "5116974",
+        "5118234",
+        "5122538",
+        "5136473",
+        "5139904",
+        "5158654",
+        "5177790",
+        "5214182",
+        "5241829",
+        "5244505",
+        "5245055",
+        "5260432",
+        "5266814",
+        "5296813",
+        "5304499",
+        "5306687",
+        "5306813",
+        "5323490",
+        "5338879",
+        "5340954",
+        "5402182",
+        "6057434",
+        "6078661",
+        "6096727",
+        "6110987",
+        "6112868",
+        "6120609",
+        "6120977",
+        "6133942",
+        "6134999",
+        "6135021",
+        "6135244",
+        "6145231",
+        "6216703",
+        "6238806",
+        "6241037",
+        "6244606",
+        "6270206",
+        "6304017",
+        "6365084",
+        "6379336",
+        "6385695",
+        "6400618",
+        "6402072",
+        "6435569",
+        "6435920",
+        "6450637",
+        "6450778",
+        "6451114",
+        "6451826",
+        "6451937",
+        "6451943",
+        "6452179",
+        "6452261",
+        "6460482",
+        "6460526",
+        "6486830",
+        "6515766",
+        "6515799",
+        "6515925",
+        "6516231",
+        "6516570",
+        "6516728",
+        "6516871",
+        "6517437",
+        "6517729",
+        "6532255",
+        "6536767",
+        "6546606",
+        "6554615"
+      ]
+    }
+  ],
+  "planned_vs_completed": [
+    {
+      "planned_object_id": "6382743",
+      "case_number": "A 54368-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1762249439000,
+      "planned_area_ha": 14.8,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "6072154",
+          "intersection_ha": 8.9825,
+          "planned_overlap_pct": 60.7,
+          "completed_overlap_pct": 96.5,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1780012800000,
+          "completed_area_ha": 9.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-09-27",
+          "efterbild": "S2MSI2A_2026-05-29"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5027672",
+      "case_number": "A 17496-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1681776000000,
+      "planned_area_ha": 12.8,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 3,
+      "best_candidates": [
+        {
+          "completed_object_id": "5377893",
+          "intersection_ha": 7.9534,
+          "planned_overlap_pct": 60.6,
+          "completed_overlap_pct": 88.0,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1716163200000,
+          "completed_area_ha": 9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2022-08-26",
+          "efterbild": "S2MSI2A_2024-05-20"
+        },
+        {
+          "completed_object_id": "4701424",
+          "intersection_ha": 0.1082,
+          "planned_overlap_pct": 0.8,
+          "completed_overlap_pct": 2.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1498860000000,
+          "completed_area_ha": 5.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2AT33VWKL1C160721102059MS",
+          "efterbild": "S2B170701102023T34VDR_S2MSI1C_170701102023"
+        },
+        {
+          "completed_object_id": "6064714",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1780099200000,
+          "completed_area_ha": 3.6,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-09-20",
+          "efterbild": "S2MSI2A_2026-05-30"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5241903",
+      "case_number": "A 62553-2021",
+      "municipality": "VÄNNÄS",
+      "received_date": 1635724800000,
+      "planned_area_ha": 10.2,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5247086",
+          "intersection_ha": 5.9425,
+          "planned_overlap_pct": 58.0,
+          "completed_overlap_pct": 78.3,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1653264000000,
+          "completed_area_ha": 7.6,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2022-05-23"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5090061",
+      "case_number": "A 12375-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1711497600000,
+      "planned_area_ha": 5.7,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 5,
+      "best_candidates": [
+        {
+          "completed_object_id": "5231373",
+          "intersection_ha": 3.9432,
+          "planned_overlap_pct": 68.5,
+          "completed_overlap_pct": 97.1,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1726099200000,
+          "completed_area_ha": 4.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-10-01",
+          "efterbild": "S2MSI2A_2024-09-12"
+        },
+        {
+          "completed_object_id": "5478538",
+          "intersection_ha": 0.0002,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1755216000000,
+          "completed_area_ha": 3.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2024-09-19",
+          "efterbild": "S2MSI2A_2025-08-15"
+        },
+        {
+          "completed_object_id": "6077599",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1778976000000,
+          "completed_area_ha": 1.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-09-27",
+          "efterbild": "S2MSI2A_2026-05-17"
+        },
+        {
+          "completed_object_id": "5717117",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1120435200000,
+          "completed_area_ha": 1.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5054219040717101822X1",
+          "efterbild": "SP5057219050706100835X1"
+        },
+        {
+          "completed_object_id": "5881315",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1563704589000,
+          "completed_area_ha": 1.6,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4938624",
+      "case_number": "A 38285-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1662595200000,
+      "planned_area_ha": 4.8,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5257142",
+          "intersection_ha": 2.8775,
+          "planned_overlap_pct": 60.0,
+          "completed_overlap_pct": 98.7,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1686096000000,
+          "completed_area_ha": 2.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2023-06-07"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5128360",
+      "case_number": "A 59518-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1734010821000,
+      "planned_area_ha": 5.2,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 4,
+      "best_candidates": [
+        {
+          "completed_object_id": "3781831",
+          "intersection_ha": 2.8747,
+          "planned_overlap_pct": 55.4,
+          "completed_overlap_pct": 94.8,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1563697389000,
+          "completed_area_ha": 3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        },
+        {
+          "completed_object_id": "5635739",
+          "intersection_ha": 0.5244,
+          "planned_overlap_pct": 10.1,
+          "completed_overlap_pct": 100.0,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1558915200000,
+          "completed_area_ha": 0.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2017-07-01",
+          "efterbild": "S2MSI2A_2019-05-27"
+        },
+        {
+          "completed_object_id": "5497077",
+          "intersection_ha": 0.0304,
+          "planned_overlap_pct": 0.6,
+          "completed_overlap_pct": 1.4,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1441836000000,
+          "completed_area_ha": 2.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50542181407260924501J0",
+          "efterbild": "IRSR2025021150910102709L30"
+        },
+        {
+          "completed_object_id": "5634433",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1563697389000,
+          "completed_area_ha": 1.6,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4936018",
+      "case_number": "A 12374-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1711497600000,
+      "planned_area_ha": 4.3,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 3,
+      "best_candidates": [
+        {
+          "completed_object_id": "5240103",
+          "intersection_ha": 2.7293,
+          "planned_overlap_pct": 62.2,
+          "completed_overlap_pct": 91.6,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1748304000000,
+          "completed_area_ha": 3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-10-01",
+          "efterbild": "S2MSI2A_2025-05-27"
+        },
+        {
+          "completed_object_id": "5231373",
+          "intersection_ha": 0.0206,
+          "planned_overlap_pct": 0.5,
+          "completed_overlap_pct": 0.5,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1726099200000,
+          "completed_area_ha": 4.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-10-01",
+          "efterbild": "S2MSI2A_2024-09-12"
+        },
+        {
+          "completed_object_id": "6077599",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1778976000000,
+          "completed_area_ha": 1.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-09-27",
+          "efterbild": "S2MSI2A_2026-05-17"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5191504",
+      "case_number": "A 19865-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1716249600000,
+      "planned_area_ha": 4.1,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5271970",
+          "intersection_ha": 2.3956,
+          "planned_overlap_pct": 58.5,
+          "completed_overlap_pct": 88.7,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1748131200000,
+          "completed_area_ha": 2.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-10-08",
+          "efterbild": "S2MSI2A_2025-05-25"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4906505",
+      "case_number": "A 67514-2021",
+      "municipality": "VÄNNÄS",
+      "received_date": 1637755447000,
+      "planned_area_ha": 2.7,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4463899",
+          "intersection_ha": 1.8414,
+          "planned_overlap_pct": 67.2,
+          "completed_overlap_pct": 99.2,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1654387200000,
+          "completed_area_ha": 1.9,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2022-06-05"
+        },
+        {
+          "completed_object_id": "4133713",
+          "intersection_ha": 0.1337,
+          "planned_overlap_pct": 4.9,
+          "completed_overlap_pct": 2.5,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1277337600000,
+          "completed_area_ha": 5.3,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "IRP6025021090625103314M3",
+          "efterbild": "SP5057219100624102303X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6495322",
+      "case_number": "A 20062-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1777039716000,
+      "planned_area_ha": 2.9,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "6118864",
+          "intersection_ha": 1.7757,
+          "planned_overlap_pct": 61.8,
+          "completed_overlap_pct": 93.9,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1787875200000,
+          "completed_area_ha": 1.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2026-04-12",
+          "efterbild": "S2MSI2A_2026-08-28"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5129096",
+      "case_number": "A 73537-2021",
+      "municipality": "UMEÅ",
+      "received_date": 1639958400000,
+      "planned_area_ha": 2.6,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5207540",
+          "intersection_ha": 1.6896,
+          "planned_overlap_pct": 65.1,
+          "completed_overlap_pct": 99.7,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1695686400000,
+          "completed_area_ha": 1.7,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2017-07-09",
+          "efterbild": "S2MSI2A_2023-09-26"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6401466",
+      "case_number": "A 19678-2024",
+      "municipality": "UMEÅ",
+      "received_date": 1716205133000,
+      "planned_area_ha": 2.5,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "6097310",
+          "intersection_ha": 1.544,
+          "planned_overlap_pct": 44.2,
+          "completed_overlap_pct": 94.5,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1777939200000,
+          "completed_area_ha": 1.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2024-05-15",
+          "efterbild": "S2MSI2A_2026-05-05"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5238238",
+      "case_number": "A 55634-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1699401600000,
+      "planned_area_ha": 2.7,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5349828",
+          "intersection_ha": 1.5064,
+          "planned_overlap_pct": 55.3,
+          "completed_overlap_pct": 89.5,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1721347200000,
+          "completed_area_ha": 1.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-07-02",
+          "efterbild": "S2MSI2A_2024-07-19"
+        },
+        {
+          "completed_object_id": "5349827",
+          "intersection_ha": 0.1049,
+          "planned_overlap_pct": 3.9,
+          "completed_overlap_pct": 15.9,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1721606400000,
+          "completed_area_ha": 0.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-07-02",
+          "efterbild": "S2MSI2A_2024-07-22"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6381821",
+      "case_number": "A 494-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1767781031000,
+      "planned_area_ha": 2,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "6066807",
+          "intersection_ha": 1.384,
+          "planned_overlap_pct": 69.2,
+          "completed_overlap_pct": 96.0,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1776038400000,
+          "completed_area_ha": 1.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-10-02",
+          "efterbild": "S2MSI2A_2026-04-13"
+        },
+        {
+          "completed_object_id": "4314793",
+          "intersection_ha": 0.007,
+          "planned_overlap_pct": 0.4,
+          "completed_overlap_pct": 0.2,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1600128000000,
+          "completed_area_ha": 3.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2020-06-13",
+          "efterbild": "S2MSI2A_2020-09-15"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5149993",
+      "case_number": "A 16606-2022",
+      "municipality": "UMEÅ",
+      "received_date": 1650499200000,
+      "planned_area_ha": 1.8,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5294401",
+          "intersection_ha": 1.2194,
+          "planned_overlap_pct": 67.2,
+          "completed_overlap_pct": 96.4,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1717718400000,
+          "completed_area_ha": 1.3,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2017-07-09",
+          "efterbild": "S2MSI2A_2024-06-07"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6065981",
+      "case_number": "A 32312-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1751054728000,
+      "planned_area_ha": 1.8,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "6028744",
+          "intersection_ha": 1.2155,
+          "planned_overlap_pct": 59.2,
+          "completed_overlap_pct": 98.2,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1760054400000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-06-01",
+          "efterbild": "S2MSI2A_2025-10-10"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5133782",
+      "case_number": "A 21622-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1684195200000,
+      "planned_area_ha": 1.7,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5324702",
+          "intersection_ha": 1.1581,
+          "planned_overlap_pct": 71.7,
+          "completed_overlap_pct": 97.2,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1719619200000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2022-08-16",
+          "efterbild": "S2MSI2A_2024-06-29"
+        },
+        {
+          "completed_object_id": "5412354",
+          "intersection_ha": 0.0063,
+          "planned_overlap_pct": 0.4,
+          "completed_overlap_pct": 0.9,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1593036000000,
+          "completed_area_ha": 0.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2B_MSI_20190721T121512_A012389_T34VDR",
+          "efterbild": "S2B_MSI_L1C_TL_MPS__20200625T123149_A017251_T34VDR"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6430092",
+      "case_number": "A 23005-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1779062400000,
+      "planned_area_ha": 3.1,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "4517054",
+          "intersection_ha": 1.15,
+          "planned_overlap_pct": 36.7,
+          "completed_overlap_pct": 97.0,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1277337600000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "IRP6025021090625103314M3",
+          "efterbild": "SP5057219100624102303X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6442021",
+      "case_number": "A 5083-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1738540800000,
+      "planned_area_ha": 2.1,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "6109889",
+          "intersection_ha": 1.1183,
+          "planned_overlap_pct": 49.4,
+          "completed_overlap_pct": 89.5,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1782950400000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-09-08",
+          "efterbild": "S2MSI2A_2026-07-02"
+        },
+        {
+          "completed_object_id": "5517818",
+          "intersection_ha": 0.143,
+          "planned_overlap_pct": 6.3,
+          "completed_overlap_pct": 4.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1406359498000,
+          "completed_area_ha": 3.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50572191308051013421J0",
+          "efterbild": "SPOT50542191407260924582J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5122706",
+      "case_number": "A 34489-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1724251255000,
+      "planned_area_ha": 1.5,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5422372",
+          "intersection_ha": 1.074,
+          "planned_overlap_pct": 69.4,
+          "completed_overlap_pct": 95.7,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1747526400000,
+          "completed_area_ha": 1.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2024-05-10",
+          "efterbild": "S2MSI2A_2025-05-18"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6376570",
+      "case_number": "A 26576-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1748622579000,
+      "planned_area_ha": 1.7,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "6081608",
+          "intersection_ha": 1.0161,
+          "planned_overlap_pct": 61.3,
+          "completed_overlap_pct": 94.3,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1775952000000,
+          "completed_area_ha": 1.1,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "S2MSI2A_2025-05-10",
+          "efterbild": "S2MSI2A_2026-04-12"
+        },
+        {
+          "completed_object_id": "5575822",
+          "intersection_ha": 0.1289,
+          "planned_overlap_pct": 7.8,
+          "completed_overlap_pct": 2.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1469089259000,
+          "completed_area_ha": 6.1,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "IRSR2025021150910102709L30",
+          "efterbild": "S2AT33VWKL1C160721102059MS"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5227009",
+      "case_number": "A 17462-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1681776000000,
+      "planned_area_ha": 1.5,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5187975",
+          "intersection_ha": 1.0081,
+          "planned_overlap_pct": 67.2,
+          "completed_overlap_pct": 95.4,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1694304000000,
+          "completed_area_ha": 1.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2022-09-05",
+          "efterbild": "S2MSI2A_2023-09-10"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6463502",
+      "case_number": "A 45326-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1758527068000,
+      "planned_area_ha": 1.7,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 3,
+      "best_candidates": [
+        {
+          "completed_object_id": "6114782",
+          "intersection_ha": 1.0068,
+          "planned_overlap_pct": 56.4,
+          "completed_overlap_pct": 86.7,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1783814400000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-08-08",
+          "efterbild": "S2MSI2A_2026-07-12"
+        },
+        {
+          "completed_object_id": "4690725",
+          "intersection_ha": 0.0562,
+          "planned_overlap_pct": 3.1,
+          "completed_overlap_pct": 1.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1498860000000,
+          "completed_area_ha": 5.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2AT33VWKL1C160721102059MS",
+          "efterbild": "S2B170701102023T34VDR_S2MSI1C_170701102023"
+        },
+        {
+          "completed_object_id": "5424531",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1719619200000,
+          "completed_area_ha": 1.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-06-30",
+          "efterbild": "S2MSI2A_2024-06-29"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4975329",
+      "case_number": "A 62203-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1672151139000,
+      "planned_area_ha": 1.6,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5315595",
+          "intersection_ha": 0.9113,
+          "planned_overlap_pct": 56.7,
+          "completed_overlap_pct": 98.6,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1686960000000,
+          "completed_area_ha": 0.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2022-08-12",
+          "efterbild": "S2MSI2A_2023-06-17"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4930235",
+      "case_number": "A 16003-2024",
+      "municipality": "UMEÅ",
+      "received_date": 1713830400000,
+      "planned_area_ha": 1.4,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4290457",
+          "intersection_ha": 0.8365,
+          "planned_overlap_pct": 62.6,
+          "completed_overlap_pct": 70.3,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1652918400000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2020-08-17",
+          "efterbild": "S2MSI2A_2022-05-19"
+        },
+        {
+          "completed_object_id": "5825730",
+          "intersection_ha": 0.0252,
+          "planned_overlap_pct": 1.9,
+          "completed_overlap_pct": 1.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1215043200000,
+          "completed_area_ha": 2.3,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219070703102347X1",
+          "efterbild": "SP5057219080922102150X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5341385",
+      "case_number": "A 51695-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1731313218000,
+      "planned_area_ha": 1.1,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5474456",
+          "intersection_ha": 0.7428,
+          "planned_overlap_pct": 64.4,
+          "completed_overlap_pct": 97.9,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1752019200000,
+          "completed_area_ha": 0.8,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2024-06-11",
+          "efterbild": "S2MSI2A_2025-07-09"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4928107",
+      "case_number": "A 20008-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1745562733000,
+      "planned_area_ha": 1.2,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5423312",
+          "intersection_ha": 0.6989,
+          "planned_overlap_pct": 50.9,
+          "completed_overlap_pct": 61.5,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1558915200000,
+          "completed_area_ha": 1.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2017-07-08",
+          "efterbild": "S2MSI2A_2019-05-27"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6447006",
+      "case_number": "A 25214-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1780012800000,
+      "planned_area_ha": 2.2,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5802288",
+          "intersection_ha": 0.6903,
+          "planned_overlap_pct": 30.2,
+          "completed_overlap_pct": 11.2,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1441836000000,
+          "completed_area_ha": 6.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50542181407260924501J0",
+          "efterbild": "IRSR2025021150910102709L30"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4976216",
+      "case_number": "A 29150-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1720522025000,
+      "planned_area_ha": 1.3,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5237472",
+          "intersection_ha": 0.677,
+          "planned_overlap_pct": 52.4,
+          "completed_overlap_pct": 88.6,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1746835200000,
+          "completed_area_ha": 0.8,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2024-05-15",
+          "efterbild": "S2MSI2A_2025-05-10"
+        },
+        {
+          "completed_object_id": "6072950",
+          "intersection_ha": 0.0001,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1775952000000,
+          "completed_area_ha": 2.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-08-31",
+          "efterbild": "S2MSI2A_2026-04-12"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4971938",
+      "case_number": "A 55632-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1699401600000,
+      "planned_area_ha": 1,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5349822",
+          "intersection_ha": 0.6358,
+          "planned_overlap_pct": 61.5,
+          "completed_overlap_pct": 99.9,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1719014400000,
+          "completed_area_ha": 0.6,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-09-26",
+          "efterbild": "S2MSI2A_2024-06-22"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5244844",
+      "case_number": "A 5302-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1738668098000,
+      "planned_area_ha": 1.1,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5309579",
+          "intersection_ha": 0.6111,
+          "planned_overlap_pct": 48.1,
+          "completed_overlap_pct": 98.5,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1747526400000,
+          "completed_area_ha": 0.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2024-09-22",
+          "efterbild": "S2MSI2A_2025-05-18"
+        },
+        {
+          "completed_object_id": "5993618",
+          "intersection_ha": 0.1712,
+          "planned_overlap_pct": 13.5,
+          "completed_overlap_pct": 13.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1120608000000,
+          "completed_area_ha": 1.3,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219040723100254X1",
+          "efterbild": "SP5057219050706100835X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4945547",
+      "case_number": "A 46434-2022",
+      "municipality": "VÄNNÄS",
+      "received_date": 1665532800000,
+      "planned_area_ha": 0.8,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5351643",
+          "intersection_ha": 0.5287,
+          "planned_overlap_pct": 66.7,
+          "completed_overlap_pct": 98.3,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1716854400000,
+          "completed_area_ha": 0.5,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "S2MSI2A_2018-08-12",
+          "efterbild": "S2MSI2A_2024-05-28"
+        },
+        {
+          "completed_object_id": "5381933",
+          "intersection_ha": 0.0001,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1686096000000,
+          "completed_area_ha": 3.5,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "S2MSI2A_2018-10-19",
+          "efterbild": "S2MSI2A_2023-06-07"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5162889",
+      "case_number": "A 19734-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1745484505000,
+      "planned_area_ha": 0.6,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5931183",
+          "intersection_ha": 0.4327,
+          "planned_overlap_pct": 53.0,
+          "completed_overlap_pct": 1.1,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1375690414000,
+          "completed_area_ha": 39.1,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "SPOT40542181209120857302I7",
+          "efterbild": "SPOT50572181308051013341J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4968307",
+      "case_number": "A 15745-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1680705375000,
+      "planned_area_ha": 1.8,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "6084955",
+          "intersection_ha": 0.3977,
+          "planned_overlap_pct": 21.8,
+          "completed_overlap_pct": 34.1,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1775779200000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-09-20",
+          "efterbild": "S2MSI2A_2026-04-10"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5312578",
+      "case_number": "A 23563-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1747317986000,
+      "planned_area_ha": 8.2,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5859816",
+          "intersection_ha": 0.3725,
+          "planned_overlap_pct": 4.4,
+          "completed_overlap_pct": 18.9,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1375690422000,
+          "completed_area_ha": 2,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SPOT40572181206231001072I2",
+          "efterbild": "SPOT50572191308051013421J0"
+        },
+        {
+          "completed_object_id": "5859815",
+          "intersection_ha": 0.1655,
+          "planned_overlap_pct": 1.9,
+          "completed_overlap_pct": 1.7,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1375690422000,
+          "completed_area_ha": 10,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SPOT40572181206231001072I2",
+          "efterbild": "SPOT50572191308051013421J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6162571",
+      "case_number": "A 63253-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1766149753000,
+      "planned_area_ha": 4.8,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "6006643",
+          "intersection_ha": 0.3112,
+          "planned_overlap_pct": 6.4,
+          "completed_overlap_pct": 31.2,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1090022400000,
+          "completed_area_ha": 1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5054218030810095551X2",
+          "efterbild": "SP5054218040717101814X1"
+        },
+        {
+          "completed_object_id": "3220787",
+          "intersection_ha": 0.0322,
+          "planned_overlap_pct": 0.7,
+          "completed_overlap_pct": 3.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1245888000000,
+          "completed_area_ha": 1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5057219080922102150X1",
+          "efterbild": "IRP6025021090625103314M3"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5245889",
+      "case_number": "A 8484-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1676419200000,
+      "planned_area_ha": 0.7,
+      "status": "meaningful_overlap_within_3_years",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5292338",
+          "intersection_ha": 0.272,
+          "planned_overlap_pct": 40.3,
+          "completed_overlap_pct": 11.3,
+          "meaningful": true,
+          "within_3_year_window": true,
+          "completed_date": 1715731200000,
+          "completed_area_ha": 2.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-06-07",
+          "efterbild": "S2MSI2A_2024-05-15"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6161943",
+      "case_number": "A 63266-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1766150967000,
+      "planned_area_ha": 6,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5570614",
+          "intersection_ha": 0.2464,
+          "planned_overlap_pct": 3.3,
+          "completed_overlap_pct": 20.8,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1090022400000,
+          "completed_area_ha": 1.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5054218030810095551X2",
+          "efterbild": "SP5054218040717101814X1"
+        },
+        {
+          "completed_object_id": "5460297",
+          "intersection_ha": 0.001,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1750118400000,
+          "completed_area_ha": 4.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-07-10",
+          "efterbild": "S2MSI2A_2025-06-17"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6105976",
+      "case_number": "A 50379-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1760451571000,
+      "planned_area_ha": 0.5,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5491133",
+          "intersection_ha": 0.2386,
+          "planned_overlap_pct": 18.4,
+          "completed_overlap_pct": 4.9,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1436047200000,
+          "completed_area_ha": 4.8,
+          "completed_municipality": "UMEÅ",
+          "forebild": "IRSR2028021140602101811L30",
+          "efterbild": "LSAT8194015150706100500OT0"
+        },
+        {
+          "completed_object_id": "5615755",
+          "intersection_ha": 0.0314,
+          "planned_overlap_pct": 2.4,
+          "completed_overlap_pct": 2.9,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1436133600000,
+          "completed_area_ha": 1.1,
+          "completed_municipality": "UMEÅ",
+          "forebild": "IRSR2028021140602101811L30",
+          "efterbild": "LSAT8194015150706100500OT0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5352650",
+      "case_number": "A 29569-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1750150181000,
+      "planned_area_ha": 2.6,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5125788",
+          "intersection_ha": 0.2194,
+          "planned_overlap_pct": 8.4,
+          "completed_overlap_pct": 3.4,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1245888000000,
+          "completed_area_ha": 6.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5057219080922102150X1",
+          "efterbild": "IRP6025021090625103314M3"
+        },
+        {
+          "completed_object_id": "4841787",
+          "intersection_ha": 0.0036,
+          "planned_overlap_pct": 0.1,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1653264000000,
+          "completed_area_ha": 3.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2022-05-23"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "3529804",
+      "case_number": "A 39676-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1663113600000,
+      "planned_area_ha": 0.9,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "4465088",
+          "intersection_ha": 0.1753,
+          "planned_overlap_pct": 14.4,
+          "completed_overlap_pct": 6.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1277337600000,
+          "completed_area_ha": 2.8,
+          "completed_municipality": "NORDMALING",
+          "forebild": "IRP6025021090625103314M3",
+          "efterbild": "SP5057219100624102303X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5114635",
+      "case_number": "A 8939-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1740480353000,
+      "planned_area_ha": 0.3,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5552487",
+          "intersection_ha": 0.1583,
+          "planned_overlap_pct": 14.2,
+          "completed_overlap_pct": 5.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1215043200000,
+          "completed_area_ha": 3,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "SP5057218070609094520X1",
+          "efterbild": "IRP6025021080817102858M3"
+        },
+        {
+          "completed_object_id": "4388888",
+          "intersection_ha": 0.0275,
+          "planned_overlap_pct": 2.5,
+          "completed_overlap_pct": 0.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1060473600000,
+          "completed_area_ha": 9,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "LA7193015020820094713M+",
+          "efterbild": "SP5054218030810095551X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6542909",
+      "case_number": "A 42510-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1791897969000,
+      "planned_area_ha": 4.4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5890292",
+          "intersection_ha": 0.1473,
+          "planned_overlap_pct": 2.9,
+          "completed_overlap_pct": 0.9,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1090022400000,
+          "completed_area_ha": 15.5,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219030810095559X2",
+          "efterbild": "SP5057219040723100254X1"
+        },
+        {
+          "completed_object_id": "5218476",
+          "intersection_ha": 0.079,
+          "planned_overlap_pct": 1.5,
+          "completed_overlap_pct": 1.9,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1746835200000,
+          "completed_area_ha": 4.2,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2023-10-16",
+          "efterbild": "S2MSI2A_2025-05-10"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6507783",
+      "case_number": "A 37709-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1789375045000,
+      "planned_area_ha": 6.9,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5495133",
+          "intersection_ha": 0.1363,
+          "planned_overlap_pct": 1.9,
+          "completed_overlap_pct": 5.2,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1347433055000,
+          "completed_area_ha": 2.6,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50572191107081033292J0",
+          "efterbild": "SPOT40542181209120857302I7"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4071666",
+      "case_number": "A 18641-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1651795200000,
+      "planned_area_ha": 2.4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "4868802",
+          "intersection_ha": 0.1231,
+          "planned_overlap_pct": 5.1,
+          "completed_overlap_pct": 6.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1340438469000,
+          "completed_area_ha": 1.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50572191107081033292J0",
+          "efterbild": "SPOT40572181206231001072I2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6073477",
+      "case_number": "A 43030-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1757376000000,
+      "planned_area_ha": 3.2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5931183",
+          "intersection_ha": 0.11,
+          "planned_overlap_pct": 2.6,
+          "completed_overlap_pct": 0.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1375690414000,
+          "completed_area_ha": 39.1,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "SPOT40542181209120857302I7",
+          "efterbild": "SPOT50572181308051013341J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6548126",
+      "case_number": "A 36518-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1788523803000,
+      "planned_area_ha": 1.4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5559038",
+          "intersection_ha": 0.1015,
+          "planned_overlap_pct": 6.1,
+          "completed_overlap_pct": 1.4,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1251072000000,
+          "completed_area_ha": 7,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219080922102150X1",
+          "efterbild": "SP4058219090824094924X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6238812",
+      "case_number": "A 8694-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1770979665000,
+      "planned_area_ha": 5.1,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4815590",
+          "intersection_ha": 0.0982,
+          "planned_overlap_pct": 1.9,
+          "completed_overlap_pct": 0.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1060473600000,
+          "completed_area_ha": 17.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "LA7193015020820094713M+",
+          "efterbild": "SP5057219030810095559X2"
+        },
+        {
+          "completed_object_id": "5853626",
+          "intersection_ha": 0.0124,
+          "planned_overlap_pct": 0.2,
+          "completed_overlap_pct": 1.4,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1120435200000,
+          "completed_area_ha": 0.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5054219040717101822X1",
+          "efterbild": "SP5057219050706100835X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6542981",
+      "case_number": "A 42506-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1791896668000,
+      "planned_area_ha": 1.7,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5890292",
+          "intersection_ha": 0.0951,
+          "planned_overlap_pct": 4.2,
+          "completed_overlap_pct": 0.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1090022400000,
+          "completed_area_ha": 15.5,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219030810095559X2",
+          "efterbild": "SP5057219040723100254X1"
+        },
+        {
+          "completed_object_id": "5218476",
+          "intersection_ha": 0.0142,
+          "planned_overlap_pct": 0.6,
+          "completed_overlap_pct": 0.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1746835200000,
+          "completed_area_ha": 4.2,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2023-10-16",
+          "efterbild": "S2MSI2A_2025-05-10"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5084989",
+      "case_number": "A 16907-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1744100682000,
+      "planned_area_ha": 6.1,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "6026291",
+          "intersection_ha": 0.0944,
+          "planned_overlap_pct": 1.5,
+          "completed_overlap_pct": 0.5,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1406325600000,
+          "completed_area_ha": 19.8,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SPOT50572191308051013421J0",
+          "efterbild": "SPOT50542181407260924501J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5265336",
+      "case_number": "A 878-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1736349442000,
+      "planned_area_ha": 4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "4436751",
+          "intersection_ha": 0.0924,
+          "planned_overlap_pct": 2.2,
+          "completed_overlap_pct": 1.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1029024000000,
+          "completed_area_ha": 8.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "LA5194015010816095323MM",
+          "efterbild": "LA7194015020811095322M+"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5151544",
+      "case_number": "A 18639-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1651795200000,
+      "planned_area_ha": 4.4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5399110",
+          "intersection_ha": 0.0888,
+          "planned_overlap_pct": 2.0,
+          "completed_overlap_pct": 3.9,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1526688000000,
+          "completed_area_ha": 2.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2017-07-06",
+          "efterbild": "S2MSI2A_2018-05-19"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6210997",
+      "case_number": "A 2955-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1768573858000,
+      "planned_area_ha": 5.2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 3,
+      "best_candidates": [
+        {
+          "completed_object_id": "5342112",
+          "intersection_ha": 0.0836,
+          "planned_overlap_pct": 1.5,
+          "completed_overlap_pct": 2.9,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1686096000000,
+          "completed_area_ha": 2.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2023-06-07"
+        },
+        {
+          "completed_object_id": "3408562",
+          "intersection_ha": 0.0804,
+          "planned_overlap_pct": 1.4,
+          "completed_overlap_pct": 6.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1060473600000,
+          "completed_area_ha": 1.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "LA7193015020820094713M+",
+          "efterbild": "SP5054218030810095551X2"
+        },
+        {
+          "completed_object_id": "4936290",
+          "intersection_ha": 0.0002,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1151625600000,
+          "completed_area_ha": 4.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5057219050706100835X1",
+          "efterbild": "SP5057218060630100303X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5249615",
+      "case_number": "A 9169-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1740561819000,
+      "planned_area_ha": 1.6,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5674423",
+          "intersection_ha": 0.0821,
+          "planned_overlap_pct": 5.0,
+          "completed_overlap_pct": 0.2,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1120608000000,
+          "completed_area_ha": 35.9,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219040723100254X1",
+          "efterbild": "SP5057219050706100835X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6525147",
+      "case_number": "A 40418-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1790694876000,
+      "planned_area_ha": 5.5,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5629528",
+          "intersection_ha": 0.0735,
+          "planned_overlap_pct": 1.3,
+          "completed_overlap_pct": 0.7,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1347433055000,
+          "completed_area_ha": 11.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50572191107081033292J0",
+          "efterbild": "SPOT40542181209120857302I7"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6065369",
+      "case_number": "A 41751-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1756771200000,
+      "planned_area_ha": 1.5,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 5,
+      "best_candidates": [
+        {
+          "completed_object_id": "4519165",
+          "intersection_ha": 0.073,
+          "planned_overlap_pct": 3.2,
+          "completed_overlap_pct": 0.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1277337600000,
+          "completed_area_ha": 11.7,
+          "completed_municipality": "UMEÅ",
+          "forebild": "IRP6025021090625103314M3",
+          "efterbild": "SP5057219100624102303X2"
+        },
+        {
+          "completed_object_id": "5409327",
+          "intersection_ha": 0.0231,
+          "planned_overlap_pct": 1.0,
+          "completed_overlap_pct": 0.2,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1685318400000,
+          "completed_area_ha": 10.1,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2023-05-29"
+        },
+        {
+          "completed_object_id": "4843689",
+          "intersection_ha": 0.0139,
+          "planned_overlap_pct": 0.6,
+          "completed_overlap_pct": 1.4,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1600819200000,
+          "completed_area_ha": 1,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2019-09-04",
+          "efterbild": "S2MSI2A_2020-09-23"
+        },
+        {
+          "completed_object_id": "4583511",
+          "intersection_ha": 0.0061,
+          "planned_overlap_pct": 0.3,
+          "completed_overlap_pct": 0.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1622678400000,
+          "completed_area_ha": 0.9,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2019-09-04",
+          "efterbild": "S2MSI2A_2021-06-03"
+        },
+        {
+          "completed_object_id": "5392427",
+          "intersection_ha": 0.0001,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1660262400000,
+          "completed_area_ha": 4.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2018-10-19",
+          "efterbild": "S2MSI2A_2022-08-12"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6068346",
+      "case_number": "A 42054-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1756857600000,
+      "planned_area_ha": 2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5874773",
+          "intersection_ha": 0.0727,
+          "planned_overlap_pct": 3.3,
+          "completed_overlap_pct": 1.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1375690422000,
+          "completed_area_ha": 5.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT40542181209120857302I7",
+          "efterbild": "SPOT50572191308051013421J0"
+        },
+        {
+          "completed_object_id": "5853287",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1563660000000,
+          "completed_area_ha": 3.3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6200299",
+      "case_number": "A 511-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1767782136000,
+      "planned_area_ha": 8.4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 3,
+      "best_candidates": [
+        {
+          "completed_object_id": "6077599",
+          "intersection_ha": 0.0648,
+          "planned_overlap_pct": 0.7,
+          "completed_overlap_pct": 3.5,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1778976000000,
+          "completed_area_ha": 1.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2025-09-27",
+          "efterbild": "S2MSI2A_2026-05-17"
+        },
+        {
+          "completed_object_id": "5231373",
+          "intersection_ha": 0.0658,
+          "planned_overlap_pct": 0.7,
+          "completed_overlap_pct": 1.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1726099200000,
+          "completed_area_ha": 4.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-10-01",
+          "efterbild": "S2MSI2A_2024-09-12"
+        },
+        {
+          "completed_object_id": "5933562",
+          "intersection_ha": 0.0362,
+          "planned_overlap_pct": 0.4,
+          "completed_overlap_pct": 3.5,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1375690422000,
+          "completed_area_ha": 1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT40572181206231001072I2",
+          "efterbild": "SPOT50572191308051013421J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5053259",
+      "case_number": "A 8935-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1740480335000,
+      "planned_area_ha": 0.2,
+      "status": "meaningful_overlap_outside_3_years",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5567314",
+          "intersection_ha": 0.0559,
+          "planned_overlap_pct": 19.9,
+          "completed_overlap_pct": 12.5,
+          "meaningful": true,
+          "within_3_year_window": false,
+          "completed_date": 1215043200000,
+          "completed_area_ha": 0.4,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "SP5057218070609094520X1",
+          "efterbild": "IRP6025021080817102858M3"
+        },
+        {
+          "completed_object_id": "5135455",
+          "intersection_ha": 0.0005,
+          "planned_overlap_pct": 0.2,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1060473600000,
+          "completed_area_ha": 0.8,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "LA7193015020820094713M+",
+          "efterbild": "SP5054218030810095551X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6552328",
+      "case_number": "A 36847-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1788797886000,
+      "planned_area_ha": 1.2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "5488234",
+          "intersection_ha": 0.0538,
+          "planned_overlap_pct": 4.6,
+          "completed_overlap_pct": 0.9,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1183420800000,
+          "completed_area_ha": 6.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5057219060612104924X2",
+          "efterbild": "SP5057219070703102347X1"
+        },
+        {
+          "completed_object_id": "4121023",
+          "intersection_ha": 0.0011,
+          "planned_overlap_pct": 0.1,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1041292800000,
+          "completed_area_ha": 3.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "LA7193015020820094713M+",
+          "efterbild": "SP5057219030810095559X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6549451",
+      "case_number": "A 36462-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1788516924000,
+      "planned_area_ha": 1,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5959573",
+          "intersection_ha": 0.0425,
+          "planned_overlap_pct": 3.2,
+          "completed_overlap_pct": 0.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1215043200000,
+          "completed_area_ha": 6.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219070703102347X1",
+          "efterbild": "SP5057219080922102150X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5149738",
+      "case_number": "A 7853-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1739895321000,
+      "planned_area_ha": 1.5,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4832424",
+          "intersection_ha": 0.0424,
+          "planned_overlap_pct": 2.7,
+          "completed_overlap_pct": 5.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1340438469000,
+          "completed_area_ha": 0.8,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SPOT50572191107081033292J0",
+          "efterbild": "SPOT40572181206231001072I2"
+        },
+        {
+          "completed_object_id": "4557755",
+          "intersection_ha": 0.0001,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1340438469000,
+          "completed_area_ha": 8,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SPOT50572191107081033292J0",
+          "efterbild": "SPOT40572181206231001072I2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5257126",
+      "case_number": "A 7213-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1739532103000,
+      "planned_area_ha": 0.7,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5861594",
+          "intersection_ha": 0.0409,
+          "planned_overlap_pct": 5.1,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1310083200000,
+          "completed_area_ha": 35.9,
+          "completed_municipality": "UMEÅ",
+          "forebild": "IRP6027021100817102349M3",
+          "efterbild": "SP5057218110708103321X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5003856",
+      "case_number": "A 44987-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1728518400000,
+      "planned_area_ha": 3,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5023278",
+          "intersection_ha": 0.0375,
+          "planned_overlap_pct": 1.3,
+          "completed_overlap_pct": 1.5,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1277337600000,
+          "completed_area_ha": 2.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "IRP6025021090625103314M3",
+          "efterbild": "SP5057219100624102303X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4982072",
+      "case_number": "A 72873-2021",
+      "municipality": "NORDMALING",
+      "received_date": 1639699200000,
+      "planned_area_ha": 0.4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5210293",
+          "intersection_ha": 0.0343,
+          "planned_overlap_pct": 7.8,
+          "completed_overlap_pct": 0.9,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1686182400000,
+          "completed_area_ha": 3.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2023-06-08"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5353374",
+      "case_number": "A 29579-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1750151113000,
+      "planned_area_ha": 1.9,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4413100",
+          "intersection_ha": 0.0321,
+          "planned_overlap_pct": 1.7,
+          "completed_overlap_pct": 0.7,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1653264000000,
+          "completed_area_ha": 4.8,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2018-05-12",
+          "efterbild": "S2MSI2A_2022-05-23"
+        },
+        {
+          "completed_object_id": "6018437",
+          "intersection_ha": 0.0255,
+          "planned_overlap_pct": 1.4,
+          "completed_overlap_pct": 1.7,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1090022400000,
+          "completed_area_ha": 1.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5057219030810095559X2",
+          "efterbild": "SP5054219040717101822X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6162680",
+      "case_number": "A 35797-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1691539200000,
+      "planned_area_ha": 3.3,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5696081",
+          "intersection_ha": 0.0281,
+          "planned_overlap_pct": 0.9,
+          "completed_overlap_pct": 0.8,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1120435200000,
+          "completed_area_ha": 3.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5054219040717101822X1",
+          "efterbild": "SP5057219050706100835X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6131449",
+      "case_number": "A 55792-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1762875447000,
+      "planned_area_ha": 3.2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5908445",
+          "intersection_ha": 0.0235,
+          "planned_overlap_pct": 0.7,
+          "completed_overlap_pct": 3.2,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1469096459000,
+          "completed_area_ha": 0.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "IRSR2025021150910102709L30",
+          "efterbild": "S2AT33VWKL1C160721102059MS"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5079538",
+      "case_number": "A 9272-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1740528000000,
+      "planned_area_ha": 1.3,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4950738",
+          "intersection_ha": 0.0223,
+          "planned_overlap_pct": 1.4,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1151625600000,
+          "completed_area_ha": 38.9,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219050706100835X1",
+          "efterbild": "SP5057218060630100303X2"
+        },
+        {
+          "completed_object_id": "6011835",
+          "intersection_ha": 0.0108,
+          "planned_overlap_pct": 0.7,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1120608000000,
+          "completed_area_ha": 15.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219040723100254X1",
+          "efterbild": "SP5057219050706100835X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6460683",
+      "case_number": "A 26796-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1781222400000,
+      "planned_area_ha": 1.8,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "3273365",
+          "intersection_ha": 0.0161,
+          "planned_overlap_pct": 0.9,
+          "completed_overlap_pct": 0.8,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1151625600000,
+          "completed_area_ha": 2.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5057219050706100835X1",
+          "efterbild": "SP5057219060612104924X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6162647",
+      "case_number": "A 35801-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1691539200000,
+      "planned_area_ha": 0.7,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "4133233",
+          "intersection_ha": 0.0128,
+          "planned_overlap_pct": 2.1,
+          "completed_overlap_pct": 0.4,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1041292800000,
+          "completed_area_ha": 2.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "LA7193015020820094713M+",
+          "efterbild": "SP5057219030810095559X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6268324",
+      "case_number": "A 14550-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1773942210000,
+      "planned_area_ha": 1.6,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 3,
+      "best_candidates": [
+        {
+          "completed_object_id": "6081928",
+          "intersection_ha": 0.0116,
+          "planned_overlap_pct": 0.7,
+          "completed_overlap_pct": 0.4,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1778976000000,
+          "completed_area_ha": 2.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2025-09-20",
+          "efterbild": "S2MSI2A_2026-05-17"
+        },
+        {
+          "completed_object_id": "5623101",
+          "intersection_ha": 0.0069,
+          "planned_overlap_pct": 0.4,
+          "completed_overlap_pct": 0.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1215043200000,
+          "completed_area_ha": 2.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057218070609094520X1",
+          "efterbild": "SP5057219080922102150X1"
+        },
+        {
+          "completed_object_id": "5374699",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1622678400000,
+          "completed_area_ha": 7.5,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2MSI2A_2019-08-20",
+          "efterbild": "S2MSI2A_2021-06-03"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5330604",
+      "case_number": "A 25074-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1747941759000,
+      "planned_area_ha": 2.1,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5517379",
+          "intersection_ha": 0.0109,
+          "planned_overlap_pct": 0.5,
+          "completed_overlap_pct": 0.2,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1406325600000,
+          "completed_area_ha": 7.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50572191308051013421J0",
+          "efterbild": "SPOT50542181407260924501J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6219517",
+      "case_number": "A 4898-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1769444142000,
+      "planned_area_ha": 0.1,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5813453",
+          "intersection_ha": 0.0106,
+          "planned_overlap_pct": 7.9,
+          "completed_overlap_pct": 0.6,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1310083200000,
+          "completed_area_ha": 1.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5057219100624102303X2",
+          "efterbild": "SP5057219110708103329X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5061590",
+      "case_number": "A 15756-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1680706455000,
+      "planned_area_ha": 2.9,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5681640",
+          "intersection_ha": 0.0095,
+          "planned_overlap_pct": 0.3,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1406359490000,
+          "completed_area_ha": 7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50572191308051013421J0",
+          "efterbild": "SPOT50542181407260924501J0"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4985464",
+      "case_number": "A 34184-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1689724800000,
+      "planned_area_ha": 0.2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "6012159",
+          "intersection_ha": 0.0094,
+          "planned_overlap_pct": 4.4,
+          "completed_overlap_pct": 0.2,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1563697389000,
+          "completed_area_ha": 4.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        },
+        {
+          "completed_object_id": "5666970",
+          "intersection_ha": 0.0003,
+          "planned_overlap_pct": 0.2,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1563660000000,
+          "completed_area_ha": 5.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6150320",
+      "case_number": "A 60756-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1765185191000,
+      "planned_area_ha": 8.6,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5306431",
+          "intersection_ha": 0.0092,
+          "planned_overlap_pct": 0.1,
+          "completed_overlap_pct": 0.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1654992000000,
+          "completed_area_ha": 3,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2018-08-15",
+          "efterbild": "S2MSI2A_2022-06-12"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5141242",
+      "case_number": "A 6179-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1739184338000,
+      "planned_area_ha": 4.8,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "6097820",
+          "intersection_ha": 0.0089,
+          "planned_overlap_pct": 0.2,
+          "completed_overlap_pct": 0.4,
+          "meaningful": false,
+          "within_3_year_window": true,
+          "completed_date": 1780358400000,
+          "completed_area_ha": 2,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "S2MSI2A_2025-10-17",
+          "efterbild": "S2MSI2A_2026-06-02"
+        },
+        {
+          "completed_object_id": "4468912",
+          "intersection_ha": 0.0129,
+          "planned_overlap_pct": 0.3,
+          "completed_overlap_pct": 0.4,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1277337600000,
+          "completed_area_ha": 3.1,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "IRP6025021090625103314M3",
+          "efterbild": "SP5057219100624102303X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6273323",
+      "case_number": "A 15690-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1774512623000,
+      "planned_area_ha": 1.2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "4424331",
+          "intersection_ha": 0.0053,
+          "planned_overlap_pct": 0.4,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1498897223000,
+          "completed_area_ha": 6.9,
+          "completed_municipality": "UMEÅ",
+          "forebild": "S2AT33VWKL1C160721102059MS",
+          "efterbild": "S2B170701102023T34VDR_S2MSI1C_170701102023"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5253037",
+      "case_number": "A 8937-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1740480343000,
+      "planned_area_ha": 1.1,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5611977",
+          "intersection_ha": 0.0053,
+          "planned_overlap_pct": 0.4,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1215043200000,
+          "completed_area_ha": 3.6,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "SP5057218070609094520X1",
+          "efterbild": "IRP6025021080817102858M3"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5048260",
+      "case_number": "A 35650-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1691589910000,
+      "planned_area_ha": 0.7,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "6006418",
+          "intersection_ha": 0.0032,
+          "planned_overlap_pct": 0.5,
+          "completed_overlap_pct": 0.3,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1090022400000,
+          "completed_area_ha": 1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SP5054218030810095551X2",
+          "efterbild": "SP5054218040717101814X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6220200",
+      "case_number": "A 4685-2026",
+      "municipality": "VÄNNÄS",
+      "received_date": 1769423357000,
+      "planned_area_ha": 0.6,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5505016",
+          "intersection_ha": 0.0028,
+          "planned_overlap_pct": 0.4,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1215043200000,
+          "completed_area_ha": 10.8,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "SP5057218070609094520X1",
+          "efterbild": "SP5057219080922102150X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5353370",
+      "case_number": "A 29573-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1750150489000,
+      "planned_area_ha": 2,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5292338",
+          "intersection_ha": 0.0022,
+          "planned_overlap_pct": 0.1,
+          "completed_overlap_pct": 0.1,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1715731200000,
+          "completed_area_ha": 2.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2023-06-07",
+          "efterbild": "S2MSI2A_2024-05-15"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5396400",
+      "case_number": "A 36810-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1754265600000,
+      "planned_area_ha": 1.3,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5819472",
+          "intersection_ha": 0.0021,
+          "planned_overlap_pct": 0.2,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1441836000000,
+          "completed_area_ha": 9.9,
+          "completed_municipality": "NORDMALING",
+          "forebild": "SPOT50542181407260924501J0",
+          "efterbild": "IRSR2025021150910102709L30"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5256760",
+      "case_number": "A 37133-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1662076800000,
+      "planned_area_ha": 26.1,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5573620",
+          "intersection_ha": 0.002,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1498904423000,
+          "completed_area_ha": 4.8,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2AT33VWKL1C160721102059MS",
+          "efterbild": "S2B170701102023T34VDR_S2MSI1C_170701102023"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6193975",
+      "case_number": "A 404-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1767715425000,
+      "planned_area_ha": 5,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5553236",
+          "intersection_ha": 0.002,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1498904423000,
+          "completed_area_ha": 5.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2AT33VWKL1C160721102059MS",
+          "efterbild": "S2B170701102023T34VDR_S2MSI1C_170701102023"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6156606",
+      "case_number": "A 62078-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1765788568000,
+      "planned_area_ha": 9.9,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4082769",
+          "intersection_ha": 0.0016,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1277337600000,
+          "completed_area_ha": 3.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "IRP6025021090625103314M3",
+          "efterbild": "SP5057219100624102303X2"
+        },
+        {
+          "completed_object_id": "5312500",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1716854400000,
+          "completed_area_ha": 8.5,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2022-09-05",
+          "efterbild": "S2MSI2A_2024-05-28"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "4940109",
+      "case_number": "A 34176-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1689724800000,
+      "planned_area_ha": 0.4,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "6012159",
+          "intersection_ha": 0.0009,
+          "planned_overlap_pct": 0.2,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1563697389000,
+          "completed_area_ha": 4.2,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        },
+        {
+          "completed_object_id": "5666970",
+          "intersection_ha": 0.0006,
+          "planned_overlap_pct": 0.1,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1563660000000,
+          "completed_area_ha": 5.7,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2A180624103022T34VDR_S2MSI1C_180624141219",
+          "efterbild": "S2B_MSI_20190721T121512_A012389_T34VDR"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6105682",
+      "case_number": "A 50365-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1760449171000,
+      "planned_area_ha": 2.3,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5679979",
+          "intersection_ha": 0.0007,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1090022400000,
+          "completed_area_ha": 37.6,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5054218030810095551X2",
+          "efterbild": "SP5054218040717101814X1"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6075324",
+      "case_number": "A 43538-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1757600676000,
+      "planned_area_ha": 4.3,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "4712085",
+          "intersection_ha": 0.0004,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1526256000000,
+          "completed_area_ha": 1.1,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2017-07-01",
+          "efterbild": "S2MSI2A_2018-05-14"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "5352203",
+      "case_number": "A 29576-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1750150775000,
+      "planned_area_ha": 0.7,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 2,
+      "best_candidates": [
+        {
+          "completed_object_id": "4026890",
+          "intersection_ha": 0.0003,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1592352000000,
+          "completed_area_ha": 1.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2MSI2A_2019-08-27",
+          "efterbild": "S2MSI2A_2020-06-17"
+        },
+        {
+          "completed_object_id": "4886141",
+          "intersection_ha": 0.0,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1593080582000,
+          "completed_area_ha": 2.4,
+          "completed_municipality": "NORDMALING",
+          "forebild": "S2B_MSI_20190721T121512_A012389_T34VDR",
+          "efterbild": "S2B_MSI_L1C_TL_MPS__20200625T123149_A017251_T34VDR"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6408177",
+      "case_number": "A 21047-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1777884688000,
+      "planned_area_ha": 0.9,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5829669",
+          "intersection_ha": 0.0002,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1310083200000,
+          "completed_area_ha": 7.8,
+          "completed_municipality": "UMEÅ",
+          "forebild": "SP5057219100624102303X2",
+          "efterbild": "SP5057219110708103329X2"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6541018",
+      "case_number": "A 35196-2026",
+      "municipality": "VÄNNÄS",
+      "received_date": 1787751936000,
+      "planned_area_ha": 3.7,
+      "status": "weak_overlap_only",
+      "completed_candidate_count": 1,
+      "best_candidates": [
+        {
+          "completed_object_id": "5226767",
+          "intersection_ha": 0.0002,
+          "planned_overlap_pct": 0.0,
+          "completed_overlap_pct": 0.0,
+          "meaningful": false,
+          "within_3_year_window": false,
+          "completed_date": 1653264000000,
+          "completed_area_ha": 0.7,
+          "completed_municipality": "VÄNNÄS",
+          "forebild": "S2MSI2A_2018-08-12",
+          "efterbild": "S2MSI2A_2022-05-23"
+        }
+      ]
+    },
+    {
+      "planned_object_id": "6203585",
+      "case_number": "A 1142-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1767903409000,
+      "planned_area_ha": 0.7,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6263183",
+      "case_number": "A 13496-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1773410930000,
+      "planned_area_ha": 6.6,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "4065469",
+      "case_number": "A 15003-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1649203200000,
+      "planned_area_ha": 1.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5242073",
+      "case_number": "A 15750-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1680705859000,
+      "planned_area_ha": 0.9,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6275644",
+      "case_number": "A 15963-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1774597737000,
+      "planned_area_ha": 1.2,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6284928",
+      "case_number": "A 18039-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1776073782000,
+      "planned_area_ha": 4.2,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6285774",
+      "case_number": "A 18042-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1776074173000,
+      "planned_area_ha": 0.6,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5153787",
+      "case_number": "A 19516-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1745404662000,
+      "planned_area_ha": 2,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6539145",
+      "case_number": "A 20163-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1777273801000,
+      "planned_area_ha": 1.7,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5143974",
+      "case_number": "A 20481-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1745798400000,
+      "planned_area_ha": 1.1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5199946",
+      "case_number": "A 20489-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1745847062000,
+      "planned_area_ha": 1.1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "4966733",
+      "case_number": "A 22004-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1717113600000,
+      "planned_area_ha": 2.1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5110193",
+      "case_number": "A 22618-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1717515686000,
+      "planned_area_ha": 2,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5305521",
+      "case_number": "A 22739-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1747059233000,
+      "planned_area_ha": 11.9,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5307154",
+      "case_number": "A 22900-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1747129893000,
+      "planned_area_ha": 1.2,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6435561",
+      "case_number": "A 23006-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1779129442000,
+      "planned_area_ha": 0.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5304503",
+      "case_number": "A 23041-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1747151998000,
+      "planned_area_ha": 3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6434510",
+      "case_number": "A 23208-2026",
+      "municipality": "VÄNNÄS",
+      "received_date": 1779262265000,
+      "planned_area_ha": 2.6,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5321186",
+      "case_number": "A 24045-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1747655378000,
+      "planned_area_ha": 0.7,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6210885",
+      "case_number": "A 2724-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1768505802000,
+      "planned_area_ha": 0.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5248124",
+      "case_number": "A 32965-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1723541413000,
+      "planned_area_ha": 2.7,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6516232",
+      "case_number": "A 33165-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1786463853000,
+      "planned_area_ha": 1.9,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6516233",
+      "case_number": "A 33166-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1786463906000,
+      "planned_area_ha": 1.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6516872",
+      "case_number": "A 33167-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1786463950000,
+      "planned_area_ha": 1.8,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6516234",
+      "case_number": "A 33169-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1786464294000,
+      "planned_area_ha": 1.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6515768",
+      "case_number": "A 33170-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1786464373000,
+      "planned_area_ha": 1.6,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6516235",
+      "case_number": "A 33171-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1786464423000,
+      "planned_area_ha": 1.1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6516236",
+      "case_number": "A 33173-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1786464494000,
+      "planned_area_ha": 0.7,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5077527",
+      "case_number": "A 34246-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1724162524000,
+      "planned_area_ha": 0.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5121369",
+      "case_number": "A 34252-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1724163041000,
+      "planned_area_ha": 5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6536474",
+      "case_number": "A 34829-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1787583822000,
+      "planned_area_ha": 4.3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6213574",
+      "case_number": "A 3483-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1768915483000,
+      "planned_area_ha": 0.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6213737",
+      "case_number": "A 3517-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1768918046000,
+      "planned_area_ha": 3.1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5274652",
+      "case_number": "A 35228-2024",
+      "municipality": "UMEÅ",
+      "received_date": 1724675415000,
+      "planned_area_ha": 1.9,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6542977",
+      "case_number": "A 35785-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1788183268000,
+      "planned_area_ha": 3.3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6162646",
+      "case_number": "A 35786-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1691539200000,
+      "planned_area_ha": 1.3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6162514",
+      "case_number": "A 35792-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1691539200000,
+      "planned_area_ha": 1.8,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6161094",
+      "case_number": "A 35803-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1691539200000,
+      "planned_area_ha": 0.9,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6516562",
+      "case_number": "A 35923-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1788220800000,
+      "planned_area_ha": 0.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6549446",
+      "case_number": "A 36449-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1788513971000,
+      "planned_area_ha": 2.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6010956",
+      "case_number": "A 38260-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1755163769000,
+      "planned_area_ha": 1.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6513328",
+      "case_number": "A 38871-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1789997712000,
+      "planned_area_ha": 1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6051883",
+      "case_number": "A 38991-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1755589631000,
+      "planned_area_ha": 1.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5139027",
+      "case_number": "A 39851-2023",
+      "municipality": "NORDMALING",
+      "received_date": 1693180800000,
+      "planned_area_ha": 2.3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6524962",
+      "case_number": "A 40124-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1790602130000,
+      "planned_area_ha": 0.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5101097",
+      "case_number": "A 42320-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1727451036000,
+      "planned_area_ha": 3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6542638",
+      "case_number": "A 42369-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1791817982000,
+      "planned_area_ha": 6.8,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6542685",
+      "case_number": "A 42519-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1791899503000,
+      "planned_area_ha": 2.8,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5270299",
+      "case_number": "A 43491-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1727913600000,
+      "planned_area_ha": 0.6,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5270300",
+      "case_number": "A 43492-2024",
+      "municipality": "NORDMALING",
+      "received_date": 1727993492000,
+      "planned_area_ha": 1.6,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6079291",
+      "case_number": "A 44168-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1757946113000,
+      "planned_area_ha": 1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6080668",
+      "case_number": "A 44725-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1758122704000,
+      "planned_area_ha": 4.3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5268030",
+      "case_number": "A 4676-2023",
+      "municipality": "VÄNNÄS",
+      "received_date": 1674777600000,
+      "planned_area_ha": 2.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6200131",
+      "case_number": "A 501-2026",
+      "municipality": "NORDMALING",
+      "received_date": 1767781647000,
+      "planned_area_ha": 2.2,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6106199",
+      "case_number": "A 50386-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1760453015000,
+      "planned_area_ha": 4.1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6121794",
+      "case_number": "A 53776-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1761842559000,
+      "planned_area_ha": 2.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6122989",
+      "case_number": "A 53777-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1761842649000,
+      "planned_area_ha": 3.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5228166",
+      "case_number": "A 53986-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1668587168000,
+      "planned_area_ha": 2.1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6132414",
+      "case_number": "A 56247-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1763039744000,
+      "planned_area_ha": 10.3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5241304",
+      "case_number": "A 56258-2024",
+      "municipality": "VÄNNÄS",
+      "received_date": 1732807704000,
+      "planned_area_ha": 0.6,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5073320",
+      "case_number": "A 59605-2022",
+      "municipality": "NORDMALING",
+      "received_date": 1670803200000,
+      "planned_area_ha": 0.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5156559",
+      "case_number": "A 59771-2023",
+      "municipality": "VÄNNÄS",
+      "received_date": 1701043200000,
+      "planned_area_ha": 0.7,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6156216",
+      "case_number": "A 62058-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1765786387000,
+      "planned_area_ha": 0.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6187166",
+      "case_number": "A 64158-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1767214961000,
+      "planned_area_ha": 2.3,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "3819225",
+      "case_number": "A 67534-2021",
+      "municipality": "VÄNNÄS",
+      "received_date": 1637758867000,
+      "planned_area_ha": 1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5007005",
+      "case_number": "A 7205-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1739531667000,
+      "planned_area_ha": 1,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "6232803",
+      "case_number": "A 7371-2026",
+      "municipality": "UMEÅ",
+      "received_date": 1770365631000,
+      "planned_area_ha": 2.9,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5030691",
+      "case_number": "A 7774-2025",
+      "municipality": "UMEÅ",
+      "received_date": 1739886320000,
+      "planned_area_ha": 2.5,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5152519",
+      "case_number": "A 879-2025",
+      "municipality": "NORDMALING",
+      "received_date": 1736294400000,
+      "planned_area_ha": 3.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5253038",
+      "case_number": "A 8938-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1740480344000,
+      "planned_area_ha": 0.4,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    },
+    {
+      "planned_object_id": "5126669",
+      "case_number": "A 8940-2025",
+      "municipality": "VÄNNÄS",
+      "received_date": 1740480355000,
+      "planned_area_ha": 0.2,
+      "status": "no_current_geometric_overlap",
+      "completed_candidate_count": 0,
+      "best_candidates": []
+    }
+  ]
+}
