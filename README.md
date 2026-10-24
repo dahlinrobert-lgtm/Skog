@@ -65,3 +65,16 @@ The scheduled workflow now also runs `scripts/snapshot_completed.py` against Sko
 **Interpretation:** a missing ID is not proof that Skogsstyrelsen deleted a case or that felling occurred. It means only that the ID was not returned in the current query. Changes can also reflect source revisions, service/query behavior, or spatial filtering. The completed-harvest product is based on satellite change detection and Skogsstyrelsen cautions that it is a guidance layer, not a direct statistical ground truth.
 
 The daily archive lets us compare full polygon geometries across observation dates. The existing notification snapshots and these completed-layer snapshots can then be used to investigate whether a planned polygon disappears around the time a nearby completed polygon appears.
+
+## Change diagnostics: planned vs completed
+
+The workflow now runs `scripts/analyze_changes.py` after saving both source layers.
+
+- Writes `data/change_analysis.json`.
+- Compares planned IDs across available notification snapshots and reports newly appearing IDs and IDs not returned later.
+- Intersects current planned polygons with the current completed polygons after projecting to SWEREF99 TM (EPSG:3006).
+- Stores each planned object’s best spatial candidates with overlap area, share of both polygons, completed-date metadata and Forebild/Efterbild identifiers.
+
+The threshold (intersection at least 0.02 ha and at least 15% of either polygon) is a working diagnostic threshold, not a validated definition of an executed case. The report expressly treats spatial overlap as candidate evidence, not proof. An ID not returned by a later query is not automatically labelled deleted, expired or felled.
+
+The project currently has a limited set of snapshots from the initial setup on 2026-10-24. That same-day history is not a sufficiently long time series to estimate typical register turnover. The report will become more informative as daily snapshots accumulate.
