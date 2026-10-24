@@ -177,6 +177,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
     prior_scope = None
     prior_time = None
     prior_filename = None
+    seen_in_scope_run: set[str] = set()
 
     for filename, snapshot in snapshots:
         if not successful(snapshot):
@@ -192,6 +193,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
         comparable = prior_ids is not None and scope == prior_scope
 
         if prior_ids is not None and not comparable:
+            seen_in_scope_run = set(ids)
             missing_due_to_scope = sorted((prior_ids or set()) - ids)
             events.append({
                 "event_type": "comparison_skipped_scope_changed",
@@ -226,6 +228,11 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
 
         if comparable:
             for key in sorted(ids - (prior_ids or set())):
+                previously_seen_in_run = key in seen_in_scope_run
+                if previously_seen_in_run:
+                    record = cases.get(key)
+                    if record is not None:
+                        record["last_reappeared_at"] = checked_at
                 events.append({
                     "event_type": "reappeared_or_newly_observed",
                     "notification_id": key,
@@ -233,6 +240,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                     "previous_observed_at": prior_time,
                     "previous_snapshot": prior_filename,
                     "snapshot": filename,
+                    "previously_seen_in_scope_run": previously_seen_in_run,
                     "meaning": "Returned in the current query after being absent from the prior comparable query; application date is not inferred.",
                 })
             for key in sorted((prior_ids or set()) - ids):
@@ -293,6 +301,7 @@ def build_history(snapshots: list[tuple[str, dict[str, Any]]],
                 record["last_query_scope_hash"] = scope
                 record["status_interpretation"] = "not_returned_is_not_felling_or_cancellation"
 
+        seen_in_scope_run.update(ids)
         prior_ids, prior_features, prior_scope, prior_time, prior_filename = ids, current_features, scope, checked_at, filename
 
     for key, record in cases.items():
