@@ -17,11 +17,13 @@ jobs:
       - run: python scripts/monitor.py
       - name: Snapshot completed-harvest polygons
         run: python scripts/snapshot_completed.py
+      - name: Analyze planned and completed changes
+        run: python scripts/analyze_changes.py
       - name: Commit dated snapshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/latest.json data/scene_index.json data/completed_latest.json data/snapshots
+          git add data/latest.json data/scene_index.json data/completed_latest.json data/change_analysis.json data/snapshots
           if ! git diff --cached --quiet; then
             git commit -m "Update Gräsmyr monitoring snapshot"
             git push
