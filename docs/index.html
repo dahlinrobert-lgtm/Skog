@@ -111,6 +111,7 @@ let performedFeatures = [];
 let performedLoadState = "loading";
 let performedTruncated = false;
 let followUpById = {};
+let analysisLoadState = "loading";
 let sortKey = "date";
 let sortDirection = -1; // newest first for dates by default
 const fmtDate = value => {
@@ -378,6 +379,16 @@ function render(){
   });
   document.getElementById("rows").innerHTML=rows.length?rows.join(""):'<tr><td colspan="9">Inga ärenden matchar filtret.</td></tr>';
 }
+function updateLoadStatus(checkedAt){
+  const base="Senaste kontroll: "+fmtDate(checkedAt)+" · datakälla: Skogsstyrelsen.";
+  const notes=[];
+  if(analysisLoadState==="loading") notes.push("matchningsanalys laddas");
+  else if(analysisLoadState==="error") notes.push("matchningsanalys saknas");
+  if(performedLoadState==="loading") notes.push("utförda avverkningar laddas");
+  else if(performedLoadState==="error") notes.push("utförda avverkningar kunde inte hämtas; statuskolumnen visar ?");
+  if(!notes.length) notes.push("matchnings- och utförd-status uppdaterad");
+  document.getElementById("loadstatus").textContent=base+" "+notes.join("; ")+". ";
+}
 async function loadFollowUpAnalysis(){
   const ar=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/change_analysis.json");
   if(!ar.ok) throw new Error("HTTP "+ar.status);
@@ -390,7 +401,7 @@ async function init(){
     if(!response.ok) throw new Error("HTTP "+response.status);
     const data=await response.json();
     allFeatures=data.cutting_notifications?.features||[];
-    document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Visar planerade ärenden; kompletterar matchning och utförd-status i bakgrunden …";
+    updateLoadStatus(data.checked_at);
     document.getElementById("checked").textContent=" Senast kontrollerad: "+(data.checked_at||"okänt datum")+".";
     // Show the primary content immediately; slower supporting sources must not block the table.
     render();
@@ -398,20 +409,22 @@ async function init(){
     renderPropertyPilot();
 
     const analysisTask=loadFollowUpAnalysis().then(()=>{
+      analysisLoadState="ok";
       render();
-      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Matchningsanalys inläst.";
+      updateLoadStatus(data.checked_at);
     }).catch(()=>{
+      analysisLoadState="error";
       followUpById={};
       render();
-      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Matchningsanalysen kunde inte läsas; uppföljningsstatus saknas.";
+      updateLoadStatus(data.checked_at);
     });
     const performedTask=loadPerformed().then(()=>{
       render();
-      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Matchnings- och utförd-status uppdaterad.";
+      updateLoadStatus(data.checked_at);
     }).catch(e=>{
       performedLoadState="error";
       render();
-      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Utförda avverkningar kunde inte hämtas; statuskolumnen visar ?.";
+      updateLoadStatus(data.checked_at);
     });
     await Promise.allSettled([analysisTask,performedTask]);
   }catch(e){
