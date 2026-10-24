@@ -45,3 +45,10 @@ Observed run metrics:
 - Before generating alerts, filter cutting notifications by the geometry of interest, distinguish truly new object IDs from older features, and alert only on newly observed records. Parcel-specific monitoring still needs a verified property-boundary layer.
 
 Run details: https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40082300173
+
+
+## Monitoring logic update (2026-10-24)
+- Cutting-notification search now uses a 10 km point-distance query around the configured centre rather than the rectangular bounding box. This narrows the search but still does not define the village or any cadastral parcel.
+- Copernicus STAC requests follow `rel=next` links and persist compact scene metadata instead of full scene geometries.
+- `data/scene_index.json` stores scene IDs and acquisition/publication timestamps for delta detection. When this index is first created, the run establishes a baseline and intentionally emits no satellite-scene alerts. This avoids treating the older archive as newly acquired imagery.
+- The next scheduled run is needed to verify these changes against the live services. Until then, pagination and distance-query behavior are implemented but not yet live-run validated.
