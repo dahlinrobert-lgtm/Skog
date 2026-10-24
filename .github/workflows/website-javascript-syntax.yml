@@ -1,0 +1,23 @@
+name: Website JavaScript syntax
+on:
+  pull_request:
+    paths:
+      - "docs/*.html"
+      - "tests/test_web_javascript_syntax.py"
+      - ".github/workflows/website-javascript-syntax.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/*.html"
+      - "tests/test_web_javascript_syntax.py"
+      - ".github/workflows/website-javascript-syntax.yml"
+jobs:
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check inline JavaScript
+        run: python tests/test_web_javascript_syntax.py
