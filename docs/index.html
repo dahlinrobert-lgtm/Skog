@@ -311,7 +311,19 @@ function render(){
   if(diagnostics)diagnostics.textContent=performedLoadState!=="ok"?"Utförda avverkningar kunde inte hämtas.":("Utförda ytor i hämtat underlag: "+performedFeatures.length+". Datumintervall: "+(doneDates.length?fmtDate(doneDates[0])+"–"+fmtDate(doneDates[doneDates.length-1]):"inga giltiga datum")+". Årsfördelning: "+(yearText||"saknas")+". "+(performedTruncated?"VARNING: resultatet kan vara begränsat till 2 000 objekt och matchningen ofullständig.":""));
   const matchCounts={case:0,spatial:0,sample:0,weak:0,near:0,coordinate:0,none:0,unknown:0};
   if(performedLoadState==="ok"){
-    selected.forEach(f=>{const m=matchPerformed(f);if(!m)matchCounts.none++;else if(m.status==="case")matchCounts.case++;else if(m.status==="spatial")matchCounts.spatial++;else if(m.status==="sample")matchCounts.sample++;else if(m.status==="weak")matchCounts.weak++;else if(m.status==="near")matchCounts.near++;else if(m.status==="coordinate")matchCounts.coordinate++;});
+    selected.forEach(f=>{
+      const m=matchPerformed(f);
+      if(!m)matchCounts.none++;
+      else if(m.status==="case")matchCounts.case++;
+      else if(m.status==="spatial")matchCounts.spatial++;
+      else if(m.status==="sample")matchCounts.sample++;
+      else if(m.status==="weak")matchCounts.weak++;
+      else if(m.status==="near")matchCounts.near++;
+      else if(m.status==="coordinate")matchCounts.coordinate++;
+      // Count sample evidence independently of the primary classification:
+      // a polygon can have strong geometric overlap AND a successful point sample.
+      if(m&&Number(m.sampleTotal)>=3&&Number(m.sampleHits)>=3&&Number(m.sampleHits)/Number(m.sampleTotal)>=0.6)matchCounts.sample++;
+    });
   }else{
     matchCounts.unknown=selected.length;
   }
@@ -320,7 +332,7 @@ function render(){
     countPill(selected.length,"ärenden i urvalet")+
     countPill(matchCounts.case,"träff via år + beteckning")+
     countPill(matchCounts.spatial,"meningsfull geometrisk överlappning")+
-    countPill(matchCounts.sample,"träff via stickprovspunkter")+
+    countPill(matchCounts.sample,"ärenden med stöd av stickprovspunkter")+
     countPill(matchCounts.weak,"svag överlappning")+
     countPill(matchCounts.near,"närliggande kandidat inom tre år")+
     countPill(matchCounts.coordinate,"närmaste koordinatkandidat – kontrollera avstånd")+
