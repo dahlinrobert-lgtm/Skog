@@ -1,6 +1,13 @@
 name: Gräsmyr monitoring
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/**"
+      - "requirements.txt"
+      - ".github/workflows/monitor.yml"
   schedule:
     - cron: "17 5 * * *"
 permissions:
