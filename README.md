@@ -103,3 +103,14 @@ New planned-notification snapshots use a backwards-compatible mixed archive:
 - `python -m unittest discover -s tests -v` validates delta reconstruction and the main safety cases.
 
 This reduces repetition in future commits, but it does **not** erase bytes already stored in Git history. Existing full snapshots are intentionally retained for auditability; historical compaction should only be considered separately after measuring repository growth and agreeing how to preserve the old history.
+
+
+## Completed-harvest archive storage optimization
+
+- `data/completed_latest.json` remains the complete current feature register with geometry hashes for direct consumers.
+- Compressed `completed_*.geojson.gz` history now supports full GeoJSON checkpoints and feature-level deltas. Additions and geometry changes include geometry; attribute-only updates reuse the geometry from the previous reconstructable state.
+- Full checkpoints are written for the initial archive, whenever the query-scope fingerprint changes, and at least every 30 days. If a compressed delta would be larger than a full archive, the writer falls back to full.
+- `scripts/completed_snapshot_store.py` reconstructs legacy full compressed GeoJSON and new delta archives. `scripts/analyze_changes.py` uses reconstructed full geometries, preserving its geometry-based comparisons.
+- `python scripts/audit_snapshots.py` reports stored archive bytes and estimated full-archive equivalents for both planned and completed snapshots.
+
+Existing full compressed archives are preserved. Delta persistence changes only future archives and does not rewrite Git history.
