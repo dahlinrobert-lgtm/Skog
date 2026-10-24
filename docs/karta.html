@@ -61,28 +61,35 @@ function popup(f,type){
 }
 function date(v){if(v==null||v==="")return "–";let n=Number(v);if(Number.isFinite(n)&&n>100000000000)return new Date(n).toISOString().slice(0,10);return String(v)}
 function ha(v){if(v==null||v==="")return "–";let n=Number(v);return Number.isFinite(n)?n.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha":String(v)}
-function queryUrl(base,fields){
- const params=new URLSearchParams({where:"1=1",outFields:fields,returnGeometry:"true",outSR:"4326",f:"geojson",resultRecordCount:"2000",orderByFields:"OBJECTID"});
- // Use a geographic envelope around the 10 km study area; the circle is shown on the map for orientation.
+function queryUrl(base,fields,offset){
+ const params=new URLSearchParams({where:"1=1",outFields:fields,returnGeometry:"true",outSR:"4326",f:"geojson",resultRecordCount:"300",orderByFields:"OBJECTID"});
  const latDelta=RADIUS/111000,lonDelta=RADIUS/(111000*Math.cos(CENTER[0]*Math.PI/180));
  params.set("geometry",JSON.stringify({xmin:CENTER[1]-lonDelta,ymin:CENTER[0]-latDelta,xmax:CENTER[1]+lonDelta,ymax:CENTER[0]+latDelta,spatialReference:{wkid:4326}}));
  params.set("geometryType","esriGeometryEnvelope");params.set("inSR","4326");params.set("spatialRel","esriSpatialRelIntersects");
- // Generalize returned vertices for display; full-resolution geometry remains in the analysis archive.
- params.set("geometryPrecision","5");
- params.set("maxAllowableOffset","0.00003");
+ params.set("geometryPrecision","5");params.set("maxAllowableOffset","0.00003");
+ params.set("resultOffset",String(offset));
  return base+"?"+params.toString();
 }
 async function getLayer(base,fields){
- const url=queryUrl(base,fields);
- const res=await fetch(url,{mode:"cors"});
- if(!res.ok)throw new Error("HTTP "+res.status);
- const json=await res.json();
- if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");
- if(!json.features)throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
- return json;
+ const all=[];
+ let offset=0, pages=0, hasMore=true;
+ const pageSize=300, maxPages=20;
+ while(hasMore && pages<maxPages){
+  const res=await fetch(queryUrl(base,fields,offset),{mode:"cors"});
+  if(!res.ok)throw new Error("HTTP "+res.status);
+  const json=await res.json();
+  if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");
+  if(!Array.isArray(json.features))throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
+  all.push(...json.features);
+  pages++;
+  hasMore=Boolean(json.exceededTransferLimit)||json.features.length===pageSize;
+  offset+=json.features.length;
+  if(json.features.length===0)hasMore=false;
+ }
+ return {type:"FeatureCollection",features:all,truncated:hasMore};
 }
 async function load(){
- document.getElementById("status").textContent="Hämtar planerade och utförda polygoner från Skogsstyrelsen…";
+ document.getElementById("status").textContent="Hämtar polygoner i mindre delar från Skogsstyrelsen…";
  document.getElementById("reload").disabled=true;
  try{
   const [planned,performed]=await Promise.all([
@@ -95,7 +102,9 @@ async function load(){
   document.getElementById("performedCount").textContent=performed.features.length.toLocaleString("sv-SE");
   const dates=performed.features.map(f=>Number(f.properties?.Avvdatum)).filter(n=>Number.isFinite(n)&&n>100000000000).sort((a,b)=>a-b);
   document.getElementById("dateRange").textContent=dates.length?new Date(dates[0]).toISOString().slice(0,10)+"–"+new Date(dates[dates.length-1]).toISOString().slice(0,10):"saknas";
-  document.getElementById("status").textContent="Data laddad. Klicka på en polygon för detaljer. Urvalet hämtas via en rektangel runt cirka 10 km-området, så polygoner i hörnen kan också visas.";
+  document.getElementById("status").textContent="Data laddad. Klicka på en polygon för detaljer."+
+   ((planned.truncated||performed.truncated)?" Varning: en eller flera källor överskred sidgränsen; visat urval kan vara ofullständigt.":"")+
+   " Polygoner hämtas i sidor om "+300+" objekt för att undvika en enda stor begäran.";
  }catch(e){
   document.getElementById("status").textContent="Kunde inte hämta kartdata: "+e.message+". Kontrollera att Skogsstyrelsens tjänst är tillgänglig och tillåter anrop från webbläsaren.";
  }finally{document.getElementById("reload").disabled=false;applyVisibility()}
