@@ -177,6 +177,51 @@ def main():
             ),
         })
 
+    # Emit a normalized notification-property relation table with sample-level evidence.
+    # These are candidate relations, not confirmed parcel intersections.
+    notification_property_relations = []
+    for result in results:
+        evidence = {}
+        for obs_index, obs in enumerate(result["observations"], start=1):
+            for item in obs.get("grasmyr_matches", []):
+                designation = item["designation"]
+                entry = evidence.setdefault(designation, {
+                    "notification_id": result["notification_id"],
+                    "objectid": result["objectid"],
+                    "notification_date": result["notification_date"],
+                    "reported_area_ha": result["reported_area_ha"],
+                    "property_candidate": designation,
+                    "sample_count": 0,
+                    "interior_sample_count": 0,
+                    "boundary_sample_count": 0,
+                    "sample_indices": [],
+                    "sample_coordinates_wgs84": [],
+                    "property_object_ids": [],
+                })
+                entry["sample_count"] += 1
+                entry["sample_indices"].append(obs_index)
+                entry["sample_coordinates_wgs84"].append(obs.get("wgs84"))
+                if obs.get("sample_kind") == "interior":
+                    entry["interior_sample_count"] += 1
+                elif obs.get("sample_kind") == "boundary_sample":
+                    entry["boundary_sample_count"] += 1
+                if item.get("object_id") and item["object_id"] not in entry["property_object_ids"]:
+                    entry["property_object_ids"].append(item["object_id"])
+        for entry in evidence.values():
+            if entry["interior_sample_count"] and entry["boundary_sample_count"]:
+                entry["evidence_class"] = "interior_and_boundary_samples"
+            elif entry["interior_sample_count"]:
+                entry["evidence_class"] = "interior_sample_only"
+            else:
+                entry["evidence_class"] = "boundary_sample_only"
+            entry["interpretation"] = (
+                "Candidate relation supported by sampled point lookup(s); not a verified cadastral polygon intersection."
+            )
+            notification_property_relations.append(entry)
+    notification_property_relations.sort(
+        key=lambda x: (x["notification_date"], x["notification_id"], x["property_candidate"])
+    )
+
     # Link notifications using independent signals. Shared sample lookups are weak
     # evidence because the queried endpoint uses a buffer and may return neighbours.
     from shapely.ops import transform as shapely_transform
@@ -269,6 +314,8 @@ def main():
         "candidate_notifications_in_radius": len(candidates),
         "features_tested": len(results),
         "target_tract_matches_total": sorted({d for r in results for d in r["target_tract_matches"]}),
+        "notification_property_relations_count": len(notification_property_relations),
+        "notification_property_relations": notification_property_relations,
         "notification_relationship_links_count": len(notification_links),
         "notification_relationship_links": notification_links,
         "limitations": [
@@ -289,6 +336,7 @@ def main():
         "target_tract_matches_total": report["target_tract_matches_total"],
         "notification_relationship_links_count": len(notification_links),
         "high_review_priority_links_count": sum(x["review_priority"] == "high_review_priority" for x in notification_links),
+        "notification_property_relations_count": len(notification_property_relations),
         "sample_relationship_examples": notification_links[:10],
         "results": [{
             "notification_id": r["notification_id"],
