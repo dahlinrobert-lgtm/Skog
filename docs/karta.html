@@ -24,7 +24,7 @@
 <button id="applyArea">Använd koordinater och radie</button>
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
-<label>Färglägg utförda <select id="performedColorMode"><option value="none">Ingen (normal)</option><option value="year">År</option><option value="hectares">Hektar</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option></select></label>
+<label>Färglägg utförda <select id="performedColorMode"><option value="none">Ingen (normal)</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option></select></label>
 <button id="reload">Ladda om data</button>
 <button id="home">Visa hela området</button>
 </div>
@@ -72,6 +72,12 @@ function performedYear(feature){
  const parsed=Date.parse(String(raw));
  return Number.isFinite(parsed)?new Date(parsed).getUTCFullYear():null;
 }
+function performedRatio(feature){
+ const p=feature?.properties||{};
+ const registered=Number(p.Arealha),reported=Number(p.AnmaldHa);
+ if(p.Arealha==null||p.Arealha===""||p.AnmaldHa==null||p.AnmaldHa===""||!Number.isFinite(registered)||!Number.isFinite(reported)||registered<0||reported<=0)return null;
+ return registered/reported*100;
+}
 function performedHectares(feature){
  const p=feature?.properties||{};
  const n=Number(p.Arealha);
@@ -104,9 +110,9 @@ function currentColorScale(){
   categories.forEach(categoryColor);
   return {mode,categories};
  }
- const values=features.map(f=>mode==="year"?performedYear(f):performedHectares(f)).filter(v=>v!==null);
+ const values=features.map(f=>mode==="year"?performedYear(f):mode==="ratio"?performedRatio(f):performedHectares(f)).filter(v=>v!==null);
  if(mode==="year")return {mode,min:values.length?Math.min(...values):null,max:2026};
- if(mode==="hectares")return {mode,min:values.length?Math.min(...values):null,max:values.length?Math.max(...values):null};
+ if(mode==="hectares"||mode==="ratio")return {mode,min:values.length?Math.min(...values):null,max:values.length?Math.max(...values):null};
  return {mode,min:null,max:null};
 }
 function performedStyle(feature){
@@ -117,7 +123,7 @@ function performedStyle(feature){
   const color=categoryColor(categoryValue(feature,mode));
   return {color:color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
  }
- const value=mode==="year"?performedYear(feature):performedHectares(feature);
+ const value=mode==="year"?performedYear(feature):mode==="ratio"?performedRatio(feature):performedHectares(feature);
  if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};
  const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min);
  const color=mixColor(t);
@@ -139,11 +145,12 @@ function refreshPerformedColors(){
   maxLabel.textContent="2026";
   note.textContent="år";
   gradient.style.background="linear-gradient(to right,"+mixColor(0)+","+mixColor(1)+")";
- }else if(mode==="hectares"){
+ }else if(mode==="hectares"||mode==="ratio"){
   minLabel.style.display="";maxLabel.style.display="";gradient.style.display="";categoryLegend.style.display="none";
-  minLabel.textContent=scale.min===null?"Lägst":scale.min.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha";
-  maxLabel.textContent=scale.max===null?"Högst":scale.max.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha";
-  note.textContent="inom valt område";
+  const unit=mode==="ratio"?" %":" ha";
+  minLabel.textContent=scale.min===null?"Lägst":scale.min.toLocaleString("sv-SE",{maximumFractionDigits:2})+unit;
+  maxLabel.textContent=scale.max===null?"Högst":scale.max.toLocaleString("sv-SE",{maximumFractionDigits:2})+unit;
+  note.textContent=mode==="ratio"?"registrerad/anmäld":"inom valt område";
   gradient.style.background="linear-gradient(to right,"+mixColor(0)+","+mixColor(1)+")";
  }else if(mode==="forestType"||mode==="harvestType"){
   minLabel.style.display="none";maxLabel.style.display="none";gradient.style.display="none";categoryLegend.style.display="flex";
@@ -164,12 +171,13 @@ function popup(f,type){
  const ratio=()=>{
   const registered=Number(p.Arealha),reported=Number(p.AnmaldHa);
   if(p.Arealha==null||p.Arealha===""||p.AnmaldHa==null||p.AnmaldHa===""||!Number.isFinite(registered)||!Number.isFinite(reported)||registered<=0)return "–";
-  return (reported/registered*100).toLocaleString("sv-SE",{maximumFractionDigits:1})+" %";
+  if(reported<=0)return "–";
+  return (registered/reported*100).toLocaleString("sv-SE",{maximumFractionDigits:1})+" %";
  };
  const fields=type==="planned"?[
  ["Ärende",p.Beteckn],["Inkomdatum",date(p.Inkomdatum)],["Kommun",p.Kommun],["Avverkningstyp",p.Avverktyp],["Anmäld areal",ha(p.AnmaldHa)],["Status",p.ArendeStatus],["Skogstyp",p.Skogstyp],["Ändamål",p.Andamal],["Areal plantering",ha(p.SkogsodlHa)],["Areal naturlig föryngring",ha(p.NatforHa)],["Län",p.Lan]
  ]:[
- ["Ärendeår",p.Arendear],["Beteckning",p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (anmäld/registrerad)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
+ ["Ärendeår",p.Arendear],["Beteckning",p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
  ];
  return '<div style="width:260px;max-width:260px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:6px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
 }
