@@ -47,7 +47,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 </div>
 <div id="loadstatus" class="muted">Hämtar senaste publicerade data …</div>
 <div class="summary" id="summary"></div>
-<p class="hint">✓ betyder att ärendet matchar via år + normaliserad beteckning, eller att en utförd yta överlappar geografiskt. Håll muspekaren över bocken för att se vilken metod som gav träffen. En geografisk träff är preliminär och bevisar inte att hela området är avverkat. – betyder att ingen match hittades; ? betyder att lagret inte kunde läsas.</p>
+<p class="hint">Sammanfattningen räknas på alla ärenden i aktuellt filter, inte bara de synliga raderna. ✓ betyder att en match hittats via år + normaliserad beteckning eller geografisk överlappning. Håll muspekaren över bocken för metod. En geografisk träff är preliminär; en träff via år + beteckning är också en automatisk kandidat och bör kontrolleras. En geografisk träff är preliminär och bevisar inte att hela området är avverkat. – betyder att ingen match hittades; ? betyder att lagret inte kunde läsas.</p>
 <div class="tablewrap" style="margin-top:13px">
 <table>
 <thead><tr><th><button class="sort" data-sort="date" type="button">Inkomdatum <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="case" type="button">Ärendenummer <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="municipality" type="button">Kommun <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="type" type="button">Typ <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="area" type="button">Areal <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="status" type="button">Status <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="property" type="button">Fastighet / karta <span class="arrow" aria-hidden="true"></span></button></th><th>Utförd yta?</th></tr></thead>
@@ -239,7 +239,20 @@ function render(){
     return cmp*sortDirection;
   });
   updateSortIndicators();
-  document.getElementById("summary").innerHTML='<span class="pill"><strong>'+selected.length+'</strong> ärenden matchar filtret</span><span class="pill">Senaste inkomdatum: <strong>'+(selected.length?fmtDate(selected[0].properties?.Inkomdatum):"–")+'</strong></span>';
+  const matchCounts={case:0,spatial:0,none:0,unknown:0};
+  if(performedLoadState==="ok"){
+    selected.forEach(f=>{const m=matchPerformed(f);if(!m)matchCounts.none++;else if(m.status==="case")matchCounts.case++;else matchCounts.spatial++;});
+  }else{
+    matchCounts.unknown=selected.length;
+  }
+  const countPill=(n,label)=>'<span class="pill"><strong>'+n+'</strong><span>'+label+'</span></span>';
+  document.getElementById("summary").innerHTML=
+    countPill(selected.length,"ärenden i urvalet")+
+    countPill(matchCounts.case,"träff via år + beteckning")+
+    countPill(matchCounts.spatial,"preliminär geografisk träff")+
+    countPill(matchCounts.none,"ingen match hittad")+
+    (performedLoadState==="ok"?"":countPill(matchCounts.unknown,"status okänd – utfört-lagret kunde inte läsas"))+
+    '<span class="pill"><strong>'+(selected.length?fmtDate(selected[0].properties?.Inkomdatum):"–")+'</strong><span>senaste inkomdatum</span></span>';
   const rows=selected.slice(0,limit).map(f=>{
     const p=f.properties||{};
     const center=centerOf(f.geometry);
