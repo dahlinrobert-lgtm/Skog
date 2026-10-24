@@ -12,6 +12,9 @@ on:
     - cron: "17 5 * * *"
 permissions:
   contents: write
+concurrency:
+  group: grasmyr-monitor-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   monitor:
     runs-on: ubuntu-latest
@@ -33,5 +36,7 @@ jobs:
           git add data/latest.json data/scene_index.json data/completed_latest.json data/change_analysis.json data/snapshots
           if ! git diff --cached --quiet; then
             git commit -m "Update Gräsmyr monitoring snapshot"
-            git push
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
           fi
