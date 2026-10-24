@@ -16,8 +16,12 @@ input,select{font:inherit;padding:9px 11px;border:1px solid #c8d4ca;border-radiu
 table{border-collapse:collapse;width:100%;font-size:.93rem}th,td{text-align:left;vertical-align:top;padding:10px 9px;border-bottom:1px solid #e3e9e4}
 th{background:#f0f5f0;white-space:nowrap}th button.sort{font:inherit;font-weight:700;color:inherit;background:transparent;border:0;padding:0;cursor:pointer;text-align:left;white-space:nowrap}th button.sort:hover,th button.sort:focus{text-decoration:underline;color:#246342}th button.sort .arrow{display:inline-block;min-width:1em;color:#246342}td a{color:#246342}tbody tr:hover{background:#f8faf8}
 .tablewrap{overflow-x:auto;border:1px solid #e1e8e1;border-radius:9px}
-.status{font-weight:600}.error{color:#a12c24}.summary{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.pill{background:#eef4ee;border-radius:8px;padding:8px 11px}.links{display:flex;gap:12px;flex-wrap:wrap}
+.status{font-weight:600}.error{color:#a12c24}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.pill{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;background:#f2f5f2;border:1px solid #dce5dc;border-radius:10px;padding:14px 15px;color:#34443a;line-height:1.35}
+.pill strong{font-size:1.65rem;line-height:1.1;color:#205b3c;font-weight:750}
+.pill span{font-size:.9rem}
+@media(max-width:650px){.summary{grid-template-columns:1fr;gap:8px}.pill{padding:12px 14px}.pill strong{font-size:1.45rem}}
+.links{display:flex;gap:12px;flex-wrap:wrap}
 a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 @media(max-width:650px){th,td{padding:8px 7px}.wide-hide{display:none}}
 </style>
@@ -183,9 +187,9 @@ async function renderPropertyPilot(){
       || Number(b.sample_count||0)-Number(a.sample_count||0)
       || String(a.notification_id||"").localeCompare(String(b.notification_id||""),"sv",{numeric:true}));
     document.getElementById("propertySummary").innerHTML=
-      '<span class="pill"><strong>'+Number(report.features_tested||0)+'</strong> testade ärenden av '+Number(report.candidate_notifications_in_radius||0)+' Nordmaling-ärenden i radien</span>'+
-      '<span class="pill"><strong>'+relations.length+'</strong> kandidatkopplingar</span>'+
-      '<span class="pill"><strong>'+relations.filter(x=>x.evidence_class==="interior_and_boundary_samples").length+'</strong> med inre punkt + gränspunkter</span>';
+      '<div class="pill"><strong>'+Number(report.features_tested||0)+' / '+Number(report.candidate_notifications_in_radius||0)+'</strong><span>Testade ärenden av Nordmaling-ärenden inom sökradien</span></div>'+
+      '<div class="pill"><strong>'+relations.length+'</strong><span>Kandidatkopplingar mellan ärenden och fastigheter</span></div>'+
+      '<div class="pill"><strong>'+relations.filter(x=>x.evidence_class==="interior_and_boundary_samples").length+'</strong><span>Med både inre provpunkt och gränspunkter</span></div>';
     const date=report.checked_at?fmtDate(report.checked_at):"okänt datum";
     document.getElementById("propertyNote").textContent=
       "Pilotrapport kontrollerad "+date+". "+Number(report.features_tested||0)+" av "+Number(report.candidate_notifications_in_radius||0)+
