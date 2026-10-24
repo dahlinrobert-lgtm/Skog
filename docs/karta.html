@@ -24,7 +24,7 @@
 <button id="applyArea">Använd koordinater och radie</button>
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
-<label>Färglägg utförda <select id="performedColorMode"><option value="none">Ingen (normal)</option><option value="year">År</option><option value="hectares">Hektar</option></select></label>
+<label>Färglägg utförda <select id="performedColorMode"><option value="none">Ingen (normal)</option><option value="year">År</option><option value="hectares">Hektar</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option></select></label>
 <button id="reload">Ladda om data</button>
 <button id="home">Visa hela området</button>
 </div>
@@ -35,7 +35,7 @@
 </div>
 <p id="status" class="muted" aria-live="polite">Laddar avverkningsdata från Skogsstyrelsen…</p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span>Välj en polygon för attribut och datum.</span></div>
-<div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span></div>
+<div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
 <section class="panel">
 <div id="map" aria-label="Karta över planerade och utförda avverkningar"></div>
@@ -59,6 +59,8 @@ plannedLayer.addTo(map);performedLayer.addTo(map);
 const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const COLOR_LOW=[185,232,255],COLOR_HIGH=[20,83,45];
 let performedScaleCache={mode:"none",min:null,max:null};
+const CATEGORY_COLORS=["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#1f78b4","#b2df8a","#fb9a99","#6a3d9a","#b15928","#17a2b8","#8c564b","#bcbd22","#ff7f00","#4e79a7","#f28e2b"];
+let categoryColorMap=new Map();
 function performedYear(feature){
  const p=feature?.properties||{};
  const direct=Number(p.Arendear);
@@ -75,6 +77,19 @@ function performedHectares(feature){
  const n=Number(p.Arealha);
  return p.Arealha!==null&&p.Arealha!==""&&Number.isFinite(n)&&n>=0?n:null;
 }
+function categoryValue(feature,mode){
+ const p=feature?.properties||{};
+ const raw=mode==="forestType"?p.Skogstyp:p.Avverktyp;
+ const value=String(raw??"").trim();
+ return value||"Okänd / saknas";
+}
+function categoryColor(value){
+ if(!categoryColorMap.has(value)){
+  const index=categoryColorMap.size;
+  categoryColorMap.set(value,CATEGORY_COLORS[index%CATEGORY_COLORS.length]);
+ }
+ return categoryColorMap.get(value);
+}
 function mixColor(t){
  t=Math.max(0,Math.min(1,t));
  const rgb=COLOR_LOW.map((v,i)=>Math.round(v+(COLOR_HIGH[i]-v)*t));
@@ -83,6 +98,12 @@ function mixColor(t){
 function currentColorScale(){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  const features=performedLayer.toGeoJSON().features||[];
+ if(mode==="forestType"||mode==="harvestType"){
+  const categories=[...new Set(features.map(f=>categoryValue(f,mode)))].sort((a,b)=>a.localeCompare(b,"sv"));
+  categoryColorMap=new Map();
+  categories.forEach(categoryColor);
+  return {mode,categories};
+ }
  const values=features.map(f=>mode==="year"?performedYear(f):performedHectares(f)).filter(v=>v!==null);
  if(mode==="year")return {mode,min:values.length?Math.min(...values):null,max:2026};
  if(mode==="hectares")return {mode,min:values.length?Math.min(...values):null,max:values.length?Math.max(...values):null};
@@ -92,6 +113,10 @@ function performedStyle(feature){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  if(mode==="none")return {color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22};
  const scale=performedScaleCache;
+ if(mode==="forestType"||mode==="harvestType"){
+  const color=categoryColor(categoryValue(feature,mode));
+  return {color:color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
+ }
  const value=mode==="year"?performedYear(feature):performedHectares(feature);
  if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};
  const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min);
@@ -105,17 +130,32 @@ function refreshPerformedColors(){
  const scale=currentColorScale();
  performedScaleCache=scale;
  legend.style.display=mode==="none"?"none":"flex";
- const gradient=document.querySelector(".color-gradient");
+ const gradient=document.getElementById("legendGradient");
+ const categoryLegend=document.getElementById("categoryLegend");
+ categoryLegend.innerHTML="";
  if(mode==="year"){
+  minLabel.style.display="";maxLabel.style.display="";gradient.style.display="";categoryLegend.style.display="none";
   minLabel.textContent=scale.min===null?"Äldst":String(scale.min);
   maxLabel.textContent="2026";
   note.textContent="år";
   gradient.style.background="linear-gradient(to right,"+mixColor(0)+","+mixColor(1)+")";
  }else if(mode==="hectares"){
+  minLabel.style.display="";maxLabel.style.display="";gradient.style.display="";categoryLegend.style.display="none";
   minLabel.textContent=scale.min===null?"Lägst":scale.min.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha";
   maxLabel.textContent=scale.max===null?"Högst":scale.max.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha";
   note.textContent="inom valt område";
   gradient.style.background="linear-gradient(to right,"+mixColor(0)+","+mixColor(1)+")";
+ }else if(mode==="forestType"||mode==="harvestType"){
+  minLabel.style.display="none";maxLabel.style.display="none";gradient.style.display="none";categoryLegend.style.display="flex";
+  note.textContent=mode==="forestType"?"Skogstyp":"Avverkningstyp";
+  scale.categories.forEach(category=>{
+   const item=document.createElement("span");
+   item.style.display="inline-flex";item.style.alignItems="center";item.style.gap="5px";
+   const swatch=document.createElement("i");
+   swatch.style.display="inline-block";swatch.style.width="12px";swatch.style.height="12px";swatch.style.borderRadius="2px";swatch.style.background=categoryColor(category);
+   const label=document.createElement("span");label.textContent=category;
+   item.append(swatch,label);categoryLegend.append(item);
+  });
  }
  performedLayer.setStyle(performedStyle);
 }
