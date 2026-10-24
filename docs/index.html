@@ -378,25 +378,45 @@ function render(){
   });
   document.getElementById("rows").innerHTML=rows.length?rows.join(""):'<tr><td colspan="9">Inga ärenden matchar filtret.</td></tr>';
 }
+async function loadFollowUpAnalysis(){
+  const ar=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/change_analysis.json");
+  if(!ar.ok) throw new Error("HTTP "+ar.status);
+  const analysis=await ar.json();
+  followUpById=Object.fromEntries((analysis.planned_vs_completed||[]).map(x=>[String(x.planned_object_id),x]));
+}
 async function init(){
   try{
     const response=await fetch(dataUrl);
     if(!response.ok) throw new Error("HTTP "+response.status);
     const data=await response.json();
     allFeatures=data.cutting_notifications?.features||[];
-    try {
-      const ar=await fetch("https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/change_analysis.json");
-      if(ar.ok){const analysis=await ar.json();followUpById=Object.fromEntries((analysis.planned_vs_completed||[]).map(x=>[String(x.planned_object_id),x]));}
-    } catch(e) { followUpById={}; }
-    document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen.";
+    document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Visar planerade ärenden; kompletterar matchning och utförd-status i bakgrunden …";
     document.getElementById("checked").textContent=" Senast kontrollerad: "+(data.checked_at||"okänt datum")+".";
-    try { await loadPerformed(); } catch(e) { performedLoadState="error"; document.getElementById("loadstatus").textContent += " Utförda avverkningar kunde inte hämtas; statuskolumnen visar ?."; }
+    // Show the primary content immediately; slower supporting sources must not block the table.
     render();
     renderHistory();
     renderPropertyPilot();
+
+    const analysisTask=loadFollowUpAnalysis().then(()=>{
+      render();
+      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Matchningsanalys inläst.";
+    }).catch(()=>{
+      followUpById={};
+      render();
+      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Matchningsanalysen kunde inte läsas; uppföljningsstatus saknas.";
+    });
+    const performedTask=loadPerformed().then(()=>{
+      render();
+      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Matchnings- och utförd-status uppdaterad.";
+    }).catch(e=>{
+      performedLoadState="error";
+      render();
+      document.getElementById("loadstatus").textContent="Senaste kontroll: "+fmtDate(data.checked_at)+" · datakälla: Skogsstyrelsen. Utförda avverkningar kunde inte hämtas; statuskolumnen visar ?.";
+    });
+    await Promise.allSettled([analysisTask,performedTask]);
   }catch(e){
     document.getElementById("loadstatus").innerHTML='<span class="error">Kunde inte läsa senaste data ('+String(e?.message||e||"okänt fel")+' ). Kontrollera nätverksåtkomst till data/latest.json på GitHub.</span>';
-    document.getElementById("rows").innerHTML='<tr><td colspan="8">Data kunde inte laddas.</td></tr>';
+    document.getElementById("rows").innerHTML='<tr><td colspan="10">Data kunde inte laddas.</td></tr>';
   }
 }
 ["municipality","search","limit"].forEach(id=>document.getElementById(id).addEventListener("input",render));
