@@ -146,6 +146,8 @@ def write_completed_archive(collection: dict[str, Any], snapshots_dir: Path,
     full_payload = json.dumps(full_collection, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     full_compressed_bytes = len(gzip.compress(full_payload, mtime=0))
 
+    # A scope transition is always a checkpoint; this rule must take precedence
+    # over any test-only compression preference.
     full_checkpoint = previous_collection is None or not previous_filename
     if previous_collection is not None:
         if (
