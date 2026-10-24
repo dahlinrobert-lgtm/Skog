@@ -8,6 +8,7 @@ planned-object persistence across saved daily snapshots where available.
 """
 import gzip
 import json
+from urllib.parse import unquote
 from collections import Counter
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -63,6 +64,15 @@ def parse_epoch_ms(value):
         return None
 
 
+def query_scope(snapshot):
+    url = unquote(str((snapshot.get("cutting_notifications") or {}).get("url") or "")).lower()
+    if "geometrytype=esrigeometryenvelope" in url:
+        return "bounding_box"
+    if "distance=10000" in url and "esrigeometrypoint" in url:
+        return "radius_10km"
+    return "unknown"
+
+
 def get_notification_map(snapshot):
     features = (snapshot.get("cutting_notifications") or {}).get("features") or []
     return {feature_id(feature): feature for feature in features if feature_id(feature)}
@@ -97,13 +107,26 @@ def main():
     # Consecutive saved history comparisons: new/missing identities in the
     # planned layer. Missing is intentionally called "not returned", not deleted.
     persistence_events = []
+    incomparable_snapshot_pairs = []
     for (prev_name, prev_data, prev_map), (next_name, next_data, next_map) in zip(planned_history, planned_history[1:]):
+        prev_scope = query_scope(prev_data)
+        next_scope = query_scope(next_data)
+        if prev_scope != next_scope:
+            incomparable_snapshot_pairs.append({
+                "from_snapshot": prev_name,
+                "to_snapshot": next_name,
+                "from_scope": prev_scope,
+                "to_scope": next_scope,
+                "reason": "The query geometry/scope changed between snapshots; ID differences are not interpreted as source changes.",
+            })
+            continue
         appeared = sorted(set(next_map) - set(prev_map))
         missing = sorted(set(prev_map) - set(next_map))
         if appeared or missing:
             persistence_events.append({
                 "from_snapshot": prev_name,
                 "to_snapshot": next_name,
+                "scope": next_scope,
                 "from_checked_at": prev_data.get("checked_at"),
                 "to_checked_at": next_data.get("checked_at"),
                 "appeared_count": len(appeared),
@@ -238,6 +261,7 @@ def main():
             **dict(counts),
         },
         "planned_persistence_events": persistence_events,
+        "incomparable_snapshot_pairs": incomparable_snapshot_pairs,
         "planned_vs_completed": sorted(planned_checks, key=lambda row: (
             row["status"] != "meaningful_overlap_candidate",
             -(row["best_candidates"][0]["intersection_ha"] if row["best_candidates"] else 0),
