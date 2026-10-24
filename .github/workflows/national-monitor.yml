@@ -9,7 +9,7 @@ on:
       - "tests/test_monitor_national.py"
       - ".github/workflows/national-monitor.yml"
   schedule:
-    - cron: "47 5 * * *"
+    - cron: "47 5 1,16 * *"
 permissions:
   contents: write
 concurrency:

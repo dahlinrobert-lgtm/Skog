@@ -156,13 +156,16 @@ def read_archive_rows(directory: Path) -> list[tuple[str, dict[str, Any]]]:
     return rows
 
 
-def get_json(params: dict[str, Any], timeout: int = 90) -> dict[str, Any]:
+def get_json(params: dict[str, Any], timeout: int = 90, use_post: bool = False) -> dict[str, Any]:
     global SESSION
     if SESSION is None:
         import requests
         SESSION = requests.Session()
         SESSION.headers.update(HEADERS)
-    response = SESSION.get(BASE_URL, params=params, timeout=timeout)
+    # POST avoids very long query URLs when requesting hundreds of object IDs.
+    # The ArcGIS endpoint supports both methods; use POST for bulk feature batches.
+    response = (SESSION.post(BASE_URL, data=params, timeout=timeout) if use_post
+                else SESSION.get(BASE_URL, params=params, timeout=timeout))
     response.raise_for_status()
     data = response.json()
     if data.get("error"):
@@ -194,12 +197,12 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             "f": "geojson",
         }
         try:
-            data = get_json(params)
+            data = get_json(params, use_post=True)
         except Exception as exc:
             # Some ArcGIS deployments intermittently return HTTP 404 for GeoJSON
             # batches. Retry the same IDs as ArcGIS JSON, with smaller batches if needed.
             print(f"Batch {batch_index}/{batch_count} GeoJSON failed: {exc}; retrying as ArcGIS JSON.", flush=True)
-            data = get_json({**params, "f": "json"})
+            data = get_json({**params, "f": "json"}, use_post=True)
         features = data.get("features")
         if not isinstance(features, list):
             raise RuntimeError(f"ArcGIS batch {batch_index}/{batch_count} had no feature list.")
@@ -222,10 +225,10 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
                 "outSR": "4326", "f": "geojson",
             }
             try:
-                data = get_json(retry_params)
+                data = get_json(retry_params, use_post=True)
             except Exception as exc:
                 print(f"Missing-ID retry batch failed: {exc}; retrying as ArcGIS JSON.", flush=True)
-                data = get_json({**retry_params, "f": "json"})
+                data = get_json({**retry_params, "f": "json"}, use_post=True)
             for feature in data.get("features", []):
                 key = feature_id(feature)
                 if key:
