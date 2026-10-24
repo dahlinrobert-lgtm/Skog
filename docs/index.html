@@ -124,7 +124,7 @@ async function init(){
     document.getElementById("checked").textContent=" Senast kontrollerad: "+(data.checked_at||"okänt datum")+".";
     render();
   }catch(e){
-    document.getElementById("loadstatus").innerHTML='<span class="error">Kunde inte läsa senaste data ('+String(e.message)+'). Kör bevakningen och kontrollera att docs/data/latest.json publicerats.</span>';
+    document.getElementById("loadstatus").innerHTML='<span class="error">Kunde inte läsa senaste data ('+String(e?.message||e||"okänt fel")+' ). Kontrollera nätverksåtkomst till data/latest.json på GitHub.</span>';
     document.getElementById("rows").innerHTML='<tr><td colspan="7">Data kunde inte laddas.</td></tr>';
   }
 }
