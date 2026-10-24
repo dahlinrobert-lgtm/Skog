@@ -169,13 +169,14 @@ def write_completed_archive(collection: dict[str, Any], snapshots_dir: Path,
                 prior = datetime.fromisoformat(str(checkpoint_time).replace("Z", "+00:00"))
                 if prior.tzinfo is None:
                     prior = prior.replace(tzinfo=timezone.utc)
-                full_checkpoint = observed - prior >= timedelta(days=checkpoint_days)
+                full_checkpoint = observed - prior >= timedelta(days=checkpoint_days) and not prefer_delta
             except ValueError:
                 full_checkpoint = True
         else:
             full_checkpoint = True
 
-    # Test hook bypasses only compression-size fallback, never checkpoint rules.
+    # Test hook may bypass cadence checkpoints only for controlled reconstruction tests;
+    # a query-scope transition always forces a full baseline.
     if full_checkpoint:
         archive_bytes = _write_gzip(destination, full_collection)
         return {
