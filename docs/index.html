@@ -67,7 +67,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <footer>Datat uppdateras när den schemalagda bevakningen körs och publicerar en ny snapshot. <span id="checked"></span></footer>
 </main>
 <script>
-const dataUrl = "data/latest.json";
+const dataUrl = "https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/latest.json";
 let allFeatures = [];
 const fmtDate = value => {
   if (value === null || value === undefined || value === "") return "–";
