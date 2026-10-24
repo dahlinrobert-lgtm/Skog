@@ -1,0 +1,26 @@
+name: Completed snapshot storage tests
+on:
+  pull_request:
+    paths:
+      - "scripts/completed_snapshot_store.py"
+      - "scripts/snapshot_completed.py"
+      - "scripts/analyze_changes.py"
+      - "tests/test_completed_snapshot_store.py"
+      - ".github/workflows/completed-snapshot-store-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/completed_snapshot_store.py"
+      - "scripts/snapshot_completed.py"
+      - "scripts/analyze_changes.py"
+      - "tests/test_completed_snapshot_store.py"
+      - ".github/workflows/completed-snapshot-store-tests.yml"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -v
