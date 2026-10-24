@@ -316,7 +316,7 @@ function render(){
       if(!m)matchCounts.none++;
       else if(m.status==="case")matchCounts.case++;
       else if(m.status==="spatial")matchCounts.spatial++;
-      else if(m.status==="sample")matchCounts.sample++;
+      else if(m.status==="sample"){/* counted separately from sample evidence below */}
       else if(m.status==="weak")matchCounts.weak++;
       else if(m.status==="near")matchCounts.near++;
       else if(m.status==="coordinate")matchCounts.coordinate++;
