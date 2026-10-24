@@ -118,8 +118,13 @@ def read_completed_archives(snapshots_dir: Path) -> list[tuple[str, dict[str, An
 def write_completed_archive(collection: dict[str, Any], snapshots_dir: Path,
                             previous_collection: dict[str, Any] | None = None,
                             previous_filename: str | None = None,
-                            checkpoint_days: int = CHECKPOINT_DAYS) -> dict[str, Any]:
-    """Write a full checkpoint or compressed feature delta, choosing full if smaller."""
+                            checkpoint_days: int = CHECKPOINT_DAYS,
+                            prefer_delta: bool = False) -> dict[str, Any]:
+    """Write a full checkpoint or compressed feature delta, choosing full if smaller.
+
+    prefer_delta is intended for tests that exercise reconstruction independently
+    of compression efficiency; production callers should leave it False.
+    """
     if not isinstance(collection.get("features"), list):
         raise ValueError("Refusing to write completed archive without a GeoJSON feature list")
     scope = collection.get("query_scope_sha256")
@@ -226,7 +231,7 @@ def write_completed_archive(collection: dict[str, Any], snapshots_dir: Path,
     delta_compressed_bytes = len(gzip.compress(delta_payload, mtime=0))
 
     # A full archive is safer and smaller when the source layer changes extensively.
-    if delta_compressed_bytes >= full_compressed_bytes:
+    if delta_compressed_bytes >= full_compressed_bytes and not prefer_delta:
         archive_bytes = _write_gzip(destination, full_collection)
         return {
             "filename": filename, "format": "full_fallback", "feature_count": len(current_features),
