@@ -48,7 +48,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 <div id="loadstatus" class="muted">Hämtar senaste publicerade data …</div>
 <div class="summary" id="summary"></div>
 <p class="hint" id="performedDiagnostics">Kontrollerar täckning för utförda avverkningar …</p>
-<p class="hint">Geografiska träffar räknas bara om utfört-lagrets avverkningsdatum är samma dag eller senare än anmälans inkomdatum. Sammanfattningen räknas på alla ärenden i aktuellt filter, inte bara de synliga raderna. ✓ betyder träff via år + normaliserad beteckning. ≈ betyder geografisk överlappning. · betyder en närliggande kandidat som kräver manuell kontroll, inte en match. – betyder ingen kandidat hittad och ? betyder att utfört-lagret inte kunde läsas. Håll muspekaren över symbolen för metod. En geografisk träff är preliminär; en träff via år + beteckning är också en automatisk kandidat och bör kontrolleras. En geografisk träff är preliminär och bevisar inte att hela området är avverkat. – betyder att ingen match hittades; ? betyder att lagret inte kunde läsas.</p>
+<p class="hint">Geografiska överlappningar räknas bara om utfört-lagrets avverkningsdatum är samma dag eller senare än anmälans inkomdatum. Närliggande kandidater inom 500 m visas separat och är inte bekräftade träffar. Sammanfattningen räknas på alla ärenden i aktuellt filter, inte bara de synliga raderna. ✓ betyder träff via år + normaliserad beteckning. ≈ betyder geografisk överlappning. · betyder en närliggande kandidat med datum efter anmälan. ? kan i en rad med historisk närhet betyda att en äldre utförd yta finns i närheten, men den bekräftar inte anmälan. – betyder ingen kandidat hittad och ? betyder att utfört-lagret inte kunde läsas. Håll muspekaren över symbolen för metod. En geografisk träff är preliminär; en träff via år + beteckning är också en automatisk kandidat och bör kontrolleras. En geografisk träff är preliminär och bevisar inte att hela området är avverkat. – betyder att ingen match hittades; ? betyder att lagret inte kunde läsas.</p>
 <div class="tablewrap" style="margin-top:13px">
 <table>
 <thead><tr><th><button class="sort" data-sort="date" type="button">Inkomdatum <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="case" type="button">Ärendenummer <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="municipality" type="button">Kommun <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="type" type="button">Typ <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="area" type="button">Areal <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="status" type="button">Status <span class="arrow" aria-hidden="true"></span></button></th><th><button class="sort" data-sort="property" type="button">Fastighet / karta <span class="arrow" aria-hidden="true"></span></button></th><th>Utförd yta?</th></tr></thead>
@@ -234,8 +234,12 @@ const eligible=performedFeatures.filter(done=>{const harvest=Number(done.propert
 const spatial=eligible.filter(done=>overlaps(f.geometry,done.geometry));if(spatial.length)return {status:"spatial",feature:spatial[0],count:spatial.length};
 // Near-centre candidates help review shifted/differently segmented polygons, but are not matches.
 const plannedArea=Number(f.properties?.AnmaldHa||0);
-const near=eligible.map(done=>({feature:done,distance:distanceMeters(geometryCenter(f.geometry),geometryCenter(done.geometry)),area:Number(done.properties?.Arealha||0)})).filter(x=>x.distance<=150&&plannedArea>0&&x.area>0&&x.area/plannedArea>=0.3&&x.area/plannedArea<=3).sort((a,b)=>a.distance-b.distance);
-if(near.length)return {status:"near",feature:near[0].feature,distance:Math.round(near[0].distance),count:near.length};return null}
+const center=geometryCenter(f.geometry);
+const near=eligible.map(done=>({feature:done,distance:distanceMeters(center,geometryCenter(done.geometry)),area:Number(done.properties?.Arealha||0)})).filter(x=>x.distance<=500&&plannedArea>0&&x.area>0&&x.area/plannedArea>=0.1&&x.area/plannedArea<=10).sort((a,b)=>a.distance-b.distance);
+if(near.length)return {status:"near",feature:near[0].feature,distance:Math.round(near[0].distance),count:near.length};
+// Show closest nearby historical observations for manual review, even when their date predates the notification.
+const historical=performedFeatures.map(done=>({feature:done,distance:distanceMeters(center,geometryCenter(done.geometry)),area:Number(done.properties?.Arealha||0),date:Number(done.properties?.Avvdatum||0)})).filter(x=>x.distance<=500&&x.date>0).sort((a,b)=>a.distance-b.distance);
+if(historical.length)return {status:"historical",feature:historical[0].feature,distance:Math.round(historical[0].distance),count:historical.length};return null}
 function render(){
   const municipality=document.getElementById("municipality").value;
   const q=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
@@ -255,9 +259,9 @@ function render(){
   const yearText=Object.keys(doneYears).sort().map(y=>y+": "+doneYears[y]).join(" · ");
   const diagnostics=document.getElementById("performedDiagnostics");
   if(diagnostics)diagnostics.textContent=performedLoadState!=="ok"?"Utförda avverkningar kunde inte hämtas.":("Utförda ytor i hämtat underlag: "+performedFeatures.length+". Datumintervall: "+(doneDates.length?fmtDate(doneDates[0])+"–"+fmtDate(doneDates[doneDates.length-1]):"inga giltiga datum")+". Årsfördelning: "+(yearText||"saknas")+". "+(performedTruncated?"VARNING: resultatet kan vara begränsat till 2 000 objekt och matchningen ofullständig.":""));
-  const matchCounts={case:0,spatial:0,near:0,none:0,unknown:0};
+  const matchCounts={case:0,spatial:0,near:0,historical:0,none:0,unknown:0};
   if(performedLoadState==="ok"){
-    selected.forEach(f=>{const m=matchPerformed(f);if(!m)matchCounts.none++;else if(m.status==="case")matchCounts.case++;else if(m.status==="spatial")matchCounts.spatial++;else matchCounts.near++;});
+    selected.forEach(f=>{const m=matchPerformed(f);if(!m)matchCounts.none++;else if(m.status==="case")matchCounts.case++;else if(m.status==="spatial")matchCounts.spatial++;else if(m.status==="near")matchCounts.near++;else matchCounts.historical++;});
   }else{
     matchCounts.unknown=selected.length;
   }
@@ -266,7 +270,8 @@ function render(){
     countPill(selected.length,"ärenden i urvalet")+
     countPill(matchCounts.case,"träff via år + beteckning")+
     countPill(matchCounts.spatial,"geografisk överlappning")+
-    countPill(matchCounts.near,"närliggande kandidat – kontrollera manuellt")+
+    countPill(matchCounts.near,"närliggande kandidat – datum efter anmälan")+
+    countPill(matchCounts.historical,"historisk närliggande yta – datum kan vara före anmälan")+
     countPill(matchCounts.none,"ingen koppling hittad i nuvarande underlag")+
     (performedLoadState==="ok"?"":countPill(matchCounts.unknown,"status okänd – utfört-lagret kunde inte läsas"))+
     '<span class="pill"><strong>'+(selected.length?fmtDate(selected[0].properties?.Inkomdatum):"–")+'</strong><span>senaste inkomdatum</span></span>';
@@ -275,7 +280,7 @@ function render(){
     const center=centerOf(f.geometry);
     const map=lantmaterietUrl(center);
     const caseNo=p.Beteckn||("OBJECTID "+(f.id??p.OBJECTID??""));
-    const match=performedLoadState==="ok"?matchPerformed(f):null;const mark=performedLoadState!=="ok"?"?":(!match?"–":(match.status==="case"?"✓":(match.status==="near"?"·":"≈")));const doneProps=match?.feature?.properties||{};const doneDetails=match?" Utförd yta: år "+(doneProps.Arendear??"–")+", datum "+fmtDate(doneProps.Avvdatum)+", areal "+(doneProps.Arealha==null?"–":Number(doneProps.Arealha).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+".":" ";const tip=performedLoadState!=="ok"?"Utfört-lagret kunde inte läsas":(!match?"Ingen tydlig ärendenyckel eller överlappning hittad":(match.status==="case"?"Matchning via ärendeår + normaliserad beteckning. Kontrollera att detta är rätt ärende.":"Geografisk överlappning med avverkningsdatum samma dag eller efter anmälan; "+(match.count>1?"flera utförda ytor överlappar":"preliminär träff")+".")+doneDetails);return '<tr><td>'+fmtDate(p.Inkomdatum)+'</td><td><a href="'+arcUrl(f.id??p.OBJECTID)+'" target="_blank" rel="noopener">'+caseNo+'</a></td><td>'+ (p.Kommun||"–")+'</td><td>'+ (p.Avverktyp||"–")+'</td><td>'+ (p.AnmaldHa==null?"–":Number(p.AnmaldHa).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+'</td><td class="status">'+(p.ArendeStatus||"–")+'</td><td>'+(map?'<a href="'+map+'" target="_blank" rel="noopener">Visa ungefärlig plats</a>':"Fastighet saknas i källan")+'</td><td title="'+tip+'">'+mark+'</td></tr>';
+    const match=performedLoadState==="ok"?matchPerformed(f):null;const mark=performedLoadState!=="ok"?"?":(!match?"–":(match.status==="case"?"✓":(match.status==="near"?"·":(match.status==="historical"?"?":"≈"))));const doneProps=match?.feature?.properties||{};const doneDetails=match?" Utförd yta: år "+(doneProps.Arendear??"–")+", datum "+fmtDate(doneProps.Avvdatum)+", areal "+(doneProps.Arealha==null?"–":Number(doneProps.Arealha).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+".":" ";const tip=performedLoadState!=="ok"?"Utfört-lagret kunde inte läsas":(!match?"Ingen tydlig ärendenyckel eller överlappning hittad":(match.status==="case"?"Matchning via ärendeår + normaliserad beteckning. Kontrollera att detta är rätt ärende.":"Geografisk överlappning med avverkningsdatum samma dag eller efter anmälan; "+(match.count>1?"flera utförda ytor överlappar":"preliminär träff")+".")+doneDetails);return '<tr><td>'+fmtDate(p.Inkomdatum)+'</td><td><a href="'+arcUrl(f.id??p.OBJECTID)+'" target="_blank" rel="noopener">'+caseNo+'</a></td><td>'+ (p.Kommun||"–")+'</td><td>'+ (p.Avverktyp||"–")+'</td><td>'+ (p.AnmaldHa==null?"–":Number(p.AnmaldHa).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+'</td><td class="status">'+(p.ArendeStatus||"–")+'</td><td>'+(map?'<a href="'+map+'" target="_blank" rel="noopener">Visa ungefärlig plats</a>':"Fastighet saknas i källan")+'</td><td title="'+tip+'">'+mark+'</td></tr>';
   });
   document.getElementById("rows").innerHTML=rows.length?rows.join(""):'<tr><td colspan="8">Inga ärenden matchar filtret.</td></tr>';
 }
