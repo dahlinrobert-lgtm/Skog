@@ -224,7 +224,7 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             f"{len(missing)} IDs were still missing after retry. Last known-good data preserved."
         )
 
-    features = sorted(found.values(), key=lambda f: int(feature_id(f)) if feature_id(f).isdigit() else feature_id(f))
+    features = sorted(found.values(), key=lambda f: feature_id(f))
     return features, {
         "object_id_count": len(object_ids),
         "feature_count": len(features),
@@ -261,11 +261,11 @@ def main() -> None:
     force_full = previous is None or previous_filename is None
     if not force_full and archive_rows:
         try:
-            last_full = next(
-                (row[1] for name, row in reversed(archive_rows)
-                 if row.get("snapshot_format") != "feature-delta-v1"),
-                None,
-            )
+            last_full = None
+            for archive_path in sorted(SNAPSHOTS.glob("*.json.gz")):
+                raw = read_gzip_json(archive_path)
+                if raw is not None and raw.get("snapshot_format") != "feature-delta-v1":
+                    last_full = raw
             last_full_dt = datetime.fromisoformat(str(last_full["checked_at"]).replace("Z", "+00:00")) if last_full else None
             force_full = last_full_dt is None or checked - last_full_dt >= timedelta(days=CHECKPOINT_DAYS)
         except (KeyError, ValueError):
