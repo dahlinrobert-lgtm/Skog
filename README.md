@@ -78,3 +78,13 @@ The workflow now runs `scripts/analyze_changes.py` after saving both source laye
 The threshold (intersection at least 0.02 ha and at least 15% of either polygon) is a working diagnostic threshold, not a validated definition of an executed case. The report expressly treats spatial overlap as candidate evidence, not proof. An ID not returned by a later query is not automatically labelled deleted, expired or felled.
 
 The project currently has a limited set of snapshots from the initial setup on 2026-10-24. That same-day history is not a sufficiently long time series to estimate typical register turnover. The report will become more informative as daily snapshots accumulate.
+
+
+## Notification history quality guard (2026-10-24)
+
+The notification-history builder compares the complete query scope, including spatial geometry/type and relevant ArcGIS query filters, rather than only the endpoint and configured centre/radius.
+
+- IDs omitted just after a query-scope change are labelled `scope_changed`; they are not counted as source `not_returned` events.
+- `record_changed` events compare tracked attributes and geometry only across consecutive successful snapshots with a matching query scope.
+- `data/notification_history_events.jsonl` is rebuilt from the saved successful snapshots each run. The dated snapshots are the source of truth, allowing stale derived events from older comparison logic to be corrected rather than preserved indefinitely.
+- A query-scope transition does not establish that an application was removed, expired, cancelled, or felled.
