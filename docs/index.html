@@ -66,6 +66,7 @@ a{color:#246342}footer{font-size:.88rem;color:#5d6b62;margin-top:18px}
 </section>
 <footer>Datat uppdateras när den schemalagda bevakningen körs och publicerar en ny snapshot. <span id="checked"></span></footer>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.12.1/proj4.min.js"></script>
 <script>
 const dataUrl = "https://raw.githubusercontent.com/dahlinrobert-lgtm/Skog/main/data/latest.json";
 let allFeatures = [];
@@ -86,6 +87,14 @@ function centerOf(geometry) {
 function arcUrl(id){
   return "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query?where="+encodeURIComponent("OBJECTID="+Number(id))+"&outFields=*&returnGeometry=true&outSR=4326&f=pjson";
 }
+function lantmaterietUrl(center){
+  if(!center) return "";
+  // Skogsstyrelsens geometrier hämtas i WGS84 (lon/lat); Min karta söker i SWEREF 99 TM.
+  if(typeof proj4 === "undefined") return "https://minkarta.lantmateriet.se/";
+  const [e,n]=proj4("EPSG:4326","EPSG:3006",[center[0],center[1]]);
+  const params=new URLSearchParams({e:String(Math.round(e)),n:String(Math.round(n)),z:"15",mapprofile:"flygbild"});
+  return "https://minkarta.lantmateriet.se/plats/3006/v2.0/?"+params.toString();
+}
 function render(){
   const municipality=document.getElementById("municipality").value;
   const q=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
@@ -99,7 +108,7 @@ function render(){
   const rows=selected.slice(0,limit).map(f=>{
     const p=f.properties||{};
     const center=centerOf(f.geometry);
-    const map=center?"https://www.google.com/maps/search/?api=1&query="+center[1].toFixed(6)+","+center[0].toFixed(6):"";
+    const map=lantmaterietUrl(center);
     const caseNo=p.Beteckn||("OBJECTID "+(f.id??p.OBJECTID??""));
     return '<tr><td>'+fmtDate(p.Inkomdatum)+'</td><td><a href="'+arcUrl(f.id??p.OBJECTID)+'" target="_blank" rel="noopener">'+caseNo+'</a></td><td>'+ (p.Kommun||"–")+'</td><td>'+ (p.Avverktyp||"–")+'</td><td>'+ (p.AnmaldHa==null?"–":Number(p.AnmaldHa).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha")+'</td><td class="status">'+(p.ArendeStatus||"–")+'</td><td>'+(map?'<a href="'+map+'" target="_blank" rel="noopener">Visa ungefärlig plats</a>':"Fastighet saknas i källan")+'</td></tr>';
   });
