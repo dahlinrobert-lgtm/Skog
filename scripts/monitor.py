@@ -47,8 +47,9 @@ def cutting_notifications():
     base = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query"
     params = {
         "where": "1=1",
-        "geometry": json.dumps({"xmin": BBOX[0], "ymin": BBOX[1], "xmax": BBOX[2], "ymax": BBOX[3], "spatialReference": {"wkid": 4326}}),
-        "geometryType": "esriGeometryEnvelope", "inSR": 4326,
+        "geometry": json.dumps({"x": LON, "y": LAT, "spatialReference": {"wkid": 4326}}),
+        "geometryType": "esriGeometryPoint", "inSR": 4326,
+        "distance": int(R * 1000), "units": "esriSRUnit_Meter",
         "spatialRel": "esriSpatialRelIntersects", "outFields": "*",
         "returnGeometry": "true", "outSR": 4326, "f": "geojson", "resultRecordCount": 2000
     }
@@ -58,7 +59,7 @@ def cutting_notifications():
         data = response.json()
         features = data.get("features", [])
         return {"status": "ok", "url": response.url, "features": features, "count": len(features),
-                "note": "Features intersect a rectangular search bbox; this is not a cadastral or village boundary. A notification does not prove felling occurred."}
+                "note": "Features intersect a 10 km point-distance query around the configured centre; this is not a cadastral or village boundary. A notification does not prove felling occurred."}
     except Exception as exc:
         return {"status": "error", "url": base, "error": str(exc), "features": [], "count": 0}
 
