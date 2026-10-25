@@ -622,7 +622,26 @@ function queryUrl(base,fields,bounds,offset){
  params.set("resultOffset",String(offset));
  return base+"?"+params.toString();
 }
+// Short-lived cache: revisiting an area can reuse API responses.
+const layerResponseCache=new Map();
+const LAYER_CACHE_TTL_MS=180000;
+const LAYER_CACHE_MAX_ENTRIES=18;
+function layerCacheKey(base,fields,bounds){
+ const round=v=>Number(v).toFixed(4);
+ const simplify=RADIUS<=5000?0.00001:RADIUS<=10000?0.00003:RADIUS<=20000?0.00006:0.00012;
+ return [base,fields,round(bounds.getWest()),round(bounds.getSouth()),round(bounds.getEast()),round(bounds.getNorth()),simplify].join("|");
+}
+function cacheLayerResponse(key,value){
+ layerResponseCache.set(key,{time:Date.now(),value});
+ while(layerResponseCache.size>LAYER_CACHE_MAX_ENTRIES)layerResponseCache.delete(layerResponseCache.keys().next().value);
+}
 async function getLayer(base,fields,bounds,signal){
+ const cacheKey=layerCacheKey(base,fields,bounds),cached=layerResponseCache.get(cacheKey);
+ if(cached&&Date.now()-cached.time<LAYER_CACHE_TTL_MS){
+  layerResponseCache.delete(cacheKey);layerResponseCache.set(cacheKey,cached);
+  return JSON.parse(JSON.stringify(cached.value));
+ }
+ if(cached)layerResponseCache.delete(cacheKey);
  const all=[],seen=new Set();
  let offset=0,pages=0,hasMore=true,truncated=false;
  const pageSize=300,maxPages=20;
@@ -644,7 +663,9 @@ async function getLayer(base,fields,bounds,signal){
   if(json.features.length===0||added===0){hasMore=false;truncated=json.features.length===pageSize;}
  }
  if(hasMore)truncated=true;
- return {type:"FeatureCollection",features:all,truncated,pages};
+ const result={type:"FeatureCollection",features:all,truncated,pages};
+ if(!signal?.aborted)cacheLayerResponse(cacheKey,result);
+ return result;
 }
 let viewRequestId=0,viewAbortController=null,viewDebounce=null;
 async function load(){
