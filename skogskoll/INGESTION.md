@@ -27,3 +27,11 @@ Migration 002 adds:
 - A database trigger preventing a completed scan from being reopened and checkpoints from moving backwards.
 
 The migration deliberately creates no end-user policies for worker-owned tables. Use the service-role key only in a server-side worker. This migration does not itself run ingestion or send notifications. The scan worker must only set a scan to `complete` after the count, page coverage, transfer-limit and ID-integrity checks all pass. A source-count change invalidates an in-progress checkpoint; restart the scan rather than mixing different source snapshots.
+
+## Bounded worker orchestration core
+
+`src/scan-worker-core.mjs` coordinates one bounded batch using injected source and store adapters. It checks the source count before each page and again before completion, validates page IDs, and returns `in_progress` when the per-run page budget is reached. It never sends alerts.
+
+The storage adapter is required to implement `commitPage()` as one database transaction: upsert current observations, append observation history, register each seen source ID, and persist the next checkpoint together. If that atomic contract is not available, do not run the worker against production data. The core alone does not connect to Supabase and does not claim to persist anything.
+
+Current status: orchestration core and mock-adapter tests are in the repository. The production Supabase adapter and its transactional RPC are still required before any full scan can run. Keep the existing source probe separate and keep alerts disabled.
