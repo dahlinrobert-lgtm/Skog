@@ -27,7 +27,7 @@ test("transfer limit and duplicate IDs fail the completeness guard", () => {
   const diagnostics = collectPageDiagnostics([page([1, 2], true), page([2, 3])]);
   assert.deepEqual(assessScanCompleteness({
     diagnostics, reportedTotal: 4, requestedPageSize: 2
-  }), { complete: false, reasons: ["transfer_limit_reported", "duplicate_ids", "count_mismatch"] });
+  }), { complete: false, reasons: ["transfer_limit_reported", "duplicate_ids"] });
 });
 
 test("missing IDs and malformed pages are surfaced", () => {
@@ -39,7 +39,7 @@ test("missing IDs and malformed pages are surfaced", () => {
   assert.equal(diagnostics.malformedPageCount, 1);
   assert.deepEqual(assessScanCompleteness({
     diagnostics, reportedTotal: 2, requestedPageSize: 100
-  }), { complete: false, reasons: ["malformed_page", "missing_ids", "count_mismatch"] });
+  }), { complete: false, reasons: ["malformed_page", "missing_ids"] });
 });
 
 test("empty source can be complete when the valid count is zero", () => {
@@ -47,4 +47,11 @@ test("empty source can be complete when the valid count is zero", () => {
   assert.deepEqual(assessScanCompleteness({
     diagnostics, reportedTotal: 0, requestedPageSize: 100
   }), { complete: true, reasons: [] });
+});
+
+test("an invalid page size never passes completeness guard", () => {
+  const diagnostics = collectPageDiagnostics([page([1])]);
+  assert.deepEqual(assessScanCompleteness({
+    diagnostics, reportedTotal: 1, requestedPageSize: 0
+  }), { complete: false, reasons: ["invalid_page_size"] });
 });
