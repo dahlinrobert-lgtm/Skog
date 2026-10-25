@@ -737,6 +737,8 @@ async function getLayer(base,fields,bounds,signal,stats){
    // even for an identical center/radius or a view contained in the cached extent.
    const fullyCovered=b.west>=a.west&&b.south>=a.south&&b.east<=a.east&&b.north<=a.north;
    if(fullyCovered){
+    // Sliding TTL: active reuse should keep a valid spatial entry warm.
+    cached.time=Date.now();
     if(stats){stats.spatialCacheHits++;stats.containedViews++;stats.reusedSpatialFeatures+=(cached.value.features||[]).length;}
     return JSON.parse(JSON.stringify(cached.value));
    }
