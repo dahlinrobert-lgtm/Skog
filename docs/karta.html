@@ -26,13 +26,7 @@
 <button id="reload">Ladda om data</button>
 <button id="home">Centrera område</button>
 </div>
-<div class="stats">
-<div class="pill"><strong id="plannedCount">–</strong><span>planerade polygoner</span></div>
-<div class="pill"><strong id="performedCount">–</strong><span>utförda polygoner</span></div>
-<div class="pill"><strong id="samradCount">–</strong><span>samrådsobjekt</span></div>
-<div class="pill"><strong id="dateRange">–</strong><span>datumintervall för utförda</span></div>
-</div>
-<p id="status" class="muted" aria-live="polite">Laddar avverkningsdata från Skogsstyrelsen…</p>
+<p id="status" class="muted" aria-live="polite" style="display:none"></p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span>Välj en polygon för attribut och datum.</span></div>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
@@ -464,6 +458,23 @@ function updateDurationHistogram(features){
   if(other>0)buckets.push({label:"Övriga kategorier",count:other});
  }else if(mode==="duration"){
   buckets=[{label:"0 år",count:records.filter(n=>n===0).length},{label:"1 år",count:records.filter(n=>n===1).length},{label:"2 år",count:records.filter(n=>n===2).length},{label:"3 år",count:records.filter(n=>n===3).length},{label:"4 år",count:records.filter(n=>n===4).length},{label:"5+ år",count:records.filter(n=>n>=5).length}];
+ }else if(mode==="ratio"){
+  // Treat unusually high ratios as one dedicated outlier category; divide the rest
+  // into five equal-width percentage intervals.
+  const sorted=[...records].sort((a,b)=>a-b);
+  const quantile=q=>{const pos=(sorted.length-1)*q,lo=Math.floor(pos),hi=Math.ceil(pos);return sorted[lo]+(sorted[hi]-sorted[lo])*(pos-lo);};
+  const q1=quantile(.25),q3=quantile(.75),outlierLimit=q3+1.5*(q3-q1);
+  const ordinary=records.filter(v=>v<=outlierLimit),extreme=records.filter(v=>v>outlierLimit);
+  if(ordinary.length){
+   const low=Math.min(...ordinary),high=Math.max(...ordinary),width=(high-low)/5;
+   if(width===0)buckets=[{label:low.toLocaleString("sv-SE",{maximumFractionDigits:1})+" %",count:ordinary.length}];
+   else{
+    buckets=Array.from({length:5},(_,i)=>({low:low+i*width,high:i===4?high:low+(i+1)*width,count:0}));
+    ordinary.forEach(v=>{const index=Math.min(4,Math.floor((v-low)/width));buckets[index].count++;});
+    buckets=buckets.filter(b=>b.count>0).map((b,i)=>({label:b.low.toLocaleString("sv-SE",{maximumFractionDigits:1})+"–"+b.high.toLocaleString("sv-SE",{maximumFractionDigits:1})+" %",count:b.count}));
+   }
+  }
+  if(extreme.length)buckets.push({label:"Extremvärden (>"+outlierLimit.toLocaleString("sv-SE",{maximumFractionDigits:1})+" %)",count:extreme.length});
  }else if(mode==="harvestYear"||mode==="issueYear"){
   const counts=new Map();records.forEach(v=>counts.set(String(Math.trunc(v)),(counts.get(String(Math.trunc(v)))||0)+1));
   buckets=[...counts.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).map(([label,count])=>({label,count}));
@@ -574,7 +585,12 @@ async function load(){
   if(planned.truncated||performed.truncated||samradTruncated||!clippingAvailable)console.warn("Map data warning",{plannedTruncated:planned.truncated,performedTruncated:performed.truncated,samradTruncated,clippingAvailable,filteredOutside:planned.filteredOutside+performed.filteredOutside+(wantSamrad?samradPoints.filteredOutside+samradLines.filteredOutside+samradAreas.filteredOutside:0)});
  }catch(e){
   if(e?.name==="AbortError")return;
-  if(requestId===viewRequestId)console.error("Kunde inte hämta kartdata",e);
+  if(requestId===viewRequestId){
+   console.error("Kunde inte hämta kartdata",e);
+   const status=document.getElementById("status");
+   status.textContent="Kunde inte hämta kartdata. Försök med Ladda om data.";
+   status.style.display="block";
+  }
  }finally{
   if(requestId===viewRequestId){document.getElementById("reload").disabled=false;applyVisibility()}
  }
