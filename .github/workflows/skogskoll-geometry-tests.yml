@@ -1,10 +1,12 @@
-name: Skogskoll geometry converter tests
+name: Skogskoll geometry tests
 
 on:
   pull_request:
     paths:
       - "skogskoll/tools/convert-min-karta-geometry.py"
       - "skogskoll/tools/test_convert_min_karta_geometry.py"
+      - "skogskoll/tools/validate-geojson-report.py"
+      - "skogskoll/tools/test_validate_geojson_report.py"
       - "skogskoll/tools/README-geometry-converter.md"
       - ".github/workflows/skogskoll-geometry-tests.yml"
   push:
@@ -13,6 +15,8 @@ on:
     paths:
       - "skogskoll/tools/convert-min-karta-geometry.py"
       - "skogskoll/tools/test_convert_min_karta_geometry.py"
+      - "skogskoll/tools/validate-geojson-report.py"
+      - "skogskoll/tools/test_validate_geojson_report.py"
       - "skogskoll/tools/README-geometry-converter.md"
       - ".github/workflows/skogskoll-geometry-tests.yml"
   workflow_dispatch:
@@ -30,8 +34,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install converter dependency
-        run: python -m pip install --upgrade pip pyproj
-      - name: Run geometry converter unit tests
+      - name: Install geometry dependencies
+        run: python -m pip install --upgrade pip pyproj shapely
+      - name: Run geometry converter and report tests
         working-directory: skogskoll/tools
-        run: python -m unittest -v test_convert_min_karta_geometry.py
+        run: |
+          python -m unittest -v test_convert_min_karta_geometry.py
+          python -m unittest -v test_validate_geojson_report.py

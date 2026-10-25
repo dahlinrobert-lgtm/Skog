@@ -40,3 +40,17 @@ python -m unittest -v test_convert_min_karta_geometry.py
 - It currently handles Polygon geometries in `enhetsutbredning[].yta[]`.
 - Min karta's displayed property boundaries are indicative and are not legally authoritative.
 - Production should use Lantmäteriet's authorized Fastighetsindelning Direkt API after access and usage approval.
+
+
+## GeoJSON geometry QA report
+
+After a GeoJSON file has been produced, the QA helper can report geometry validity, ring closure, coordinate bounds, and per-feature diagnostics without claiming that the source CRS or legal boundary has been verified.
+
+Install the reporting dependency and run the helper:
+
+```bash
+python -m pip install shapely
+python skogskoll/tools/validate-geojson-report.py skogskoll-geometry.geojson skogskoll-geometry-report.json
+```
+
+The JSON report deliberately sets `source_crs_verified` and `authoritative_boundary_verified` to `false`. Valid GeoJSON and plausible WGS84 coordinates are quality checks, not proof of the origin coordinate system. The corresponding unit tests run in the Skogskoll geometry GitHub Actions workflow.
