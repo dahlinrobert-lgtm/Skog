@@ -732,6 +732,14 @@ async function getLayer(base,fields,bounds,signal,stats){
    if(stats)stats.spatialOverlapHits++;
    const a=cached.bounds,b=nextBounds;
    const west=Math.max(a.west,b.west),south=Math.max(a.south,b.south),east=Math.min(a.east,b.east),north=Math.min(a.north,b.north);
+   // If the requested envelope is already fully covered, the cached response is
+   // sufficient. Previously an empty strip list fell through to a full API fetch,
+   // even for an identical center/radius or a view contained in the cached extent.
+   const fullyCovered=b.west>=a.west&&b.south>=a.south&&b.east<=a.east&&b.north<=a.north;
+   if(fullyCovered){
+    if(stats){stats.spatialCacheHits++;stats.containedViews++;stats.reusedSpatialFeatures+=(cached.value.features||[]).length;}
+    return JSON.parse(JSON.stringify(cached.value));
+   }
    const strips=[];
    // Rectangle difference: top and bottom span the full new width; side strips
    // fill the remaining middle band without duplicating the intersection area.
@@ -766,7 +774,7 @@ async function load(){
  viewAbortController=new AbortController();
  const signal=viewAbortController.signal;
  const bounds=searchCircle.getBounds();
- const perf={startedAt:performance.now(),apiRequests:0,responseCacheHits:0,spatialOverlapHits:0,incrementalViews:0,incrementalStrips:0,reusedSpatialFeatures:0,fullViewFetches:0};
+ const perf={startedAt:performance.now(),apiRequests:0,responseCacheHits:0,spatialOverlapHits:0,spatialCacheHits:0,containedViews:0,incrementalViews:0,incrementalStrips:0,reusedSpatialFeatures:0,fullViewFetches:0};
  try{
   const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
   const plannedPromise=getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal,perf);
