@@ -73,6 +73,9 @@ const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>l
 const samradPointLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:5,color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 const samradLineLayer=L.geoJSON(null,{style:()=>({color:"#ea580c",weight:3,opacity:.9}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 const samradAreaLayer=L.geoJSON(null,{style:()=>({color:"#a21caf",weight:2,opacity:.9,fillColor:"#d946ef",fillOpacity:.22}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
+// Transparent interaction-only buffers make thin consultation geometries easier to click without changing their appearance.
+const samradPointHitLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:12,stroke:false,fill:true,fillColor:"#000",fillOpacity:0,interactive:true}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
+const samradLineHitLayer=L.geoJSON(null,{style:()=>({color:"#000",weight:16,opacity:0,fill:false,interactive:true}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 plannedLayer.addTo(map);performedLayer.addTo(map);
 const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
@@ -336,8 +339,12 @@ async function load(){
   }
   plannedLayer.clearLayers();performedLayer.clearLayers();
   samradPointLayer.clearLayers();samradLineLayer.clearLayers();samradAreaLayer.clearLayers();
+  samradPointHitLayer.clearLayers();samradLineHitLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);
-  if(wantSamrad){samradPointLayer.addData(samradPoints);samradLineLayer.addData(samradLines);samradAreaLayer.addData(samradAreas);}
+  if(wantSamrad){
+   samradPointLayer.addData(samradPoints);samradLineLayer.addData(samradLines);samradAreaLayer.addData(samradAreas);
+   samradPointHitLayer.addData(samradPoints);samradLineHitLayer.addData(samradLines);
+  }
   refreshPerformedColors();
   updateDurationHistogram(performed.features);
   document.getElementById("plannedCount").textContent=planned.features.length.toLocaleString("sv-SE");
@@ -366,9 +373,11 @@ function applyVisibility(){
  if(document.getElementById("showPlanned").checked){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map)}else map.removeLayer(plannedLayer);
  if(document.getElementById("showPerformed").checked){if(!map.hasLayer(performedLayer))performedLayer.addTo(map)}else map.removeLayer(performedLayer);
  const showSamrad=document.getElementById("showSamrad").checked;
- for(const layer of [samradAreaLayer,samradLineLayer,samradPointLayer]){
+ for(const layer of [samradAreaLayer,samradLineLayer,samradPointLayer,samradLineHitLayer,samradPointHitLayer]){
   if(showSamrad){if(!map.hasLayer(layer))layer.addTo(map)}else map.removeLayer(layer);
  }
+ // Keep transparent hit targets above visible consultation geometries.
+ if(showSamrad){samradLineHitLayer.bringToFront();samradPointHitLayer.bringToFront()}
 }
 document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);
 document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("performedColorMode").addEventListener("change",refreshPerformedColors);document.getElementById("reload").addEventListener("click",load);document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
