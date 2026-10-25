@@ -672,7 +672,8 @@ async function getLayer(base,fields,bounds,signal){
  // raw response and request only the parts of the new envelope outside the old one.
  const spatialLayerCache=new Map();
  const SPATIAL_CACHE_TTL_MS=180000;
- const SPATIAL_REUSE_OVERLAP=0.75;
+ // Reuse any positive overlap; only a completely disjoint extent needs a full fetch.
+ const SPATIAL_REUSE_OVERLAP=0;
  function boundsValues(bounds){return {west:bounds.getWest(),south:bounds.getSouth(),east:bounds.getEast(),north:bounds.getNorth()};}
  function boundsArea(b){return Math.max(0,b.east-b.west)*Math.max(0,b.north-b.south);}
  function overlapRatio(a,b){
