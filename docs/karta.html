@@ -22,7 +22,7 @@
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <label><input id="showSamrad" type="checkbox"> Samråd (punkter, linjer och ytor)</label>
-<label>Färglägg utförda <select id="performedColorMode"><option value="none">Åtgärd</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="samradAction">Samrådsåtgärd</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
+<label>Ändra färgläggning <select id="performedColorMode"><option value="none">Åtgärd</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="samradAction">Samrådsåtgärd</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
 <button id="home">Centrera område</button>
 <label>Bakgrundskarta <select id="baseMapSelect"><option value="standard">Standardkarta</option><option value="imagery">Flygfoto / satellit</option></select></label>
 <label title="Ju mindre radius desto snabbare laddar kartan.">Radius <select id="radiusSelect" title="Ju mindre radius desto snabbare laddar kartan."><option value="2000">2 km</option><option value="5000">5 km</option><option value="10000">10 km</option><option value="20000">20 km</option><option value="50000">50 km</option></select></label>
@@ -304,6 +304,7 @@ function categoryValue(feature,mode){
  return value||"Okänd / saknas";
 }
 function categoryColor(value){
+ if(value==="Okänd / saknas")return "#d3d3d3";
  if(!categoryColorMap.has(value)){
   const index=categoryColorMap.size;
   categoryColorMap.set(value,CATEGORY_COLORS[index%CATEGORY_COLORS.length]);
