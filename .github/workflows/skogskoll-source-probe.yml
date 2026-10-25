@@ -10,6 +10,15 @@ on:
       - "skogskoll/README.md"
       - "skogskoll/INGESTION.md"
       - "skogskoll/db/**"
+  pull_request:
+    paths:
+      - ".github/workflows/skogskoll-source-probe.yml"
+      - "skogskoll/scripts/**"
+      - "skogskoll/src/**"
+      - "skogskoll/tests/**"
+      - "skogskoll/README.md"
+      - "skogskoll/INGESTION.md"
+      - "skogskoll/db/**"
   workflow_dispatch:
   schedule:
     - cron: "17 */6 * * *"
@@ -56,6 +65,7 @@ jobs:
       - name: Syntax-check source probe and ingestion core
         run: |
           node --check skogskoll/scripts/probe-source.mjs
+          node --check skogskoll/scripts/compare-probes.mjs
           node --check skogskoll/scripts/run-scan.mjs
           node --check skogskoll/scripts/recover-stale-scan.mjs
           node --check skogskoll/src/scan-plan.mjs
