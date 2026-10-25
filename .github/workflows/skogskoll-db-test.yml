@@ -1,7 +1,12 @@
-name: Skogskoll database test harness
+name: Skogskoll database tests
 on:
   push:
-    branches: [db-test-harness]
+    branches: [main]
+    paths:
+      - "skogskoll/db/**"
+      - "skogskoll/INGESTION.md"
+      - ".github/workflows/skogskoll-db-test.yml"
+  pull_request:
     paths:
       - "skogskoll/db/**"
       - "skogskoll/INGESTION.md"
@@ -10,6 +15,55 @@ on:
 permissions:
   contents: read
 jobs:
+  postgis-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: skogskoll_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d skogskoll_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: skogskoll_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - name: Create minimal Supabase-compatible auth roles
+        run: |
+          psql -v ON_ERROR_STOP=1 <<'SQL'
+          create role anon nologin;
+          create role authenticated nologin;
+          create role service_role nologin bypassrls;
+          create schema auth;
+          create table auth.users (id uuid primary key);
+          create function auth.uid() returns uuid language sql stable as $$
+            select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
+          $$;
+          SQL
+      - name: Apply schema and migrations
+        run: |
+          psql -v ON_ERROR_STOP=1 -f skogskoll/db/schema.sql
+          psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/002_observation_history.sql
+          psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/003_atomic_page_commit.sql
+          psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/004_watch_area_matching.sql
+      - name: Run PostGIS matching integration test
+        run: psql -v ON_ERROR_STOP=1 -f skogskoll/db/tests/watch-area-matching.sql
+      - name: Run transactional ingestion smoke test
+        run: psql -v ON_ERROR_STOP=1 -f skogskoll/db/tests/smoke-atomic-ingestion.sql
   static-sql-check:
     runs-on: ubuntu-latest
     steps:
@@ -17,32 +71,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Check SQL smoke test safety and expected assertions
+      - name: Check SQL test assertions and migration guardrails
         run: |
           node --input-type=module -e '
             import { readFileSync } from "node:fs";
             const migration = readFileSync("skogskoll/db/migrations/003_atomic_page_commit.sql", "utf8");
+            const matching = readFileSync("skogskoll/db/migrations/004_watch_area_matching.sql", "utf8");
             const smoke = readFileSync("skogskoll/db/tests/smoke-atomic-ingestion.sql", "utf8");
+            const matchTest = readFileSync("skogskoll/db/tests/watch-area-matching.sql", "utf8");
             const requiredFns = ["skogskoll_start_scan", "skogskoll_commit_page", "skogskoll_finish_scan", "skogskoll_recover_stale_scan"];
             for (const name of requiredFns) {
               if (!migration.includes("create or replace function public." + name)) throw new Error("Migration missing " + name);
               if (!smoke.includes(name)) throw new Error("Smoke test does not exercise " + name);
             }
-            if (!/^begin;[\s\S]*rollback;\s*$/im.test(smoke)) throw new Error("SQL smoke test must be wrapped in transaction + rollback");
-            if (!smoke.includes("duplicate ID across scan pages") || !smoke.includes("atomic page")) throw new Error("Missing atomicity/duplicate assertions");
-            for (const assertion of ["changed payload history event missing", "stale recovery did not fail the session", "stale recovery did not fail the poll run"]) {
-              if (!smoke.includes(assertion)) throw new Error("Smoke test missing assertion: " + assertion);
+            if (!matching.includes("st_dwithin") || !matching.includes("st_intersects") || !matching.includes("security definer")) throw new Error("PostGIS matcher missing required predicates/security");
+            for (const assertion of ["radius match expected 2", "polygon match expected 2", "disabled watch area must return no matches"]) {
+              if (!matchTest.includes(assertion)) throw new Error("Matching integration test missing assertion: " + assertion);
             }
-            if (!smoke.includes("gen_random_uuid()")) throw new Error("Smoke source identifier must be unique per execution");
-            if (!migration.includes("as $$\ndeclare") || !migration.includes("end;\n$$;")) throw new Error("Expected valid PL/pgSQL dollar delimiters");
-            const funcs = [...migration.matchAll(/create or replace function public\.skogskoll_[\s\S]*?\n\$\$;/g)];
-            if (funcs.length !== 5) throw new Error("Expected 5 closed Skogskoll RPC functions, found " + funcs.length);
-            console.log("Static database harness checks passed.");
+            if (!/^begin;[\\s\\S]*rollback;\\s*$/im.test(smoke) || !/^begin;[\\s\\S]*rollback;\\s*$/im.test(matchTest)) throw new Error("SQL tests must be wrapped in transaction + rollback");
+            console.log("Static database guardrails passed.");
           '
-      - name: Confirm no live database is configured
-        run: |
-          if [ -n "${SUPABASE_URL:-}" ] || [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
-            echo "This workflow is static-only and must not receive production database credentials."
-            exit 1
-          fi
-          echo "Static-only workflow; no database credentials required."
