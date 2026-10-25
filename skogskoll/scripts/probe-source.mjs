@@ -6,7 +6,7 @@ const ENDPOINT = SERVICE + "/0";
 const OUT = "skogskoll/reports/source-probe-latest.json";
 const PAGE_SIZE = 100;
 const MAX_PAGES = 3;
-const fields = ["OBJECTID", "Beteckn", "Kommun", "Inkomdatum", "ArendeStatus", "AnmaldHa"];
+const requestedFields = ["Beteckn", "Kommun", "Inkomdatum", "ArendeStatus", "AnmaldHa"];
 
 async function getJson(url) {
   const response = await fetch(url, { headers: { "user-agent": "Skogskoll-source-probe/0.1 (read-only)" } });
@@ -19,8 +19,9 @@ async function getJson(url) {
 function hash(value) {
   return createHash("sha256").update(JSON.stringify(value)).digest("hex");
 }
-function stableId(feature) {
-  return feature.id ?? feature.properties?.OBJECTID ?? feature.properties?.ObjectId ?? null;
+function stableId(feature, objectIdField = "OBJECTID") {
+  const props = feature?.properties ?? {};
+  return feature?.id ?? props[objectIdField] ?? props.OBJECTID ?? props.ObjectId ?? props.objectid ?? null;
 }
 
 const report = {
@@ -32,22 +33,26 @@ const report = {
   errors: [],
 };
 try {
-  const [service, layer, first] = await Promise.all([
+  const [service, layer] = await Promise.all([
     getJson(SERVICE + "?f=pjson"),
-    getJson(ENDPOINT + "?f=pjson"),
-    getJson(ENDPOINT + "/query?" + new URLSearchParams({
-      where: "1=1", outFields: fields.join(","), returnGeometry: "true",
-      outSR: "4326", f: "geojson", resultRecordCount: String(PAGE_SIZE),
-      orderByFields: "OBJECTID ASC", resultOffset: "0"
-    }))
+    getJson(ENDPOINT + "?f=pjson")
   ]);
+  const objectIdField = layer.objectIdField ?? (layer.fields ?? []).find(f => f.type === "esriFieldTypeOID")?.name;
+  if (!objectIdField) throw new Error("No object ID field found in layer metadata");
+  const validFields = new Set((layer.fields ?? []).map(f => f.name));
+  const outFields = [objectIdField, ...requestedFields.filter(name => validFields.has(name))].join(",");
+  const queryPage = offset => getJson(ENDPOINT + "/query?" + new URLSearchParams({
+    where: "1=1", outFields, returnGeometry: "true", outSR: "4326", f: "geojson",
+    resultRecordCount: String(PAGE_SIZE), orderByFields: `${objectIdField} ASC`, resultOffset: String(offset)
+  }));
+  const first = await queryPage(0);
   report.checks.service_metadata = {
     ok: !service.error, service_name: service.name ?? null,
     currentVersion: service.currentVersion ?? null,
     layer_count: Array.isArray(service.layers) ? service.layers.length : null
   };
   report.checks.layer_metadata = {
-    ok: !layer.error, name: layer.name ?? null, objectIdField: layer.objectIdField ?? null,
+    ok: !layer.error, name: layer.name ?? null, objectIdField: objectIdField,
     geometryType: layer.geometryType ?? null, maxRecordCount: layer.maxRecordCount ?? null,
     fields: (layer.fields ?? []).map(f => ({ name: f.name, type: f.type, alias: f.alias }))
   };
@@ -56,27 +61,23 @@ try {
     ok: true, count: first.features.length,
     response_type: first.type ?? null,
     has_exceededTransferLimit: Boolean(first.exceededTransferLimit),
-    sample_ids: first.features.slice(0, 10).map(stableId),
+    sample_ids: first.features.slice(0, 10).map(f => stableId(f, objectIdField)),
     sample_properties: first.features.slice(0, 3).map(f => f.properties),
     geometry_types: [...new Set(first.features.map(f => f.geometry?.type ?? "null"))],
     stable_id_coverage: first.features.length
-      ? first.features.filter(f => stableId(f) !== null).length / first.features.length : null
+      ? first.features.filter(f => stableId(f, objectIdField) !== null).length / first.features.length : null
   };
   const pages = [first];
   let offset = first.features.length;
   for (let i = 1; i < MAX_PAGES && (first.exceededTransferLimit || first.features.length === PAGE_SIZE); i++) {
-    const page = await getJson(ENDPOINT + "/query?" + new URLSearchParams({
-      where: "1=1", outFields: fields.join(","), returnGeometry: "true",
-      outSR: "4326", f: "geojson", resultRecordCount: String(PAGE_SIZE),
-      orderByFields: "OBJECTID ASC", resultOffset: String(offset)
-    }));
+    const page = await queryPage(offset);
     if (!Array.isArray(page.features)) throw new Error("Paged query did not return features array");
     pages.push(page);
     offset += page.features.length;
     if (!page.features.length) break;
   }
   const all = pages.flatMap(p => p.features);
-  const ids = all.map(stableId).filter(v => v !== null).map(String);
+  const ids = all.map(f => stableId(f, objectIdField)).filter(v => v !== null).map(String);
   report.checks.pagination = {
     pages_checked: pages.length, fetched_count: all.length,
     unique_ids: new Set(ids).size, duplicate_ids: ids.length - new Set(ids).size,
@@ -84,7 +85,7 @@ try {
     capped: pages.length === MAX_PAGES && Boolean(pages.at(-1)?.exceededTransferLimit)
   };
   const canonical = first.features.slice(0, 20).map(f => ({
-    id: stableId(f), properties: f.properties, geometry_type: f.geometry?.type ?? null
+    id: stableId(f, objectIdField), properties: f.properties, geometry_type: f.geometry?.type ?? null
   }));
   report.checks.repeatability_fingerprint = {
     sample_size: canonical.length,
@@ -96,10 +97,16 @@ try {
       (layer.fields ?? []).some(f => f.name === name)),
     status_field_candidates: ["ArendeStatus"].filter(name =>
       (layer.fields ?? []).some(f => f.name === name)),
-    id_field_detected: layer.objectIdField ?? null,
+    id_field_detected: objectIdField,
     note: "Confirm actual field types and whether Inkomdatum means received date or another date before user-facing wording."
   };
-  report.summary = "Probe completed. This is not approval to activate alerts; repeat at least twice across a six-hour interval and review field semantics, stable IDs, pagination and geometry.";
+  report.checks.scope = {
+    requested_pages_limit: MAX_PAGES,
+    page_size: PAGE_SIZE,
+    intentionally_bounded_sample: true,
+    note: "This probe validates source behavior on a bounded sample; it is not a full ingestion or completeness scan."
+  };
+  report.summary = "Probe completed on a bounded sample. This is not approval to activate alerts; repeat across a six-hour interval and verify stable IDs, pagination and field semantics before ingestion.";
 } catch (error) {
   report.summary = "Probe failed; alerting must remain disabled.";
   report.errors.push(String(error?.stack ?? error));
