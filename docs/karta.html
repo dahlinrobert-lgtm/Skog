@@ -803,11 +803,17 @@ async function load(){
   const samradResult=await samradPromise;
   if(requestId!==viewRequestId||signal.aborted)return;
   perf.totalMs=Math.round((performance.now()-perf.startedAt)*100)/100;
-  if(new URLSearchParams(location.search).get("debugPerf")==="1")console.info("[Skogskoll] map-load",{
-   radiusKm:RADIUS/1000,...perf,
-   plannedFeatures:planned.features.length,performedFeatures:performed.features.length,
-   samradRequested:wantSamrad,samradError:Boolean(samradResult.error)
-  });
+  if(new URLSearchParams(location.search).get("debugPerf")==="1"){
+   console.info("[Skogskoll] map-load",{
+    radiusKm:RADIUS/1000,...perf,
+    plannedFeatures:planned.features.length,performedFeatures:performed.features.length,
+    samradRequested:wantSamrad,samradError:Boolean(samradResult.error)
+   });
+   if(perf.layerFetches?.length)console.table(perf.layerFetches.map(x=>({
+    layer:x.layer,pages:x.pages,features:x.features,truncated:x.truncated,
+    fetchMs:x.fetchMs,parseMs:x.parseMs,dedupeMs:x.dedupeMs,elapsedMs:x.elapsedMs,emptyPages:x.emptyPages
+   })));
+  }
   if(samradResult.error){
    console.warn("Samrådsdata kunde inte hämtas; huvudlagren visas ändå",samradResult.error);
    const status=document.getElementById("status");
