@@ -50,6 +50,25 @@ try {
     resultRecordCount: String(PAGE_SIZE), orderByFields: `${objectIdField} ASC`, resultOffset: String(offset)
   }));
   const first = await queryPage(0);
+  let newestSample = null;
+  if (validFields.has("Inkomdatum")) {
+    newestSample = await getJson(ENDPOINT + "/query?" + new URLSearchParams({
+      where: "Inkomdatum IS NOT NULL", outFields, returnGeometry: "false", outSR: "4326", f: "geojson",
+      resultRecordCount: String(PAGE_SIZE), orderByFields: `Inkomdatum DESC, ${objectIdField} DESC`, resultOffset: "0"
+    }));
+    if (!Array.isArray(newestSample.features)) throw new Error("Newest-record query did not return features array");
+    const newestDates = newestSample.features.map(f => f.properties?.Inkomdatum)
+      .filter(v => typeof v === "number" && Number.isFinite(v));
+    report.checks.newest_records = {
+      ok: true,
+      count: newestSample.features.length,
+      sample_ids: newestSample.features.slice(0, 10).map(f => stableId(f, objectIdField)),
+      max_source_date: newestDates.length ? new Date(Math.max(...newestDates)).toISOString() : null,
+      min_source_date_in_sample: newestDates.length ? new Date(Math.min(...newestDates)).toISOString() : null,
+      status_values: [...new Set(newestSample.features.map(f => f.properties?.ArendeStatus).filter(v => v != null))],
+      note: "Ordered by Inkomdatum descending. This is a recent-date sample, not confirmation that Inkomdatum means publication or notification date."
+    };
+  }
   report.checks.source_size = {
     ok: true,
     total_feature_count: countResult.count,
