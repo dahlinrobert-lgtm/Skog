@@ -111,14 +111,11 @@ let caseColorByFeature=new Map();
 let categoryColorMap=new Map();
 function performedYear(feature){
  const p=feature?.properties||{};
+ // Prefer the actual harvest date; fall back to case year only when no date exists.
+ const fromDate=yearFromDateValue(p.Avvdatum);
+ if(fromDate!==null)return fromDate;
  const direct=Number(p.Arendear);
- if(Number.isFinite(direct)&&direct>=1900&&direct<=2100)return direct;
- const raw=p.Avvdatum;
- if(raw==null||raw==="")return null;
- const n=Number(raw);
- if(Number.isFinite(n)&&n>100000000000)return new Date(n).getUTCFullYear();
- const parsed=Date.parse(String(raw));
- return Number.isFinite(parsed)?new Date(parsed).getUTCFullYear():null;
+ return Number.isFinite(direct)&&direct>=1900&&direct<=2100?direct:null;
 }
 function performedRatio(feature){
  const p=feature?.properties||{};
@@ -302,6 +299,7 @@ function mixColor(t){
 function currentColorScale(){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  const features=[...performedLayer.toGeoJSON().features,...plannedLayer.toGeoJSON().features];
+ if(mode==="samradAction")features.push(...samradPointLayer.toGeoJSON().features,...samradLineLayer.toGeoJSON().features,...samradAreaLayer.toGeoJSON().features);
  if(mode==="caseId"){
   const diagnostic=assignCaseGroupColors(features);
   return {mode,diagnostic};
@@ -312,7 +310,7 @@ function currentColorScale(){
   categories.forEach(categoryColor);
   return {mode,categories};
  }
- const values=features.map(f=>mode==="year"?(f.__planned?plannedYear(f):performedYear(f)):mode==="ratio"?performedRatio(f):performedHectares(f)).filter(v=>v!==null);
+ const values=features.map(f=>mode==="year"?(f?.properties?.Avvdatum==null?plannedYear(f):performedYear(f)):mode==="ratio"?performedRatio(f):performedHectares(f)).filter(v=>v!==null);
  if(mode==="year")return {mode,min:values.length?Math.min(...values):null,max:Math.max(2026,...values)};
  if(mode==="hectares"||mode==="ratio")return {mode,min:values.length?Math.min(...values):null,max:values.length?Math.max(...values):null};
  return {mode,min:null,max:null};
@@ -587,7 +585,7 @@ async function load(){
  const bounds=searchCircle.getBounds();
  
  try{
-  const wantSamrad=document.getElementById("showSamrad").checked;
+  const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
   let [planned,performed,samradPoints,samradLines,samradAreas]=await Promise.all([
    getLayer(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal),
    getLayer(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal),
