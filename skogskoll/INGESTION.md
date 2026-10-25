@@ -43,6 +43,12 @@ A process that is terminated without handling an exception may leave its databas
 
 Use this only after independently confirming that no worker is still running for the source. The old seen-ID ledger belongs to the old scan ID, so recovery does not resume that offset into a new session: run a fresh bounded scan from offset 0. Previously committed observations remain idempotent: existing IDs are classified as unchanged or changed, not inserted as new records. The RPC does not activate alerts or deactivate observations.
 
+## Database smoke test (disposable project only)
+
+A transactional SQL smoke test is provided at `db/tests/smoke-atomic-ingestion.sql`. After applying `db/schema.sql`, migration 002 and migration 003 to a **disposable Supabase test project**, run this script in the SQL editor. It starts a one-record scan, checks that current state + history + seen ID are committed together, verifies duplicate-page rejection and completion coverage, exercises stale-session recovery, and rolls the entire test transaction back.
+
+The GitHub workflow `.github/workflows/skogskoll-db-test.yml` performs static-only checks of the smoke test and migration. It intentionally does not connect to a live database and must not be supplied database credentials. Static checks are not a substitute for running the SQL against PostgreSQL/Supabase.
+
 ## Manual stale-session recovery command
 
 The optional command `scripts/recover-stale-scan.mjs` calls the service-role-only recovery RPC for the Skogsstyrelsen source. It is disabled unless `SKOGSKOLL_ENABLE_STALE_RECOVERY=YES` is set, and it refuses stale cutoffs under 60 minutes. The default cutoff is 24 hours; override it with `SKOGSKOLL_STALE_MINUTES` only when needed.
