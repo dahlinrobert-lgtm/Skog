@@ -138,7 +138,11 @@ begin
   select scan_id, poll_run_id into v_scan, v_run
   from public.skogskoll_start_scan(v_source || ':stale', 2, 1, 'incremental');
 
+  -- The checkpoint trigger deliberately refreshes updated_at on updates.
+  -- Disable it only for this synthetic stale-session fixture, then restore it immediately.
+  alter table public.scan_sessions disable trigger trg_guard_skogskoll_scan_session;
   update public.scan_sessions set updated_at = now() - interval '2 days' where id = v_scan;
+  alter table public.scan_sessions enable trigger trg_guard_skogskoll_scan_session;
   select count(*) into v_recovered
   from public.skogskoll_recover_stale_scan(v_source || ':stale', now() - interval '1 day', 'sql_smoke_recovery');
 
