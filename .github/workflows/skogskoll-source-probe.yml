@@ -8,6 +8,8 @@ on:
       - "skogskoll/src/**"
       - "skogskoll/tests/**"
       - "skogskoll/README.md"
+      - "skogskoll/INGESTION.md"
+      - "skogskoll/db/**"
   workflow_dispatch:
   schedule:
     - cron: "17 */6 * * *"
