@@ -4,14 +4,14 @@ on:
     branches: [fix/samrad-radius-filter]
     paths:
       - "docs/karta.html"
-      - "src/map-radius-filter.mjs"
+      - "docs/map-radius-filter.mjs"
       - "tests/map-radius-filter.test.mjs"
       - ".github/workflows/map-radius-filter.yml"
   pull_request:
     branches: [main]
     paths:
       - "docs/karta.html"
-      - "src/map-radius-filter.mjs"
+      - "docs/map-radius-filter.mjs"
       - "tests/map-radius-filter.test.mjs"
       - ".github/workflows/map-radius-filter.yml"
   workflow_dispatch:
@@ -28,14 +28,14 @@ jobs:
       - name: Test radius filter for points, lines, polygons and geometry collections
         run: node --test tests/map-radius-filter.test.mjs
       - name: Syntax-check shared radius filter
-        run: node --check src/map-radius-filter.mjs
+        run: node --check docs/map-radius-filter.mjs
       - name: Verify map uses the shared radius filter for all layers
         run: |
           node --input-type=module -e '
             import { readFileSync } from "node:fs";
             const html = readFileSync("docs/karta.html", "utf8");
             if (!html.includes("<script type=\"module\">")) throw new Error("Map inline script must be a module to import the shared filter");
-            if (!html.includes("import { filterFeatureCollectionToRadius } from \"../src/map-radius-filter.mjs\";")) throw new Error("Map must import shared radius filter");
+            if (!html.includes("import { filterFeatureCollectionToRadius } from \"../docs/map-radius-filter.mjs\";")) throw new Error("Map must import shared radius filter");
             if (!/filterToRadius\(planned\);\s*filterToRadius\(performed\);/.test(html)) throw new Error("Planned and performed layers must use radius filter");
             if (!/if\(wantSamrad\)\{filterToRadius\(samradPoints\);filterToRadius\(samradLines\);filterToRadius\(samradAreas\);\}/.test(html)) throw new Error("All three consultation geometry layers must use radius filter");
             console.log("Map uses shared radius filter for planned, performed and consultation layers.");
