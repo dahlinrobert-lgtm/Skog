@@ -2,6 +2,15 @@
 
 Fristående, mobilanpassad app för privata skogsägare. Första leveransen är **förstudie + datakällprobe**; den skickar inga larm.
 
+## Prototyp som går att prova redan nu
+
+- Skapa, redigera och ta bort bevakningsområden lokalt i webbläsaren.
+- Stöd för cirkel runt en punkt eller GeoJSON Polygon/MultiPolygon i WGS84.
+- Inställningar för önskad e-post/push-kanal och händelsetyper sparas lokalt; inget skickas.
+- Historikvyn visar uttryckligen att den saknar verifierade observationer i stället för att hitta på exempeldata.
+- Lokal lagring är bara för prototypen: uppgifterna synkas inte och försvinner om webbplatsdata rensas.
+- Ren geometrihjälpare i `src/geometry-match.mjs` kan testas utan databas och har syntetiska tester för radie, polygoner, korsande linjer och gränsfall. Den är en första approximativ matchare och ersätter inte PostGIS-validering.
+
 ## Målarkitektur
 - **Webbapp:** statisk app under `skogskoll/`, kan publiceras separat på GitHub Pages.
 - **Beständig databas:** Supabase/Postgres med användare, bevakningsområden, källobservationer, larmhändelser och pushprenumerationer.
@@ -45,7 +54,8 @@ Fristående, mobilanpassad app för privata skogsägare. Första leveransen är 
 En ny post i tjänsten betyder att den är ny för vår historik, inte säkert att den inkom samma dag. Geometrisk överlappning mot ett bevakningsområde är en matchning, inte ett juridiskt besked om ägande eller rådighet. Skogsstyrelsen uppger att publicerade avverkningsanmälningar kan finnas kvar i upp till sex år beroende på när åtgärden genomförts; frånvaro i lagret kan därför inte tolkas som bevis för att ingen anmälan funnits.
 
 ## Nästa steg
-- Kör källproben igen efter minst sex timmar.
-- Jämför rapporternas datummönster och fingerprint.
-- Bygg en separat fullständig ingestion som aldrig markerar ej sedda poster inaktiva efter misslyckad eller ofullständig poll.
-- Aktivera aviseringar separat efter uttryckligt beslut.
+
+- Vänta in källprobe med minst sex timmars mellanrum och jämför rapporterna med `node skogskoll/scripts/compare-probes.mjs äldre.json nyare.json`.
+- Kör SQL-smoketestet mot ett separat, disponibelt Supabase-projekt; statiska CI-kontroller är inte live-databasverifiering.
+- Koppla inte den lokala prototypen till produktion eller skicka aviseringar innan auth, RLS, databastransaktioner och ingestion har verifierats.
+- Efter live-test: koppla bevakningsgeometrier till PostGIS-matchning, bygg historikvyn på verkliga observationer och implementera aviserings-outbox med explicit opt-in.
