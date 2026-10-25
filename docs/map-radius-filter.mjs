@@ -89,3 +89,41 @@ export function filterFeatureCollectionToRadius(collection, center, radiusMeters
   const features = collection.features.filter(feature => featureTouchesRadius(feature, center, radiusMeters));
   return { ...collection, features, filteredOutside: originalCount - features.length };
 }
+
+/**
+ * Clip polygon and multipolygon features to the selected circular search area.
+ * Turf is injected by the browser caller so this module remains testable in Node.
+ * Non-polygon geometries are retained unchanged; use the radius filter first.
+ */
+export function clipPolygonCollectionToRadius(collection, center, radiusMeters, turf) {
+  if (!collection || !Array.isArray(collection.features)) throw new TypeError("FeatureCollection.features must be an array");
+  if (!turf || typeof turf.circle !== "function" || typeof turf.intersect !== "function") {
+    throw new TypeError("A Turf-compatible circle/intersect implementation is required");
+  }
+  const clipCircle = turf.circle([center.lon, center.lat], radiusMeters / 1000, {
+    steps: 128,
+    units: "kilometers"
+  });
+  const features = [];
+  let clippedCount = 0;
+  for (const feature of collection.features) {
+    const type = feature?.geometry?.type;
+    if (type !== "Polygon" && type !== "MultiPolygon") {
+      features.push(feature);
+      continue;
+    }
+    try {
+      const clipped = turf.intersect(turf.featureCollection([feature, clipCircle]));
+      if (!clipped) {
+        clippedCount++;
+        continue;
+      }
+      features.push({ ...clipped, properties: feature.properties ?? {} });
+      if (JSON.stringify(clipped.geometry) !== JSON.stringify(feature.geometry)) clippedCount++;
+    } catch (error) {
+      // Fail closed: don't draw an un-clipped polygon beyond the search circle.
+      clippedCount++;
+    }
+  }
+  return { ...collection, features, clippedOutside: clippedCount };
+}
