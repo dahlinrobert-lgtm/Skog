@@ -121,3 +121,18 @@ test("stale scan recovery RPC is narrowly scoped and requires explicit age cutof
     p_reason: "worker interrupted"
   });
 });
+
+test("manual stale recovery command is disabled without explicit opt-in", () => {
+  const script = new URL("../scripts/recover-stale-scan.mjs", import.meta.url);
+  const env = { ...process.env };
+  delete env.SKOGSKOLL_ENABLE_STALE_RECOVERY;
+  delete env.SUPABASE_URL;
+  delete env.SUPABASE_SERVICE_ROLE_KEY;
+  const result = spawnSync(process.execPath, [fileURLToPath(script)], {
+    encoding: "utf8",
+    env
+  });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Stale-session recovery is disabled/);
+  assert.doesNotMatch(result.stderr, /SUPABASE_SERVICE_ROLE_KEY/);
+});
