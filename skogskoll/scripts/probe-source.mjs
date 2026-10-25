@@ -1,7 +1,8 @@
 import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 
-const SERVICE = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer";\nconst ENDPOINT = SERVICE + "/0";
+const SERVICE = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer";
+const ENDPOINT = SERVICE + "/0";
 const OUT = "skogskoll/reports/source-probe-latest.json";
 const PAGE_SIZE = 100;
 const MAX_PAGES = 3;
@@ -24,7 +25,8 @@ function stableId(feature) {
 
 const report = {
   checked_at: new Date().toISOString(),
-  service: SERVICE,\n  layer_endpoint: ENDPOINT,
+  service: SERVICE,
+  layer_endpoint: ENDPOINT,
   mode: "read-only; no alerts; no database writes",
   checks: {},
   errors: [],
@@ -104,5 +106,6 @@ try {
   process.exitCode = 1;
 }
 await mkdir("skogskoll/reports", { recursive: true });
-await writeFile(OUT, JSON.stringify(report, null, 2) + "\n");
+await writeFile(OUT, JSON.stringify(report, null, 2) + "
+");
 console.log(JSON.stringify(report, null, 2));
