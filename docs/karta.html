@@ -651,9 +651,9 @@ function applyVisibility(){
  if(showSamrad){samradLineHitLayer.bringToFront();samradPointHitLayer.bringToFront()}
 }
 document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);
-document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("performedColorMode").addEventListener("change",refreshPerformedColors);document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
+document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("performedColorMode").addEventListener("change",()=>{refreshPerformedColors();if(document.getElementById("performedColorMode").value==="samradAction")load()});document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
 // Clicking the map selects a new search-area center and reloads the data for that area.
-map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);load();});document.getElementById("histogramAttribute").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
+map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});
 function radiusZoom(radius){return radius<=2500?13:radius<=5000?12:radius<=10000?11:radius<=20000?10:radius<=50000?8:7;}
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
