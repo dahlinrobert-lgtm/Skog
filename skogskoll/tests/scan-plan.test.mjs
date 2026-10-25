@@ -69,3 +69,20 @@ test("empty source creates an already-complete checkpoint", () => {
     sourceKey: "source", reportedTotal: 0, pageSize: 100
   }).valid, true);
 });
+
+test("database-backed checkpoint advances without embedding the full ID history", () => {
+  const start = createCheckpoint({
+    sourceKey: "source", reportedTotal: 3, pageSize: 2, externalSeenIds: true
+  });
+  const one = advanceCheckpoint(start, { features: [feature(1), feature(2)] });
+  assert.deepEqual(one.seenIds, []);
+  assert.equal(one.seenIdsCount, 2);
+  assert.equal(one.externalSeenIds, true);
+  assert.equal(validateCheckpoint(one, {
+    sourceKey: "source", reportedTotal: 3, pageSize: 2
+  }).valid, true);
+  const corrupted = { ...one, seenIdsCount: 1 };
+  assert.equal(validateCheckpoint(corrupted, {
+    sourceKey: "source", reportedTotal: 3, pageSize: 2
+  }).valid, false);
+});
