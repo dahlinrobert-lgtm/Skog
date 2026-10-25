@@ -140,10 +140,18 @@ export function createSupabaseStore({
         scanId: row.id,
         mode: row.diagnostics?.mode ?? "baseline"
       };
-      // The scanner accepts a changed source count only by starting over. Mark
-      // the old session failed through the database before creating a fresh one.
-      if (checkpoint.reportedTotal < 0 || checkpoint.nextOffset > checkpoint.reportedTotal) {
-        throw new Error("Persisted scan checkpoint exceeds its recorded source count");
+      if (checkpoint.reportedTotal < 0 || checkpoint.nextOffset > checkpoint.reportedTotal ||
+          checkpoint.fetchedCount !== checkpoint.nextOffset) {
+        await rpc("skogskoll_fail_scan", {
+          p_scan_id: row.id,
+          p_reason: "persisted_checkpoint_inconsistent",
+          p_details: {
+            source_count: checkpoint.reportedTotal,
+            next_offset: checkpoint.nextOffset,
+            fetched_count: checkpoint.fetchedCount
+          }
+        });
+        throw new Error("Persisted scan checkpoint exceeds or conflicts with its recorded source count");
       }
       return checkpoint;
     },
