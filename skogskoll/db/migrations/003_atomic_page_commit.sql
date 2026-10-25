@@ -29,7 +29,7 @@ begin
   if p_page_size is null or p_page_size < 1 then
     raise exception 'page_size must be positive';
   end if;
-  if p_mode not in ('baseline','incremental') then
+  if p_mode is null or p_mode not in ('baseline','incremental') then
     raise exception 'mode must be baseline or incremental';
   end if;
 
@@ -132,6 +132,7 @@ begin
     if not (p_ids @> jsonb_build_array(v_id)) then raise exception 'record ID absent from page ID list'; end if;
     if v_record->>'content_hash' is null then raise exception 'record has no content_hash'; end if;
 
+    v_previous_hash := null;
     select content_hash into v_previous_hash
     from public.source_observations
     where source = v_source and source_id = v_id
