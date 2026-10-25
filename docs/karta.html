@@ -606,7 +606,9 @@ function updateDurationHistogram(features){
  footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+(mode==="samradAction"?" samrådsposter":" polygoner")+" saknade giltigt värde.":"");
 }
 function filterToRadius(collection){
- return filterFeatureCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS);
+ const result=filterFeatureCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS);
+ if(new URLSearchParams(location.search).get("debugPerf")==="1")console.info("[Skogskoll] radius-filter",result.filterStats);
+ return result;
 }
 function clipPolygonCollection(collection,turf){
  return clipPolygonCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS,turf);
