@@ -5,6 +5,12 @@
 alter table public.scan_sessions
   add column if not exists poll_run_id uuid references public.poll_runs(id) on delete set null;
 
+-- Prevent two workers from advancing separate sessions for the same source.
+-- A failed session may be followed by a fresh one; a running session is unique.
+create unique index if not exists scan_sessions_one_running_per_source_idx
+  on public.scan_sessions(source)
+  where status = 'running';
+
 -- Allocate a session and corresponding poll_run in one transaction.
 create or replace function public.skogskoll_start_scan(
   p_source text,
