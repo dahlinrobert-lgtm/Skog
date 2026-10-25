@@ -18,16 +18,13 @@
 <main>
 <section class="panel">
 <div class="controls">
-<label>Latitud <input id="lat" type="number" step="0.00001" min="-90" max="90" value="63.74646" style="width:125px" aria-label="Latitud"></label>
-<label>Longitud <input id="lon" type="number" step="0.00001" min="-180" max="180" value="19.66455" style="width:125px" aria-label="Longitud"></label>
 
-<button id="applyArea">Använd koordinater och radie</button>
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <label><input id="showSamrad" type="checkbox"> Samråd (punkter, linjer och ytor)</label>
 <label>Färglägg utförda <select id="performedColorMode"><option value="none">Ingen (normal)</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
 <button id="reload">Ladda om data</button>
-<button id="home">Visa hela området</button>
+<button id="home">Centrera område</button>
 </div>
 <div class="stats">
 <div class="pill"><strong id="plannedCount">–</strong><span>planerade polygoner</span></div>
@@ -44,10 +41,22 @@
 <footer>Datakälla: Skogsstyrelsens öppna geodatatjänster. Planerade anmälningar och utförda ytor är separata register och en geometrisk närhet innebär inte i sig att en viss anmälan säkert har lett till en viss avverkning.</footer>
 </section>
 <section class="panel" aria-labelledby="durationTitle">
-<h2 id="durationTitle">Tid från ärendeår till utförd avverkning</h2>
-<p class="muted">För utförda polygoner i valt område. Skillnaden beräknas som ärendeår minus året för avverkningsdatumet. Exempel: samma år = under 1 år; ett års skillnad = 1–2 år.</p>
+<div class="controls" style="justify-content:space-between">
+<h2 id="durationTitle" style="margin:0">Histogram för utförda avverkningar</h2>
+<label>Attribut <select id="histogramAttribute">
+<option value="duration">Tid från ärendeår till utförd avverkning</option>
+<option value="harvestYear">Avverkningsår</option>
+<option value="issueYear">Ärendeår</option>
+<option value="registeredArea">Registrerad areal (ha)</option>
+<option value="reportedArea">Anmäld areal (ha)</option>
+<option value="harvestType">Avverkningstyp</option>
+<option value="forestType">Skogstyp</option>
+<option value="municipality">Kommun</option>
+</select></label>
+</div>
+<p id="durationDescription" class="muted">Skillnaden beräknas som avverkningsår minus ärendeår.</p>
 <div id="durationSummary" class="muted">Inväntar data…</div>
-<div id="durationHistogram" role="img" aria-label="Histogram över tiden mellan ärendeår och avverkningsår"></div>
+<div id="durationHistogram" role="img" aria-label="Histogram för valt attribut"></div>
 <p id="durationFootnote" class="muted"></p>
 </section>
 </main>
@@ -421,42 +430,51 @@ function yearFromDateValue(value){
  return Number.isFinite(parsed)?new Date(parsed).getUTCFullYear():null;
 }
 function updateDurationHistogram(features){
- const histogram=document.getElementById("durationHistogram");
- const summary=document.getElementById("durationSummary");
- const footnote=document.getElementById("durationFootnote");
- const records=[];
- let excluded=0;
+ const histogram=document.getElementById("durationHistogram"),summary=document.getElementById("durationSummary"),footnote=document.getElementById("durationFootnote");
+ const selector=document.getElementById("histogramAttribute"),mode=selector?selector.value:"duration";
+ const records=[];let excluded=0;
+ const parseNum=v=>{if(v===null||v===undefined||String(v).trim()==="")return null;const n=Number(v);return Number.isFinite(n)?n:null;};
  for(const feature of features){
-  const p=feature?.properties||{};
-  const issueYear=Number(p.Arendear);
-  const harvestYear=yearFromDateValue(p.Avvdatum);
-  if(!Number.isFinite(issueYear)||issueYear<1900||issueYear>2100||harvestYear===null||harvestYear<1900||harvestYear>2100){excluded++;continue;}
-  const gap=issueYear-harvestYear;
-  if(gap<0){excluded++;continue;}
-  records.push(gap);
+  const p=feature?.properties||{};let value=null;
+  if(mode==="duration"){
+   const issue=parseNum(p.Arendear),harvest=yearFromDateValue(p.Avvdatum);
+   if(issue===null||issue<1900||issue>2100||harvest===null||harvest<1900||harvest>2100||harvest<issue){excluded++;continue;}
+   value=harvest-issue;
+  }else if(mode==="harvestYear")value=yearFromDateValue(p.Avvdatum);
+  else if(mode==="issueYear")value=parseNum(p.Arendear);
+  else if(mode==="registeredArea")value=parseNum(p.Arealha);
+  else if(mode==="reportedArea")value=parseNum(p.AnmaldHa);
+  else if(mode==="harvestType")value=String(p.Avverktyp??"").trim()||"Okänd / saknas";
+  else if(mode==="forestType")value=String(p.Skogstyp??"").trim()||"Okänd / saknas";
+  else if(mode==="municipality")value=String(p.Kommun??"").trim()||"Okänd / saknas";
+  if(value===null||(typeof value==="number"&&!Number.isFinite(value))){excluded++;continue;}
+  records.push(value);
  }
- if(!records.length){
-  summary.textContent="Inga utförda avverkningar med giltigt ärendeår och avverkningsdatum i det valda området.";
-  histogram.innerHTML="";
-  footnote.textContent=excluded?excluded.toLocaleString("sv-SE")+" polygoner kunde inte klassificeras.":"";
-  return;
+ const labels={duration:"Tid från ärendeår till utförd avverkning (år)",harvestYear:"Avverkningsår",issueYear:"Ärendeår",registeredArea:"Registrerad areal (ha)",reportedArea:"Anmäld areal (ha)",harvestType:"Avverkningstyp",forestType:"Skogstyp",municipality:"Kommun"};
+ document.getElementById("durationTitle").textContent="Histogram: "+labels[mode];
+ document.getElementById("durationDescription").textContent=mode==="duration"?"Skillnaden beräknas som avverkningsår minus ärendeår.":"För utförda polygoner i valt område. Numeriska attribut grupperas i intervall och kategoriska attribut efter kategori.";
+ if(!records.length){summary.textContent="Inga poster med giltiga värden för valt attribut.";histogram.innerHTML="";footnote.textContent=excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"";return;}
+ let buckets=[];
+ if(typeof records[0]==="string"){
+  const counts=new Map();records.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
+  buckets=[...counts.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"sv")).slice(0,12).map(([label,count])=>({label,count}));
+  const shown=buckets.reduce((s,b)=>s+b.count,0),other=records.length-shown;
+  if(other>0)buckets.push({label:"Övriga kategorier",count:other});
+ }else if(mode==="duration"){
+  buckets=[{label:"0 år",count:records.filter(n=>n===0).length},{label:"1 år",count:records.filter(n=>n===1).length},{label:"2 år",count:records.filter(n=>n===2).length},{label:"3 år",count:records.filter(n=>n===3).length},{label:"4 år",count:records.filter(n=>n===4).length},{label:"5+ år",count:records.filter(n=>n>=5).length}];
+ }else if(mode==="harvestYear"||mode==="issueYear"){
+  const counts=new Map();records.forEach(v=>counts.set(String(Math.trunc(v)),(counts.get(String(Math.trunc(v)))||0)+1));
+  buckets=[...counts.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).map(([label,count])=>({label,count}));
+  if(buckets.length>16){const grouped=new Map();records.forEach(v=>{const start=Math.floor(v/5)*5,label=start+"–"+(start+4);grouped.set(label,(grouped.get(label)||0)+1);});buckets=[...grouped.entries()].sort((a,b)=>Number(a[0].split("–")[0])-Number(b[0].split("–")[0])).map(([label,count])=>({label,count}));}
+ }else{
+  const min=Math.min(...records),max=Math.max(...records),bins=8,span=max-min;
+  if(span===0)buckets=[{label:min.toLocaleString("sv-SE",{maximumFractionDigits:2}),count:records.length}];
+  else{const step=span/bins,counts=Array(bins).fill(0);records.forEach(v=>counts[Math.min(bins-1,Math.floor((v-min)/step))]++);buckets=counts.map((count,i)=>({label:(min+i*step).toLocaleString("sv-SE",{maximumFractionDigits:1})+"–"+(i===bins-1?max:min+(i+1)*step).toLocaleString("sv-SE",{maximumFractionDigits:1}),count})).filter(b=>b.count>0);}
  }
- const buckets=[
-  {label:"< 1 år",count:records.filter(n=>n===0).length},
-  {label:"1–2 år",count:records.filter(n=>n===1).length},
-  {label:"2–3 år",count:records.filter(n=>n===2).length},
-  {label:"3–4 år",count:records.filter(n=>n===3).length},
-  {label:"4–5 år",count:records.filter(n=>n===4).length},
-  {label:"5+ år",count:records.filter(n=>n>=5).length}
- ];
- const max=Math.max(1,...buckets.map(b=>b.count));
- summary.textContent=records.length.toLocaleString("sv-SE")+" avverkningar med användbara årtal; andelar beräknas av dessa.";
- histogram.innerHTML=buckets.map(bucket=>{
-  const pct=bucket.count/records.length*100;
-  const width=bucket.count/max*100;
-  return '<div class="duration-row"><div>'+bucket.label+'</div><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%"></div></div><div class="duration-value">'+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' % ('+bucket.count.toLocaleString("sv-SE")+')</div></div>';
- }).join("");
- footnote.textContent="Andelarna summerar till 100 % över klassificerade polygoner. "+(excluded?excluded.toLocaleString("sv-SE")+" polygoner uteslutna eftersom årtal saknades, var ogiltiga eller avverkningsåret låg efter ärendeåret.":"");
+ const maxCount=Math.max(1,...buckets.map(b=>b.count));
+ summary.textContent=records.length.toLocaleString("sv-SE")+" av "+features.length.toLocaleString("sv-SE")+" polygoner ingår. Staplarna visar antal och andel.";
+ histogram.innerHTML=buckets.map(bucket=>{const pct=bucket.count/records.length*100,width=bucket.count/maxCount*100;return '<div class="duration-row"><div>'+esc(bucket.label)+'</div><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%"></div></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div>';}).join("");
+ footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"");
 }
 function filterToRadius(collection){
  return filterFeatureCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS);
@@ -564,7 +582,7 @@ function applyVisibility(){
  if(showSamrad){samradLineHitLayer.bringToFront();samradPointHitLayer.bringToFront()}
 }
 document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);
-document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("performedColorMode").addEventListener("change",refreshPerformedColors);document.getElementById("reload").addEventListener("click",load);document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
+document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("performedColorMode").addEventListener("change",refreshPerformedColors);document.getElementById("reload").addEventListener("click",load);document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});document.getElementById("histogramAttribute").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
 function radiusZoom(radius){return radius<=2500?13:radius<=5000?12:radius<=10000?11:radius<=20000?10:radius<=50000?8:7;}
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
