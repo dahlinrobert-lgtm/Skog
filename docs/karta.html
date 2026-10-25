@@ -106,12 +106,30 @@ function performedHectares(feature){
  const n=Number(p.Arealha);
  return p.Arealha!==null&&p.Arealha!==""&&Number.isFinite(n)&&n>=0?n:null;
 }
+function polygonId(feature){
+ const p=feature?.properties||{};
+ return p.OBJECTID??p.ObjectId??feature?.id??"saknas";
+}
 function caseId(feature){
  const p=feature?.properties||{};
- for(const key of ["Arendenummer","Ärendenummer","ArendeNummer","ArendeNr","ÄrendeNr","Arendenr","Arende","Ärende","Beteckning","Beteckn"]){
-  const v=p[key]; if(v!==null&&v!==undefined&&String(v).trim()!=="") return String(v).trim();
- }
- return "ID saknas";
+ const designation=String(p.Beteckn??p.Beteckning??"").trim();
+ const year=String(p.Arendear??"").trim();
+ const municipality=String(p.Kommunnr??"").trim();
+ // No dedicated case-number field is exposed by the performed layer; this composite is provisional.
+ if(!designation||!year)return null;
+ return [municipality||"kommun-okänd",year,designation].join("|");
+}
+function caseLabel(feature){
+ const p=feature?.properties||{};
+ const id=caseId(feature);
+ if(!id)return "Ärende-ID saknas";
+ return [p.Kommun||p.Kommunnr||null,p.Arendear||null,p.Beteckn||p.Beteckning||null].filter(v=>v!==null&&String(v).trim()!=="").join(" · ");
+}
+function stableCaseColor(id){
+ if(!id)return "#8a938d";
+ let hash=2166136261;
+ for(let i=0;i<id.length;i++){hash^=id.charCodeAt(i);hash=Math.imul(hash,16777619);}
+ return FOUR_COLOR_PALETTE[(hash>>>0)%FOUR_COLOR_PALETTE.length];
 }
 function vertexKeys(feature){
  const keys=new Set();
@@ -123,21 +141,16 @@ function vertexKeys(feature){
  walk(feature?.geometry?.coordinates); return keys;
 }
 function assignFourColors(features){
- const ids=features.map((f,i)=>String(f.id??f.properties?.OBJECTID??f.properties?.ObjectId??JSON.stringify(f.geometry??i)));
- const owners=new Map(), adj=features.map(()=>new Set());
- features.forEach((f,i)=>vertexKeys(f).forEach(k=>{if(!owners.has(k))owners.set(k,[]);owners.get(k).push(i);}));
- for(const list of owners.values()) for(let a=0;a<list.length;a++) for(let b=a+1;b<list.length;b++){adj[list[a]].add(list[b]);adj[list[b]].add(list[a]);}
- const colors=Array(features.length).fill(-1), left=new Set(features.map((_,i)=>i));
- while(left.size){
-  let pick=-1, sat=-1, deg=-1;
-  for(const i of left){const used=new Set([...adj[i]].map(n=>colors[n]).filter(n=>n>=0));if(used.size>sat||(used.size===sat&&adj[i].size>deg)){pick=i;sat=used.size;deg=adj[i].size;}}
-  const used=new Set([...adj[pick]].map(n=>colors[n]).filter(n=>n>=0));
-  let color=FOUR_COLOR_PALETTE.findIndex((_,i)=>!used.has(i)); if(color<0){color=0;while(used.has(color))color++;}
-  colors[pick]=color;left.delete(pick);
- }
+ const groups=new Map();let missing=0;
  caseColorByFeature=new Map();
- features.forEach((f,i)=>caseColorByFeature.set(ids[i],FOUR_COLOR_PALETTE[colors[i]]||"#777777"));
- return {count:features.length, colorsUsed:new Set(colors).size, edges:adj.reduce((n,s)=>n+s.size,0)/2, fallback:colors.some(c=>c>=4)};
+ for(const feature of features){
+  const id=caseId(feature),key=String(polygonId(feature));
+  if(!id){missing++;caseColorByFeature.set(key,"#8a938d");continue;}
+  if(!groups.has(id))groups.set(id,[]);
+  groups.get(id).push(feature);
+  caseColorByFeature.set(key,stableCaseColor(id));
+ }
+ return {count:features.length,groups:groups.size,missing,groupEntries:[...groups.entries()].map(([id,items])=>({id,label:caseLabel(items[0]),color:stableCaseColor(id),count:items.length})).sort((a,b)=>b.count-a.count||a.label.localeCompare(b.label,"sv"))};
 }
 function categoryValue(feature,mode){
  const p=feature?.properties||{};
@@ -180,7 +193,7 @@ function performedStyle(feature){
  if(mode==="none")return {color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22};
  const scale=performedScaleCache;
  if(mode==="caseId"){
-  const key=String(feature?.id??feature?.properties?.OBJECTID??feature?.properties?.ObjectId??JSON.stringify(feature?.geometry??""));
+  const key=String(polygonId(feature));
   const color=caseColorByFeature.get(key)||"#777777";
   return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
  }
@@ -219,8 +232,15 @@ function refreshPerformedColors(){
   gradient.style.background="linear-gradient(to right,"+mixColor(0)+","+mixColor(1)+")";
  }else if(mode==="caseId"){
   minLabel.style.display="none";maxLabel.style.display="none";gradient.style.display="none";categoryLegend.style.display="flex";
-  note.textContent="Fyra färger återanvänds; grannskap uppskattas via gemensamma hörn. ID visas i popup.";
-  const diag=scale.diagnostic||{};const info=document.createElement("div");info.style.width="100%";info.textContent="Polygoner: "+(diag.count||0)+" · grannpar: "+(diag.edges||0)+(diag.fallback?" · varning: grafen krävde fler än fyra färger":"");categoryLegend.append(info);
+  note.textContent="Samma preliminära ärendegrupp får samma färg. Grå = ärendeuppgift saknas; färger kan återanvändas mellan grupper.";
+  const diag=scale.diagnostic||{};const info=document.createElement("div");info.style.width="100%";info.textContent="Polygoner: "+(diag.count||0)+" · grupper: "+(diag.groups||0)+" · saknar gruppering: "+(diag.missing||0);categoryLegend.append(info);
+  (diag.groupEntries||[]).slice(0,30).forEach(group=>{
+   const item=document.createElement("span");item.style.display="inline-flex";item.style.alignItems="center";item.style.gap="5px";
+   const swatch=document.createElement("i");swatch.style.display="inline-block";swatch.style.width="12px";swatch.style.height="12px";swatch.style.borderRadius="2px";swatch.style.background=group.color;
+   const label=document.createElement("span");label.textContent=group.label+(group.count>1?" ("+group.count+" polygoner)":"");
+   item.append(swatch,label);categoryLegend.append(item);
+  });
+  if((diag.groupEntries||[]).length>30){const rest=document.createElement("span");rest.textContent="… och "+(diag.groupEntries.length-30)+" grupper till";categoryLegend.append(rest);}
   }else if(mode==="forestType"||mode==="harvestType"){
   minLabel.style.display="none";maxLabel.style.display="none";gradient.style.display="none";categoryLegend.style.display="flex";
   note.textContent=mode==="forestType"?"Skogstyp":"Avverkningstyp";
@@ -259,7 +279,7 @@ function popup(f,type){
  const fields=type==="planned"?[
  ["Ärende",p.Beteckn],["Inkomdatum",date(p.Inkomdatum)],["Kommun",p.Kommun],["Avverkningstyp",p.Avverktyp],["Anmäld areal",ha(p.AnmaldHa)],["Status",p.ArendeStatus],["Skogstyp",p.Skogstyp],["Ändamål",p.Andamal],["Areal plantering",ha(p.SkogsodlHa)],["Areal naturlig föryngring",ha(p.NatforHa)],["Län",p.Lan]
  ]:[
- ["ID",caseId(f)],["Ärendenummer",p.Arendenummer??p.ArendeNummer??p.ArendeNr??p.Arendenr],["Ärendeår",p.Arendear],["Beteckning",p.Beteckning??p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
+ ["Ärendegrupp",caseLabel(f)],["Polygon-ID (OBJECTID)",polygonId(f)],["Beteckning",p.Beteckn??p.Beteckning],["Ärendeår",p.Arendear],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
  ];
  return '<div style="width:260px;max-width:260px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:6px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
 }
