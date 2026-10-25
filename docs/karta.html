@@ -456,7 +456,7 @@ function updateDurationHistogram(features){
  const selector=document.getElementById("histogramAttribute"),mode=selector?selector.value:"duration";
  const records=[];let excluded=0;const samradRecords=[];
  const typeSelector=document.getElementById("histogramType"),typeControl=document.getElementById("histogramTypeControl");
- if(typeControl)typeControl.style.display=mode==="samradAction"?"":"none";
+ if(typeControl)typeControl.style.display="";
  const histogramType=typeSelector?typeSelector.value:"count";
  const parseNum=v=>{if(v===null||v===undefined||String(v).trim()==="")return null;const n=Number(v);return Number.isFinite(n)?n:null;};
  for(const feature of features){
