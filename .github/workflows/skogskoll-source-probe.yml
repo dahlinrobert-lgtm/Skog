@@ -25,8 +25,10 @@ jobs:
           node-version: "20"
       - name: Test deterministic ingestion and pagination core
         run: node --test skogskoll/tests/*.test.mjs
-      - name: Syntax-check source probe
-        run: node --check skogskoll/scripts/probe-source.mjs
+      - name: Syntax-check source probe and scan planner
+        run: |
+          node --check skogskoll/scripts/probe-source.mjs
+          node --check skogskoll/src/scan-plan.mjs
       - name: Probe public ArcGIS source (read-only)
         run: node skogskoll/scripts/probe-source.mjs
       - name: Upload source diagnostics
