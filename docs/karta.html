@@ -82,6 +82,7 @@ const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
 const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
 const FOUR_COLOR_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7"];
+const CASE_GROUP_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7","#D55E00","#56B4E9","#882255","#AA4499","#332288","#999933","#44AA99","#CC6677"];
 let caseColorByFeature=new Map();
 let categoryColorMap=new Map();
 function performedYear(feature){
@@ -125,11 +126,66 @@ function caseLabel(feature){
  if(!id)return "Ärende-ID saknas";
  return [p.Kommun||p.Kommunnr||null,p.Arendear||null,p.Beteckn||p.Beteckning||null].filter(v=>v!==null&&String(v).trim()!=="").join(" · ");
 }
-function stableCaseColor(id){
- if(!id)return "#8a938d";
- let hash=2166136261;
- for(let i=0;i<id.length;i++){hash^=id.charCodeAt(i);hash=Math.imul(hash,16777619);}
- return FOUR_COLOR_PALETTE[(hash>>>0)%FOUR_COLOR_PALETTE.length];
+function assignCaseGroupColors(features){
+ const groups=new Map(),groupByFeature=new Map();let missing=0;
+ caseColorByFeature=new Map();
+ for(const feature of features){
+  const id=caseId(feature),key=String(polygonId(feature));
+  if(!id){missing++;caseColorByFeature.set(key,"#8a938d");continue;}
+  if(!groups.has(id))groups.set(id,{id,features:[],label:caseLabel(feature)});
+  groups.get(id).features.push(feature);groupByFeature.set(feature,id);
+ }
+ const ids=[...groups.keys()],adj=new Map(ids.map(id=>[id,new Set()])),vertexOwners=new Map();
+ // Build adjacency between case groups from shared boundary vertices. Two or more shared
+ // vertices indicate a shared edge, avoiding false adjacency from a single corner touch.
+ for(const [id,group] of groups){
+  const vertices=new Set();
+  for(const feature of group.features)for(const vertex of vertexKeys(feature))vertices.add(vertex);
+  for(const vertex of vertices){
+   if(!vertexOwners.has(vertex))vertexOwners.set(vertex,new Set());
+   vertexOwners.get(vertex).add(id);
+  }
+ }
+ const sharedCounts=new Map();
+ for(const ownerSet of vertexOwners.values()){
+  const owners=[...ownerSet];
+  for(let a=0;a<owners.length;a++)for(let b=a+1;b<owners.length;b++){
+   const pair=owners[a]<owners[b]?owners[a]+"\u0000"+owners[b]:owners[b]+"\u0000"+owners[a];
+   sharedCounts.set(pair,(sharedCounts.get(pair)||0)+1);
+  }
+ }
+ for(const [pair,count] of sharedCounts){
+  if(count<2)continue;
+  const [a,b]=pair.split("\u0000");if(a===undefined||b===undefined)continue;
+  adj.get(a)?.add(b);adj.get(b)?.add(a);
+ }
+ // DSATUR coloring: color the most constrained neighboring group first.
+ const assigned=new Map(),remaining=new Set(ids);let conflicts=0;
+ while(remaining.size){
+  let pick=null,bestSaturation=-1,bestDegree=-1;
+  for(const id of remaining){
+   const used=new Set([...adj.get(id)].map(n=>assigned.get(n)).filter(v=>v!==undefined));
+   const degree=adj.get(id).size;
+   if(used.size>bestSaturation||(used.size===bestSaturation&&degree>bestDegree)){pick=id;bestSaturation=used.size;bestDegree=degree;}
+  }
+  const used=new Set([...adj.get(pick)].map(n=>assigned.get(n)).filter(v=>v!==undefined));
+  let color=CASE_GROUP_PALETTE.findIndex((_,i)=>!used.has(i));
+  if(color<0){
+   // More than twelve distinct neighboring colors: minimize collisions rather than fail.
+   let best=Infinity; color=0;
+   for(let i=0;i<CASE_GROUP_PALETTE.length;i++){
+    const count=[...adj.get(pick)].filter(n=>assigned.get(n)===i).length;
+    if(count<best){best=count;color=i;}
+   }
+   if(best>0)conflicts++;
+  }
+  assigned.set(pick,color);remaining.delete(pick);
+ }
+ for(const [id,group] of groups){
+  const color=CASE_GROUP_PALETTE[assigned.get(id)]||"#8a938d";
+  for(const feature of group.features)caseColorByFeature.set(String(polygonId(feature)),color);
+ }
+ return {count:features.length,groups:groups.size,missing,conflicts,groupEntries:[...groups.entries()].map(([id,group])=>({id,label:group.label,color:CASE_GROUP_PALETTE[assigned.get(id)],count:group.features.length}))};
 }
 function vertexKeys(feature){
  const keys=new Set();
@@ -174,7 +230,7 @@ function currentColorScale(){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  const features=performedLayer.toGeoJSON().features||[];
  if(mode==="caseId"){
-  const diagnostic=assignFourColors(features);
+  const diagnostic=assignCaseGroupColors(features);
   return {mode,diagnostic};
  }
  if(mode==="forestType"||mode==="harvestType"){
@@ -213,7 +269,7 @@ function refreshPerformedColors(){
  const minLabel=document.getElementById("legendMin"),maxLabel=document.getElementById("legendMax"),note=document.getElementById("legendNote");
  const scale=currentColorScale();
  performedScaleCache=scale;
- legend.style.display=mode==="none"?"none":"flex";
+ legend.style.display=(mode==="none"||mode==="caseId")?"none":"flex";
  const gradient=document.getElementById("legendGradient");
  const categoryLegend=document.getElementById("categoryLegend");
  categoryLegend.innerHTML="";
