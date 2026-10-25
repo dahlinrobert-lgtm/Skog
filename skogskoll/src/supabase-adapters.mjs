@@ -160,6 +160,11 @@ export function createSupabaseStore({
         // Do not silently reset or advance a broken persisted checkpoint.
         throw new Error(`Persisted checkpoint has ${seenIds.length} IDs but fetched_count is ${checkpoint.fetchedCount}`);
       }
+      // The scanner accepts a changed source count only by starting over. Mark
+      // the old session failed through the database before creating a fresh one.
+      if (checkpoint.reportedTotal < 0 || checkpoint.nextOffset > checkpoint.reportedTotal) {
+        throw new Error("Persisted scan checkpoint exceeds its recorded source count");
+      }
       return checkpoint;
     },
 
