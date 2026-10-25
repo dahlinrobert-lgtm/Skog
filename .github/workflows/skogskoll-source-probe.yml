@@ -73,14 +73,24 @@ jobs:
           node --check skogskoll/src/observation-core.mjs
           node --check skogskoll/src/supabase-adapters.mjs
           node --check skogskoll/src/geometry-match.mjs
+          node --check skogskoll/src/watch-area-preview.mjs
       - name: Syntax-check standalone Skogskoll page script
         run: |
           node --input-type=module -e '
             import { readFileSync, writeFileSync } from "node:fs";
             const html = readFileSync("skogskoll/index.html", "utf8");
-            const match = html.match(/<script>([\s\S]*?)<\/script>/i);
+            const match = html.match(/<script[^>]*>[\s\S]*?<\/script>/i);
             if (!match) throw new Error("No inline script found in Skogskoll page");
-            writeFileSync("/tmp/skogskoll-page.js", match[1]);
+            writeFileSync("/tmp/skogskoll-page.html", html);
+          '
+          node --input-type=module -e '
+            import { readFileSync, writeFileSync } from "node:fs";
+            const html = readFileSync("/tmp/skogskoll-page.html", "utf8");
+            const start = html.indexOf("<script");
+            const openEnd = start < 0 ? -1 : html.indexOf(">", start);
+            const end = html.indexOf("</script>", openEnd);
+            if (start < 0 || openEnd < 0 || end < 0) throw new Error("No script found for syntax check");
+            writeFileSync("/tmp/skogskoll-page.js", html.slice(openEnd + 1, end));
           '
           node --check /tmp/skogskoll-page.js
       - name: Probe public ArcGIS source (read-only)
