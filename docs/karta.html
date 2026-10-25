@@ -653,7 +653,11 @@ async function getLayer(base,fields,bounds,signal,stats){
  let fetchMs=0,parseMs=0,dedupeMs=0,emptyPages=0;
  while(hasMore&&pages<maxPages){
   if(signal?.aborted)throw new DOMException("Aborted","AbortError");
-  const batchCount=Math.min(batchSize,maxPages-pages);
+  // Probe the first page alone. Small extents often fit in one page, and
+  // launching a four-page batch immediately wastes three requests when that
+  // first page is already the terminal page. Once more data is confirmed,
+  // retain parallel batches for throughput.
+  const batchCount=pages===0?1:Math.min(batchSize,maxPages-pages);
   const offsets=Array.from({length:batchCount},(_,i)=>(pages+i)*pageSize);
   if(stats)stats.apiRequests+=batchCount;
   const responses=await Promise.all(offsets.map(async offset=>{
