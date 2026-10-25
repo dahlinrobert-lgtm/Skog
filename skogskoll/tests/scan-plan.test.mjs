@@ -50,3 +50,22 @@ test("checkpoint refuses changed page size and cannot advance once complete", ()
   assert.equal(done.complete, true);
   assert.throws(() => advanceCheckpoint(done, { features: [] }), /already complete/);
 });
+
+test("checkpoint rejects inconsistent persisted ID lists", () => {
+  assert.throws(() => createCheckpoint({
+    sourceKey: "source", reportedTotal: 2, pageSize: 1, fetchedCount: 1, nextOffset: 1, seenIds: []
+  }), /seenIds length/);
+  const checkpoint = createCheckpoint({ sourceKey: "source", reportedTotal: 2, pageSize: 1 });
+  const corrupted = { ...checkpoint, fetchedCount: 1, nextOffset: 1, seenIds: [] };
+  assert.equal(validateCheckpoint(corrupted, {
+    sourceKey: "source", reportedTotal: 2, pageSize: 1
+  }).valid, false);
+});
+
+test("empty source creates an already-complete checkpoint", () => {
+  const checkpoint = createCheckpoint({ sourceKey: "source", reportedTotal: 0, pageSize: 100 });
+  assert.equal(checkpoint.complete, true);
+  assert.equal(validateCheckpoint(checkpoint, {
+    sourceKey: "source", reportedTotal: 0, pageSize: 100
+  }).valid, true);
+});
