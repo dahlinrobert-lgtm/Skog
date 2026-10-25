@@ -1,4 +1,9 @@
 {
+  "S1D_IW_GRDH_1SDV_20261025T160535_20261025T160600_005174_009D10_1819_COG": {
+    "collection": "sentinel-1-grd",
+    "acquired_at": "2026-10-25T16:05:35.806949Z",
+    "published_at": "2026-10-25T16:27:25.648011Z"
+  },
   "S1C_IW_GRDH_1SDV_20261024T161328_20261024T161353_010029_014036_1DB4_COG": {
     "collection": "sentinel-1-grd",
     "acquired_at": "2026-10-24T16:13:28.637139Z",
@@ -994,10 +999,10 @@
     "acquired_at": "2026-06-06T05:05:52.459293Z",
     "published_at": "2026-06-06T04:05:54.832513Z"
   },
-  "S1C_IW_GRDH_1SDV_20260605T051319_20260605T051344_007966_01032D_344E_COG": {
-    "collection": "sentinel-1-grd",
-    "acquired_at": "2026-06-05T05:13:19.500242Z",
-    "published_at": "2026-06-05T03:58:48.282500Z"
+  "S2B_MSIL2A_20261025T103119_N0513_R108_T34VDR_20261025T125310": {
+    "collection": "sentinel-2-l2a",
+    "acquired_at": "2026-10-25T10:31:19.024000Z",
+    "published_at": "2026-10-25T13:28:58.000000Z"
   },
   "S2C_MSIL2A_20261024T101101_N0513_R022_T34VDR_20261024T140910": {
     "collection": "sentinel-2-l2a",
@@ -1993,10 +1998,5 @@
     "collection": "sentinel-2-l2a",
     "acquired_at": "2026-03-18T10:07:41.025000Z",
     "published_at": "2026-03-18T17:04:48.000000Z"
-  },
-  "S2A_MSIL2A_20260316T103041_N0512_R108_T34VDR_20260316T171615": {
-    "collection": "sentinel-2-l2a",
-    "acquired_at": "2026-03-16T10:30:41.024000Z",
-    "published_at": "2026-03-16T18:07:05.000000Z"
   }
 }

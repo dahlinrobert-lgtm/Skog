@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-25T09:48:13.792318Z",
+  "checked_at": "2026-10-25T18:49:12.849869Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27815,6 +27815,19 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1D_IW_GRDH_1SDV_20261025T160535_20261025T160600_005174_009D10_1819_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-10-25T16:05:35.806949Z",
+        "published_at": "2026-10-25T16:27:25.648011Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          18.740805,
+          63.302891,
+          24.84193,
+          65.256767
+        ]
+      },
+      {
         "id": "S1C_IW_GRDH_1SDV_20261024T161328_20261024T161353_010029_014036_1DB4_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-10-24T16:13:28.637139Z",
@@ -30400,19 +30413,6 @@
           23.234404,
           64.395149
         ]
-      },
-      {
-        "id": "S1C_IW_GRDH_1SDV_20260605T051319_20260605T051344_007966_01032D_344E_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-05T05:13:19.500242Z",
-        "published_at": "2026-06-05T03:58:48.282500Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          15.149176,
-          62.062283,
-          20.989569,
-          64.008057
-        ]
       }
     ],
     "count": 200,
@@ -30424,6 +30424,19 @@
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
     "collection": "sentinel-2-l2a",
     "items": [
+      {
+        "id": "S2B_MSIL2A_20261025T103119_N0513_R108_T34VDR_20261025T125310",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-10-25T10:31:19.024000Z",
+        "published_at": "2026-10-25T13:28:58.000000Z",
+        "cloud_cover_percent": 96.99,
+        "bbox": [
+          18.953501523280057,
+          63.02793322568484,
+          20.489045922390634,
+          64.02249954134751
+        ]
+      },
       {
         "id": "S2C_MSIL2A_20261024T101101_N0513_R022_T34VDR_20261024T140910",
         "collection": "sentinel-2-l2a",
@@ -33010,26 +33023,40 @@
           21.199734465434084,
           64.02701663648664
         ]
-      },
-      {
-        "id": "S2A_MSIL2A_20260316T103041_N0512_R108_T34VDR_20260316T171615",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-03-16T10:30:41.024000Z",
-        "published_at": "2026-03-16T18:07:05.000000Z",
-        "cloud_cover_percent": 100.0,
-        "bbox": [
-          18.953501523280057,
-          63.02793322568484,
-          20.463347421678233,
-          64.02233620316824
-        ]
       }
     ],
     "count": 200,
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [],
+  "new_scenes_since_previous_run": [
+    {
+      "id": "S1D_IW_GRDH_1SDV_20261025T160535_20261025T160600_005174_009D10_1819_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-10-25T16:05:35.806949Z",
+      "published_at": "2026-10-25T16:27:25.648011Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        18.740805,
+        63.302891,
+        24.84193,
+        65.256767
+      ]
+    },
+    {
+      "id": "S2B_MSIL2A_20261025T103119_N0513_R108_T34VDR_20261025T125310",
+      "collection": "sentinel-2-l2a",
+      "acquired_at": "2026-10-25T10:31:19.024000Z",
+      "published_at": "2026-10-25T13:28:58.000000Z",
+      "cloud_cover_percent": 96.99,
+      "bbox": [
+        18.953501523280057,
+        63.02793322568484,
+        20.489045922390634,
+        64.02249954134751
+      ]
+    }
+  ],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
