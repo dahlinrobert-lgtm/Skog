@@ -36,7 +36,7 @@ jobs:
             const html = readFileSync("docs/karta.html", "utf8");
             if (!html.includes("<script type=\"module\">")) throw new Error("Map inline script must be a module to import the shared filter");
             if (!html.includes("import { filterFeatureCollectionToRadius } from \"./map-radius-filter.mjs\";")) throw new Error("Map must import shared radius filter from published docs asset");
-            if (!/planned=filterToRadius\\(planned\\);\\s*performed=filterToRadius\\(performed\\);/.test(html)) throw new Error("Filtered planned and performed collections must be assigned before rendering");
-            if (!/if\\(wantSamrad\\)\\{samradPoints=filterToRadius\\(samradPoints\\);samradLines=filterToRadius\\(samradLines\\);samradAreas=filterToRadius\\(samradAreas\\);\\}/.test(html)) throw new Error("Filtered consultation collections must be assigned before rendering");
+            if (!html.includes("planned=filterToRadius(planned);performed=filterToRadius(performed);")) throw new Error("Filtered planned and performed collections must be assigned before rendering");
+            if (!html.includes("if(wantSamrad){samradPoints=filterToRadius(samradPoints);samradLines=filterToRadius(samradLines);samradAreas=filterToRadius(samradAreas);}")) throw new Error("Filtered consultation collections must be assigned before rendering");
             console.log("Map uses shared radius filter for planned, performed and consultation layers.");
           '
