@@ -110,9 +110,22 @@ export function featureTouchesRadius(feature, center, radiusMeters, toleranceMet
 
 export function filterFeatureCollectionToRadius(collection, center, radiusMeters) {
   if (!collection || !Array.isArray(collection.features)) throw new TypeError("FeatureCollection.features must be an array");
+  const startedAt = globalThis.performance?.now?.() ?? Date.now();
   const originalCount = collection.features.length;
   const features = collection.features.filter(feature => featureTouchesRadius(feature, center, radiusMeters));
-  return { ...collection, features, filteredOutside: originalCount - features.length };
+  const finishedAt = globalThis.performance?.now?.() ?? Date.now();
+  return {
+    ...collection,
+    features,
+    filteredOutside: originalCount - features.length,
+    filterStats: {
+      radiusMeters,
+      inputFeatures: originalCount,
+      outputFeatures: features.length,
+      filteredOutside: originalCount - features.length,
+      durationMs: Math.round((finishedAt - startedAt) * 100) / 100
+    }
+  };
 }
 
 /**
