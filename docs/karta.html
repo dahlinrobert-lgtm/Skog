@@ -48,6 +48,7 @@
 <option value="municipality">Kommun</option>
 <option value="samradAction">Samrådsåtgärd</option>
 </select></label>
+<label id="histogramTypeControl" style="display:none">Typ <select id="histogramType"><option value="count">Efter antal områden</option><option value="hectares">Efter hektar</option></select></label>
 </div>
 <p id="durationDescription" class="muted">Skillnaden beräknas som avverkningsår minus ärendeår.</p>
 <div id="durationSummary" class="muted">Inväntar data…</div>
@@ -453,7 +454,10 @@ function yearFromDateValue(value){
 function updateDurationHistogram(features){
  const histogram=document.getElementById("durationHistogram"),summary=document.getElementById("durationSummary"),footnote=document.getElementById("durationFootnote");
  const selector=document.getElementById("histogramAttribute"),mode=selector?selector.value:"duration";
- const records=[];let excluded=0;
+ const records=[];let excluded=0;const samradRecords=[];
+ const typeSelector=document.getElementById("histogramType"),typeControl=document.getElementById("histogramTypeControl");
+ if(typeControl)typeControl.style.display=mode==="samradAction"?"":"none";
+ const histogramType=typeSelector?typeSelector.value:"count";
  const parseNum=v=>{if(v===null||v===undefined||String(v).trim()==="")return null;const n=Number(v);return Number.isFinite(n)?n:null;};
  for(const feature of features){
   const p=feature?.properties||{};let value=null;
@@ -477,16 +481,19 @@ function updateDurationHistogram(features){
  if(mode==="samradAction"){
   const layers=[samradPointLayer,samradLineLayer,samradAreaLayer];
   records.length=0;excluded=0;
-  for(const layer of layers)for(const feature of layer.toGeoJSON().features){const value=String(feature?.properties?.Samradsatgard??feature?.properties?.["Samrådsåtgärd"]??"").trim();if(value)records.push(value);else excluded++;}
+  for(const layer of layers)for(const feature of layer.toGeoJSON().features){const p=feature?.properties||{};const value=String(p.Samradsatgard??p["Samrådsåtgärd"]??"").trim();const rawArea=p.AnmaldHa??p.Arealha??p.Areal??p.AreaHa;const area=rawArea==null||String(rawArea).trim()===""?null:Number(rawArea);if(value){records.push(value);samradRecords.push({value,hectares:Number.isFinite(area)&&area>=0?area:null});}else excluded++;}
  }
  document.getElementById("durationTitle").textContent="Histogram: "+labels[mode];
  document.getElementById("durationDescription").textContent=mode==="duration"?"Skillnaden beräknas som avverkningsår minus ärendeår.":(mode==="registeredArea"||mode==="reportedArea")?"För utförda polygoner i valt område. Arealer visas i fasta intervall: 0–1 ha till 9–10 ha, därefter 10–15 ha och 15+ ha. Stapellängden visar antal polygoner i varje intervall.":mode==="ratio"?"För utförda polygoner i valt område. Andelen delas i intervall om 10 procentenheter från 0 till 130 %, följt av en kategori för 130 % och högre. Stapellängden visar antal polygoner. Färgstyrkan ökar stegvis uppifrån och ned efter intervallens ordningsföljd, oberoende av antalet polygoner.":"För utförda polygoner i valt område. Numeriska attribut grupperas i intervall och kategoriska attribut efter kategori.";
  if(!records.length){summary.textContent="Inga poster med giltiga värden för valt attribut.";histogram.innerHTML="";footnote.textContent=excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"";return;}
  let buckets=[];
  if(typeof records[0]==="string"){
-  const counts=new Map();records.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
+  const counts=new Map();
+  if(mode==="samradAction"&&histogramType==="hectares")samradRecords.forEach(item=>{if(item.hectares!==null)counts.set(item.value,(counts.get(item.value)||0)+item.hectares);else excluded++;});
+  else records.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
   buckets=[...counts.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"sv")).slice(0,12).map(([label,count])=>({label,count}));
-  const shown=buckets.reduce((s,b)=>s+b.count,0),other=records.length-shown;
+  const totalMetric=mode==="samradAction"&&histogramType==="hectares"?[...counts.values()].reduce((s,v)=>s+v,0):records.length;
+  const shown=buckets.reduce((s,b)=>s+b.count,0),other=totalMetric-shown;
   if(other>0)buckets.push({label:"Övriga kategorier",count:other});
  }else if(mode==="duration"){
   buckets=[{label:"0 år",count:records.filter(n=>n===0).length},{label:"1 år",count:records.filter(n=>n===1).length},{label:"2 år",count:records.filter(n=>n===2).length},{label:"3 år",count:records.filter(n=>n===3).length},{label:"4 år",count:records.filter(n=>n===4).length},{label:"5+ år",count:records.filter(n=>n>=5).length}];
@@ -538,8 +545,8 @@ function updateDurationHistogram(features){
  const maxBarValue=Math.max(1,...buckets.map(b=>densityMode?(b.density??b.count):b.count));
  const sourceCount=mode==="samradAction"?[samradPointLayer,samradLineLayer,samradAreaLayer].reduce((sum,layer)=>sum+layer.toGeoJSON().features.length,0):features.length;
  const recordName=mode==="samradAction"?"samrådsposter":"polygoner";
- summary.textContent=records.length.toLocaleString("sv-SE")+" av "+sourceCount.toLocaleString("sv-SE")+" "+recordName+" ingår. Staplarna visar antal "+recordName+" i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
- histogram.innerHTML=buckets.map((bucket,index)=>{const pct=bucket.count/records.length*100,width=(densityMode?(bucket.density??bucket.count):bucket.count)/maxBarValue*100;const opacity=mode==="ratio"?(buckets.length===1?1:0.22+0.78*index/(buckets.length-1)):1;return '<div class="duration-row"><div class="duration-row-main"><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%;opacity:'+opacity.toFixed(2)+'"></div><span class="duration-track-label">'+esc(bucket.label)+'</span></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div></div>';}).join("");
+ summary.textContent=mode==="samradAction"&&histogramType==="hectares"?"Staplarna visar summerad areal i hektar per samrådsåtgärd. "+(excluded?excluded.toLocaleString("sv-SE")+" poster saknade giltig areal.":"") :records.length.toLocaleString("sv-SE")+" av "+sourceCount.toLocaleString("sv-SE")+" "+recordName+" ingår. Staplarna visar antal "+recordName+" i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
+ histogram.innerHTML=buckets.map((bucket,index)=>{const pct=bucket.count/(mode==="samradAction"&&histogramType==="hectares"?Math.max(1,buckets.reduce((sum,b)=>sum+b.count,0)):records.length)*100,width=(densityMode?(bucket.density??bucket.count):bucket.count)/maxBarValue*100;const opacity=mode==="ratio"?(buckets.length===1?1:0.22+0.78*index/(buckets.length-1)):1;return '<div class="duration-row"><div class="duration-row-main"><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%;opacity:'+opacity.toFixed(2)+'"></div><span class="duration-track-label">'+esc(bucket.label)+'</span></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div></div>';}).join("");
  footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+(mode==="samradAction"?" samrådsposter":" polygoner")+" saknade giltigt värde.":"");
 }
 function filterToRadius(collection){
@@ -655,7 +662,7 @@ function applyVisibility(){
 document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);
 document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("performedColorMode").addEventListener("change",()=>{refreshPerformedColors();if(document.getElementById("performedColorMode").value==="samradAction")load()});document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
 // Clicking the map selects a new search-area center and reloads the data for that area.
-map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});
+map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});document.getElementById("histogramType").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
 function radiusZoom(radius){return radius<=2500?13:radius<=5000?12:radius<=10000?11:radius<=20000?10:radius<=50000?8:7;}
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
