@@ -43,6 +43,22 @@ A process that is terminated without handling an exception may leave its databas
 
 Use this only after independently confirming that no worker is still running for the source. The old seen-ID ledger belongs to the old scan ID, so recovery does not resume that offset into a new session: run a fresh bounded scan from offset 0. Previously committed observations remain idempotent: existing IDs are classified as unchanged or changed, not inserted as new records. The RPC does not activate alerts or deactivate observations.
 
+## Manual stale-session recovery command
+
+The optional command `scripts/recover-stale-scan.mjs` calls the service-role-only recovery RPC for the Skogsstyrelsen source. It is disabled unless `SKOGSKOLL_ENABLE_STALE_RECOVERY=YES` is set, and it refuses stale cutoffs under 60 minutes. The default cutoff is 24 hours; override it with `SKOGSKOLL_STALE_MINUTES` only when needed.
+
+Example (run only after verifying that no worker is active):
+
+```sh
+SKOGSKOLL_ENABLE_STALE_RECOVERY=YES \
+SKOGSKOLL_STALE_MINUTES=1440 \
+SUPABASE_URL=https://YOUR_PROJECT.supabase.co \
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVER_ONLY_KEY \
+node skogskoll/scripts/recover-stale-scan.mjs
+```
+
+This command only marks a sufficiently old running session failed. It does not start or resume a scan. Keep the service-role key out of browser code, GitHub Pages, commits, logs and screenshots.
+
 ## Bounded worker orchestration core
 
 `src/scan-worker-core.mjs` coordinates one bounded batch using injected source and store adapters. It checks the source count before each page and again before completion, validates page IDs, and returns `in_progress` when the per-run page budget is reached. It never sends alerts.
