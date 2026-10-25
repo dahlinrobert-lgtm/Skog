@@ -11,6 +11,7 @@ export async function runScanBatch({
   store,
   pageSize = 500,
   maxPages = 50,
+  mode = "baseline",
   observedAt = () => new Date().toISOString()
 }) {
   if (!source || typeof source.getCount !== "function" || typeof source.getPage !== "function") {
@@ -42,7 +43,7 @@ export async function runScanBatch({
     }
     if (!checkpoint) {
       checkpoint = createCheckpoint({ sourceKey, reportedTotal, pageSize });
-      scanId = await store.startScan({ sourceKey, reportedTotal, pageSize, checkpoint });
+      scanId = await store.startScan({ sourceKey, reportedTotal, pageSize, checkpoint, mode });
       checkpoint = { ...checkpoint, scanId };
     } else {
       scanId = checkpoint.scanId ?? null;
