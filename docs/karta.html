@@ -864,8 +864,9 @@ async function load(){
    samradPointLayer.addData(samradPoints);samradLineLayer.addData(samradLines);samradAreaLayer.addData(samradAreas);
    samradPointHitLayer.addData(samradPoints);samradLineHitLayer.addData(samradLines);
   }
-  refreshPerformedColors();
-  updateDurationHistogram(performed.features);
+  // The performed layer and histogram were already refreshed before awaiting
+  // optional consultation data. Repeating both here needlessly walks every
+  // performed feature a second time on each load.
   const samradTruncated=wantSamrad&&(samradPoints.truncated||samradLines.truncated||samradAreas.truncated);
   if(planned.truncated||performed.truncated||samradTruncated||!clippingAvailable)console.warn("Map data warning",{plannedTruncated:planned.truncated,performedTruncated:performed.truncated,samradTruncated,clippingAvailable,filteredOutside:planned.filteredOutside+performed.filteredOutside+(wantSamrad?samradPoints.filteredOutside+samradLines.filteredOutside+samradAreas.filteredOutside:0)});
   lastRenderedViewKey=viewKey;
