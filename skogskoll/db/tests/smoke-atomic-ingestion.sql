@@ -19,6 +19,7 @@ declare
   v_obs integer;
   v_recovered integer;
   v_feature jsonb;
+  v_changed_feature jsonb;
   v_ids jsonb;
   v_hash text := repeat('a', 64);
   v_now timestamptz := now();
@@ -73,6 +74,37 @@ begin
 
   select count(*) into v_seen from public.scan_seen_ids where scan_id = v_scan;
   if v_seen <> 1 then raise exception 'failed duplicate page leaked into seen-ID ledger'; end if;
+
+  -- A changed payload on a new scan must update current state and append history.
+  -- The source observation ID is stable across scans; run IDs are not.
+  declare
+    v_scan2 uuid;
+    v_run2 uuid;
+  begin
+    select scan_id, poll_run_id into v_scan2, v_run2
+    from public.skogskoll_start_scan(v_source, 1, 1, 'incremental');
+
+    v_changed_feature := jsonb_build_array(jsonb_build_object(
+      'source', v_source,
+      'source_id', 'smoke-1',
+      'content_hash', repeat('b', 64),
+      'source_received_at', '2026-10-25',
+      'attributes', jsonb_build_object('test', true, 'label', 'changed payload'),
+      'geometry', null
+    ));
+    select * into v_result from public.skogskoll_commit_page(
+      v_scan2, 0, 0, 1, 1, v_changed_feature, v_ids, v_now + interval '2 minutes'
+    );
+    if v_result.changed_count <> 1 or v_result.inserted_count <> 0 then
+      raise exception 'changed payload did not classify as changed: %', row_to_json(v_result);
+    end if;
+    if not exists (
+      select 1 from public.source_observation_history
+      where source = v_source and source_id = 'smoke-1'
+        and poll_run_id = v_run2 and event_type = 'changed'
+    ) then raise exception 'changed payload history event missing'; end if;
+    perform public.skogskoll_finish_scan(v_scan2);
+  end;
 
   -- Current committed offset is complete; finish must verify ledger coverage.
   perform public.skogskoll_finish_scan(v_scan);
