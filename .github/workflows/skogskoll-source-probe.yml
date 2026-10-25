@@ -42,10 +42,10 @@ jobs:
             if (missing.length) throw new Error("Migration missing required guardrails: " + missing.join(", "));
             if (!sql.includes("language plpgsql") || !sql.includes("security definer")) throw new Error("Migration function security declarations missing");
             const recovery = sql.slice(sql.lastIndexOf("create or replace function public.skogskoll_recover_stale_scan"));
-            if (!/as \\$\\$\\s*declare/.test(recovery) || !/end;\\s*\\$\\$;/.test(recovery)) {
+            if (!/as \$\$\s*declare/.test(recovery) || !/end;\s*\$\$;/.test(recovery)) {
               throw new Error("Stale recovery function has invalid PL/pgSQL dollar delimiters");
             }
-            const functions = [...sql.matchAll(/create or replace function public\\.skogskoll_[\\s\\S]*?\\n\\$\\$;/g)];
+            const functions = [...sql.matchAll(/create or replace function public\.skogskoll_[\s\S]*?\n\$\$;/g)];
             if (functions.length < 5) throw new Error("Expected all five Skogskoll RPC functions to use closed dollar-quoted bodies");
             console.log("Migration structure guardrails present:", required.length, "and", functions.length, "closed function bodies");
           '
