@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { featureTouchesRadius, clipPolygonCollectionToRadius } from "../docs/map-radius-filter.mjs";
+import { featureTouchesRadius, filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from "../docs/map-radius-filter.mjs";
 
 const center = { lat: 63.74646, lon: 19.66455 };
 const radius = 10_000;
@@ -82,4 +82,25 @@ test("polygon clipping drops polygons with no intersection", () => {
   };
   const result = clipPolygonCollectionToRadius({ type: "FeatureCollection", features: [polygon] }, center, radius, turf);
   assert.equal(result.features.length, 0);
+});
+
+test("radius filtering returns correct counts and timing diagnostics", () => {
+  const collection = { type: "FeatureCollection", features: [
+    point(center.lat, center.lon),
+    point(63.95, center.lon)
+  ] };
+  const result = filterFeatureCollectionToRadius(collection, center, radius);
+  assert.equal(result.features.length, 1);
+  assert.equal(result.filteredOutside, 1);
+  assert.equal(result.filterStats.inputFeatures, 2);
+  assert.equal(result.filterStats.outputFeatures, 1);
+  assert.equal(result.filterStats.filteredOutside, 1);
+  assert.equal(result.filterStats.radiusMeters, radius);
+  assert.ok(Number.isFinite(result.filterStats.durationMs));
+  assert.ok(result.filterStats.durationMs >= 0);
+});
+
+test("radius filtering rejects invalid collection and radius arguments", () => {
+  assert.throws(() => filterFeatureCollectionToRadius(null, center, radius), /FeatureCollection/);
+  assert.throws(() => featureTouchesRadius(point(center.lat, center.lon), center, -1), /non-negative radius/);
 });
