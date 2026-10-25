@@ -7,6 +7,7 @@ on:
       - "skogskoll/scripts/probe-source.mjs"
       - "skogskoll/src/**"
       - "skogskoll/tests/**"
+      - "skogskoll/README.md"
   workflow_dispatch:
   schedule:
     - cron: "17 */6 * * *"
@@ -22,7 +23,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Test deterministic deduplication core
+      - name: Test deterministic ingestion and pagination core
         run: node --test skogskoll/tests/*.test.mjs
       - name: Syntax-check source probe
         run: node --check skogskoll/scripts/probe-source.mjs
