@@ -627,7 +627,7 @@ const layerResponseCache=new Map();
 const LAYER_CACHE_TTL_MS=180000;
 const LAYER_CACHE_MAX_ENTRIES=18;
 function layerCacheKey(base,fields,bounds){
- const round=v=>Number(v).toFixed(4);
+ const round=v=>Number(v).toFixed(6);
  const simplify=RADIUS<=5000?0.00001:RADIUS<=10000?0.00003:RADIUS<=20000?0.00006:0.00012;
  return [base,fields,round(bounds.getWest()),round(bounds.getSouth()),round(bounds.getEast()),round(bounds.getNorth()),simplify].join("|");
 }
