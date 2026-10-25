@@ -73,6 +73,7 @@ jobs:
           node --check skogskoll/src/observation-core.mjs
           node --check skogskoll/src/supabase-adapters.mjs
           node --check skogskoll/src/geometry-match.mjs
+          node --check skogskoll/src/watch-area-preview.mjs
       - name: Syntax-check standalone Skogskoll page script
         run: |
           node --input-type=module -e '
