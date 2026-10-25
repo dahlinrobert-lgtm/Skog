@@ -71,7 +71,7 @@ export async function runScanBatch({
       }
     }
     if (!checkpoint) {
-      checkpoint = createCheckpoint({ sourceKey, reportedTotal, pageSize });
+      checkpoint = createCheckpoint({ sourceKey, reportedTotal, pageSize, externalSeenIds: store.externalSeenIds === true });
       scanId = await store.startScan({ sourceKey, reportedTotal, pageSize, checkpoint, mode });
       checkpoint = { ...checkpoint, scanId };
     } else {
