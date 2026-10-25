@@ -11,7 +11,7 @@ Fristående, mobilanpassad app för privata skogsägare. Första leveransen är 
 
 ## Källprobe — verifieringsstatus
 - Första körningen lyckades 2026-10-25.
-- Senaste verifierade körningen: [run 40180003449](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40180003449), conclusion `success`.
+- Senaste verifierade körningen som slutförts helt: [run #44](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40181356356), conclusion `success`. Senare körningar har lagt till worker-/adaptertester; deras CI-resultat kontrolleras separat.
 - Källans count-query rapporterade 129 733 poster vid den körningen.
 - Provet läste 300 poster: 300 unika tekniska ID:n, inga dubbletter och inga saknade ID:n.
 - Proben begränsas avsiktligt till tre sidor à 100 poster; den gör inte en fullständig inläsning. 300 poster var cirka 0,077 % av källans rapporterade antal.
