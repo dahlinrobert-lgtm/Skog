@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173d2b">
+<title>Skogskoll – bevaka din skog</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f3f6f1;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:#fff;padding:26px max(18px,calc((100% - 1050px)/2))}h1{margin:0;font-size:clamp(1.8rem,4vw,2.5rem)}header p{margin:.4rem 0 0;color:#dce9df}main{max-width:1050px;margin:auto;padding:20px 16px 48px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:white;border:1px solid #dce4dd;border-radius:14px;padding:18px;min-width:0}.wide{grid-column:1/-1}h2{font-size:1.15rem;margin:0 0 10px}.muted{color:#607066;font-size:.92rem}.status{border-left:4px solid #d97706;padding:10px 12px;background:#fff7e6;border-radius:5px}.pill{display:inline-block;border-radius:999px;padding:4px 9px;background:#fff0d1;color:#7c3f00;font-size:.8rem;font-weight:700}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#f1f6f0;border-radius:10px;padding:12px}.stat strong{display:block;font-size:1.2rem;color:#145b37}label{display:block;font-size:.9rem;font-weight:600;margin:10px 0 5px}input,select,button,textarea{font:inherit}input,select,textarea{width:100%;padding:10px;border:1px solid #c9d5cb;border-radius:8px;background:#fff}textarea{min-height:100px;resize:vertical;font-family:ui-monospace,monospace;font-size:.85rem}button{border:0;border-radius:8px;background:#1d6840;color:#fff;padding:10px 14px;font-weight:650;cursor:pointer}button.secondary{background:#e7efe8;color:#20432e}button.danger{background:#f8e9e6;color:#8a2e20}button:disabled{opacity:.55;cursor:not-allowed}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.list{padding-left:20px}.list li{margin:6px 0}.saved-item,.history-item{border:1px solid #e0e7e1;border-radius:10px;padding:12px;margin-top:9px}.saved-item strong,.history-item strong{display:block}.item-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.empty{padding:14px;border-radius:10px;background:#f4f7f3;color:#607066}.toggle{display:flex;align-items:flex-start;gap:9px;margin:10px 0}.toggle input{width:auto;margin-top:5px}.toggle label{margin:0;font-weight:500}.small{font-size:.82rem}footer{margin-top:14px;font-size:.82rem;color:#607066}@media(max-width:700px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.stats{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>🌲 Skogskoll</h1><p>Håll koll på avverkningsanmälningar som berör din skog.</p></header>
+<main>
+<div class="status"><span class="pill">TESTLÄGE</span> Larm och riktig datainläsning är avstängda medan datakällan och databasen verifieras. Dina inställningar sparas endast lokalt i den här webbläsaren.</div>
+<div class="grid" style="margin-top:14px">
+<section class="card">
+<h2>Skapa bevakning</h2>
+<p class="muted">Spara ett testområde lokalt. Du kan använda en cirkel runt en punkt eller klistra in en GeoJSON-polygon. Ingen information skickas till en server.</p>
+<label for="areaName">Namn på bevakningen</label><input id="areaName" maxlength="80" placeholder="Ex. Skiftet vid sjön">
+<label for="areaType">Typ av område</label><select id="areaType"><option value="radius">Radie runt en punkt</option><option value="polygon">Polygon (GeoJSON)</option></select>
+<div id="radiusFields">
+<div class="row"><div><label for="lat">Latitud</label><input id="lat" type="number" min="-90" max="90" step=".00001" value="63.74646"></div><div><label for="lon">Longitud</label><input id="lon" type="number" min="-180" max="180" step=".00001" value="19.66455"></div></div>
+<label for="radius">Bevakningsradie</label><select id="radius"><option value="1000">1 km</option><option value="2500">2,5 km</option><option value="5000" selected>5 km</option><option value="10000">10 km</option><option value="20000">20 km</option></select>
+</div>
+<div id="polygonFields" hidden><label for="polygonJson">Polygon som GeoJSON-geometry</label><textarea id="polygonJson" placeholder='{"type":"Polygon","coordinates":[[[19.6,63.7],[19.7,63.7],[19.7,63.8],[19.6,63.8],[19.6,63.7]]]} '></textarea><p class="muted small">Koordinater ska vara [longitud, latitud] i WGS84/EPSG:4326. Polygonens ring måste vara sluten.</p></div>
+<div class="actions"><button id="saveArea">Spara bevakning lokalt</button><button id="preview" class="secondary">Visa i kartan</button></div>
+<p id="areaStatus" class="muted" aria-live="polite">Välj område och spara en lokal testbevakning.</p>
+</section>
+<section class="card">
+<h2>Mina bevakningsområden</h2><p class="muted">Dessa områden finns bara i den här webbläsaren. De synkas inte mellan enheter.</p><div id="savedAreas"><div class="empty">Inga sparade bevakningar ännu.</div></div>
+</section>
+<section class="card wide">
+<h2>Historik och upptäckter</h2>
+<p class="muted">Testa den nya matchningslogiken mot egna, lokala syntetiska observationer utan att ansluta databasen.</p>
+<div class="actions"><button id="runMatchPreview" class="secondary">Kör lokal matchningstest</button><button id="seedMatchDemo" class="secondary">Lägg till syntetiska testposter</button><button id="clearMatchDemo" class="secondary">Rensa testposter</button></div>
+<p id="matchPreviewStatus" class="muted" aria-live="polite">Ingen matchning har körts. Testposter är endast lokala.</p>
+<div id="matchPreviewResults"></div>
+<p class="muted">Här kommer appen att visa första observation, senare ändringar och matchning mot dina områden. Vi skiljer alltid på när Skogskoll upptäckte en post och källans eget inkomdatum.</p>
+<div class="stats"><div class="stat"><strong>Inte ansluten</strong><span class="small">Datakälla</span></div><div class="stat"><strong>Testläge</strong><span class="small">Historik</span></div><div class="stat"><strong>0</strong><span class="small">Verifierade larm</span></div></div>
+<div id="historyList" class="empty" style="margin-top:12px">Ingen verifierad observation att visa ännu. Vi visar inte påhittade avverkningsanmälningar i historiken.</div>
+</section>
+<section class="card">
+<h2>Kommande aviseringar</h2><p class="muted">Välj önskad kanal och vilka typer av händelser du vill få se. Inställningarna är en lokal prototyp och skickar ingenting.</p>
+<div class="toggle"><input id="emailPref" type="checkbox"><label for="emailPref">E-postaviseringar (önskad inställning)</label></div>
+<div class="toggle"><input id="pushPref" type="checkbox"><label for="pushPref">Pushaviseringar (önskad inställning)</label></div>
+<div class="toggle"><input id="newPref" type="checkbox" checked><label for="newPref">Visa när en avverkningsanmälan upptäcks första gången</label></div>
+<div class="toggle"><input id="changePref" type="checkbox" checked><label for="changePref">Visa när uppgifter eller geometri ändras</label></div>
+<div class="toggle"><input id="matchPref" type="checkbox" checked><label for="matchPref">Kräv geografisk matchning mot bevakningsområdet</label></div>
+<div class="actions"><button id="savePrefs">Spara inställningar</button></div><p id="prefStatus" class="muted" aria-live="polite">Inga aviseringar skickas i testläget.</p>
+</section>
+<section class="card">
+<h2>Verifiering</h2>
+<ul class="list"><li>Källproben läser bara ett begränsat urval.</li><li>Första upptäckt betyder inte att ärendet är nytt.</li><li>Ofullständig skanning får aldrig markera ej sedda poster som borttagna.</li><li>Geografisk matchning visar närhet/överlapp, inte ägande eller juridisk rådighet.</li></ul>
+<p><a href="https://dahlinrobert-lgtm.github.io/Skog/karta.html">Öppna befintlig Skog-karta ↗</a></p>
+</section>
+</div>
+<footer>Skogskoll är en prototyp. Lokala testinställningar är inte en säkerhetskopia och försvinner om webbläsarens lokala webbplatsdata rensas.</footer>
+</main>
+<script type="module">
+import { createLocalMatchPreview } from "./src/watch-area-preview.mjs";
+"use strict";
+const AREA_KEY="skogskoll.watchAreas.v1";
+const PREF_KEY="skogskoll.alertPreferences.v1";
+const byId=id=>document.getElementById(id);
+const readJson=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
+const saveJson=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+let selectedAreaId=null;
+function getAreas(){const value=readJson(AREA_KEY,[]);return Array.isArray(value)?value:[]}
+function getCurrentArea(){
+ const name=byId("areaName").value.trim();
+ if(!name) throw new Error("Ange ett namn på bevakningen.");
+ if(byId("areaType").value==="radius"){
+  const lat=Number(byId("lat").value),lon=Number(byId("lon").value),radiusM=Number(byId("radius").value);
+  if(!byId("lat").value||!byId("lon").value||!Number.isFinite(lat)||lat < -90||lat>90||!Number.isFinite(lon)||lon < -180||lon>180) throw new Error("Kontrollera latitud och longitud.");
+  return {name,type:"radius",center:[lon,lat],radiusM};
+ }
+ let geometry;
+ try{geometry=JSON.parse(byId("polygonJson").value)}catch{throw new Error("Polygonen är inte giltig JSON.")}
+ if(!geometry||!["Polygon","MultiPolygon"].includes(geometry.type)||!Array.isArray(geometry.coordinates)) throw new Error("Ange en GeoJSON Polygon eller MultiPolygon.");
+ const rings=geometry.type==="Polygon"?geometry.coordinates:geometry.coordinates.flat();
+ if(!rings.length||rings.some(ring=>!Array.isArray(ring)||ring.length<4||JSON.stringify(ring[0])!==JSON.stringify(ring[ring.length-1]))||rings.flat().some(p=>!Array.isArray(p)||p.length<2||!Number.isFinite(p[0])||!Number.isFinite(p[1])||p[0]<-180||p[0]>180||p[1]<-90||p[1]>90)) throw new Error("Polygonens koordinater är ogiltiga eller ringen är inte sluten.");
+ return {name,type:"polygon",geometry};
+}
+function summary(area){return area.type==="radius"?"Cirkel · "+(area.radiusM/1000).toLocaleString("sv-SE")+" km · "+area.center[1].toFixed(5)+", "+area.center[0].toFixed(5):"Polygon · "+(area.geometry.type==="Polygon"?area.geometry.coordinates[0].length-1:area.geometry.coordinates.reduce((sum,p)=>sum+p[0].length-1,0))+" hörn";}
+function renderAreas(){
+ const areas=getAreas();
+ if(!areas.length){byId("savedAreas").innerHTML='<div class="empty">Inga sparade bevakningar ännu.</div>';return}
+ byId("savedAreas").innerHTML=areas.map(area=>'<article class="saved-item"><strong>'+escapeHtml(area.name)+'</strong><span class="muted small">'+escapeHtml(summary(area))+'</span><div class="item-actions"><button class="secondary" data-load="'+escapeHtml(area.id)+'">Redigera</button><button class="secondary" data-map="'+escapeHtml(area.id)+'">Visa i kartan</button><button class="danger" data-delete="'+escapeHtml(area.id)+'">Ta bort</button></div></article>').join("");
+}
+function loadArea(area){
+ selectedAreaId=area.id;byId("areaName").value=area.name;byId("areaType").value=area.type;toggleType();
+ if(area.type==="radius"){byId("lon").value=area.center[0];byId("lat").value=area.center[1];byId("radius").value=String(area.radiusM)}
+ else byId("polygonJson").value=JSON.stringify(area.geometry);
+ byId("areaStatus").textContent="Redigerar: "+area.name;
+}
+function toggleType(){const polygon=byId("areaType").value==="polygon";byId("radiusFields").hidden=polygon;byId("polygonFields").hidden=!polygon}
+function mapArea(area){
+ if(area.type==="radius"){
+  const url="https://dahlinrobert-lgtm.github.io/Skog/docs/karta.html?lat="+encodeURIComponent(area.center[1])+"&lon="+encodeURIComponent(area.center[0])+"&radius="+encodeURIComponent(area.radiusM);
+  window.open(url,"_blank","noopener");
+  byId("areaStatus").textContent="Öppnade kartan för punkt/radie. Polygon visas ännu inte direkt i kartvyn.";
+ }else{
+  byId("areaStatus").textContent="Polygonen är sparad lokalt. Kartvyn tar ännu inte emot polygonen som URL-parameter.";
+ }
+}
+byId("areaType").addEventListener("change",toggleType);
+byId("saveArea").addEventListener("click",()=>{
+ try{
+  const current=getCurrentArea(),areas=getAreas(),now=new Date().toISOString();
+  const area={...current,id:selectedAreaId??(crypto.randomUUID?crypto.randomUUID():String(Date.now())),createdAt:now,updatedAt:now};
+  const index=areas.findIndex(item=>item.id===area.id);
+  if(index>=0){area.createdAt=areas[index].createdAt;areas[index]=area}else areas.unshift(area);
+  saveJson(AREA_KEY,areas);selectedAreaId=area.id;renderAreas();
+  byId("areaStatus").textContent="Sparad lokalt: "+area.name+". Ingen server har kontaktats.";
+ }catch(error){byId("areaStatus").textContent=error.message}
+});
+byId("preview").addEventListener("click",()=>{
+ try{const area=getCurrentArea();byId("areaStatus").textContent=area.name+": "+summary(area)+". Förhandsgranskning sker i testläge.";mapArea(area)}catch(error){byId("areaStatus").textContent=error.message}
+});
+byId("savedAreas").addEventListener("click",event=>{
+ const load=event.target.closest("[data-load]"),map=event.target.closest("[data-map]"),del=event.target.closest("[data-delete]");
+ const areas=getAreas();
+ if(load){const area=areas.find(item=>item.id===load.dataset.load);if(area)loadArea(area)}
+ if(map){const area=areas.find(item=>item.id===map.dataset.map);if(area)mapArea(area)}
+ if(del){const area=areas.find(item=>item.id===del.dataset.delete);if(area&&confirm("Ta bort den lokala bevakningen '"+area.name+"'?")){saveJson(AREA_KEY,areas.filter(item=>item.id!==area.id));if(selectedAreaId===area.id)selectedAreaId=null;renderAreas()}}
+});
+const prefFields=["emailPref","pushPref","newPref","changePref","matchPref"];
+function loadPrefs(){const prefs=readJson(PREF_KEY,{});for(const id of prefFields)byId(id).checked=typeof prefs[id]==="boolean"?prefs[id]:byId(id).checked}
+byId("savePrefs").addEventListener("click",()=>{
+ const prefs=Object.fromEntries(prefFields.map(id=>[id,byId(id).checked]));
+ saveJson(PREF_KEY,prefs);byId("prefStatus").textContent="Inställningar sparade lokalt. E-post och push är fortfarande avstängda i systemet; inget skickas.";
+});
+const matchPreview=createLocalMatchPreview();
+byId("seedMatchDemo").addEventListener("click",()=>{
+ const observations=[
+  {sourceId:"demo-near",label:"Syntetisk post – nära bevakningen",eventType:"test",geometry:{type:"Point",coordinates:[19.67,63.75]}},
+  {sourceId:"demo-far",label:"Syntetisk post – långt bort",eventType:"test",geometry:{type:"Point",coordinates:[20.1,64.1]}}
+ ];
+ matchPreview.saveObservations(observations);
+ byId("matchPreviewStatus").textContent="Två syntetiska testposter sparades lokalt. De är inte verkliga avverkningsanmälningar.";
+ byId("matchPreviewResults").innerHTML="";
+});
+byId("clearMatchDemo").addEventListener("click",()=>{
+ matchPreview.saveObservations([]);
+ byId("matchPreviewStatus").textContent="Lokala testposter rensade.";
+ byId("matchPreviewResults").innerHTML="";
+});
+byId("runMatchPreview").addEventListener("click",()=>{
+ try{
+  const areas=getAreas();
+  if(!areas.length){byId("matchPreviewStatus").textContent="Skapa först minst ett lokalt bevakningsområde.";return}
+  const results=matchPreview.run();
+  byId("matchPreviewStatus").textContent="Matchning klar: "+results.length+" matchande område/post-par. Beräkningen kördes lokalt; inga nätverksanrop eller aviseringar gjordes.";
+  byId("matchPreviewResults").innerHTML=results.length?results.map(item=>'<article class="history-item"><strong>'+escapeHtml(item.observationLabel)+'</strong><span class="muted small">Bevakning: '+escapeHtml(item.areaName)+' · '+(item.match?'Geografisk match':'Ingen geografisk match')+'</span><span class="muted small">ID: '+escapeHtml(item.observationId??'saknas')+' · syntetisk testdata</span></article>').join(""):'<div class="empty">Inga matchningar för de sparade lokala testposterna.</div>';
+ }catch(error){byId("matchPreviewStatus").textContent="Matchningstestet misslyckades: "+error.message}
+});
+toggleType();renderAreas();loadPrefs();
+</script>
+</body>
+</html>
