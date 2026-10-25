@@ -52,7 +52,8 @@
 </section>
 </main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script>
+<script type="module">
+import { filterFeatureCollectionToRadius } from "./map-radius-filter.mjs";
 (function(){
 "use strict";
 const initialParams=new URLSearchParams(window.location.search);
@@ -260,71 +261,8 @@ function updateDurationHistogram(features){
  }).join("");
  footnote.textContent="Andelarna summerar till 100 % över klassificerade polygoner. "+(excluded?excluded.toLocaleString("sv-SE")+" polygoner uteslutna eftersom årtal saknades, var ogiltiga eller avverkningsåret låg efter ärendeåret.":"");
 }
-function featureTouchesRadius(feature){
- const geometry=feature?.geometry;
- if(!geometry||!geometry.coordinates)return false;
- const center=L.latLng(CENTER[0],CENTER[1]);
- const insideRing=(point,ring)=>{
-  let inside=false;
-  const x=point[0],y=point[1];
-  for(let i=0,j=ring.length-1;i<ring.length;j=i++){
-   const xi=ring[i][0],yi=ring[i][1],xj=ring[j][0],yj=ring[j][1];
-   const intersects=((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/((yj-yi)||1e-15)+xi);
-   if(intersects)inside=!inside;
-  }
-  return inside;
- };
- const pointInPolygon=(point,poly)=>{
-  if(!poly.length||!insideRing(point,poly[0]))return false;
-  for(let i=1;i<poly.length;i++)if(insideRing(point,poly[i]))return false;
-  return true;
- };
- const pointToSegmentMeters=(p,a,b)=>{
-  const lat0=center.lat*Math.PI/180;
-  const xy=coord=>[ (coord[0]-CENTER[1])*111320*Math.cos(lat0), (coord[1]-CENTER[0])*110540 ];
-  const P=xy(p),A=xy(a),B=xy(b);
-  const dx=B[0]-A[0],dy=B[1]-A[1],den=dx*dx+dy*dy;
-  const t=den?Math.max(0,Math.min(1,((P[0]-A[0])*dx+(P[1]-A[1])*dy)/den)):0;
-  return Math.hypot(P[0]-(A[0]+t*dx),P[1]-(A[1]+t*dy));
- };
- const ringTouches=ring=>{
-  if(!ring||ring.length<2)return false;
-  for(let i=0;i<ring.length;i++){
-   const a=ring[i],b=ring[(i+1)%ring.length];
-   if(center.distanceTo(L.latLng(a[1],a[0]))<=RADIUS+2)return true;
-   if(pointToSegmentMeters([CENTER[1],CENTER[0]],a,b)<=RADIUS+2)return true;
-  }
-  return false;
- };
- const ringTouchesOpen=ring=>{
-  if(!ring||ring.length<1)return false;
-  if(ring.length===1)return center.distanceTo(L.latLng(ring[0][1],ring[0][0]))<=RADIUS+2;
-  for(let i=0;i<ring.length-1;i++){
-   const a=ring[i],b=ring[i+1];
-   if(center.distanceTo(L.latLng(a[1],a[0]))<=RADIUS+2||pointToSegmentMeters([CENTER[1],CENTER[0]],a,b)<=RADIUS+2)return true;
-  }
-  return false;
- };
- const polygonTouches=poly=>{
-  if(!poly?.length)return false;
-  const centerPoint=[CENTER[1],CENTER[0]];
-  if(pointInPolygon(centerPoint,poly))return true;
-  return poly.some(ring=>ringTouches(ring));
- };
- if(geometry.type==="Polygon")return polygonTouches(geometry.coordinates);
- if(geometry.type==="MultiPolygon")return geometry.coordinates.some(polygonTouches);
- if(geometry.type==="GeometryCollection")return (geometry.geometries||[]).some(g=>featureTouchesRadius({...feature,geometry:g}));
- if(geometry.type==="Point")return center.distanceTo(L.latLng(geometry.coordinates[1],geometry.coordinates[0]))<=RADIUS+2;
- if(geometry.type==="MultiPoint")return geometry.coordinates.some(c=>center.distanceTo(L.latLng(c[1],c[0]))<=RADIUS+2);
- if(geometry.type==="LineString")return ringTouchesOpen(geometry.coordinates);
- if(geometry.type==="MultiLineString")return geometry.coordinates.some(ringTouchesOpen);
- return false;
-}
 function filterToRadius(collection){
- const before=collection.features.length;
- collection.features=collection.features.filter(featureTouchesRadius);
- collection.filteredOutside=before-collection.features.length;
- return collection;
+ return filterFeatureCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS);
 }
 function date(v){if(v==null||v==="")return "–";let n=Number(v);if(Number.isFinite(n)&&n>100000000000)return new Date(n).toISOString().slice(0,10);return String(v)}
 function ha(v){if(v==null||v==="")return "–";let n=Number(v);return Number.isFinite(n)?n.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha":String(v)}

@@ -49,6 +49,10 @@ jobs:
             if (functions.length < 5) throw new Error("Expected all five Skogskoll RPC functions to use closed dollar-quoted bodies");
             console.log("Migration structure guardrails present:", required.length, "and", functions.length, "closed function bodies");
           '
+      - name: Test shared map radius filter
+        run: node --test tests/map-radius-filter.test.mjs
+      - name: Syntax-check shared map radius filter
+        run: node --check docs/map-radius-filter.mjs
       - name: Syntax-check source probe and ingestion core
         run: |
           node --check skogskoll/scripts/probe-source.mjs
