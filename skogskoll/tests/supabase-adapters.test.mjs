@@ -98,3 +98,26 @@ test("manual ingestion entrypoint is disabled without explicit opt-in", () => {
   assert.match(result.stderr, /Ingestion is disabled/);
   assert.doesNotMatch(result.stderr, /SUPABASE_SERVICE_ROLE_KEY/);
 });
+
+test("stale scan recovery RPC is narrowly scoped and requires explicit age cutoff", async () => {
+  const calls = [];
+  const fetchImpl = async (url, init) => {
+    calls.push({ url: String(url), init });
+    return response([{ recovered_scan_id: "scan-old", recovered_offset: 1500 }]);
+  };
+  const store = createSupabaseStore({
+    url: "https://project.supabase.co", serviceRoleKey: "test-key", fetchImpl
+  });
+  const result = await store.recoverStaleScan({
+    sourceKey: "source-a",
+    staleBefore: "2026-10-25T08:00:00Z",
+    reason: "worker interrupted"
+  });
+  assert.deepEqual(result, [{ recovered_scan_id: "scan-old", recovered_offset: 1500 }]);
+  assert.ok(calls[0].url.endsWith("/rest/v1/rpc/skogskoll_recover_stale_scan"));
+  assert.deepEqual(JSON.parse(calls[0].init.body), {
+    p_source: "source-a",
+    p_stale_before: "2026-10-25T08:00:00Z",
+    p_reason: "worker interrupted"
+  });
+});
