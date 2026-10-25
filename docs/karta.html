@@ -52,10 +52,10 @@
 </section>
 </main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script>
+<script type="module">
+import { filterFeatureCollectionToRadius } from "../src/map-radius-filter.mjs";
 (function(){
 "use strict";
-import { filterFeatureCollectionToRadius } from "../src/map-radius-filter.mjs";
 const initialParams=new URLSearchParams(window.location.search);
 let CENTER=[Number(initialParams.get("lat"))||63.74646,Number(initialParams.get("lon"))||19.66455], RADIUS=Number(initialParams.get("radius"))||10000;
 let searchCircle=null;
