@@ -1,0 +1,44 @@
+name: Skogskoll database test harness
+on:
+  push:
+    branches: [db-test-harness]
+    paths:
+      - "skogskoll/db/**"
+      - "skogskoll/INGESTION.md"
+      - ".github/workflows/skogskoll-db-test.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-sql-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Check SQL smoke test safety and expected assertions
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const migration = readFileSync("skogskoll/db/migrations/003_atomic_page_commit.sql", "utf8");
+            const smoke = readFileSync("skogskoll/db/tests/smoke-atomic-ingestion.sql", "utf8");
+            const requiredFns = ["skogskoll_start_scan", "skogskoll_commit_page", "skogskoll_finish_scan", "skogskoll_recover_stale_scan"];
+            for (const name of requiredFns) {
+              if (!migration.includes("create or replace function public." + name)) throw new Error("Migration missing " + name);
+              if (!smoke.includes(name)) throw new Error("Smoke test does not exercise " + name);
+            }
+            if (!/^begin;[\s\S]*rollback;\s*$/im.test(smoke)) throw new Error("SQL smoke test must be wrapped in transaction + rollback");
+            if (!smoke.includes("duplicate ID across scan pages") || !smoke.includes("atomic page")) throw new Error("Missing atomicity/duplicate assertions");
+            if (!migration.includes("as $$\ndeclare") || !migration.includes("end;\n$$;")) throw new Error("Expected valid PL/pgSQL dollar delimiters");
+            const funcs = [...migration.matchAll(/create or replace function public\.skogskoll_[\s\S]*?\n\$\$;/g)];
+            if (funcs.length !== 5) throw new Error("Expected 5 closed Skogskoll RPC functions, found " + funcs.length);
+            console.log("Static database harness checks passed.");
+          '
+      - name: Confirm no live database is configured
+        run: |
+          if [ -n "${SUPABASE_URL:-}" ] || [ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ]; then
+            echo "This workflow is static-only and must not receive production database credentials."
+            exit 1
+          fi
+          echo "Static-only workflow; no database credentials required."
