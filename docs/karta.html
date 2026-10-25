@@ -170,7 +170,7 @@ function assignCaseGroupColors(features){
       const distance=Math.hypot(v.x-other.x,v.y-other.y);
       if(distance>toleranceM)continue;
       const key=pairKey(id,other.id);
-      if(!pairMatches.has(key))pairMatches.set(key,{a:id<b? id:other.id,b:id<b?other.id:id,vertices:new Set()});
+      if(!pairMatches.has(key))pairMatches.set(key,{a:id<other.id?id:other.id,b:id<other.id?other.id:id,vertices:new Set()});
       // Count distinct nearby vertex positions, not every pair of dense vertices.
       pairMatches.get(key).vertices.add(Math.round((v.x+other.x)/2)+","+Math.round((v.y+other.y)/2));
      }
