@@ -104,3 +104,25 @@ test("radius filtering rejects invalid collection and radius arguments", () => {
   assert.throws(() => filterFeatureCollectionToRadius(null, center, radius), /FeatureCollection/);
   assert.throws(() => featureTouchesRadius(point(center.lat, center.lon), center, -1), /non-negative radius/);
 });
+
+test("polygon wholly inside radius skips expensive intersection", () => {
+  const polygon = { type: "Feature", properties: { id: 9 }, geometry: { type: "Polygon", coordinates: [[
+    [center.lon - 0.001, center.lat - 0.001],
+    [center.lon + 0.001, center.lat - 0.001],
+    [center.lon + 0.001, center.lat + 0.001],
+    [center.lon - 0.001, center.lat + 0.001],
+    [center.lon - 0.001, center.lat - 0.001]
+  ]] } };
+  let intersectCalls = 0;
+  const turf = {
+    circle: () => ({ type: "Feature", geometry: { type: "Polygon", coordinates: [] } }),
+    featureCollection: features => ({ type: "FeatureCollection", features }),
+    intersect: () => { intersectCalls++; throw new Error("should not intersect an already-contained polygon"); }
+  };
+  const result = clipPolygonCollectionToRadius({ type: "FeatureCollection", features: [polygon] }, center, radius, turf);
+  assert.equal(result.features.length, 1);
+  assert.equal(intersectCalls, 0);
+  assert.equal(result.clipStats.polygonsConsidered, 1);
+  assert.equal(result.clipStats.polygonsAlreadyInside, 1);
+  assert.equal(result.clipStats.polygonsClipped, 0);
+});
