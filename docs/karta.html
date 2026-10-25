@@ -80,8 +80,8 @@ plannedLayer.addTo(map);performedLayer.addTo(map);
 const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
-const CATEGORY_COLORS=["#0072B2","#E69F00","#009E73","#CC79A7"];
-const FOUR_COLOR_PALETTE=CATEGORY_COLORS;
+const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
+const FOUR_COLOR_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7"];
 let caseColorByFeature=new Map();
 let categoryColorMap=new Map();
 function performedYear(feature){
@@ -123,7 +123,7 @@ function vertexKeys(feature){
  walk(feature?.geometry?.coordinates); return keys;
 }
 function assignFourColors(features){
- const ids=features.map((f,i)=>String(f.id??f.properties?.OBJECTID??f.properties?.ObjectId??i));
+ const ids=features.map((f,i)=>String(f.id??f.properties?.OBJECTID??f.properties?.ObjectId??JSON.stringify(f.geometry??i)));
  const owners=new Map(), adj=features.map(()=>new Set());
  features.forEach((f,i)=>vertexKeys(f).forEach(k=>{if(!owners.has(k))owners.set(k,[]);owners.get(k).push(i);}));
  for(const list of owners.values()) for(let a=0;a<list.length;a++) for(let b=a+1;b<list.length;b++){adj[list[a]].add(list[b]);adj[list[b]].add(list[a]);}
@@ -180,7 +180,7 @@ function performedStyle(feature){
  if(mode==="none")return {color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22};
  const scale=performedScaleCache;
  if(mode==="caseId"){
-  const key=String(feature?.id??feature?.properties?.OBJECTID??feature?.properties?.ObjectId??"");
+  const key=String(feature?.id??feature?.properties?.OBJECTID??feature?.properties?.ObjectId??JSON.stringify(feature?.geometry??""));
   const color=caseColorByFeature.get(key)||"#777777";
   return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
  }
