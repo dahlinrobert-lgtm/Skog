@@ -648,41 +648,51 @@ async function getLayer(base,fields,bounds,signal,stats){
  }
  if(cached)layerResponseCache.delete(cacheKey);
  const all=[],seen=new Set();
- let offset=0,pages=0,hasMore=true,truncated=false;
- const pageSize=300,maxPages=500,fetchStartedAt=performance.now();
+ let pages=0,hasMore=true,truncated=false;
+ const pageSize=300,maxPages=500,batchSize=4,fetchStartedAt=performance.now();
  let fetchMs=0,parseMs=0,dedupeMs=0,emptyPages=0;
  while(hasMore&&pages<maxPages){
   if(signal?.aborted)throw new DOMException("Aborted","AbortError");
-  if(stats)stats.apiRequests++;
-  const requestStartedAt=performance.now();
-  const res=await fetch(queryUrl(base,fields,bounds,offset),{mode:"cors",signal});
-  fetchMs+=performance.now()-requestStartedAt;
-  if(!res.ok)throw new Error("HTTP "+res.status);
-  const parseStartedAt=performance.now();
-  const json=await res.json();
-  parseMs+=performance.now()-parseStartedAt;
-  if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");
-  if(!Array.isArray(json.features))throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
-  const dedupeStartedAt=performance.now();
-  let added=0;
-  for(const feature of json.features){
-   const id=feature.id??feature.properties?.OBJECTID??feature.properties?.ObjectId;
-   const key=id===undefined?JSON.stringify(feature.geometry):String(id);
-   if(!seen.has(key)){seen.add(key);all.push(feature);added++;}
+  const batchCount=Math.min(batchSize,maxPages-pages);
+  const offsets=Array.from({length:batchCount},(_,i)=>(pages+i)*pageSize);
+  if(stats)stats.apiRequests+=batchCount;
+  const responses=await Promise.all(offsets.map(async offset=>{
+   const requestStartedAt=performance.now();
+   const res=await fetch(queryUrl(base,fields,bounds,offset),{mode:"cors",signal});
+   const requestMs=performance.now()-requestStartedAt;
+   if(!res.ok)throw new Error("HTTP "+res.status);
+   const parseStartedAt=performance.now();
+   const json=await res.json();
+   const pageParseMs=performance.now()-parseStartedAt;
+   if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");
+   if(!Array.isArray(json.features))throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
+   return {offset,json,requestMs,pageParseMs};
+  }));
+  // Keep server ordering deterministic and stop at the first short terminal page.
+  responses.sort((a,b)=>a.offset-b.offset);
+  for(const page of responses){
+   if(!hasMore)break;
+   fetchMs+=page.requestMs;parseMs+=page.pageParseMs;
+   const json=page.json,dedupeStartedAt=performance.now();
+   let added=0;
+   for(const feature of json.features){
+    const id=feature.id??feature.properties?.OBJECTID??feature.properties?.ObjectId;
+    const key=id===undefined?JSON.stringify(feature.geometry):String(id);
+    if(!seen.has(key)){seen.add(key);all.push(feature);added++;}
+   }
+   dedupeMs+=performance.now()-dedupeStartedAt;
+   pages++;
+   if(json.features.length===0)emptyPages++;
+   hasMore=Boolean(json.exceededTransferLimit)||json.features.length===pageSize;
+   if(json.features.length===0||added===0){hasMore=false;truncated=json.features.length===pageSize;}
   }
-  dedupeMs+=performance.now()-dedupeStartedAt;
-  pages++;
-  if(json.features.length===0)emptyPages++;
-  hasMore=Boolean(json.exceededTransferLimit)||json.features.length===pageSize;
-  offset+=json.features.length;
-  if(json.features.length===0||added===0){hasMore=false;truncated=json.features.length===pageSize;}
  }
  if(hasMore)truncated=true;
  if(stats){
   if(!stats.layerFetches)stats.layerFetches=[];
   stats.layerFetches.push({layer:base.split("/").slice(-2).join("/"),pages,features:all.length,truncated,
    fetchMs:Math.round(fetchMs),parseMs:Math.round(parseMs),dedupeMs:Math.round(dedupeMs),
-   elapsedMs:Math.round(performance.now()-fetchStartedAt),emptyPages});
+   elapsedMs:Math.round(performance.now()-fetchStartedAt),emptyPages,batchSize});
  }
  const result={type:"FeatureCollection",features:all,truncated,pages};
  if(!signal?.aborted)cacheLayerResponse(cacheKey,result);
