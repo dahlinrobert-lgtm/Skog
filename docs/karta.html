@@ -479,11 +479,26 @@ function updateDurationHistogram(features){
   const counts=new Map();records.forEach(v=>counts.set(String(Math.trunc(v)),(counts.get(String(Math.trunc(v)))||0)+1));
   buckets=[...counts.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).map(([label,count])=>({label,count}));
   if(buckets.length>16){const grouped=new Map();records.forEach(v=>{const start=Math.floor(v/5)*5,label=start+"–"+(start+4);grouped.set(label,(grouped.get(label)||0)+1);});buckets=[...grouped.entries()].sort((a,b)=>Number(a[0].split("–")[0])-Number(b[0].split("–")[0])).map(([label,count])=>({label,count}));}
+ }else if(mode==="registeredArea"||mode==="reportedArea"){
+  // Use nine quantile-based area classes: the middle class contains the median,
+  // with four lower and four upper classes. This avoids a single first bin
+  // swallowing most observations when the area distribution is highly skewed.
+  const sorted=[...records].sort((a,b)=>a-b),n=sorted.length;
+  if(sorted[0]===sorted[n-1]){
+   buckets=[{label:sorted[0].toLocaleString("sv-SE",{maximumFractionDigits:1})+" ha",count:n}];
+  }else{
+   for(let i=0;i<9;i++){
+    const from=Math.floor(i*n/9),to=Math.floor((i+1)*n/9);
+    if(from>=to)continue;
+    const group=sorted.slice(from,to),low=group[0],high=group[group.length-1];
+    buckets.push({label:(low===high?low.toLocaleString("sv-SE",{maximumFractionDigits:1}):low.toLocaleString("sv-SE",{maximumFractionDigits:1})+"–"+high.toLocaleString("sv-SE",{maximumFractionDigits:1}))+" ha",count:group.length});
+   }
+  }
  }else{
   const min=Math.min(...records),max=Math.max(...records),span=max-min;
   if(span===0)buckets=[{label:min.toLocaleString("sv-SE",{maximumFractionDigits:0}),count:records.length}];
   else{
-   // Use integer-wide, contiguous bins for all numeric attributes: 0–6, 6–12, 12–18, etc.
+   // Use integer-wide, contiguous bins for other numeric attributes.
    const rawStep=span/8;
    const step=Math.max(1,Math.ceil(rawStep));
    const start=Math.floor(min/step)*step;
