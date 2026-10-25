@@ -659,11 +659,12 @@ async function getLayer(base,fields,bounds,signal,stats){
   // retain parallel batches for throughput.
   const adaptiveBatchSize=pages===0?1:pages===1?2:batchSize;
   const batchCount=Math.min(adaptiveBatchSize,maxPages-pages);
+  const pageBaseOffset=offset;
   const offsets=Array.from({length:batchCount},(_,i)=>(pages+i)*pageSize);
   if(stats)stats.apiRequests+=batchCount;
-  const responses=await Promise.all(offsets.map(async offset=>{
+  const responses=await Promise.all(offsets.map(async requestedOffset=>{
    const requestStartedAt=performance.now();
-   const res=await fetch(queryUrl(base,fields,bounds,offset),{mode:"cors",signal});
+   const res=await fetch(queryUrl(base,fields,bounds,requestedOffset),{mode:"cors",signal});
    const requestMs=performance.now()-requestStartedAt;
    if(!res.ok)throw new Error("HTTP "+res.status);
    const parseStartedAt=performance.now();
@@ -671,7 +672,7 @@ async function getLayer(base,fields,bounds,signal,stats){
    const pageParseMs=performance.now()-parseStartedAt;
    if(json.error)throw new Error(json.error.message||"Fel från karttjänsten");
    if(!Array.isArray(json.features))throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
-   return {offset,json,requestMs,pageParseMs};
+   return {offset:requestedOffset,json,requestMs,pageParseMs};
   }));
   // Keep server ordering deterministic and stop at the first short terminal page.
   responses.sort((a,b)=>a.offset-b.offset);
@@ -689,6 +690,10 @@ async function getLayer(base,fields,bounds,signal,stats){
    pages++;
    if(json.features.length===0)emptyPages++;
    hasMore=Boolean(json.exceededTransferLimit)||json.features.length===pageSize;
+   // Advance the next request by the number of records actually returned,
+   // not by the number of pages processed. This matters when a terminal
+   // page is short or concurrent requests were launched speculatively.
+   offset=page.offset+json.features.length;
    if(json.features.length===0||added===0){hasMore=false;truncated=json.features.length===pageSize;}
   }
  }
