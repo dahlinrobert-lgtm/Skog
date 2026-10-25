@@ -9,19 +9,23 @@ Fristående, mobilanpassad app för privata skogsägare. Första leveransen är 
 - **Larm:** e-post via Resend och web push via VAPID/web-push. Larm är avstängda tills datakällans beteende har verifierats.
 - **Befintliga lager återanvänds:** samma Skogsstyrelsen ArcGIS-tjänst för avverkningsanmälningar som i `docs/karta.html`.
 
-## Första källproben — verifieringsstatus
+## Källprobe — verifieringsstatus
 - Första körningen lyckades 2026-10-25.
-- Provet läste 300 poster: 300 unika tekniska ID:n och inga dubbletter i provet.
-- Proben begränsas avsiktligt till tre sidor à 100 poster; den gör inte en fullständig inläsning.
-- Rapporten kontrollerar nu även källans totala räknarvärde, senaste poster sorterade efter `Inkomdatum`, pagineringens sidstorlekar och saknade ID:n.
-- En lyckad källprobe betyder inte att aviseringar kan aktiveras.
+- Senaste verifierade körningen: [run 40179914630](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40179914630), conclusion `success`.
+- Källans count-query rapporterade 129 734 poster vid den körningen.
+- Provet läste 300 poster: 300 unika tekniska ID:n, inga dubbletter och inga saknade ID:n.
+- Proben begränsas avsiktligt till tre sidor à 100 poster; den gör inte en fullständig inläsning. 300 poster var cirka 0,077 % av källans rapporterade antal.
+- Senaste 100 urvalet sorterat efter `Inkomdatum` hade datum mellan 2026-10-23 och 2026-10-24 UTC.
+- Kontroller för sidstorlek, källantal, ID-integritet, syntax och pagination core körs automatiskt i workflow.
+- En lyckad källprobe betyder inte att aviseringar kan aktiveras eller att hela registret är historiskt validerat.
 
 ## Säkerhetsgrind före larm
 1. Kör `node skogskoll/scripts/probe-source.mjs` lokalt eller workflow `Skogskoll source probe`.
 2. Granska `skogskoll/reports/source-probe-latest.json` som workflow-artifact.
 3. Kör minst två prober med minst sex timmars mellanrum och jämför fingerprint, datummönster och ID-beteende.
 4. Implementera en separat fullständig/inkrementell ingestion med kontrollerad paginering, räknare, retry, checkpoint och tydliga regler för ofullständiga körningar.
-5. Verifiera idempotent DB-upsert/deduplicering och historik innan e-post eller push kopplas på.
+5. Använd `skogskoll/src/pagination-core.mjs` som ren kontrollfunktion för att bedöma en skanning. Den markerar inte poster inaktiva och utför ingen databasoperation.
+6. Verifiera idempotent DB-upsert/deduplicering och historik innan e-post eller push kopplas på.
 
 ## Källidentitet och datum
 - `OBJECTID` behandlas som källans tekniska rad-ID; dess stabilitet över tid ska verifieras.
