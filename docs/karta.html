@@ -649,7 +649,7 @@ async function getLayer(base,fields,bounds,signal,stats){
  if(cached)layerResponseCache.delete(cacheKey);
  const all=[],seen=new Set();
  let offset=0,pages=0,hasMore=true,truncated=false;
- const pageSize=300,maxPages=100;
+ const pageSize=300,maxPages=500;
  while(hasMore&&pages<maxPages){
   if(stats)stats.apiRequests++;
   const res=await fetch(queryUrl(base,fields,bounds,offset),{mode:"cors",signal});
@@ -774,6 +774,10 @@ async function load(){
   perf.polygonsConsidered=(planned.clipStats?.polygonsConsidered||0)+(performed.clipStats?.polygonsConsidered||0);
   perf.polygonsClipped=(planned.clipStats?.polygonsClipped||0)+(performed.clipStats?.polygonsClipped||0);
   perf.polygonsAlreadyInside=(planned.clipStats?.polygonsAlreadyInside||0)+(performed.clipStats?.polygonsAlreadyInside||0);
+  perf.plannedPages=planned.pages||0;
+  perf.performedPages=performed.pages||0;
+  perf.plannedTruncated=Boolean(planned.truncated);
+  perf.performedTruncated=Boolean(performed.truncated);
   if(requestId!==viewRequestId||signal.aborted)return;
   const renderStartedAt=performance.now();
   plannedLayer.clearLayers();performedLayer.clearLayers();
