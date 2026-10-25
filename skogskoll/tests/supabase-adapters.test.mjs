@@ -32,20 +32,16 @@ test("ArcGIS source returns count and normalizes object IDs", async () => {
   assert.ok(calls.some(url => url.includes("orderByFields=OBJECTID")));
 });
 
-test("Supabase store restores resumable checkpoint and seen IDs", async () => {
+test("Supabase store restores compact checkpoint without downloading all seen IDs", async () => {
+  const calls = [];
   const fetchImpl = async url => {
+    calls.push(String(url));
     const parsed = new URL(url);
     if (parsed.pathname.endsWith("/scan_sessions")) return response([{
       id: "scan-1", source: "source-a", source_count: 3, page_size: 2,
       next_offset: 2, fetched_count: 2, status: "running",
       diagnostics: { mode: "incremental" }, updated_at: "2026-10-25T00:00:00Z"
     }]);
-    if (parsed.pathname.endsWith("/scan_seen_ids")) {
-      const offset = Number(parsed.searchParams.get("offset") ?? 0);
-      return response(offset === 0
-        ? [{ source_id: "a", first_offset: 0 }, { source_id: "b", first_offset: 1 }]
-        : []);
-    }
     throw new Error("Unexpected request: " + url);
   };
   const store = createSupabaseStore({
@@ -55,8 +51,12 @@ test("Supabase store restores resumable checkpoint and seen IDs", async () => {
   const checkpoint = await store.loadCheckpoint("source-a");
   assert.equal(checkpoint.scanId, "scan-1");
   assert.equal(checkpoint.mode, "incremental");
-  assert.deepEqual(checkpoint.seenIds, ["a", "b"]);
+  assert.deepEqual(checkpoint.seenIds, []);
+  assert.equal(checkpoint.externalSeenIds, true);
+  assert.equal(checkpoint.seenIdsCount, 2);
   assert.equal(checkpoint.complete, false);
+  assert.equal(calls.length, 1, "resume requires only one checkpoint query");
+  assert.equal(store.externalSeenIds, true);
 });
 
 test("Supabase start scan calls RPC with explicit mode", async () => {
