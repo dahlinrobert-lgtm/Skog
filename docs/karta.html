@@ -763,7 +763,13 @@ async function load(){
   updateDurationHistogram(performed.features);
   const samradResult=await samradPromise;
   if(requestId!==viewRequestId||signal.aborted)return;
-  if(samradResult.error)throw samradResult.error;
+  if(samradResult.error){
+   console.warn("Samrådsdata kunde inte hämtas; huvudlagren visas ändå",samradResult.error);
+   const status=document.getElementById("status");
+   status.textContent="Huvudlagren är laddade, men samrådsdata kunde inte hämtas.";
+   status.style.display="block";
+   return;
+  }
   let [samradPoints,samradLines,samradAreas]=samradResult.value;
   if(wantSamrad){
    samradPoints=filterToRadius(samradPoints);samradLines=filterToRadius(samradLines);samradAreas=filterToRadius(samradAreas);
