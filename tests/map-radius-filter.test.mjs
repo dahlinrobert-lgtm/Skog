@@ -32,3 +32,26 @@ test("polygon is included when it contains circle center and excluded when far a
   assert.equal(featureTouchesRadius(inside, center, radius), true);
   assert.equal(featureTouchesRadius(outside, center, radius), false);
 });
+
+test("GeometryCollection applies radius checks to its child geometries", () => {
+  const collection = {
+    type: "Feature",
+    properties: {},
+    geometry: { type: "GeometryCollection", geometries: [
+      { type: "Point", coordinates: [center.lon, center.lat] },
+      { type: "Point", coordinates: [center.lon + 0.5, center.lat + 0.5] }
+    ] }
+  };
+  assert.equal(featureTouchesRadius(collection, center, radius), true);
+  const outside = {
+    ...collection,
+    geometry: { type: "GeometryCollection", geometries: [
+      { type: "Point", coordinates: [center.lon + 0.5, center.lat + 0.5] },
+      { type: "LineString", coordinates: [
+        [center.lon + 0.5, center.lat + 0.5],
+        [center.lon + 0.6, center.lat + 0.6]
+      ] }
+    ] }
+  };
+  assert.equal(featureTouchesRadius(outside, center, radius), false);
+});
