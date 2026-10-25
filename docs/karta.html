@@ -639,9 +639,10 @@ function cacheLayerResponse(key,value){
  layerResponseCache.set(key,{time:Date.now(),value});
  while(layerResponseCache.size>LAYER_CACHE_MAX_ENTRIES)layerResponseCache.delete(layerResponseCache.keys().next().value);
 }
-async function getLayer(base,fields,bounds,signal){
+async function getLayer(base,fields,bounds,signal,stats){
  const cacheKey=layerCacheKey(base,fields,bounds),cached=layerResponseCache.get(cacheKey);
  if(cached&&Date.now()-cached.time<LAYER_CACHE_TTL_MS){
+  if(stats)stats.responseCacheHits++;
   layerResponseCache.delete(cacheKey);layerResponseCache.set(cacheKey,cached);
   return JSON.parse(JSON.stringify(cached.value));
  }
@@ -650,6 +651,7 @@ async function getLayer(base,fields,bounds,signal){
  let offset=0,pages=0,hasMore=true,truncated=false;
  const pageSize=300,maxPages=20;
  while(hasMore&&pages<maxPages){
+  if(stats)stats.apiRequests++;
   const res=await fetch(queryUrl(base,fields,bounds,offset),{mode:"cors",signal});
   if(!res.ok)throw new Error("HTTP "+res.status);
   const json=await res.json();
@@ -699,10 +701,11 @@ async function getLayer(base,fields,bounds,signal){
   }
   return {type:"FeatureCollection",features,pages,truncated};
  }
- async function getLayerForView(base,fields,bounds,signal){
+ async function getLayerForView(base,fields,bounds,signal,stats){
   const simplify=RADIUS<=5000?0.00001:RADIUS<=10000?0.00003:RADIUS<=20000?0.00006:0.00012;
   const key=[base,fields,simplify].join("|"),nextBounds=boundsValues(bounds),cached=spatialLayerCache.get(key);
   if(cached&&Date.now()-cached.time<SPATIAL_CACHE_TTL_MS&&overlapRatio(cached.bounds,nextBounds)>0){
+   if(stats)stats.spatialOverlapHits++;
    const a=cached.bounds,b=nextBounds;
    const west=Math.max(a.west,b.west),south=Math.max(a.south,b.south),east=Math.min(a.east,b.east),north=Math.min(a.north,b.north);
    const strips=[];
@@ -718,15 +721,17 @@ async function getLayer(base,fields,bounds,signal){
    // the uncovered area is almost the full view or the strip count is high.
    const incrementalIsWorthwhile=validStrips.length>0&&validStrips.length<=3&&fetchArea<newArea*0.7;
    if(incrementalIsWorthwhile){
+    if(stats){stats.incrementalViews++;stats.incrementalStrips+=validStrips.length;stats.reusedSpatialFeatures+=(cached.value.features||[]).length;}
     if(signal?.aborted)throw new DOMException("Aborted","AbortError");
-    const additions=await Promise.all(validStrips.map(strip=>getLayer(base,fields,boundsFromValues(strip),signal)));
+    const additions=await Promise.all(validStrips.map(strip=>getLayer(base,fields,boundsFromValues(strip),signal,stats)));
     if(signal?.aborted)throw new DOMException("Aborted","AbortError");
     const result=mergeCollections([{...cached.value},...additions]);
     spatialLayerCache.set(key,{time:Date.now(),bounds:nextBounds,value:result});
     return JSON.parse(JSON.stringify(result));
    }
   }
-  const result=await getLayer(base,fields,bounds,signal);
+  if(stats)stats.fullViewFetches++;
+  const result=await getLayer(base,fields,bounds,signal,stats);
   if(!signal?.aborted)spatialLayerCache.set(key,{time:Date.now(),bounds:nextBounds,value:result});
   return result;
 }
@@ -737,20 +742,26 @@ async function load(){
  viewAbortController=new AbortController();
  const signal=viewAbortController.signal;
  const bounds=searchCircle.getBounds();
+ const perf={startedAt:performance.now(),apiRequests:0,responseCacheHits:0,spatialOverlapHits:0,incrementalViews:0,incrementalStrips:0,reusedSpatialFeatures:0,fullViewFetches:0};
  try{
   const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
-  const plannedPromise=getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal);
-  const performedPromise=getLayerForView(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal);
+  const plannedPromise=getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal,perf);
+  const performedPromise=getLayerForView(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal,perf);
   // Samråd loads concurrently but cannot block first paint of the two main layers.
   const samradPromise=wantSamrad?Promise.all([
-   getLayerForView(SAMRAD_POINTS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal),
-   getLayerForView(SAMRAD_LINES,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal),
-   getLayerForView(SAMRAD_AREAS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal)
+   getLayerForView(SAMRAD_POINTS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal,perf),
+   getLayerForView(SAMRAD_LINES,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal,perf),
+   getLayerForView(SAMRAD_AREAS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal,perf)
   ]).then(value=>({value})).catch(error=>({error})):Promise.resolve({value:[{type:"FeatureCollection",features:[],pages:0,truncated:false},{type:"FeatureCollection",features:[],pages:0,truncated:false},{type:"FeatureCollection",features:[],pages:0,truncated:false}]});
   let [planned,performed]=await Promise.all([plannedPromise,performedPromise]);
   if(requestId!==viewRequestId)return;
+  const filterStartedAt=performance.now();
   planned=filterToRadius(planned);performed=filterToRadius(performed);
+  perf.filterMs=Math.round((performance.now()-filterStartedAt)*100)/100;
+  perf.filteredFeatures=(planned.filterStats?.inputFeatures||0)+(performed.filterStats?.inputFeatures||0);
+  perf.retainedFeatures=planned.features.length+performed.features.length;
   let clippingAvailable=true,turf=null;
+  const clipStartedAt=performance.now();
   try{
    const turfModule=await import("https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm");
    turf=turfModule.default??turfModule;
@@ -759,14 +770,23 @@ async function load(){
    clippingAvailable=false;
    console.error("Polygon clipping unavailable; showing radius-filtered original polygons",clipError);
   }
+  perf.clippingMs=Math.round((performance.now()-clipStartedAt)*100)/100;
   if(requestId!==viewRequestId||signal.aborted)return;
+  const renderStartedAt=performance.now();
   plannedLayer.clearLayers();performedLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);
   // First useful render: don't wait for optional consultation layers.
   refreshPerformedColors();
   updateDurationHistogram(performed.features);
+  perf.mainRenderMs=Math.round((performance.now()-renderStartedAt)*100)/100;
   const samradResult=await samradPromise;
   if(requestId!==viewRequestId||signal.aborted)return;
+  perf.totalMs=Math.round((performance.now()-perf.startedAt)*100)/100;
+  if(new URLSearchParams(location.search).get("debugPerf")==="1")console.info("[Skogskoll] map-load",{
+   radiusKm:RADIUS/1000,...perf,
+   plannedFeatures:planned.features.length,performedFeatures:performed.features.length,
+   samradRequested:wantSamrad,samradError:Boolean(samradResult.error)
+  });
   if(samradResult.error){
    console.warn("Samrådsdata kunde inte hämtas; huvudlagren visas ändå",samradResult.error);
    const status=document.getElementById("status");
