@@ -20,7 +20,20 @@ export function normalizeFeature(feature, observedAt = new Date().toISOString())
   const sourceId = getStableSourceId(feature);
   if (!sourceId) return {ok:false,reason:"missing_stable_source_id"};
   const props = feature.properties ?? {};
-  return {ok:true,source:SOURCE_ID,source_id:sourceId,observed_at:observedAt,source_created_at:props.Inkomdatum ?? props.InkomDatum ?? null,attributes:props,geometry:feature.geometry ?? null,content_hash:contentHash(feature)};
+  // Keep the source's received date distinct from the time our system first observed it.
+  const sourceReceivedAt = props.Inkomdatum ?? props.InkomDatum ?? null;
+  return {
+    ok:true,
+    source:SOURCE_ID,
+    source_id:sourceId,
+    observed_at:observedAt,
+    source_received_at:sourceReceivedAt,
+    // Backward-compatible alias; do not interpret this as publication/first-seen time.
+    source_created_at:sourceReceivedAt,
+    attributes:props,
+    geometry:feature.geometry ?? null,
+    content_hash:contentHash(feature)
+  };
 }
 export function classifyObservation(current, previous) {
   if (!current?.ok) return {action:"reject",reason:current?.reason ?? "invalid_observation"};
