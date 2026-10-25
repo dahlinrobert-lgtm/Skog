@@ -30,6 +30,10 @@ jobs:
             }
             if (!/^begin;[\s\S]*rollback;\s*$/im.test(smoke)) throw new Error("SQL smoke test must be wrapped in transaction + rollback");
             if (!smoke.includes("duplicate ID across scan pages") || !smoke.includes("atomic page")) throw new Error("Missing atomicity/duplicate assertions");
+            for (const assertion of ["changed payload history event missing", "stale recovery did not fail the session", "stale recovery did not fail the poll run"]) {
+              if (!smoke.includes(assertion)) throw new Error("Smoke test missing assertion: " + assertion);
+            }
+            if (!smoke.includes("gen_random_uuid()")) throw new Error("Smoke source identifier must be unique per execution");
             if (!migration.includes("as $$\ndeclare") || !migration.includes("end;\n$$;")) throw new Error("Expected valid PL/pgSQL dollar delimiters");
             const funcs = [...migration.matchAll(/create or replace function public\.skogskoll_[\s\S]*?\n\$\$;/g)];
             if (funcs.length !== 5) throw new Error("Expected 5 closed Skogskoll RPC functions, found " + funcs.length);
