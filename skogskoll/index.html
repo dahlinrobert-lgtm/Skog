@@ -45,7 +45,7 @@ document.getElementById("preview").addEventListener("click",()=>{
  const status=document.getElementById("previewStatus");
  if(!Number.isFinite(lat)||lat < -90||lat>90||!Number.isFinite(lon)||lon < -180||lon>180){status.textContent="Kontrollera latitud och longitud.";return;}
  status.textContent=name+": "+lat.toFixed(5)+", "+lon.toFixed(5)+" · radie "+(radius/1000).toLocaleString("sv-SE")+" km. Permanent lagring kräver inloggning och databasanslutning.";
- const url="../karta.html?lat="+encodeURIComponent(lat)+"&lon="+encodeURIComponent(lon)+"&radius="+encodeURIComponent(radius);
+ const url="https://dahlinrobert-lgtm.github.io/Skog/docs/karta.html?lat="+encodeURIComponent(lat)+"&lon="+encodeURIComponent(lon)+"&radius="+encodeURIComponent(radius);
  window.open(url,"_blank","noopener");
 });
 </script>
