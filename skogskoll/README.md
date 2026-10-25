@@ -9,6 +9,7 @@ Fristående, mobilanpassad app för privata skogsägare. Första leveransen är 
 - Inställningar för önskad e-post/push-kanal och händelsetyper sparas lokalt; inget skickas.
 - Historikvyn visar uttryckligen att den saknar verifierade observationer i stället för att hitta på exempeldata.
 - Lokal lagring är bara för prototypen: uppgifterna synkas inte och försvinner om webbplatsdata rensas.
+- Den lokala matchningspanelen kan testa bevakningar mot syntetiska testposter, utan nätverksanrop. Testposter märks som syntetiska och går inte till historiken som verkliga observationer.
 - Ren geometrihjälpare i `src/geometry-match.mjs` kan testas utan databas och har syntetiska tester för radie, polygoner, korsande linjer och gränsfall. Den är en första approximativ matchare och ersätter inte PostGIS-validering.
 
 ## Målarkitektur
