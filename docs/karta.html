@@ -667,6 +667,61 @@ async function getLayer(base,fields,bounds,signal){
  if(!signal?.aborted)cacheLayerResponse(cacheKey,result);
  return result;
 }
+
+ // Incremental spatial cache: when a center moves only slightly, reuse the prior
+ // raw response and request only the parts of the new envelope outside the old one.
+ const spatialLayerCache=new Map();
+ const SPATIAL_CACHE_TTL_MS=180000;
+ const SPATIAL_REUSE_OVERLAP=0.75;
+ function boundsValues(bounds){return {west:bounds.getWest(),south:bounds.getSouth(),east:bounds.getEast(),north:bounds.getNorth()};}
+ function boundsArea(b){return Math.max(0,b.east-b.west)*Math.max(0,b.north-b.south);}
+ function overlapRatio(a,b){
+  const width=Math.max(0,Math.min(a.east,b.east)-Math.max(a.west,b.west));
+  const height=Math.max(0,Math.min(a.north,b.north)-Math.max(a.south,b.south));
+  const intersection=width*height,denominator=Math.max(boundsArea(a),boundsArea(b));
+  return denominator>0?intersection/denominator:0;
+ }
+ function boundsFromValues(b){return L.latLngBounds([[b.south,b.west],[b.north,b.east]]);}
+ function featureKey(feature){
+  const id=feature.id??feature.properties?.OBJECTID??feature.properties?.ObjectId??feature.properties?.ObjectID;
+  return id===undefined?JSON.stringify(feature.geometry):String(id);
+ }
+ function mergeCollections(collections){
+  const features=[],seen=new Set();let pages=0,truncated=false;
+  for(const collection of collections){
+   pages+=collection.pages||0;truncated=truncated||Boolean(collection.truncated);
+   for(const feature of collection.features||[]){const key=featureKey(feature);if(!seen.has(key)){seen.add(key);features.push(feature);}}
+  }
+  return {type:"FeatureCollection",features,pages,truncated};
+ }
+ async function getLayerForView(base,fields,bounds,signal){
+  const simplify=RADIUS<=5000?0.00001:RADIUS<=10000?0.00003:RADIUS<=20000?0.00006:0.00012;
+  const key=[base,fields,simplify].join("|"),nextBounds=boundsValues(bounds),cached=spatialLayerCache.get(key);
+  if(cached&&Date.now()-cached.time<SPATIAL_CACHE_TTL_MS&&overlapRatio(cached.bounds,nextBounds)>SPATIAL_REUSE_OVERLAP){
+   const a=cached.bounds,b=nextBounds;
+   const west=Math.max(a.west,b.west),south=Math.max(a.south,b.south),east=Math.min(a.east,b.east),north=Math.min(a.north,b.north);
+   const strips=[];
+   // Rectangle difference: top and bottom span the full new width; side strips
+   // fill the remaining middle band without duplicating the intersection area.
+   if(north<b.north)strips.push({west:b.west,south:north,east:b.east,north:b.north});
+   if(south>b.south)strips.push({west:b.west,south:b.south,east:b.east,north:south});
+   if(west>b.west&&north>south)strips.push({west:b.west,south,north,east:west});
+   if(east<b.east&&north>south)strips.push({west:east,south,north,east:b.east});
+   const additions=[];
+   for(const strip of strips){
+    if(signal?.aborted)throw new DOMException("Aborted","AbortError");
+    if(boundsArea(strip)<=0)continue;
+    additions.push(await getLayer(base,fields,boundsFromValues(strip),signal));
+   }
+   if(signal?.aborted)throw new DOMException("Aborted","AbortError");
+   const result=mergeCollections([{...cached.value},...additions]);
+   spatialLayerCache.set(key,{time:Date.now(),bounds:nextBounds,value:result});
+   return JSON.parse(JSON.stringify(result));
+  }
+  const result=await getLayer(base,fields,bounds,signal);
+  if(!signal?.aborted)spatialLayerCache.set(key,{time:Date.now(),bounds:nextBounds,value:result});
+  return result;
+}
 let viewRequestId=0,viewAbortController=null,viewDebounce=null;
 async function load(){
  const requestId=++viewRequestId;
@@ -678,11 +733,11 @@ async function load(){
  try{
   const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
   let [planned,performed,samradPoints,samradLines,samradAreas]=await Promise.all([
-   getLayer(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal),
-   getLayer(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal),
-   wantSamrad?getLayer(SAMRAD_POINTS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
-   wantSamrad?getLayer(SAMRAD_LINES,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
-   wantSamrad?getLayer(SAMRAD_AREAS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false})
+   getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal),
+   getLayerForView(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal),
+   wantSamrad?getLayerForView(SAMRAD_POINTS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
+   wantSamrad?getLayerForView(SAMRAD_LINES,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
+   wantSamrad?getLayerForView(SAMRAD_AREAS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false})
   ]);
   if(requestId!==viewRequestId)return;
   planned=filterToRadius(planned);performed=filterToRadius(performed);
