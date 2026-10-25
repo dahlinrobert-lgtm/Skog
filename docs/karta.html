@@ -471,7 +471,7 @@ function updateDurationHistogram(features){
    else{
     buckets=Array.from({length:5},(_,i)=>({low:low+i*width,high:i===4?high:low+(i+1)*width,count:0}));
     ordinary.forEach(v=>{const index=Math.min(4,Math.floor((v-low)/width));buckets[index].count++;});
-    buckets=buckets.filter(b=>b.count>0).map((b,i)=>({label:b.low.toLocaleString("sv-SE",{maximumFractionDigits:1})+"–"+b.high.toLocaleString("sv-SE",{maximumFractionDigits:1})+" %",count:b.count}));
+    buckets=buckets.map(b=>({label:b.low.toLocaleString("sv-SE",{maximumFractionDigits:1})+"–"+b.high.toLocaleString("sv-SE",{maximumFractionDigits:1})+" %",count:b.count}));
    }
   }
   if(extreme.length)buckets.push({label:"Extremvärden (>"+outlierLimit.toLocaleString("sv-SE",{maximumFractionDigits:1})+" %)",count:extreme.length});
