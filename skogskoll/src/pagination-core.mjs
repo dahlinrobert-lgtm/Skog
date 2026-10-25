@@ -43,10 +43,9 @@ export function collectPageDiagnostics(pages, idOf = feature => feature?.id ?? f
 }
 
 /**
- * A scan is not complete merely because the last response is short.
- * The service's own count must agree with the fetched count, no transfer
- * limit flag may remain, every page must be well formed, and all IDs must
- * be present and unique. This is a conservative guard for ingestion code.
+ * Conservative guard before a caller uses a scan for reconciliation.
+ * The service count must match the fetched count; pages must be well formed;
+ * IDs must be present and unique; and no transfer-limit flag may remain.
  */
 export function assessScanCompleteness({ diagnostics, reportedTotal, requestedPageSize }) {
   if (!diagnostics || !Number.isInteger(reportedTotal) || reportedTotal < 0) {
