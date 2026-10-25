@@ -212,8 +212,8 @@ begin
 
   update public.poll_runs
   set fetched_count = p_next_fetched,
-      inserted_count = inserted_count + v_inserted,
-      updated_count = updated_count + v_changed,
+      inserted_count = public.poll_runs.inserted_count + v_inserted,
+      updated_count = public.poll_runs.updated_count + v_changed,
       diagnostics = diagnostics || jsonb_build_object('last_page_at', p_observed_at)
   where id = v_scan.poll_run_id;
 

@@ -72,3 +72,15 @@ This command only marks a sufficiently old running session failed. It does not s
 The storage adapter is required to implement `commitPage()` as one database transaction: upsert current observations, append observation history, register each seen source ID, and persist the next checkpoint together. If that atomic contract is not available, do not run the worker against production data. The core alone does not connect to Supabase and does not claim to persist anything.
 
 Current status: orchestration core and mock-adapter tests are in the repository. The transactional SQL primitives are now committed in migration 003. The production Supabase source/store adapter, SQL execution validation against a real Supabase project, and safe manual run entrypoint are still required before any full scan can run. Do not enable full import or alerts yet. Keep the existing source probe separate and keep alerts disabled.
+
+
+## PostGIS watch-area matching (migration 004)
+
+Migration 004 adds the read-only, service-role-only RPC `skogskoll_match_observations(watch_area_id, since)`. It is the authoritative database matcher for future use by the app/worker:
+
+- Radius areas must be stored as a WGS84 `POINT` in `watch_areas.geom` plus `radius_m`; matching uses `ST_DWithin(...::geography, ...::geography, radius_m)`, so radius is measured in metres.
+- Polygon areas must be `POLYGON` or `MULTIPOLYGON` with `radius_m = NULL`; matching uses `ST_Intersects`.
+- Disabled areas, inactive observations, and observations without geometry are excluded. The optional `since` cutoff uses `last_seen_at`.
+- This RPC only returns matching observations. It does not create alert events, deliver notifications, import source data, or modify user preferences.
+
+The database workflow now starts a disposable PostGIS service in GitHub Actions, creates minimal mock Supabase auth roles, applies the schema and migrations 002–004, and runs rollback-wrapped SQL integration tests. This validates PostgreSQL/PostGIS behavior in CI but is not a live Supabase project test.
