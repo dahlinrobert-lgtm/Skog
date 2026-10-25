@@ -111,6 +111,21 @@ begin
   if (select count(distinct value #>> '{}') from jsonb_array_elements(p_ids)) <> jsonb_array_length(p_ids) then
     raise exception 'duplicate IDs within page';
   end if;
+  if (
+    select count(*) from (
+      (select value->>'source_id' as id from jsonb_array_elements(p_records))
+      except
+      (select value #>> '{}' as id from jsonb_array_elements(p_ids))
+    ) diff
+  ) > 0 or (
+    select count(*) from (
+      (select value #>> '{}' as id from jsonb_array_elements(p_ids))
+      except
+      (select value->>'source_id' as id from jsonb_array_elements(p_records))
+    ) diff
+  ) > 0 then
+    raise exception 'record IDs and page IDs do not match exactly';
+  end if;
 
   insert into public.scan_seen_ids(scan_id, source_id, first_offset)
   select p_scan_id, ids.id, p_expected_offset + ids.ordinality::integer - 1
