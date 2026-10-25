@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { featureTouchesRadius } from "../docs/map-radius-filter.mjs";
+import { featureTouchesRadius, clipPolygonCollectionToRadius } from "../docs/map-radius-filter.mjs";
 
 const center = { lat: 63.74646, lon: 19.66455 };
 const radius = 10_000;
@@ -54,4 +54,32 @@ test("GeometryCollection applies radius checks to its child geometries", () => {
     ] }
   };
   assert.equal(featureTouchesRadius(outside, center, radius), false);
+});
+
+test("polygon clipping passes polygon and circle to intersection and keeps clipped properties", () => {
+  const polygon = { type: "Feature", properties: { id: 7 }, geometry: { type: "Polygon", coordinates: [] } };
+  const clipped = { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [[[0,0],[1,0],[1,1],[0,0]]] } };
+  let circleArgs, intersectionArgs;
+  const turf = {
+    circle: (...args) => (circleArgs = args, { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [] } }),
+    featureCollection: features => ({ type: "FeatureCollection", features }),
+    intersect: fc => (intersectionArgs = fc.features, clipped)
+  };
+  const result = clipPolygonCollectionToRadius({ type: "FeatureCollection", features: [polygon] }, center, radius, turf);
+  assert.deepEqual(circleArgs[0], [center.lon, center.lat]);
+  assert.equal(circleArgs[1], radius / 1000);
+  assert.equal(intersectionArgs.length, 2);
+  assert.equal(result.features.length, 1);
+  assert.deepEqual(result.features[0].properties, { id: 7 });
+});
+
+test("polygon clipping drops polygons with no intersection", () => {
+  const polygon = { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [] } };
+  const turf = {
+    circle: () => ({ type: "Feature", geometry: { type: "Polygon", coordinates: [] } }),
+    featureCollection: features => ({ features }),
+    intersect: () => null
+  };
+  const result = clipPolygonCollectionToRadius({ type: "FeatureCollection", features: [polygon] }, center, radius, turf);
+  assert.equal(result.features.length, 0);
 });
