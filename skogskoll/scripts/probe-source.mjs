@@ -33,10 +33,14 @@ const report = {
   errors: [],
 };
 try {
-  const [service, layer] = await Promise.all([
+  const [service, layer, countResult] = await Promise.all([
     getJson(SERVICE + "?f=pjson"),
-    getJson(ENDPOINT + "?f=pjson")
+    getJson(ENDPOINT + "?f=pjson"),
+    getJson(ENDPOINT + "/query?" + new URLSearchParams({
+      where: "1=1", returnCountOnly: "true", f: "json"
+    }))
   ]);
+  if (!Number.isInteger(countResult.count)) throw new Error("Source did not return a valid total record count");
   const objectIdField = layer.objectIdField ?? (layer.fields ?? []).find(f => f.type === "esriFieldTypeOID")?.name;
   if (!objectIdField) throw new Error("No object ID field found in layer metadata");
   const validFields = new Set((layer.fields ?? []).map(f => f.name));
@@ -46,6 +50,12 @@ try {
     resultRecordCount: String(PAGE_SIZE), orderByFields: `${objectIdField} ASC`, resultOffset: String(offset)
   }));
   const first = await queryPage(0);
+  report.checks.source_size = {
+    ok: true,
+    total_feature_count: countResult.count,
+    sample_coverage: countResult.count ? first.features.length / countResult.count : null,
+    note: "Count is from the service query API; the probe reads only a bounded sample, not all features."
+  };
   report.checks.service_metadata = {
     ok: !service.error, service_name: service.name ?? null,
     currentVersion: service.currentVersion ?? null,
@@ -92,13 +102,21 @@ try {
     sha256: hash(canonical),
     note: "Compare this fingerprint across separate runs; it is a diagnostic, not proof of source immutability."
   };
+  const businessKeys = first.features.map(f => f.properties?.Beteckn).filter(v => v !== null && v !== undefined && String(v).trim() !== "").map(String);
+  const uniqueBusinessKeys = new Set(businessKeys);
+  const dates = first.features.map(f => f.properties?.Inkomdatum).filter(v => typeof v === "number" && Number.isFinite(v));
   report.checks.field_semantics = {
     date_field_candidates: ["Inkomdatum"].filter(name =>
       (layer.fields ?? []).some(f => f.name === name)),
     status_field_candidates: ["ArendeStatus"].filter(name =>
       (layer.fields ?? []).some(f => f.name === name)),
     id_field_detected: objectIdField,
-    note: "Confirm actual field types and whether Inkomdatum means received date or another date before user-facing wording."
+    business_key_field: (layer.fields ?? []).some(f => f.name === "Beteckn") ? "Beteckn" : null,
+    sample_business_key_coverage: first.features.length ? businessKeys.length / first.features.length : null,
+    sample_business_key_duplicates: businessKeys.length - uniqueBusinessKeys.size,
+    sample_date_min: dates.length ? new Date(Math.min(...dates)).toISOString() : null,
+    sample_date_max: dates.length ? new Date(Math.max(...dates)).toISOString() : null,
+    note: "OBJECTID is the technical row ID; evaluate whether Beteckn is a stable case identifier before choosing production identity. Confirm Inkomdatum semantics before user-facing wording."
   };
   report.checks.scope = {
     requested_pages_limit: MAX_PAGES,
