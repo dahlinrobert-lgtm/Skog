@@ -4,6 +4,10 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/skogskoll-source-probe.yml"
+      - "docs/karta.html"
+      - "docs/map-radius-filter.mjs"
+      - "tests/map-radius-filter.test.mjs"
+      - "scripts/benchmark-map-radius-filter.mjs"
       - "skogskoll/scripts/**"
       - "skogskoll/src/**"
       - "skogskoll/tests/**"
@@ -13,6 +17,10 @@ on:
   pull_request:
     paths:
       - ".github/workflows/skogskoll-source-probe.yml"
+      - "docs/karta.html"
+      - "docs/map-radius-filter.mjs"
+      - "tests/map-radius-filter.test.mjs"
+      - "scripts/benchmark-map-radius-filter.mjs"
       - "skogskoll/scripts/**"
       - "skogskoll/src/**"
       - "skogskoll/tests/**"
