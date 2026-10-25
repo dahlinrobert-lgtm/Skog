@@ -28,7 +28,7 @@ declare
 begin
   -- Start a bounded scan over a one-record test source.
   select scan_id, poll_run_id into v_scan, v_run
-  from public.skogskoll_start_scan(v_source, 1, 1, 'baseline');
+  from public.skogskoll_start_scan(v_source, 3, 1, 'baseline');
 
   if v_scan is null or v_run is null then
     raise exception 'start_scan did not allocate IDs';
@@ -65,7 +65,7 @@ begin
   -- Duplicate IDs within a page must be rejected without leaking ledger rows.
   begin
     perform * from public.skogskoll_commit_page(
-      v_scan, 1, 1, 2, 2,
+      v_scan, 1, 1, 3, 3,
       jsonb_build_array(
         jsonb_build_object('source', v_source, 'source_id', 'smoke-2', 'content_hash', v_hash, 'attributes', '{}'::jsonb, 'geometry', null),
         jsonb_build_object('source', v_source, 'source_id', 'smoke-3', 'content_hash', v_hash, 'attributes', '{}'::jsonb, 'geometry', null)
@@ -82,6 +82,19 @@ begin
 
   select count(*) into v_seen from public.scan_seen_ids where scan_id = v_scan;
   if v_seen <> 1 then raise exception 'rejected duplicate page leaked into seen-ID ledger'; end if;
+
+  -- Commit the two remaining distinct IDs to complete the 3-record baseline.
+  select * into v_result
+  from public.skogskoll_commit_page(
+    v_scan, 1, 1, 3, 3,
+    jsonb_build_array(
+      jsonb_build_object('source', v_source, 'source_id', 'smoke-2', 'content_hash', repeat('c',64), 'attributes', '{}'::jsonb, 'geometry', null),
+      jsonb_build_object('source', v_source, 'source_id', 'smoke-3', 'content_hash', repeat('d',64), 'attributes', '{}'::jsonb, 'geometry', null)
+    ),
+    jsonb_build_array('smoke-2', 'smoke-3'),
+    v_now + interval '1 minute'
+  );
+  if v_result.inserted_count <> 2 then raise exception 'valid second page was not committed'; end if;
 
   -- Finish the first scan before starting another session for the same source.
   perform public.skogskoll_finish_scan(v_scan);
