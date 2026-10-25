@@ -292,15 +292,14 @@ function stableCaseColor(id){
 }
 function assignFourColors(features){
  const groups=new Map();let missing=0;
- caseColorByFeature=new Map();
  for(const feature of features){
-  const id=caseId(feature),key=String(polygonId(feature));
-  if(!id){missing++;caseColorByFeature.set(key,"#8a938d");continue;}
-  if(!groups.has(id))groups.set(id,[]);
-  groups.get(id).push(feature);
-  caseColorByFeature.set(key,stableCaseColor(id));
+  const id=caseId(feature);
+  if(!id){missing++;continue;}
+  const group=groups.get(id);
+  if(group)group.count++;
+  else groups.set(id,{feature,count:1});
  }
- return {count:features.length,groups:groups.size,missing,groupEntries:[...groups.entries()].map(([id,items])=>({id,label:caseLabel(items[0]),color:stableCaseColor(id),count:items.length})).sort((a,b)=>b.count-a.count||a.label.localeCompare(b.label,"sv"))};
+ return {count:features.length,groups:groups.size,missing,groupEntries:[...groups.entries()].map(([id,group])=>({id,label:caseLabel(group.feature),color:stableCaseColor(id),count:group.count})).sort((a,b)=>b.count-a.count||a.label.localeCompare(b.label,"sv"))};
 }
 function categoryValue(feature,mode){
  const p=feature?.properties||{};
@@ -378,8 +377,8 @@ function performedStyle(feature){
  if(mode==="none")return {color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22};
  const scale=performedScaleCache;
  if(mode==="caseId"){
-  const key=String(polygonId(feature));
-  const color=caseColorByFeature.get(key)||"#777777";
+  const id=caseId(feature);
+  const color=id?stableCaseColor(id):"#8a938d";
   return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
  }
  if(mode==="forestType"||mode==="harvestType"||mode==="samradAction"){
