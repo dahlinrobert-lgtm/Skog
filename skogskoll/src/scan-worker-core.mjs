@@ -1,6 +1,35 @@
 import { advanceCheckpoint, createCheckpoint, validateCheckpoint } from "./scan-plan.mjs";
 import { normalizeFeature, SOURCE_ID } from "./observation-core.mjs";
 
+function isFatalScanError(error) {
+  const message = String(error?.message ?? error).toLowerCase();
+  // Network/server failures can be retried from the last atomically committed
+  // page. Integrity and snapshot violations must stop this session.
+  if (message.includes("stale checkpoint")) return false;
+  if (/^supabase rest 4\\d\\d:/.test(message)) return true;
+  return [
+    "source returned an invalid count",
+    "source_count_changed:",
+    "source_count_changed_at_finish:",
+    "source returned a malformed page",
+    "source returned an invalid count",
+    "arcgis returned invalid count",
+    "arcgis returned invalid json",
+    "arcgis page omitted features array",
+    "missing source id",
+    "duplicate id",
+    "transfer limit reported",
+    "empty page before reported total",
+    "page exceeds requested page size",
+    "page exceeds source total",
+    "source id; do not advance",
+    "persisted checkpoint",
+    "no object id field",
+    "invalid geojson",
+    "geometry"
+  ].some(fragment => message.includes(fragment));
+}
+
 /**
  * Executes one bounded scan batch against injected source/store adapters.
  * The store must commit records, seen IDs and the next checkpoint atomically in
@@ -92,7 +121,12 @@ export async function runScanBatch({
     }
     return { status: "in_progress", scanId, fetchedCount: checkpoint.fetchedCount, pagesFetched, nextOffset: checkpoint.nextOffset };
   } catch (error) {
-    await store.failScan(scanId, String(error?.message ?? error), { sourceKey }).catch(() => {});
+    // Preserve the last committed checkpoint after transient network/5xx errors.
+    // Structural source errors and known data-integrity violations are terminal
+    // for this scan and must be recorded as failed rather than retried forever.
+    if (scanId && isFatalScanError(error)) {
+      await store.failScan(scanId, String(error?.message ?? error), { sourceKey }).catch(() => {});
+    }
     throw error;
   }
 }
