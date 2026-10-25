@@ -324,13 +324,16 @@ function mixColor(t){
 }
 function currentColorScale(){
  const mode=document.getElementById("performedColorMode")?.value||"none";
- const features=[...performedLayer.toGeoJSON().features,...plannedLayer.toGeoJSON().features];
- if(mode==="samradAction"||mode==="forestType"||mode==="hectares")features.push(...samradPointLayer.toGeoJSON().features,...samradLineLayer.toGeoJSON().features,...samradAreaLayer.toGeoJSON().features);
  if(mode==="caseId"){
-  // Stable hash colors avoid expensive boundary sampling and graph coloring on every refresh.
+  // Avoid serializing every polygon geometry to GeoJSON just to calculate its ID color.
+  const features=[];
+  performedLayer.eachLayer(layer=>{if(layer.feature)features.push(layer.feature);});
+  plannedLayer.eachLayer(layer=>{if(layer.feature)features.push(layer.feature);});
   const diagnostic=assignFourColors(features);
   return {mode,diagnostic};
  }
+ const features=[...performedLayer.toGeoJSON().features,...plannedLayer.toGeoJSON().features];
+ if(mode==="samradAction"||mode==="forestType"||mode==="hectares")features.push(...samradPointLayer.toGeoJSON().features,...samradLineLayer.toGeoJSON().features,...samradAreaLayer.toGeoJSON().features);
  if(mode==="forestType"||mode==="harvestType"||mode==="samradAction"){
   const categories=[...new Set(features.map(f=>categoryValue(f,mode)))].sort((a,b)=>a.localeCompare(b,"sv"));
   categoryColorMap=new Map();
