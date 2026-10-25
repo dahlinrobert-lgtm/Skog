@@ -157,7 +157,12 @@ export function createSupabaseStore({
         mode: row.diagnostics?.mode ?? "baseline"
       };
       if (seenIds.length !== checkpoint.fetchedCount) {
-        // Do not silently reset or advance a broken persisted checkpoint.
+        // A corrupt checkpoint must not be retried forever as if it were valid.
+        await rpc("skogskoll_fail_scan", {
+          p_scan_id: row.id,
+          p_reason: "persisted_checkpoint_id_count_mismatch",
+          p_details: { seen_ids: seenIds.length, fetched_count: checkpoint.fetchedCount }
+        });
         throw new Error(`Persisted checkpoint has ${seenIds.length} IDs but fetched_count is ${checkpoint.fetchedCount}`);
       }
       // The scanner accepts a changed source count only by starting over. Mark
