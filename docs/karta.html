@@ -680,9 +680,9 @@ async function load(){
   let [planned,performed,samradPoints,samradLines,samradAreas]=await Promise.all([
    getLayer(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal),
    getLayer(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal),
-   wantSamrad?getLayer(SAMRAD_POINTS,"*",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
-   wantSamrad?getLayer(SAMRAD_LINES,"*",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
-   wantSamrad?getLayer(SAMRAD_AREAS,"*",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false})
+   wantSamrad?getLayer(SAMRAD_POINTS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
+   wantSamrad?getLayer(SAMRAD_LINES,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
+   wantSamrad?getLayer(SAMRAD_AREAS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false})
   ]);
   if(requestId!==viewRequestId)return;
   planned=filterToRadius(planned);performed=filterToRadius(performed);
