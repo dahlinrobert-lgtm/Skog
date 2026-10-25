@@ -33,7 +33,7 @@ const report = {
 };
 try {
   const [service, layer, first] = await Promise.all([
-    getJson(ENDPOINT + "?f=pjson"),
+    getJson(SERVICE + "?f=pjson"),
     getJson(ENDPOINT + "?f=pjson"),
     getJson(ENDPOINT + "/query?" + new URLSearchParams({
       where: "1=1", outFields: fields.join(","), returnGeometry: "true",
