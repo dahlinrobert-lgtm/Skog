@@ -18,13 +18,14 @@ node --test skogskoll/tests/*.test.mjs
 
 ## Database groundwork (migration 002)
 
-Apply `db/schema.sql` first, then `db/migrations/002_observation_history.sql` in the Supabase SQL editor.
+Apply `db/schema.sql` first, then `db/migrations/002_observation_history.sql`, then `db/migrations/003_atomic_page_commit.sql` in the Supabase SQL editor.
 
 Migration 002 adds:
 - `source_observation_history`: append-only snapshots/change records, separate from the current-state row in `source_observations`.
 - `scan_sessions`: persisted run count, page size, checkpoint, status and diagnostics.
 - `scan_seen_ids`: per-scan unique source IDs to detect overlap/duplicate pages without a giant JSON checkpoint.
 - A database trigger preventing a completed scan from being reopened and checkpoints from moving backwards.
+- Migration 003 adds service-role-only RPCs to start a scan, commit a complete page atomically, finish only after full ID coverage, and record failed scans. The page transaction writes normalized IDs, current state, change history, and checkpoint together.
 
 The migration deliberately creates no end-user policies for worker-owned tables. Use the service-role key only in a server-side worker. This migration does not itself run ingestion or send notifications. The scan worker must only set a scan to `complete` after the count, page coverage, transfer-limit and ID-integrity checks all pass. A source-count change invalidates an in-progress checkpoint; restart the scan rather than mixing different source snapshots.
 
@@ -34,4 +35,4 @@ The migration deliberately creates no end-user policies for worker-owned tables.
 
 The storage adapter is required to implement `commitPage()` as one database transaction: upsert current observations, append observation history, register each seen source ID, and persist the next checkpoint together. If that atomic contract is not available, do not run the worker against production data. The core alone does not connect to Supabase and does not claim to persist anything.
 
-Current status: orchestration core and mock-adapter tests are in the repository. The production Supabase adapter and its transactional RPC are still required before any full scan can run. Keep the existing source probe separate and keep alerts disabled.
+Current status: orchestration core and mock-adapter tests are in the repository. The transactional SQL primitives are now committed in migration 003. The production Supabase source/store adapter, SQL execution validation against a real Supabase project, and safe manual run entrypoint are still required before any full scan can run. Do not enable full import or alerts yet. Keep the existing source probe separate and keep alerts disabled.
