@@ -1,7 +1,7 @@
 name: Map radius filter
 on:
   push:
-    branches: [fix/radius-workflow-dynamic-clip-check]
+    branches: [fix/clip-polygons-to-radius]
     paths:
       - "docs/karta.html"
       - "docs/map-radius-filter.mjs"
