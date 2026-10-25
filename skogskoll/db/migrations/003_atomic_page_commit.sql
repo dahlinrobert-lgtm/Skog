@@ -282,3 +282,63 @@ grant execute on function public.skogskoll_start_scan(text,integer,integer,text)
 grant execute on function public.skogskoll_commit_page(uuid,integer,integer,integer,integer,jsonb,jsonb,timestamptz) to service_role;
 grant execute on function public.skogskoll_finish_scan(uuid) to service_role;
 grant execute on function public.skogskoll_fail_scan(uuid,text,jsonb) to service_role;
+
+-- Recover stale worker sessions after a process is killed or the host loses power.
+-- Run only after verifying no worker is actively processing this source.
+-- The prior session is marked failed for audit; the next scan starts from offset 0
+-- because seen-ID coverage is scoped to a scan session.
+create or replace function public.skogskoll_recover_stale_scan(
+  p_source text,
+  p_stale_before timestamptz,
+  p_reason text default 'stale_worker_recovery'
+) returns table(recovered_scan_id uuid, recovered_offset integer)
+language plpgsql
+security definer
+set search_path = public, extensions
+as $
+declare
+  v_scan public.scan_sessions%rowtype;
+begin
+  if p_source is null or length(trim(p_source)) = 0 then
+    raise exception 'source is required';
+  end if;
+  if p_stale_before is null or p_stale_before >= now() then
+    raise exception 'stale_before must be in the past';
+  end if;
+
+  select * into v_scan
+  from public.scan_sessions
+  where source = p_source and status = 'running' and updated_at < p_stale_before
+  order by updated_at asc
+  limit 1
+  for update;
+
+  if not found then
+    return;
+  end if;
+
+  update public.scan_sessions
+  set status = 'failed',
+      diagnostics = diagnostics || jsonb_build_object(
+        'failure_reason', left(coalesce(p_reason, 'stale_worker_recovery'), 500),
+        'recovered_at', now(),
+        'recovery_note', 'Prior session retained for audit; start a fresh scan from offset 0.'
+      )
+  where id = v_scan.id;
+
+  update public.poll_runs
+  set status = 'failed',
+      finished_at = now(),
+      diagnostics = diagnostics || jsonb_build_object(
+        'failure_reason', left(coalesce(p_reason, 'stale_worker_recovery'), 500),
+        'recovered_scan_id', v_scan.id
+      )
+  where id = v_scan.poll_run_id;
+
+  return query select v_scan.id, v_scan.next_offset;
+end;
+$;
+
+revoke all on function public.skogskoll_recover_stale_scan(text,timestamptz,text) from public, anon, authenticated;
+grant execute on function public.skogskoll_recover_stale_scan(text,timestamptz,text) to service_role;
+
