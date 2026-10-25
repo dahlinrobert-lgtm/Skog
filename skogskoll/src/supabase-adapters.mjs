@@ -111,25 +111,8 @@ export function createSupabaseStore({
     return request(`/rest/v1/rpc/${name}`, { method: "POST", body: args });
   }
 
-  async function listSeenIds(scanId) {
-    const ids = [];
-    for (let offset = 0; ; offset += restBatchSize) {
-      const query = new URLSearchParams({
-        select: "source_id,first_offset",
-        scan_id: `eq.${scanId}`,
-        order: "first_offset.asc",
-        limit: String(restBatchSize),
-        offset: String(offset)
-      });
-      const batch = await request(`/rest/v1/scan_seen_ids?${query}`);
-      if (!Array.isArray(batch)) throw new Error("Unexpected scan_seen_ids response");
-      ids.push(...batch.map(row => String(row.source_id)));
-      if (batch.length < restBatchSize) break;
-    }
-    return ids;
-  }
-
   return {
+    externalSeenIds: true,
     async loadCheckpoint(sourceKey) {
       const query = new URLSearchParams({
         select: "id,source,source_count,page_size,next_offset,fetched_count,status,diagnostics,updated_at",
@@ -142,7 +125,6 @@ export function createSupabaseStore({
       if (!Array.isArray(rows)) throw new Error("Unexpected scan_sessions response");
       if (!rows.length) return null;
       const row = rows[0];
-      const seenIds = await listSeenIds(row.id);
       const checkpoint = {
         schemaVersion: 1,
         sourceKey: row.source,
@@ -150,21 +132,14 @@ export function createSupabaseStore({
         pageSize: row.page_size,
         nextOffset: row.next_offset,
         fetchedCount: row.fetched_count,
-        seenIds,
+        seenIds: [],
+        externalSeenIds: true,
+        seenIdsCount: row.fetched_count,
         updatedAt: row.updated_at ?? null,
         complete: row.next_offset === row.source_count && row.fetched_count === row.source_count,
         scanId: row.id,
         mode: row.diagnostics?.mode ?? "baseline"
       };
-      if (seenIds.length !== checkpoint.fetchedCount) {
-        // A corrupt checkpoint must not be retried forever as if it were valid.
-        await rpc("skogskoll_fail_scan", {
-          p_scan_id: row.id,
-          p_reason: "persisted_checkpoint_id_count_mismatch",
-          p_details: { seen_ids: seenIds.length, fetched_count: checkpoint.fetchedCount }
-        });
-        throw new Error(`Persisted checkpoint has ${seenIds.length} IDs but fetched_count is ${checkpoint.fetchedCount}`);
-      }
       // The scanner accepts a changed source count only by starting over. Mark
       // the old session failed through the database before creating a fresh one.
       if (checkpoint.reportedTotal < 0 || checkpoint.nextOffset > checkpoint.reportedTotal) {
