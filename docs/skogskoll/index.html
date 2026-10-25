@@ -16,14 +16,14 @@
 <div class="grid" style="margin-top:14px">
 <section class="card">
 <h2>Skapa bevakning</h2>
-<p class="muted">Spara ett testområde lokalt. Du kan använda en cirkel runt en punkt eller klistra in en GeoJSON-polygon. Ingen information skickas till en server.</p>
+<p class="muted">Börja med en radie runt en punkt. Fastighetssökning med automatisk polygonhämtning är nästa steg; den ska kopplas till Lantmäteriets officiella API efter att åtkomst och användningsvillkor är ordnade. Inget skickas till en server i den här prototypen.</p><div class="empty"><strong>Fastighetspolygon – planerad funktion</strong><br>Sök på fastighetsbeteckning, välj rätt träff och kontrollera polygonen på kartan. En fastighet kan bestå av flera områden. Vi aktiverar inte hämtning via Min kartas interna endpoint innan användning och koordinatsystem är verifierade.</div>
 <label for="areaName">Namn på bevakningen</label><input id="areaName" maxlength="80" placeholder="Ex. Skiftet vid sjön">
-<label for="areaType">Typ av område</label><select id="areaType"><option value="radius">Radie runt en punkt</option><option value="polygon">Polygon (GeoJSON)</option></select>
 <div id="radiusFields">
 <div class="row"><div><label for="lat">Latitud</label><input id="lat" type="number" min="-90" max="90" step=".00001" value="63.74646"></div><div><label for="lon">Longitud</label><input id="lon" type="number" min="-180" max="180" step=".00001" value="19.66455"></div></div>
 <label for="radius">Bevakningsradie</label><select id="radius"><option value="1000">1 km</option><option value="2500">2,5 km</option><option value="5000" selected>5 km</option><option value="10000">10 km</option><option value="20000">20 km</option></select>
 </div>
-<div id="polygonFields" hidden><label for="polygonJson">Polygon som GeoJSON-geometry</label><textarea id="polygonJson" placeholder='{"type":"Polygon","coordinates":[[[19.6,63.7],[19.7,63.7],[19.7,63.8],[19.6,63.8],[19.6,63.7]]]} '></textarea><p class="muted small">Koordinater ska vara [longitud, latitud] i WGS84/EPSG:4326. Polygonens ring måste vara sluten.</p></div>
+<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:650">Avancerat: importera egen polygon</summary><p class="muted small">Använd bara om du redan har en geometri i GeoJSON med koordinater i WGS84/EPSG:4326. Lantmäteriets koordinater i SWEREF99 TM kan inte klistras in direkt.</p><label for="areaType">Typ av område</label><select id="areaType"><option value="radius">Radie runt en punkt</option><option value="polygon">Egen polygon (GeoJSON)</option></select>
+<div id="polygonFields" hidden><label for="polygonJson">Polygon som GeoJSON-geometry</label><textarea id="polygonJson" placeholder='{"type":"Polygon","coordinates":[[[19.6,63.7],[19.7,63.7],[19.7,63.8],[19.6,63.8],[19.6,63.7]]]} '></textarea><p class="muted small">Koordinater ska vara [longitud, latitud] i WGS84/EPSG:4326. Polygonens ring måste vara sluten.</p></div></details>
 <div class="actions"><button id="saveArea">Spara bevakning lokalt</button><button id="preview" class="secondary">Visa i kartan</button></div>
 <p id="areaStatus" class="muted" aria-live="polite">Välj område och spara en lokal testbevakning.</p>
 </section>
