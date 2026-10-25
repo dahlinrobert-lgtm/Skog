@@ -328,7 +328,7 @@ function filterToRadius(collection){
 function date(v){if(v==null||v==="")return "–";let n=Number(v);if(Number.isFinite(n)&&n>100000000000)return new Date(n).toISOString().slice(0,10);return String(v)}
 function ha(v){if(v==null||v==="")return "–";let n=Number(v);return Number.isFinite(n)?n.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha":String(v)}
 function queryUrl(base,fields,bounds,offset){
- const params=new URLSearchParams({where:"1=1",outFields:fields,returnGeometry:"true",outSR:"4326",f:"geojson",resultRecordCount:"300",orderByFields:"OBJECTID"});
+ const params=new URLSearchParams({where:"1=1",outFields:fields,returnGeometry:"true",outSR:"4326",f:"geojson",resultRecordCount:"300",orderByFields:"ObjectId"});
  params.set("geometry",JSON.stringify({xmin:bounds.getWest(),ymin:bounds.getSouth(),xmax:bounds.getEast(),ymax:bounds.getNorth(),spatialReference:{wkid:4326}}));
  params.set("geometryType","esriGeometryEnvelope");params.set("inSR","4326");params.set("spatialRel","esriSpatialRelIntersects");
  params.set("geometryPrecision","5");params.set("maxAllowableOffset","0.00003");
@@ -347,7 +347,7 @@ async function getLayer(base,fields,bounds,signal){
   if(!Array.isArray(json.features))throw new Error("Karttjänsten returnerade inget GeoJSON-lager");
   let added=0;
   for(const feature of json.features){
-   const id=feature.id??feature.properties?.OBJECTID;
+   const id=feature.id??feature.properties?.OBJECTID??feature.properties?.ObjectId;
    const key=id===undefined?JSON.stringify(feature.geometry):String(id);
    if(!seen.has(key)){seen.add(key);all.push(feature);added++;}
   }
