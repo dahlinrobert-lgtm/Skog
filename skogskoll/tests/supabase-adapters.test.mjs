@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { createArcGisSource, createSupabaseStore, createProductionAdapters } from "../src/supabase-adapters.mjs";
 
 function response(body, { ok = true, status = 200 } = {}) {
@@ -79,4 +81,20 @@ test("Supabase start scan calls RPC with explicit mode", async () => {
 test("adapter refuses missing Supabase credentials before making requests", () => {
   assert.throws(() => createProductionAdapters({}, {}), /SUPABASE_URL/);
   assert.throws(() => createSupabaseStore({ url: "https://project.supabase.co", serviceRoleKey: "" }), /service-role key/);
+});
+
+test("manual ingestion entrypoint is disabled without explicit opt-in", () => {
+  const script = new URL("../scripts/run-scan.mjs", import.meta.url);
+  const env = { ...process.env };
+  delete env.SKOGSKOLL_ENABLE_INGESTION;
+  delete env.SKOGSKOLL_SCAN_MODE;
+  delete env.SUPABASE_URL;
+  delete env.SUPABASE_SERVICE_ROLE_KEY;
+  const result = spawnSync(process.execPath, [fileURLToPath(script)], {
+    encoding: "utf8",
+    env
+  });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Ingestion is disabled/);
+  assert.doesNotMatch(result.stderr, /SUPABASE_SERVICE_ROLE_KEY/);
 });
