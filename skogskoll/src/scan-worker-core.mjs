@@ -6,7 +6,7 @@ function isFatalScanError(error) {
   // Network/server failures can be retried from the last atomically committed
   // page. Integrity and snapshot violations must stop this session.
   if (message.includes("stale checkpoint")) return false;
-  if (/^supabase rest 4\\d\\d:/.test(message)) return true;
+  if (/^supabase rest 4\d\d:/.test(message)) return true;
   return [
     "source returned an invalid count",
     "source_count_changed:",
