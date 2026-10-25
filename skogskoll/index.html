@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173d2b">
+<title>Skogskoll – bevaka din skog</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f3f6f1;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:#fff;padding:26px max(18px,calc((100% - 1050px)/2))}h1{margin:0;font-size:clamp(1.8rem,4vw,2.5rem)}header p{margin:.4rem 0 0;color:#dce9df}main{max-width:1050px;margin:auto;padding:20px 16px 48px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:white;border:1px solid #dce4dd;border-radius:14px;padding:18px;min-width:0}.wide{grid-column:1/-1}h2{font-size:1.15rem;margin:0 0 10px}.muted{color:#607066;font-size:.92rem}.status{border-left:4px solid #d97706;padding:10px 12px;background:#fff7e6;border-radius:5px}.pill{display:inline-block;border-radius:999px;padding:4px 9px;background:#fff0d1;color:#7c3f00;font-size:.8rem;font-weight:700}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#f1f6f0;border-radius:10px;padding:12px}.stat strong{display:block;font-size:1.35rem;color:#145b37}label{display:block;font-size:.9rem;font-weight:600;margin:10px 0 5px}input,select,button{font:inherit}input,select{width:100%;padding:10px;border:1px solid #c9d5cb;border-radius:8px;background:#fff}button{border:0;border-radius:8px;background:#1d6840;color:#fff;padding:10px 14px;font-weight:650;cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.layers{display:flex;gap:10px;flex-wrap:wrap}.layers label{display:flex;align-items:center;gap:7px;background:#f1f6f0;padding:8px;border-radius:8px;font-weight:500;margin:0}.layers input{width:auto}.list{padding-left:20px}.list li{margin:6px 0}footer{margin-top:14px;font-size:.82rem;color:#607066}@media(max-width:700px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.stats{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>🌲 Skogskoll</h1><p>Håll koll på nya avverkningsanmälningar nära din skog.</p></header>
+<main>
+<div class="status"><span class="pill">TESTLÄGE</span> Larm är avstängda medan vi verifierar datakällan. Appen skickar inga mejl eller pushnotiser ännu.</div>
+<div class="grid" style="margin-top:14px">
+<section class="card">
+<h2>Din bevakning</h2>
+<p class="muted">Ange ett namn och en ungefärlig punkt för att skissa på en bevakning. Den här prototypen sparar inte uppgifterna permanent.</p>
+<label for="areaName">Namn på bevakningen</label><input id="areaName" placeholder="Ex. Skiftet vid sjön">
+<div class="row"><div><label for="lat">Latitud</label><input id="lat" type="number" step=".00001" value="63.74646"></div><div><label for="lon">Longitud</label><input id="lon" type="number" step=".00001" value="19.66455"></div></div>
+<label for="radius">Bevakningsradie</label><select id="radius"><option value="1000">1 km</option><option value="2500">2,5 km</option><option value="5000" selected>5 km</option><option value="10000">10 km</option><option value="20000">20 km</option></select>
+<div style="margin-top:12px"><button id="preview">Förhandsgranska i karta</button></div>
+<p id="previewStatus" class="muted" aria-live="polite">Välj område och öppna förhandsgranskningen i Skogs kartvy.</p>
+</section>
+<section class="card">
+<h2>Så fungerar larmen</h2>
+<div class="stats"><div class="stat"><strong>6 h</strong><span>planerat intervall</span></div><div class="stat"><strong>Mejl</strong><span>första kanal</span></div><div class="stat"><strong>Push</strong><span>i mobilen</span></div></div>
+<ul class="list"><li>Ny post måste ha en stabil källidentifierare.</li><li>Varje objekt lagras i historiken och dedupliceras.</li><li>Endast objekt som matchar din bevakningsgeometri kan ge larm.</li><li>Om källan ligger nere ska körningen markeras som fel – inte tolkas som att allt är borttaget.</li></ul>
+</section>
+<section class="card wide">
+<h2>Datakälla och verifiering</h2>
+<p>Prototypen utgår från Skogsstyrelsens befintliga lager för avverkningsanmälningar som redan används i Skog-kartan.</p>
+<p class="muted">En post som upptäcks första gången av Skogskoll är inte nödvändigtvis nyinkommen samma dag. Innan larm slås på måste vi jämföra upprepade körningar, granska datumfält, stabila ID:n, geometrier och paginering.</p>
+<p><a href="https://dahlinrobert-lgtm.github.io/Skog/karta.html">Öppna befintlig Skog-karta ↗</a></p>
+</section>
+</div>
+<footer>Skogskoll är en separat prototyp. Geometrisk närhet är inte ett bevis på fastighetsägande eller juridisk rådighet.</footer>
+</main>
+<script>
+"use strict";
+document.getElementById("preview").addEventListener("click",()=>{
+ const name=document.getElementById("areaName").value.trim()||"Min bevakning";
+ const lat=Number(document.getElementById("lat").value),lon=Number(document.getElementById("lon").value),radius=Number(document.getElementById("radius").value);
+ const status=document.getElementById("previewStatus");
+ if(!Number.isFinite(lat)||lat < -90||lat>90||!Number.isFinite(lon)||lon < -180||lon>180){status.textContent="Kontrollera latitud och longitud.";return;}
+ status.textContent=name+": "+lat.toFixed(5)+", "+lon.toFixed(5)+" · radie "+(radius/1000).toLocaleString("sv-SE")+" km. Permanent lagring kräver inloggning och databasanslutning.";
+ const url="https://dahlinrobert-lgtm.github.io/Skog/docs/karta.html?lat="+encodeURIComponent(lat)+"&lon="+encodeURIComponent(lon)+"&radius="+encodeURIComponent(radius);
+ window.open(url,"_blank","noopener");
+});
+</script>
+</body></html>
