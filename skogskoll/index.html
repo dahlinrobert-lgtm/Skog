@@ -32,6 +32,10 @@
 </section>
 <section class="card wide">
 <h2>Historik och upptäckter</h2>
+<p class="muted">Testa den nya matchningslogiken mot egna, lokala syntetiska observationer utan att ansluta databasen.</p>
+<div class="actions"><button id="runMatchPreview" class="secondary">Kör lokal matchningstest</button><button id="seedMatchDemo" class="secondary">Lägg till syntetiska testposter</button><button id="clearMatchDemo" class="secondary">Rensa testposter</button></div>
+<p id="matchPreviewStatus" class="muted" aria-live="polite">Ingen matchning har körts. Testposter är endast lokala.</p>
+<div id="matchPreviewResults"></div>
 <p class="muted">Här kommer appen att visa första observation, senare ändringar och matchning mot dina områden. Vi skiljer alltid på när Skogskoll upptäckte en post och källans eget inkomdatum.</p>
 <div class="stats"><div class="stat"><strong>Inte ansluten</strong><span class="small">Datakälla</span></div><div class="stat"><strong>Testläge</strong><span class="small">Historik</span></div><div class="stat"><strong>0</strong><span class="small">Verifierade larm</span></div></div>
 <div id="historyList" class="empty" style="margin-top:12px">Ingen verifierad observation att visa ännu. Vi visar inte påhittade avverkningsanmälningar i historiken.</div>
@@ -53,7 +57,8 @@
 </div>
 <footer>Skogskoll är en prototyp. Lokala testinställningar är inte en säkerhetskopia och försvinner om webbläsarens lokala webbplatsdata rensas.</footer>
 </main>
-<script>
+<script type="module">
+import { createLocalMatchPreview } from "./src/watch-area-preview.mjs";
 "use strict";
 const AREA_KEY="skogskoll.watchAreas.v1";
 const PREF_KEY="skogskoll.alertPreferences.v1";
@@ -126,6 +131,30 @@ function loadPrefs(){const prefs=readJson(PREF_KEY,{});for(const id of prefField
 byId("savePrefs").addEventListener("click",()=>{
  const prefs=Object.fromEntries(prefFields.map(id=>[id,byId(id).checked]));
  saveJson(PREF_KEY,prefs);byId("prefStatus").textContent="Inställningar sparade lokalt. E-post och push är fortfarande avstängda i systemet; inget skickas.";
+});
+const matchPreview=createLocalMatchPreview();
+byId("seedMatchDemo").addEventListener("click",()=>{
+ const observations=[
+  {sourceId:"demo-near",label:"Syntetisk post – nära bevakningen",eventType:"test",geometry:{type:"Point",coordinates:[19.67,63.75]}},
+  {sourceId:"demo-far",label:"Syntetisk post – långt bort",eventType:"test",geometry:{type:"Point",coordinates:[20.1,64.1]}}
+ ];
+ matchPreview.saveObservations(observations);
+ byId("matchPreviewStatus").textContent="Två syntetiska testposter sparades lokalt. De är inte verkliga avverkningsanmälningar.";
+ byId("matchPreviewResults").innerHTML="";
+});
+byId("clearMatchDemo").addEventListener("click",()=>{
+ matchPreview.saveObservations([]);
+ byId("matchPreviewStatus").textContent="Lokala testposter rensade.";
+ byId("matchPreviewResults").innerHTML="";
+});
+byId("runMatchPreview").addEventListener("click",()=>{
+ try{
+  const areas=getAreas();
+  if(!areas.length){byId("matchPreviewStatus").textContent="Skapa först minst ett lokalt bevakningsområde.";return}
+  const results=matchPreview.run();
+  byId("matchPreviewStatus").textContent="Matchning klar: "+results.length+" matchande område/post-par. Beräkningen kördes lokalt; inga nätverksanrop eller aviseringar gjordes.";
+  byId("matchPreviewResults").innerHTML=results.length?results.map(item=>'<article class="history-item"><strong>'+escapeHtml(item.observationLabel)+'</strong><span class="muted small">Bevakning: '+escapeHtml(item.areaName)+' · '+(item.match?'Geografisk match':'Ingen geografisk match')+'</span><span class="muted small">ID: '+escapeHtml(item.observationId??'saknas')+' · syntetisk testdata</span></article>').join(""):'<div class="empty">Inga matchningar för de sparade lokala testposterna.</div>';
+ }catch(error){byId("matchPreviewStatus").textContent="Matchningstestet misslyckades: "+error.message}
 });
 toggleType();renderAreas();loadPrefs();
 </script>
