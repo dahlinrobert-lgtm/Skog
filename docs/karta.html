@@ -82,7 +82,7 @@ const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
 const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
 const FOUR_COLOR_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7"];
-const CASE_GROUP_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7","#D55E00","#56B4E9","#882255","#AA4499","#332288","#999933","#44AA99","#CC6677"];
+const CASE_GROUP_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7","#D55E00","#56B4E9","#882255","#AA4499","#332288","#999933","#44AA99","#CC6677","#117733","#88CCEE","#CC3311","#6699CC","#EE7733","#997700","#EE3377","#BBBBBB"];
 let caseColorByFeature=new Map();
 let categoryColorMap=new Map();
 function performedYear(feature){
@@ -136,43 +136,47 @@ function assignCaseGroupColors(features){
   groups.get(id).features.push(feature);groupByFeature.set(feature,id);
  }
  const ids=[...groups.keys()],adj=new Map(ids.map(id=>[id,new Set()]));
- // Treat nearby boundary vertices as neighbors, not only exactly shared coordinates.
- // 35 m catches small digitizing gaps while requiring multiple matches avoids coloring
- // polygons as neighbors just because they touch at one corner.
- const toleranceM=35,cellSizeM=toleranceM,grid=new Map(),pairMatches=new Map();
- function collectVertices(geometry,out){
+ // Buffer adjacency: sample boundary segments every 15 m, then look for samples
+ // within 35 m. This catches parallel edges with a small gap even when their vertices
+ // are far apart. Three distinct near-pairs help reject corner-only contacts.
+ const toleranceM=35,sampleStepM=15,cellSizeM=toleranceM,grid=new Map(),pairMatches=new Map();
+ function project(lon,lat){return {x:lon*111320*Math.cos(lat*Math.PI/180),y:lat*110540};}
+ function collectBoundarySamples(geometry,out){
   if(!geometry)return;
   function walk(value){
    if(!Array.isArray(value))return;
-   if(value.length>=2&&typeof value[0]==="number"&&typeof value[1]==="number"){
-    const lon=value[0],lat=value[1],x=lon*111320*Math.cos(lat*Math.PI/180),y=lat*110540;
-    out.push({x,y,lon,lat});return;
+   if(value.length&&Array.isArray(value[0])&&typeof value[0][0]==="number"){
+    // A ring: interpolate points along each segment in approximate local metres.
+    for(let i=0;i<value.length-1;i++){
+     const a=value[i],b=value[i+1],pa=project(a[0],a[1]),pb=project(b[0],b[1]);
+     const distance=Math.hypot(pb.x-pa.x,pb.y-pa.y),steps=Math.max(1,Math.ceil(distance/sampleStepM));
+     for(let j=0;j<steps;j++){
+      const t=j/steps;out.push({x:pa.x+(pb.x-pa.x)*t,y:pa.y+(pb.y-pa.y)*t});
+     }
+    }
+    const last=value[value.length-1];if(last&&typeof last[0]==="number")out.push(project(last[0],last[1]));
+    return;
    }
    for(const child of value)walk(child);
   }
   walk(geometry.coordinates);
  }
  function pairKey(a,b){return a<b?a+"\u0000"+b:b+"\u0000"+a;}
- const groupVertexKeys=new Set();
+ const groupSampleKeys=new Set();
  for(const [id,group] of groups){
   for(const feature of group.features){
-   const raw=[];collectVertices(feature.geometry,raw);
-   for(const v of raw){
-    // De-duplicate repeated vertices within a group at approximately metre precision.
+   const samples=[];collectBoundarySamples(feature.geometry,samples);
+   for(const v of samples){
     const unique=id+"|"+Math.round(v.x)+","+Math.round(v.y);
-    if(groupVertexKeys.has(unique))continue;groupVertexKeys.add(unique);
+    if(groupSampleKeys.has(unique))continue;groupSampleKeys.add(unique);
     const gx=Math.floor(v.x/cellSizeM),gy=Math.floor(v.y/cellSizeM);
     for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++){
-     const bucket=grid.get((gx+dx)+","+ (gy+dy));
-     if(!bucket)continue;
+     const bucket=grid.get((gx+dx)+","+(gy+dy));if(!bucket)continue;
      for(const other of bucket){
-      if(other.id===id)continue;
-      const distance=Math.hypot(v.x-other.x,v.y-other.y);
-      if(distance>toleranceM)continue;
+      if(other.id===id||Math.hypot(v.x-other.x,v.y-other.y)>toleranceM)continue;
       const key=pairKey(id,other.id);
-      if(!pairMatches.has(key))pairMatches.set(key,{a:id<other.id?id:other.id,b:id<other.id?other.id:id,vertices:new Set()});
-      // Count distinct nearby vertex positions, not every pair of dense vertices.
-      pairMatches.get(key).vertices.add(Math.round((v.x+other.x)/2)+","+Math.round((v.y+other.y)/2));
+      if(!pairMatches.has(key))pairMatches.set(key,{a:id<other.id?id:other.id,b:id<other.id?other.id:id,samples:new Set()});
+      pairMatches.get(key).samples.add(Math.round((v.x+other.x)/2)+","+Math.round((v.y+other.y)/2));
      }
     }
     const bucketKey=gx+","+gy;if(!grid.has(bucketKey))grid.set(bucketKey,[]);
@@ -181,7 +185,7 @@ function assignCaseGroupColors(features){
   }
  }
  for(const match of pairMatches.values()){
-  if(match.vertices.size<2)continue;
+  if(match.samples.size<3)continue;
   adj.get(match.a)?.add(match.b);adj.get(match.b)?.add(match.a);
  }
  // DSATUR coloring: color the most constrained neighboring group first.
