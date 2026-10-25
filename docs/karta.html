@@ -309,7 +309,7 @@ async function load(){
  document.getElementById("reload").disabled=true;
  try{
   const wantSamrad=document.getElementById("showSamrad").checked;
-  const [planned,performed,samradPoints,samradLines,samradAreas]=await Promise.all([
+  let [planned,performed,samradPoints,samradLines,samradAreas]=await Promise.all([
    getLayer(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal),
    getLayer(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal),
    wantSamrad?getLayer(SAMRAD_POINTS,"*",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false}),
@@ -317,8 +317,8 @@ async function load(){
    wantSamrad?getLayer(SAMRAD_AREAS,"*",bounds,signal):Promise.resolve({type:"FeatureCollection",features:[],pages:0,truncated:false})
   ]);
   if(requestId!==viewRequestId)return;
-  filterToRadius(planned);filterToRadius(performed);
-  if(wantSamrad){filterToRadius(samradPoints);filterToRadius(samradLines);filterToRadius(samradAreas);}
+  planned=filterToRadius(planned);performed=filterToRadius(performed);
+  if(wantSamrad){samradPoints=filterToRadius(samradPoints);samradLines=filterToRadius(samradLines);samradAreas=filterToRadius(samradAreas);}
   plannedLayer.clearLayers();performedLayer.clearLayers();
   samradPointLayer.clearLayers();samradLineLayer.clearLayers();samradAreaLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);
