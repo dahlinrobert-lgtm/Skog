@@ -33,6 +33,7 @@ jobs:
           node --check skogskoll/src/scan-plan.mjs
           node --check skogskoll/src/scan-worker-core.mjs
           node --check skogskoll/src/observation-core.mjs
+          node --check skogskoll/src/supabase-adapters.mjs
       - name: Probe public ArcGIS source (read-only)
         run: node skogskoll/scripts/probe-source.mjs
       - name: Upload source diagnostics
