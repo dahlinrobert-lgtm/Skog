@@ -29,6 +29,14 @@ Migration 002 adds:
 
 The migration deliberately creates no end-user policies for worker-owned tables. Use the service-role key only in a server-side worker. This migration does not itself run ingestion or send notifications. The scan worker must only set a scan to `complete` after the count, page coverage, transfer-limit and ID-integrity checks all pass. A source-count change invalidates an in-progress checkpoint; restart the scan rather than mixing different source snapshots.
 
+## Production adapters and explicit manual entrypoint
+
+`src/supabase-adapters.mjs` implements the ArcGIS source adapter and service-role Supabase REST/RPC store. It restores checkpoints from `scan_sessions` and `scan_seen_ids`, keeps IDs normalized in the database, and passes each page to the transactional RPC. Adapter contract tests run in the normal test suite.
+
+`scripts/run-scan.mjs` is deliberately not attached to the scheduled workflow. It exits before network/database access unless `SKOGSKOLL_ENABLE_INGESTION=YES`, `SKOGSKOLL_SCAN_MODE=baseline|incremental`, `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are explicitly provided. Default run budget is 10 pages of 500 records, to be resumed by a subsequent manual invocation. Use the service-role key only in a trusted server environment; never put it in the frontend or GitHub Pages. No secrets are configured by this commit.
+
+Transient network and server errors preserve the last committed checkpoint; known source-integrity violations stop the session. A source count check cannot prove snapshot consistency when the source changes and its count coincidentally stays constant, so a completed scan is a validated offset-pagination pass, not a transactionally consistent snapshot of the external ArcGIS service.
+
 ## Bounded worker orchestration core
 
 `src/scan-worker-core.mjs` coordinates one bounded batch using injected source and store adapters. It checks the source count before each page and again before completion, validates page IDs, and returns `in_progress` when the per-run page budget is reached. It never sends alerts.
