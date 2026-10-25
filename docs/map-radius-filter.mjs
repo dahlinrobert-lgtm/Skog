@@ -144,13 +144,33 @@ export function clipPolygonCollectionToRadius(collection, center, radiusMeters, 
   });
   const features = [];
   let clippedCount = 0;
+  let polygonsConsidered = 0, polygonsClipped = 0, polygonsAlreadyInside = 0;
+  const withinCircle = coord => Array.isArray(coord) && coord.length >= 2 &&
+    Number.isFinite(coord[0]) && Number.isFinite(coord[1]) &&
+    distanceMeters(center, coord) <= radiusMeters + 2;
+  const allCoordinatesWithinCircle = value => {
+    if (!Array.isArray(value)) return true;
+    if (value.length >= 2 && typeof value[0] === "number" && typeof value[1] === "number") {
+      return withinCircle(value);
+    }
+    return value.every(allCoordinatesWithinCircle);
+  };
   for (const feature of collection.features) {
     const type = feature?.geometry?.type;
     if (type !== "Polygon" && type !== "MultiPolygon") {
       features.push(feature);
       continue;
     }
+    polygonsConsidered++;
+    // A circle is convex: if every polygon vertex is inside it, every straight
+    // edge is inside too. Avoid an expensive Turf intersection in this common case.
+    if (allCoordinatesWithinCircle(feature.geometry.coordinates)) {
+      features.push(feature);
+      polygonsAlreadyInside++;
+      continue;
+    }
     try {
+      polygonsClipped++;
       const clipped = turf.intersect(turf.featureCollection([feature, clipCircle]));
       if (!clipped) {
         clippedCount++;
@@ -163,5 +183,10 @@ export function clipPolygonCollectionToRadius(collection, center, radiusMeters, 
       clippedCount++;
     }
   }
-  return { ...collection, features, clippedOutside: clippedCount };
+  return {
+    ...collection,
+    features,
+    clippedOutside: clippedCount,
+    clipStats: { polygonsConsidered, polygonsClipped, polygonsAlreadyInside }
+  };
 }
