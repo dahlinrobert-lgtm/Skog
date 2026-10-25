@@ -2,7 +2,6 @@ name: Skogskoll source probe
 on:
   push:
     branches: [main]
-  pull_request:
     paths:
       - ".github/workflows/skogskoll-source-probe.yml"
       - "skogskoll/scripts/**"
@@ -11,6 +10,7 @@ on:
       - "skogskoll/README.md"
       - "skogskoll/INGESTION.md"
       - "skogskoll/db/**"
+  pull_request:
     paths:
       - ".github/workflows/skogskoll-source-probe.yml"
       - "skogskoll/scripts/**"
