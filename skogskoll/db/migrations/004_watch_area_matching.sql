@@ -46,7 +46,7 @@ begin
   from public.source_observations o
   where o.active = true
     and o.geom is not null
-    and (p_since is null or o.first_seen_at >= p_since)
+    and (p_since is null or o.last_seen_at >= p_since)
     and (
       (v_area.radius_m is not null and
         st_dwithin(o.geom::geography, v_area.geom::geography, v_area.radius_m))
