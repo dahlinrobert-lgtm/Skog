@@ -22,7 +22,7 @@ export function createScanPlan({ reportedTotal, pageSize = 500, maxPagesPerRun =
   };
 }
 
-export function createCheckpoint({ sourceKey, reportedTotal, pageSize, nextOffset = 0, fetchedCount = 0, seenIds = [] }) {
+export function createCheckpoint({ sourceKey, reportedTotal, pageSize, nextOffset = 0, fetchedCount = 0, seenIds = [], externalSeenIds = false }) {
   if (!sourceKey || typeof sourceKey !== "string") throw new TypeError("sourceKey is required");
   for (const [name, value] of Object.entries({ reportedTotal, pageSize, nextOffset, fetchedCount })) {
     if (!Number.isSafeInteger(value) || value < 0) throw new TypeError(name + " must be a non-negative safe integer");
@@ -33,7 +33,8 @@ export function createCheckpoint({ sourceKey, reportedTotal, pageSize, nextOffse
   if (!Array.isArray(seenIds)) throw new TypeError("seenIds must be an array");
   const ids = seenIds.map(String);
   if (new Set(ids).size !== ids.length) throw new Error("seenIds must be unique");
-  if (ids.length !== fetchedCount) throw new Error("seenIds length must equal fetchedCount");
+  if (!externalSeenIds && ids.length !== fetchedCount) throw new Error("seenIds length must equal fetchedCount");
+  if (externalSeenIds && ids.length !== 0) throw new Error("externalSeenIds checkpoints must not embed IDs");
   if (nextOffset !== fetchedCount) throw new Error("nextOffset must equal fetchedCount");
   return {
     schemaVersion: 1,
@@ -45,6 +46,8 @@ export function createCheckpoint({ sourceKey, reportedTotal, pageSize, nextOffse
     // Keep the pure planning API self-contained; production stores can load
     // normalized IDs from scan_seen_ids and omit this in the persisted JSON.
     seenIds: [...new Set(ids)],
+    externalSeenIds,
+    seenIdsCount: fetchedCount,
     updatedAt: null,
     complete: reportedTotal === 0
   };
@@ -63,6 +66,9 @@ export function validateCheckpoint(checkpoint, { sourceKey, reportedTotal, pageS
   if (checkpoint?.nextOffset !== checkpoint?.fetchedCount) reasons.push("offset_count_mismatch");
   if (!Array.isArray(checkpoint?.seenIds)) {
     reasons.push("invalid_seen_ids");
+  } else if (checkpoint.externalSeenIds === true) {
+    if (checkpoint.seenIds.length !== 0) reasons.push("external_checkpoint_embeds_ids");
+    if (checkpoint.seenIdsCount !== checkpoint.fetchedCount) reasons.push("checkpoint_id_count_mismatch");
   } else {
     if (new Set(checkpoint.seenIds.map(String)).size !== checkpoint.seenIds.length) reasons.push("duplicate_checkpoint_ids");
     if (checkpoint.seenIds.length !== checkpoint.fetchedCount) reasons.push("checkpoint_id_count_mismatch");
@@ -82,7 +88,7 @@ export function advanceCheckpoint(checkpoint, page, { idOf = feature => feature?
   }
   if (page.features.length > checkpoint.pageSize) throw new Error("page exceeds requested page size");
 
-  const existing = new Set(checkpoint.seenIds);
+  const existing = new Set(checkpoint.externalSeenIds === true ? [] : checkpoint.seenIds);
   const pageIds = [];
   for (const feature of page.features) {
     const id = idOf(feature);
@@ -104,7 +110,8 @@ export function advanceCheckpoint(checkpoint, page, { idOf = feature => feature?
     ...checkpoint,
     nextOffset,
     fetchedCount,
-    seenIds: [...checkpoint.seenIds, ...pageIds],
+    seenIds: checkpoint.externalSeenIds === true ? [] : [...checkpoint.seenIds, ...pageIds],
+    seenIdsCount: checkpoint.fetchedCount + pageIds.length,
     updatedAt: observedAt,
     complete
   };
