@@ -37,16 +37,16 @@
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span>Välj en polygon för attribut och datum.</span></div>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
+<section class="panel">
+<div id="map" aria-label="Karta över planerade och utförda avverkningar"></div>
+<footer>Datakälla: Skogsstyrelsens öppna geodatatjänster. Planerade anmälningar och utförda ytor är separata register och en geometrisk närhet innebär inte i sig att en viss anmälan säkert har lett till en viss avverkning.</footer>
+</section>
 <section class="panel" aria-labelledby="durationTitle">
 <h2 id="durationTitle">Tid från ärendeår till utförd avverkning</h2>
 <p class="muted">För utförda polygoner i valt område. Skillnaden beräknas som ärendeår minus året för avverkningsdatumet. Exempel: samma år = under 1 år; ett års skillnad = 1–2 år.</p>
 <div id="durationSummary" class="muted">Inväntar data…</div>
 <div id="durationHistogram" role="img" aria-label="Histogram över tiden mellan ärendeår och avverkningsår"></div>
 <p id="durationFootnote" class="muted"></p>
-</section>
-<section class="panel">
-<div id="map" aria-label="Karta över planerade och utförda avverkningar"></div>
-<footer>Datakälla: Skogsstyrelsens öppna geodatatjänster. Planerade anmälningar och utförda ytor är separata register och en geometrisk närhet innebär inte i sig att en viss anmälan säkert har lett till en viss avverkning.</footer>
 </section>
 </main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
