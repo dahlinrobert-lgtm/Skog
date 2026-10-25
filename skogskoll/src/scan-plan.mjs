@@ -30,7 +30,11 @@ export function createCheckpoint({ sourceKey, reportedTotal, pageSize, nextOffse
   if (pageSize < 1) throw new TypeError("pageSize must be positive");
   if (nextOffset > reportedTotal) throw new RangeError("nextOffset cannot exceed reportedTotal");
   if (fetchedCount > reportedTotal) throw new RangeError("fetchedCount cannot exceed reportedTotal");
-  const ids = Array.isArray(seenIds) ? seenIds.map(String) : [];
+  if (!Array.isArray(seenIds)) throw new TypeError("seenIds must be an array");
+  const ids = seenIds.map(String);
+  if (new Set(ids).size !== ids.length) throw new Error("seenIds must be unique");
+  if (ids.length !== fetchedCount) throw new Error("seenIds length must equal fetchedCount");
+  if (nextOffset !== fetchedCount) throw new Error("nextOffset must equal fetchedCount");
   return {
     schemaVersion: 1,
     sourceKey,
@@ -40,7 +44,7 @@ export function createCheckpoint({ sourceKey, reportedTotal, pageSize, nextOffse
     fetchedCount,
     seenIds: [...new Set(ids)],
     updatedAt: null,
-    complete: false
+    complete: reportedTotal === 0
   };
 }
 
@@ -54,7 +58,16 @@ export function validateCheckpoint(checkpoint, { sourceKey, reportedTotal, pageS
   if (!Number.isSafeInteger(checkpoint?.fetchedCount) || checkpoint.fetchedCount < 0) reasons.push("invalid_fetched_count");
   if (checkpoint?.nextOffset > reportedTotal) reasons.push("offset_exceeds_total");
   if (checkpoint?.fetchedCount > reportedTotal) reasons.push("fetched_exceeds_total");
-  if (!Array.isArray(checkpoint?.seenIds)) reasons.push("invalid_seen_ids");
+  if (checkpoint?.nextOffset !== checkpoint?.fetchedCount) reasons.push("offset_count_mismatch");
+  if (!Array.isArray(checkpoint?.seenIds)) {
+    reasons.push("invalid_seen_ids");
+  } else {
+    if (new Set(checkpoint.seenIds.map(String)).size !== checkpoint.seenIds.length) reasons.push("duplicate_checkpoint_ids");
+    if (checkpoint.seenIds.length !== checkpoint.fetchedCount) reasons.push("checkpoint_id_count_mismatch");
+  }
+  if (checkpoint?.complete !== (checkpoint?.nextOffset === reportedTotal && checkpoint?.fetchedCount === reportedTotal)) {
+    reasons.push("completion_state_mismatch");
+  }
   return { valid: reasons.length === 0, reasons };
 }
 
@@ -85,9 +98,6 @@ export function advanceCheckpoint(checkpoint, page, { idOf = feature => feature?
     throw new Error("page exceeds source total; do not advance checkpoint");
   }
   const complete = nextOffset === checkpoint.reportedTotal && fetchedCount === checkpoint.reportedTotal;
-  if (complete && new Set([...checkpoint.seenIds, ...pageIds]).size !== reportedUniqueCount(checkpoint.seenIds, pageIds)) {
-    throw new Error("internal ID uniqueness check failed");
-  }
   return {
     ...checkpoint,
     nextOffset,
@@ -96,7 +106,4 @@ export function advanceCheckpoint(checkpoint, page, { idOf = feature => feature?
     updatedAt: observedAt,
     complete
   };
-}
-function reportedUniqueCount(existing, next) {
-  return new Set([...existing, ...next]).size;
 }
