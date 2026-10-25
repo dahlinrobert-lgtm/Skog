@@ -62,20 +62,29 @@ begin
     raise exception 'page transaction did not persist ID/current/history together (seen %, obs %, hist %)', v_seen, v_obs, v_history;
   end if;
 
-  -- Repeating an ID in the same scan must be rejected and must not advance checkpoint.
+  -- Duplicate IDs within a page must be rejected without leaking ledger rows.
   begin
     perform * from public.skogskoll_commit_page(
-      v_scan, 1, 1, 2, 2, v_feature, v_ids, v_now + interval '1 minute'
+      v_scan, 1, 1, 2, 2,
+      jsonb_build_array(
+        jsonb_build_object('source', v_source, 'source_id', 'smoke-2', 'content_hash', v_hash, 'attributes', '{}'::jsonb, 'geometry', null),
+        jsonb_build_object('source', v_source, 'source_id', 'smoke-3', 'content_hash', v_hash, 'attributes', '{}'::jsonb, 'geometry', null)
+      ),
+      jsonb_build_array('smoke-2', 'smoke-2'),
+      v_now + interval '1 minute'
     );
-    raise exception 'duplicate ID across scan pages was unexpectedly accepted';
+    raise exception 'duplicate IDs within a page were unexpectedly accepted';
   exception
     when others then
-      if sqlerrm = 'duplicate ID across scan pages was unexpectedly accepted' then raise; end if;
-      if position('duplicate ID across scan pages' in sqlerrm) = 0 then raise; end if;
+      if sqlerrm = 'duplicate IDs within a page were unexpectedly accepted' then raise; end if;
+      if position('duplicate IDs within page' in sqlerrm) = 0 then raise; end if;
   end;
 
   select count(*) into v_seen from public.scan_seen_ids where scan_id = v_scan;
-  if v_seen <> 1 then raise exception 'failed duplicate page leaked into seen-ID ledger'; end if;
+  if v_seen <> 1 then raise exception 'rejected duplicate page leaked into seen-ID ledger'; end if;
+
+  -- Finish the first scan before starting another session for the same source.
+  perform public.skogskoll_finish_scan(v_scan);
 
   -- A changed payload on a new scan must update current state and append history.
   -- The source observation ID is stable across scans; run IDs are not.
