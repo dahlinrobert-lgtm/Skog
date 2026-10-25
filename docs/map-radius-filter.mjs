@@ -49,6 +49,31 @@ export function featureTouchesRadius(feature, center, radiusMeters, toleranceMet
   const geometry = feature?.geometry;
   if (!geometry || typeof geometry.type !== "string") return false;
 
+  // Cheap bounding-box rejection before testing every vertex and segment.
+  const latPadding = (radiusMeters + toleranceMeters) / 110_540;
+  const lonScale = Math.max(0.01, Math.cos(center.lat * Math.PI / 180));
+  const lonPadding = (radiusMeters + toleranceMeters) / (111_320 * lonScale);
+  const bbox = [Infinity, Infinity, -Infinity, -Infinity];
+  const visitCoordinates = value => {
+    if (!Array.isArray(value)) return;
+    if (value.length >= 2 && typeof value[0] === "number" && typeof value[1] === "number") {
+      if (Number.isFinite(value[0]) && Number.isFinite(value[1])) {
+        bbox[0] = Math.min(bbox[0], value[0]);
+        bbox[1] = Math.min(bbox[1], value[1]);
+        bbox[2] = Math.max(bbox[2], value[0]);
+        bbox[3] = Math.max(bbox[3], value[1]);
+      }
+      return;
+    }
+    for (const child of value) visitCoordinates(child);
+  };
+  if (geometry.type === "GeometryCollection") {
+    for (const item of geometry.geometries || []) visitCoordinates(item.coordinates);
+  } else visitCoordinates(geometry.coordinates);
+  if (bbox[0] !== Infinity &&
+      (bbox[2] < center.lon - lonPadding || bbox[0] > center.lon + lonPadding ||
+       bbox[3] < center.lat - latPadding || bbox[1] > center.lat + latPadding)) return false;
+
   const within = coord => Array.isArray(coord) && coord.length >= 2 &&
     Number.isFinite(coord[0]) && Number.isFinite(coord[1]) &&
     distanceMeters(center, coord) <= radiusMeters + toleranceMeters;
