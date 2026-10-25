@@ -82,7 +82,27 @@ const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
 const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
 const FOUR_COLOR_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7"];
-const CASE_GROUP_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7","#D55E00","#56B4E9","#882255","#AA4499","#332288","#999933","#44AA99","#CC6677","#117733","#88CCEE","#CC3311","#6699CC","#EE7733","#997700","#EE3377","#BBBBBB","#4477AA","#228833","#AA3377","#66CCEE","#AA4499","#44AA99","#999933","#DDCC77","#CC6677","#332288","#88CCEE","#117733"];
+function makeCaseGroupPalette(){
+ const palette=[],seen=new Set();
+ // Spread hues with a golden-angle sequence; alternate luminance and saturation to
+ // make neighboring colors distinguishable even in dense local clusters.
+ for(let i=0;i<64;i++){
+  const hue=(i*137.50776405)%360;
+  const sat=[78,68,86,72][i%4];
+  const light=[43,54,47,61,38,57][i%6];
+  const c=hslToHex(hue,sat,light);
+  if(!seen.has(c)){seen.add(c);palette.push(c);}
+ }
+ return palette;
+}
+function hslToHex(h,s,l){
+ s/=100;l/=100;
+ const k=n=>(n+h/30)%12;
+ const a=s*Math.min(l,1-l);
+ const f=n=>Math.round(255*(l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)))));
+ return "#"+[f(0),f(8),f(4)].map(v=>v.toString(16).padStart(2,"0")).join("").toUpperCase();
+}
+const CASE_GROUP_PALETTE=makeCaseGroupPalette();
 let caseColorByFeature=new Map();
 let categoryColorMap=new Map();
 function performedYear(feature){
@@ -204,13 +224,25 @@ function assignCaseGroupColors(features){
    const degree=adj.get(id).size;
    if(used.size>bestSaturation||(used.size===bestSaturation&&degree>bestDegree)){pick=id;bestSaturation=used.size;bestDegree=degree;}
   }
-  const used=new Set([...adj.get(pick)].map(n=>assigned.get(n)).filter(v=>v!==undefined));
-  let color=CASE_GROUP_PALETTE.findIndex((_,i)=>!used.has(i));
-  if(color<0){
-   // More than twelve distinct neighboring colors: minimize collisions rather than fail.
-   let best=Infinity; color=0;
+  const neighborColors=[...adj.get(pick)].map(n=>assigned.get(n)).filter(v=>v!==undefined);
+  let candidates=CASE_GROUP_PALETTE.map((hex,index)=>({hex,index})).filter(item=>!neighborColors.includes(item.index));
+  let color;
+  if(candidates.length){
+   // Among legal colors, choose one maximally separated from already-colored neighbors.
+   // This avoids repeatedly using the same first few palette colors in large local clusters.
+   const rgb=hex=>[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16));
+   const dist=(a,b)=>{const x=rgb(a),y=rgb(b);return Math.sqrt((x[0]-y[0])**2+(x[1]-y[1])**2+(x[2]-y[2])**2);};
+   candidates.sort((a,b)=>{
+    const minA=neighborColors.length?Math.min(...neighborColors.map(i=>dist(a.hex,CASE_GROUP_PALETTE[i]))):0;
+    const minB=neighborColors.length?Math.min(...neighborColors.map(i=>dist(b.hex,CASE_GROUP_PALETTE[i]))):0;
+    return minB-minA||a.index-b.index;
+   });
+   color=candidates[0].index;
+  }else{
+   // If every palette color is already used by a neighbor, minimize direct collisions.
+   let best=Infinity;color=0;
    for(let i=0;i<CASE_GROUP_PALETTE.length;i++){
-    const count=[...adj.get(pick)].filter(n=>assigned.get(n)===i).length;
+    const count=neighborColors.filter(n=>n===i).length;
     if(count<best){best=count;color=i;}
    }
    if(best>0)conflicts++;
