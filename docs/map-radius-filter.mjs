@@ -148,8 +148,13 @@ export function clipPolygonCollectionToRadius(collection, center, radiusMeters, 
   const withinCircle = coord => Array.isArray(coord) && coord.length >= 2 &&
     Number.isFinite(coord[0]) && Number.isFinite(coord[1]) &&
     distanceMeters(center, coord) <= radiusMeters + 2;
+  const hasCoordinates = value => {
+    if (!Array.isArray(value)) return false;
+    if (value.length >= 2 && typeof value[0] === "number" && typeof value[1] === "number") return true;
+    return value.some(hasCoordinates);
+  };
   const allCoordinatesWithinCircle = value => {
-    if (!Array.isArray(value)) return true;
+    if (!Array.isArray(value)) return false;
     if (value.length >= 2 && typeof value[0] === "number" && typeof value[1] === "number") {
       return withinCircle(value);
     }
@@ -164,7 +169,7 @@ export function clipPolygonCollectionToRadius(collection, center, radiusMeters, 
     polygonsConsidered++;
     // A circle is convex: if every polygon vertex is inside it, every straight
     // edge is inside too. Avoid an expensive Turf intersection in this common case.
-    if (allCoordinatesWithinCircle(feature.geometry.coordinates)) {
+    if (hasCoordinates(feature.geometry.coordinates) && allCoordinatesWithinCircle(feature.geometry.coordinates)) {
       features.push(feature);
       polygonsAlreadyInside++;
       continue;
