@@ -106,6 +106,5 @@ try {
   process.exitCode = 1;
 }
 await mkdir("skogskoll/reports", { recursive: true });
-await writeFile(OUT, JSON.stringify(report, null, 2) + "
-");
+await writeFile(OUT, JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));
