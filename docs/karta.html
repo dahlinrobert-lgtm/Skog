@@ -649,7 +649,7 @@ async function getLayer(base,fields,bounds,signal,stats){
  if(cached)layerResponseCache.delete(cacheKey);
  const all=[],seen=new Set();
  let offset=0,pages=0,hasMore=true,truncated=false;
- const pageSize=300,maxPages=20;
+ const pageSize=300,maxPages=100;
  while(hasMore&&pages<maxPages){
   if(stats)stats.apiRequests++;
   const res=await fetch(queryUrl(base,fields,bounds,offset),{mode:"cors",signal});
@@ -771,6 +771,9 @@ async function load(){
    console.error("Polygon clipping unavailable; showing radius-filtered original polygons",clipError);
   }
   perf.clippingMs=Math.round((performance.now()-clipStartedAt)*100)/100;
+  perf.polygonsConsidered=(planned.clipStats?.polygonsConsidered||0)+(performed.clipStats?.polygonsConsidered||0);
+  perf.polygonsClipped=(planned.clipStats?.polygonsClipped||0)+(performed.clipStats?.polygonsClipped||0);
+  perf.polygonsAlreadyInside=(planned.clipStats?.polygonsAlreadyInside||0)+(performed.clipStats?.polygonsAlreadyInside||0);
   if(requestId!==viewRequestId||signal.aborted)return;
   const renderStartedAt=performance.now();
   plannedLayer.clearLayers();performedLayer.clearLayers();
