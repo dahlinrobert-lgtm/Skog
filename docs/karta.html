@@ -648,7 +648,7 @@ async function getLayer(base,fields,bounds,signal,stats){
  }
  if(cached)layerResponseCache.delete(cacheKey);
  const all=[],seen=new Set();
- let pages=0,hasMore=true,truncated=false;
+ let pages=0,hasMore=true,truncated=false,offset=0;
  const pageSize=300,maxPages=500,batchSize=4,fetchStartedAt=performance.now();
  let fetchMs=0,parseMs=0,dedupeMs=0,emptyPages=0;
  while(hasMore&&pages<maxPages){
@@ -659,8 +659,7 @@ async function getLayer(base,fields,bounds,signal,stats){
   // retain parallel batches for throughput.
   const adaptiveBatchSize=pages===0?1:pages===1?2:batchSize;
   const batchCount=Math.min(adaptiveBatchSize,maxPages-pages);
-  const pageBaseOffset=offset;
-  const offsets=Array.from({length:batchCount},(_,i)=>(pages+i)*pageSize);
+  const offsets=Array.from({length:batchCount},(_,i)=>offset+i*pageSize);
   if(stats)stats.apiRequests+=batchCount;
   const responses=await Promise.all(offsets.map(async requestedOffset=>{
    const requestStartedAt=performance.now();
