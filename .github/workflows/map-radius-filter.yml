@@ -1,7 +1,7 @@
 name: Map radius filter
 on:
   push:
-    branches: [fix/samrad-radius-filter]
+    branches: [fix/clip-polygons-to-radius]
     paths:
       - "docs/karta.html"
       - "docs/map-radius-filter.mjs"
@@ -35,8 +35,10 @@ jobs:
             import { readFileSync } from "node:fs";
             const html = readFileSync("docs/karta.html", "utf8");
             if (!html.includes("<script type=\"module\">")) throw new Error("Map inline script must be a module to import the shared filter");
-            if (!html.includes("import { filterFeatureCollectionToRadius } from \"./map-radius-filter.mjs\";")) throw new Error("Map must import shared radius filter from published docs asset");
+            if (!html.includes("filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from \"./map-radius-filter.mjs\";")) throw new Error("Map must import radius filter and polygon clipper from published docs asset");
             if (!html.includes("planned=filterToRadius(planned);performed=filterToRadius(performed);")) throw new Error("Filtered planned and performed collections must be assigned before rendering");
             if (!html.includes("if(wantSamrad){samradPoints=filterToRadius(samradPoints);samradLines=filterToRadius(samradLines);samradAreas=filterToRadius(samradAreas);}")) throw new Error("Filtered consultation collections must be assigned before rendering");
+            if (!html.includes("if(wantSamrad)samradAreas=clipPolygonCollection(samradAreas);")) throw new Error("Consultation polygons must be clipped to the circle before rendering");
+            if (!html.includes("planned=clipPolygonCollection(planned);performed=clipPolygonCollection(performed);")) throw new Error("Harvest polygons must be clipped to the circle before rendering");
             console.log("Map uses shared radius filter for planned, performed and consultation layers.");
           '
