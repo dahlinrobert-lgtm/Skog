@@ -48,7 +48,7 @@
 <option value="municipality">Kommun</option>
 <option value="samradAction">Samrådsåtgärd</option>
 </select></label>
-<label id="histogramTypeControl" style="display:none">Typ <select id="histogramType"><option value="count">Efter antal områden</option><option value="hectares">Efter hektar</option></select></label>
+<label id="histogramTypeControl">Typ <select id="histogramType"><option value="count">Efter antal områden</option><option value="hectares">Efter hektar</option><option value="meters" hidden>Efter meter</option></select></label>
 </div>
 <p id="durationDescription" class="muted">Skillnaden beräknas som avverkningsår minus ärendeår.</p>
 <div id="durationSummary" class="muted">Inväntar data…</div>
@@ -311,14 +311,15 @@ function currentColorScale(){
   categories.forEach(categoryColor);
   return {mode,categories};
  }
- const values=(mode==="year"?[...performedLayer.toGeoJSON().features.map(performedYear),...plannedLayer.toGeoJSON().features.map(plannedYear)]:features.map(f=>mode==="ratio"?performedRatio(f):performedHectares(f))).filter(v=>v!==null);
+ const values=(mode==="year"?[...performedLayer.toGeoJSON().features.map(performedYear),...plannedLayer.toGeoJSON().features.map(plannedYear),...samradPointLayer.toGeoJSON().features.map(samradYear),...samradLineLayer.toGeoJSON().features.map(samradYear),...samradAreaLayer.toGeoJSON().features.map(samradYear)]:features.map(f=>mode==="ratio"?performedRatio(f):performedHectares(f))).filter(v=>v!==null);
  if(mode==="year")return {mode,min:values.length?Math.min(...values):null,max:Math.max(2026,...values)};
  if(mode==="hectares"||mode==="ratio")return {mode,min:values.length?Math.min(...values):null,max:values.length?Math.max(...values):null};
  return {mode,min:null,max:null};
 }
+function samradYear(feature){const p=feature?.properties||{};return yearFromDateValue(p.ArendeAr??p.Arendeår??p["Ärendeår"]??p.Arendear??p.ArendeDatum??p.Inkomdatum??p.Datum);}
 function plannedYear(feature){
  const p=feature?.properties||{};
- const raw=p.Avvdatum??p.AvvSasong??p.AvvSäsong??p.Avverkningsdatum??p.PlaneradAvverkning??p.PlaneradAvverkningDatum;
+ const raw=p.Inkomdatum??p.Avvdatum??p.AvvSasong??p["AvvSäsong"]??p.Avverkningsdatum??p.PlaneradAvverkning??p.PlaneradAvverkningDatum;
  const parsed=yearFromDateValue(raw);
  if(parsed!==null)return parsed;
  const match=String(raw??"").match(/(?:19|20)\d{2}/);
@@ -330,6 +331,8 @@ function colorForNumericYear(feature,isPlanned){
  const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min),color=mixColor(t);
  return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.68};
 }
+function colorForYearValue(value){const scale=performedScaleCache;if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min),color=mixColor(t);return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.68};}
+function samradStyle(feature){const mode=document.getElementById("performedColorMode")?.value||"none";if(mode==="year")return colorForYearValue(samradYear(feature));if(mode==="samradAction"){const color=categoryColor(categoryValue(feature,mode));return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}return null;}
 function plannedStyle(feature){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  if(mode==="year")return colorForNumericYear(feature,true);
@@ -407,9 +410,9 @@ function refreshPerformedColors(){
  }
  performedLayer.setStyle(performedStyle);
  plannedLayer.setStyle(plannedStyle);
- samradAreaLayer.setStyle(feature=>mode==="samradAction"?{color:categoryColor(categoryValue(feature,mode)),weight:2,opacity:.95,fillColor:categoryColor(categoryValue(feature,mode)),fillOpacity:.62}:{color:"#a21caf",weight:2,opacity:.9,fillColor:"#d946ef",fillOpacity:.22});
- samradLineLayer.setStyle(feature=>mode==="samradAction"?{color:categoryColor(categoryValue(feature,mode)),weight:3,opacity:.9}:{color:"#ea580c",weight:3,opacity:.9});
- samradPointLayer.setStyle(feature=>mode==="samradAction"?{color:categoryColor(categoryValue(feature,mode)),weight:1.5,fillColor:categoryColor(categoryValue(feature,mode)),fillOpacity:.85}:{color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85});
+ samradAreaLayer.setStyle(feature=>samradStyle(feature)||{color:"#a21caf",weight:2,opacity:.9,fillColor:"#d946ef",fillOpacity:.22});
+ samradLineLayer.setStyle(feature=>samradStyle(feature)||{color:"#ea580c",weight:3,opacity:.9});
+ samradPointLayer.setStyle(feature=>samradStyle(feature)||{color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85});
 }
 function popup(f,type){
  const p=f.properties||{};
@@ -451,13 +454,15 @@ function yearFromDateValue(value){
  const parsed=Date.parse(String(value));
  return Number.isFinite(parsed)?new Date(parsed).getUTCFullYear():null;
 }
+function geometryLengthMeters(geometry){if(!geometry?.coordinates)return 0;const lines=[];const walk=coords=>{if(!Array.isArray(coords))return;if(coords.length>=2&&typeof coords[0]==="number"&&typeof coords[1]==="number")return;if(coords.length&&Array.isArray(coords[0])&&typeof coords[0][0]==="number"){lines.push(coords);return;}coords.forEach(walk);};walk(geometry.coordinates);const rad=d=>d*Math.PI/180;let total=0;for(const line of lines)for(let i=1;i<line.length;i++){const [x1,y1]=line[i-1],[x2,y2]=line[i],a=rad(y2-y1),b=rad(x2-x1),h=Math.sin(a/2)**2+Math.cos(rad(y1))*Math.cos(rad(y2))*Math.sin(b/2)**2;total+=6371008.8*2*Math.atan2(Math.sqrt(h),Math.sqrt(Math.max(0,1-h)));}return total;}
 function updateDurationHistogram(features){
  const histogram=document.getElementById("durationHistogram"),summary=document.getElementById("durationSummary"),footnote=document.getElementById("durationFootnote");
  const selector=document.getElementById("histogramAttribute"),mode=selector?selector.value:"duration";
- const records=[];const recordAreas=[];let excluded=0;const samradRecords=[];
+ const records=[];const recordAreas=[];const recordMeters=[];let excluded=0;const samradRecords=[];
  const typeSelector=document.getElementById("histogramType"),typeControl=document.getElementById("histogramTypeControl");
  if(typeControl)typeControl.style.display="";
  const histogramType=typeSelector?typeSelector.value:"count";
+ const meterOption=typeSelector?.querySelector('option[value="meters"]');if(meterOption)meterOption.hidden=mode!=="samradAction";if(mode!=="samradAction"&&histogramType==="meters"&&typeSelector)typeSelector.value="count";
  const parseNum=v=>{if(v===null||v===undefined||String(v).trim()==="")return null;const n=Number(v);return Number.isFinite(n)?n:null;};
  for(const feature of features){
   const p=feature?.properties||{};let value=null;
@@ -475,13 +480,13 @@ function updateDurationHistogram(features){
   else if(mode==="municipality")value=String(p.Kommun??"").trim()||"Okänd / saknas";
   else if(mode==="samradAction")value=String(p.Samradsatgard??p.Samrådsåtgärd??"").trim()||"Okänd / saknas";
   if(value===null||(typeof value==="number"&&!Number.isFinite(value))){excluded++;continue;}
-  records.push(value);const areaRaw=p.Arealha??p.AnmaldHa??p.Areal??p.AreaHa;const areaNum=areaRaw==null||String(areaRaw).trim()===""?null:Number(areaRaw);recordAreas.push(Number.isFinite(areaNum)&&areaNum>=0?areaNum:null);
+  records.push(value);const areaRaw=p.Arealha??p.AnmaldHa??p.Areal??p.AreaHa;const areaNum=areaRaw==null||String(areaRaw).trim()===""?null:Number(areaRaw);recordAreas.push(Number.isFinite(areaNum)&&areaNum>=0?areaNum:null);recordMeters.push(geometryLengthMeters(feature.geometry));
  }
  const labels={duration:"Tid från ärendeår till utförd avverkning (år)",harvestYear:"Avverkningsår",issueYear:"Ärendeår",registeredArea:"Registrerad areal (ha)",reportedArea:"Anmäld areal (ha)",ratio:"Andel (registrerad/anmäld) (%)",harvestType:"Avverkningstyp",forestType:"Skogstyp",municipality:"Kommun",samradAction:"Samrådsåtgärd"};
  if(mode==="samradAction"){
   const layers=[samradPointLayer,samradLineLayer,samradAreaLayer];
-  records.length=0;recordAreas.length=0;excluded=0;
-  for(const layer of layers)for(const feature of layer.toGeoJSON().features){const p=feature?.properties||{};const value=String(p.Samradsatgard??p["Samrådsåtgärd"]??"").trim();const rawArea=p.Arealha??p.AnmaldHa??p.Areal??p.AreaHa;const area=rawArea==null||String(rawArea).trim()===""?null:Number(rawArea);if(value){records.push(value);recordAreas.push(Number.isFinite(area)&&area>=0?area:null);}else excluded++;}
+  records.length=0;recordAreas.length=0;recordMeters.length=0;excluded=0;
+  for(const layer of layers)for(const feature of layer.toGeoJSON().features){const p=feature?.properties||{};const value=String(p.Samradsatgard??p["Samrådsåtgärd"]??"").trim();const rawArea=p.Arealha??p.AnmaldHa??p.Areal??p.AreaHa;const area=rawArea==null||String(rawArea).trim()===""?null:Number(rawArea);if(value){records.push(value);recordAreas.push(Number.isFinite(area)&&area>=0?area:null);recordMeters.push(geometryLengthMeters(feature.geometry));}else excluded++;}
  }
  document.getElementById("durationTitle").textContent="Histogram: "+labels[mode];
  document.getElementById("durationDescription").textContent=mode==="duration"?"Skillnaden beräknas som avverkningsår minus ärendeår.":(mode==="registeredArea"||mode==="reportedArea")?"För utförda polygoner i valt område. Arealer visas i fasta intervall: 0–1 ha till 9–10 ha, därefter 10–15 ha och 15+ ha. Stapellängden visar antal polygoner i varje intervall.":mode==="ratio"?"För utförda polygoner i valt område. Andelen delas i intervall om 10 procentenheter från 0 till 130 %, följt av en kategori för 130 % och högre. Stapellängden visar antal polygoner. Färgstyrkan ökar stegvis uppifrån och ned efter intervallens ordningsföljd, oberoende av antalet polygoner.":"För utförda polygoner i valt område. Numeriska attribut grupperas i intervall och kategoriska attribut efter kategori.";
@@ -537,7 +542,9 @@ function updateDurationHistogram(features){
    buckets=[...counts.entries()].map(([lower,count])=>({label:lower.toLocaleString("sv-SE",{maximumFractionDigits:0})+"–"+(lower+step).toLocaleString("sv-SE",{maximumFractionDigits:0}),count})).filter(b=>b.count>0);
   }
  }
- if(histogramType==="hectares"){
+ if(mode==="samradAction"&&histogramType==="meters"){
+  const weighted=buckets.map(b=>({...b,count:0}));records.forEach((value,i)=>{const idx=weighted.findIndex(b=>b.label===value);if(idx>=0)weighted[idx].count+=recordMeters[i]||0;});buckets=weighted.filter(b=>b.count>0).map(b=>({...b,label:b.label+" (m)"}));
+ }else if(histogramType==="hectares"){
   const weighted=buckets.map(b=>({...b,count:0}));
   const findBucket=value=>{
    if(typeof value==="string")return weighted.findIndex(b=>b.label===value);
@@ -563,7 +570,7 @@ function updateDurationHistogram(features){
  const maxBarValue=Math.max(1,...buckets.map(b=>densityMode?(b.density??b.count):b.count));
  const sourceCount=mode==="samradAction"?[samradPointLayer,samradLineLayer,samradAreaLayer].reduce((sum,layer)=>sum+layer.toGeoJSON().features.length,0):features.length;
  const recordName=mode==="samradAction"?"samrådsposter":"polygoner";
- summary.textContent=histogramType==="hectares"?"Staplarna visar summerad areal i hektar per kategori eller intervall. "+(excluded?excluded.toLocaleString("sv-SE")+" poster saknade giltig areal.":"") :records.length.toLocaleString("sv-SE")+" av "+sourceCount.toLocaleString("sv-SE")+" "+recordName+" ingår. Staplarna visar antal "+recordName+" i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
+ summary.textContent=mode==="samradAction"&&histogramType==="meters"?"Staplarna visar summerad geometrisk längd i meter per samrådsåtgärd.":histogramType==="hectares"?"Staplarna visar summerad areal i hektar per kategori eller intervall. "+(excluded?excluded.toLocaleString("sv-SE")+" poster saknade giltig areal.":"") :records.length.toLocaleString("sv-SE")+" av "+sourceCount.toLocaleString("sv-SE")+" "+recordName+" ingår. Staplarna visar antal "+recordName+" i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
  histogram.innerHTML=buckets.map((bucket,index)=>{const pct=bucket.count/(histogramType==="hectares"?Math.max(1,buckets.reduce((sum,b)=>sum+b.count,0)):records.length)*100,width=(densityMode?(bucket.density??bucket.count):bucket.count)/maxBarValue*100;const opacity=mode==="ratio"?(buckets.length===1?1:0.22+0.78*index/(buckets.length-1)):1;return '<div class="duration-row"><div class="duration-row-main"><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%;opacity:'+opacity.toFixed(2)+'"></div><span class="duration-track-label">'+esc(bucket.label)+'</span></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div></div>';}).join("");
  footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+(mode==="samradAction"?" samrådsposter":" polygoner")+" saknade giltigt värde.":"");
 }
