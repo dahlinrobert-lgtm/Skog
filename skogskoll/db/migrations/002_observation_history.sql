@@ -68,6 +68,12 @@ begin
   if new.next_offset <> new.fetched_count then
     raise exception 'Skogskoll scan offset and fetched count must advance together';
   end if;
+  if new.status = 'complete' and new.next_offset <> new.source_count then
+    raise exception 'Skogskoll scan cannot complete before reaching source count';
+  end if;
+  if new.status = 'complete' and new.completed_at is null then
+    new.completed_at := now();
+  end if;
   new.updated_at := now();
   return new;
 end;
