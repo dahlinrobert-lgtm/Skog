@@ -320,7 +320,7 @@ function plannedYear(feature){
  const raw=p.Avvdatum??p.AvvSasong??p.AvvSäsong??p.Avverkningsdatum??p.PlaneradAvverkning??p.PlaneradAvverkningDatum;
  const parsed=yearFromDateValue(raw);
  if(parsed!==null)return parsed;
- const match=String(raw??"").match(/(?:19|20)\\d{2}/);
+ const match=String(raw??"").match(/(?:19|20)\d{2}/);
  return match?Number(match[0]):null;
 }
 function colorForNumericYear(feature,isPlanned){
