@@ -310,14 +310,18 @@ function currentColorScale(){
   categories.forEach(categoryColor);
   return {mode,categories};
  }
- const values=features.map(f=>mode==="year"?(f?.properties?.Avvdatum==null?plannedYear(f):performedYear(f)):mode==="ratio"?performedRatio(f):performedHectares(f)).filter(v=>v!==null);
+ const values=(mode==="year"?[...performedLayer.toGeoJSON().features.map(performedYear),...plannedLayer.toGeoJSON().features.map(plannedYear)]:features.map(f=>mode==="ratio"?performedRatio(f):performedHectares(f))).filter(v=>v!==null);
  if(mode==="year")return {mode,min:values.length?Math.min(...values):null,max:Math.max(2026,...values)};
  if(mode==="hectares"||mode==="ratio")return {mode,min:values.length?Math.min(...values):null,max:values.length?Math.max(...values):null};
  return {mode,min:null,max:null};
 }
 function plannedYear(feature){
  const p=feature?.properties||{};
- return yearFromDateValue(p.Avvdatum??p.AvvSasong??p.AvvSäsong??p.Avverkningsdatum??p.PlaneradAvverkning??p.PlaneradAvverkningDatum);
+ const raw=p.Avvdatum??p.AvvSasong??p.AvvSäsong??p.Avverkningsdatum??p.PlaneradAvverkning??p.PlaneradAvverkningDatum;
+ const parsed=yearFromDateValue(raw);
+ if(parsed!==null)return parsed;
+ const match=String(raw??"").match(/(?:19|20)\\d{2}/);
+ return match?Number(match[0]):null;
 }
 function colorForNumericYear(feature,isPlanned){
  const value=isPlanned?plannedYear(feature):performedYear(feature),scale=performedScaleCache;
@@ -367,7 +371,7 @@ function refreshPerformedColors(){
  if(mode==="year"){
   minLabel.style.display="";maxLabel.style.display="";gradient.style.display="";categoryLegend.style.display="none";
   minLabel.textContent=scale.min===null?"Äldst":String(scale.min);
-  maxLabel.textContent="2026";
+  maxLabel.textContent=scale.max===null?"Senaste":String(scale.max);
   note.textContent="år";
   gradient.style.background="linear-gradient(to right,"+mixColor(0)+","+mixColor(1)+")";
  }else if(mode==="hectares"||mode==="ratio"){
