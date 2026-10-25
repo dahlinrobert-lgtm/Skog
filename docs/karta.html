@@ -454,7 +454,7 @@ function yearFromDateValue(value){
 function updateDurationHistogram(features){
  const histogram=document.getElementById("durationHistogram"),summary=document.getElementById("durationSummary"),footnote=document.getElementById("durationFootnote");
  const selector=document.getElementById("histogramAttribute"),mode=selector?selector.value:"duration";
- const records=[];let excluded=0;const samradRecords=[];
+ const records=[];const recordAreas=[];let excluded=0;const samradRecords=[];
  const typeSelector=document.getElementById("histogramType"),typeControl=document.getElementById("histogramTypeControl");
  if(typeControl)typeControl.style.display="";
  const histogramType=typeSelector?typeSelector.value:"count";
@@ -475,25 +475,22 @@ function updateDurationHistogram(features){
   else if(mode==="municipality")value=String(p.Kommun??"").trim()||"Okänd / saknas";
   else if(mode==="samradAction")value=String(p.Samradsatgard??p.Samrådsåtgärd??"").trim()||"Okänd / saknas";
   if(value===null||(typeof value==="number"&&!Number.isFinite(value))){excluded++;continue;}
-  records.push(value);
+  records.push(value);const areaRaw=p.Arealha??p.AnmaldHa??p.Areal??p.AreaHa;const areaNum=areaRaw==null||String(areaRaw).trim()===""?null:Number(areaRaw);recordAreas.push(Number.isFinite(areaNum)&&areaNum>=0?areaNum:null);
  }
  const labels={duration:"Tid från ärendeår till utförd avverkning (år)",harvestYear:"Avverkningsår",issueYear:"Ärendeår",registeredArea:"Registrerad areal (ha)",reportedArea:"Anmäld areal (ha)",ratio:"Andel (registrerad/anmäld) (%)",harvestType:"Avverkningstyp",forestType:"Skogstyp",municipality:"Kommun",samradAction:"Samrådsåtgärd"};
  if(mode==="samradAction"){
   const layers=[samradPointLayer,samradLineLayer,samradAreaLayer];
-  records.length=0;excluded=0;
-  for(const layer of layers)for(const feature of layer.toGeoJSON().features){const p=feature?.properties||{};const value=String(p.Samradsatgard??p["Samrådsåtgärd"]??"").trim();const rawArea=p.AnmaldHa??p.Arealha??p.Areal??p.AreaHa;const area=rawArea==null||String(rawArea).trim()===""?null:Number(rawArea);if(value){records.push(value);samradRecords.push({value,hectares:Number.isFinite(area)&&area>=0?area:null});}else excluded++;}
+  records.length=0;recordAreas.length=0;excluded=0;
+  for(const layer of layers)for(const feature of layer.toGeoJSON().features){const p=feature?.properties||{};const value=String(p.Samradsatgard??p["Samrådsåtgärd"]??"").trim();const rawArea=p.Arealha??p.AnmaldHa??p.Areal??p.AreaHa;const area=rawArea==null||String(rawArea).trim()===""?null:Number(rawArea);if(value){records.push(value);recordAreas.push(Number.isFinite(area)&&area>=0?area:null);}else excluded++;}
  }
  document.getElementById("durationTitle").textContent="Histogram: "+labels[mode];
  document.getElementById("durationDescription").textContent=mode==="duration"?"Skillnaden beräknas som avverkningsår minus ärendeår.":(mode==="registeredArea"||mode==="reportedArea")?"För utförda polygoner i valt område. Arealer visas i fasta intervall: 0–1 ha till 9–10 ha, därefter 10–15 ha och 15+ ha. Stapellängden visar antal polygoner i varje intervall.":mode==="ratio"?"För utförda polygoner i valt område. Andelen delas i intervall om 10 procentenheter från 0 till 130 %, följt av en kategori för 130 % och högre. Stapellängden visar antal polygoner. Färgstyrkan ökar stegvis uppifrån och ned efter intervallens ordningsföljd, oberoende av antalet polygoner.":"För utförda polygoner i valt område. Numeriska attribut grupperas i intervall och kategoriska attribut efter kategori.";
  if(!records.length){summary.textContent="Inga poster med giltiga värden för valt attribut.";histogram.innerHTML="";footnote.textContent=excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"";return;}
  let buckets=[];
  if(typeof records[0]==="string"){
-  const counts=new Map();
-  if(mode==="samradAction"&&histogramType==="hectares")samradRecords.forEach(item=>{if(item.hectares!==null)counts.set(item.value,(counts.get(item.value)||0)+item.hectares);else excluded++;});
-  else records.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
+  const counts=new Map();records.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
   buckets=[...counts.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"sv")).slice(0,12).map(([label,count])=>({label,count}));
-  const totalMetric=mode==="samradAction"&&histogramType==="hectares"?[...counts.values()].reduce((s,v)=>s+v,0):records.length;
-  const shown=buckets.reduce((s,b)=>s+b.count,0),other=totalMetric-shown;
+  const shown=buckets.reduce((s,b)=>s+b.count,0),other=records.length-shown;
   if(other>0)buckets.push({label:"Övriga kategorier",count:other});
  }else if(mode==="duration"){
   buckets=[{label:"0 år",count:records.filter(n=>n===0).length},{label:"1 år",count:records.filter(n=>n===1).length},{label:"2 år",count:records.filter(n=>n===2).length},{label:"3 år",count:records.filter(n=>n===3).length},{label:"4 år",count:records.filter(n=>n===4).length},{label:"5+ år",count:records.filter(n=>n>=5).length}];
@@ -540,13 +537,34 @@ function updateDurationHistogram(features){
    buckets=[...counts.entries()].map(([lower,count])=>({label:lower.toLocaleString("sv-SE",{maximumFractionDigits:0})+"–"+(lower+step).toLocaleString("sv-SE",{maximumFractionDigits:0}),count})).filter(b=>b.count>0);
   }
  }
+ if(histogramType==="hectares"){
+  const weighted=buckets.map(b=>({...b,count:0}));
+  const findBucket=value=>{
+   if(typeof value==="string")return weighted.findIndex(b=>b.label===value);
+   if(mode==="duration"){const label=value>=5?"5+ år":Math.trunc(value)+" år";return weighted.findIndex(b=>b.label===label);}
+   if(mode==="ratio"){if(value<0)return 0;if(value>=130)return weighted.length-1;return Math.min(weighted.length-2,Math.floor(value/10));}
+   if(mode==="harvestYear"||mode==="issueYear"){
+    const grouped=weighted.some(b=>b.label.includes("–"));
+    const base=Math.floor(value/5)*5,label=grouped?base+"–"+(base+4):String(Math.trunc(value));
+    return weighted.findIndex(b=>b.label===label);
+   }
+   if(mode==="registeredArea"||mode==="reportedArea"){
+    if(value<0)return 0;if(value>=15)return weighted.length-1;
+    const lower=value>=10?10:Math.floor(value),upper=lower===10?15:lower+1;
+    return weighted.findIndex(b=>b.label===lower+"–"+upper+" ha");
+   }
+   return weighted.findIndex(b=>{const m=b.label.match(/^(-?\d+(?:[.,]\d+)?)–(-?\d+(?:[.,]\d+)?)/);return m&&value>=Number(m[1].replace(",","."))&&value<Number(m[2].replace(",","."));});
+  };
+  records.forEach((value,i)=>{const area=recordAreas[i];if(area===null){excluded++;return;}const index=findBucket(value);if(index>=0)weighted[index].count+=area;});
+  buckets=weighted.filter(b=>b.count>0);
+ }
  const maxCount=Math.max(1,...buckets.map(b=>b.count));
  const densityMode=false;
  const maxBarValue=Math.max(1,...buckets.map(b=>densityMode?(b.density??b.count):b.count));
  const sourceCount=mode==="samradAction"?[samradPointLayer,samradLineLayer,samradAreaLayer].reduce((sum,layer)=>sum+layer.toGeoJSON().features.length,0):features.length;
  const recordName=mode==="samradAction"?"samrådsposter":"polygoner";
- summary.textContent=mode==="samradAction"&&histogramType==="hectares"?"Staplarna visar summerad areal i hektar per samrådsåtgärd. "+(excluded?excluded.toLocaleString("sv-SE")+" poster saknade giltig areal.":"") :records.length.toLocaleString("sv-SE")+" av "+sourceCount.toLocaleString("sv-SE")+" "+recordName+" ingår. Staplarna visar antal "+recordName+" i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
- histogram.innerHTML=buckets.map((bucket,index)=>{const pct=bucket.count/(mode==="samradAction"&&histogramType==="hectares"?Math.max(1,buckets.reduce((sum,b)=>sum+b.count,0)):records.length)*100,width=(densityMode?(bucket.density??bucket.count):bucket.count)/maxBarValue*100;const opacity=mode==="ratio"?(buckets.length===1?1:0.22+0.78*index/(buckets.length-1)):1;return '<div class="duration-row"><div class="duration-row-main"><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%;opacity:'+opacity.toFixed(2)+'"></div><span class="duration-track-label">'+esc(bucket.label)+'</span></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div></div>';}).join("");
+ summary.textContent=histogramType==="hectares"?"Staplarna visar summerad areal i hektar per kategori eller intervall. "+(excluded?excluded.toLocaleString("sv-SE")+" poster saknade giltig areal.":"") :records.length.toLocaleString("sv-SE")+" av "+sourceCount.toLocaleString("sv-SE")+" "+recordName+" ingår. Staplarna visar antal "+recordName+" i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
+ histogram.innerHTML=buckets.map((bucket,index)=>{const pct=bucket.count/(histogramType==="hectares"?Math.max(1,buckets.reduce((sum,b)=>sum+b.count,0)):records.length)*100,width=(densityMode?(bucket.density??bucket.count):bucket.count)/maxBarValue*100;const opacity=mode==="ratio"?(buckets.length===1?1:0.22+0.78*index/(buckets.length-1)):1;return '<div class="duration-row"><div class="duration-row-main"><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%;opacity:'+opacity.toFixed(2)+'"></div><span class="duration-track-label">'+esc(bucket.label)+'</span></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div></div>';}).join("");
  footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+(mode==="samradAction"?" samrådsposter":" polygoner")+" saknade giltigt värde.":"");
 }
 function filterToRadius(collection){
