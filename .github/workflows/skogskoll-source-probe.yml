@@ -52,7 +52,7 @@ jobs:
       - name: Test shared map radius filter
         run: node --test tests/map-radius-filter.test.mjs
       - name: Syntax-check shared map radius filter
-        run: node --check src/map-radius-filter.mjs
+        run: node --check docs/map-radius-filter.mjs
       - name: Syntax-check source probe and ingestion core
         run: |
           node --check skogskoll/scripts/probe-source.mjs
