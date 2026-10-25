@@ -617,8 +617,8 @@ function queryUrl(base,fields,bounds,offset){
  params.set("geometryType","esriGeometryEnvelope");params.set("inSR","4326");params.set("spatialRel","esriSpatialRelIntersects");
  params.set("geometryPrecision","5");
  // Simplify returned geometries progressively at wider radii to reduce transfer and drawing costs.
- const offset=RADIUS<=5000?0.00001:RADIUS<=10000?0.00003:RADIUS<=20000?0.00006:0.00012;
- params.set("maxAllowableOffset",String(offset));
+ const simplifyOffset=RADIUS<=5000?0.00001:RADIUS<=10000?0.00003:RADIUS<=20000?0.00006:0.00012;
+ params.set("maxAllowableOffset",String(simplifyOffset));
  params.set("resultOffset",String(offset));
  return base+"?"+params.toString();
 }
