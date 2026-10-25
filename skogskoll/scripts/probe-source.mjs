@@ -9,7 +9,7 @@ const MAX_PAGES = 3;
 const requestedFields = ["Beteckn", "Kommun", "Inkomdatum", "ArendeStatus", "AnmaldHa"];
 
 async function getJson(url) {
-  const response = await fetch(url, { headers: { "user-agent": "Skogskoll-source-probe/0.2 (read-only)" } });
+  const response = await fetch(url, { headers: { "user-agent": "Skogskoll-source-probe/0.3 (read-only)" } });
   const body = await response.json().catch(() => null);
   if (!response.ok) throw new Error(`HTTP ${response.status} from ${url}`);
   if (!body) throw new Error("Invalid JSON response");
@@ -45,7 +45,9 @@ try {
       where: "1=1", returnCountOnly: "true", f: "json"
     }))
   ]);
-  if (!Number.isInteger(countResult.count)) throw new Error("Source did not return a valid total record count");
+  if (!Number.isInteger(countResult.count) || countResult.count < 0) {
+    throw new Error("Source did not return a valid total record count");
+  }
 
   const objectIdField = layer.objectIdField ?? (layer.fields ?? []).find(f => f.type === "esriFieldTypeOID")?.name;
   if (!objectIdField) throw new Error("No object ID field found in layer metadata");
@@ -113,7 +115,7 @@ try {
   // Bounded QA sample only. Production ingestion must use a separate complete-scan routine.
   const pages = [first];
   let offset = first.features.length;
-  for (let i = 1; i < MAX_PAGES && (first.exceededTransferLimit || first.features.length === PAGE_SIZE); i++) {
+  for (let i = 1; i < MAX_PAGES && (pages.at(-1).exceededTransferLimit || pages.at(-1).features.length === PAGE_SIZE); i++) {
     const page = await queryPage(offset);
     if (!Array.isArray(page.features)) throw new Error("Paged query did not return features array");
     pages.push(page);
@@ -121,16 +123,20 @@ try {
     if (!page.features.length) break;
   }
   const all = pages.flatMap(p => p.features);
-  const ids = all.map(f => stableId(f, objectIdField)).filter(v => v !== null).map(String);
+  const rawIds = all.map(f => stableId(f, objectIdField));
+  const ids = rawIds.filter(v => v !== null && v !== undefined && String(v).trim() !== "").map(String);
   const uniqueIds = new Set(ids);
+  const numericIds = ids.map(Number).filter(Number.isFinite);
+  const idsMonotonic = numericIds.length === ids.length &&
+    numericIds.every((v, i) => i === 0 || v >= numericIds[i - 1]);
   report.checks.pagination = {
     pages_checked: pages.length,
     page_sizes: pages.map(p => p.features.length),
     fetched_count: all.length,
     unique_ids: uniqueIds.size,
     duplicate_ids: ids.length - uniqueIds.size,
-    missing_id_count: all.filter(f => stableId(f, objectIdField) === null).length,
-    ids_monotonic_in_sample: ids.every((v, i) => i === 0 || Number(v) >= Number(ids[i - 1])),
+    missing_id_count: rawIds.length - ids.length,
+    ids_monotonic_in_sample: idsMonotonic,
     capped: pages.length === MAX_PAGES && Boolean(pages.at(-1)?.exceededTransferLimit),
     complete_scan: false,
     source_total_count: countResult.count
@@ -167,6 +173,15 @@ try {
     complete_scan_attempted: false,
     note: "This probe is source QA only. It does not ingest the layer or approve alert activation."
   };
+
+  const sampleErrors = [];
+  if (all.length > countResult.count) sampleErrors.push("sample_exceeds_source_count");
+  if (rawIds.length !== ids.length) sampleErrors.push("missing_id_in_sample");
+  if (uniqueIds.size !== ids.length) sampleErrors.push("duplicate_id_in_sample");
+  if (!idsMonotonic) sampleErrors.push("non_monotonic_or_non_numeric_ids");
+  report.checks.sample_integrity = { ok: sampleErrors.length === 0, errors: sampleErrors };
+  if (sampleErrors.length) throw new Error(`Sample integrity check failed: ${sampleErrors.join(", ")}`);
+
   report.summary = "Probe completed on a bounded sample. Alerts remain disabled; verify repeatability across at least six hours and implement a separate complete, auditable ingestion scan before any alerting.";
 } catch (error) {
   report.summary = "Probe failed; alerting must remain disabled.";
