@@ -15,6 +15,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - name: Test deterministic deduplication core
+        run: node --test skogskoll/tests/*.test.mjs
+      - name: Syntax-check source probe
+        run: node --check skogskoll/scripts/probe-source.mjs
       - name: Probe public ArcGIS source (read-only)
         run: node skogskoll/scripts/probe-source.mjs
       - name: Upload source diagnostics
