@@ -536,9 +536,11 @@ function updateDurationHistogram(features){
  const maxCount=Math.max(1,...buckets.map(b=>b.count));
  const densityMode=false;
  const maxBarValue=Math.max(1,...buckets.map(b=>densityMode?(b.density??b.count):b.count));
- summary.textContent=records.length.toLocaleString("sv-SE")+" av "+features.length.toLocaleString("sv-SE")+" polygoner ingår. Staplarna visar antal polygoner i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
+ const sourceCount=mode==="samradAction"?[samradPointLayer,samradLineLayer,samradAreaLayer].reduce((sum,layer)=>sum+layer.toGeoJSON().features.length,0):features.length;
+ const recordName=mode==="samradAction"?"samrådsposter":"polygoner";
+ summary.textContent=records.length.toLocaleString("sv-SE")+" av "+sourceCount.toLocaleString("sv-SE")+" "+recordName+" ingår. Staplarna visar antal "+recordName+" i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
  histogram.innerHTML=buckets.map((bucket,index)=>{const pct=bucket.count/records.length*100,width=(densityMode?(bucket.density??bucket.count):bucket.count)/maxBarValue*100;const opacity=mode==="ratio"?(buckets.length===1?1:0.22+0.78*index/(buckets.length-1)):1;return '<div class="duration-row"><div class="duration-row-main"><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%;opacity:'+opacity.toFixed(2)+'"></div><span class="duration-track-label">'+esc(bucket.label)+'</span></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div></div>';}).join("");
- footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"");
+ footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+(mode==="samradAction"?" samrådsposter":" polygoner")+" saknade giltigt värde.":"");
 }
 function filterToRadius(collection){
  return filterFeatureCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS);
