@@ -448,7 +448,7 @@ function updateDurationHistogram(features){
  }
  const labels={duration:"Tid från ärendeår till utförd avverkning (år)",harvestYear:"Avverkningsår",issueYear:"Ärendeår",registeredArea:"Registrerad areal (ha)",reportedArea:"Anmäld areal (ha)",ratio:"Andel (registrerad/anmäld) (%)",harvestType:"Avverkningstyp",forestType:"Skogstyp",municipality:"Kommun"};
  document.getElementById("durationTitle").textContent="Histogram: "+labels[mode];
- document.getElementById("durationDescription").textContent=mode==="duration"?"Skillnaden beräknas som avverkningsår minus ärendeår.":(mode==="registeredArea"||mode==="reportedArea")?"För utförda polygoner i valt område. Arealer visas i fasta intervall: 0–1 ha till 9–10 ha, därefter 10–15 ha och 15+ ha. Stapellängden visar antal polygoner i varje intervall.":mode==="ratio"?"För utförda polygoner i valt område. Andelar delas i nio intervall med ungefär lika många polygoner. Stapelns längd visar täthet per procentenhet; siffrorna till höger visar antal och andel polygoner.":"För utförda polygoner i valt område. Numeriska attribut grupperas i intervall och kategoriska attribut efter kategori.";
+ document.getElementById("durationDescription").textContent=mode==="duration"?"Skillnaden beräknas som avverkningsår minus ärendeår.":(mode==="registeredArea"||mode==="reportedArea")?"För utförda polygoner i valt område. Arealer visas i fasta intervall: 0–1 ha till 9–10 ha, därefter 10–15 ha och 15+ ha. Stapellängden visar antal polygoner i varje intervall.":mode==="ratio"?"För utförda polygoner i valt område. Andelen delas i fasta intervall kring 100 % (registrerad areal lika med anmäld areal). Stapellängden visar antal polygoner i varje intervall; siffrorna till höger visar antal och andel av alla giltiga poster.":"För utförda polygoner i valt område. Numeriska attribut grupperas i intervall och kategoriska attribut efter kategori.";
  if(!records.length){summary.textContent="Inga poster med giltiga värden för valt attribut.";histogram.innerHTML="";footnote.textContent=excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"";return;}
  let buckets=[];
  if(typeof records[0]==="string"){
@@ -459,22 +459,26 @@ function updateDurationHistogram(features){
  }else if(mode==="duration"){
   buckets=[{label:"0 år",count:records.filter(n=>n===0).length},{label:"1 år",count:records.filter(n=>n===1).length},{label:"2 år",count:records.filter(n=>n===2).length},{label:"3 år",count:records.filter(n=>n===3).length},{label:"4 år",count:records.filter(n=>n===4).length},{label:"5+ år",count:records.filter(n=>n>=5).length}];
  }else if(mode==="ratio"){
-  // Nine quantile groups: roughly equal polygon counts, with bars scaled by
-  // density per percentage point so narrower, more concentrated intervals stand out.
-  const sorted=[...records].sort((a,b)=>a-b),n=sorted.length;
-  if(sorted[0]===sorted[n-1]){
-   buckets=[{label:sorted[0].toLocaleString("sv-SE",{maximumFractionDigits:1})+" %",count:n,range:0}];
-  }else{
-   for(let i=0;i<9;i++){
-    const from=Math.floor(i*n/9),to=Math.floor((i+1)*n/9);
-    if(from>=to)continue;
-    const group=sorted.slice(from,to),low=group[0],high=group[group.length-1];
-    buckets.push({label:(low===high?low.toLocaleString("sv-SE",{maximumFractionDigits:1}):low.toLocaleString("sv-SE",{maximumFractionDigits:1})+"–"+high.toLocaleString("sv-SE",{maximumFractionDigits:1}))+" %",count:group.length,range:high-low});
-   }
-   const positiveRanges=buckets.map(b=>b.range).filter(v=>v>0);
-   const fallbackRange=positiveRanges.length?Math.min(...positiveRanges):1;
-   buckets.forEach(b=>b.density=b.count/(b.range>0?b.range:fallbackRange));
-  }
+  // Fixed, meaningful percentage intervals around 100% (registered equals reported).
+  const edges=[0,50,80,85,90,95,100,105,110,115,150];
+  buckets=edges.slice(0,-1).map((lower,i)=>({label:lower+"–"+edges[i+1]+" %",count:0}));
+  buckets.push({label:"150+ %",count:0});
+  records.forEach(v=>{
+   if(v<0){buckets[0].count++;return;}
+   if(v>=150){buckets[buckets.length-1].count++;return;}
+   let index;
+   if(v<50)index=0;
+   else if(v<80)index=1;
+   else if(v<85)index=2;
+   else if(v<90)index=3;
+   else if(v<95)index=4;
+   else if(v<100)index=5;
+   else if(v<105)index=6;
+   else if(v<110)index=7;
+   else if(v<115)index=8;
+   else index=9;
+   buckets[index].count++;
+  });
  }else if(mode==="harvestYear"||mode==="issueYear"){
   const counts=new Map();records.forEach(v=>counts.set(String(Math.trunc(v)),(counts.get(String(Math.trunc(v)))||0)+1));
   buckets=[...counts.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).map(([label,count])=>({label,count}));
@@ -508,9 +512,9 @@ function updateDurationHistogram(features){
   }
  }
  const maxCount=Math.max(1,...buckets.map(b=>b.count));
- const densityMode=mode==="ratio";
+ const densityMode=false;
  const maxBarValue=Math.max(1,...buckets.map(b=>densityMode?(b.density??b.count):b.count));
- summary.textContent=records.length.toLocaleString("sv-SE")+" av "+features.length.toLocaleString("sv-SE")+" polygoner ingår. Staplarna visar "+(mode==="ratio"?"täthet per procentenhet; siffrorna visar antal och andel. ":"antal och andel polygoner. ")+"Andelar beräknas av poster med giltigt värde.";
+ summary.textContent=records.length.toLocaleString("sv-SE")+" av "+features.length.toLocaleString("sv-SE")+" polygoner ingår. Staplarna visar antal polygoner i varje intervall och deras andel av alla giltiga poster. Andelar beräknas av poster med giltigt värde.";
  histogram.innerHTML=buckets.map(bucket=>{const pct=bucket.count/records.length*100,width=(densityMode?(bucket.density??bucket.count):bucket.count)/maxBarValue*100;return '<div class="duration-row"><div class="duration-label">'+esc(bucket.label)+'</div><div class="duration-row-main"><div class="duration-track"><div class="duration-bar" style="width:'+width.toFixed(2)+'%"></div></div><div class="duration-value">'+bucket.count.toLocaleString("sv-SE")+' ('+pct.toLocaleString("sv-SE",{maximumFractionDigits:1})+' %)</div></div></div>';}).join("");
  footnote.textContent="Andelar beräknas av poster med giltigt värde. "+(excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"");
 }
