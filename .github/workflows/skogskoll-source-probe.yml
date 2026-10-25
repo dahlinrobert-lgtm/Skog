@@ -79,8 +79,15 @@ jobs:
           node --input-type=module -e '
             import { readFileSync, writeFileSync } from "node:fs";
             const html = readFileSync("skogskoll/index.html", "utf8");
-            const match = html.match(/<script[^>]*>([\\s\\S]*?)<\\/script>/i);
+            const match = html.match(/<script[^>]*>[\s\S]*?<\/script>/i);
             if (!match) throw new Error("No inline script found in Skogskoll page");
+            writeFileSync("/tmp/skogskoll-page.html", html);
+          '
+          node --input-type=module -e '
+            import { readFileSync, writeFileSync } from "node:fs";
+            const html = readFileSync("/tmp/skogskoll-page.html", "utf8");
+            const match = html.match(/<script[^>]*>([\\s\\S]*?)<\\/script>/i);
+            if (!match) throw new Error("No script found for syntax check");
             writeFileSync("/tmp/skogskoll-page.js", match[1]);
           '
           node --check /tmp/skogskoll-page.js
