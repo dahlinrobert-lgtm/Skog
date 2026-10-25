@@ -68,7 +68,15 @@ export async function runScanBatch({
 
       // Atomic adapter contract: upsert observations + append history + insert seen IDs + checkpoint.
       await store.commitPage({
-        scanId, previousCheckpoint: checkpoint, nextCheckpoint: next, records, rawFeatures: page.features
+        scanId,
+        previousCheckpoint: checkpoint,
+        nextCheckpoint: next,
+        records,
+        rawFeatures: page.features,
+        // The persistent store keeps IDs normalized in its own table, not in
+        // the checkpoint JSON. The SQL RPC validates the IDs and commits them
+        // with the observations and offsets in one transaction.
+        pageIds: records.map(record => record.source_id)
       });
       checkpoint = { ...next, scanId };
       pagesFetched++;
