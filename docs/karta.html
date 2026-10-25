@@ -299,7 +299,8 @@ function assignFourColors(features){
 function categoryValue(feature,mode){
  const p=feature?.properties||{};
  const raw=mode==="forestType"?p.Skogstyp:mode==="harvestType"?p.Avverktyp:p.Samradsatgard??p.Samrådsåtgärd;
- const value=String(raw??"").trim();
+ let value=String(raw??"").trim();
+ if(mode==="harvestType")value=value.replace(/\\s*\\/\\s*försöksver\\s*$/i,"").trim();
  return value||"Okänd / saknas";
 }
 function categoryColor(value){
