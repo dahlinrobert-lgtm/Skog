@@ -25,7 +25,7 @@
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <label><input id="showSamrad" type="checkbox"> Samråd (punkter, linjer och ytor)</label>
-<label>Färglägg utförda <select id="performedColorMode"><option value="none">Ingen (normal)</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option></select></label>
+<label>Färglägg utförda <select id="performedColorMode"><option value="none">Ingen (normal)</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
 <button id="reload">Ladda om data</button>
 <button id="home">Visa hela området</button>
 </div>
@@ -80,7 +80,9 @@ plannedLayer.addTo(map);performedLayer.addTo(map);
 const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
-const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
+const CATEGORY_COLORS=["#0072B2","#E69F00","#009E73","#CC79A7"];
+const FOUR_COLOR_PALETTE=CATEGORY_COLORS;
+let caseColorByFeature=new Map();
 let categoryColorMap=new Map();
 function performedYear(feature){
  const p=feature?.properties||{};
@@ -104,6 +106,39 @@ function performedHectares(feature){
  const n=Number(p.Arealha);
  return p.Arealha!==null&&p.Arealha!==""&&Number.isFinite(n)&&n>=0?n:null;
 }
+function caseId(feature){
+ const p=feature?.properties||{};
+ for(const key of ["Arendenummer","Ärendenummer","ArendeNummer","ArendeNr","ÄrendeNr","Arendenr","Arende","Ärende","Beteckning","Beteckn"]){
+  const v=p[key]; if(v!==null&&v!==undefined&&String(v).trim()!=="") return String(v).trim();
+ }
+ return "ID saknas";
+}
+function vertexKeys(feature){
+ const keys=new Set();
+ function walk(v){
+  if(!Array.isArray(v))return;
+  if(v.length>=2&&typeof v[0]==="number"&&typeof v[1]==="number"){keys.add(v[0].toFixed(6)+","+v[1].toFixed(6));return;}
+  v.forEach(walk);
+ }
+ walk(feature?.geometry?.coordinates); return keys;
+}
+function assignFourColors(features){
+ const ids=features.map((f,i)=>String(f.id??f.properties?.OBJECTID??f.properties?.ObjectId??i));
+ const owners=new Map(), adj=features.map(()=>new Set());
+ features.forEach((f,i)=>vertexKeys(f).forEach(k=>{if(!owners.has(k))owners.set(k,[]);owners.get(k).push(i);}));
+ for(const list of owners.values()) for(let a=0;a<list.length;a++) for(let b=a+1;b<list.length;b++){adj[list[a]].add(list[b]);adj[list[b]].add(list[a]);}
+ const colors=Array(features.length).fill(-1), left=new Set(features.map((_,i)=>i));
+ while(left.size){
+  let pick=-1, sat=-1, deg=-1;
+  for(const i of left){const used=new Set([...adj[i]].map(n=>colors[n]).filter(n=>n>=0));if(used.size>sat||(used.size===sat&&adj[i].size>deg)){pick=i;sat=used.size;deg=adj[i].size;}}
+  const used=new Set([...adj[pick]].map(n=>colors[n]).filter(n=>n>=0));
+  let color=FOUR_COLOR_PALETTE.findIndex((_,i)=>!used.has(i)); if(color<0){color=0;while(used.has(color))color++;}
+  colors[pick]=color;left.delete(pick);
+ }
+ caseColorByFeature=new Map();
+ features.forEach((f,i)=>caseColorByFeature.set(ids[i],FOUR_COLOR_PALETTE[colors[i]]||"#777777"));
+ return {count:features.length, colorsUsed:new Set(colors).size, edges:adj.reduce((n,s)=>n+s.size,0)/2, fallback:colors.some(c=>c>=4)};
+}
 function categoryValue(feature,mode){
  const p=feature?.properties||{};
  const raw=mode==="forestType"?p.Skogstyp:p.Avverktyp;
@@ -125,6 +160,10 @@ function mixColor(t){
 function currentColorScale(){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  const features=performedLayer.toGeoJSON().features||[];
+ if(mode==="caseId"){
+  const diagnostic=assignFourColors(features);
+  return {mode,diagnostic};
+ }
  if(mode==="forestType"||mode==="harvestType"){
   const categories=[...new Set(features.map(f=>categoryValue(f,mode)))].sort((a,b)=>a.localeCompare(b,"sv"));
   categoryColorMap=new Map();
@@ -140,6 +179,11 @@ function performedStyle(feature){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  if(mode==="none")return {color:"#e03131",weight:2,opacity:.95,fillColor:"#e03131",fillOpacity:.22};
  const scale=performedScaleCache;
+ if(mode==="caseId"){
+  const key=String(feature?.id??feature?.properties?.OBJECTID??feature?.properties?.ObjectId??"");
+  const color=caseColorByFeature.get(key)||"#777777";
+  return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
+ }
  if(mode==="forestType"||mode==="harvestType"){
   const color=categoryColor(categoryValue(feature,mode));
   return {color:color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
@@ -173,7 +217,11 @@ function refreshPerformedColors(){
   maxLabel.textContent=scale.max===null?"Högst":scale.max.toLocaleString("sv-SE",{maximumFractionDigits:2})+unit;
   note.textContent=mode==="ratio"?"registrerad/anmäld":"inom valt område";
   gradient.style.background="linear-gradient(to right,"+mixColor(0)+","+mixColor(1)+")";
- }else if(mode==="forestType"||mode==="harvestType"){
+ }else if(mode==="caseId"){
+  minLabel.style.display="none";maxLabel.style.display="none";gradient.style.display="none";categoryLegend.style.display="flex";
+  note.textContent="Fyra färger återanvänds; grannskap uppskattas via gemensamma hörn. ID visas i popup.";
+  const diag=scale.diagnostic||{};const info=document.createElement("div");info.style.width="100%";info.textContent="Polygoner: "+(diag.count||0)+" · grannpar: "+(diag.edges||0)+(diag.fallback?" · varning: grafen krävde fler än fyra färger":"");categoryLegend.append(info);
+  }else if(mode==="forestType"||mode==="harvestType"){
   minLabel.style.display="none";maxLabel.style.display="none";gradient.style.display="none";categoryLegend.style.display="flex";
   note.textContent=mode==="forestType"?"Skogstyp":"Avverkningstyp";
   scale.categories.forEach(category=>{
@@ -211,7 +259,7 @@ function popup(f,type){
  const fields=type==="planned"?[
  ["Ärende",p.Beteckn],["Inkomdatum",date(p.Inkomdatum)],["Kommun",p.Kommun],["Avverkningstyp",p.Avverktyp],["Anmäld areal",ha(p.AnmaldHa)],["Status",p.ArendeStatus],["Skogstyp",p.Skogstyp],["Ändamål",p.Andamal],["Areal plantering",ha(p.SkogsodlHa)],["Areal naturlig föryngring",ha(p.NatforHa)],["Län",p.Lan]
  ]:[
- ["Ärendeår",p.Arendear],["Beteckning",p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
+ ["ID",caseId(f)],["Ärendenummer",p.Arendenummer??p.ArendeNummer??p.ArendeNr??p.Arendenr],["Ärendeår",p.Arendear],["Beteckning",p.Beteckning??p.Beteckn],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
  ];
  return '<div style="width:260px;max-width:260px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:6px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
 }
