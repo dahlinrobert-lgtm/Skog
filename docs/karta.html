@@ -317,7 +317,7 @@ function mixColor(t){
 function currentColorScale(){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  const features=[...performedLayer.toGeoJSON().features,...plannedLayer.toGeoJSON().features];
- if(mode==="samradAction")features.push(...samradPointLayer.toGeoJSON().features,...samradLineLayer.toGeoJSON().features,...samradAreaLayer.toGeoJSON().features);
+ if(mode==="samradAction"||mode==="forestType"||mode==="hectares")features.push(...samradPointLayer.toGeoJSON().features,...samradLineLayer.toGeoJSON().features,...samradAreaLayer.toGeoJSON().features);
  if(mode==="caseId"){
   const diagnostic=assignCaseGroupColors(features);
   return {mode,diagnostic};
