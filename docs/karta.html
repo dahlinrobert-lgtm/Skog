@@ -163,10 +163,11 @@ function assignCaseGroupColors(features){
   groups.get(id).features.push(feature);groupByFeature.set(feature,id);
  }
  const ids=[...groups.keys()],adj=new Map(ids.map(id=>[id,new Set()]));
- // Buffer adjacency: sample boundary segments every 15 m, then look for samples
- // within 35 m. This catches parallel edges with a small gap even when their vertices
- // are far apart. Three distinct near-pairs help reject corner-only contacts.
- const toleranceM=35,sampleStepM=15,cellSizeM=toleranceM,grid=new Map(),pairMatches=new Map();
+ // Neighborhood adjacency: sample boundary segments every 100 m and search within 1 km.
+ // This intentionally distinguishes nearby-but-separated harvest polygons as well as
+ // touching polygons, so the local map has stronger color contrast. Require at least
+ // three distinct nearby sample positions to avoid treating a single near-corner as an edge.
+ const toleranceM=1000,sampleStepM=100,cellSizeM=toleranceM,grid=new Map(),pairMatches=new Map();
  function project(lon,lat){return {x:lon*111320*Math.cos(lat*Math.PI/180),y:lat*110540};}
  function collectBoundarySamples(geometry,out){
   if(!geometry)return;
