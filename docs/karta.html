@@ -657,7 +657,8 @@ async function getLayer(base,fields,bounds,signal,stats){
   // launching a four-page batch immediately wastes three requests when that
   // first page is already the terminal page. Once more data is confirmed,
   // retain parallel batches for throughput.
-  const batchCount=pages===0?1:Math.min(batchSize,maxPages-pages);
+  const adaptiveBatchSize=pages===0?1:pages===1?2:batchSize;
+  const batchCount=Math.min(adaptiveBatchSize,maxPages-pages);
   const offsets=Array.from({length:batchCount},(_,i)=>(pages+i)*pageSize);
   if(stats)stats.apiRequests+=batchCount;
   const responses=await Promise.all(offsets.map(async offset=>{
