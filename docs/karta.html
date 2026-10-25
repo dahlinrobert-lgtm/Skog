@@ -53,7 +53,8 @@
 </main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script type="module">
-import { filterFeatureCollectionToRadius } from "./map-radius-filter.mjs";
+import { filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from "./map-radius-filter.mjs";
+import * as turf from "https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm";
 (function(){
 "use strict";
 const initialParams=new URLSearchParams(window.location.search);
@@ -264,6 +265,9 @@ function updateDurationHistogram(features){
 function filterToRadius(collection){
  return filterFeatureCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS);
 }
+function clipPolygonCollection(collection){
+ return clipPolygonCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS,turf);
+}
 function date(v){if(v==null||v==="")return "–";let n=Number(v);if(Number.isFinite(n)&&n>100000000000)return new Date(n).toISOString().slice(0,10);return String(v)}
 function ha(v){if(v==null||v==="")return "–";let n=Number(v);return Number.isFinite(n)?n.toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha":String(v)}
 function queryUrl(base,fields,bounds,offset){
@@ -319,6 +323,9 @@ async function load(){
   if(requestId!==viewRequestId)return;
   planned=filterToRadius(planned);performed=filterToRadius(performed);
   if(wantSamrad){samradPoints=filterToRadius(samradPoints);samradLines=filterToRadius(samradLines);samradAreas=filterToRadius(samradAreas);}
+  // Filtering selects intersecting features; clipping is additionally needed to hide polygon parts outside the circle.
+  planned=clipPolygonCollection(planned);performed=clipPolygonCollection(performed);
+  if(wantSamrad)samradAreas=clipPolygonCollection(samradAreas);
   plannedLayer.clearLayers();performedLayer.clearLayers();
   samradPointLayer.clearLayers();samradLineLayer.clearLayers();samradAreaLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);
