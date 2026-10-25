@@ -31,7 +31,7 @@ The migration deliberately creates no end-user policies for worker-owned tables.
 
 ## Production adapters and explicit manual entrypoint
 
-`src/supabase-adapters.mjs` implements the ArcGIS source adapter and service-role Supabase REST/RPC store. It restores checkpoints from `scan_sessions` and `scan_seen_ids`, keeps IDs normalized in the database, and passes each page to the transactional RPC. Adapter contract tests run in the normal test suite.
+`src/supabase-adapters.mjs` implements the ArcGIS source adapter and service-role Supabase REST/RPC store. It restores a compact checkpoint from `scan_sessions`; it does not download the full `scan_seen_ids` table on each resume. The database remains authoritative for cross-page duplicate detection through the unique `(scan_id, source_id)` key and the atomic page RPC. The pure in-memory planner retains full ID checking for deterministic unit tests. Adapter contract tests run in the normal test suite.
 
 `scripts/run-scan.mjs` is deliberately not attached to the scheduled workflow. It exits before network/database access unless `SKOGSKOLL_ENABLE_INGESTION=YES`, `SKOGSKOLL_SCAN_MODE=baseline|incremental`, `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are explicitly provided. Default run budget is 10 pages of 500 records, to be resumed by a subsequent manual invocation. Use the service-role key only in a trusted server environment; never put it in the frontend or GitHub Pages. No secrets are configured by this commit.
 
