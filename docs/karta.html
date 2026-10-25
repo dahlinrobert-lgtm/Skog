@@ -49,6 +49,7 @@
 <option value="issueYear">Ärendeår</option>
 <option value="registeredArea">Registrerad areal (ha)</option>
 <option value="reportedArea">Anmäld areal (ha)</option>
+<option value="ratio">Andel (registrerad/anmäld) (%)</option>
 <option value="harvestType">Avverkningstyp</option>
 <option value="forestType">Skogstyp</option>
 <option value="municipality">Kommun</option>
@@ -444,13 +445,14 @@ function updateDurationHistogram(features){
   else if(mode==="issueYear")value=parseNum(p.Arendear);
   else if(mode==="registeredArea")value=parseNum(p.Arealha);
   else if(mode==="reportedArea")value=parseNum(p.AnmaldHa);
+  else if(mode==="ratio")value=performedRatio(feature);
   else if(mode==="harvestType")value=String(p.Avverktyp??"").trim()||"Okänd / saknas";
   else if(mode==="forestType")value=String(p.Skogstyp??"").trim()||"Okänd / saknas";
   else if(mode==="municipality")value=String(p.Kommun??"").trim()||"Okänd / saknas";
   if(value===null||(typeof value==="number"&&!Number.isFinite(value))){excluded++;continue;}
   records.push(value);
  }
- const labels={duration:"Tid från ärendeår till utförd avverkning (år)",harvestYear:"Avverkningsår",issueYear:"Ärendeår",registeredArea:"Registrerad areal (ha)",reportedArea:"Anmäld areal (ha)",harvestType:"Avverkningstyp",forestType:"Skogstyp",municipality:"Kommun"};
+ const labels={duration:"Tid från ärendeår till utförd avverkning (år)",harvestYear:"Avverkningsår",issueYear:"Ärendeår",registeredArea:"Registrerad areal (ha)",reportedArea:"Anmäld areal (ha)",ratio:"Andel (registrerad/anmäld) (%)",harvestType:"Avverkningstyp",forestType:"Skogstyp",municipality:"Kommun"};
  document.getElementById("durationTitle").textContent="Histogram: "+labels[mode];
  document.getElementById("durationDescription").textContent=mode==="duration"?"Skillnaden beräknas som avverkningsår minus ärendeår.":"För utförda polygoner i valt område. Numeriska attribut grupperas i intervall och kategoriska attribut efter kategori.";
  if(!records.length){summary.textContent="Inga poster med giltiga värden för valt attribut.";histogram.innerHTML="";footnote.textContent=excluded?excluded.toLocaleString("sv-SE")+" polygoner saknade giltigt värde.":"";return;}
@@ -467,9 +469,19 @@ function updateDurationHistogram(features){
   buckets=[...counts.entries()].sort((a,b)=>Number(a[0])-Number(b[0])).map(([label,count])=>({label,count}));
   if(buckets.length>16){const grouped=new Map();records.forEach(v=>{const start=Math.floor(v/5)*5,label=start+"–"+(start+4);grouped.set(label,(grouped.get(label)||0)+1);});buckets=[...grouped.entries()].sort((a,b)=>Number(a[0].split("–")[0])-Number(b[0].split("–")[0])).map(([label,count])=>({label,count}));}
  }else{
-  const min=Math.min(...records),max=Math.max(...records),bins=8,span=max-min;
-  if(span===0)buckets=[{label:min.toLocaleString("sv-SE",{maximumFractionDigits:2}),count:records.length}];
-  else{const step=span/bins,counts=Array(bins).fill(0);records.forEach(v=>counts[Math.min(bins-1,Math.floor((v-min)/step))]++);buckets=counts.map((count,i)=>({label:(min+i*step).toLocaleString("sv-SE",{maximumFractionDigits:1})+"–"+(i===bins-1?max:min+(i+1)*step).toLocaleString("sv-SE",{maximumFractionDigits:1}),count})).filter(b=>b.count>0);}
+  const min=Math.min(...records),max=Math.max(...records),span=max-min;
+  if(span===0)buckets=[{label:min.toLocaleString("sv-SE",{maximumFractionDigits:0}),count:records.length}];
+  else{
+   // Use integer-wide, contiguous bins for all numeric attributes: 0–6, 6–12, 12–18, etc.
+   const rawStep=span/8;
+   const step=Math.max(1,Math.ceil(rawStep));
+   const start=Math.floor(min/step)*step;
+   const end=Math.ceil((max+Number.EPSILON)/step)*step;
+   const counts=new Map();
+   for(let lower=start;lower<end;lower+=step)counts.set(lower,0);
+   records.forEach(v=>{const lower=Math.floor(v/step)*step;counts.set(lower,(counts.get(lower)||0)+1);});
+   buckets=[...counts.entries()].map(([lower,count])=>({label:lower.toLocaleString("sv-SE",{maximumFractionDigits:0})+"–"+(lower+step).toLocaleString("sv-SE",{maximumFractionDigits:0}),count})).filter(b=>b.count>0);
+  }
  }
  const maxCount=Math.max(1,...buckets.map(b=>b.count));
  summary.textContent=records.length.toLocaleString("sv-SE")+" av "+features.length.toLocaleString("sv-SE")+" polygoner ingår. Staplarna visar antal och andel.";
