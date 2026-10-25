@@ -4,7 +4,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/skogskoll-source-probe.yml"
-      - "skogskoll/scripts/probe-source.mjs"
+      - "skogskoll/scripts/**"
       - "skogskoll/src/**"
       - "skogskoll/tests/**"
       - "skogskoll/README.md"
