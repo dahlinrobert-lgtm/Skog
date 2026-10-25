@@ -135,29 +135,54 @@ function assignCaseGroupColors(features){
   if(!groups.has(id))groups.set(id,{id,features:[],label:caseLabel(feature)});
   groups.get(id).features.push(feature);groupByFeature.set(feature,id);
  }
- const ids=[...groups.keys()],adj=new Map(ids.map(id=>[id,new Set()])),vertexOwners=new Map();
- // Build adjacency between case groups from shared boundary vertices. Two or more shared
- // vertices indicate a shared edge, avoiding false adjacency from a single corner touch.
+ const ids=[...groups.keys()],adj=new Map(ids.map(id=>[id,new Set()]));
+ // Treat nearby boundary vertices as neighbors, not only exactly shared coordinates.
+ // 35 m catches small digitizing gaps while requiring multiple matches avoids coloring
+ // polygons as neighbors just because they touch at one corner.
+ const toleranceM=35,cellSizeM=toleranceM,grid=new Map(),pairMatches=new Map();
+ function collectVertices(geometry,out){
+  if(!geometry)return;
+  function walk(value){
+   if(!Array.isArray(value))return;
+   if(value.length>=2&&typeof value[0]==="number"&&typeof value[1]==="number"){
+    const lon=value[0],lat=value[1],x=lon*111320*Math.cos(lat*Math.PI/180),y=lat*110540;
+    out.push({x,y,lon,lat});return;
+   }
+   for(const child of value)walk(child);
+  }
+  walk(geometry.coordinates);
+ }
+ function pairKey(a,b){return a<b?a+"\u0000"+b:b+"\u0000"+a;}
+ const groupVertexKeys=new Set();
  for(const [id,group] of groups){
-  const vertices=new Set();
-  for(const feature of group.features)for(const vertex of vertexKeys(feature))vertices.add(vertex);
-  for(const vertex of vertices){
-   if(!vertexOwners.has(vertex))vertexOwners.set(vertex,new Set());
-   vertexOwners.get(vertex).add(id);
+  for(const feature of group.features){
+   const raw=[];collectVertices(feature.geometry,raw);
+   for(const v of raw){
+    // De-duplicate repeated vertices within a group at approximately metre precision.
+    const unique=id+"|"+Math.round(v.x)+","+Math.round(v.y);
+    if(groupVertexKeys.has(unique))continue;groupVertexKeys.add(unique);
+    const gx=Math.floor(v.x/cellSizeM),gy=Math.floor(v.y/cellSizeM);
+    for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++){
+     const bucket=grid.get((gx+dx)+","+ (gy+dy));
+     if(!bucket)continue;
+     for(const other of bucket){
+      if(other.id===id)continue;
+      const distance=Math.hypot(v.x-other.x,v.y-other.y);
+      if(distance>toleranceM)continue;
+      const key=pairKey(id,other.id);
+      if(!pairMatches.has(key))pairMatches.set(key,{a:id<b? id:other.id,b:id<b?other.id:id,vertices:new Set()});
+      // Count distinct nearby vertex positions, not every pair of dense vertices.
+      pairMatches.get(key).vertices.add(Math.round((v.x+other.x)/2)+","+Math.round((v.y+other.y)/2));
+     }
+    }
+    const bucketKey=gx+","+gy;if(!grid.has(bucketKey))grid.set(bucketKey,[]);
+    grid.get(bucketKey).push({id,x:v.x,y:v.y});
+   }
   }
  }
- const sharedCounts=new Map();
- for(const ownerSet of vertexOwners.values()){
-  const owners=[...ownerSet];
-  for(let a=0;a<owners.length;a++)for(let b=a+1;b<owners.length;b++){
-   const pair=owners[a]<owners[b]?owners[a]+"\u0000"+owners[b]:owners[b]+"\u0000"+owners[a];
-   sharedCounts.set(pair,(sharedCounts.get(pair)||0)+1);
-  }
- }
- for(const [pair,count] of sharedCounts){
-  if(count<2)continue;
-  const [a,b]=pair.split("\u0000");if(a===undefined||b===undefined)continue;
-  adj.get(a)?.add(b);adj.get(b)?.add(a);
+ for(const match of pairMatches.values()){
+  if(match.vertices.size<2)continue;
+  adj.get(match.a)?.add(match.b);adj.get(match.b)?.add(match.a);
  }
  // DSATUR coloring: color the most constrained neighboring group first.
  const assigned=new Map(),remaining=new Set(ids);let conflicts=0;
