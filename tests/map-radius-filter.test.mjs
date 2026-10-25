@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { featureTouchesRadius } from "../src/map-radius-filter.mjs";
+import { featureTouchesRadius } from "../docs/map-radius-filter.mjs";
 
 const center = { lat: 63.74646, lon: 19.66455 };
 const radius = 10_000;
