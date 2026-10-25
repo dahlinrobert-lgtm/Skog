@@ -295,7 +295,7 @@ create or replace function public.skogskoll_recover_stale_scan(
 language plpgsql
 security definer
 set search_path = public, extensions
-as $
+as $$
 declare
   v_scan public.scan_sessions%rowtype;
 begin
@@ -337,7 +337,7 @@ begin
 
   return query select v_scan.id, v_scan.next_offset;
 end;
-$;
+$$;
 
 revoke all on function public.skogskoll_recover_stale_scan(text,timestamptz,text) from public, anon, authenticated;
 grant execute on function public.skogskoll_recover_stale_scan(text,timestamptz,text) to service_role;
