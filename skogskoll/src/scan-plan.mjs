@@ -42,6 +42,8 @@ export function createCheckpoint({ sourceKey, reportedTotal, pageSize, nextOffse
     pageSize,
     nextOffset,
     fetchedCount,
+    // Keep the pure planning API self-contained; production stores can load
+    // normalized IDs from scan_seen_ids and omit this in the persisted JSON.
     seenIds: [...new Set(ids)],
     updatedAt: null,
     complete: reportedTotal === 0
