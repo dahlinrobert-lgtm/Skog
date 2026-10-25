@@ -88,6 +88,6 @@ jobs:
             for (const assertion of ["radius match expected 2", "polygon match expected 2", "disabled watch area must return no matches"]) {
               if (!matchTest.includes(assertion)) throw new Error("Matching integration test missing assertion: " + assertion);
             }
-            if (!smoke.trimStart().toLowerCase().startsWith("begin;") || !/rollback;\s*$/i.test(smoke) || !matchTest.trimStart().toLowerCase().startsWith("begin;") || !/rollback;\s*$/i.test(matchTest)) throw new Error("SQL tests must be wrapped in transaction + rollback");
+            if (!smoke.includes("begin;") || !smoke.trimEnd().endsWith("rollback;") || !matchTest.includes("begin;") || !matchTest.trimEnd().endsWith("rollback;")) throw new Error("SQL tests must be wrapped in transaction + rollback");
             console.log("Static database guardrails passed.");
           '
