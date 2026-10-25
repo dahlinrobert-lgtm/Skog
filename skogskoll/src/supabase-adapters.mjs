@@ -188,6 +188,18 @@ export function createSupabaseStore({
       await rpc("skogskoll_finish_scan", { p_scan_id: scanId });
     },
 
+    async recoverStaleScan({ sourceKey, staleBefore, reason = "stale_worker_recovery" }) {
+      if (typeof sourceKey !== "string" || sourceKey.trim() === "") throw new TypeError("sourceKey is required");
+      if (typeof staleBefore !== "string" || !Number.isFinite(Date.parse(staleBefore)) || Date.parse(staleBefore) >= Date.now()) {
+        throw new TypeError("staleBefore must be a valid timestamp in the past");
+      }
+      return rpc("skogskoll_recover_stale_scan", {
+        p_source: sourceKey,
+        p_stale_before: staleBefore,
+        p_reason: String(reason).slice(0, 500)
+      });
+    },
+
     async failScan(scanId, reason, details = {}) {
       if (!scanId) return;
       await rpc("skogskoll_fail_scan", {
