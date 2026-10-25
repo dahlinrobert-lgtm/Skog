@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 
-const ENDPOINT = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0";
+const SERVICE = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer";\nconst ENDPOINT = SERVICE + "/0";
 const OUT = "skogskoll/reports/source-probe-latest.json";
 const PAGE_SIZE = 100;
 const MAX_PAGES = 3;
@@ -24,7 +24,7 @@ function stableId(feature) {
 
 const report = {
   checked_at: new Date().toISOString(),
-  endpoint: ENDPOINT,
+  service: SERVICE,\n  layer_endpoint: ENDPOINT,
   mode: "read-only; no alerts; no database writes",
   checks: {},
   errors: [],
