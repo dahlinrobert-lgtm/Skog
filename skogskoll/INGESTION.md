@@ -37,6 +37,12 @@ The migration deliberately creates no end-user policies for worker-owned tables.
 
 Transient network and server errors preserve the last committed checkpoint; known source-integrity violations stop the session. A source count check cannot prove snapshot consistency when the source changes and its count coincidentally stays constant, so a completed scan is a validated offset-pagination pass, not a transactionally consistent snapshot of the external ArcGIS service.
 
+## Recovering a stale running session
+
+A process that is terminated without handling an exception may leave its database session in `running`, and the unique one-running-session-per-source index correctly blocks a second session. Migration 003 therefore provides the service-role-only RPC `skogskoll_recover_stale_scan(p_source, p_stale_before, p_reason)`. It returns no row unless a session for that source has an `updated_at` older than the supplied timestamp. It marks the matching session and its poll run failed for audit; it does **not** delete history or unseen records.
+
+Use this only after independently confirming that no worker is still running for the source. The old seen-ID ledger belongs to the old scan ID, so recovery does not resume that offset into a new session: run a fresh bounded scan from offset 0. Previously committed observations remain idempotent: existing IDs are classified as unchanged or changed, not inserted as new records. The RPC does not activate alerts or deactivate observations.
+
 ## Bounded worker orchestration core
 
 `src/scan-worker-core.mjs` coordinates one bounded batch using injected source and store adapters. It checks the source count before each page and again before completion, validates page IDs, and returns `in_progress` when the per-run page budget is reached. It never sends alerts.
