@@ -54,7 +54,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script type="module">
 import { filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from "./map-radius-filter.mjs";
-import * as turf from "https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm";
+
 (function(){
 "use strict";
 const initialParams=new URLSearchParams(window.location.search);
@@ -265,7 +265,7 @@ function updateDurationHistogram(features){
 function filterToRadius(collection){
  return filterFeatureCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS);
 }
-function clipPolygonCollection(collection){
+function clipPolygonCollection(collection,turf){
  return clipPolygonCollectionToRadius(collection,{lat:CENTER[0],lon:CENTER[1]},RADIUS,turf);
 }
 function date(v){if(v==null||v==="")return "–";let n=Number(v);if(Number.isFinite(n)&&n>100000000000)return new Date(n).toISOString().slice(0,10);return String(v)}
@@ -323,9 +323,17 @@ async function load(){
   if(requestId!==viewRequestId)return;
   planned=filterToRadius(planned);performed=filterToRadius(performed);
   if(wantSamrad){samradPoints=filterToRadius(samradPoints);samradLines=filterToRadius(samradLines);samradAreas=filterToRadius(samradAreas);}
-  // Filtering selects intersecting features; clipping is additionally needed to hide polygon parts outside the circle.
-  planned=clipPolygonCollection(planned);performed=clipPolygonCollection(performed);
-  if(wantSamrad)samradAreas=clipPolygonCollection(samradAreas);
+  // Load clipping library dynamically so a CDN/module failure cannot prevent Leaflet or the map data from loading.
+  let clippingAvailable=true;
+  try{
+   const turfModule=await import("https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm");
+   const turf=turfModule.default??turfModule;
+   planned=clipPolygonCollection(planned,turf);performed=clipPolygonCollection(performed,turf);
+   if(wantSamrad)samradAreas=clipPolygonCollection(samradAreas,turf);
+  }catch(clipError){
+   clippingAvailable=false;
+   console.error("Polygon clipping unavailable; showing radius-filtered original polygons",clipError);
+  }
   plannedLayer.clearLayers();performedLayer.clearLayers();
   samradPointLayer.clearLayers();samradLineLayer.clearLayers();samradAreaLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);
@@ -341,7 +349,8 @@ async function load(){
   const samradPages=wantSamrad?samradPoints.pages+samradLines.pages+samradAreas.pages:0;
   const samradTruncated=wantSamrad&&(samradPoints.truncated||samradLines.truncated||samradAreas.truncated);
   document.getElementById("status").textContent="Visar objekt som skär eller tangerar sökcirkeln ("+planned.pages+" + "+performed.pages+(wantSamrad?" + "+samradPages:"")+" sidor). Filtrerade bort "+(planned.filteredOutside+performed.filteredOutside+(wantSamrad?samradPoints.filteredOutside+samradLines.filteredOutside+samradAreas.filteredOutside:0)).toLocaleString("sv-SE")+" objekt utanför radien."+
-   ((planned.truncated||performed.truncated||samradTruncated)?" Varning: källans sidgräns kan ha nåtts; visat urval kan vara ofullständigt.":"");
+   ((planned.truncated||performed.truncated||samradTruncated)?" Varning: källans sidgräns kan ha nåtts; visat urval kan vara ofullständigt.":"")+
+   (!clippingAvailable?" Varning: polygonklippning kunde inte laddas; polygoner visas ofiltrerade vid cirkelkanten.":"");
  }catch(e){
   if(e?.name==="AbortError")return;
   if(requestId===viewRequestId)document.getElementById("status").textContent="Kunde inte hämta kartdata: "+e.message+". Kontrollera att Skogsstyrelsens tjänst är tillgänglig och tillåter anrop från webbläsaren.";
