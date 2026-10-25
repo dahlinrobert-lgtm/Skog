@@ -769,8 +769,21 @@ async function getLayer(base,fields,bounds,signal,stats){
   if(!signal?.aborted)spatialLayerCache.set(key,{time:Date.now(),bounds:nextBounds,value:result});
   return result;
 }
-let viewRequestId=0,viewAbortController=null,viewDebounce=null;
+let viewRequestId=0,viewAbortController=null,viewDebounce=null,lastRenderedViewKey=null;
+function currentViewKey(wantSamrad){
+ // Include every setting that changes which source layers must be loaded.
+ // Presentation-only settings deliberately do not invalidate the data view.
+ return JSON.stringify({lat:Number(CENTER[0].toFixed(7)),lon:Number(CENTER[1].toFixed(7)),radius:RADIUS,wantSamrad});
+}
 async function load(){
+ const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
+ const viewKey=currentViewKey(wantSamrad);
+ if(viewKey===lastRenderedViewKey){
+  // Same successful data view: don't refilter, reclip, or rebuild thousands of Leaflet features.
+  applyVisibility();
+  if(new URLSearchParams(location.search).get("debugPerf")==="1")console.info("[Skogskoll] map-load-skipped",{reason:"unchanged-view",radiusKm:RADIUS/1000});
+  return;
+ }
  const requestId=++viewRequestId;
  if(viewAbortController)viewAbortController.abort();
  viewAbortController=new AbortController();
@@ -778,7 +791,6 @@ async function load(){
  const bounds=searchCircle.getBounds();
  const perf={startedAt:performance.now(),apiRequests:0,responseCacheHits:0,spatialOverlapHits:0,spatialCacheHits:0,containedViews:0,incrementalViews:0,incrementalStrips:0,reusedSpatialFeatures:0,fullViewFetches:0};
  try{
-  const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
   const plannedPromise=getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal,perf);
   const performedPromise=getLayerForView(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal,perf);
   // Samråd loads concurrently but cannot block first paint of the two main layers.
@@ -856,6 +868,7 @@ async function load(){
   updateDurationHistogram(performed.features);
   const samradTruncated=wantSamrad&&(samradPoints.truncated||samradLines.truncated||samradAreas.truncated);
   if(planned.truncated||performed.truncated||samradTruncated||!clippingAvailable)console.warn("Map data warning",{plannedTruncated:planned.truncated,performedTruncated:performed.truncated,samradTruncated,clippingAvailable,filteredOutside:planned.filteredOutside+performed.filteredOutside+(wantSamrad?samradPoints.filteredOutside+samradLines.filteredOutside+samradAreas.filteredOutside:0)});
+  lastRenderedViewKey=viewKey;
  }catch(e){
   if(e?.name==="AbortError")return;
   if(requestId===viewRequestId){
