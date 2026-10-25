@@ -47,6 +47,7 @@ jobs:
         run: |
           node --check skogskoll/scripts/probe-source.mjs
           node --check skogskoll/scripts/run-scan.mjs
+          node --check skogskoll/scripts/recover-stale-scan.mjs
           node --check skogskoll/src/scan-plan.mjs
           node --check skogskoll/src/scan-worker-core.mjs
           node --check skogskoll/src/observation-core.mjs
