@@ -10,7 +10,7 @@ begin;
 
 do $test$
 declare
-  v_source text := 'skogskoll:sql-smoke-test';
+  v_source text := 'skogskoll:sql-smoke-test-' || gen_random_uuid()::text;
   v_scan uuid;
   v_run uuid;
   v_result record;
