@@ -9,12 +9,25 @@ Fristående, mobilanpassad app för privata skogsägare. Första leveransen är 
 - **Larm:** e-post via Resend och web push via VAPID/web-push. Larm är avstängda tills datakällans beteende har verifierats.
 - **Befintliga lager återanvänds:** samma Skogsstyrelsen ArcGIS-tjänst för avverkningsanmälningar som i `docs/karta.html`.
 
+## Första källproben — verifieringsstatus
+- Första körningen lyckades 2026-10-25.
+- Provet läste 300 poster: 300 unika tekniska ID:n och inga dubbletter i provet.
+- Proben begränsas avsiktligt till tre sidor à 100 poster; den gör inte en fullständig inläsning.
+- Rapporten kontrollerar nu även källans totala räknarvärde, senaste poster sorterade efter `Inkomdatum`, pagineringens sidstorlekar och saknade ID:n.
+- En lyckad källprobe betyder inte att aviseringar kan aktiveras.
+
 ## Säkerhetsgrind före larm
 1. Kör `node skogskoll/scripts/probe-source.mjs` lokalt eller workflow `Skogskoll source probe`.
 2. Granska `skogskoll/reports/source-probe-latest.json` som workflow-artifact.
-3. Bekräfta att tjänsten returnerar stabila unika identifierare, datumfält och geometrier, samt att paginering och upprepade körningar ger förväntat resultat.
-4. Implementera och verifiera DB-upsert/deduplicering mot faktisk respons.
-5. Först därefter kopplas mejl/push på. Inga notiser skickas i denna version.
+3. Kör minst två prober med minst sex timmars mellanrum och jämför fingerprint, datummönster och ID-beteende.
+4. Implementera en separat fullständig/inkrementell ingestion med kontrollerad paginering, räknare, retry, checkpoint och tydliga regler för ofullständiga körningar.
+5. Verifiera idempotent DB-upsert/deduplicering och historik innan e-post eller push kopplas på.
+
+## Källidentitet och datum
+- `OBJECTID` behandlas som källans tekniska rad-ID; dess stabilitet över tid ska verifieras.
+- `Beteckn` är en kandidat till ärendeidentitet, men får inte antas vara unik eller oföränderlig utan test.
+- `Inkomdatum` bevaras som källans inkomdatum. Det är inte samma sak som när Skogskoll först observerade posten eller när den publicerades.
+- Första upptäckt av en äldre post skapar en historisk baselinepost, inte en ny-händelse-avisering.
 
 ## Konfiguration för framtida drift
 - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`: worker-only, aldrig i frontend.
@@ -24,10 +37,10 @@ Fristående, mobilanpassad app för privata skogsägare. Första leveransen är 
 - Frontendens Supabase anon key kan exponeras endast med korrekt RLS-policy. Lägg inte in service-role-nyckeln i webappen.
 
 ## Viktiga semantiska begränsningar
-En ny post i tjänsten betyder att den är ny för vår historik, inte säkert att den inkom samma dag. Om källan saknar publiceringstid kan appen bara ange när posten först observerades. Geometrisk överlappning mot ett bevakningsområde är en matchning, inte ett juridiskt besked om ägande eller rådighet.
+En ny post i tjänsten betyder att den är ny för vår historik, inte säkert att den inkom samma dag. Geometrisk överlappning mot ett bevakningsområde är en matchning, inte ett juridiskt besked om ägande eller rådighet. Skogsstyrelsen uppger att publicerade avverkningsanmälningar kan finnas kvar i upp till sex år beroende på när åtgärden genomförts; frånvaro i lagret kan därför inte tolkas som bevis för att ingen anmälan funnits.
 
 ## Nästa steg
-- Kör källprobe flera gånger med minst sex timmars mellanrum.
-- Dokumentera fältschema, stabilitet, pagination och ändringar/borttagningar.
-- Lägg till autentisering, RLS, bevakningspolygoner och testad idempotent historik.
-- Aktivera larm separat efter uttryckligt beslut.
+- Kör källproben igen efter minst sex timmar.
+- Jämför rapporternas datummönster och fingerprint.
+- Bygg en separat fullständig ingestion som aldrig markerar ej sedda poster inaktiva efter misslyckad eller ofullständig poll.
+- Aktivera aviseringar separat efter uttryckligt beslut.
