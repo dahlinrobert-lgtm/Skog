@@ -1,8 +1,14 @@
+import importlib.util
 import unittest
+from pathlib import Path
 
 from pyproj import Transformer
 
-from convert_min_karta_geometry import transform_nested
+MODULE_PATH = Path(__file__).with_name("convert-min-karta-geometry.py")
+SPEC = importlib.util.spec_from_file_location("geometry_converter", MODULE_PATH)
+MODULE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MODULE)
+transform_nested = MODULE.transform_nested
 
 
 class GeometryConverterTests(unittest.TestCase):
