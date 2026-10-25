@@ -85,3 +85,15 @@ test("worker stops cleanly when max pages per run is reached", async () => {
   assert.equal(result.pagesFetched, 2);
   assert.equal(result.nextOffset, 4);
 });
+
+test("transient source failures preserve the committed scan for resumption", async () => {
+  const store = makeStore(3);
+  const source = {
+    key: "source",
+    async getCount() { return 3; },
+    async getPage() { throw new Error("temporary fetch failed"); }
+  };
+  await assert.rejects(runScanBatch({ source, store, pageSize: 2, maxPages: 1 }), /temporary fetch failed/);
+  assert.equal(store.calls.failures.length, 0);
+  assert.equal(store.calls.finished, 0);
+});
