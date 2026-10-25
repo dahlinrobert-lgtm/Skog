@@ -55,7 +55,7 @@
 <script>
 (function(){
 "use strict";
-let CENTER=[63.74646,19.66455], RADIUS=10000;
+const initialParams=new URLSearchParams(window.location.search);\nlet CENTER=[Number(initialParams.get("lat"))||63.74646,Number(initialParams.get("lon"))||19.66455], RADIUS=Number(initialParams.get("radius"))||10000;
 let searchCircle=null;
 const PLANNED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query";
 const PERFORMED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query";
