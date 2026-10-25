@@ -12,27 +12,6 @@ function requiredEnv(env, name) {
   return value.trim();
 }
 
-function arcGisId(feature, objectIdField) {
-  const properties = feature?.properties ?? {};
-  const value = feature?.id ?? properties[objectIdField] ?? properties.OBJECTID ?? properties.ObjectId ?? properties.objectid;
-  return value === null || value === undefined || String(value).trim() === "" ? null : String(value);
-}
-
-async function fetchJson(url, init = {}) {
-  const response = await fetch(url, {
-    ...init,
-    headers: {
-      "user-agent": "Skogskoll-ingestion-worker/0.1 (server-side; bounded scan)",
-      ...(init.headers ?? {})
-    }
-  });
-  const body = await response.json().catch(() => null);
-  if (!response.ok) throw new Error(`HTTP ${response.status} from ${new URL(url).origin}`);
-  if (!body || typeof body !== "object") throw new Error("Upstream returned invalid JSON");
-  if (body.error) throw new Error(body.error.message || JSON.stringify(body.error));
-  return body;
-}
-
 export function createArcGisSource({
   endpoint = DEFAULT_ENDPOINT,
   pageLimit = DEFAULT_PAGE_LIMIT,
@@ -86,7 +65,13 @@ export function createArcGisSource({
       });
       const body = await json(url);
       if (!Array.isArray(body.features)) throw new Error("ArcGIS page omitted features array");
-      return { features: body.features, exceededTransferLimit: body.exceededTransferLimit === true };
+      // Normalize the technical key regardless of GeoJSON's id representation.
+      const features = body.features.map(feature => {
+        const properties = feature.properties ?? {};
+        const id = feature.id ?? properties[idField] ?? properties.OBJECTID ?? properties.ObjectId ?? properties.objectid;
+        return id === null || id === undefined ? feature : { ...feature, id: String(id) };
+      });
+      return { features, exceededTransferLimit: body.exceededTransferLimit === true };
     }
   };
 }
