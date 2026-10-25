@@ -82,7 +82,7 @@ const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
 const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
 const FOUR_COLOR_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7"];
-const CASE_GROUP_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7","#D55E00","#56B4E9","#882255","#AA4499","#332288","#999933","#44AA99","#CC6677","#117733","#88CCEE","#CC3311","#6699CC","#EE7733","#997700","#EE3377","#BBBBBB"];
+const CASE_GROUP_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7","#D55E00","#56B4E9","#882255","#AA4499","#332288","#999933","#44AA99","#CC6677","#117733","#88CCEE","#CC3311","#6699CC","#EE7733","#997700","#EE3377","#BBBBBB","#4477AA","#228833","#AA3377","#66CCEE","#AA4499","#44AA99","#999933","#DDCC77","#CC6677","#332288","#88CCEE","#117733"];
 let caseColorByFeature=new Map();
 let categoryColorMap=new Map();
 function performedYear(feature){
@@ -113,18 +113,25 @@ function polygonId(feature){
 }
 function caseId(feature){
  const p=feature?.properties||{};
- const designation=String(p.Beteckn??p.Beteckning??"").trim();
+ const raw=String(p.Beteckn??p.Beteckning??"").trim();
+ const designation=raw.toLocaleLowerCase("sv");
+ const unavailable=!raw||["visas ej","visa ej","ej tillgänglig","saknas","okänd","null","undefined","-"].includes(designation);
  const year=String(p.Arendear??"").trim();
  const municipality=String(p.Kommunnr??"").trim();
- // No dedicated case-number field is exposed by the performed layer; this composite is provisional.
- if(!designation||!year)return null;
- return [municipality||"kommun-okänd",year,designation].join("|");
+ // "Visas ej" is a display placeholder, not a real case number. Use polygon-level fallback
+ // so these records do not all collapse into one false shared case group.
+ if(!unavailable&&year)return [municipality||"kommun-okänd",year,raw].join("|");
+ const oid=polygonId(feature);
+ if(oid!=="saknas")return "polygon:"+String(oid);
+ return null;
 }
 function caseLabel(feature){
  const p=feature?.properties||{};
- const id=caseId(feature);
- if(!id)return "Ärende-ID saknas";
- return [p.Kommun||p.Kommunnr||null,p.Arendear||null,p.Beteckn||p.Beteckning||null].filter(v=>v!==null&&String(v).trim()!=="").join(" · ");
+ const raw=String(p.Beteckn??p.Beteckning??"").trim();
+ const unavailable=!raw||["visas ej","visa ej","ej tillgänglig","saknas","okänd","null","undefined","-"].includes(raw.toLocaleLowerCase("sv"));
+ const municipality=p.Kommun||p.Kommunnr||"Kommun okänd";
+ if(unavailable)return [municipality,p.Arendear||null,"Polygon "+polygonId(feature)+" (ärende-ID saknas)"].filter(v=>v!==null&&String(v).trim()!=="").join(" · ");
+ return [municipality,p.Arendear||null,raw].filter(v=>v!==null&&String(v).trim()!=="").join(" · ");
 }
 function assignCaseGroupColors(features){
  const groups=new Map(),groupByFeature=new Map();let missing=0;
