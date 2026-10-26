@@ -13,7 +13,7 @@ on:
       - ".github/workflows/analyse-real-harvest-volume.yml"
       - "scripts/analyze_volume_for_polygon.py"
 permissions:
-  contents: read
+  contents: write
 jobs:
   analyse:
     runs-on: ubuntu-latest
@@ -69,7 +69,37 @@ jobs:
               for x in rows[:8]: print(x)
               if report["errors"]: raise SystemExit(report["errors"])
           Path("real-volume-summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          records=[]
+          for group in summary:
+              for row in group["rows"]:
+                  if row["status"] == "ok":
+                      records.append({"objectid":row["objectid"],"raster_code":group["raster"],"kommun":row["kommun"],
+                        "beteckning":row["beteckning"],"area_ha":row["area_ha"],"valid_cells":row["valid_cells"],
+                        "coverage_pct":row["coverage_pct"],"mean_m3sk_ha":row["mean_m3sk_ha"],
+                        "estimated_total_m3sk":row["estimated_total_m3sk"]})
+          payload={"dataset":"Skogsstyrelsen Skogliga grunddata – volym omdrev 3",
+            "method":"cell-centre inclusion; NoData excluded; valid zero retained",
+            "sample_limit_per_raster":len(summary[0]["rows"]) if summary else 0,
+            "note":"Only sampled polygons with valid raster cells are listed. Missing IDs mean not yet calculated in this sample, not necessarily missing forest volume.",
+            "generated_at_utc":__import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
+            "sample_counts":{g["raster"]:{"sampled":g["polygon_count"],"valid":sum(r["status"]=="ok" for r in g["rows"])} for g in summary},
+            "records":records}
+          target=Path("docs/volume-overlays/polygon-volume-attributes.json")
+          target.parent.mkdir(parents=True,exist_ok=True)
+          target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(f"Prepared public popup lookup: {len(records)} polygons have valid raster values")
           PY
+      - name: Publish sampled volume attributes to Pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/volume-overlays/polygon-volume-attributes.json
+          if git diff --cached --quiet; then
+            echo "Volume attribute lookup unchanged."
+          else
+            git commit -m "Update sampled polygon volume attributes"
+            git push
+          fi
       - name: Upload real polygon volume analysis
         uses: actions/upload-artifact@v4
         with:
