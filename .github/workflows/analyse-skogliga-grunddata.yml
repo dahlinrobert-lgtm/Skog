@@ -1,0 +1,40 @@
+name: Analyse Skogsstyrelsen volume rasters
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/skogliga-grunddata/*.zip"
+      - "scripts/analyse_skogliga_grunddata.py"
+      - ".github/workflows/analyse-skogliga-grunddata.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install raster analysis dependencies
+        run: python -m pip install --disable-pip-version-check numpy rasterio
+
+      - name: Analyse raster values and coverage
+        run: python scripts/analyse_skogliga_grunddata.py
+
+      - name: Upload analysis report
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogliga-grunddata-pixel-analysis
+          path: data/skogliga-grunddata/pixel-analysis-report.json
+          if-no-files-found: error
+          retention-days: 30
