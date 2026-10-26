@@ -17,3 +17,17 @@ Här läggs små provfiler från Skogsstyrelsens volymraster för att verifiera 
 Använd gärna: `volym_omdrev3_<område>_<datum>.<ext>`
 
 Ingen rasterfil är ännu incheckad i den här mappen.
+
+
+## Automatisk validering
+
+GitHub Actions kör `scripts/validate_skogliga_grunddata.py` när ZIP-filerna ändras eller vid manuell start. Rapporten `validation-report.json` innehåller arkivinventering, SHA-256, ZIP-kontroll och metadata för läsbara raster (dimensioner, CRS, upplösning, utbredning, band och NoData).
+
+Kör lokalt efter att ha installerat Rasterio:
+
+```bash
+python -m pip install rasterio
+python scripts/validate_skogliga_grunddata.py
+```
+
+Skriptet packar bara rastermedlemmar till temporära mappar för metadataavläsning; ZIP-originalen ändras inte.
