@@ -1,0 +1,58 @@
+name: Analyse Halland volume test areas
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/skogliga-grunddata/halland-test-areas.geojson"
+      - "data/skogliga-grunddata/sks_Volym_omdrev3_13.zip"
+      - "scripts/analyze_volume_for_polygon.py"
+      - ".github/workflows/analyse-halland-volume-test-areas.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install analysis dependencies
+        run: python -m pip install numpy rasterio shapely pyproj
+      - name: Analyse test polygons against source rasters
+        run: |
+          python scripts/analyze_volume_for_polygon.py \
+            --polygon data/skogliga-grunddata/halland-test-areas.geojson \
+            --output halland-volume-test-report.json
+      - name: Validate report structure and coverage
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("halland-volume-test-report.json").read_text(encoding="utf-8"))
+          assert report["polygon_count"] == 4, report["polygon_count"]
+          assert report["input_crs"] == "EPSG:3006", report["input_crs"]
+          halland = next((r for r in report["rasters"] if r["source_archive"].endswith("_13.zip")), None)
+          assert halland is not None, "Halland raster archive 13 missing"
+          assert len(halland["per_polygon"]) == 4
+          for item in halland["per_polygon"]:
+              stats = item["stats"]
+              print(item["feature_id"], stats["status"],
+                    "valid_cells=", stats["valid_cells"],
+                    "coverage_pct=", stats["valid_coverage_pct"],
+                    "mean_m3sk_ha=", stats["mean_volume_m3sk_per_ha_including_zero"])
+          print("Halland test polygons:", report["polygon_count"])
+          print("Analysis errors:", len(report["errors"]))
+          assert not report["errors"], report["errors"]
+          PY
+      - name: Upload analysis report
+        uses: actions/upload-artifact@v4
+        with:
+          name: halland-volume-test-report
+          path: halland-volume-test-report.json
+          if-no-files-found: error
