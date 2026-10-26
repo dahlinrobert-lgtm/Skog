@@ -6,6 +6,8 @@ on:
     paths:
       - "scripts/fetch_halland_completed_sample.py"
       - "scripts/compare_polygon_pixel_methods.py"
+      - "tests/test_compare_polygon_pixel_methods.py"
+      - "tests/test_uniform_control_raster.py"
       - ".github/workflows/validate-real-halland-completed-harvest.yml"
 
 permissions:
