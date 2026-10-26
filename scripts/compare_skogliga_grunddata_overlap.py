@@ -161,7 +161,9 @@ def main() -> int:
         extracted = {}
         for archive in archives:
             try:
-                extracted[archive.name] = extract_tif(archive, root / (archive.stem))
+                member_dir = root / archive.stem
+                member_dir.mkdir(parents=True, exist_ok=True)
+                extracted[archive.name] = extract_tif(archive, member_dir)
             except Exception as exc:
                 errors.append({"archive": archive.name, "error": f"{type(exc).__name__}: {exc}"})
         paths = sorted(extracted.values())
