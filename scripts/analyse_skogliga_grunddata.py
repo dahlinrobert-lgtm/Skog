@@ -6,7 +6,6 @@ import json
 import math
 import tempfile
 import zipfile
-from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -40,6 +39,8 @@ def analyse_raster(path: Path) -> dict:
         hist = np.zeros(HIST_SIZE, dtype=np.uint64)
         valid_count = 0
         nodata_count = 0
+        zero_count = 0
+        positive_count = 0
         min_value = None
         max_value = None
         sum_value = 0.0
@@ -50,6 +51,8 @@ def analyse_raster(path: Path) -> dict:
             arr = ds.read(1, window=window, masked=False)
             valid = arr != nodata
             nodata_count += int(arr.size - np.count_nonzero(valid))
+            zero_count += int(np.count_nonzero(valid & (arr == 0)))
+            positive_count += int(np.count_nonzero(valid & (arr > 0)))
             if not np.any(valid):
                 continue
             vals = arr[valid].astype(np.int32, copy=False)
@@ -82,7 +85,11 @@ def analyse_raster(path: Path) -> dict:
             "total_pixels": int(ds.width * ds.height),
             "valid_pixels": valid_count,
             "nodata_pixels": nodata_count,
+            "zero_value_pixels": zero_count,
+            "positive_value_pixels": positive_count,
             "valid_percent": round(100 * valid_count / (ds.width * ds.height), 6) if ds.width * ds.height else None,
+            "zero_value_percent_of_all_pixels": round(100 * zero_count / (ds.width * ds.height), 6) if ds.width * ds.height else None,
+            "positive_value_percent_of_all_pixels": round(100 * positive_count / (ds.width * ds.height), 6) if ds.width * ds.height else None,
             "minimum": min_value,
             "maximum": max_value,
             "mean": mean,
@@ -154,6 +161,7 @@ def main() -> int:
             "percentiles": "Exact integer percentiles from a full int16 histogram",
             "coverage_note": "Overlap uses bounding boxes only, not pixel-level valid-data footprints",
             "units_note": "Units/scaling are not inferred from pixel values; verify against product documentation",
+            "zero_values_note": "Zero is reported separately but remains included in descriptive statistics; product documentation identifies zero as an assigned value for cells below the canopy-height threshold.",
         },
         "raster_count": len(rasters),
         "rasters": rasters,
@@ -164,6 +172,7 @@ def main() -> int:
     print(f"Analysed {len(rasters)} raster(s); errors: {len(errors)}; report: {OUT.relative_to(ROOT)}")
     for item in rasters:
         print(f"- {item['file']}: valid={item['valid_pixels']:,}, "
+              f"zero={item['zero_value_pixels']:,}, positive={item['positive_value_pixels']:,}, "
               f"NoData={item['nodata_pixels']:,}, min={item['minimum']}, "
               f"max={item['maximum']}, mean={item['mean']}")
     for error in errors:
