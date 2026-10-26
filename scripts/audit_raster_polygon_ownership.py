@@ -20,7 +20,10 @@ from pyproj import CRS, Transformer
 from shapely.geometry import mapping
 from shapely.ops import transform as transform_geometry
 
-from analyze_volume_for_polygon import load_features
+try:
+    from scripts.analyze_volume_for_polygon import load_features
+except ModuleNotFoundError:
+    from analyze_volume_for_polygon import load_features
 
 
 def audit_cell_ownership(ds, features, source_crs):
