@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-26T20:12:48.501441Z",
+  "generated_at": "2026-10-26T20:23:24.930820Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -25,10 +25,10 @@
     "match_score_formula": "0-100 heuristic: meaningful overlap +25, completed polygon coverage up to +30, planned polygon coverage up to +20, plausible timing +15, same municipality +10."
   },
   "sources": {
-    "latest_planned_checked_at": "2026-10-26T20:11:32.095390Z",
-    "latest_completed_checked_at": "2026-10-26T20:11:44.982452Z",
-    "completed_archive": "completed_20261026T201144Z.geojson.gz",
-    "planned_snapshots_read": 31,
+    "latest_planned_checked_at": "2026-10-26T20:21:37.886492Z",
+    "latest_completed_checked_at": "2026-10-26T20:21:50.968678Z",
+    "completed_archive": "completed_20261026T202150Z.geojson.gz",
+    "planned_snapshots_read": 32,
     "unreadable_snapshots": []
   },
   "counts": {
@@ -46,7 +46,221 @@
     "planned_with_meaningful_overlap_within_3_years": 28,
     "planned_with_meaningful_overlap_outside_3_years": 12
   },
-  "planned_persistence_events": [],
+  "planned_persistence_events": [
+    {
+      "from_snapshot": "20261026T201132Z.json",
+      "to_snapshot": "20261026T202137Z.json",
+      "scope": "radius_10km",
+      "from_checked_at": "2026-10-26T20:11:32.095390Z",
+      "to_checked_at": "2026-10-26T20:21:37.886492Z",
+      "appeared_count": 159,
+      "not_returned_count": 159,
+      "appeared_ids": [
+        "4925919",
+        "4927102",
+        "4938366",
+        "4953005",
+        "4988863",
+        "4988864",
+        "4999586",
+        "5002631",
+        "5010786",
+        "5015190",
+        "5016435",
+        "5023558",
+        "5036663",
+        "5036823",
+        "5038265",
+        "5039416",
+        "5048343",
+        "5048381",
+        "5060473",
+        "5070754",
+        "5075373",
+        "5077672",
+        "5082562",
+        "5097572",
+        "5099233",
+        "5115075",
+        "5115716",
+        "5115840",
+        "5123149",
+        "5123199",
+        "5132260",
+        "5134139",
+        "5138290",
+        "5144484",
+        "5144970",
+        "5147638",
+        "5149992",
+        "5151687",
+        "5154936",
+        "5154937",
+        "5161516",
+        "5168473",
+        "5169641",
+        "5170292",
+        "5176469",
+        "5190207",
+        "5202684",
+        "5204617",
+        "5214730",
+        "5226668",
+        "5230360",
+        "5233861",
+        "5241251",
+        "5242620",
+        "5251828",
+        "5251829",
+        "5260071",
+        "5260944",
+        "5261740",
+        "5265041",
+        "5270192",
+        "5272239",
+        "5274699",
+        "5275442",
+        "5275720",
+        "5305896",
+        "5310200",
+        "5310215",
+        "5313728",
+        "5326581",
+        "5336664",
+        "5346966",
+        "5359308",
+        "5359421",
+        "5359819",
+        "5360396",
+        "5398291",
+        "5413201",
+        "6058351",
+        "6069482",
+        "6072081",
+        "6073086",
+        "6078753",
+        "6080698",
+        "6082788",
+        "6085416",
+        "6115538",
+        "6115547",
+        "6115553",
+        "6130786",
+        "6130875",
+        "6138931",
+        "6140344",
+        "6157019",
+        "6165537",
+        "6165540",
+        "6170122",
+        "6170123",
+        "6170943",
+        "6171007"
+      ],
+      "not_returned_ids": [
+        "4928107",
+        "4930235",
+        "4936018",
+        "4938624",
+        "4940109",
+        "4945547",
+        "4966733",
+        "4968307",
+        "4971938",
+        "4975329",
+        "4976216",
+        "4982072",
+        "4985464",
+        "5003856",
+        "5007005",
+        "5027672",
+        "5030691",
+        "5048260",
+        "5053259",
+        "5061590",
+        "5073320",
+        "5077527",
+        "5079538",
+        "5084989",
+        "5090061",
+        "5101097",
+        "5110193",
+        "5114635",
+        "5121369",
+        "5122706",
+        "5126669",
+        "5128360",
+        "5129096",
+        "5133782",
+        "5139027",
+        "5141242",
+        "5143974",
+        "5149738",
+        "5149993",
+        "5151544",
+        "5152519",
+        "5153787",
+        "5156559",
+        "5162889",
+        "5191504",
+        "5199946",
+        "5227009",
+        "5228166",
+        "5238238",
+        "5241304",
+        "5241903",
+        "5242073",
+        "5244844",
+        "5245889",
+        "5248124",
+        "5249615",
+        "5253037",
+        "5253038",
+        "5256760",
+        "5257126",
+        "5265336",
+        "5268030",
+        "5270299",
+        "5270300",
+        "5274652",
+        "5304503",
+        "5305521",
+        "5307154",
+        "5312578",
+        "5321186",
+        "5330604",
+        "5341385",
+        "5352203",
+        "5352650",
+        "5353370",
+        "5353374",
+        "5396400",
+        "6010956",
+        "6051883",
+        "6065369",
+        "6065981",
+        "6068346",
+        "6073477",
+        "6075324",
+        "6079291",
+        "6080668",
+        "6105682",
+        "6105976",
+        "6106199",
+        "6121794",
+        "6122989",
+        "6131449",
+        "6132414",
+        "6150320",
+        "6156216",
+        "6156606",
+        "6161094",
+        "6161943",
+        "6162514",
+        "6162571"
+      ]
+    }
+  ],
   "incomparable_snapshot_pairs": [
     {
       "from_snapshot": "20261024T093149Z.json",
@@ -57,8 +271,8 @@
     }
   ],
   "completed_evidence_transitions": {
-    "snapshot_count": 28,
-    "comparable_pairs": 17,
+    "snapshot_count": 29,
+    "comparable_pairs": 18,
     "skipped_scope_pairs": [
       {
         "before_snapshot": "completed_20261024T185121Z.geojson.gz",
@@ -131,12 +345,545 @@
         "reason": "Completed-layer query scope is missing or changed; source differences are not interpreted as evidence transitions."
       }
     ],
-    "events": [],
+    "events": [
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5202684",
+        "case_number": "A 12374-2024",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5377710",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 4.3,
+        "intersection_ha": 2.729,
+        "planned_overlap_pct": 62.2,
+        "completed_overlap_pct": 91.6,
+        "completed_date": 1748304000000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5099233",
+        "case_number": "A 12375-2024",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5362574",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 5.7,
+        "intersection_ha": 3.943,
+        "planned_overlap_pct": 68.5,
+        "completed_overlap_pct": 97.1,
+        "completed_date": 1726099200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5115716",
+        "case_number": "A 16606-2022",
+        "municipality": "UMEÅ",
+        "completed_object_id": "5369578",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.8,
+        "intersection_ha": 1.219,
+        "planned_overlap_pct": 67.2,
+        "completed_overlap_pct": 96.4,
+        "completed_date": 1717718400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5123199",
+        "case_number": "A 17462-2023",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5444756",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.5,
+        "intersection_ha": 1.008,
+        "planned_overlap_pct": 67.2,
+        "completed_overlap_pct": 95.4,
+        "completed_date": 1694304000000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5241251",
+        "case_number": "A 17496-2023",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5267605",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 12.8,
+        "intersection_ha": 7.953,
+        "planned_overlap_pct": 60.6,
+        "completed_overlap_pct": 88.0,
+        "completed_date": 1716163200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6379028",
+        "case_number": "A 19678-2024",
+        "municipality": "UMEÅ",
+        "completed_object_id": "6099811",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 2.5,
+        "intersection_ha": 1.544,
+        "planned_overlap_pct": 44.2,
+        "completed_overlap_pct": 94.5,
+        "completed_date": 1777939200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5097572",
+        "case_number": "A 19865-2024",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5225267",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 4.1,
+        "intersection_ha": 2.396,
+        "planned_overlap_pct": 58.5,
+        "completed_overlap_pct": 88.7,
+        "completed_date": 1748131200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6471796",
+        "case_number": "A 20062-2026",
+        "municipality": "NORDMALING",
+        "completed_object_id": "6123387",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 2.9,
+        "intersection_ha": 1.776,
+        "planned_overlap_pct": 61.8,
+        "completed_overlap_pct": 93.9,
+        "completed_date": 1787875200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "4925919",
+        "case_number": "A 21622-2023",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5203583",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.7,
+        "intersection_ha": 1.158,
+        "planned_overlap_pct": 71.7,
+        "completed_overlap_pct": 97.2,
+        "completed_date": 1719619200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6344382",
+        "case_number": "A 26576-2025",
+        "municipality": "VÄNNÄS",
+        "completed_object_id": "6085506",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.7,
+        "intersection_ha": 1.016,
+        "planned_overlap_pct": 61.3,
+        "completed_overlap_pct": 94.3,
+        "completed_date": 1775952000000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5170292",
+        "case_number": "A 29150-2024",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5381365",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.3,
+        "intersection_ha": 0.677,
+        "planned_overlap_pct": 52.4,
+        "completed_overlap_pct": 88.6,
+        "completed_date": 1746835200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6069482",
+        "case_number": "A 32312-2025",
+        "municipality": "NORDMALING",
+        "completed_object_id": "6027080",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.8,
+        "intersection_ha": 1.215,
+        "planned_overlap_pct": 59.2,
+        "completed_overlap_pct": 98.2,
+        "completed_date": 1760054400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5168473",
+        "case_number": "A 34489-2024",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5295807",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.5,
+        "intersection_ha": 1.074,
+        "planned_overlap_pct": 69.4,
+        "completed_overlap_pct": 95.7,
+        "completed_date": 1747526400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5151687",
+        "case_number": "A 38285-2022",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5396280",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 4.8,
+        "intersection_ha": 2.877,
+        "planned_overlap_pct": 60.0,
+        "completed_overlap_pct": 98.7,
+        "completed_date": 1686096000000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6443369",
+        "case_number": "A 45326-2025",
+        "municipality": "NORDMALING",
+        "completed_object_id": "6119322",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.7,
+        "intersection_ha": 1.007,
+        "planned_overlap_pct": 56.4,
+        "completed_overlap_pct": 86.7,
+        "completed_date": 1783814400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5016435",
+        "case_number": "A 46434-2022",
+        "municipality": "VÄNNÄS",
+        "completed_object_id": "5220978",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 0.8,
+        "intersection_ha": 0.529,
+        "planned_overlap_pct": 66.7,
+        "completed_overlap_pct": 98.3,
+        "completed_date": 1716854400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6323572",
+        "case_number": "A 494-2026",
+        "municipality": "NORDMALING",
+        "completed_object_id": "6067844",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 2,
+        "intersection_ha": 1.384,
+        "planned_overlap_pct": 69.2,
+        "completed_overlap_pct": 96.0,
+        "completed_date": 1776038400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6416923",
+        "case_number": "A 5083-2025",
+        "municipality": "NORDMALING",
+        "completed_object_id": "6114351",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 2.1,
+        "intersection_ha": 1.118,
+        "planned_overlap_pct": 49.4,
+        "completed_overlap_pct": 89.5,
+        "completed_date": 1782950400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5346966",
+        "case_number": "A 51695-2024",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5472498",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.1,
+        "intersection_ha": 0.743,
+        "planned_overlap_pct": 64.4,
+        "completed_overlap_pct": 97.9,
+        "completed_date": 1752019200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5115840",
+        "case_number": "A 5302-2025",
+        "municipality": "UMEÅ",
+        "completed_object_id": "5260816",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.1,
+        "intersection_ha": 0.611,
+        "planned_overlap_pct": 48.1,
+        "completed_overlap_pct": 98.5,
+        "completed_date": 1747526400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "6375804",
+        "case_number": "A 54368-2025",
+        "municipality": "NORDMALING",
+        "completed_object_id": "6095492",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 14.8,
+        "intersection_ha": 8.983,
+        "planned_overlap_pct": 60.7,
+        "completed_overlap_pct": 96.5,
+        "completed_date": 1780012800000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5251828",
+        "case_number": "A 55632-2023",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5255890",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1,
+        "intersection_ha": 0.636,
+        "planned_overlap_pct": 61.5,
+        "completed_overlap_pct": 99.9,
+        "completed_date": 1719014400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5251829",
+        "case_number": "A 55634-2023",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5255891",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 2.7,
+        "intersection_ha": 0.105,
+        "planned_overlap_pct": 3.9,
+        "completed_overlap_pct": 15.9,
+        "completed_date": 1721606400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5251829",
+        "case_number": "A 55634-2023",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5275925",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 2.7,
+        "intersection_ha": 1.506,
+        "planned_overlap_pct": 55.3,
+        "completed_overlap_pct": 89.5,
+        "completed_date": 1721347200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5023558",
+        "case_number": "A 62203-2022",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5324195",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 1.6,
+        "intersection_ha": 0.911,
+        "planned_overlap_pct": 56.7,
+        "completed_overlap_pct": 98.6,
+        "completed_date": 1686960000000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5144970",
+        "case_number": "A 62553-2021",
+        "municipality": "VÄNNÄS",
+        "completed_object_id": "5382391",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 10.2,
+        "intersection_ha": 5.942,
+        "planned_overlap_pct": 58.0,
+        "completed_overlap_pct": 78.3,
+        "completed_date": 1653264000000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5260071",
+        "case_number": "A 73537-2021",
+        "municipality": "UMEÅ",
+        "completed_object_id": "5379710",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 2.6,
+        "intersection_ha": 1.69,
+        "planned_overlap_pct": 65.1,
+        "completed_overlap_pct": 99.7,
+        "completed_date": 1695686400000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      },
+      {
+        "event_type": "new_completed_detection_overlap",
+        "planned_object_id": "5077672",
+        "case_number": "A 8484-2023",
+        "municipality": "NORDMALING",
+        "completed_object_id": "5285732",
+        "before_snapshot": "completed_20261026T201144Z.geojson.gz",
+        "after_snapshot": "completed_20261026T202150Z.geojson.gz",
+        "before_checked_at": "2026-10-26T20:11:44.982452Z",
+        "after_checked_at": "2026-10-26T20:21:50.968678Z",
+        "planned_area_ha": 0.7,
+        "intersection_ha": 0.272,
+        "planned_overlap_pct": 40.3,
+        "completed_overlap_pct": 11.3,
+        "completed_date": 1715731200000,
+        "geometry_changed": false,
+        "attributes_changed": false,
+        "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution."
+      }
+    ],
     "note": "Only archives with matching, known query-scope fingerprints are compared. Transitions require meaningful spatial overlap and completed date within three years of notification. The source is satellite-based guidance, not ground truth."
   },
   "planned_vs_completed": [
     {
-      "planned_object_id": "5133782",
+      "planned_object_id": "4925919",
       "case_number": "A 21622-2023",
       "municipality": "NORDMALING",
       "received_date": 1684195200000,
@@ -144,11 +891,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 93.5,
-      "best_match_id": "5324702",
+      "best_match_id": "5203583",
       "strong_match_count": 1,
       "age_days": 1259,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.158,
       "estimated_plan_coverage_pct": 71.7,
       "unique_union_covered_ha": 1.158,
@@ -157,7 +904,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5324702",
+          "completed_object_id": "5203583",
           "intersection_ha": 1.1581,
           "planned_overlap_pct": 71.7,
           "completed_overlap_pct": 97.2,
@@ -171,7 +918,7 @@
           "match_score": 93.5
         },
         {
-          "completed_object_id": "5412354",
+          "completed_object_id": "5239857",
           "intersection_ha": 0.0063,
           "planned_overlap_pct": 0.4,
           "completed_overlap_pct": 0.9,
@@ -199,7 +946,7 @@
       "strong_match_count": 1,
       "age_days": 1797,
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.841,
       "estimated_plan_coverage_pct": 67.2,
       "unique_union_covered_ha": 1.841,
@@ -238,7 +985,7 @@
       ]
     },
     {
-      "planned_object_id": "5129096",
+      "planned_object_id": "5260071",
       "case_number": "A 73537-2021",
       "municipality": "UMEÅ",
       "received_date": 1639958400000,
@@ -246,11 +993,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.9,
-      "best_match_id": "5207540",
+      "best_match_id": "5379710",
       "strong_match_count": 1,
       "age_days": 1771,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.69,
       "estimated_plan_coverage_pct": 65.1,
       "unique_union_covered_ha": 1.69,
@@ -259,7 +1006,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5207540",
+          "completed_object_id": "5379710",
           "intersection_ha": 1.6896,
           "planned_overlap_pct": 65.1,
           "completed_overlap_pct": 99.7,
@@ -275,7 +1022,7 @@
       ]
     },
     {
-      "planned_object_id": "5090061",
+      "planned_object_id": "5099233",
       "case_number": "A 12375-2024",
       "municipality": "NORDMALING",
       "received_date": 1711497600000,
@@ -283,11 +1030,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.8,
-      "best_match_id": "5231373",
+      "best_match_id": "5362574",
       "strong_match_count": 1,
       "age_days": 943,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 3.943,
       "estimated_plan_coverage_pct": 68.5,
       "unique_union_covered_ha": 3.943,
@@ -296,7 +1043,7 @@
       "completed_candidate_count": 5,
       "best_candidates": [
         {
-          "completed_object_id": "5231373",
+          "completed_object_id": "5362574",
           "intersection_ha": 3.9432,
           "planned_overlap_pct": 68.5,
           "completed_overlap_pct": 97.1,
@@ -310,7 +1057,7 @@
           "match_score": 92.8
         },
         {
-          "completed_object_id": "5478538",
+          "completed_object_id": "5476870",
           "intersection_ha": 0.0002,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -324,7 +1071,7 @@
           "match_score": 25
         },
         {
-          "completed_object_id": "6077599",
+          "completed_object_id": "6098464",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -338,7 +1085,7 @@
           "match_score": 25
         },
         {
-          "completed_object_id": "5717117",
+          "completed_object_id": "5784368",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -352,7 +1099,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5881315",
+          "completed_object_id": "5836202",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -368,7 +1115,7 @@
       ]
     },
     {
-      "planned_object_id": "4945547",
+      "planned_object_id": "5016435",
       "case_number": "A 46434-2022",
       "municipality": "VÄNNÄS",
       "received_date": 1665532800000,
@@ -376,11 +1123,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.8,
-      "best_match_id": "5351643",
+      "best_match_id": "5220978",
       "strong_match_count": 1,
       "age_days": 1475,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0.529,
       "estimated_plan_coverage_pct": 66.7,
       "unique_union_covered_ha": 0.529,
@@ -389,7 +1136,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5351643",
+          "completed_object_id": "5220978",
           "intersection_ha": 0.5287,
           "planned_overlap_pct": 66.7,
           "completed_overlap_pct": 98.3,
@@ -403,7 +1150,7 @@
           "match_score": 92.8
         },
         {
-          "completed_object_id": "5381933",
+          "completed_object_id": "5289034",
           "intersection_ha": 0.0001,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -419,7 +1166,7 @@
       ]
     },
     {
-      "planned_object_id": "5122706",
+      "planned_object_id": "5168473",
       "case_number": "A 34489-2024",
       "municipality": "NORDMALING",
       "received_date": 1724251255000,
@@ -427,11 +1174,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.6,
-      "best_match_id": "5422372",
+      "best_match_id": "5295807",
       "strong_match_count": 1,
       "age_days": 796,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.074,
       "estimated_plan_coverage_pct": 69.4,
       "unique_union_covered_ha": 1.074,
@@ -440,7 +1187,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5422372",
+          "completed_object_id": "5295807",
           "intersection_ha": 1.074,
           "planned_overlap_pct": 69.4,
           "completed_overlap_pct": 95.7,
@@ -456,7 +1203,7 @@
       ]
     },
     {
-      "planned_object_id": "6381821",
+      "planned_object_id": "6323572",
       "case_number": "A 494-2026",
       "municipality": "NORDMALING",
       "received_date": 1767781031000,
@@ -464,11 +1211,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.6,
-      "best_match_id": "6066807",
+      "best_match_id": "6067844",
       "strong_match_count": 1,
       "age_days": 292,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.384,
       "estimated_plan_coverage_pct": 69.2,
       "unique_union_covered_ha": 1.384,
@@ -477,7 +1224,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "6066807",
+          "completed_object_id": "6067844",
           "intersection_ha": 1.384,
           "planned_overlap_pct": 69.2,
           "completed_overlap_pct": 96.0,
@@ -507,7 +1254,7 @@
       ]
     },
     {
-      "planned_object_id": "5149993",
+      "planned_object_id": "5115716",
       "case_number": "A 16606-2022",
       "municipality": "UMEÅ",
       "received_date": 1650499200000,
@@ -515,11 +1262,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.4,
-      "best_match_id": "5294401",
+      "best_match_id": "5369578",
       "strong_match_count": 1,
       "age_days": 1649,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.219,
       "estimated_plan_coverage_pct": 67.2,
       "unique_union_covered_ha": 1.219,
@@ -528,7 +1275,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5294401",
+          "completed_object_id": "5369578",
           "intersection_ha": 1.2194,
           "planned_overlap_pct": 67.2,
           "completed_overlap_pct": 96.4,
@@ -544,7 +1291,7 @@
       ]
     },
     {
-      "planned_object_id": "4971938",
+      "planned_object_id": "5251828",
       "case_number": "A 55632-2023",
       "municipality": "NORDMALING",
       "received_date": 1699401600000,
@@ -552,11 +1299,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.3,
-      "best_match_id": "5349822",
+      "best_match_id": "5255890",
       "strong_match_count": 1,
       "age_days": 1083,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0.636,
       "estimated_plan_coverage_pct": 61.5,
       "unique_union_covered_ha": 0.636,
@@ -565,7 +1312,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5349822",
+          "completed_object_id": "5255890",
           "intersection_ha": 0.6358,
           "planned_overlap_pct": 61.5,
           "completed_overlap_pct": 99.9,
@@ -581,7 +1328,7 @@
       ]
     },
     {
-      "planned_object_id": "5341385",
+      "planned_object_id": "5346966",
       "case_number": "A 51695-2024",
       "municipality": "NORDMALING",
       "received_date": 1731313218000,
@@ -589,11 +1336,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.2,
-      "best_match_id": "5474456",
+      "best_match_id": "5472498",
       "strong_match_count": 1,
       "age_days": 714,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0.743,
       "estimated_plan_coverage_pct": 64.4,
       "unique_union_covered_ha": 0.743,
@@ -602,7 +1349,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5474456",
+          "completed_object_id": "5472498",
           "intersection_ha": 0.7428,
           "planned_overlap_pct": 64.4,
           "completed_overlap_pct": 97.9,
@@ -618,7 +1365,7 @@
       ]
     },
     {
-      "planned_object_id": "5227009",
+      "planned_object_id": "5123199",
       "case_number": "A 17462-2023",
       "municipality": "NORDMALING",
       "received_date": 1681776000000,
@@ -626,11 +1373,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 92.1,
-      "best_match_id": "5187975",
+      "best_match_id": "5444756",
       "strong_match_count": 1,
       "age_days": 1287,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.008,
       "estimated_plan_coverage_pct": 67.2,
       "unique_union_covered_ha": 1.008,
@@ -639,7 +1386,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5187975",
+          "completed_object_id": "5444756",
           "intersection_ha": 1.0081,
           "planned_overlap_pct": 67.2,
           "completed_overlap_pct": 95.4,
@@ -655,7 +1402,7 @@
       ]
     },
     {
-      "planned_object_id": "4938624",
+      "planned_object_id": "5151687",
       "case_number": "A 38285-2022",
       "municipality": "NORDMALING",
       "received_date": 1662595200000,
@@ -663,11 +1410,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 91.6,
-      "best_match_id": "5257142",
+      "best_match_id": "5396280",
       "strong_match_count": 1,
       "age_days": 1509,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 2.877,
       "estimated_plan_coverage_pct": 60.0,
       "unique_union_covered_ha": 2.877,
@@ -676,7 +1423,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5257142",
+          "completed_object_id": "5396280",
           "intersection_ha": 2.8775,
           "planned_overlap_pct": 60.0,
           "completed_overlap_pct": 98.7,
@@ -692,7 +1439,7 @@
       ]
     },
     {
-      "planned_object_id": "6065981",
+      "planned_object_id": "6069482",
       "case_number": "A 32312-2025",
       "municipality": "NORDMALING",
       "received_date": 1751054728000,
@@ -700,11 +1447,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 91.3,
-      "best_match_id": "6028744",
+      "best_match_id": "6027080",
       "strong_match_count": 1,
       "age_days": 486,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.216,
       "estimated_plan_coverage_pct": 59.2,
       "unique_union_covered_ha": 1.215,
@@ -713,7 +1460,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "6028744",
+          "completed_object_id": "6027080",
           "intersection_ha": 1.2155,
           "planned_overlap_pct": 59.2,
           "completed_overlap_pct": 98.2,
@@ -729,7 +1476,7 @@
       ]
     },
     {
-      "planned_object_id": "6382743",
+      "planned_object_id": "6375804",
       "case_number": "A 54368-2025",
       "municipality": "NORDMALING",
       "received_date": 1762249439000,
@@ -737,11 +1484,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 91.1,
-      "best_match_id": "6072154",
+      "best_match_id": "6095492",
       "strong_match_count": 1,
       "age_days": 356,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 8.982,
       "estimated_plan_coverage_pct": 60.7,
       "unique_union_covered_ha": 8.983,
@@ -750,7 +1497,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "6072154",
+          "completed_object_id": "6095492",
           "intersection_ha": 8.9825,
           "planned_overlap_pct": 60.7,
           "completed_overlap_pct": 96.5,
@@ -766,7 +1513,7 @@
       ]
     },
     {
-      "planned_object_id": "4975329",
+      "planned_object_id": "5023558",
       "case_number": "A 62203-2022",
       "municipality": "NORDMALING",
       "received_date": 1672151139000,
@@ -774,11 +1521,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 90.9,
-      "best_match_id": "5315595",
+      "best_match_id": "5324195",
       "strong_match_count": 1,
       "age_days": 1399,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0.911,
       "estimated_plan_coverage_pct": 56.7,
       "unique_union_covered_ha": 0.911,
@@ -787,7 +1534,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5315595",
+          "completed_object_id": "5324195",
           "intersection_ha": 0.9113,
           "planned_overlap_pct": 56.7,
           "completed_overlap_pct": 98.6,
@@ -803,7 +1550,7 @@
       ]
     },
     {
-      "planned_object_id": "6495322",
+      "planned_object_id": "6471796",
       "case_number": "A 20062-2026",
       "municipality": "NORDMALING",
       "received_date": 1777039716000,
@@ -811,11 +1558,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 90.5,
-      "best_match_id": "6118864",
+      "best_match_id": "6123387",
       "strong_match_count": 1,
       "age_days": 185,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.776,
       "estimated_plan_coverage_pct": 61.8,
       "unique_union_covered_ha": 1.776,
@@ -824,7 +1571,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "6118864",
+          "completed_object_id": "6123387",
           "intersection_ha": 1.7757,
           "planned_overlap_pct": 61.8,
           "completed_overlap_pct": 93.9,
@@ -840,7 +1587,7 @@
       ]
     },
     {
-      "planned_object_id": "6376570",
+      "planned_object_id": "6344382",
       "case_number": "A 26576-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1748622579000,
@@ -848,11 +1595,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 90.5,
-      "best_match_id": "6081608",
+      "best_match_id": "6085506",
       "strong_match_count": 1,
       "age_days": 514,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.016,
       "estimated_plan_coverage_pct": 61.3,
       "unique_union_covered_ha": 1.016,
@@ -861,7 +1608,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "6081608",
+          "completed_object_id": "6085506",
           "intersection_ha": 1.0161,
           "planned_overlap_pct": 61.3,
           "completed_overlap_pct": 94.3,
@@ -875,7 +1622,7 @@
           "match_score": 90.5
         },
         {
-          "completed_object_id": "5575822",
+          "completed_object_id": "5878858",
           "intersection_ha": 0.1289,
           "planned_overlap_pct": 7.8,
           "completed_overlap_pct": 2.1,
@@ -891,7 +1638,7 @@
       ]
     },
     {
-      "planned_object_id": "4936018",
+      "planned_object_id": "5202684",
       "case_number": "A 12374-2024",
       "municipality": "NORDMALING",
       "received_date": 1711497600000,
@@ -899,11 +1646,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 89.9,
-      "best_match_id": "5240103",
+      "best_match_id": "5377710",
       "strong_match_count": 1,
       "age_days": 943,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 2.729,
       "estimated_plan_coverage_pct": 62.2,
       "unique_union_covered_ha": 2.729,
@@ -912,7 +1659,7 @@
       "completed_candidate_count": 3,
       "best_candidates": [
         {
-          "completed_object_id": "5240103",
+          "completed_object_id": "5377710",
           "intersection_ha": 2.7293,
           "planned_overlap_pct": 62.2,
           "completed_overlap_pct": 91.6,
@@ -926,7 +1673,7 @@
           "match_score": 89.9
         },
         {
-          "completed_object_id": "5231373",
+          "completed_object_id": "5362574",
           "intersection_ha": 0.0206,
           "planned_overlap_pct": 0.5,
           "completed_overlap_pct": 0.5,
@@ -940,7 +1687,7 @@
           "match_score": 25
         },
         {
-          "completed_object_id": "6077599",
+          "completed_object_id": "6098464",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -956,7 +1703,7 @@
       ]
     },
     {
-      "planned_object_id": "5244844",
+      "planned_object_id": "5115840",
       "case_number": "A 5302-2025",
       "municipality": "UMEÅ",
       "received_date": 1738668098000,
@@ -964,11 +1711,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 89.2,
-      "best_match_id": "5309579",
+      "best_match_id": "5260816",
       "strong_match_count": 1,
       "age_days": 629,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0.611,
       "estimated_plan_coverage_pct": 48.1,
       "unique_union_covered_ha": 0.611,
@@ -977,7 +1724,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5309579",
+          "completed_object_id": "5260816",
           "intersection_ha": 0.6111,
           "planned_overlap_pct": 48.1,
           "completed_overlap_pct": 98.5,
@@ -991,7 +1738,7 @@
           "match_score": 89.2
         },
         {
-          "completed_object_id": "5993618",
+          "completed_object_id": "5702142",
           "intersection_ha": 0.1712,
           "planned_overlap_pct": 13.5,
           "completed_overlap_pct": 13.3,
@@ -1007,7 +1754,7 @@
       ]
     },
     {
-      "planned_object_id": "5027672",
+      "planned_object_id": "5241251",
       "case_number": "A 17496-2023",
       "municipality": "NORDMALING",
       "received_date": 1681776000000,
@@ -1015,11 +1762,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 88.5,
-      "best_match_id": "5377893",
+      "best_match_id": "5267605",
       "strong_match_count": 1,
       "age_days": 1287,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 7.953,
       "estimated_plan_coverage_pct": 60.6,
       "unique_union_covered_ha": 7.953,
@@ -1028,7 +1775,7 @@
       "completed_candidate_count": 3,
       "best_candidates": [
         {
-          "completed_object_id": "5377893",
+          "completed_object_id": "5267605",
           "intersection_ha": 7.9534,
           "planned_overlap_pct": 60.6,
           "completed_overlap_pct": 88.0,
@@ -1056,7 +1803,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "6064714",
+          "completed_object_id": "6093328",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -1072,7 +1819,7 @@
       ]
     },
     {
-      "planned_object_id": "5191504",
+      "planned_object_id": "5097572",
       "case_number": "A 19865-2024",
       "municipality": "NORDMALING",
       "received_date": 1716249600000,
@@ -1080,11 +1827,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 88.3,
-      "best_match_id": "5271970",
+      "best_match_id": "5225267",
       "strong_match_count": 1,
       "age_days": 888,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 2.396,
       "estimated_plan_coverage_pct": 58.5,
       "unique_union_covered_ha": 2.396,
@@ -1093,7 +1840,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5271970",
+          "completed_object_id": "5225267",
           "intersection_ha": 2.3956,
           "planned_overlap_pct": 58.5,
           "completed_overlap_pct": 88.7,
@@ -1109,7 +1856,7 @@
       ]
     },
     {
-      "planned_object_id": "5238238",
+      "planned_object_id": "5251829",
       "case_number": "A 55634-2023",
       "municipality": "NORDMALING",
       "received_date": 1699401600000,
@@ -1117,11 +1864,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 87.9,
-      "best_match_id": "5349828",
+      "best_match_id": "5275925",
       "strong_match_count": 1,
       "age_days": 1083,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.506,
       "estimated_plan_coverage_pct": 55.3,
       "unique_union_covered_ha": 1.506,
@@ -1130,7 +1877,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5349828",
+          "completed_object_id": "5275925",
           "intersection_ha": 1.5064,
           "planned_overlap_pct": 55.3,
           "completed_overlap_pct": 89.5,
@@ -1144,7 +1891,7 @@
           "match_score": 87.9
         },
         {
-          "completed_object_id": "5349827",
+          "completed_object_id": "5255891",
           "intersection_ha": 0.1049,
           "planned_overlap_pct": 3.9,
           "completed_overlap_pct": 15.9,
@@ -1160,7 +1907,7 @@
       ]
     },
     {
-      "planned_object_id": "6463502",
+      "planned_object_id": "6443369",
       "case_number": "A 45326-2025",
       "municipality": "NORDMALING",
       "received_date": 1758527068000,
@@ -1168,11 +1915,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 87.3,
-      "best_match_id": "6114782",
+      "best_match_id": "6119322",
       "strong_match_count": 1,
       "age_days": 399,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.007,
       "estimated_plan_coverage_pct": 56.4,
       "unique_union_covered_ha": 1.007,
@@ -1181,7 +1928,7 @@
       "completed_candidate_count": 3,
       "best_candidates": [
         {
-          "completed_object_id": "6114782",
+          "completed_object_id": "6119322",
           "intersection_ha": 1.0068,
           "planned_overlap_pct": 56.4,
           "completed_overlap_pct": 86.7,
@@ -1209,7 +1956,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5424531",
+          "completed_object_id": "5320950",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -1225,7 +1972,7 @@
       ]
     },
     {
-      "planned_object_id": "6401466",
+      "planned_object_id": "6379028",
       "case_number": "A 19678-2024",
       "municipality": "UMEÅ",
       "received_date": 1716205133000,
@@ -1233,11 +1980,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 87.2,
-      "best_match_id": "6097310",
+      "best_match_id": "6099811",
       "strong_match_count": 1,
       "age_days": 889,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.544,
       "estimated_plan_coverage_pct": 44.2,
       "unique_union_covered_ha": 1.544,
@@ -1246,7 +1993,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "6097310",
+          "completed_object_id": "6099811",
           "intersection_ha": 1.544,
           "planned_overlap_pct": 44.2,
           "completed_overlap_pct": 94.5,
@@ -1262,7 +2009,7 @@
       ]
     },
     {
-      "planned_object_id": "4976216",
+      "planned_object_id": "5170292",
       "case_number": "A 29150-2024",
       "municipality": "NORDMALING",
       "received_date": 1720522025000,
@@ -1270,11 +2017,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 87.1,
-      "best_match_id": "5237472",
+      "best_match_id": "5381365",
       "strong_match_count": 1,
       "age_days": 839,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0.677,
       "estimated_plan_coverage_pct": 52.4,
       "unique_union_covered_ha": 0.677,
@@ -1283,7 +2030,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5237472",
+          "completed_object_id": "5381365",
           "intersection_ha": 0.677,
           "planned_overlap_pct": 52.4,
           "completed_overlap_pct": 88.6,
@@ -1297,7 +2044,7 @@
           "match_score": 87.1
         },
         {
-          "completed_object_id": "6072950",
+          "completed_object_id": "6052635",
           "intersection_ha": 0.0001,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -1313,7 +2060,7 @@
       ]
     },
     {
-      "planned_object_id": "6442021",
+      "planned_object_id": "6416923",
       "case_number": "A 5083-2025",
       "municipality": "NORDMALING",
       "received_date": 1738540800000,
@@ -1321,11 +2068,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 86.7,
-      "best_match_id": "6109889",
+      "best_match_id": "6114351",
       "strong_match_count": 1,
       "age_days": 630,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 1.118,
       "estimated_plan_coverage_pct": 49.4,
       "unique_union_covered_ha": 1.118,
@@ -1334,7 +2081,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "6109889",
+          "completed_object_id": "6114351",
           "intersection_ha": 1.1183,
           "planned_overlap_pct": 49.4,
           "completed_overlap_pct": 89.5,
@@ -1348,7 +2095,7 @@
           "match_score": 86.7
         },
         {
-          "completed_object_id": "5517818",
+          "completed_object_id": "5917951",
           "intersection_ha": 0.143,
           "planned_overlap_pct": 6.3,
           "completed_overlap_pct": 4.3,
@@ -1364,7 +2111,7 @@
       ]
     },
     {
-      "planned_object_id": "5241903",
+      "planned_object_id": "5144970",
       "case_number": "A 62553-2021",
       "municipality": "VÄNNÄS",
       "received_date": 1635724800000,
@@ -1372,11 +2119,11 @@
       "status": "meaningful_overlap_within_3_years",
       "follow_up_status": "likely_partial",
       "match_score": 85.1,
-      "best_match_id": "5247086",
+      "best_match_id": "5382391",
       "strong_match_count": 1,
       "age_days": 1820,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 5.942,
       "estimated_plan_coverage_pct": 58.0,
       "unique_union_covered_ha": 5.942,
@@ -1385,7 +2132,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5247086",
+          "completed_object_id": "5382391",
           "intersection_ha": 5.9425,
           "planned_overlap_pct": 58.0,
           "completed_overlap_pct": 78.3,
@@ -1401,7 +2148,7 @@
       ]
     },
     {
-      "planned_object_id": "5128360",
+      "planned_object_id": "5275442",
       "case_number": "A 59518-2024",
       "municipality": "NORDMALING",
       "received_date": 1734010821000,
@@ -1412,8 +2159,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 683,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1436,7 +2183,7 @@
           "match_score": 74.5
         },
         {
-          "completed_object_id": "5635739",
+          "completed_object_id": "5642124",
           "intersection_ha": 0.5244,
           "planned_overlap_pct": 10.1,
           "completed_overlap_pct": 100.0,
@@ -1450,7 +2197,7 @@
           "match_score": 67.0
         },
         {
-          "completed_object_id": "5497077",
+          "completed_object_id": "5814014",
           "intersection_ha": 0.0304,
           "planned_overlap_pct": 0.6,
           "completed_overlap_pct": 1.4,
@@ -1464,7 +2211,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5634433",
+          "completed_object_id": "5656898",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -1480,7 +2227,7 @@
       ]
     },
     {
-      "planned_object_id": "4928107",
+      "planned_object_id": "5272239",
       "case_number": "A 20008-2025",
       "municipality": "NORDMALING",
       "received_date": 1745562733000,
@@ -1491,8 +2238,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 549,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1501,7 +2248,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5423312",
+          "completed_object_id": "5425961",
           "intersection_ha": 0.6989,
           "planned_overlap_pct": 50.9,
           "completed_overlap_pct": 61.5,
@@ -1517,7 +2264,7 @@
       ]
     },
     {
-      "planned_object_id": "5162889",
+      "planned_object_id": "5161516",
       "case_number": "A 19734-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1745484505000,
@@ -1528,8 +2275,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 550,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1538,7 +2285,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5931183",
+          "completed_object_id": "5557354",
           "intersection_ha": 0.4327,
           "planned_overlap_pct": 53.0,
           "completed_overlap_pct": 1.1,
@@ -1554,7 +2301,7 @@
       ]
     },
     {
-      "planned_object_id": "5053259",
+      "planned_object_id": "5048343",
       "case_number": "A 8935-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1740480335000,
@@ -1565,8 +2312,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 608,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1575,7 +2322,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5567314",
+          "completed_object_id": "5734244",
           "intersection_ha": 0.0559,
           "planned_overlap_pct": 19.9,
           "completed_overlap_pct": 12.5,
@@ -1605,7 +2352,7 @@
       ]
     },
     {
-      "planned_object_id": "5312578",
+      "planned_object_id": "5313728",
       "case_number": "A 23563-2025",
       "municipality": "UMEÅ",
       "received_date": 1747317986000,
@@ -1616,8 +2363,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 529,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1626,7 +2373,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5859816",
+          "completed_object_id": "5681258",
           "intersection_ha": 0.3725,
           "planned_overlap_pct": 4.4,
           "completed_overlap_pct": 18.9,
@@ -1640,7 +2387,7 @@
           "match_score": 41.5
         },
         {
-          "completed_object_id": "5859815",
+          "completed_object_id": "5681257",
           "intersection_ha": 0.1655,
           "planned_overlap_pct": 1.9,
           "completed_overlap_pct": 1.7,
@@ -1656,7 +2403,7 @@
       ]
     },
     {
-      "planned_object_id": "6105976",
+      "planned_object_id": "6115538",
       "case_number": "A 50379-2025",
       "municipality": "UMEÅ",
       "received_date": 1760451571000,
@@ -1667,8 +2414,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 377,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1677,7 +2424,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5491133",
+          "completed_object_id": "5606716",
           "intersection_ha": 0.2386,
           "planned_overlap_pct": 18.4,
           "completed_overlap_pct": 4.9,
@@ -1691,7 +2438,7 @@
           "match_score": 40.1
         },
         {
-          "completed_object_id": "5615755",
+          "completed_object_id": "5976289",
           "intersection_ha": 0.0314,
           "planned_overlap_pct": 2.4,
           "completed_overlap_pct": 2.9,
@@ -1707,7 +2454,7 @@
       ]
     },
     {
-      "planned_object_id": "5141242",
+      "planned_object_id": "5144484",
       "case_number": "A 6179-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1739184338000,
@@ -1718,8 +2465,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 623,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1728,7 +2475,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "6097820",
+          "completed_object_id": "6099898",
           "intersection_ha": 0.0089,
           "planned_overlap_pct": 0.2,
           "completed_overlap_pct": 0.4,
@@ -1758,7 +2505,7 @@
       ]
     },
     {
-      "planned_object_id": "5084989",
+      "planned_object_id": "5270192",
       "case_number": "A 16907-2025",
       "municipality": "UMEÅ",
       "received_date": 1744100682000,
@@ -1769,8 +2516,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 566,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1779,7 +2526,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "6026291",
+          "completed_object_id": "5987862",
           "intersection_ha": 0.0944,
           "planned_overlap_pct": 1.5,
           "completed_overlap_pct": 0.5,
@@ -1795,7 +2542,7 @@
       ]
     },
     {
-      "planned_object_id": "5330604",
+      "planned_object_id": "5336664",
       "case_number": "A 25074-2025",
       "municipality": "NORDMALING",
       "received_date": 1747941759000,
@@ -1806,8 +2553,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 522,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1816,7 +2563,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5517379",
+          "completed_object_id": "5579178",
           "intersection_ha": 0.0109,
           "planned_overlap_pct": 0.5,
           "completed_overlap_pct": 0.2,
@@ -1832,7 +2579,7 @@
       ]
     },
     {
-      "planned_object_id": "5352650",
+      "planned_object_id": "5359308",
       "case_number": "A 29569-2025",
       "municipality": "NORDMALING",
       "received_date": 1750150181000,
@@ -1843,8 +2590,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 496,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1883,7 +2630,7 @@
       ]
     },
     {
-      "planned_object_id": "5353370",
+      "planned_object_id": "5359421",
       "case_number": "A 29573-2025",
       "municipality": "NORDMALING",
       "received_date": 1750150489000,
@@ -1894,8 +2641,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 496,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1904,7 +2651,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5292338",
+          "completed_object_id": "5285732",
           "intersection_ha": 0.0022,
           "planned_overlap_pct": 0.1,
           "completed_overlap_pct": 0.1,
@@ -1920,7 +2667,7 @@
       ]
     },
     {
-      "planned_object_id": "5352203",
+      "planned_object_id": "5359819",
       "case_number": "A 29576-2025",
       "municipality": "NORDMALING",
       "received_date": 1750150775000,
@@ -1931,8 +2678,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 496,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -1971,7 +2718,7 @@
       ]
     },
     {
-      "planned_object_id": "5353374",
+      "planned_object_id": "5360396",
       "case_number": "A 29579-2025",
       "municipality": "NORDMALING",
       "received_date": 1750151113000,
@@ -1982,8 +2729,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 496,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2006,7 +2753,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "6018437",
+          "completed_object_id": "5998939",
           "intersection_ha": 0.0255,
           "planned_overlap_pct": 1.4,
           "completed_overlap_pct": 1.7,
@@ -2022,7 +2769,7 @@
       ]
     },
     {
-      "planned_object_id": "5396400",
+      "planned_object_id": "5398291",
       "case_number": "A 36810-2025",
       "municipality": "NORDMALING",
       "received_date": 1754265600000,
@@ -2033,8 +2780,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 448,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2043,7 +2790,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5819472",
+          "completed_object_id": "5575073",
           "intersection_ha": 0.0021,
           "planned_overlap_pct": 0.2,
           "completed_overlap_pct": 0.0,
@@ -2059,7 +2806,7 @@
       ]
     },
     {
-      "planned_object_id": "6065369",
+      "planned_object_id": "6072081",
       "case_number": "A 41751-2025",
       "municipality": "UMEÅ",
       "received_date": 1756771200000,
@@ -2070,8 +2817,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 419,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2094,7 +2841,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5409327",
+          "completed_object_id": "5315197",
           "intersection_ha": 0.0231,
           "planned_overlap_pct": 1.0,
           "completed_overlap_pct": 0.2,
@@ -2136,7 +2883,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5392427",
+          "completed_object_id": "5288059",
           "intersection_ha": 0.0001,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -2152,7 +2899,7 @@
       ]
     },
     {
-      "planned_object_id": "6068346",
+      "planned_object_id": "6073086",
       "case_number": "A 42054-2025",
       "municipality": "NORDMALING",
       "received_date": 1756857600000,
@@ -2163,8 +2910,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 418,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2173,7 +2920,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5874773",
+          "completed_object_id": "5499141",
           "intersection_ha": 0.0727,
           "planned_overlap_pct": 3.3,
           "completed_overlap_pct": 1.3,
@@ -2187,7 +2934,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5853287",
+          "completed_object_id": "5951396",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -2203,7 +2950,7 @@
       ]
     },
     {
-      "planned_object_id": "6073477",
+      "planned_object_id": "6078753",
       "case_number": "A 43030-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1757376000000,
@@ -2214,8 +2961,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 412,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2224,7 +2971,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5931183",
+          "completed_object_id": "5557354",
           "intersection_ha": 0.11,
           "planned_overlap_pct": 2.6,
           "completed_overlap_pct": 0.3,
@@ -2240,7 +2987,7 @@
       ]
     },
     {
-      "planned_object_id": "6075324",
+      "planned_object_id": "6080698",
       "case_number": "A 43538-2025",
       "municipality": "NORDMALING",
       "received_date": 1757600676000,
@@ -2251,8 +2998,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 410,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2277,7 +3024,7 @@
       ]
     },
     {
-      "planned_object_id": "6105682",
+      "planned_object_id": "6115547",
       "case_number": "A 50365-2025",
       "municipality": "UMEÅ",
       "received_date": 1760449171000,
@@ -2288,8 +3035,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 377,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2298,7 +3045,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5679979",
+          "completed_object_id": "5578894",
           "intersection_ha": 0.0007,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -2314,7 +3061,7 @@
       ]
     },
     {
-      "planned_object_id": "5257126",
+      "planned_object_id": "4988864",
       "case_number": "A 7213-2025",
       "municipality": "UMEÅ",
       "received_date": 1739532103000,
@@ -2325,8 +3072,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 619,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2335,7 +3082,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5861594",
+          "completed_object_id": "5747602",
           "intersection_ha": 0.0409,
           "planned_overlap_pct": 5.1,
           "completed_overlap_pct": 0.1,
@@ -2351,7 +3098,7 @@
       ]
     },
     {
-      "planned_object_id": "5149738",
+      "planned_object_id": "5138290",
       "case_number": "A 7853-2025",
       "municipality": "UMEÅ",
       "received_date": 1739895321000,
@@ -2362,8 +3109,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 615,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2402,7 +3149,7 @@
       ]
     },
     {
-      "planned_object_id": "5265336",
+      "planned_object_id": "4938366",
       "case_number": "A 878-2025",
       "municipality": "NORDMALING",
       "received_date": 1736349442000,
@@ -2413,8 +3160,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 656,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2439,7 +3186,7 @@
       ]
     },
     {
-      "planned_object_id": "5253037",
+      "planned_object_id": "5265041",
       "case_number": "A 8937-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1740480343000,
@@ -2450,8 +3197,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 608,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2460,7 +3207,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5611977",
+          "completed_object_id": "5722838",
           "intersection_ha": 0.0053,
           "planned_overlap_pct": 0.4,
           "completed_overlap_pct": 0.1,
@@ -2476,7 +3223,7 @@
       ]
     },
     {
-      "planned_object_id": "5114635",
+      "planned_object_id": "5048381",
       "case_number": "A 8939-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1740480353000,
@@ -2487,8 +3234,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 608,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2497,7 +3244,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5552487",
+          "completed_object_id": "5527876",
           "intersection_ha": 0.1583,
           "planned_overlap_pct": 14.2,
           "completed_overlap_pct": 5.3,
@@ -2527,7 +3274,7 @@
       ]
     },
     {
-      "planned_object_id": "5249615",
+      "planned_object_id": "5070754",
       "case_number": "A 9169-2025",
       "municipality": "UMEÅ",
       "received_date": 1740561819000,
@@ -2538,8 +3285,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 607,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2548,7 +3295,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5674423",
+          "completed_object_id": "5494155",
           "intersection_ha": 0.0821,
           "planned_overlap_pct": 5.0,
           "completed_overlap_pct": 0.2,
@@ -2564,7 +3311,7 @@
       ]
     },
     {
-      "planned_object_id": "5079538",
+      "planned_object_id": "5204617",
       "case_number": "A 9272-2025",
       "municipality": "UMEÅ",
       "received_date": 1740528000000,
@@ -2575,8 +3322,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 607,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2599,7 +3346,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "6011835",
+          "completed_object_id": "5999115",
           "intersection_ha": 0.0108,
           "planned_overlap_pct": 0.7,
           "completed_overlap_pct": 0.1,
@@ -2615,7 +3362,7 @@
       ]
     },
     {
-      "planned_object_id": "5153787",
+      "planned_object_id": "5039416",
       "case_number": "A 19516-2025",
       "municipality": "NORDMALING",
       "received_date": 1745404662000,
@@ -2626,8 +3373,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 551,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2637,7 +3384,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5143974",
+      "planned_object_id": "5147638",
       "case_number": "A 20481-2025",
       "municipality": "NORDMALING",
       "received_date": 1745798400000,
@@ -2648,8 +3395,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 546,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2659,7 +3406,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5199946",
+      "planned_object_id": "5242620",
       "case_number": "A 20489-2025",
       "municipality": "NORDMALING",
       "received_date": 1745847062000,
@@ -2670,8 +3417,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 546,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2681,7 +3428,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5305521",
+      "planned_object_id": "5305896",
       "case_number": "A 22739-2025",
       "municipality": "NORDMALING",
       "received_date": 1747059233000,
@@ -2692,8 +3439,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 532,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2703,7 +3450,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5307154",
+      "planned_object_id": "5310215",
       "case_number": "A 22900-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1747129893000,
@@ -2714,8 +3461,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 531,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2725,7 +3472,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5304503",
+      "planned_object_id": "5310200",
       "case_number": "A 23041-2025",
       "municipality": "NORDMALING",
       "received_date": 1747151998000,
@@ -2736,8 +3483,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 531,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2747,7 +3494,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5321186",
+      "planned_object_id": "5326581",
       "case_number": "A 24045-2025",
       "municipality": "NORDMALING",
       "received_date": 1747655378000,
@@ -2758,8 +3505,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 525,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2769,7 +3516,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6010956",
+      "planned_object_id": "5413201",
       "case_number": "A 38260-2025",
       "municipality": "NORDMALING",
       "received_date": 1755163769000,
@@ -2780,8 +3527,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 438,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2791,7 +3538,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6051883",
+      "planned_object_id": "6058351",
       "case_number": "A 38991-2025",
       "municipality": "NORDMALING",
       "received_date": 1755589631000,
@@ -2802,8 +3549,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 433,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2813,7 +3560,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6079291",
+      "planned_object_id": "6082788",
       "case_number": "A 44168-2025",
       "municipality": "UMEÅ",
       "received_date": 1757946113000,
@@ -2824,8 +3571,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 406,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2835,7 +3582,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6080668",
+      "planned_object_id": "6085416",
       "case_number": "A 44725-2025",
       "municipality": "UMEÅ",
       "received_date": 1758122704000,
@@ -2846,8 +3593,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 404,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2857,7 +3604,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6106199",
+      "planned_object_id": "6115553",
       "case_number": "A 50386-2025",
       "municipality": "NORDMALING",
       "received_date": 1760453015000,
@@ -2868,8 +3615,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 377,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2879,7 +3626,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5241304",
+      "planned_object_id": "5149992",
       "case_number": "A 56258-2024",
       "municipality": "VÄNNÄS",
       "received_date": 1732807704000,
@@ -2890,8 +3637,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 697,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2901,7 +3648,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5007005",
+      "planned_object_id": "4988863",
       "case_number": "A 7205-2025",
       "municipality": "UMEÅ",
       "received_date": 1739531667000,
@@ -2912,8 +3659,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 619,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2923,7 +3670,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5030691",
+      "planned_object_id": "5230360",
       "case_number": "A 7774-2025",
       "municipality": "UMEÅ",
       "received_date": 1739886320000,
@@ -2934,8 +3681,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 615,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2945,7 +3692,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5152519",
+      "planned_object_id": "5274699",
       "case_number": "A 879-2025",
       "municipality": "NORDMALING",
       "received_date": 1736294400000,
@@ -2956,8 +3703,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 656,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2967,7 +3714,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5253038",
+      "planned_object_id": "5226668",
       "case_number": "A 8938-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1740480344000,
@@ -2978,8 +3725,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 608,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -2989,7 +3736,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5126669",
+      "planned_object_id": "5261740",
       "case_number": "A 8940-2025",
       "municipality": "VÄNNÄS",
       "received_date": 1740480355000,
@@ -3000,8 +3747,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 608,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3011,7 +3758,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "4930235",
+      "planned_object_id": "5075373",
       "case_number": "A 16003-2024",
       "municipality": "UMEÅ",
       "received_date": 1713830400000,
@@ -3022,8 +3769,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 916,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3046,7 +3793,7 @@
           "match_score": 68.6
         },
         {
-          "completed_object_id": "5825730",
+          "completed_object_id": "5802580",
           "intersection_ha": 0.0252,
           "planned_overlap_pct": 1.9,
           "completed_overlap_pct": 1.1,
@@ -3062,7 +3809,7 @@
       ]
     },
     {
-      "planned_object_id": "5245889",
+      "planned_object_id": "5077672",
       "case_number": "A 8484-2023",
       "municipality": "NORDMALING",
       "received_date": 1676419200000,
@@ -3073,8 +3820,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1349,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3083,7 +3830,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5292338",
+          "completed_object_id": "5285732",
           "intersection_ha": 0.272,
           "planned_overlap_pct": 40.3,
           "completed_overlap_pct": 11.3,
@@ -3099,7 +3846,7 @@
       ]
     },
     {
-      "planned_object_id": "4968307",
+      "planned_object_id": "5082562",
       "case_number": "A 15745-2023",
       "municipality": "NORDMALING",
       "received_date": 1680705375000,
@@ -3110,8 +3857,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1300,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3120,7 +3867,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "6084955",
+          "completed_object_id": "6078019",
           "intersection_ha": 0.3977,
           "planned_overlap_pct": 21.8,
           "completed_overlap_pct": 34.1,
@@ -3136,7 +3883,7 @@
       ]
     },
     {
-      "planned_object_id": "4982072",
+      "planned_object_id": "5260944",
       "case_number": "A 72873-2021",
       "municipality": "NORDMALING",
       "received_date": 1639699200000,
@@ -3147,8 +3894,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1774,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3157,7 +3904,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5210293",
+          "completed_object_id": "5235018",
           "intersection_ha": 0.0343,
           "planned_overlap_pct": 7.8,
           "completed_overlap_pct": 0.9,
@@ -3173,7 +3920,7 @@
       ]
     },
     {
-      "planned_object_id": "5061590",
+      "planned_object_id": "4953005",
       "case_number": "A 15756-2023",
       "municipality": "NORDMALING",
       "received_date": 1680706455000,
@@ -3184,8 +3931,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1300,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3194,7 +3941,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5681640",
+          "completed_object_id": "5772109",
           "intersection_ha": 0.0095,
           "planned_overlap_pct": 0.3,
           "completed_overlap_pct": 0.1,
@@ -3210,7 +3957,7 @@
       ]
     },
     {
-      "planned_object_id": "5151544",
+      "planned_object_id": "5036663",
       "case_number": "A 18639-2022",
       "municipality": "NORDMALING",
       "received_date": 1651795200000,
@@ -3221,8 +3968,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1634,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3231,7 +3978,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5399110",
+          "completed_object_id": "5224821",
           "intersection_ha": 0.0888,
           "planned_overlap_pct": 2.0,
           "completed_overlap_pct": 3.9,
@@ -3259,7 +4006,7 @@
       "strong_match_count": 0,
       "age_days": 1634,
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3284,7 +4031,7 @@
       ]
     },
     {
-      "planned_object_id": "4940109",
+      "planned_object_id": "5060473",
       "case_number": "A 34176-2023",
       "municipality": "NORDMALING",
       "received_date": 1689724800000,
@@ -3295,8 +4042,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1195,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3305,7 +4052,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "6012159",
+          "completed_object_id": "5828321",
           "intersection_ha": 0.0009,
           "planned_overlap_pct": 0.2,
           "completed_overlap_pct": 0.0,
@@ -3319,7 +4066,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5666970",
+          "completed_object_id": "5606656",
           "intersection_ha": 0.0006,
           "planned_overlap_pct": 0.1,
           "completed_overlap_pct": 0.0,
@@ -3335,7 +4082,7 @@
       ]
     },
     {
-      "planned_object_id": "4985464",
+      "planned_object_id": "5038265",
       "case_number": "A 34184-2023",
       "municipality": "NORDMALING",
       "received_date": 1689724800000,
@@ -3346,8 +4093,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1195,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3356,7 +4103,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "6012159",
+          "completed_object_id": "5828321",
           "intersection_ha": 0.0094,
           "planned_overlap_pct": 4.4,
           "completed_overlap_pct": 0.2,
@@ -3370,7 +4117,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5666970",
+          "completed_object_id": "5606656",
           "intersection_ha": 0.0003,
           "planned_overlap_pct": 0.2,
           "completed_overlap_pct": 0.0,
@@ -3386,7 +4133,7 @@
       ]
     },
     {
-      "planned_object_id": "5048260",
+      "planned_object_id": "5233861",
       "case_number": "A 35650-2023",
       "municipality": "NORDMALING",
       "received_date": 1691589910000,
@@ -3397,8 +4144,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1174,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3407,7 +4154,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "6006418",
+          "completed_object_id": "5973738",
           "intersection_ha": 0.0032,
           "planned_overlap_pct": 0.5,
           "completed_overlap_pct": 0.3,
@@ -3423,7 +4170,7 @@
       ]
     },
     {
-      "planned_object_id": "6162680",
+      "planned_object_id": "6171007",
       "case_number": "A 35797-2023",
       "municipality": "NORDMALING",
       "received_date": 1691539200000,
@@ -3434,8 +4181,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1174,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3444,7 +4191,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5696081",
+          "completed_object_id": "5493837",
           "intersection_ha": 0.0281,
           "planned_overlap_pct": 0.9,
           "completed_overlap_pct": 0.8,
@@ -3460,7 +4207,7 @@
       ]
     },
     {
-      "planned_object_id": "6162647",
+      "planned_object_id": "6170123",
       "case_number": "A 35801-2023",
       "municipality": "NORDMALING",
       "received_date": 1691539200000,
@@ -3471,8 +4218,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1174,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3497,7 +4244,7 @@
       ]
     },
     {
-      "planned_object_id": "5256760",
+      "planned_object_id": "5002631",
       "case_number": "A 37133-2022",
       "municipality": "NORDMALING",
       "received_date": 1662076800000,
@@ -3508,8 +4255,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1515,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3518,7 +4265,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5573620",
+          "completed_object_id": "5645876",
           "intersection_ha": 0.002,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -3546,7 +4293,7 @@
       "strong_match_count": 0,
       "age_days": 1503,
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3571,7 +4318,7 @@
       ]
     },
     {
-      "planned_object_id": "5003856",
+      "planned_object_id": "4999586",
       "case_number": "A 44987-2024",
       "municipality": "NORDMALING",
       "received_date": 1728518400000,
@@ -3582,8 +4329,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 746,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3620,7 +4367,7 @@
       "strong_match_count": 0,
       "age_days": 1664,
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3630,7 +4377,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5242073",
+      "planned_object_id": "5123149",
       "case_number": "A 15750-2023",
       "municipality": "NORDMALING",
       "received_date": 1680705859000,
@@ -3641,8 +4388,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1300,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3652,7 +4399,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "4966733",
+      "planned_object_id": "5010786",
       "case_number": "A 22004-2024",
       "municipality": "NORDMALING",
       "received_date": 1717113600000,
@@ -3663,8 +4410,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 878,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3674,7 +4421,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5110193",
+      "planned_object_id": "4927102",
       "case_number": "A 22618-2024",
       "municipality": "NORDMALING",
       "received_date": 1717515686000,
@@ -3685,8 +4432,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 874,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3696,7 +4443,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5248124",
+      "planned_object_id": "5190207",
       "case_number": "A 32965-2024",
       "municipality": "NORDMALING",
       "received_date": 1723541413000,
@@ -3707,8 +4454,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 804,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3718,7 +4465,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5077527",
+      "planned_object_id": "5169641",
       "case_number": "A 34246-2024",
       "municipality": "NORDMALING",
       "received_date": 1724162524000,
@@ -3729,8 +4476,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 797,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3740,7 +4487,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5121369",
+      "planned_object_id": "5214730",
       "case_number": "A 34252-2024",
       "municipality": "NORDMALING",
       "received_date": 1724163041000,
@@ -3751,8 +4498,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 797,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3762,7 +4509,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5274652",
+      "planned_object_id": "5275720",
       "case_number": "A 35228-2024",
       "municipality": "UMEÅ",
       "received_date": 1724675415000,
@@ -3773,8 +4520,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 791,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3784,7 +4531,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6162646",
+      "planned_object_id": "6170122",
       "case_number": "A 35786-2023",
       "municipality": "NORDMALING",
       "received_date": 1691539200000,
@@ -3795,8 +4542,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1174,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3806,7 +4553,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6162514",
+      "planned_object_id": "6170943",
       "case_number": "A 35792-2023",
       "municipality": "NORDMALING",
       "received_date": 1691539200000,
@@ -3817,8 +4564,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1174,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3828,7 +4575,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6161094",
+      "planned_object_id": "6172868",
       "case_number": "A 35803-2023",
       "municipality": "NORDMALING",
       "received_date": 1691539200000,
@@ -3839,8 +4586,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1174,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3850,7 +4597,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5139027",
+      "planned_object_id": "5134139",
       "case_number": "A 39851-2023",
       "municipality": "NORDMALING",
       "received_date": 1693180800000,
@@ -3861,8 +4608,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1155,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3872,7 +4619,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5101097",
+      "planned_object_id": "5036823",
       "case_number": "A 42320-2024",
       "municipality": "NORDMALING",
       "received_date": 1727451036000,
@@ -3883,8 +4630,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 759,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3894,7 +4641,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5270299",
+      "planned_object_id": "5154936",
       "case_number": "A 43491-2024",
       "municipality": "NORDMALING",
       "received_date": 1727913600000,
@@ -3905,8 +4652,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 753,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3916,7 +4663,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5270300",
+      "planned_object_id": "5154937",
       "case_number": "A 43492-2024",
       "municipality": "NORDMALING",
       "received_date": 1727993492000,
@@ -3927,8 +4674,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 752,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3938,7 +4685,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5268030",
+      "planned_object_id": "5132260",
       "case_number": "A 4676-2023",
       "municipality": "VÄNNÄS",
       "received_date": 1674777600000,
@@ -3949,8 +4696,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1368,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3960,7 +4707,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5228166",
+      "planned_object_id": "5115075",
       "case_number": "A 53986-2022",
       "municipality": "NORDMALING",
       "received_date": 1668587168000,
@@ -3971,8 +4718,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1440,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -3982,7 +4729,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5073320",
+      "planned_object_id": "5176469",
       "case_number": "A 59605-2022",
       "municipality": "NORDMALING",
       "received_date": 1670803200000,
@@ -3993,8 +4740,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1414,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4004,7 +4751,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "5156559",
+      "planned_object_id": "5015190",
       "case_number": "A 59771-2023",
       "municipality": "VÄNNÄS",
       "received_date": 1701043200000,
@@ -4015,8 +4762,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 1064,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4038,7 +4785,7 @@
       "strong_match_count": 0,
       "age_days": 1797,
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4048,7 +4795,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6430092",
+      "planned_object_id": "6408085",
       "case_number": "A 23005-2026",
       "municipality": "NORDMALING",
       "received_date": 1779062400000,
@@ -4059,8 +4806,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 161,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4085,7 +4832,7 @@
       ]
     },
     {
-      "planned_object_id": "6162571",
+      "planned_object_id": "6171154",
       "case_number": "A 63253-2025",
       "municipality": "NORDMALING",
       "received_date": 1766149753000,
@@ -4096,8 +4843,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 311,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4106,7 +4853,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "6006643",
+          "completed_object_id": "6020024",
           "intersection_ha": 0.3112,
           "planned_overlap_pct": 6.4,
           "completed_overlap_pct": 31.2,
@@ -4136,7 +4883,7 @@
       ]
     },
     {
-      "planned_object_id": "6447006",
+      "planned_object_id": "6423241",
       "case_number": "A 25214-2026",
       "municipality": "NORDMALING",
       "received_date": 1780012800000,
@@ -4147,8 +4894,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 150,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4157,7 +4904,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5802288",
+          "completed_object_id": "5864767",
           "intersection_ha": 0.6903,
           "planned_overlap_pct": 30.2,
           "completed_overlap_pct": 11.2,
@@ -4173,7 +4920,7 @@
       ]
     },
     {
-      "planned_object_id": "6161943",
+      "planned_object_id": "6171896",
       "case_number": "A 63266-2025",
       "municipality": "NORDMALING",
       "received_date": 1766150967000,
@@ -4184,8 +4931,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 311,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4194,7 +4941,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5570614",
+          "completed_object_id": "5615893",
           "intersection_ha": 0.2464,
           "planned_overlap_pct": 3.3,
           "completed_overlap_pct": 20.8,
@@ -4208,7 +4955,7 @@
           "match_score": 41.9
         },
         {
-          "completed_object_id": "5460297",
+          "completed_object_id": "5455893",
           "intersection_ha": 0.001,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -4224,7 +4971,7 @@
       ]
     },
     {
-      "planned_object_id": "6268324",
+      "planned_object_id": "6280645",
       "case_number": "A 14550-2026",
       "municipality": "UMEÅ",
       "received_date": 1773942210000,
@@ -4235,8 +4982,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 221,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4245,7 +4992,7 @@
       "completed_candidate_count": 3,
       "best_candidates": [
         {
-          "completed_object_id": "6081928",
+          "completed_object_id": "6076192",
           "intersection_ha": 0.0116,
           "planned_overlap_pct": 0.7,
           "completed_overlap_pct": 0.4,
@@ -4259,7 +5006,7 @@
           "match_score": 25
         },
         {
-          "completed_object_id": "5623101",
+          "completed_object_id": "5728546",
           "intersection_ha": 0.0069,
           "planned_overlap_pct": 0.4,
           "completed_overlap_pct": 0.3,
@@ -4273,7 +5020,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5374699",
+          "completed_object_id": "5340084",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -4289,7 +5036,7 @@
       ]
     },
     {
-      "planned_object_id": "6200299",
+      "planned_object_id": "6204738",
       "case_number": "A 511-2026",
       "municipality": "NORDMALING",
       "received_date": 1767782136000,
@@ -4300,8 +5047,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 292,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4310,7 +5057,7 @@
       "completed_candidate_count": 3,
       "best_candidates": [
         {
-          "completed_object_id": "6077599",
+          "completed_object_id": "6098464",
           "intersection_ha": 0.0648,
           "planned_overlap_pct": 0.7,
           "completed_overlap_pct": 3.5,
@@ -4324,7 +5071,7 @@
           "match_score": 25
         },
         {
-          "completed_object_id": "5231373",
+          "completed_object_id": "5362574",
           "intersection_ha": 0.0658,
           "planned_overlap_pct": 0.7,
           "completed_overlap_pct": 1.6,
@@ -4338,7 +5085,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5933562",
+          "completed_object_id": "5740263",
           "intersection_ha": 0.0362,
           "planned_overlap_pct": 0.4,
           "completed_overlap_pct": 3.5,
@@ -4354,7 +5101,7 @@
       ]
     },
     {
-      "planned_object_id": "6273323",
+      "planned_object_id": "6286827",
       "case_number": "A 15690-2026",
       "municipality": "UMEÅ",
       "received_date": 1774512623000,
@@ -4365,8 +5112,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 214,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4391,7 +5138,7 @@
       ]
     },
     {
-      "planned_object_id": "6408177",
+      "planned_object_id": "6389028",
       "case_number": "A 21047-2026",
       "municipality": "UMEÅ",
       "received_date": 1777884688000,
@@ -4402,8 +5149,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 175,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4412,7 +5159,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5829669",
+          "completed_object_id": "5725376",
           "intersection_ha": 0.0002,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -4428,7 +5175,7 @@
       ]
     },
     {
-      "planned_object_id": "6460683",
+      "planned_object_id": "6438254",
       "case_number": "A 26796-2026",
       "municipality": "NORDMALING",
       "received_date": 1781222400000,
@@ -4439,8 +5186,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 136,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4465,7 +5212,7 @@
       ]
     },
     {
-      "planned_object_id": "6210997",
+      "planned_object_id": "6224237",
       "case_number": "A 2955-2026",
       "municipality": "NORDMALING",
       "received_date": 1768573858000,
@@ -4476,8 +5223,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 283,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4486,7 +5233,7 @@
       "completed_candidate_count": 3,
       "best_candidates": [
         {
-          "completed_object_id": "5342112",
+          "completed_object_id": "5299867",
           "intersection_ha": 0.0836,
           "planned_overlap_pct": 1.5,
           "completed_overlap_pct": 2.9,
@@ -4530,7 +5277,7 @@
       ]
     },
     {
-      "planned_object_id": "6541018",
+      "planned_object_id": "6513083",
       "case_number": "A 35196-2026",
       "municipality": "VÄNNÄS",
       "received_date": 1787751936000,
@@ -4541,8 +5288,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 61,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4551,7 +5298,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5226767",
+          "completed_object_id": "5264349",
           "intersection_ha": 0.0002,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -4567,7 +5314,7 @@
       ]
     },
     {
-      "planned_object_id": "6549451",
+      "planned_object_id": "6524091",
       "case_number": "A 36462-2026",
       "municipality": "UMEÅ",
       "received_date": 1788516924000,
@@ -4578,8 +5325,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 52,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4588,7 +5335,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5959573",
+          "completed_object_id": "5603826",
           "intersection_ha": 0.0425,
           "planned_overlap_pct": 3.2,
           "completed_overlap_pct": 0.6,
@@ -4604,7 +5351,7 @@
       ]
     },
     {
-      "planned_object_id": "6548126",
+      "planned_object_id": "6523575",
       "case_number": "A 36518-2026",
       "municipality": "UMEÅ",
       "received_date": 1788523803000,
@@ -4615,8 +5362,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 52,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4625,7 +5372,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5559038",
+          "completed_object_id": "5884616",
           "intersection_ha": 0.1015,
           "planned_overlap_pct": 6.1,
           "completed_overlap_pct": 1.4,
@@ -4641,7 +5388,7 @@
       ]
     },
     {
-      "planned_object_id": "6552328",
+      "planned_object_id": "6523278",
       "case_number": "A 36847-2026",
       "municipality": "NORDMALING",
       "received_date": 1788797886000,
@@ -4652,8 +5399,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 49,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4662,7 +5409,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5488234",
+          "completed_object_id": "5812870",
           "intersection_ha": 0.0538,
           "planned_overlap_pct": 4.6,
           "completed_overlap_pct": 0.9,
@@ -4692,7 +5439,7 @@
       ]
     },
     {
-      "planned_object_id": "6507783",
+      "planned_object_id": "6531493",
       "case_number": "A 37709-2026",
       "municipality": "NORDMALING",
       "received_date": 1789375045000,
@@ -4703,8 +5450,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 42,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4713,7 +5460,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5495133",
+          "completed_object_id": "5668872",
           "intersection_ha": 0.1363,
           "planned_overlap_pct": 1.9,
           "completed_overlap_pct": 5.2,
@@ -4729,7 +5476,7 @@
       ]
     },
     {
-      "planned_object_id": "6193975",
+      "planned_object_id": "6203703",
       "case_number": "A 404-2026",
       "municipality": "NORDMALING",
       "received_date": 1767715425000,
@@ -4740,8 +5487,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 293,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4750,7 +5497,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5553236",
+          "completed_object_id": "5878482",
           "intersection_ha": 0.002,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -4766,7 +5513,7 @@
       ]
     },
     {
-      "planned_object_id": "6525147",
+      "planned_object_id": "6501739",
       "case_number": "A 40418-2026",
       "municipality": "NORDMALING",
       "received_date": 1790694876000,
@@ -4777,8 +5524,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 27,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4787,7 +5534,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5629528",
+          "completed_object_id": "5570129",
           "intersection_ha": 0.0735,
           "planned_overlap_pct": 1.3,
           "completed_overlap_pct": 0.7,
@@ -4803,7 +5550,7 @@
       ]
     },
     {
-      "planned_object_id": "6542981",
+      "planned_object_id": "6518676",
       "case_number": "A 42506-2026",
       "municipality": "UMEÅ",
       "received_date": 1791896668000,
@@ -4814,8 +5561,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 13,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4824,7 +5571,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5890292",
+          "completed_object_id": "5617998",
           "intersection_ha": 0.0951,
           "planned_overlap_pct": 4.2,
           "completed_overlap_pct": 0.6,
@@ -4838,7 +5585,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5218476",
+          "completed_object_id": "5390845",
           "intersection_ha": 0.0142,
           "planned_overlap_pct": 0.6,
           "completed_overlap_pct": 0.3,
@@ -4854,7 +5601,7 @@
       ]
     },
     {
-      "planned_object_id": "6542909",
+      "planned_object_id": "6518435",
       "case_number": "A 42510-2026",
       "municipality": "UMEÅ",
       "received_date": 1791897969000,
@@ -4865,8 +5612,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 13,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4875,7 +5622,7 @@
       "completed_candidate_count": 2,
       "best_candidates": [
         {
-          "completed_object_id": "5890292",
+          "completed_object_id": "5617998",
           "intersection_ha": 0.1473,
           "planned_overlap_pct": 2.9,
           "completed_overlap_pct": 0.9,
@@ -4889,7 +5636,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5218476",
+          "completed_object_id": "5390845",
           "intersection_ha": 0.079,
           "planned_overlap_pct": 1.5,
           "completed_overlap_pct": 1.9,
@@ -4905,7 +5652,7 @@
       ]
     },
     {
-      "planned_object_id": "6220200",
+      "planned_object_id": "6234361",
       "case_number": "A 4685-2026",
       "municipality": "VÄNNÄS",
       "received_date": 1769423357000,
@@ -4916,8 +5663,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 273,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4926,7 +5673,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5505016",
+          "completed_object_id": "5612580",
           "intersection_ha": 0.0028,
           "planned_overlap_pct": 0.4,
           "completed_overlap_pct": 0.0,
@@ -4942,7 +5689,7 @@
       ]
     },
     {
-      "planned_object_id": "6219517",
+      "planned_object_id": "6234542",
       "case_number": "A 4898-2026",
       "municipality": "NORDMALING",
       "received_date": 1769444142000,
@@ -4953,8 +5700,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 273,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -4963,7 +5710,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5813453",
+          "completed_object_id": "5843620",
           "intersection_ha": 0.0106,
           "planned_overlap_pct": 7.9,
           "completed_overlap_pct": 0.6,
@@ -4979,7 +5726,7 @@
       ]
     },
     {
-      "planned_object_id": "6131449",
+      "planned_object_id": "6138931",
       "case_number": "A 55792-2025",
       "municipality": "NORDMALING",
       "received_date": 1762875447000,
@@ -4990,8 +5737,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 349,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5000,7 +5747,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5908445",
+          "completed_object_id": "5775125",
           "intersection_ha": 0.0235,
           "planned_overlap_pct": 0.7,
           "completed_overlap_pct": 3.2,
@@ -5016,7 +5763,7 @@
       ]
     },
     {
-      "planned_object_id": "6150320",
+      "planned_object_id": "6157019",
       "case_number": "A 60756-2025",
       "municipality": "NORDMALING",
       "received_date": 1765185191000,
@@ -5027,8 +5774,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 322,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5037,7 +5784,7 @@
       "completed_candidate_count": 1,
       "best_candidates": [
         {
-          "completed_object_id": "5306431",
+          "completed_object_id": "5369165",
           "intersection_ha": 0.0092,
           "planned_overlap_pct": 0.1,
           "completed_overlap_pct": 0.3,
@@ -5053,7 +5800,7 @@
       ]
     },
     {
-      "planned_object_id": "6156606",
+      "planned_object_id": "6165540",
       "case_number": "A 62078-2025",
       "municipality": "NORDMALING",
       "received_date": 1765788568000,
@@ -5064,8 +5811,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 315,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5088,7 +5835,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5312500",
+          "completed_object_id": "5313427",
           "intersection_ha": 0.0,
           "planned_overlap_pct": 0.0,
           "completed_overlap_pct": 0.0,
@@ -5104,7 +5851,7 @@
       ]
     },
     {
-      "planned_object_id": "6238812",
+      "planned_object_id": "6252775",
       "case_number": "A 8694-2026",
       "municipality": "NORDMALING",
       "received_date": 1770979665000,
@@ -5115,8 +5862,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 255,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5139,7 +5886,7 @@
           "match_score": 10
         },
         {
-          "completed_object_id": "5853626",
+          "completed_object_id": "5984118",
           "intersection_ha": 0.0124,
           "planned_overlap_pct": 0.2,
           "completed_overlap_pct": 1.4,
@@ -5155,7 +5902,7 @@
       ]
     },
     {
-      "planned_object_id": "6203585",
+      "planned_object_id": "6211035",
       "case_number": "A 1142-2026",
       "municipality": "UMEÅ",
       "received_date": 1767903409000,
@@ -5165,9 +5912,9 @@
       "match_score": 0,
       "best_match_id": null,
       "strong_match_count": 0,
-      "age_days": 290,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "age_days": 291,
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5177,7 +5924,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6263183",
+      "planned_object_id": "6275910",
       "case_number": "A 13496-2026",
       "municipality": "NORDMALING",
       "received_date": 1773410930000,
@@ -5188,8 +5935,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 227,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5199,7 +5946,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6275644",
+      "planned_object_id": "6287250",
       "case_number": "A 15963-2026",
       "municipality": "NORDMALING",
       "received_date": 1774597737000,
@@ -5210,8 +5957,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 213,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5221,7 +5968,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6284928",
+      "planned_object_id": "6299778",
       "case_number": "A 18039-2026",
       "municipality": "NORDMALING",
       "received_date": 1776073782000,
@@ -5232,8 +5979,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 196,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5243,7 +5990,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6285774",
+      "planned_object_id": "6300595",
       "case_number": "A 18042-2026",
       "municipality": "NORDMALING",
       "received_date": 1776074173000,
@@ -5254,8 +6001,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 196,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5265,7 +6012,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6539145",
+      "planned_object_id": "6513319",
       "case_number": "A 20163-2026",
       "municipality": "NORDMALING",
       "received_date": 1777273801000,
@@ -5276,8 +6023,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 182,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5287,7 +6034,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6435561",
+      "planned_object_id": "6408086",
       "case_number": "A 23006-2026",
       "municipality": "NORDMALING",
       "received_date": 1779129442000,
@@ -5298,8 +6045,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 161,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5309,7 +6056,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6434510",
+      "planned_object_id": "6413921",
       "case_number": "A 23208-2026",
       "municipality": "VÄNNÄS",
       "received_date": 1779262265000,
@@ -5320,8 +6067,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 159,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5331,7 +6078,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6210885",
+      "planned_object_id": "6223679",
       "case_number": "A 2724-2026",
       "municipality": "NORDMALING",
       "received_date": 1768505802000,
@@ -5342,8 +6089,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 284,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5353,7 +6100,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6516232",
+      "planned_object_id": "6494126",
       "case_number": "A 33165-2026",
       "municipality": "NORDMALING",
       "received_date": 1786463853000,
@@ -5364,8 +6111,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 76,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5375,7 +6122,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6516233",
+      "planned_object_id": "6494127",
       "case_number": "A 33166-2026",
       "municipality": "NORDMALING",
       "received_date": 1786463906000,
@@ -5386,8 +6133,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 76,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5397,7 +6144,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6516872",
+      "planned_object_id": "6494760",
       "case_number": "A 33167-2026",
       "municipality": "NORDMALING",
       "received_date": 1786463950000,
@@ -5408,8 +6155,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 76,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5419,7 +6166,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6516234",
+      "planned_object_id": "6494128",
       "case_number": "A 33169-2026",
       "municipality": "NORDMALING",
       "received_date": 1786464294000,
@@ -5430,8 +6177,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 76,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5441,7 +6188,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6515768",
+      "planned_object_id": "6494607",
       "case_number": "A 33170-2026",
       "municipality": "NORDMALING",
       "received_date": 1786464373000,
@@ -5452,8 +6199,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 76,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5463,7 +6210,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6516235",
+      "planned_object_id": "6494129",
       "case_number": "A 33171-2026",
       "municipality": "NORDMALING",
       "received_date": 1786464423000,
@@ -5474,8 +6221,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 76,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5485,7 +6232,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6516236",
+      "planned_object_id": "6495047",
       "case_number": "A 33173-2026",
       "municipality": "NORDMALING",
       "received_date": 1786464494000,
@@ -5496,8 +6243,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 76,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5507,7 +6254,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6536474",
+      "planned_object_id": "6508835",
       "case_number": "A 34829-2026",
       "municipality": "NORDMALING",
       "received_date": 1787583822000,
@@ -5518,8 +6265,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 63,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5529,7 +6276,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6213574",
+      "planned_object_id": "6227059",
       "case_number": "A 3483-2026",
       "municipality": "NORDMALING",
       "received_date": 1768915483000,
@@ -5540,8 +6287,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 279,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5551,7 +6298,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6213737",
+      "planned_object_id": "6226313",
       "case_number": "A 3517-2026",
       "municipality": "NORDMALING",
       "received_date": 1768918046000,
@@ -5562,8 +6309,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 279,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5573,7 +6320,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6542977",
+      "planned_object_id": "6517807",
       "case_number": "A 35785-2026",
       "municipality": "NORDMALING",
       "received_date": 1788183268000,
@@ -5584,8 +6331,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 56,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5595,7 +6342,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6516562",
+      "planned_object_id": "6494869",
       "case_number": "A 35923-2026",
       "municipality": "NORDMALING",
       "received_date": 1788220800000,
@@ -5606,8 +6353,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 55,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5617,7 +6364,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6549446",
+      "planned_object_id": "6523751",
       "case_number": "A 36449-2026",
       "municipality": "UMEÅ",
       "received_date": 1788513971000,
@@ -5628,8 +6375,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 52,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5639,7 +6386,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6513328",
+      "planned_object_id": "6490094",
       "case_number": "A 38871-2026",
       "municipality": "NORDMALING",
       "received_date": 1789997712000,
@@ -5650,8 +6397,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 35,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5661,7 +6408,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6524962",
+      "planned_object_id": "6498930",
       "case_number": "A 40124-2026",
       "municipality": "NORDMALING",
       "received_date": 1790602130000,
@@ -5672,8 +6419,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 28,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5683,7 +6430,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6542638",
+      "planned_object_id": "6514959",
       "case_number": "A 42369-2026",
       "municipality": "NORDMALING",
       "received_date": 1791817982000,
@@ -5694,8 +6441,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 14,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5705,7 +6452,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6542685",
+      "planned_object_id": "6518450",
       "case_number": "A 42519-2026",
       "municipality": "UMEÅ",
       "received_date": 1791899503000,
@@ -5716,8 +6463,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 13,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5727,7 +6474,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6200131",
+      "planned_object_id": "6202599",
       "case_number": "A 501-2026",
       "municipality": "NORDMALING",
       "received_date": 1767781647000,
@@ -5738,8 +6485,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 292,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5749,7 +6496,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6121794",
+      "planned_object_id": "6130875",
       "case_number": "A 53776-2025",
       "municipality": "NORDMALING",
       "received_date": 1761842559000,
@@ -5760,8 +6507,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 361,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5771,7 +6518,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6122989",
+      "planned_object_id": "6130786",
       "case_number": "A 53777-2025",
       "municipality": "NORDMALING",
       "received_date": 1761842649000,
@@ -5782,8 +6529,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 361,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5793,7 +6540,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6132414",
+      "planned_object_id": "6140344",
       "case_number": "A 56247-2025",
       "municipality": "NORDMALING",
       "received_date": 1763039744000,
@@ -5804,8 +6551,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 347,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5815,7 +6562,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6156216",
+      "planned_object_id": "6165537",
       "case_number": "A 62058-2025",
       "municipality": "NORDMALING",
       "received_date": 1765786387000,
@@ -5826,8 +6573,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 315,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5837,7 +6584,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6187166",
+      "planned_object_id": "6193764",
       "case_number": "A 64158-2025",
       "municipality": "NORDMALING",
       "received_date": 1767214961000,
@@ -5848,8 +6595,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 298,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
@@ -5859,7 +6606,7 @@
       "best_candidates": []
     },
     {
-      "planned_object_id": "6232803",
+      "planned_object_id": "6245278",
       "case_number": "A 7371-2026",
       "municipality": "UMEÅ",
       "received_date": 1770365631000,
@@ -5870,8 +6617,8 @@
       "best_match_id": null,
       "strong_match_count": 0,
       "age_days": 262,
-      "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_checked_at": "2026-10-26T20:11:32.095390Z",
+      "first_seen_at": "2026-10-26T20:21:37.886492Z",
+      "last_checked_at": "2026-10-26T20:21:37.886492Z",
       "completed_overlap_ha_sum": 0,
       "estimated_plan_coverage_pct": 0,
       "unique_union_covered_ha": 0.0,
