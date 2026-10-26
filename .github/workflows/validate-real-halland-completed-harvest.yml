@@ -26,6 +26,8 @@ jobs:
           python scripts/fetch_halland_completed_sample.py \
             --limit 50 \
             --output halland-completed-harvest-sample.geojson
+      - name: Test pixel comparison helper
+        run: python -m unittest tests/test_compare_polygon_pixel_methods.py
       - name: Compare cell-centre and fractional coverage
         run: |
           python scripts/compare_polygon_pixel_methods.py \
