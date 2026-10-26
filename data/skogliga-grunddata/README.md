@@ -46,3 +46,12 @@ Körningen 2026-10-26 kunde läsa alla tre raster utan fel. Se [validation-repor
 Alla tre är GeoTIFF med ett `int16`-band och NoData-värdet `-1`. Rasterdimensioner/utbredning är metadata; rapporten bekräftar inte ännu enhet eller tolkning av övriga pixelvärden.
 
 Arbetsflödet laddar nu rapporten upp som ett GitHub Actions-artifakt i stället för att försöka pusha direkt till `main`. Det undviker samtidighetskonflikt med andra commits.
+
+
+## Pixelvärden och täckning
+
+Skriptet `scripts/analyse_skogliga_grunddata.py` analyserar rasterfilerna inuti ZIP-arkiven fönster för fönster. Det räknar giltiga pixlar och NoData, min/max, medelvärde, standardavvikelse och exakta percentiler via histogram. Det jämför också rasterfilernas geografiska begränsningsrutor.
+
+Kör arbetsflödet **Analyse Skogsstyrelsen volume rasters** manuellt under Actions. Resultatet publiceras som artefakten `skogliga-grunddata-pixel-analysis` och innehåller `pixel-analysis-report.json`.
+
+Obs: jämförelsen av täckning använder rasterfilernas begränsningsrutor, inte en fullständig pixel-för-pixel-analys av giltig täckning. Enhet och eventuell skalfaktor härleds inte från pixelvärdena; verifiera dessa mot produktdokumentationen innan värdena används i beräkningar.
