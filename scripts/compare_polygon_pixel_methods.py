@@ -24,11 +24,17 @@ def compare_one(ds, geom, nodata):
     extent = box(ds.bounds.left, ds.bounds.bottom, ds.bounds.right, ds.bounds.top)
     clipped = geom.intersection(extent)
     if clipped.is_empty:
-        return {"status": "outside_raster_extent"}
+        return {"status": "outside_raster_extent",
+                "polygon_area_ha": round(float(geom.area / 10000), 4),
+                "intersection_area_ha": 0.0,
+                "raster_extent_intersection_pct": 0.0}
     win = from_bounds(*clipped.bounds, transform=ds.transform).round_offsets().round_lengths()
     win = win.intersection(rasterio.windows.Window(0, 0, ds.width, ds.height))
     if win.width <= 0 or win.height <= 0:
-        return {"status": "no_raster_cells_in_extent"}
+        return {"status": "no_raster_cells_in_extent",
+                "polygon_area_ha": round(float(geom.area / 10000), 4),
+                "intersection_area_ha": round(float(clipped.area / 10000), 4),
+                "raster_extent_intersection_pct": round(100 * clipped.area / geom.area, 2) if geom.area else 0.0}
     arr = ds.read(1, window=win, masked=False)
     trans = ds.window_transform(win)
     center_mask = geometry_mask([mapping(geom)], out_shape=arr.shape, transform=trans,
@@ -57,12 +63,24 @@ def compare_one(ds, geom, nodata):
     frac_volume = float(sum(v * f * pixel_area_ha for v, f in zip(fractional_values, fractions)))
     frac_mean = float(sum(v * f for v, f in zip(fractional_values, fractions)) / frac_total) if frac_total else None
     center_mean = float(np.mean(center_vals)) if center_vals.size else None
+    inside_centres = int(np.count_nonzero(center_mask))
+    valid_centres = int(center_vals.size)
+    intersecting_cells = int(sum(1 for row in range(rows) for col in range(cols)
+                                 if arr[row, col] != nodata and arr[row, col] >= 0
+                                 and box(*(lambda a, b: (min(a[0], b[0]), min(a[1], b[1]), max(a[0], b[0]), max(a[1], b[1]))(
+                                     trans * (col, row), trans * (col + 1, row + 1))).__iter__()).intersects(clipped)))
+    nodata_center_cells = int(np.count_nonzero(center_mask & (arr == nodata)))
     return {
-        "status": "ok" if frac_total else "no_valid_cells",
+        "status": "ok" if frac_total else ("no_valid_cells" if clipped.area > 0 else "outside_raster_extent"),
         "pixel_size_m": [abs(float(ds.transform.a)), abs(float(ds.transform.e))],
         "polygon_area_ha": round(float(geom.area / 10000), 4),
-        "valid_center_cells": int(center_vals.size),
+        "intersection_area_ha": round(float(clipped.area / 10000), 4),
+        "raster_extent_intersection_pct": round(100 * clipped.area / geom.area, 2) if geom.area else 0.0,
+        "cells_with_centres_inside_polygon": inside_centres,
+        "valid_center_cells": valid_centres,
+        "nodata_center_cells": nodata_center_cells,
         "fractional_intersecting_cells": len(fractions),
+        "valid_fractional_intersecting_cells": len(fractions),
         "fractional_equivalent_cells": round(frac_total, 4),
         "fractional_coverage_ha": round(frac_total * pixel_area_ha, 4),
         "center_mean_m3sk_ha": round(center_mean, 3) if center_mean is not None else None,
