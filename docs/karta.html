@@ -526,7 +526,29 @@ function popup(f,type){
  ]:[
  ["Ärendegrupp",caseLabel(f)],["Polygon-ID (OBJECTID)",polygonId(f)],["Beteckning",p.Beteckn??p.Beteckning],["Ärendeår",p.Arendear],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
  ];
- return '<div style="width:260px;max-width:260px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:6px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
+ const rows=items=>'<table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:5px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+items.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table>';
+ const rasterSourceForFeature=feature=>{
+  const g=feature?.geometry;if(!g?.coordinates)return null;
+  const points=[];const walk=x=>{if(!Array.isArray(x))return;if(typeof x[0]==="number"&&typeof x[1]==="number"){points.push(x);return;}x.forEach(walk);};walk(g.coordinates);
+  if(!points.length)return null;
+  const lon=points.reduce((s,p)=>s+p[0],0)/points.length,lat=points.reduce((s,p)=>s+p[1],0)/points.length;
+  const sources=[{name:"07",label:"Kronoberg (07)",b:[12.5125,55.922,16.6588,57.293]},{name:"10",label:"Blekinge (10)",b:[14.1804,55.4859,16.6389,56.8438]},{name:"13",label:"Halland (13)",b:[10.8071,55.8805,14.1995,57.7393]}];
+  return sources.find(s=>lon>=s.b[0]&&lon<=s.b[2]&&lat>=s.b[1]&&lat<=s.b[3])||null;
+ };
+ const rasterSource=rasterSourceForFeature(f);
+ const rasterRows=rasterSource?[
+  ["Rasterområde",rasterSource.label],
+  ["Rasterprodukt","Skogsstyrelsen – Skogliga grunddata, volym omdrev 3"],
+  ["Upplösning","10 × 10 m"],
+  ["Koordinatsystem","SWEREF 99 TM (EPSG:3006)"],
+  ["Volym (m³sk/ha)","Beräknas från originalraster i nästa steg"],
+  ["Beräknad totalvolym","Beräknas från originalraster i nästa steg"],
+  ["Metod","Cellcentrum; NoData utesluts och giltiga nollvärden behålls"]
+ ]:[
+  ["Rastertäckning","Ingen av de tre provrastrens täckningsrutor matchar polygonens mittpunkt."],
+  ["Volym","Ingen rasteruppgift tillgänglig"]
+ ];
+ return '<div style="width:280px;max-width:280px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><details open style="margin-top:7px;border-top:1px solid #dce4dd;padding-top:5px"><summary style="cursor:pointer;font-weight:700">Befintliga uppgifter – kommun och beteckning</summary>'+rows(fields)+'</details><details style="margin-top:7px;border-top:1px solid #dce4dd;padding-top:5px"><summary style="cursor:pointer;font-weight:700">Skogliga grunddata – raster och volym</summary>'+rows(rasterRows)+'<p style="font-size:11px;color:#59665e;margin:5px 0 0">Rasterbilderna på kartan är endast översiktsbilder och används inte för volymberäkning. Volymvärden ska beräknas från originalraster, inte uppskattas från bildens färger.</p></details></div>';
 }
 function yearFromDateValue(value){
  if(value==null||value==="")return null;
