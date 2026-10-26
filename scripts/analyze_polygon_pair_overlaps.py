@@ -86,12 +86,28 @@ def analyze_pairs(ds, features, source_crs):
                 image_relation = "shared_image_reference"
             else:
                 image_relation = "no_shared_image_reference"
+            # Image identifiers are retained as exploratory source metadata only.
+            # Do not use them to decide whether records are duplicates or one case.
+            date_a = props_a.get("Avvdatum")
+            date_b = props_b.get("Avvdatum")
+            try:
+                date_delta_days = abs(float(date_a) - float(date_b)) / 86400000.0
+            except (TypeError, ValueError):
+                date_delta_days = None
+            area_attr_a = props_a.get("Arealha")
+            area_attr_b = props_b.get("Arealha")
+            try:
+                source_area_delta_ha = abs(float(area_attr_a) - float(area_attr_b))
+            except (TypeError, ValueError):
+                source_area_delta_ha = None
             pair_records[(i, j)] = {
                 "feature_ids": [item["id"], other["id"]],
                 "polygon_a_properties": props_a,
                 "polygon_b_properties": props_b,
                 "shared_image_ids": shared_image_ids,
-                "source_image_relation": image_relation,
+                "source_image_relation_exploratory_only": image_relation,
+                "source_avvdatum_delta_days": round(date_delta_days, 2) if date_delta_days is not None else None,
+                "source_arealha_delta_ha": round(source_area_delta_ha, 4) if source_area_delta_ha is not None else None,
                 "polygon_a_area_m2": round(area_a, 3),
                 "polygon_b_area_m2": round(area_b, 3),
                 "geometry_intersection_area_m2": round(area, 3),
@@ -195,7 +211,9 @@ def main():
                   "severity=", pair.get("overlap_severity"),
                   "valid=", pair.get("polygon_a_valid"), pair.get("polygon_b_valid"),
                   "intersection_type=", pair["geometry_intersection_type"],
-                  "source_image_relation=", pair.get("source_image_relation"),
+                  "avvdatum_delta_days=", pair.get("source_avvdatum_delta_days"),
+                  "source_arealha_delta_ha=", pair.get("source_arealha_delta_ha"),
+                  "image_relation_exploratory_only=", pair.get("source_image_relation_exploratory_only"),
                   "shared_image_ids=", ",".join(pair.get("shared_image_ids", [])))
             # Print only source fields useful for diagnosing whether overlap
             # pairs are likely duplicate records or distinct harvest cases.
