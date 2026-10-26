@@ -127,3 +127,22 @@ The source ZIPs for Volym omdrev 3 are retained unchanged. The tile-index workfl
 - Large counties, including Norrbotten, are intentionally not required for this initial test. The same tile scheme can be used when adding larger source files later.
 
 Run locally with `python -m pip install numpy rasterio` and `python scripts/build_skogliga_grunddata_tile_index.py`.
+
+
+## Polygon-based volume attributes (background data, not a map layer)
+
+The script `scripts/analyze_volume_for_polygon.py` reads the volume raster as a background dataset and returns statistics attached to input polygon features. It does not generate tiles for display or add the raster to the map.
+
+- Input: GeoJSON Polygon, MultiPolygon, Feature, or FeatureCollection. GeoJSON is assumed to be WGS84 unless a legacy GeoJSON CRS is declared; use `--polygon-crs EPSG:3006` to override.
+- Processing: transforms polygons to the raster CRS (EPSG:3006), reads only the raster window intersecting each polygon, and includes cells whose centres fall inside the polygon.
+- Output attributes/statistics per polygon and source raster: valid-cell count, zero/positive/NoData counts, valid-data coverage, mean/median/90th percentile volume and a rough cell-based total-volume estimate.
+- Zero values remain valid and are included in the statistics. NoData is excluded.
+- No available raster coverage is reported explicitly; it is not interpreted as zero volume.
+- The reported total volume is an approximate raster-derived estimate, not a field inventory, guarantee of current stock, or cadastral/legal conclusion. The source data describe conditions at the local laser-scanning date.
+
+Install dependencies with `python -m pip install numpy rasterio shapely pyproj`. Example:
+```bash
+python scripts/analyze_volume_for_polygon.py --polygon path/to/forest_polygons.geojson --output data/volume_polygon_attributes.json
+```
+
+A CI workflow checks polygon input handling: https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/test-polygon-volume-analysis.yml
