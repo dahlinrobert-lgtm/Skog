@@ -92,6 +92,7 @@ async function loadHallandTestAreas(){
   const data=await hallandTestLoadPromise;
   hallandTestLayer.clearLayers().addData(data);
   hallandTestStatus.textContent="Halland: "+(data.features||[]).length+" syntetiska testpolygoner visas med turkos kontur. Klicka på en polygon för information.";
+  if(document.getElementById("showHallandTestAreas").checked&&hallandTestLayer.getBounds().isValid()&&!window.__hallandTestInitialZoom){window.__hallandTestInitialZoom=true;map.fitBounds(hallandTestLayer.getBounds().pad(0.18));}
  }catch(error){
   hallandTestStatus.textContent="Hallands testpolygoner kunde inte laddas: "+error.message;
   console.error("Halland test polygons failed",error);
