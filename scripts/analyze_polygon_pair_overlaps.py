@@ -13,6 +13,7 @@ import rasterio
 from pyproj import CRS, Transformer
 from shapely.geometry import box, mapping
 from shapely.ops import transform as transform_geometry
+from shapely.validation import explain_validity
 
 try:
     from scripts.analyze_volume_for_polygon import load_features
@@ -55,12 +56,34 @@ def analyze_pairs(ds, features, source_crs):
                 continue
             intersection = geom.intersection(other["clipped"])
             area = float(intersection.area)
+            area_a = float(geom.area)
+            area_b = float(other["clipped"].area)
+            smaller_area = min(area_a, area_b)
+            larger_area = max(area_a, area_b)
+            overlap_smaller_pct = (100 * area / smaller_area) if smaller_area > 0 else None
+            overlap_larger_pct = (100 * area / larger_area) if larger_area > 0 else None
+            # Diagnostic classification only; never automatically alter source polygons.
+            if area <= 0.01:
+                severity = "touch_or_numerical_sliver"
+            elif overlap_smaller_pct is not None and overlap_smaller_pct >= 1:
+                severity = "material_relative_to_smaller_polygon"
+            else:
+                severity = "small_relative_overlap"
             pair_records[(i, j)] = {
                 "feature_ids": [item["id"], other["id"]],
+                "polygon_a_area_m2": round(area_a, 3),
+                "polygon_b_area_m2": round(area_b, 3),
                 "geometry_intersection_area_m2": round(area, 3),
                 "geometry_intersection_area_ha": round(area / 10000, 6),
+                "overlap_of_smaller_polygon_pct": round(overlap_smaller_pct, 6) if overlap_smaller_pct is not None else None,
+                "overlap_of_larger_polygon_pct": round(overlap_larger_pct, 6) if overlap_larger_pct is not None else None,
+                "overlap_severity": severity,
                 "geometry_intersection_is_area_overlap": bool(area > 0.01),
                 "geometry_intersection_type": intersection.geom_type,
+                "polygon_a_valid": bool(geom.is_valid),
+                "polygon_b_valid": bool(other["clipped"].is_valid),
+                "polygon_a_validity_reason": explain_validity(geom),
+                "polygon_b_validity_reason": explain_validity(other["clipped"]),
             }
 
     # Count cells selected by both polygons. Cell-centre inclusion matches the
@@ -139,11 +162,17 @@ def main():
     print("Polygon pairs with shared cell centres:", report["pairs_with_shared_cell_centres"])
     print("Pairs with positive geometric area overlap:", report["pairs_with_positive_area_overlap"])
     print("Pairs touching only or numerical sliver:", report["pairs_touching_only_or_numerical_sliver"])
+    print("Pairs material relative to smaller polygon (>=1%):",
+          sum(1 for pair in report["pairs"]
+              if pair.get("overlap_severity") == "material_relative_to_smaller_polygon"))
     for pair in report["pairs"]:
         if pair["shared_cell_count"] or pair["geometry_intersection_is_area_overlap"]:
             print("Pair", ",".join(pair["feature_ids"]),
                   "shared_cells=", pair["shared_cell_count"],
                   "geometry_overlap_m2=", pair["geometry_intersection_area_m2"],
+                  "overlap_smaller_pct=", pair.get("overlap_of_smaller_polygon_pct"),
+                  "severity=", pair.get("overlap_severity"),
+                  "valid=", pair.get("polygon_a_valid"), pair.get("polygon_b_valid"),
                   "intersection_type=", pair["geometry_intersection_type"])
 
 
