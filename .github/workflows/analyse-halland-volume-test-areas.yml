@@ -7,6 +7,8 @@ on:
       - "data/skogliga-grunddata/halland-test-areas.geojson"
       - "data/skogliga-grunddata/sks_Volym_omdrev3_13.zip"
       - "scripts/analyze_volume_for_polygon.py"
+      - "scripts/compare_polygon_pixel_methods.py"
+      - "tests/test_compare_polygon_pixel_methods.py"
       - "scripts/audit_raster_polygon_ownership.py"
       - "tests/test_analyze_volume_for_polygon.py"
       - "tests/test_audit_raster_polygon_ownership.py"
@@ -55,6 +57,12 @@ jobs:
           PY
       - name: Test polygon raster analysis and ownership rules
         run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Compare cell-centre and fractional coverage methods
+        run: |
+          python scripts/compare_polygon_pixel_methods.py \
+            --polygon data/skogliga-grunddata/halland-test-areas.geojson \
+            --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \
+            --output halland-pixel-method-comparison.json
       - name: Audit cell ownership for Halland test polygons
         run: |
           python scripts/audit_raster_polygon_ownership.py \
@@ -68,4 +76,5 @@ jobs:
           path: |
             halland-volume-test-report.json
             halland-cell-ownership-report.json
+            halland-pixel-method-comparison.json
           if-no-files-found: error
