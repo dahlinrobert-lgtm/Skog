@@ -1,0 +1,64 @@
+name: Validate real Halland completed-harvest polygons
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-real-polygons:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install analysis dependencies
+        run: python -m pip install requests numpy rasterio shapely pyproj
+      - name: Fetch real completed-harvest polygons from Skogsstyrelsen
+        run: |
+          python scripts/fetch_halland_completed_sample.py \
+            --limit 50 \
+            --output halland-completed-harvest-sample.geojson
+      - name: Compare cell-centre and fractional coverage
+        run: |
+          python scripts/compare_polygon_pixel_methods.py \
+            --polygon halland-completed-harvest-sample.geojson \
+            --polygon-crs EPSG:3006 \
+            --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \
+            --output real-halland-pixel-comparison.json
+      - name: Audit cell ownership
+        run: |
+          python scripts/audit_raster_polygon_ownership.py \
+            --polygon halland-completed-harvest-sample.geojson \
+            --polygon-crs EPSG:3006 \
+            --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \
+            --output real-halland-cell-ownership.json
+      - name: Validate real-polygon report
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          sample = json.loads(Path("halland-completed-harvest-sample.geojson").read_text(encoding="utf-8"))
+          comparison = json.loads(Path("real-halland-pixel-comparison.json").read_text(encoding="utf-8"))
+          ownership = json.loads(Path("real-halland-cell-ownership.json").read_text(encoding="utf-8"))
+          assert sample["features"], "No real source features"
+          assert len(comparison["polygons"]) == len(sample["features"])
+          assert ownership["polygon_count"] == len(sample["features"])
+          ok = sum(p["comparison"]["status"] == "ok" for p in comparison["polygons"])
+          print("Source polygons:", len(sample["features"]))
+          print("Polygons with raster coverage:", ok)
+          print("Cell overlap:", ownership["cells_selected_by_multiple_polygons"])
+          print("Double-count excess:", ownership["double_count_excess"])
+          assert ok > 0, "No sample polygon has valid raster coverage; check source/raster alignment"
+          PY
+      - name: Upload reproducible sample and reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-halland-completed-harvest-validation
+          path: |
+            halland-completed-harvest-sample.geojson
+            real-halland-pixel-comparison.json
+            real-halland-cell-ownership.json
+          if-no-files-found: error
