@@ -31,3 +31,18 @@ python scripts/validate_skogliga_grunddata.py
 ```
 
 Skriptet packar bara rastermedlemmar till temporära mappar för metadataavläsning; ZIP-originalen ändras inte.
+
+
+## Senaste valideringsresultat
+
+Körningen 2026-10-26 kunde läsa alla tre raster utan fel. Se [validation-report.json](validation-report.json) för fullständiga metadata och SHA-256-kontroller.
+
+| Fil | Rasterstorlek | Upplösning | CRS | Utbredning (SWEREF 99 TM) |
+|---|---:|---:|---|---|
+| `sks_Volym_omdrev3_07.tif` | 25 000 × 15 000 | 10 m | EPSG:3006 | E 350000–600000, N 6200000–6350000 |
+| `sks_Volym_omdrev3_10.tif` | 15 000 × 15 000 | 10 m | EPSG:3006 | E 450000–600000, N 6150000–6300000 |
+| `sks_Volym_omdrev3_13.tif` | 20 000 × 20 000 | 10 m | EPSG:3006 | E 250000–450000, N 6200000–6400000 |
+
+Alla tre är GeoTIFF med ett `int16`-band och NoData-värdet `-1`. Rasterdimensioner/utbredning är metadata; rapporten bekräftar inte ännu enhet eller tolkning av övriga pixelvärden.
+
+Arbetsflödet laddar nu rapporten upp som ett GitHub Actions-artifakt i stället för att försöka pusha direkt till `main`. Det undviker samtidighetskonflikt med andra commits.
