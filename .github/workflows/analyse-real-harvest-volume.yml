@@ -5,7 +5,12 @@ on:
       sample_limit:
         description: Maximum real polygons per raster area (validation sample)
         required: true
-        default: "200"
+        default: "0"
+        type: string
+      raster_codes:
+        description: Raster areas to process (07, 10, 13); Halland is 13
+        required: true
+        default: "13"
         type: string
   push:
     paths:
@@ -26,7 +31,7 @@ jobs:
       - name: Install analysis dependencies
         run: python -m pip install requests numpy rasterio shapely pyproj
       - name: Fetch real polygons in all three raster extents
-        run: python scripts/fetch_real_harvests_for_volume_rasters.py --output real-volume-polygons.geojson --limit "${{ inputs.sample_limit || '200' }}"
+        run: python scripts/fetch_real_harvests_for_volume_rasters.py --output real-volume-polygons.geojson --limit "${{ inputs.sample_limit || '0' }}" --raster-codes "${{ inputs.raster_codes || '13' }}"
       - name: Split groups and calculate volume statistics from original rasters
         run: |
           python - <<'PY'
@@ -41,7 +46,7 @@ jobs:
               print(f"raster {code}: {len(group['features'])} real polygons")
           PY
           set -e
-          for code in 07 10 13; do
+          for code in $(echo "${{ inputs.raster_codes || '13' }}" | tr ',' ' '); do
             mkdir -p "raster-data-$code"
             cp "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" "raster-data-$code/"
             python scripts/analyze_volume_for_polygon.py --polygon "real-polygons-$code.geojson" --data-dir "raster-data-$code" --output "real-volume-report-$code.json"
@@ -52,8 +57,9 @@ jobs:
           import json
           from pathlib import Path
           summary=[]
-          for code in ("07","10","13"):
-              report=json.loads(Path(f"real-volume-report-{code}.json").read_text(encoding="utf-8"))
+          for report_path in sorted(Path(".").glob("real-volume-report-*.json")):
+              code=report_path.stem.rsplit("-",1)[-1]
+              report=json.loads(report_path.read_text(encoding="utf-8"))
               raster=next((r for r in report["rasters"] if r["source_archive"].endswith(f"_{code}.zip")),None)
               if raster is None: raise SystemExit(f"Raster {code} missing in analysis report")
               rows=[]
@@ -120,8 +126,6 @@ jobs:
           name: real-harvest-volume-analysis
           path: |
             real-volume-polygons.geojson
-            real-volume-report-07.json
-            real-volume-report-10.json
-            real-volume-report-13.json
+            real-volume-report-*.json
             real-volume-summary.json
           if-no-files-found: error
