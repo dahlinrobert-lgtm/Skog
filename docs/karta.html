@@ -106,6 +106,16 @@ document.getElementById("showHallandTestAreas").addEventListener("change",e=>{
 const volumeRasterLayers=[];
 let volumeRasterLoadPromise=null;
 const volumeRasterStatus=document.getElementById("volumeRasterStatus");
+let polygonVolumeAttributesById=new Map();
+let polygonVolumeAttributesLoadError=false;
+const polygonVolumeAttributesReady=fetch("./volume-overlays/polygon-volume-attributes.json")
+ .then(r=>{if(!r.ok)throw new Error("Volymrapporten saknas");return r.json();})
+ .then(doc=>{for(const row of doc.records||[])polygonVolumeAttributesById.set(String(row.objectid),row);return doc;})
+ .catch(error=>{polygonVolumeAttributesLoadError=true;console.warn("Polygon volume attributes unavailable",error);return null;});
+function bindFeaturePopup(layer,feature,type){
+ layer.bindPopup(()=>popup(feature,type));
+ layer.on("click",async()=>{await polygonVolumeAttributesReady;if(layer.isPopupOpen())layer.setPopupContent(popup(feature,type));});
+}
 async function setVolumeRasterVisibility(show){
  if(!show){for(const layer of volumeRasterLayers)if(map.hasLayer(layer))map.removeLayer(layer);volumeRasterStatus.style.display="none";return;}
  volumeRasterStatus.style.display="block";
@@ -139,9 +149,9 @@ const radiusSelect=document.getElementById("radiusSelect");
 const radiusChoices=[2000,4000,6000,8000,10000,20000,30000,40000];
 radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADIUS)<Math.abs(best-RADIUS)?value:best,radiusChoices[0]));
 RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
-const plannedLayer=L.geoJSON(null,{style:plannedStyle,onEachFeature:(f,l)=>l.bindPopup(popup(f,"planned"))});
-const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>l.bindPopup(popup(f,"performed"))});
-const samradPointLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:5,color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
+const plannedLayer=L.geoJSON(null,{style:plannedStyle,onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
+const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>bindFeaturePopup(l,f,"performed")});
+const samradPointLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:5,color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"samrad")});
 const samradLineLayer=L.geoJSON(null,{style:()=>({color:"#ea580c",weight:3,opacity:.9}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 const samradAreaLayer=L.geoJSON(null,{style:()=>({color:"#a21caf",weight:2,opacity:.9,fillColor:"#d946ef",fillOpacity:.22}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 // Transparent interaction-only buffers make thin consultation geometries easier to click without changing their appearance.
@@ -536,17 +546,24 @@ function popup(f,type){
   return sources.find(s=>lon>=s.b[0]&&lon<=s.b[2]&&lat>=s.b[1]&&lat<=s.b[3])||null;
  };
  const rasterSource=rasterSourceForFeature(f);
- const rasterRows=rasterSource?[
-  ["Rasterområde",rasterSource.label],
+ const volumeRecord=polygonVolumeAttributesById.get(String(p.OBJECTID??p.ObjectId??f.id??""));
+ const rasterSourceLabel=volumeRecord?({"07":"Kronoberg (07)","10":"Blekinge (10)","13":"Halland (13)"}[volumeRecord.raster_code]||("Raster "+volumeRecord.raster_code)):(rasterSource?rasterSource.label:"Ej fastställt");
+ const fmtNumber=(v,d=1)=>v==null||!Number.isFinite(Number(v))?"Ej tillgängligt":Number(v).toLocaleString("sv-SE",{maximumFractionDigits:d});
+ const rasterRows=volumeRecord?[
+  ["Rasterområde",rasterSourceLabel],
   ["Rasterprodukt","Skogsstyrelsen – Skogliga grunddata, volym omdrev 3"],
   ["Upplösning","10 × 10 m"],
-  ["Koordinatsystem","SWEREF 99 TM (EPSG:3006)"],
-  ["Volym (m³sk/ha)","Beräknas från originalraster i nästa steg"],
-  ["Beräknad totalvolym","Beräknas från originalraster i nästa steg"],
-  ["Metod","Cellcentrum; NoData utesluts och giltiga nollvärden behålls"]
+  ["Medelvolym"," "+fmtNumber(volumeRecord.mean_m3sk_ha,2)+" m³sk/ha"],
+  ["Uppskattad totalvolym",fmtNumber(volumeRecord.estimated_total_m3sk,2)+" m³sk"],
+  ["Giltig rastertäckning",fmtNumber(volumeRecord.coverage_pct,2)+" %"],
+  ["Antal giltiga celler",fmtNumber(volumeRecord.valid_cells,0)],
+  ["Metod","Cellcentrum; NoData utesluts, giltiga nollvärden behålls"]
  ]:[
-  ["Rastertäckning","Ingen av de tre provrastrens täckningsrutor matchar polygonens mittpunkt."],
-  ["Volym","Ingen rasteruppgift tillgänglig"]
+  ["Rasterområde",rasterSourceLabel],
+  ["Volymberäkning","Ingen giltig beräkning för denna polygon i det aktuella testurvalet."],
+  ["Viktigt","Det betyder inte säkert att volymdata saknas. Polygonen kan ännu inte ha analyserats eller ligga i en del av rasterfilen med NoData."],
+  ["Metod","Cellcentrum; originalraster med 10 m celler"],
+  ["Status",polygonVolumeAttributesLoadError?"Volymrapporten kunde inte hämtas":"Testurval – utökas efter verifiering"]
  ];
  return '<div style="width:280px;max-width:280px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><details open style="margin-top:7px;border-top:1px solid #dce4dd;padding-top:5px"><summary style="cursor:pointer;font-weight:700">Befintliga uppgifter – kommun och beteckning</summary>'+rows(fields)+'</details><details style="margin-top:7px;border-top:1px solid #dce4dd;padding-top:5px"><summary style="cursor:pointer;font-weight:700">Skogliga grunddata – raster och volym</summary>'+rows(rasterRows)+'<p style="font-size:11px;color:#59665e;margin:5px 0 0">Rasterbilderna på kartan är endast översiktsbilder och används inte för volymberäkning. Volymvärden ska beräknas från originalraster, inte uppskattas från bildens färger.</p></details></div>';
 }
