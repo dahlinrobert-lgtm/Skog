@@ -1,0 +1,30 @@
+{
+  "type": "FeatureCollection",
+  "name": "halland_volume_test_areas_wgs84",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "halland-test-01",
+      "properties": {"test_area":"Halland test 01","purpose":"Pilot polygon volume statistics","synthetic_test_geometry":true,"area_ha":9},
+      "geometry":{"type":"Polygon","coordinates":[[[13.0428717004,56.6487521125],[13.0477613016,56.6488289037],[13.0476220686,56.6515225369],[13.0427321192,56.6514457378],[13.0428717004,56.6487521125]]]}
+    },
+    {
+      "type": "Feature",
+      "id": "halland-test-02",
+      "properties": {"test_area":"Halland test 02","purpose":"Pilot polygon volume statistics","synthetic_test_geometry":true,"area_ha":25},
+      "geometry":{"type":"Polygon","coordinates":[[[13.0587089699,56.6579861691],[13.0668603873,56.6581130245],[13.0666305074,56.6626024564],[13.0584781222,56.6624755795],[13.0587089699,56.6579861691]]]}
+    },
+    {
+      "type": "Feature",
+      "id": "halland-test-03",
+      "properties": {"test_area":"Halland test 03","purpose":"Pilot polygon volume statistics","synthetic_test_geometry":true,"area_ha":12},
+      "geometry":{"type":"Polygon","coordinates":[[[13.0754694965,56.6492604281],[13.0787293346,56.6493107905],[13.0784552555,56.6546981535],[13.0751949531,56.6546477810],[13.0754694965,56.6492604281]]]}
+    },
+    {
+      "type": "Feature",
+      "id": "halland-test-04",
+      "properties": {"test_area":"Halland test 04","purpose":"Pilot polygon volume statistics","synthetic_test_geometry":true,"area_ha":32},
+      "geometry":{"type":"Polygon","coordinates":[[[13.0908610192,56.6674693781],[13.1039068392,56.6676687444],[13.1037263981,56.6712603624],[13.0906793385,56.6710609690],[13.0908610192,56.6674693781]]]}
+    }
+  ]
+}
