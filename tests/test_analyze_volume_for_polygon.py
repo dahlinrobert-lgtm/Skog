@@ -81,5 +81,29 @@ class PolygonInputTests(unittest.TestCase):
             self.assertEqual(stats["valid_cells"], 0)
 
 
+    def test_edge_to_edge_polygons_do_not_double_count_grid_aligned_cells(self):
+        # A 10 m raster: four cells across, with the shared polygon edge on x=20,
+        # exactly on a pixel edge. Cell-centre inclusion should assign each
+        # raster cell to one side only.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "adjacent.tif"
+            values = np.array([[10, 20, 30, 40]], dtype=np.int16)
+            with rasterio.open(
+                path, "w", driver="GTiff", height=1, width=4, count=1,
+                dtype="int16", crs="EPSG:3006",
+                transform=from_origin(500000, 7000010, 10, 10), nodata=-1,
+            ) as dst:
+                dst.write(values, 1)
+            left = box(500000, 7000000, 500020, 7000010)
+            right = box(500020, 7000000, 500040, 7000010)
+            with rasterio.open(path) as ds:
+                left_stats = summarize_feature(ds, left, -1)
+                right_stats = summarize_feature(ds, right, -1)
+            self.assertEqual(left_stats["cells_inside_polygon"], 2)
+            self.assertEqual(right_stats["cells_inside_polygon"], 2)
+            self.assertEqual(left_stats["cells_inside_polygon"] + right_stats["cells_inside_polygon"], 4)
+            self.assertEqual(left_stats["pixel_size_m"], [10.0, 10.0])
+            self.assertIn("all_touched=False", right_stats["pixel_assignment_rule"])
+
 if __name__ == "__main__":
     unittest.main()
