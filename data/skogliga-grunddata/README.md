@@ -91,3 +91,12 @@ Det stora rektangelöverlappet mellan 07 och 10 innehåller inga celler med gilt
 ### Geografisk relevans
 
 Filnamnens länskoder är 07 Kronobergs län, 10 Blekinge län och 13 Hallands län. De här tre testfilerna täcker därför inte Luleå/Norrbotten (länskod 25). För Skogskoll i norra Sverige behöver vi senare lägga till rätt geografiska leveranser; analysflödet kan återanvändas på dem.
+
+
+## Visuell täckningskontroll
+
+Arbetsflödet [Create Skogsstyrelsen raster overview](https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/create-skogliga-grunddata-overview.yml) skapar en nedskalad PNG-karta och en JSON-rapport som Actions-artifakt. [Lyckad körning 1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40392838901).
+
+Översikten visar att giltiga celler ligger i mindre, sammanhängande eller uppdelade områden inom varje stor rasterutbredning. Den grå ytan är NoData, gult är giltigt nollvärde och grönt är positiv volym. Kartan är avsedd för snabb visuell kontroll, inte mätning eller beräkning. Den använder närmaste granne för nedskalning; exakta statistikvärden ska tas från originalraster och pixelanalysrapporter.
+
+Norrbotten är inte inkluderat i dessa provfiler avsiktligt. Det är rimligt att testa flödet med mindre län först; för ett stort län bör vi sedan hämta/hantera data i delområden eller rastertiles i stället för att kräva att hela länet hanteras som en enda fil.
