@@ -23,11 +23,7 @@ from shapely.ops import transform as transform_geometry
 try:
     from scripts.analyze_volume_for_polygon import load_features
 except ModuleNotFoundError:
-    try:
-    from scripts.analyze_volume_for_polygon import load_features
-except ModuleNotFoundError:
     from analyze_volume_for_polygon import load_features
-
 
 def audit_cell_ownership(ds, features, source_crs):
     """Count cell-centre assignments and overlaps on the raster's native grid."""
