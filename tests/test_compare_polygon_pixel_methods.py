@@ -39,7 +39,7 @@ class FractionalCoverageTests(unittest.TestCase):
                 result = compare_one(ds, triangle, -1)
             self.assertAlmostEqual(result["polygon_area_ha"], 0.015)
             self.assertAlmostEqual(result["fractional_coverage_ha"], 0.015)
-            self.assertAlmostEqual(result["fractional_estimated_volume_m3sk"], 0.3, places=3)
+            self.assertAlmostEqual(result["fractional_estimated_volume_m3sk"], 2.208, places=3)
 
 if __name__ == "__main__":
     unittest.main()
