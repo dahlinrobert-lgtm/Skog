@@ -50,11 +50,20 @@ jobs:
           assert sample["features"], "No real source features"
           assert len(comparison["polygons"]) == len(sample["features"])
           assert ownership["polygon_count"] == len(sample["features"])
-          ok = sum(p["comparison"]["status"] == "ok" for p in comparison["polygons"])
+          from collections import Counter
+          statuses = Counter(p["comparison"]["status"] for p in comparison["polygons"])
+          ok = statuses.get("ok", 0)
           print("Source polygons:", len(sample["features"]))
-          print("Polygons with raster coverage:", ok)
+          print("Raster coverage status counts:", dict(statuses))
           print("Cell overlap:", ownership["cells_selected_by_multiple_polygons"])
           print("Double-count excess:", ownership["double_count_excess"])
+          for item in comparison["polygons"]:
+              c = item["comparison"]
+              print("Polygon", item["feature_id"], "status=", c["status"],
+                    "area_ha=", c.get("polygon_area_ha"),
+                    "centre_cells=", c.get("valid_center_cells"),
+                    "fractional_cells=", c.get("fractional_intersecting_cells"),
+                    "fractional_coverage_ha=", c.get("fractional_coverage_ha"))
           assert ok > 0, "No sample polygon has valid raster coverage; check source/raster alignment"
           PY
       - name: Upload reproducible sample and reports
