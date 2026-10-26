@@ -98,6 +98,9 @@ def compare_one(ds, geom, nodata):
         "other_negative_fractional_intersecting_cells": len(other_negative_fractions),
         "fractional_equivalent_cells_all_raster_cells": round(geometric_frac_total, 4),
         "fractional_equivalent_valid_cells": round(valid_frac_total, 4),
+        # Backward-compatible aliases: these historically meant valid-cell coverage.
+        "fractional_equivalent_cells": round(valid_frac_total, 4),
+        "fractional_coverage_ha": round(valid_frac_total * pixel_area_ha, 4),
         "fractional_raster_intersection_ha": round(geometric_frac_total * pixel_area_ha, 4),
         "fractional_nodata_coverage_ha": round(nodata_frac_total * pixel_area_ha, 4),
         "fractional_valid_coverage_ha": round(valid_frac_total * pixel_area_ha, 4),
