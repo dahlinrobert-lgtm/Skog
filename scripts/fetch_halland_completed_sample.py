@@ -42,8 +42,9 @@ def main():
     features = data.get("features")
     if not isinstance(features, list):
         raise RuntimeError("Source response did not contain a GeoJSON feature list")
-    if data.get("exceededTransferLimit"):
-        raise RuntimeError("Source response exceeded transfer limit; refusing incomplete sample")
+    # This is intentionally a bounded sample, not a complete county extract.
+    # ArcGIS may set exceededTransferLimit when more matching features exist;
+    # the first ordered page is still a valid sample for method validation.
     # Keep only geometries that are actually labelled as Halland and have geometry.
     features = [f for f in features if (f.get("properties") or {}).get("Lannr") == "13"
                 and f.get("geometry")]
@@ -59,7 +60,8 @@ def main():
                       "order": "OBJECTID ASC", "requested_limit": args.limit},
             "retrieved_at_utc": datetime.now(timezone.utc).isoformat(),
             "count": len(features),
-            "note": "Live source sample for validation only; not a complete county inventory."
+            "source_more_matching_features": bool(data.get("exceededTransferLimit")),
+            "note": "Live source sample for validation only; not a complete county inventory. A transfer-limit flag means more matching source features may exist."
         },
         "features": features,
     }
