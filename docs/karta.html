@@ -22,6 +22,7 @@
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <label><input id="showSamrad" type="checkbox"> Samråd</label>
+<label title="Testlager med nedskalad skogsvolym från Skogsstyrelsens raster (omdrev 3). Visas endast där data finns."><input id="showVolumeRaster" type="checkbox"> Skogsvolym – testlager</label>
 <label>Ändra färgläggning <select id="performedColorMode"><option value="none">Åtgärd</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="samradAction">Samrådsåtgärd</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
 <button id="home">Centrera område</button>
 <label>Bakgrundskarta <select id="baseMapSelect"><option value="standard">Standardkarta</option><option value="imagery">Flygfoto / satellit</option></select></label>
@@ -30,6 +31,7 @@
 </div>
 <p id="status" class="muted" aria-live="polite" style="display:none"></p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span><i class="swatch samrad"></i>Samråd</span><span>Välj en polygon för attribut och datum.</span></div>
+<p id="volumeRasterStatus" class="muted" style="display:none" aria-live="polite"></p>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
 <section class="panel">
@@ -77,6 +79,35 @@ const map=L.map("map",{preferCanvas:true,zoomSnap:0.25}).setView(CENTER,radiusZo
 const standardBaseLayer=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 const imageryBaseLayer=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'Tiles &copy; Esri and its imagery providers'});
 standardBaseLayer.addTo(map);
+const volumeRasterLayers=[];
+let volumeRasterLoadPromise=null;
+const volumeRasterStatus=document.getElementById("volumeRasterStatus");
+async function setVolumeRasterVisibility(show){
+ if(!show){for(const layer of volumeRasterLayers)if(map.hasLayer(layer))map.removeLayer(layer);volumeRasterStatus.style.display="none";return;}
+ volumeRasterStatus.style.display="block";
+ volumeRasterStatus.textContent="Laddar skogsvolymens testlager…";
+ try{
+  if(!volumeRasterLoadPromise){
+   volumeRasterLoadPromise=fetch("./volume-overlays/manifest.json").then(r=>{if(!r.ok)throw new Error("Manifest saknas");return r.json();}).then(manifest=>{
+    for(const item of manifest.rasters||[]){
+     const bounds=[[item.bounds_wgs84[1],item.bounds_wgs84[0]],[item.bounds_wgs84[3],item.bounds_wgs84[2]]];
+     const layer=L.imageOverlay("./volume-overlays/"+item.image,bounds,{opacity:0.78,interactive:false,alt:"Skogsstyrelsens skogsvolym, testlager"});
+     layer.on("load",()=>{});
+     volumeRasterLayers.push(layer);
+    }
+    return manifest;
+   });
+  }
+  const manifest=await volumeRasterLoadPromise;
+  if(!document.getElementById("showVolumeRaster").checked)return;
+  for(const layer of volumeRasterLayers)if(!map.hasLayer(layer))layer.addTo(map);
+  volumeRasterStatus.textContent="Testlager: nedskalad skogsvolym (omdrev 3). Grå = NoData, gul = giltigt nollvärde, grön = positiv volym. Endast visning – inte för mätning.";
+ }catch(error){
+  volumeRasterStatus.textContent="Testlagret kunde inte laddas. Bildfilerna skapas av arbetsflödet för rasteröversikt.";
+  console.error("Volume raster overlay failed",error);
+ }
+}
+document.getElementById("showVolumeRaster").addEventListener("change",e=>setVolumeRasterVisibility(e.target.checked));
 const baseMapSelect=document.getElementById("baseMapSelect");
 baseMapSelect.addEventListener("change",()=>{const next=baseMapSelect.value==="imagery"?imageryBaseLayer:standardBaseLayer;const other=next===imageryBaseLayer?standardBaseLayer:imageryBaseLayer;if(map.hasLayer(other))map.removeLayer(other);if(!map.hasLayer(next))next.addTo(map);});
 searchCircle=L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false}).addTo(map);
