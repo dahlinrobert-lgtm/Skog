@@ -1,0 +1,39 @@
+name: Build sparse 5 km volume raster tile index
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/skogliga-grunddata/*.zip"
+      - "scripts/build_skogliga_grunddata_tile_index.py"
+      - ".github/workflows/build-skogliga-grunddata-tile-index.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  tile-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install raster dependencies
+        run: python -m pip install --disable-pip-version-check numpy rasterio
+
+      - name: Build sparse tile index
+        run: python scripts/build_skogliga_grunddata_tile_index.py
+
+      - name: Upload tile index
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogliga-grunddata-5km-tile-index
+          path: data/skogliga-grunddata/tile-index-5km.json
+          if-no-files-found: error
+          retention-days: 30
