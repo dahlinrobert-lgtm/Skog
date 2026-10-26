@@ -1,0 +1,39 @@
+name: Validate Skogsstyrelsen volume rasters
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/skogliga-grunddata/*.zip"
+      - "scripts/validate_skogliga_grunddata.py"
+      - ".github/workflows/validate-skogliga-grunddata.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install raster reader
+        run: python -m pip install --upgrade pip rasterio
+      - name: Validate ZIP files and raster metadata
+        run: python scripts/validate_skogliga_grunddata.py
+      - name: Commit validation report
+        if: always()
+        run: |
+          if [ -f data/skogliga-grunddata/validation-report.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/skogliga-grunddata/validation-report.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Update Skogliga grunddata validation report"
+              git push
+            fi
+          fi
