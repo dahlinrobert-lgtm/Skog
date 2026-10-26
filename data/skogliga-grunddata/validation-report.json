@@ -1,0 +1,159 @@
+{
+  "generated_at_utc": "2026-10-26T17:32:39.028619+00:00",
+  "source": "Skogsstyrelsen, Skogliga grunddata – Volym, omdrev 3",
+  "checks": [
+    "ZIP integrity",
+    "archive inventory",
+    "SHA-256",
+    "raster metadata"
+  ],
+  "archives": [
+    {
+      "archive": "sks_Volym_omdrev3_07.zip",
+      "archive_bytes": 5942179,
+      "sha256": "cdb43a37a83af26247f4268d88322e28114b88a4d512bab08d0d88fbffde6c23",
+      "members": [
+        {
+          "name": "sks_Volym_omdrev3_07.tif",
+          "compressed_bytes": 5941880,
+          "uncompressed_bytes": 12070878
+        },
+        {
+          "name": "sks_Volym_omdrev3_07.tfw",
+          "compressed_bytes": 29,
+          "uncompressed_bytes": 92
+        }
+      ],
+      "rasters": [
+        {
+          "file": "sks_Volym_omdrev3_07.tif",
+          "driver": "GTiff",
+          "width": 25000,
+          "height": 15000,
+          "band_count": 1,
+          "dtypes": [
+            "int16"
+          ],
+          "crs": "EPSG:3006",
+          "resolution": [
+            10,
+            10
+          ],
+          "bounds": [
+            350000,
+            6200000,
+            600000,
+            6350000
+          ],
+          "nodata": -1,
+          "band_descriptions": [
+            null
+          ],
+          "tags": {
+            "AREA_OR_POINT": "Area"
+          },
+          "archive_member": "sks_Volym_omdrev3_07.tif"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "archive": "sks_Volym_omdrev3_10.zip",
+      "archive_bytes": 1457683,
+      "sha256": "26959ee209f5282725398496dd8db07fece3327d3085a1aab210dc727ea3da13",
+      "members": [
+        {
+          "name": "sks_Volym_omdrev3_10.tif",
+          "compressed_bytes": 1457386,
+          "uncompressed_bytes": 5945728
+        },
+        {
+          "name": "sks_Volym_omdrev3_10.tfw",
+          "compressed_bytes": 27,
+          "uncompressed_bytes": 92
+        }
+      ],
+      "rasters": [
+        {
+          "file": "sks_Volym_omdrev3_10.tif",
+          "driver": "GTiff",
+          "width": 15000,
+          "height": 15000,
+          "band_count": 1,
+          "dtypes": [
+            "int16"
+          ],
+          "crs": "EPSG:3006",
+          "resolution": [
+            10,
+            10
+          ],
+          "bounds": [
+            450000,
+            6150000,
+            600000,
+            6300000
+          ],
+          "nodata": -1,
+          "band_descriptions": [
+            null
+          ],
+          "tags": {
+            "AREA_OR_POINT": "Area"
+          },
+          "archive_member": "sks_Volym_omdrev3_10.tif"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "archive": "sks_Volym_omdrev3_13.zip",
+      "archive_bytes": 17890176,
+      "sha256": "b633a23347eb313356bd8d4542cc667895cce8cd65fd76c6ea443901ef1db942",
+      "members": [
+        {
+          "name": "sks_Volym_omdrev3_13.tif",
+          "compressed_bytes": 17889879,
+          "uncompressed_bytes": 25827285
+        },
+        {
+          "name": "sks_Volym_omdrev3_13.tfw",
+          "compressed_bytes": 27,
+          "uncompressed_bytes": 92
+        }
+      ],
+      "rasters": [
+        {
+          "file": "sks_Volym_omdrev3_13.tif",
+          "driver": "GTiff",
+          "width": 20000,
+          "height": 20000,
+          "band_count": 1,
+          "dtypes": [
+            "int16"
+          ],
+          "crs": "EPSG:3006",
+          "resolution": [
+            10,
+            10
+          ],
+          "bounds": [
+            250000,
+            6200000,
+            450000,
+            6400000
+          ],
+          "nodata": -1,
+          "band_descriptions": [
+            null
+          ],
+          "tags": {
+            "AREA_OR_POINT": "Area"
+          },
+          "archive_member": "sks_Volym_omdrev3_13.tif"
+        }
+      ],
+      "errors": []
+    }
+  ]
+}
