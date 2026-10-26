@@ -62,3 +62,32 @@ Obs: jämförelsen av täckning använder rasterfilernas begränsningsrutor, int
 Skogsstyrelsens produktbeskrivning anger att volym uttrycks i m³sk/ha och att celler där den grundytevägda medelhöjden är under 3 meter får värdet 0 i samtliga kartprodukter. Därför ska nollor inte behandlas som NoData. Analysrapportens procentandel giltiga pixlar betyder endast andelen celler som inte är markerade med NoData (-1); den är inte i sig ett mått på skogstäckning.
 
 Efter den första analysen har skriptet uppdaterats så att nollceller och positiva celler redovisas separat. Se produktbeskrivningen hos [Skogsstyrelsen](https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/raster-skogliga-grunddata---produktbeskrivning.pdf).
+
+
+## Pixelanalys – resultat 2026-10-26
+
+Arbetsflödet **Analyse Skogsstyrelsen volume rasters** har körts med separat redovisning för nollvärden och positiva värden. Se artefakten från [körning 3](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40391104595).
+
+| Raster | Giltiga celler (0 eller positivt) | Nollvärden | Positiva värden | NoData |
+|---|---:|---:|---:|---:|
+| `sks_Volym_omdrev3_07.tif` | 4 393 500 | 775 058 | 3 618 442 | 370 606 500 |
+| `sks_Volym_omdrev3_10.tif` | 2 212 906 | 1 446 061 | 766 845 | 222 787 094 |
+| `sks_Volym_omdrev3_13.tif` | 17 795 154 | 6 924 322 | 10 870 832 | 382 204 846 |
+
+Värdena är i m³sk/ha enligt produktbeskrivningen. Giltiga nollceller är inte NoData och ska inte kastas bort.
+
+## Pixelvis kontroll av överlapp
+
+Arbetsflödet [Compare Skogsstyrelsen raster overlap](https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/compare-skogliga-grunddata-overlap.yml) jämförde cellerna i de geografiska överlappen, blockvis. Rapportartefakten finns i [körning 2](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40391418611).
+
+| Rasterpar | Överlapp | Båda har giltigt värde | Samma värde där båda är giltiga |
+|---|---:|---:|---:|
+| 07 och 10 | 15 000 km² i begränsningsrutorna | 0 celler | Ej tillämpligt |
+| 07 och 13 | 15 000 km² i begränsningsrutorna | 9 683 celler | 9 683 av 9 683 (100 %) |
+| 10 och 13 | Inget rektangulärt överlapp | 0 celler | Ej tillämpligt |
+
+Det stora rektangelöverlappet mellan 07 och 10 innehåller inga celler med giltigt värde i båda filer. Mellan 07 och 13 finns 9 683 celler med data i båda, och samtliga har identiska värden. Det talar för att filerna kan kombineras utan konflikt i just det kontrollerade överlappet, men det bevisar inte att de kommer från samma version eller att de täcker hela Sverige.
+
+### Geografisk relevans
+
+Filnamnens länskoder är 07 Kronobergs län, 10 Blekinge län och 13 Hallands län. De här tre testfilerna täcker därför inte Luleå/Norrbotten (länskod 25). För Skogskoll i norra Sverige behöver vi senare lägga till rätt geografiska leveranser; analysflödet kan återanvändas på dem.
