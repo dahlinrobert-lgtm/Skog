@@ -71,6 +71,8 @@ def analyze_pairs(ds, features, source_crs):
                 severity = "small_relative_overlap"
             pair_records[(i, j)] = {
                 "feature_ids": [item["id"], other["id"]],
+                "polygon_a_properties": item["properties"],
+                "polygon_b_properties": other["properties"],
                 "polygon_a_area_m2": round(area_a, 3),
                 "polygon_b_area_m2": round(area_b, 3),
                 "geometry_intersection_area_m2": round(area, 3),
