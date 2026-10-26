@@ -176,6 +176,15 @@ def main():
                   "severity=", pair.get("overlap_severity"),
                   "valid=", pair.get("polygon_a_valid"), pair.get("polygon_b_valid"),
                   "intersection_type=", pair["geometry_intersection_type"])
+            # Print only source fields useful for diagnosing whether overlap
+            # pairs are likely duplicate records or distinct harvest cases.
+            fields = ("OBJECTID", "Beteckn", "Avverktyp", "Avvdatum", "KallaDatum",
+                      "Arealha", "KallaAreal", "Kommun", "Kommunnr", "Forebild", "Efterbild")
+            for label in ("polygon_a_properties", "polygon_b_properties"):
+                props = pair.get(label) or {}
+                print("  ", label, json.dumps(
+                    {key: props.get(key) for key in fields if key in props},
+                    ensure_ascii=False, sort_keys=True))
 
 
 if __name__ == "__main__":
