@@ -7,6 +7,7 @@ on:
       - "scripts/fetch_halland_completed_sample.py"
       - "scripts/compare_polygon_pixel_methods.py"
       - "scripts/audit_raster_polygon_ownership.py"
+      - "scripts/analyze_polygon_pair_overlaps.py"
       - "tests/test_compare_polygon_pixel_methods.py"
       - "tests/test_uniform_control_raster.py"
       - ".github/workflows/validate-real-halland-completed-harvest.yml"
@@ -47,6 +48,13 @@ jobs:
             --polygon-crs EPSG:3006 \
             --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \
             --output real-halland-cell-ownership.json
+      - name: Analyze polygon-pair geometric overlaps
+        run: |
+          python scripts/analyze_polygon_pair_overlaps.py \\
+            --polygon halland-completed-harvest-sample.geojson \\
+            --polygon-crs EPSG:3006 \\
+            --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \\
+            --output real-halland-polygon-pair-overlaps.json
       - name: Validate real-polygon report
         run: |
           python - <<'PY'
@@ -55,9 +63,12 @@ jobs:
           sample = json.loads(Path("halland-completed-harvest-sample.geojson").read_text(encoding="utf-8"))
           comparison = json.loads(Path("real-halland-pixel-comparison.json").read_text(encoding="utf-8"))
           ownership = json.loads(Path("real-halland-cell-ownership.json").read_text(encoding="utf-8"))
+          pair_overlaps = json.loads(Path("real-halland-polygon-pair-overlaps.json").read_text(encoding="utf-8"))
           assert sample["features"], "No real source features"
           assert len(comparison["polygons"]) == len(sample["features"])
           assert ownership["polygon_count"] == len(sample["features"])
+          assert pair_overlaps["polygon_count"] == len(sample["features"])
+          assert pair_overlaps["pairs_with_shared_cell_centres"] >= 0
           from collections import Counter
           statuses = Counter(p["comparison"]["status"] for p in comparison["polygons"])
           ok = statuses.get("ok", 0)
@@ -65,6 +76,9 @@ jobs:
           print("Raster coverage status counts:", dict(statuses))
           print("Cell overlap:", ownership["cells_selected_by_multiple_polygons"])
           print("Double-count excess:", ownership["double_count_excess"])
+          print("Polygon pairs with shared cell centres:", pair_overlaps["pairs_with_shared_cell_centres"])
+          print("Pairs with positive geometric area overlap:", pair_overlaps["pairs_with_positive_area_overlap"])
+          print("Pairs touching only or numerical sliver:", pair_overlaps["pairs_touching_only_or_numerical_sliver"])
           print("Overlap cell details:")
           for cell in ownership.get("overlap_cell_details", []):
               print("Overlap cell", cell["row"], cell["column"],
@@ -95,4 +109,5 @@ jobs:
             halland-completed-harvest-sample.geojson
             real-halland-pixel-comparison.json
             real-halland-cell-ownership.json
+            real-halland-polygon-pair-overlaps.json
           if-no-files-found: error
