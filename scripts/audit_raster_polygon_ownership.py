@@ -70,9 +70,39 @@ def audit_cell_ownership(ds, features, source_crs):
             "cell_assignments": int(mask.sum()),
             "properties": feature["properties"],
         })
-    overlap_cells = int(np.count_nonzero(counts > 1))
+    overlap_mask = counts > 1
+    overlap_cells = int(np.count_nonzero(overlap_mask))
     sum_assignments = int(sum(x["cell_assignments"] for x in per_polygon))
     unique_cells = int(np.count_nonzero(counts > 0))
+
+    # Keep a detailed, reproducible list of overlap cells and their owning
+    # polygon IDs. Re-rasterize one polygon at a time, sampling only overlap
+    # positions, to avoid allocating a polygon_count x raster-sized array.
+    overlap_rows, overlap_cols = np.nonzero(overlap_mask)
+    owners = [[] for _ in range(len(overlap_rows))]
+    overlap_lookup = {(int(row), int(col)): idx
+                      for idx, (row, col) in enumerate(zip(overlap_rows, overlap_cols))}
+    for feature, geom in zip(features, projected):
+        mask = rasterize(
+            [(mapping(geom), 1)], out_shape=counts.shape, transform=transform,
+            fill=0, dtype="uint8", all_touched=False,
+        ).astype(bool)
+        selected_overlap = mask[overlap_mask]
+        for idx in np.flatnonzero(selected_overlap):
+            owners[int(idx)].append(feature["feature_id"])
+
+    overlap_details = []
+    for idx, (row, col) in enumerate(zip(overlap_rows, overlap_cols)):
+        x, y = ds.transform * (int(col) + 0.5 + window.col_off,
+                               int(row) + 0.5 + window.row_off)
+        overlap_details.append({
+            "row": int(row + window.row_off),
+            "column": int(col + window.col_off),
+            "center_x": round(float(x), 3),
+            "center_y": round(float(y), 3),
+            "owner_count": len(owners[idx]),
+            "feature_ids": owners[idx],
+        })
     return {
         "raster_crs": ds.crs.to_string(),
         "pixel_size": [abs(float(ds.transform.a)), abs(float(ds.transform.e))],
@@ -80,6 +110,7 @@ def audit_cell_ownership(ds, features, source_crs):
         "polygon_count": len(features),
         "polygon_cell_counts": per_polygon,
         "cells_selected_by_multiple_polygons": overlap_cells,
+        "overlap_cell_details": overlap_details,
         "sum_polygon_cell_assignments": sum_assignments,
         "unique_cells_selected": unique_cells,
         "double_count_excess": sum_assignments - unique_cells,
