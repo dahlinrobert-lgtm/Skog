@@ -1,0 +1,81 @@
+name: Analyse real harvest polygons against volume rasters
+on:
+  workflow_dispatch:
+    inputs:
+      sample_limit:
+        description: Maximum real polygons per raster area (validation sample)
+        required: true
+        default: "40"
+        type: string
+  push:
+    paths:
+      - "scripts/fetch_real_harvests_for_volume_rasters.py"
+      - ".github/workflows/analyse-real-harvest-volume.yml"
+      - "scripts/analyze_volume_for_polygon.py"
+permissions:
+  contents: read
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install analysis dependencies
+        run: python -m pip install requests numpy rasterio shapely pyproj
+      - name: Fetch real polygons in all three raster extents
+        run: python scripts/fetch_real_harvests_for_volume_rasters.py --output real-volume-polygons.geojson --limit "${{ inputs.sample_limit || '40' }}"
+      - name: Split groups and calculate volume statistics from original rasters
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          doc=json.loads(Path("real-volume-polygons.geojson").read_text(encoding="utf-8"))
+          summary=[]
+          for group in doc["raster_groups"]:
+              code=group["metadata"]["raster_code"]
+              path=Path(f"real-polygons-{code}.geojson")
+              path.write_text(json.dumps({"type":"FeatureCollection","features":group["features"]},ensure_ascii=False),encoding="utf-8")
+              print(f"raster {code}: {len(group['features'])} real polygons")
+          PY
+          set -e
+          for code in 07 10 13; do
+            python scripts/analyze_volume_for_polygon.py --polygon "real-polygons-$code.geojson" --output "real-volume-report-$code.json"
+          done
+      - name: Validate and summarize reports
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          summary=[]
+          for code in ("07","10","13"):
+              report=json.loads(Path(f"real-volume-report-{code}.json").read_text(encoding="utf-8"))
+              raster=next((r for r in report["rasters"] if r["source_archive"].endswith(f"_{code}.zip")),None)
+              if raster is None: raise SystemExit(f"Raster {code} missing in analysis report")
+              rows=[]
+              for item in raster["per_polygon"]:
+                  s=item["stats"]
+                  rows.append({"objectid":item["properties"].get("OBJECTID"),"kommun":item["properties"].get("Kommun"),
+                    "beteckning":item["properties"].get("Beteckn"),"area_ha":item["properties"].get("Arealha"),
+                    "status":s["status"],"valid_cells":s["valid_cells"],"coverage_pct":s["valid_coverage_pct"],
+                    "mean_m3sk_ha":s["mean_volume_m3sk_per_ha_including_zero"],
+                    "estimated_total_m3sk":s["estimated_volume_m3sk_from_valid_cells"]})
+              summary.append({"raster":code,"polygon_count":len(rows),"rows":rows})
+              print(f"Raster {code}: polygons={len(rows)}; valid={sum(x['status']=='ok' for x in rows)}")
+              for x in rows[:8]: print(x)
+              if report["errors"]: raise SystemExit(report["errors"])
+          Path("real-volume-summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          PY
+      - name: Upload real polygon volume analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-harvest-volume-analysis
+          path: |
+            real-volume-polygons.geojson
+            real-volume-report-07.json
+            real-volume-report-10.json
+            real-volume-report-13.json
+            real-volume-summary.json
+          if-no-files-found: error
