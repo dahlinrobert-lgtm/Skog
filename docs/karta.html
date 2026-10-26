@@ -26,6 +26,7 @@
 <button id="home">Centrera område</button>
 <label>Bakgrundskarta <select id="baseMapSelect"><option value="standard">Standardkarta</option><option value="imagery">Flygfoto / satellit</option></select></label>
 <label title="Ju mindre radius desto snabbare laddar kartan.">Radius <select id="radiusSelect" title="Ju mindre radius desto snabbare laddar kartan."><option value="2000">2 km</option><option value="4000">4 km</option><option value="6000">6 km</option><option value="8000">8 km</option><option value="10000">10 km</option><option value="20000">20 km</option><option value="30000">30 km</option><option value="40000">40 km</option></select></label>
+<div id="loadProgress" role="status" aria-live="polite" title="Ungefärlig andel av kartladdningen som är klar" style="display:none;min-width:150px;max-width:220px;flex:1 1 150px;padding:6px 9px;border:1px solid #c8d4ca;border-radius:8px;background:#fff;font-size:.85rem"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:4px"><span id="loadProgressLabel">Laddar data…</span><strong id="loadProgressPercent">0%</strong></div><div style="height:7px;background:#e5ebe5;border-radius:5px;overflow:hidden"><div id="loadProgressBar" style="height:100%;width:0%;background:#27834a;transition:width .18s ease"></div></div></div>
 </div>
 <p id="status" class="muted" aria-live="polite" style="display:none"></p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span><i class="swatch samrad"></i>Samråd</span><span>Välj en polygon för attribut och datum.</span></div>
@@ -688,6 +689,7 @@ async function getLayer(base,fields,bounds,signal,stats){
    }
    dedupeMs+=performance.now()-dedupeStartedAt;
    pages++;
+   if(stats){stats.pagesCompleted=(stats.pagesCompleted||0)+1;if(typeof stats.onProgress==="function")stats.onProgress(stats.pagesCompleted);}
    if(json.features.length===0)emptyPages++;
    const exceeded=Boolean(json.exceededTransferLimit);
    hasMore=exceeded||json.features.length===pageSize;
@@ -800,11 +802,13 @@ async function load(){
   return;
  }
  const requestId=++viewRequestId;
+ setLoadProgress(2,"Startar laddning…");
  if(viewAbortController)viewAbortController.abort();
  viewAbortController=new AbortController();
  const signal=viewAbortController.signal;
  const bounds=searchCircle.getBounds();
- const perf={startedAt:performance.now(),apiRequests:0,responseCacheHits:0,spatialOverlapHits:0,spatialCacheHits:0,containedViews:0,incrementalViews:0,incrementalStrips:0,reusedSpatialFeatures:0,fullViewFetches:0};
+ const perf={startedAt:performance.now(),apiRequests:0,responseCacheHits:0,spatialOverlapHits:0,spatialCacheHits:0,containedViews:0,incrementalViews:0,incrementalStrips:0,reusedSpatialFeatures:0,fullViewFetches:0,pagesCompleted:0};
+ perf.onProgress=()=>setLoadProgress(Math.min(62,8+perf.pagesCompleted*1.5),"Hämtar kartdata…");
  try{
   const plannedPromise=getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal,perf);
   const performedPromise=getLayerForView(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal,perf);
@@ -816,6 +820,7 @@ async function load(){
   ]).then(value=>({value})).catch(error=>({error})):Promise.resolve({value:[{type:"FeatureCollection",features:[],pages:0,truncated:false},{type:"FeatureCollection",features:[],pages:0,truncated:false},{type:"FeatureCollection",features:[],pages:0,truncated:false}]});
   let [planned,performed]=await Promise.all([plannedPromise,performedPromise]);
   if(requestId!==viewRequestId)return;
+  setLoadProgress(68,"Bearbetar områden…");
   const filterStartedAt=performance.now();
   planned=filterToRadius(planned);performed=filterToRadius(performed);
   perf.filterMs=Math.round((performance.now()-filterStartedAt)*100)/100;
@@ -832,6 +837,7 @@ async function load(){
    console.error("Polygon clipping unavailable; showing radius-filtered original polygons",clipError);
   }
   perf.clippingMs=Math.round((performance.now()-clipStartedAt)*100)/100;
+  setLoadProgress(82,"Ritar kartan…");
   perf.polygonsConsidered=(planned.clipStats?.polygonsConsidered||0)+(performed.clipStats?.polygonsConsidered||0);
   perf.polygonsClipped=(planned.clipStats?.polygonsClipped||0)+(performed.clipStats?.polygonsClipped||0);
   perf.polygonsAlreadyInside=(planned.clipStats?.polygonsAlreadyInside||0)+(performed.clipStats?.polygonsAlreadyInside||0);
@@ -847,6 +853,7 @@ async function load(){
   refreshPerformedColors();
   updateDurationHistogram(performed.features);
   perf.mainRenderMs=Math.round((performance.now()-renderStartedAt)*100)/100;
+  setLoadProgress(90,wantSamrad?"Hämtar samrådsdata…":"Slutför…");
   const samradResult=await samradPromise;
   if(requestId!==viewRequestId||signal.aborted)return;
   perf.totalMs=Math.round((performance.now()-perf.startedAt)*100)/100;
@@ -891,9 +898,12 @@ async function load(){
   const samradTruncated=wantSamrad&&(samradPoints.truncated||samradLines.truncated||samradAreas.truncated);
   if(planned.truncated||performed.truncated||samradTruncated||!clippingAvailable)console.warn("Map data warning",{plannedTruncated:planned.truncated,performedTruncated:performed.truncated,samradTruncated,clippingAvailable,filteredOutside:planned.filteredOutside+performed.filteredOutside+(wantSamrad?samradPoints.filteredOutside+samradLines.filteredOutside+samradAreas.filteredOutside:0)});
   lastRenderedViewKey=viewKey;
+  setLoadProgress(100,"Klart");
+  window.setTimeout(()=>{const el=document.getElementById("loadProgress");if(el&&el.dataset.state==="done")el.style.display="none";},1200);
  }catch(e){
   if(e?.name==="AbortError")return;
   if(requestId===viewRequestId){
+   setLoadProgress(100,"Laddningen misslyckades",true);
    console.error("Kunde inte hämta kartdata",e);
    const status=document.getElementById("status");
    status.textContent="Kunde inte hämta kartdata. Försök med Ladda om data.";
@@ -902,6 +912,13 @@ async function load(){
  }finally{
   if(requestId===viewRequestId){applyVisibility()}
  }
+}
+function setLoadProgress(percent,label,failed=false){
+ const box=document.getElementById("loadProgress"),bar=document.getElementById("loadProgressBar"),value=document.getElementById("loadProgressPercent"),caption=document.getElementById("loadProgressLabel");
+ if(!box||!bar||!value||!caption)return;
+ const n=Math.max(0,Math.min(100,Math.round(percent)));
+ box.style.display="block";box.dataset.state=failed?"failed":n>=100?"done":"loading";
+ caption.textContent=label;value.textContent=n+"%";bar.style.width=n+"%";bar.style.background=failed?"#b42318":"#27834a";
 }
 function scheduleViewLoad(){
  if(viewDebounce)clearTimeout(viewDebounce);
