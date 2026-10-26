@@ -65,10 +65,6 @@ def compare_one(ds, geom, nodata):
     center_mean = float(np.mean(center_vals)) if center_vals.size else None
     inside_centres = int(np.count_nonzero(center_mask))
     valid_centres = int(center_vals.size)
-    intersecting_cells = int(sum(1 for row in range(rows) for col in range(cols)
-                                 if arr[row, col] != nodata and arr[row, col] >= 0
-                                 and box(*(lambda a, b: (min(a[0], b[0]), min(a[1], b[1]), max(a[0], b[0]), max(a[1], b[1]))(
-                                     trans * (col, row), trans * (col + 1, row + 1))).__iter__()).intersects(clipped)))
     nodata_center_cells = int(np.count_nonzero(center_mask & (arr == nodata)))
     return {
         "status": "ok" if frac_total else ("no_valid_cells" if clipped.area > 0 else "outside_raster_extent"),
