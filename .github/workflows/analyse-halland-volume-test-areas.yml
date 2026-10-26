@@ -53,7 +53,7 @@ jobs:
           assert not report["errors"], report["errors"]
           PY
       - name: Test polygon raster analysis and ownership rules
-        run: python -m unittest tests/test_analyze_volume_for_polygon.py tests/test_audit_raster_polygon_ownership.py
+        run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Audit cell ownership for Halland test polygons
         run: |
           python scripts/audit_raster_polygon_ownership.py \
