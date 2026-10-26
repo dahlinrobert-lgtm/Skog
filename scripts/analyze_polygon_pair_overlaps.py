@@ -71,43 +71,31 @@ def analyze_pairs(ds, features, source_crs):
                 severity = "small_relative_overlap"
             props_a = item["properties"] or {}
             props_b = other["properties"] or {}
-            images_a = {str(props_a.get(key)).strip() for key in ("Forebild", "Efterbild")
-                        if props_a.get(key) not in (None, "") and str(props_a.get(key)).strip().lower() != "none"}
-            images_b = {str(props_b.get(key)).strip() for key in ("Forebild", "Efterbild")
-                        if props_b.get(key) not in (None, "") and str(props_b.get(key)).strip().lower() != "none"}
-            shared_image_ids = sorted(images_a & images_b)
-            # A shared before/after image can indicate linked change-detection
-            # records rather than duplicate polygons. This is evidence only.
-            if props_a.get("Forebild") and props_a.get("Forebild") == props_b.get("Efterbild"):
-                image_relation = "a_before_matches_b_after"
-            elif props_a.get("Efterbild") and props_a.get("Efterbild") == props_b.get("Forebild"):
-                image_relation = "a_after_matches_b_before"
-            elif shared_image_ids:
-                image_relation = "shared_image_reference"
-            else:
-                image_relation = "no_shared_image_reference"
-            # Image identifiers are retained as exploratory source metadata only.
-            # Do not use them to decide whether records are duplicates or one case.
-            date_a = props_a.get("Avvdatum")
-            date_b = props_b.get("Avvdatum")
-            try:
-                date_delta_days = abs(float(date_a) - float(date_b)) / 86400000.0
-            except (TypeError, ValueError):
-                date_delta_days = None
-            area_attr_a = props_a.get("Arealha")
-            area_attr_b = props_b.get("Arealha")
-            try:
-                source_area_delta_ha = abs(float(area_attr_a) - float(area_attr_b))
-            except (TypeError, ValueError):
-                source_area_delta_ha = None
+            # Keep the assessment focused on geometry and area. Source image IDs
+            # and dates are intentionally not used in overlap interpretation.
+            def numeric_area_ha(props):
+                try:
+                    value = float(props.get("Arealha"))
+                    return value if np.isfinite(value) and value >= 0 else None
+                except (TypeError, ValueError):
+                    return None
+            source_area_a_ha = numeric_area_ha(props_a)
+            source_area_b_ha = numeric_area_ha(props_b)
+            source_area_delta_ha = (abs(source_area_a_ha - source_area_b_ha)
+                                     if source_area_a_ha is not None and source_area_b_ha is not None
+                                     else None)
+            geometry_area_a_ha = area_a / 10000.0
+            geometry_area_b_ha = area_b / 10000.0
             pair_records[(i, j)] = {
                 "feature_ids": [item["id"], other["id"]],
                 "polygon_a_properties": props_a,
                 "polygon_b_properties": props_b,
-                "shared_image_ids": shared_image_ids,
-                "source_image_relation_exploratory_only": image_relation,
-                "source_avvdatum_delta_days": round(date_delta_days, 2) if date_delta_days is not None else None,
-                "source_arealha_delta_ha": round(source_area_delta_ha, 4) if source_area_delta_ha is not None else None,
+                "source_area_a_ha": source_area_a_ha,
+                "source_area_b_ha": source_area_b_ha,
+                "source_area_difference_ha": round(source_area_delta_ha, 4) if source_area_delta_ha is not None else None,
+                "geometry_area_a_ha": round(geometry_area_a_ha, 6),
+                "geometry_area_b_ha": round(geometry_area_b_ha, 6),
+                "geometry_area_difference_ha": round(abs(geometry_area_a_ha - geometry_area_b_ha), 6),
                 "polygon_a_area_m2": round(area_a, 3),
                 "polygon_b_area_m2": round(area_b, 3),
                 "geometry_intersection_area_m2": round(area, 3),
@@ -211,10 +199,9 @@ def main():
                   "severity=", pair.get("overlap_severity"),
                   "valid=", pair.get("polygon_a_valid"), pair.get("polygon_b_valid"),
                   "intersection_type=", pair["geometry_intersection_type"],
-                  "avvdatum_delta_days=", pair.get("source_avvdatum_delta_days"),
-                  "source_arealha_delta_ha=", pair.get("source_arealha_delta_ha"),
-                  "image_relation_exploratory_only=", pair.get("source_image_relation_exploratory_only"),
-                  "shared_image_ids=", ",".join(pair.get("shared_image_ids", [])))
+                  "polygon_areas_ha=", pair.get("geometry_area_a_ha"), pair.get("geometry_area_b_ha"),
+                  "source_areas_ha=", pair.get("source_area_a_ha"), pair.get("source_area_b_ha"),
+                  "source_area_difference_ha=", pair.get("source_area_difference_ha"))
             # Print only source fields useful for diagnosing whether overlap
             # pairs are likely duplicate records or distinct harvest cases.
             fields = ("OBJECTID", "Beteckn", "Avverktyp", "Avvdatum", "KallaDatum",
