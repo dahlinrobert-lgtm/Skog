@@ -25,7 +25,7 @@
 <label>Ändra färgläggning <select id="performedColorMode"><option value="none">Åtgärd</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="samradAction">Samrådsåtgärd</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
 <button id="home">Centrera område</button>
 <label>Bakgrundskarta <select id="baseMapSelect"><option value="standard">Standardkarta</option><option value="imagery">Flygfoto / satellit</option></select></label>
-<label title="Ju mindre radius desto snabbare laddar kartan.">Radius <select id="radiusSelect" title="Ju mindre radius desto snabbare laddar kartan."><option value="2000">2 km</option><option value="5000">5 km</option><option value="10000">10 km</option><option value="20000">20 km</option><option value="50000">50 km</option></select></label>
+<label title="Ju mindre radius desto snabbare laddar kartan.">Radius <select id="radiusSelect" title="Ju mindre radius desto snabbare laddar kartan."><option value="2000">2 km</option><option value="5000">5 km</option><option value="10000">10 km</option><option value="20000">20 km</option><option value="40000">40 km</option><option value="50000">50 km</option></select></label>
 </div>
 <p id="status" class="muted" aria-live="polite" style="display:none"></p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span><i class="swatch samrad"></i>Samråd</span><span>Välj en polygon för attribut och datum.</span></div>
@@ -80,7 +80,7 @@ const baseMapSelect=document.getElementById("baseMapSelect");
 baseMapSelect.addEventListener("change",()=>{const next=baseMapSelect.value==="imagery"?imageryBaseLayer:standardBaseLayer;const other=next===imageryBaseLayer?standardBaseLayer:imageryBaseLayer;if(map.hasLayer(other))map.removeLayer(other);if(!map.hasLayer(next))next.addTo(map);});
 searchCircle=L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false}).addTo(map);
 const radiusSelect=document.getElementById("radiusSelect");
-const radiusChoices=[2000,5000,10000,20000,50000];
+const radiusChoices=[2000,5000,10000,20000,40000,50000];
 radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADIUS)<Math.abs(best-RADIUS)?value:best,radiusChoices[0]));
 RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);
 const plannedLayer=L.geoJSON(null,{style:plannedStyle,onEachFeature:(f,l)=>l.bindPopup(popup(f,"planned"))});
