@@ -23,6 +23,8 @@
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <label><input id="showSamrad" type="checkbox"> Samråd</label>
 <label title="Testlager med nedskalad skogsvolym från Skogsstyrelsens raster (omdrev 3). Visas endast där data finns."><input id="showVolumeRaster" type="checkbox"> Skogsvolym – testlager</label>
+<label title="Visa syntetiska testpolygoner i Halland och zooma till dem."><input id="showHallandTestAreas" type="checkbox" checked> Testområden – Halland</label>
+
 <label>Ändra färgläggning <select id="performedColorMode"><option value="none">Åtgärd</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="samradAction">Samrådsåtgärd</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
 <button id="home">Centrera område</button>
 <label>Bakgrundskarta <select id="baseMapSelect"><option value="standard">Standardkarta</option><option value="imagery">Flygfoto / satellit</option></select></label>
@@ -32,6 +34,7 @@
 <p id="status" class="muted" aria-live="polite" style="display:none"></p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span><i class="swatch samrad"></i>Samråd</span><span>Välj en polygon för attribut och datum.</span></div>
 <p id="volumeRasterStatus" class="muted" style="display:none" aria-live="polite"></p>
+<p id="hallandTestStatus" class="muted" aria-live="polite">Testområden i Halland laddas…</p>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
 <section class="panel">
@@ -79,6 +82,26 @@ const map=L.map("map",{preferCanvas:true,zoomSnap:0.25}).setView(CENTER,radiusZo
 const standardBaseLayer=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 const imageryBaseLayer=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'Tiles &copy; Esri and its imagery providers'});
 standardBaseLayer.addTo(map);
+const hallandTestStatus=document.getElementById("hallandTestStatus");
+const hallandTestLayer=L.geoJSON(null,{style:feature=>({color:"#00a6a6",weight:3,opacity:1,fillColor:"#22d3ee",fillOpacity:0.3,dashArray:"6 4"}),onEachFeature:(feature,layer)=>{const p=feature.properties||{};layer.bindPopup('<strong>'+esc(p.test_area||feature.id||"Halland testområde")+'</strong><br>Testgeometri – inte ett verifierat avverkningsområde.');}});
+hallandTestLayer.addTo(map);
+let hallandTestLoadPromise=null;
+async function loadHallandTestAreas(){
+ try{
+  if(!hallandTestLoadPromise) hallandTestLoadPromise=fetch("./volume-overlays/halland-test-areas-wgs84.geojson").then(r=>{if(!r.ok)throw new Error("GeoJSON saknas");return r.json();});
+  const data=await hallandTestLoadPromise;
+  hallandTestLayer.clearLayers().addData(data);
+  hallandTestStatus.textContent="Halland: "+(data.features||[]).length+" syntetiska testpolygoner visas med turkos kontur. Klicka på en polygon för information.";
+ }catch(error){
+  hallandTestStatus.textContent="Hallands testpolygoner kunde inte laddas: "+error.message;
+  console.error("Halland test polygons failed",error);
+ }
+}
+loadHallandTestAreas();
+document.getElementById("showHallandTestAreas").addEventListener("change",e=>{
+ if(e.target.checked){if(!map.hasLayer(hallandTestLayer))hallandTestLayer.addTo(map);loadHallandTestAreas();}
+ else if(map.hasLayer(hallandTestLayer))map.removeLayer(hallandTestLayer);
+});
 const volumeRasterLayers=[];
 let volumeRasterLoadPromise=null;
 const volumeRasterStatus=document.getElementById("volumeRasterStatus");
