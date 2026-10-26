@@ -146,3 +146,13 @@ python scripts/analyze_volume_for_polygon.py --polygon path/to/forest_polygons.g
 ```
 
 A CI workflow checks polygon input handling: https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/test-polygon-volume-analysis.yml
+
+
+### Polygon analysis verification
+
+The CI workflow now tests the raster calculation against a small synthetic GeoTIFF with known values. It verifies that:
+- a zero value is included in the mean and total-volume estimate;
+- NoData is excluded from volume statistics but counted in the coverage diagnostics;
+- a polygon outside the raster extent is reported as `outside_raster_extent`, with no mean reported instead of a false zero-volume result.
+
+Latest test run: https://github.com/dahlinrobert-lgtm/Skog/actions/runs/40395710886 (4 tests passed). These are controlled synthetic-data tests; a real property polygon has not yet been validated against the downloaded county rasters.
