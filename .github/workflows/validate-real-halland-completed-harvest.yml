@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "scripts/fetch_halland_completed_sample.py"
+      - "scripts/compare_polygon_pixel_methods.py"
       - ".github/workflows/validate-real-halland-completed-harvest.yml"
 
 permissions:
