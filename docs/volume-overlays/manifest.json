@@ -1,0 +1,66 @@
+{
+  "title": "Skogsstyrelsen Volym omdrev 3 – testlager",
+  "note": "Nedskalad visningsbild, inte för mätning. Grå=NoData, gul=giltigt nollvärde, grön=positiv volym.",
+  "rasters": [
+    {
+      "archive": "sks_Volym_omdrev3_07.zip",
+      "image": "sks_Volym_omdrev3_07.png",
+      "bounds_wgs84": [
+        12.512522946693096,
+        55.92198438997808,
+        16.65881260360546,
+        57.29297566062285
+      ],
+      "display_resolution": [
+        700,
+        420
+      ],
+      "crs_source": "EPSG:3006",
+      "source_resolution_m": [
+        10.0,
+        10.0
+      ],
+      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+    },
+    {
+      "archive": "sks_Volym_omdrev3_10.zip",
+      "image": "sks_Volym_omdrev3_10.png",
+      "bounds_wgs84": [
+        14.180404162800803,
+        55.48588105172443,
+        16.63890642846309,
+        56.843806261342046
+      ],
+      "display_resolution": [
+        700,
+        700
+      ],
+      "crs_source": "EPSG:3006",
+      "source_resolution_m": [
+        10.0,
+        10.0
+      ],
+      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+    },
+    {
+      "archive": "sks_Volym_omdrev3_13.zip",
+      "image": "sks_Volym_omdrev3_13.png",
+      "bounds_wgs84": [
+        10.807119277054383,
+        55.88046207485505,
+        14.199477196331866,
+        57.73933504994498
+      ],
+      "display_resolution": [
+        700,
+        700
+      ],
+      "crs_source": "EPSG:3006",
+      "source_resolution_m": [
+        10.0,
+        10.0
+      ],
+      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+    }
+  ]
+}
