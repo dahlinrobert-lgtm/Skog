@@ -798,6 +798,7 @@ async function load(){
  if(viewKey===lastRenderedViewKey){
   // Same successful data view: don't refilter, reclip, or rebuild thousands of Leaflet features.
   applyVisibility();
+  if(document.getElementById("histogramAttribute").value==="samradAction")updateDurationHistogram(performedLayer.toGeoJSON().features);
   if(new URLSearchParams(location.search).get("debugPerf")==="1")console.info("[Skogskoll] map-load-skipped",{reason:"unchanged-view",radiusKm:RADIUS/1000});
   return;
  }
@@ -892,6 +893,8 @@ async function load(){
    samradPointLayer.addData(samradPoints);samradLineLayer.addData(samradLines);samradAreaLayer.addData(samradAreas);
    samradPointHitLayer.addData(samradPoints);samradLineHitLayer.addData(samradLines);
   }
+  // Samråd may finish after the first histogram render; refresh it with loaded data.
+  if(document.getElementById("histogramAttribute").value==="samradAction")updateDurationHistogram(performedLayer.toGeoJSON().features);
   // The performed layer and histogram were already refreshed before awaiting
   // optional consultation data. Repeating both here needlessly walks every
   // performed feature a second time on each load.
