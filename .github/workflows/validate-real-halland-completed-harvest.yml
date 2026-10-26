@@ -50,10 +50,10 @@ jobs:
             --output real-halland-cell-ownership.json
       - name: Analyze polygon-pair geometric overlaps
         run: |
-          python scripts/analyze_polygon_pair_overlaps.py \\
-            --polygon halland-completed-harvest-sample.geojson \\
-            --polygon-crs EPSG:3006 \\
-            --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \\
+          python scripts/analyze_polygon_pair_overlaps.py \
+            --polygon halland-completed-harvest-sample.geojson \
+            --polygon-crs EPSG:3006 \
+            --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \
             --output real-halland-polygon-pair-overlaps.json
       - name: Validate real-polygon report
         run: |
