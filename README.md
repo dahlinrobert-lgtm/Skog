@@ -114,3 +114,16 @@ This reduces repetition in future commits, but it does **not** erase bytes alrea
 - `python scripts/audit_snapshots.py` reports stored archive bytes and estimated full-archive equivalents for both planned and completed snapshots.
 
 Existing full compressed archives are preserved. Delta persistence changes only future archives and does not rewrite Git history.
+
+## Skogliga grunddata – sparse 5 km tile index
+
+The source ZIPs for Volym omdrev 3 are retained unchanged. The tile-index workflow extracts each TIFF to temporary storage and scans it in 5 km × 5 km windows (500 × 500 cells at 10 m resolution).
+
+- Workflow: https://github.com/dahlinrobert-lgtm/Skog/actions/workflows/build-skogliga-grunddata-tile-index.yml
+- Output artifact: `skogliga-grunddata-5km-tile-index` (retained for 30 days).
+- The index is sparse: only tiles with at least one valid pixel are listed, so empty NoData regions are not expanded into many records.
+- Each tile records its EPSG:3006 extent, valid/zero/positive/other-negative/NoData counts and source raster identity. Tile bounds are suitable for discovering candidate areas; the original 10 m pixels must still be used for any precise calculation.
+- Zero is a valid raster value, not NoData. Volym is expressed in m³sk/ha. See [Skogsstyrelsen's product description](https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/skogliga-grunddata/).
+- Large counties, including Norrbotten, are intentionally not required for this initial test. The same tile scheme can be used when adding larger source files later.
+
+Run locally with `python -m pip install numpy rasterio` and `python scripts/build_skogliga_grunddata_tile_index.py`.
