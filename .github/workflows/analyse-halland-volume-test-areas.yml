@@ -7,6 +7,8 @@ on:
       - "data/skogliga-grunddata/halland-test-areas.geojson"
       - "data/skogliga-grunddata/sks_Volym_omdrev3_13.zip"
       - "scripts/analyze_volume_for_polygon.py"
+      - "scripts/audit_raster_polygon_ownership.py"
+      - "tests/test_audit_raster_polygon_ownership.py"
       - ".github/workflows/analyse-halland-volume-test-areas.yml"
 
 permissions:
@@ -50,9 +52,17 @@ jobs:
           print("Analysis errors:", len(report["errors"]))
           assert not report["errors"], report["errors"]
           PY
+      - name: Test polygon raster analysis and ownership rules
+        run: python -m unittest tests/test_analyze_volume_for_polygon.py tests/test_audit_raster_polygon_ownership.py
+      - name: Audit cell ownership for Halland test polygons
+        run: |
+          python scripts/audit_raster_polygon_ownership.py \
+            --polygon data/skogliga-grunddata/halland-test-areas.geojson \
+            --raster data/skogliga-grunddata/sks_Volym_omdrev3_13.zip \
+            --output halland-cell-ownership-report.json
       - name: Upload analysis report
         uses: actions/upload-artifact@v4
         with:
           name: halland-volume-test-report
-          path: halland-volume-test-report.json
+          path: |\n            halland-volume-test-report.json\n            halland-cell-ownership-report.json
           if-no-files-found: error
