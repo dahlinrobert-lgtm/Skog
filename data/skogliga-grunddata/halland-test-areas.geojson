@@ -1,0 +1,62 @@
+{
+  "type": "FeatureCollection",
+  "name": "halland_volume_test_areas",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:EPSG::3006" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "halland-test-01",
+      "properties": {
+        "test_area": "Halland test 01",
+        "purpose": "Pilot polygon volume statistics",
+        "synthetic_test_geometry": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[380000,6280000],[380300,6280000],[380300,6280300],[380000,6280300],[380000,6280000]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "halland-test-02",
+      "properties": {
+        "test_area": "Halland test 02",
+        "purpose": "Pilot polygon volume statistics",
+        "synthetic_test_geometry": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[381000,6281000],[381500,6281000],[381500,6281500],[381000,6281500],[381000,6281000]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "halland-test-03",
+      "properties": {
+        "test_area": "Halland test 03",
+        "purpose": "Pilot polygon volume statistics",
+        "synthetic_test_geometry": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[382000,6280000],[382200,6280000],[382200,6280600],[382000,6280600],[382000,6280000]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "halland-test-04",
+      "properties": {
+        "test_area": "Halland test 04",
+        "purpose": "Pilot polygon volume statistics",
+        "synthetic_test_geometry": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[383000,6282000],[383800,6282000],[383800,6282400],[383000,6282400],[383000,6282000]]]
+      }
+    }
+  ]
+}
