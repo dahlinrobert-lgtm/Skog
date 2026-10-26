@@ -1,0 +1,36 @@
+name: Build experimental volume raster map overlays
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/skogliga-grunddata/*.zip"
+      - "scripts/create_skogliga_grunddata_map_overlays.py"
+      - ".github/workflows/build-volume-map-overlays.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build-overlays:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install raster dependencies
+        run: python -m pip install numpy rasterio pillow
+      - name: Generate map overlays
+        run: python scripts/create_skogliga_grunddata_map_overlays.py
+      - name: Commit generated overlay images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/volume-overlays/
+          if git diff --cached --quiet; then
+            echo "No overlay changes."
+          else
+            git commit -m "Build experimental forest volume map overlays"
+            git push
+          fi
