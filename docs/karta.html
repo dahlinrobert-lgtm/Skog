@@ -651,6 +651,7 @@ async function getLayer(base,fields,bounds,signal,stats){
  let pages=0,hasMore=true,truncated=false,offset=0;
  const pageSize=300,maxPages=500,batchSize=4,fetchStartedAt=performance.now();
  let fetchMs=0,parseMs=0,dedupeMs=0,emptyPages=0;
+ const pageDiagnostics=[];
  while(hasMore&&pages<maxPages){
   if(signal?.aborted)throw new DOMException("Aborted","AbortError");
   // Probe the first page alone. Small extents often fit in one page, and
@@ -688,10 +689,13 @@ async function getLayer(base,fields,bounds,signal,stats){
    dedupeMs+=performance.now()-dedupeStartedAt;
    pages++;
    if(json.features.length===0)emptyPages++;
-   hasMore=Boolean(json.exceededTransferLimit)||json.features.length===pageSize;
-   // Advance the next request by the number of records actually returned,
-   // not by the number of pages processed. This matters when a terminal
-   // page is short or concurrent requests were launched speculatively.
+   const exceeded=Boolean(json.exceededTransferLimit);
+   hasMore=exceeded||json.features.length===pageSize;
+   // Debug-only page metadata helps reveal short pages that still report more data.
+   if(new URLSearchParams(location.search).get("debugPerf")==="1"){
+    pageDiagnostics.push({offset:page.offset,returned:json.features.length,added,
+     exceededTransferLimit:exceeded,nextOffset:page.offset+json.features.length});
+   }
    offset=page.offset+json.features.length;
    if(json.features.length===0||added===0){hasMore=false;truncated=json.features.length===pageSize;}
   }
@@ -701,7 +705,8 @@ async function getLayer(base,fields,bounds,signal,stats){
   if(!stats.layerFetches)stats.layerFetches=[];
   stats.layerFetches.push({layer:base.split("/").slice(-2).join("/"),pages,features:all.length,truncated,
    fetchMs:Math.round(fetchMs),parseMs:Math.round(parseMs),dedupeMs:Math.round(dedupeMs),
-   elapsedMs:Math.round(performance.now()-fetchStartedAt),emptyPages,batchSize});
+   elapsedMs:Math.round(performance.now()-fetchStartedAt),emptyPages,batchSize,
+   ...(pageDiagnostics.length?{pageDiagnostics}: {})});
  }
  const result={type:"FeatureCollection",features:all,truncated,pages};
  if(!signal?.aborted)cacheLayerResponse(cacheKey,result);
@@ -854,6 +859,10 @@ async function load(){
     layer:x.layer,pages:x.pages,features:x.features,truncated:x.truncated,
     fetchMs:x.fetchMs,parseMs:x.parseMs,dedupeMs:x.dedupeMs,elapsedMs:x.elapsedMs,emptyPages:x.emptyPages
    })));
+   const irregularPages=(perf.layerFetches||[]).flatMap(x=>(x.pageDiagnostics||[])
+    .filter(p=>p.returned!==300&&p.exceededTransferLimit)
+    .map(p=>({layer:x.layer,...p})));
+   if(irregularPages.length)console.warn("[Skogskoll] pagination-irregular-pages: short page still reports more data; verify offsets",irregularPages);
   }
   if(samradResult.error){
    console.warn("Samrådsdata kunde inte hämtas; huvudlagren visas ändå",samradResult.error);
