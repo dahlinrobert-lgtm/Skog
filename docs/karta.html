@@ -694,6 +694,7 @@ async function getLayer(base,fields,bounds,signal,stats){
    // Debug-only page metadata helps reveal short pages that still report more data.
    if(new URLSearchParams(location.search).get("debugPerf")==="1"){
     pageDiagnostics.push({offset:page.offset,returned:json.features.length,added,
+     requestMs:Math.round(page.requestMs),parseMs:Math.round(page.pageParseMs),
      exceededTransferLimit:exceeded,nextOffset:page.offset+json.features.length});
    }
    offset=page.offset+json.features.length;
@@ -859,9 +860,11 @@ async function load(){
     layer:x.layer,pages:x.pages,features:x.features,truncated:x.truncated,
     fetchMs:x.fetchMs,parseMs:x.parseMs,dedupeMs:x.dedupeMs,elapsedMs:x.elapsedMs,emptyPages:x.emptyPages
    })));
-   const irregularPages=(perf.layerFetches||[]).flatMap(x=>(x.pageDiagnostics||[])
-    .filter(p=>p.returned!==300&&p.exceededTransferLimit)
+   const allPages=(perf.layerFetches||[]).flatMap(x=>(x.pageDiagnostics||[])
     .map(p=>({layer:x.layer,...p})));
+   const slowPages=allPages.filter(p=>p.requestMs>=3000).sort((a,b)=>b.requestMs-a.requestMs);
+   if(slowPages.length)console.warn("[Skogskoll] slow-source-pages: individual requests >= 3 s",slowPages.slice(0,15));
+   const irregularPages=allPages.filter(p=>p.returned!==300&&p.exceededTransferLimit);
    if(irregularPages.length)console.warn("[Skogskoll] pagination-irregular-pages: short page still reports more data; verify offsets",irregularPages);
   }
   if(samradResult.error){
