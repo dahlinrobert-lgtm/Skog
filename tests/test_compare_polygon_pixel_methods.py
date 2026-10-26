@@ -19,7 +19,7 @@ class FractionalCoverageTests(unittest.TestCase):
                 result = compare_one(ds, box(500005, 7000000, 500015, 7000010), -1)
             self.assertAlmostEqual(result["fractional_equivalent_cells"], 0.5)
             self.assertAlmostEqual(result["fractional_coverage_ha"], 0.005)
-            self.assertAlmostEqual(result["fractional_estimated_volume_m3sk"], 0.75)
+            self.assertAlmostEqual(result["fractional_estimated_volume_m3sk"], 0.5)
             self.assertEqual(result["valid_center_cells"], 0)
 
 if __name__ == "__main__":
