@@ -23,6 +23,9 @@ from shapely.ops import transform as transform_geometry
 try:
     from scripts.analyze_volume_for_polygon import load_features
 except ModuleNotFoundError:
+    try:
+    from scripts.analyze_volume_for_polygon import load_features
+except ModuleNotFoundError:
     from analyze_volume_for_polygon import load_features
 
 
