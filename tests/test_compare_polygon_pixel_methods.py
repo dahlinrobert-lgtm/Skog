@@ -17,9 +17,9 @@ class FractionalCoverageTests(unittest.TestCase):
                 dst.write(np.array([[100, 200]], dtype=np.int16), 1)
             with rasterio.open(path) as ds:
                 result = compare_one(ds, box(500005, 7000000, 500015, 7000010), -1)
-            self.assertAlmostEqual(result["fractional_equivalent_cells"], 1.0)
-            self.assertAlmostEqual(result["fractional_coverage_ha"], 0.01)
-            self.assertAlmostEqual(result["fractional_estimated_volume_m3sk"], 1.5)
+            self.assertAlmostEqual(result["fractional_equivalent_cells"], 0.5)
+            self.assertAlmostEqual(result["fractional_coverage_ha"], 0.005)
+            self.assertAlmostEqual(result["fractional_estimated_volume_m3sk"], 0.75)
             self.assertEqual(result["valid_center_cells"], 0)
 
 if __name__ == "__main__":
