@@ -133,6 +133,9 @@ def summarize_feature(ds: rasterio.io.DatasetReader, geom, nodata: float | int) 
         "p90_volume_m3sk_per_ha_including_zero": round(float(np.percentile(vals, 90)), 2) if valid_count else None,
         "estimated_volume_m3sk_from_valid_cells": round(total_estimate, 2) if valid_count else None,
         "pixel_area_ha": pixel_area_ha,
+        "pixel_size_m": [abs(float(ds.transform.a)), abs(float(ds.transform.e))],
+        "raster_grid_origin": [float(ds.transform.c), float(ds.transform.f)],
+        "pixel_assignment_rule": "cell-centre inclusion (all_touched=False); adjacent polygons aligned to pixel edges do not share cells",
         "method": "cell-centre inclusion; raster cell value treated as m3sk/ha; NoData excluded; zero retained",
     }
 
@@ -147,6 +150,9 @@ def empty_stats(status: str) -> dict[str, Any]:
         "p90_volume_m3sk_per_ha_including_zero": None,
         "estimated_volume_m3sk_from_valid_cells": None,
         "pixel_area_ha": None,
+        "pixel_size_m": None,
+        "raster_grid_origin": None,
+        "pixel_assignment_rule": "cell-centre inclusion (all_touched=False)",
         "method": "cell-centre inclusion; raster cell value treated as m3sk/ha; NoData excluded; zero retained",
     }
 
@@ -211,7 +217,9 @@ def main() -> int:
         "warnings": [
             "Modelled raster estimates describe the forest at the local laser-scanning date, not necessarily the current date.",
             "Zero means no volume estimate was produced for low vegetation/open areas; it is retained as a valid raster value.",
-            "Estimated total volume is a coarse cell-based estimate over cell centres inside the polygon; it is not a forest inventory or a cadastral/legal determination.",
+            "Estimated total volume is a coarse cell-based estimate over cell centres inside each polygon; it is not a forest inventory or a cadastral/legal determination.",
+            "Each polygon is evaluated independently. For overlapping polygons, the same raster cell can contribute to more than one polygon total; aggregate totals across overlapping polygons must not be summed without deduplication.",
+            "Raster cells are located by the source raster transform and pixel-centre rule, not by snapping or shifting polygons to a 10 m grid. Edge-touching polygons should be checked for overlap if their boundaries are not aligned to raster cell edges.",
             "Only source rasters available in the data directory are analysed; absence of coverage is reported as no valid cells."
         ],
         "rasters": results,
