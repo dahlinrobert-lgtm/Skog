@@ -18,7 +18,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int, default=50)
     args = parser.parse_args()
-    if not 1 <= args.limit <= 200:
+    if not 1 <= args.limit <= 2000:
         raise ValueError("--limit must be between 1 and 200")
     params = {
         "where": "Lannr = '13'",
@@ -30,24 +30,31 @@ def main():
         "returnGeometry": "true",
         "outSR": "3006",
         "f": "geojson",
-        "resultRecordCount": args.limit,
+        "resultRecordCount": min(args.limit, 200),
+        "resultOffset": 0,
         "orderByFields": "OBJECTID ASC",
     }
-    response = requests.get(URL, params=params, timeout=90,
-                            headers={"User-Agent": "Skogskoll-real-polygon-validation/1.0"})
-    response.raise_for_status()
-    data = response.json()
-    if data.get("error"):
-        raise RuntimeError(f"Skogsstyrelsen ArcGIS error: {data['error']}")
-    features = data.get("features")
-    if not isinstance(features, list):
-        raise RuntimeError("Source response did not contain a GeoJSON feature list")
-    # This is intentionally a bounded sample, not a complete county extract.
-    # ArcGIS may set exceededTransferLimit when more matching features exist;
-    # the first ordered page is still a valid sample for method validation.
-    # Keep only geometries that are actually labelled as Halland and have geometry.
-    features = [f for f in features if (f.get("properties") or {}).get("Lannr") == "13"
+    features = []
+    page_size = min(args.limit, 200)
+    source_more = False
+    for offset in range(0, args.limit, page_size):
+        params["resultRecordCount"] = min(page_size, args.limit - offset)
+        params["resultOffset"] = offset
+        response = requests.get(URL, params=params, timeout=90,
+                                headers={"User-Agent": "Skogskoll-real-polygon-validation/1.0"})
+        response.raise_for_status()
+        data = response.json()
+        if data.get("error"):
+            raise RuntimeError(f"Skogsstyrelsen ArcGIS error: {data['error']}")
+        page = data.get("features")
+        if not isinstance(page, list):
+            raise RuntimeError("Source response did not contain a GeoJSON feature list")
+        source_more = source_more or bool(data.get("exceededTransferLimit"))
+        page = [f for f in page if (f.get("properties") or {}).get("Lannr") == "13"
                 and f.get("geometry")]
+        features.extend(page)
+        if len(page) < params["resultRecordCount"]:
+            break
     if not features:
         raise RuntimeError("No real Halland completed-harvest polygons returned for the raster extent")
     collection = {
@@ -60,8 +67,9 @@ def main():
                       "order": "OBJECTID ASC", "requested_limit": args.limit},
             "retrieved_at_utc": datetime.now(timezone.utc).isoformat(),
             "count": len(features),
-            "source_more_matching_features": bool(data.get("exceededTransferLimit")),
-            "note": "Live source sample for validation only; not a complete county inventory. A transfer-limit flag means more matching source features may exist."
+            "source_more_matching_features": source_more,
+            "pagination_page_size": page_size,
+            "note": "Live source sample for validation only; not a complete county inventory. Pagination is ordered by OBJECTID."
         },
         "features": features,
     }
