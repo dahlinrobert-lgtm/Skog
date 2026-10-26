@@ -26,7 +26,7 @@ jobs:
       - name: Fetch real completed-harvest polygons from Skogsstyrelsen
         run: |
           python scripts/fetch_halland_completed_sample.py \
-            --limit 50 \
+            --limit 500 \
             --output halland-completed-harvest-sample.geojson
       - name: Test pixel comparison helper
         run: |
@@ -64,6 +64,14 @@ jobs:
           print("Raster coverage status counts:", dict(statuses))
           print("Cell overlap:", ownership["cells_selected_by_multiple_polygons"])
           print("Double-count excess:", ownership["double_count_excess"])
+          valid = [p["comparison"] for p in comparison["polygons"] if p["comparison"]["status"] == "ok"]
+          if valid:
+              diffs = [p["volume_difference_fractional_minus_center_m3sk"] for p in valid]
+              abs_diffs = [abs(x) for x in diffs]
+              print("Valid polygons compared:", len(valid))
+              print("Mean signed volume difference (m3sk):", round(sum(diffs) / len(diffs), 3))
+              print("Mean absolute volume difference (m3sk):", round(sum(abs_diffs) / len(abs_diffs), 3))
+              print("Maximum absolute volume difference (m3sk):", round(max(abs_diffs), 3))
           for item in comparison["polygons"]:
               c = item["comparison"]
               print("Polygon", item["feature_id"], "status=", c["status"],
