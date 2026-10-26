@@ -55,3 +55,10 @@ Skriptet `scripts/analyse_skogliga_grunddata.py` analyserar rasterfilerna inuti 
 Kör arbetsflödet **Analyse Skogsstyrelsen volume rasters** manuellt under Actions. Resultatet publiceras som artefakten `skogliga-grunddata-pixel-analysis` och innehåller `pixel-analysis-report.json`.
 
 Obs: jämförelsen av täckning använder rasterfilernas begränsningsrutor, inte en fullständig pixel-för-pixel-analys av giltig täckning. Enhet och eventuell skalfaktor härleds inte från pixelvärdena; verifiera dessa mot produktdokumentationen innan värdena används i beräkningar.
+
+
+### Tolkning av pixelvärden
+
+Skogsstyrelsens produktbeskrivning anger att volym uttrycks i m³sk/ha och att celler där den grundytevägda medelhöjden är under 3 meter får värdet 0 i samtliga kartprodukter. Därför ska nollor inte behandlas som NoData. Analysrapportens procentandel giltiga pixlar betyder endast andelen celler som inte är markerade med NoData (-1); den är inte i sig ett mått på skogstäckning.
+
+Efter den första analysen har skriptet uppdaterats så att nollceller och positiva celler redovisas separat. Se produktbeskrivningen hos [Skogsstyrelsen](https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/raster-skogliga-grunddata---produktbeskrivning.pdf).
