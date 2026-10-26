@@ -6,6 +6,7 @@ on:
     paths:
       - "scripts/fetch_halland_completed_sample.py"
       - "scripts/compare_polygon_pixel_methods.py"
+      - "scripts/audit_raster_polygon_ownership.py"
       - "tests/test_compare_polygon_pixel_methods.py"
       - "tests/test_uniform_control_raster.py"
       - ".github/workflows/validate-real-halland-completed-harvest.yml"
@@ -64,6 +65,11 @@ jobs:
           print("Raster coverage status counts:", dict(statuses))
           print("Cell overlap:", ownership["cells_selected_by_multiple_polygons"])
           print("Double-count excess:", ownership["double_count_excess"])
+          print("Overlap cell details:")
+          for cell in ownership.get("overlap_cell_details", []):
+              print("Overlap cell", cell["row"], cell["column"],
+                    "owners=", ",".join(map(str, cell["feature_ids"])),
+                    "centre=", cell["center_x"], cell["center_y"])
           valid = [p["comparison"] for p in comparison["polygons"] if p["comparison"]["status"] == "ok"]
           if valid:
               diffs = [p["volume_difference_fractional_minus_center_m3sk"] for p in valid]
