@@ -98,7 +98,21 @@ jobs:
             echo "Volume attribute lookup unchanged."
           else
             git commit -m "Update sampled polygon volume attributes"
-            git push
+            # Monitoring and Pages workflows may push while this analysis is running.
+            # Rebase generated output onto the latest main before pushing.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                echo "Published sampled volume attributes."
+                break
+              fi
+              if [ "$attempt" -eq 5 ]; then
+                echo "Could not publish after five attempts." >&2
+                exit 1
+              fi
+              sleep 2
+            done
           fi
       - name: Upload real polygon volume analysis
         uses: actions/upload-artifact@v4
