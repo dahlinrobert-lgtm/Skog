@@ -43,31 +43,48 @@ def compare_one(ds, geom, nodata):
     center_vals = arr[valid_center].astype(np.float64)
     pixel_area_ha = abs(ds.transform.a * ds.transform.e - ds.transform.b * ds.transform.d) / 10000.0
     center_volume = float(np.sum(center_vals[center_vals >= 0]) * pixel_area_ha)
-    fractional_values, fractions = [], []
+    fractional_values, valid_fractions = [], []
+    all_fractions = []
+    nodata_fractions = []
+    other_negative_fractions = []
     rows, cols = arr.shape
     for row in range(rows):
         for col in range(cols):
             value = arr[row, col]
-            if value == nodata or value < 0:
-                continue
-            left, top = trans * (col, row)
-            right, bottom = trans * (col + 1, row + 1)
-            cell = box(min(left, right), min(top, bottom), max(left, right), max(top, bottom))
+            # This implementation assumes the source raster is north-up and unrotated.
+            p1 = trans * (col, row)
+            p2 = trans * (col + 1, row + 1)
+            cell = box(min(p1[0], p2[0]), min(p1[1], p2[1]),
+                       max(p1[0], p2[0]), max(p1[1], p2[1]))
             if not cell.intersects(clipped):
                 continue
             covered = cell.intersection(clipped).area / cell.area
-            if covered > 0:
+            if covered <= 0:
+                continue
+            all_fractions.append(float(covered))
+            if value == nodata:
+                nodata_fractions.append(float(covered))
+            elif value < 0:
+                other_negative_fractions.append(float(covered))
+            else:
                 fractional_values.append(float(value))
-                fractions.append(float(covered))
-    frac_total = float(sum(fractions))
-    frac_volume = float(sum(v * f * pixel_area_ha for v, f in zip(fractional_values, fractions)))
-    frac_mean = float(sum(v * f for v, f in zip(fractional_values, fractions)) / frac_total) if frac_total else None
+                valid_fractions.append(float(covered))
+    geometric_frac_total = float(sum(all_fractions))
+    nodata_frac_total = float(sum(nodata_fractions))
+    other_negative_frac_total = float(sum(other_negative_fractions))
+    valid_frac_total = float(sum(valid_fractions))
+    frac_volume = float(sum(v * f * pixel_area_ha for v, f in zip(fractional_values, valid_fractions)))
+    frac_mean = float(sum(v * f for v, f in zip(fractional_values, valid_fractions)) / valid_frac_total) if valid_frac_total else None
     center_mean = float(np.mean(center_vals)) if center_vals.size else None
     inside_centres = int(np.count_nonzero(center_mask))
     valid_centres = int(center_vals.size)
     nodata_center_cells = int(np.count_nonzero(center_mask & (arr == nodata)))
+    status = "ok" if valid_frac_total else (
+        "overlaps_raster_nodata_only" if all_fractions and nodata_frac_total else
+        "overlaps_only_negative_values" if other_negative_frac_total else
+        "no_valid_raster_cells")
     return {
-        "status": "ok" if frac_total else ("no_valid_cells" if clipped.area > 0 else "outside_raster_extent"),
+        "status": status,
         "pixel_size_m": [abs(float(ds.transform.a)), abs(float(ds.transform.e))],
         "polygon_area_ha": round(float(geom.area / 10000), 4),
         "intersection_area_ha": round(float(clipped.area / 10000), 4),
@@ -75,10 +92,16 @@ def compare_one(ds, geom, nodata):
         "cells_with_centres_inside_polygon": inside_centres,
         "valid_center_cells": valid_centres,
         "nodata_center_cells": nodata_center_cells,
-        "fractional_intersecting_cells": len(fractions),
-        "valid_fractional_intersecting_cells": len(fractions),
-        "fractional_equivalent_cells": round(frac_total, 4),
-        "fractional_coverage_ha": round(frac_total * pixel_area_ha, 4),
+        "fractional_intersecting_cells": len(all_fractions),
+        "valid_fractional_intersecting_cells": len(valid_fractions),
+        "nodata_fractional_intersecting_cells": len(nodata_fractions),
+        "other_negative_fractional_intersecting_cells": len(other_negative_fractions),
+        "fractional_equivalent_cells_all_raster_cells": round(geometric_frac_total, 4),
+        "fractional_equivalent_valid_cells": round(valid_frac_total, 4),
+        "fractional_raster_intersection_ha": round(geometric_frac_total * pixel_area_ha, 4),
+        "fractional_nodata_coverage_ha": round(nodata_frac_total * pixel_area_ha, 4),
+        "fractional_valid_coverage_ha": round(valid_frac_total * pixel_area_ha, 4),
+        "fractional_valid_coverage_pct_of_raster_intersection": round(100 * valid_frac_total / geometric_frac_total, 2) if geometric_frac_total else 0.0,
         "center_mean_m3sk_ha": round(center_mean, 3) if center_mean is not None else None,
         "fractional_mean_m3sk_ha": round(frac_mean, 3) if frac_mean is not None else None,
         "center_estimated_volume_m3sk": round(center_volume, 3),
