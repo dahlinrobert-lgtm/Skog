@@ -2,6 +2,10 @@ name: Validate real Halland completed-harvest polygons
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/fetch_halland_completed_sample.py"
+      - ".github/workflows/validate-real-halland-completed-harvest.yml"
 
 permissions:
   contents: read
