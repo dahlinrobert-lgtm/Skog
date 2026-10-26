@@ -69,10 +69,29 @@ def analyze_pairs(ds, features, source_crs):
                 severity = "material_relative_to_smaller_polygon"
             else:
                 severity = "small_relative_overlap"
+            props_a = item["properties"] or {}
+            props_b = other["properties"] or {}
+            images_a = {str(props_a.get(key)).strip() for key in ("Forebild", "Efterbild")
+                        if props_a.get(key) not in (None, "") and str(props_a.get(key)).strip().lower() != "none"}
+            images_b = {str(props_b.get(key)).strip() for key in ("Forebild", "Efterbild")
+                        if props_b.get(key) not in (None, "") and str(props_b.get(key)).strip().lower() != "none"}
+            shared_image_ids = sorted(images_a & images_b)
+            # A shared before/after image can indicate linked change-detection
+            # records rather than duplicate polygons. This is evidence only.
+            if props_a.get("Forebild") and props_a.get("Forebild") == props_b.get("Efterbild"):
+                image_relation = "a_before_matches_b_after"
+            elif props_a.get("Efterbild") and props_a.get("Efterbild") == props_b.get("Forebild"):
+                image_relation = "a_after_matches_b_before"
+            elif shared_image_ids:
+                image_relation = "shared_image_reference"
+            else:
+                image_relation = "no_shared_image_reference"
             pair_records[(i, j)] = {
                 "feature_ids": [item["id"], other["id"]],
-                "polygon_a_properties": item["properties"],
-                "polygon_b_properties": other["properties"],
+                "polygon_a_properties": props_a,
+                "polygon_b_properties": props_b,
+                "shared_image_ids": shared_image_ids,
+                "source_image_relation": image_relation,
                 "polygon_a_area_m2": round(area_a, 3),
                 "polygon_b_area_m2": round(area_b, 3),
                 "geometry_intersection_area_m2": round(area, 3),
@@ -175,7 +194,9 @@ def main():
                   "overlap_smaller_pct=", pair.get("overlap_of_smaller_polygon_pct"),
                   "severity=", pair.get("overlap_severity"),
                   "valid=", pair.get("polygon_a_valid"), pair.get("polygon_b_valid"),
-                  "intersection_type=", pair["geometry_intersection_type"])
+                  "intersection_type=", pair["geometry_intersection_type"],
+                  "source_image_relation=", pair.get("source_image_relation"),
+                  "shared_image_ids=", ",".join(pair.get("shared_image_ids", [])))
             # Print only source fields useful for diagnosing whether overlap
             # pairs are likely duplicate records or distinct harvest cases.
             fields = ("OBJECTID", "Beteckn", "Avverktyp", "Avvdatum", "KallaDatum",
