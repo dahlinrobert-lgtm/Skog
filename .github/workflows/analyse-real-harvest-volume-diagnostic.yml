@@ -54,13 +54,19 @@ jobs:
           import json, os
           from pathlib import Path
           doc=json.loads(Path("real-volume-polygons.geojson").read_text(encoding="utf-8"))
-          groups={str(g["metadata"]["raster_code"]):g for g in doc["raster_groups"]}
+          # Fetcher returns raster groups under "raster_groups"; expose a clear
+          # diagnostic if this output contract changes unexpectedly.
+          groups={str(g["metadata"]["raster_code"]):g for g in doc.get("raster_groups", [])}
           codes=[x.strip() for x in os.environ.get("CODES_INPUT","13").split(",") if x.strip()]
           for code in codes:
-              group=groups[code]
-              Path(f"real-polygons-{code}.geojson").write_text(
+              group=groups.get(code)
+              if group is None:
+                  raise SystemExit(f"Raster group {code} missing; top-level keys={list(doc)}; available groups={list(groups)}")
+              target=Path(f"real-polygons-{code}.geojson")
+              target.write_text(
                   json.dumps({"type":"FeatureCollection","features":group["features"]},ensure_ascii=False),
                   encoding="utf-8")
+              print(f"Prepared raster {code}: {len(group['features'])} polygons -> {target}", flush=True)
           PY
           status=0
           for code in $(echo "$codes" | tr ',' ' '); do
@@ -70,6 +76,17 @@ jobs:
               --polygon "real-polygons-$code.geojson" \
               --data-dir "raster-data-$code" \
               --output "real-volume-report-$code.json" || status=$?
+            if [ -f "real-volume-report-$code.json" ]; then
+              python - "$code" <<'PYREPORT'
+          import json, sys
+          from pathlib import Path
+          code=sys.argv[1]
+          report=json.loads(Path(f"real-volume-report-{code}.json").read_text(encoding="utf-8"))
+          print(f"REPORT raster={code} polygons={report.get('polygon_count')} rasters={len(report.get('rasters', []))} errors={len(report.get('errors', []))}", flush=True)
+          for error in report.get("errors", [])[:5]:
+              print("REPORT_ERROR", json.dumps(error, ensure_ascii=False)[:5000], flush=True)
+          PYREPORT
+            fi
           done
           echo "ANALYSIS_EXIT_CODE=$status"
           exit "$status"
