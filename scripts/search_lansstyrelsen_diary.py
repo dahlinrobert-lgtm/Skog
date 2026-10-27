@@ -137,14 +137,15 @@ def main() -> None:
             else:
                 payload[name] = field.get_text()
 
-        # ASP.NET Web Forms requires its hidden state fields and the actual event target.
+        # The visible "Sök" button is JavaScript-driven: it copies selected
+        # values to hidden fields and then clicks btnHiddenSearch. Sending the
+        # hidden submit control as a normal submit (without __EVENTTARGET) best
+        # matches that native browser form submission.
         payload[DIARY_FIELD] = county_value
         payload[TITLE_FIELD] = args.search_term
-        # The visible "Sök" control is type=button and is wired through JavaScript.
-        # Its hidden submit companion is the actual ASP.NET postback target.
         payload[PREFIX + "txtHiddenDiaryID"] = county_value
-        payload["__EVENTTARGET"] = PREFIX + "btnHiddenSearch"
-        payload["__EVENTARGUMENT"] = ""
+        payload.pop("__EVENTTARGET", None)
+        payload.pop("__EVENTARGUMENT", None)
         payload[PREFIX + "btnHiddenSearch"] = ""
 
         action = urljoin(initial.url, form.get("action") or initial.url)
@@ -161,6 +162,15 @@ def main() -> None:
         result["result_count"] = len(results)
         result["pagination_diagnostics"] = diagnostics
         result["response_excerpt"] = norm(output_soup.body)[:2200] if output_soup.body else ""
+        result["selected_county_after_post"] = next(
+            (norm(opt) for opt in (output_soup.find("select", {"name": DIARY_FIELD}) or BeautifulSoup("", "html.parser")).find_all("option")
+             if opt.get("selected")),
+            None,
+        )
+        result["search_input_after_post"] = (
+            (output_soup.find("input", {"name": TITLE_FIELD}) or {}).get("value")
+            if output_soup.find("input", {"name": TITLE_FIELD}) else None
+        )
         result["submitted_field_names"] = sorted(payload.keys())
         result["response_title_contains_query"] = args.search_term.casefold() in norm(output_soup.body).casefold() if output_soup.body else False
         result["response_contains_no_results_marker"] = bool(
