@@ -260,8 +260,8 @@ def main() -> None:
             finally:
                 browser.close()
     except Exception as exc:
-        result["error"] = f"{type(exc).__name__}: {exc}"
-        result["request_ok"] = False
+        batch["error"] = f"{type(exc).__name__}: {exc}"
+        batch["request_ok"] = False
 
     batch["validation_warning"] = None
     args.output.parent.mkdir(parents=True, exist_ok=True)
