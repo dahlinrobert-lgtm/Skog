@@ -124,6 +124,9 @@ def main() -> None:
                         number = match.group(1)
                         start = max(0, match.start() - 220)
                         end = min(len(body_text), match.end() + 900)
+                        # Prefer the nearest separator-delimited snippet around one
+                        # diary number; this is best-effort until detail-page parsing
+                        # and pagination have been independently validated.
                         result_rows.append({
                             "diary_number": number,
                             "row_text": body_text[start:end],
