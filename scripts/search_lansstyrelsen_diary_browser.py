@@ -264,6 +264,8 @@ def main() -> None:
         batch["request_ok"] = False
 
     batch["validation_warning"] = None
+    if not batch["request_ok"] and not batch.get("error"):
+        batch["error"] = "Search batch was not validated"
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(batch, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({
