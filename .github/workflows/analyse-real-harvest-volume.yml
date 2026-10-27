@@ -132,3 +132,5 @@ jobs:
             real-volume-report-*.json
             real-volume-summary.json
           if-no-files-found: error
+
+# Re-run trigger marker: workflow is manual-only for long raster runs.
