@@ -92,6 +92,12 @@ def main() -> None:
         extra = extra.strip()
         if extra and extra.casefold() not in {t.casefold() for t in terms}:
             terms.append(extra)
+    if not terms or any(not term for term in terms):
+        raise SystemExit("At least one non-empty search term is required")
+    if any(len(term) < 2 for term in terms):
+        raise SystemExit("Search terms must contain at least two characters")
+    if len(terms) > 10:
+        raise SystemExit("A maximum of 10 search terms can be searched in one batch")
 
     batch = {
         "source": URL,
