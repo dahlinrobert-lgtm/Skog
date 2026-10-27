@@ -1,0 +1,48 @@
+name: Search Länsstyrelsen public diary
+
+on:
+  workflow_dispatch:
+    inputs:
+      county:
+        description: Public diary label
+        required: true
+        default: "Länsstyrelsen i Västra Götalands län"
+        type: choice
+        options:
+          - "Länsstyrelsen i Västra Götalands län"
+          - "Länsstyrelsen i Norrbottens län"
+          - "Länsstyrelsen i Västerbottens län"
+          - "Alla län"
+      search_term:
+        description: Phrase searched in case title
+        required: true
+        default: "naturvårdsbränning"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install search dependencies
+        run: python -m pip install requests beautifulsoup4
+      - name: Submit one public diary search
+        run: |
+          python scripts/search_lansstyrelsen_diary.py \
+            --county "${{ inputs.county }}" \
+            --search-term "${{ inputs.search_term }}" \
+            --output diary-search.json
+      - name: Upload public search results
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-diary-search
+          path: diary-search.json
+          if-no-files-found: error
+          retention-days: 30
