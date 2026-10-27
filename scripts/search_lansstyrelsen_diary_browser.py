@@ -83,145 +83,180 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--county", required=True, help="Exact diary option label")
     parser.add_argument("--search-term", required=True)
+    parser.add_argument("--extra-search-terms", default="", help="Additional comma- or newline-separated title phrases")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    result = {
+    terms = [args.search_term.strip()]
+    for extra in re.split(r"[,;\n\r]+", args.extra_search_terms or ""):
+        extra = extra.strip()
+        if extra and extra.casefold() not in {t.casefold() for t in terms}:
+            terms.append(extra)
+
+    batch = {
         "source": URL,
         "tested_at_utc": datetime.now(timezone.utc).isoformat(),
         "requested_county": args.county,
-        "search_term": args.search_term,
+        "search_term": terms[0],
+        "search_terms": terms,
         "browser_submission": True,
         "request_ok": False,
         "result_count": 0,
         "reported_total_results": None,
         "results": [],
-        "pagination": {"pages_read": 0, "has_next_page": None},
+        "pagination": {"pages_read": 0, "has_next_page": False},
         "table_diagnostics": [],
         "error": None,
+        "queries": [],
     }
 
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             try:
-                page = browser.new_page(locale="sv-SE")
-                response = page.goto(URL, wait_until="domcontentloaded", timeout=60000)
-                result["initial_http_status"] = response.status if response else None
-                page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
-                options = [clean(x) for x in page.locator(f"{COUNTY_SELECT} option").all_text_contents()]
-                if args.county not in options:
-                    raise RuntimeError(f"County option not found: {args.county}")
-                page.locator(COUNTY_SELECT).select_option(label=args.county)
-                page.locator(TITLE_INPUT).fill(args.search_term)
+                merged_by_id: dict[str, dict] = {}
+                for term in terms:
+                    query_result = {
+                        "search_term": term,
+                        "request_ok": False,
+                        "result_count": 0,
+                        "reported_total_results": None,
+                        "results": [],
+                        "pagination": {"pages_read": 0, "has_next_page": None},
+                        "table_diagnostics": [],
+                        "error": None,
+                    }
+                    page = browser.new_page(locale="sv-SE")
+                    try:
+                        response = page.goto(URL, wait_until="domcontentloaded", timeout=60000)
+                        query_result["initial_http_status"] = response.status if response else None
+                        page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
+                        options = [clean(x) for x in page.locator(f"{COUNTY_SELECT} option").all_text_contents()]
+                        if args.county not in options:
+                            raise RuntimeError(f"County option not found: {args.county}")
+                        page.locator(COUNTY_SELECT).select_option(label=args.county)
+                        page.locator(TITLE_INPUT).fill(term)
 
-                # Wait for either a full postback or an async postback to settle.
-                try:
-                    with page.expect_navigation(wait_until="domcontentloaded", timeout=20000):
-                        page.locator(SEARCH_BUTTON).click()
-                except PlaywrightTimeoutError:
-                    # This public ASP.NET form can use an asynchronous postback.
-                    page.locator(SEARCH_BUTTON).click(timeout=3000) if page.locator(SEARCH_BUTTON).is_visible() else None
-                    page.wait_for_timeout(1800)
-
-                # The query may return zero rows, in which case the grid is absent.
-                try:
-                    page.locator(RESULT_GRID).wait_for(state="attached", timeout=12000)
-                    grid_present = True
-                except PlaywrightTimeoutError:
-                    grid_present = page.locator(RESULT_GRID).count() > 0
-
-                body_text = clean(page.locator("body").inner_text(timeout=20000))
-                result["http_status"] = 200 if page.locator("body").count() else 0
-                result["page_text_excerpt"] = body_text[:5000]
-                result["page_text_tail_excerpt"] = body_text[-2500:]
-                result["criterion_validation_message"] = (
-                    "Minst ett sökkriterium förutom diarium måste vara angivet" in body_text
-                )
-                result["reported_total_results"] = parse_total(body_text)
-
-                if result["criterion_validation_message"]:
-                    raise RuntimeError("Diary form rejected the query because a search criterion was missing")
-                if result["reported_total_results"] == 0:
-                    result["request_ok"] = True
-                    result["pagination"]["has_next_page"] = False
-                elif not grid_present:
-                    raise RuntimeError("No result grid found although the page did not report zero results")
-                else:
-                    seen: set[str] = set()
-                    max_pages = 100
-                    result["request_ok"] = True
-                    for page_number in range(1, max_pages + 1):
                         try:
-                            page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
+                            with page.expect_navigation(wait_until="domcontentloaded", timeout=20000):
+                                page.locator(SEARCH_BUTTON).click()
                         except PlaywrightTimeoutError:
-                            raise RuntimeError(f"Result grid not visible on page {page_number}")
+                            if page.locator(SEARCH_BUTTON).is_visible():
+                                page.locator(SEARCH_BUTTON).click(timeout=3000)
+                            page.wait_for_timeout(1800)
+
+                        try:
+                            page.locator(RESULT_GRID).wait_for(state="attached", timeout=12000)
+                            grid_present = True
+                        except PlaywrightTimeoutError:
+                            grid_present = page.locator(RESULT_GRID).count() > 0
                         body_text = clean(page.locator("body").inner_text(timeout=20000))
-                        if result["reported_total_results"] is None:
-                            result["reported_total_results"] = parse_total(body_text)
-                        records, diag = extract_grid(page, page_number, seen)
-                        result["results"].extend(records)
-                        result["table_diagnostics"].append(diag)
-                        result["pagination"]["pages_read"] = page_number
-
-                        next_candidates = page.locator(
-                            "#SearchPlaceHolder_caseGridView a, "
-                            "#SearchPlaceHolder_caseGridView input[type='submit'], "
-                            "#SearchPlaceHolder_caseGridView input[type='button']"
+                        query_result["http_status"] = 200 if page.locator("body").count() else 0
+                        query_result["reported_total_results"] = parse_total(body_text)
+                        query_result["criterion_validation_message"] = (
+                            "Minst ett sökkriterium förutom diarium måste vara angivet" in body_text
                         )
-                        next_control = None
-                        for i in range(next_candidates.count()):
-                            control = next_candidates.nth(i)
-                            label = clean(" ".join([
-                                control.inner_text() if control.evaluate("(e) => e.tagName.toLowerCase() !== 'input'") else "",
-                                control.get_attribute("value") or "",
-                                control.get_attribute("title") or "",
-                                control.get_attribute("aria-label") or "",
-                            ]))
-                            if label.casefold() in {"next", "nästa", ">", "»", "›"} or "nästa" in label.casefold() or "next" in label.casefold():
-                                next_control = control
-                                break
-
-                        if next_control is None:
-                            result["pagination"]["has_next_page"] = False
-                            break
-
-                        old_first_id = result["results"][0]["diary_number"] if result["results"] else None
-                        old_page_count = len(seen)
-                        href = next_control.get_attribute("href") or ""
-                        postback_match = re.search(r"__doPostBack\(['\"]([^'\"]+)['\"],['\"]([^'\"]*)['\"]\)", href)
-                        if postback_match:
-                            target, argument = postback_match.groups()
-                            with page.expect_response(lambda resp: "diarium.lansstyrelsen.se" in resp.url and resp.request.method == "POST", timeout=15000):
-                                page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
+                        if query_result["criterion_validation_message"]:
+                            raise RuntimeError("Diary form rejected the query because a search criterion was missing")
+                        if query_result["reported_total_results"] == 0:
+                            query_result["request_ok"] = True
+                            query_result["pagination"]["has_next_page"] = False
+                        elif not grid_present:
+                            raise RuntimeError("No result grid found although the page did not report zero results")
                         else:
-                            try:
-                                with page.expect_navigation(wait_until="domcontentloaded", timeout=12000):
-                                    next_control.click()
-                            except PlaywrightTimeoutError:
-                                next_control.click(timeout=3000)
-                                page.wait_for_timeout(1200)
-                        page.wait_for_timeout(300)
-                        if len(seen) == old_page_count:
-                            new_body = clean(page.locator("body").inner_text(timeout=20000))
-                            new_grid = page.locator(RESULT_GRID)
-                            new_first_id = None
-                            if new_grid.count() and new_grid.locator("tr").count() > 1:
-                                new_first_id = clean(new_grid.locator("tr").nth(1).locator("td, th").nth(0).inner_text())
-                            if new_body == body_text or new_first_id == old_first_id:
-                                raise RuntimeError(f"Pagination did not advance after page {page_number}")
-                    else:
-                        raise RuntimeError(f"Safety cap reached after {max_pages} result pages")
+                            local_seen: set[str] = set()
+                            query_result["request_ok"] = True
+                            for page_number in range(1, 101):
+                                page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
+                                current_body = clean(page.locator("body").inner_text(timeout=20000))
+                                if query_result["reported_total_results"] is None:
+                                    query_result["reported_total_results"] = parse_total(current_body)
+                                records, diag = extract_grid(page, page_number, local_seen)
+                                query_result["results"].extend(records)
+                                query_result["table_diagnostics"].append(diag)
+                                query_result["pagination"]["pages_read"] = page_number
 
-                result["result_count"] = len(result["results"])
-                result["visible_case_count_hint"] = result["result_count"]
-                result["total_reconciled"] = (
-                    result["reported_total_results"] is not None
-                    and result["reported_total_results"] == result["result_count"]
-                    and result["pagination"]["has_next_page"] is False
-                )
-                if result["request_ok"] and result["reported_total_results"] is not None and not result["total_reconciled"]:
-                    result["validation_warning"] = "Extracted results do not match reported total"
+                                controls = page.locator(
+                                    "#SearchPlaceHolder_caseGridView a, "
+                                    "#SearchPlaceHolder_caseGridView input[type='submit'], "
+                                    "#SearchPlaceHolder_caseGridView input[type='button']"
+                                )
+                                next_control = None
+                                for i in range(controls.count()):
+                                    control = controls.nth(i)
+                                    label = clean(" ".join([
+                                        control.inner_text() if control.evaluate("(e) => e.tagName.toLowerCase() !== 'input'") else "",
+                                        control.get_attribute("value") or "",
+                                        control.get_attribute("title") or "",
+                                        control.get_attribute("aria-label") or "",
+                                    ]))
+                                    if label.casefold() in {"next", "nästa", ">", "»", "›"} or "nästa" in label.casefold() or "next" in label.casefold():
+                                        next_control = control
+                                        break
+                                if next_control is None:
+                                    query_result["pagination"]["has_next_page"] = False
+                                    break
+
+                                old_count = len(local_seen)
+                                old_first = query_result["results"][0]["diary_number"] if query_result["results"] else None
+                                href = next_control.get_attribute("href") or ""
+                                postback_match = re.search(r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)", href)
+                                if postback_match:
+                                    target, argument = postback_match.groups()
+                                    with page.expect_response(lambda resp: "diarium.lansstyrelsen.se" in resp.url and resp.request.method == "POST", timeout=15000):
+                                        page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
+                                else:
+                                    try:
+                                        with page.expect_navigation(wait_until="domcontentloaded", timeout=12000):
+                                            next_control.click()
+                                    except PlaywrightTimeoutError:
+                                        next_control.click(timeout=3000)
+                                        page.wait_for_timeout(1200)
+                                page.wait_for_timeout(300)
+                                if len(local_seen) == old_count:
+                                    new_body = clean(page.locator("body").inner_text(timeout=20000))
+                                    new_grid = page.locator(RESULT_GRID)
+                                    new_first = clean(new_grid.locator("tr").nth(1).locator("td, th").nth(0).inner_text()) if new_grid.count() and new_grid.locator("tr").count() > 1 else None
+                                    if new_body == current_body or new_first == old_first:
+                                        raise RuntimeError(f"Pagination did not advance after page {page_number}")
+                            else:
+                                raise RuntimeError("Safety cap reached after 100 result pages")
+
+                        query_result["result_count"] = len(query_result["results"])
+                        query_result["total_reconciled"] = (
+                            query_result["reported_total_results"] is not None
+                            and query_result["reported_total_results"] == query_result["result_count"]
+                            and query_result["pagination"]["has_next_page"] is False
+                        )
+                        if not query_result["total_reconciled"]:
+                            raise RuntimeError(
+                                f"Query '{term}' extracted {query_result['result_count']} records but source reported "
+                                f"{query_result['reported_total_results']}"
+                            )
+                        query_result["validation_warning"] = None
+                        batch["queries"].append(query_result)
+                        for record in query_result["results"]:
+                            number = record["diary_number"]
+                            if number not in merged_by_id:
+                                record["query_terms"] = [term]
+                                merged_by_id[number] = record
+                            elif term not in merged_by_id[number]["query_terms"]:
+                                merged_by_id[number]["query_terms"].append(term)
+                    finally:
+                        page.close()
+
+                batch["results"] = list(merged_by_id.values())
+                batch["request_ok"] = True
+                batch["result_count"] = len(batch["results"])
+                batch["reported_total_results"] = sum(q["reported_total_results"] for q in batch["queries"])
+                batch["pagination"]["pages_read"] = sum(q["pagination"]["pages_read"] or 0 for q in batch["queries"])
+                batch["pagination"]["has_next_page"] = False
+                batch["total_reconciled"] = all(q.get("total_reconciled") for q in batch["queries"])
+                batch["per_query_counts"] = [
+                    {"search_term": q["search_term"], "extracted_count": q["result_count"],
+                     "reported_total_results": q["reported_total_results"], "total_reconciled": q["total_reconciled"]}
+                    for q in batch["queries"]
+                ]
             finally:
                 browser.close()
     except Exception as exc:
