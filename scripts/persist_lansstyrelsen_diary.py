@@ -1,0 +1,182 @@
+#!/usr/bin/env python3
+"""Persist public Länsstyrelsen diary search results and append auditable events.
+
+The input is a successful diary-search JSON file. Results are keyed by diary
+number plus diary/county label, never by title text. This script only writes
+local output files; it does not publish or change GitHub data by itself.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+
+def canonical_json(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def content_hash(record: dict[str, Any]) -> str:
+    tracked = {
+        key: value for key, value in record.items()
+        if key not in {"first_observed_at", "last_observed_at", "observation_count", "content_hash", "event_type"}
+    }
+    return hashlib.sha256(canonical_json(tracked).encode("utf-8")).hexdigest()
+
+
+def read_json(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
+    with path.open(encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", type=Path, required=True, help="diary-search.json")
+    parser.add_argument("--state", type=Path, required=True, help="Persistent state JSON")
+    parser.add_argument("--events", type=Path, required=True, help="Append-only events JSONL")
+    parser.add_argument("--summary", type=Path, required=True, help="Run summary JSON")
+    args = parser.parse_args()
+
+    run = read_json(args.input, {})
+    if not run.get("request_ok"):
+        raise SystemExit("Refusing to persist a failed diary search")
+    if run.get("error"):
+        raise SystemExit(f"Refusing to persist a search with error: {run['error']}")
+    total = run.get("reported_total_results")
+    if total is not None and (not run.get("total_reconciled") or total != run.get("result_count")):
+        raise SystemExit("Refusing to persist unreconciled results: reported total != extracted count")
+    if run.get("pagination", {}).get("has_next_page") is not False:
+        raise SystemExit("Refusing to persist results until pagination is confirmed complete")
+
+    county = str(run.get("requested_county") or "").strip()
+    search_term = str(run.get("search_term") or "").strip()
+    observed_at = str(run.get("tested_at_utc") or datetime.now(timezone.utc).isoformat())
+    if not county or not search_term:
+        raise SystemExit("Search county and phrase are required")
+    if not isinstance(run.get("results"), list):
+        raise SystemExit("Input results must be a list")
+
+    state = read_json(args.state, {"schema_version": 1, "records": {}})
+    records: dict[str, dict[str, Any]] = state.setdefault("records", {})
+    previous_counts = len(records)
+    events: list[dict[str, Any]] = []
+    seen_this_run: set[str] = set()
+    invalid_count = 0
+
+    for raw in run["results"]:
+        if not isinstance(raw, dict):
+            invalid_count += 1
+            continue
+        diary_number = str(raw.get("diary_number") or "").strip()
+        if not diary_number or "-" not in diary_number:
+            invalid_count += 1
+            continue
+        key = f"{county.casefold()}::{diary_number}"
+        if key in seen_this_run:
+            invalid_count += 1
+            continue
+        seen_this_run.add(key)
+
+        candidate = {
+            "record_key": key,
+            "diary_number": diary_number,
+            "diary": county,
+            "query_term": search_term,
+            "source_url": run.get("source"),
+            "title": raw.get("title") or raw.get("Ärenderubrik"),
+            "status": raw.get("status") or raw.get("Status"),
+            "source_date": raw.get("date") or raw.get("In/Upp-datum"),
+            "columns": raw,
+            "links": raw.get("links", []),
+            "last_query_total": total,
+            "last_query_page": raw.get("page_number"),
+        }
+        candidate_hash = content_hash(candidate)
+        previous = records.get(key)
+        if previous is None:
+            record = {
+                **candidate,
+                "first_observed_at": observed_at,
+                "last_observed_at": observed_at,
+                "observation_count": 1,
+                "content_hash": candidate_hash,
+            }
+            records[key] = record
+            events.append({
+                "event_id": hashlib.sha256(f"{key}|first_seen|{observed_at}".encode()).hexdigest(),
+                "event_type": "first_seen",
+                "record_key": key,
+                "diary_number": diary_number,
+                "diary": county,
+                "observed_at": observed_at,
+                "source_date": candidate["source_date"],
+                "title": candidate["title"],
+                "content_hash": candidate_hash,
+                "baseline_only": True,
+                "note": "First observation by this tool; not proof that the case was newly registered.",
+            })
+        elif previous.get("content_hash") != candidate_hash:
+            event_type = "record_changed"
+            record = {
+                **candidate,
+                "first_observed_at": previous.get("first_observed_at", observed_at),
+                "last_observed_at": observed_at,
+                "observation_count": int(previous.get("observation_count", 0)) + 1,
+                "content_hash": candidate_hash,
+            }
+            records[key] = record
+            events.append({
+                "event_id": hashlib.sha256(f"{key}|{event_type}|{observed_at}|{candidate_hash}".encode()).hexdigest(),
+                "event_type": event_type,
+                "record_key": key,
+                "diary_number": diary_number,
+                "diary": county,
+                "observed_at": observed_at,
+                "previous_hash": previous.get("content_hash"),
+                "content_hash": candidate_hash,
+                "before": {k: previous.get(k) for k in ("title", "status", "source_date")},
+                "after": {k: record.get(k) for k in ("title", "status", "source_date")},
+                "note": "A difference was detected in captured search-row data; verify source semantics before treating it as a legal status change.",
+            })
+        else:
+            previous["last_observed_at"] = observed_at
+            previous["observation_count"] = int(previous.get("observation_count", 0)) + 1
+            previous["last_query_total"] = total
+            records[key] = previous
+
+    args.state.parent.mkdir(parents=True, exist_ok=True)
+    args.events.parent.mkdir(parents=True, exist_ok=True)
+    args.summary.parent.mkdir(parents=True, exist_ok=True)
+    args.state.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with args.events.open("a", encoding="utf-8") as handle:
+        for event in events:
+            handle.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
+
+    summary = {
+        "observed_at": observed_at,
+        "diary": county,
+        "search_term": search_term,
+        "request_ok": True,
+        "extracted_count": len(run["results"]),
+        "reported_total_results": total,
+        "total_reconciled": run.get("total_reconciled"),
+        "pagination": run.get("pagination"),
+        "state_record_count_before": previous_counts,
+        "state_record_count_after": len(records),
+        "first_seen_events": sum(e["event_type"] == "first_seen" for e in events),
+        "changed_events": sum(e["event_type"] == "record_changed" for e in events),
+        "invalid_or_duplicate_records": invalid_count,
+        "absent_ids_interpreted_as_removed": False,
+        "note": "Records absent from a search are not marked removed: they may not match the current search phrase or may be outside the source's current result window.",
+    }
+    args.summary.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(summary, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()
