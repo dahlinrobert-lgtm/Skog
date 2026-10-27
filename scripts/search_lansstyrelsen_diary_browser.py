@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Use a real browser to search the public Länsstyrelsen diary and extract cases."""
+"""Search the public Länsstyrelsen diary and extract result-grid rows."""
 from __future__ import annotations
 
 import argparse
@@ -14,10 +14,11 @@ URL = "https://diarium.lansstyrelsen.se/default.aspx"
 COUNTY_SELECT = "#SearchPlaceHolder_CaseSearch_ddDiaryID"
 TITLE_INPUT = "#SearchPlaceHolder_CaseSearch_title"
 SEARCH_BUTTON = "#SearchPlaceHolder_CaseSearch_btnSearch"
+RESULT_GRID = "#SearchPlaceHolder_caseGridView"
 
 
 def clean(text: str) -> str:
-    return re.sub(r"\\s+", " ", text).strip()
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def main() -> None:
@@ -35,9 +36,10 @@ def main() -> None:
         "browser_submission": True,
         "request_ok": False,
         "result_count": 0,
+        "reported_total_results": None,
         "results": [],
+        "pagination": {"pages_read": 0, "has_next_page": None},
         "table_diagnostics": [],
-        "page_text_excerpt": "",
         "error": None,
     }
 
@@ -56,123 +58,152 @@ def main() -> None:
                     )
                 page.locator(COUNTY_SELECT).select_option(label=args.county)
                 page.locator(TITLE_INPUT).fill(args.search_term)
-
-                # Submit through the actual page JavaScript, like a normal user.
                 with page.expect_navigation(wait_until="domcontentloaded", timeout=45000):
                     page.locator(SEARCH_BUTTON).click()
-                page.wait_for_timeout(900)
-                result["final_url"] = page.url
-                result["http_status"] = 200 if page.locator("body").count() else 0
-                body_text = clean(page.locator("body").inner_text(timeout=20000))
-                result["page_text_length"] = len(body_text)
-                result["page_text_excerpt"] = body_text[:4000]
-                result["page_text_tail_excerpt"] = body_text[-4000:]
-                result["query_occurrences"] = body_text.casefold().count(args.search_term.casefold())
-                result["criterion_validation_message"] = (
-                    "Minst ett sökkriterium förutom diarium måste vara angivet" in body_text
-                )
 
-                tables = page.locator("table")
-                result_rows = []
-                seen_rows: set[str] = set()
-                for table_index in range(min(tables.count(), 80)):
-                    table = tables.nth(table_index)
-                    if not table.is_visible():
-                        continue
-                    rows = table.locator("tr")
-                    row_count = rows.count()
-                    row_samples = []
-                    for row_index in range(row_count):
-                        row = rows.nth(row_index)
+                result["request_ok"] = True
+                seen = set()
+                max_pages = 100
+                for page_number in range(1, max_pages + 1):
+                    page.wait_for_timeout(300)
+                    body_text = clean(page.locator("body").inner_text(timeout=20000))
+                    grid = page.locator(RESULT_GRID)
+                    if grid.count() == 0 or not grid.is_visible():
+                        result["request_ok"] = False
+                        result["error"] = "Search completed but the expected result grid was not found"
+                        break
+
+                    grid_rows = grid.locator("tr")
+                    rows_this_page = 0
+                    header_cells = grid_rows.nth(0).locator("th, td")
+                    headers = [clean(header_cells.nth(i).inner_text()) for i in range(header_cells.count())]
+                    for row_index in range(1, grid_rows.count()):
+                        row = grid_rows.nth(row_index)
                         if not row.is_visible():
                             continue
                         cells = row.locator("th, td")
-                        cell_values = [clean(cells.nth(i).inner_text()) for i in range(cells.count())]
-                        row_text = " | ".join(value for value in cell_values if value)
-                        if row_text and len(row_samples) < 5:
-                            row_samples.append(row_text[:700])
-                        if not row_text or row_text in seen_rows:
+                        values = [clean(cells.nth(i).inner_text()) for i in range(cells.count())]
+                        if not any(values):
                             continue
-                        seen_rows.add(row_text)
-                        diary_match = re.search(r"\\b(\\d{1,6}-\\d{4})\\b", row_text)
-                        if not diary_match:
+
+                        # Column headers are source-defined. Preserve the complete row
+                        # and map key fields by header, not positional guesses.
+                        record = {headers[i] if i < len(headers) and headers[i] else f"column_{i+1}": v
+                                  for i, v in enumerate(values)}
+                        diary_number = values[0] if values else ""
+                        if not re.fullmatch(r"\d{1,6}-\d{4}", diary_number):
                             continue
+                        if diary_number in seen:
+                            continue
+                        seen.add(diary_number)
                         links = row.locator("a")
-                        result_rows.append({
-                            "diary_number": diary_match.group(1),
-                            "row_text": row_text[:1800],
-                            "cells": cell_values,
+                        record.update({
+                            "diary_number": diary_number,
+                            "status": record.get("Status"),
+                            "date": record.get("In/Upp-datum"),
+                            "title": record.get("Ärenderubrik"),
                             "links": [
-                                {"text": clean(links.nth(i).inner_text()), "href": links.nth(i).get_attribute("href")}
+                                {"text": clean(links.nth(i).inner_text()),
+                                 "href": links.nth(i).get_attribute("href")}
                                 for i in range(links.count())
                             ],
-                            "table_index": table_index,
-                            "row_index": row_index,
+                            "page_number": page_number,
                         })
+                        result["results"].append(record)
+                        rows_this_page += 1
+
+                    result["pagination"]["pages_read"] = page_number
                     result["table_diagnostics"].append({
-                        "index": table_index,
-                        "id": table.get_attribute("id"),
-                        "class": table.get_attribute("class"),
-                        "row_count": row_count,
-                        "sample_rows": row_samples,
+                        "page_number": page_number,
+                        "headers": headers,
+                        "row_count_including_header": grid_rows.count(),
+                        "result_rows_extracted": rows_this_page,
                     })
 
-                # If tables are nested/layout-only, fall back to unique case numbers
-                # in visible body text. Do not mistake headings for individual cases.
-                if not result_rows:
-                    for match in re.finditer(r"(?<!\\d)(\\d{1,6}-\\d{4})(?!\\d)", body_text):
-                        number = match.group(1)
-                        start = max(0, match.start() - 220)
-                        end = min(len(body_text), match.end() + 900)
-                        # Prefer the nearest separator-delimited snippet around one
-                        # diary number; this is best-effort until detail-page parsing
-                        # and pagination have been independently validated.
-                        result_rows.append({
-                            "diary_number": number,
-                            "row_text": body_text[start:end],
-                            "cells": [],
-                            "links": [],
-                            "table_index": None,
-                            "row_index": None,
-                        })
-                    deduped = {}
-                    for item in result_rows:
-                        deduped.setdefault(item["diary_number"], item)
-                    result_rows = list(deduped.values())
+                    # Read total hits displayed by the source separately from
+                    # the rows captured. This must reconcile before data is trusted.
+                    total_match = re.search(r"Sökresultat\s*:?\s*[\d\s–-]+\s+av\s+(\d+)", body_text, re.I)
+                    if total_match:
+                        result["reported_total_results"] = int(total_match.group(1))
 
-                # The search results page explicitly reports the number of
-                # total hits (e.g. "Sökresultat: 1-14 av 14"). Keep it separate
-                # from the number extracted from the current page.
-                result_count_match = re.search(r"Sökresultat:\\s*[0-9\\s–-]+\\s+av\\s+(\\d+)", body_text, re.I)
-                result["reported_total_results"] = int(result_count_match.group(1)) if result_count_match else None
-                result["results"] = result_rows
-                result["result_count"] = len(result_rows)
-                result["visible_case_count_hint"] = len(
-                    re.findall(r"(?<!\\d)\\d{1,6}-\\d{4}(?!\\d)", body_text)
+                    next_button = page.locator(
+                        "#SearchPlaceHolder_caseGridView a[title*='Next'], "
+                        "#SearchPlaceHolder_caseGridView a[aria-label*='Next'], "
+                        "#SearchPlaceHolder_caseGridView a[title*='Nästa'], "
+                        "#SearchPlaceHolder_caseGridView a[aria-label*='Nästa']"
+                    )
+                    if next_button.count() == 0:
+                        # Fall back to visible grid pager links. Use DOM postback target
+                        # through the user's normal public UI, not a guessed endpoint.
+                        pager_links = grid.locator("a")
+                        candidates = []
+                        for i in range(pager_links.count()):
+                            link = pager_links.nth(i)
+                            label = clean(link.inner_text())
+                            title = clean(link.get_attribute("title") or "")
+                            aria = clean(link.get_attribute("aria-label") or "")
+                            if label in {"Next", "Nästa", ">", "»"} or "next" in title.lower() or "nästa" in title.lower() or "next" in aria.lower():
+                                candidates.append(link)
+                        next_button = candidates[0] if candidates else None
+                    if not next_button or (hasattr(next_button, "count") and next_button.count() == 0):
+                        result["pagination"]["has_next_page"] = False
+                        break
+                    result["pagination"]["has_next_page"] = True
+                    before = len(seen)
+                    try:
+                        with page.expect_navigation(wait_until="domcontentloaded", timeout=15000):
+                            next_button.click()
+                    except Exception:
+                        # Some ASP.NET GridView paging uses an asynchronous postback.
+                        try:
+                            next_button.click(timeout=3000)
+                            page.wait_for_timeout(1000)
+                        except Exception:
+                            result["request_ok"] = False
+                            result["error"] = f"Could not advance to result page {page_number + 1}"
+                            break
+                    if len(seen) == before:
+                        new_body = clean(page.locator("body").inner_text(timeout=20000))
+                        if new_body == body_text:
+                            result["request_ok"] = False
+                            result["error"] = f"Pagination did not change the page after page {page_number}"
+                            break
+                else:
+                    result["request_ok"] = False
+                    result["error"] = f"Safety cap reached after {max_pages} result pages"
+
+                result["result_count"] = len(result["results"])
+                result["visible_case_count_hint"] = len(seen)
+                result["total_reconciled"] = (
+                    result["reported_total_results"] is not None
+                    and result["reported_total_results"] == result["result_count"]
+                    and result["pagination"]["has_next_page"] is False
                 )
-                result["request_ok"] = (
-                    result["initial_http_status"] == 200
-                    and result.get("http_status") == 200
-                    and not result["criterion_validation_message"]
-                )
+                result["page_text_excerpt"] = clean(page.locator("body").inner_text(timeout=20000))[:3000]
+                if result["request_ok"] and not result["total_reconciled"]:
+                    result["validation_warning"] = "Captured row count has not been reconciled to the source's total hit count"
             finally:
                 browser.close()
     except Exception as exc:
         result["error"] = f"{type(exc).__name__}: {exc}"
+        result["request_ok"] = False
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({
         "request_ok": result["request_ok"],
-        "initial_http_status": result.get("initial_http_status"),
-        "http_status": result.get("http_status"),
         "county": result["requested_county"],
         "search_term": result["search_term"],
         "result_count": result["result_count"],
-        "visible_case_count_hint": result.get("visible_case_count_hint"),
-        "criterion_validation_message": result.get("criterion_validation_message"),
+        "reported_total_results": result["reported_total_results"],
+        "total_reconciled": result.get("total_reconciled"),
+        "pagination": result["pagination"],
         "error": result.get("error"),
+        "validation_warning": result.get("validation_warning"),
     }, ensure_ascii=False))
+    # Return nonzero when we failed to obtain the grid or pagination stopped
+    # unexpectedly. A total reconciliation warning remains visible but doesn't
+    # hide a technically successful first-page capture.
     if not result["request_ok"]:
         raise SystemExit(1)
 
