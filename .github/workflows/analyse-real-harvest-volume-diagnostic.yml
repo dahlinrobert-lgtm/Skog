@@ -73,6 +73,7 @@ jobs:
           PY
           status=0
           for code in $(echo "$codes" | tr ',' ' '); do
+            test -f "real-polygons-$code.geojson" || { echo "Missing prepared polygon file: real-polygons-$code.geojson" >&2; exit 1; }
             mkdir -p "raster-data-$code"
             cp "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" "raster-data-$code/"
             python scripts/analyze_volume_for_polygon.py \
