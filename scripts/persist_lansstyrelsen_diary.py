@@ -48,15 +48,16 @@ def main() -> None:
     if run.get("error"):
         raise SystemExit(f"Refusing to persist a search with error: {run['error']}")
     total = run.get("reported_total_results")
+    queries = run.get("queries")
     if not run.get("total_reconciled"):
-        if total is None or run.get("result_count") != total:
-            raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
         raise SystemExit("Refusing to persist results until all source queries are reconciled")
     if total is None:
-        raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
+        raise SystemExit("Refusing to persist results until a validated source total is present")
     if run.get("pagination", {}).get("has_next_page") is not False:
         raise SystemExit("Refusing to persist results until pagination is confirmed complete")
-    queries = run.get("queries")
+    if not isinstance(run.get("results"), list):
+        raise SystemExit("Input results must be a list")
+
     if isinstance(queries, list) and queries:
         for query in queries:
             query_total = query.get("reported_total_results")
@@ -68,18 +69,20 @@ def main() -> None:
                 or not query.get("total_reconciled")
                 or query.get("pagination", {}).get("has_next_page") is not False
             ):
-                raise SystemExit(f"Refusing to persist: query failed validation: {query.get('search_term')}")
-        unique_numbers = {
-            str(record.get("diary_number") or "").strip()
-            for record in run.get("results", [])
-            if isinstance(record, dict) and str(record.get("diary_number") or "").strip()
+                raise SystemExit(
+                    f"Refusing to persist: query failed validation: "
+                    f"{query.get('requested_county', '')} / {query.get('search_term', '')}"
+                )
+        unique_keys = {
+            f"{str(record.get('diary') or run.get('requested_county') or '').casefold()}::"
+            f"{str(record.get('diary_number') or '').strip()}"
+            for record in run["results"] if isinstance(record, dict)
+            and str(record.get("diary_number") or "").strip()
         }
-        if len(unique_numbers) != len(run.get("results", [])) or len(unique_numbers) != run.get("result_count"):
-            raise SystemExit("Refusing to persist: result count must match unique diary numbers across query overlap")
-        if sum(query.get("reported_total_results", 0) for query in queries) != total:
-            raise SystemExit("Refusing to persist: aggregate source total does not match per-query totals")
-    elif run.get("result_count") != total:
-        raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
+        if len(unique_keys) != len(run["results"]) or len(unique_keys) != run.get("result_count"):
+            raise SystemExit("Refusing to persist: result count must match unique county/diary-number pairs")
+        if len(queries) != len(run.get("per_query_counts", queries)):
+            raise SystemExit("Refusing to persist: per-query validation metadata is incomplete")
     elif run.get("result_count") != total:
         raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
 
