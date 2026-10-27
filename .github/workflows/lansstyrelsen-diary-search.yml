@@ -93,30 +93,37 @@ jobs:
               "table_diagnostics": data.get("table_diagnostics", [])[:12],
           }, ensure_ascii=False, indent=2))
           PY
-      - name: Commit validated diary history
+      - name: Publish validated diary history with concurrency-safe retry
         if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/lansstyrelsen-diary/
-          if git diff --cached --quiet; then
-            echo "Diary history unchanged."
-          else
+          for attempt in 1 2 3 4 5; do
+            # Rebuild the state against the latest main instead of rebasing generated
+            # JSON snapshots, which can conflict when two diary searches finish together.
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/persist_lansstyrelsen_diary.py \
+              --input diary-search.json \
+              --state data/lansstyrelsen-diary/state.json \
+              --events data/lansstyrelsen-diary/events.jsonl \
+              --summary data/lansstyrelsen-diary/last-run-summary.json
+            git add data/lansstyrelsen-diary/
+            if git diff --cached --quiet; then
+              echo "Diary history unchanged."
+              exit 0
+            fi
             git commit -m "Update Länsstyrelsen diary history"
-            for attempt in 1 2 3 4 5; do
-              git fetch origin main
-              git rebase origin/main
-              if git push origin HEAD:main; then
-                echo "Published validated diary history."
-                break
-              fi
-              if [ "$attempt" -eq 5 ]; then
-                echo "Could not publish diary history after five attempts." >&2
-                exit 1
-              fi
-              sleep 2
-            done
-          fi
+            if git push origin HEAD:main; then
+              echo "Published validated diary history."
+              exit 0
+            fi
+            if [ "$attempt" -eq 5 ]; then
+              echo "Could not publish diary history after five attempts." >&2
+              exit 1
+            fi
+            sleep 2
+          done
       - name: Upload public search results and history summary
         if: always()
         uses: actions/upload-artifact@v4
