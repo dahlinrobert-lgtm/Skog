@@ -48,8 +48,8 @@ def main() -> None:
     if run.get("error"):
         raise SystemExit(f"Refusing to persist a search with error: {run['error']}")
     total = run.get("reported_total_results")
-    if total is None or not run.get("total_reconciled") or run.get("result_count") != total:
-        raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
+    if total is None or not run.get("total_reconciled"):
+        raise SystemExit("Refusing to persist results until all source queries are reconciled")
     if run.get("pagination", {}).get("has_next_page") is not False:
         raise SystemExit("Refusing to persist results until pagination is confirmed complete")
     queries = run.get("queries")
@@ -65,6 +65,15 @@ def main() -> None:
                 or query.get("pagination", {}).get("has_next_page") is not False
             ):
                 raise SystemExit(f"Refusing to persist: query failed validation: {query.get('search_term')}")
+        unique_numbers = {
+            str(record.get("diary_number") or "").strip()
+            for record in run.get("results", [])
+            if isinstance(record, dict) and str(record.get("diary_number") or "").strip()
+        }
+        if len(unique_numbers) != len(run.get("results", [])) or len(unique_numbers) != run.get("result_count"):
+            raise SystemExit("Refusing to persist: result count must match unique diary numbers across query overlap")
+    elif run.get("result_count") != total:
+        raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
 
     county = str(run.get("requested_county") or "").strip()
     search_term = str(run.get("search_term") or "").strip()
@@ -127,7 +136,7 @@ def main() -> None:
                 "first_observed_at": observed_at,
                 "last_observed_at": observed_at,
                 "observation_count": 1,
-                "queries_seen": [search_term],
+                "queries_seen": sorted(set(query_terms or [search_term])),
                 "content_hash": candidate_hash,
             }
             records[key] = record
