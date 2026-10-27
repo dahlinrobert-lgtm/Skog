@@ -18,6 +18,11 @@ on:
         required: true
         default: "naturvårdsbränning"
         type: string
+      search_terms:
+        description: Optional newline- or comma-separated extra phrases; each is searched separately
+        required: false
+        default: ""
+        type: string
   push:
     paths:
       - "scripts/search_lansstyrelsen_diary.py"
@@ -48,13 +53,23 @@ jobs:
         env:
           COUNTY_INPUT: ${{ inputs.county }}
           SEARCH_TERM_INPUT: ${{ inputs.search_term }}
+          SEARCH_TERMS_INPUT: ${{ inputs.search_terms }}
         run: |
           county="${COUNTY_INPUT:-Länsstyrelsen i Västra Götalands län}"
           search_term="${SEARCH_TERM_INPUT:-naturvårdsbränning}"
-          python scripts/search_lansstyrelsen_diary_browser.py \
-            --county "$county" \
-            --search-term "$search_term" \
-            --output diary-search.json
+          extra_terms="${SEARCH_TERMS_INPUT:-}"
+          if [ -z "$extra_terms" ]; then
+            python scripts/search_lansstyrelsen_diary_browser.py \
+              --county "$county" \
+              --search-term "$search_term" \
+              --output diary-search.json
+          else
+            python scripts/search_lansstyrelsen_diary_browser.py \
+              --county "$county" \
+              --search-term "$search_term" \
+              --extra-search-terms "$extra_terms" \
+              --output diary-search.json
+          fi
       - name: Persist validated result rows
         if: success()
         run: |
