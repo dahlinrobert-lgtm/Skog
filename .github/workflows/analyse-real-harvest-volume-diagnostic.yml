@@ -48,7 +48,7 @@ jobs:
         env:
           CODES_INPUT: ${{ inputs.raster_codes }}
         run: |
-          set +e
+          set -e
           codes="${CODES_INPUT:-13}"
           python - <<'PY'
           import json, os
