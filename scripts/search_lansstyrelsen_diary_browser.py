@@ -140,10 +140,15 @@ def main() -> None:
                         deduped.setdefault(item["diary_number"], item)
                     result_rows = list(deduped.values())
 
+                # The search results page explicitly reports the number of
+                # total hits (e.g. "Sökresultat: 1-14 av 14"). Keep it separate
+                # from the number extracted from the current page.
+                result_count_match = re.search(r"Sökresultat:\\s*[0-9\\s–-]+\\s+av\\s+(\\d+)", body_text, re.I)
+                result["reported_total_results"] = int(result_count_match.group(1)) if result_count_match else None
                 result["results"] = result_rows
                 result["result_count"] = len(result_rows)
                 result["visible_case_count_hint"] = len(
-                    re.findall(r"\\b\\d{1,6}-\\d{4}\\b", body_text)
+                    re.findall(r"(?<!\\d)\\d{1,6}-\\d{4}(?!\\d)", body_text)
                 )
                 result["request_ok"] = (
                     result["initial_http_status"] == 200
