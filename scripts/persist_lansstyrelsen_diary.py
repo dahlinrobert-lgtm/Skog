@@ -126,6 +126,8 @@ def main() -> None:
                 "note": "First observation by this tool; not proof that the case was newly registered.",
             })
         else:
+            # Compare only source-provided case fields. Search term, row position,
+            # query totals, and page number are query metadata, not case changes.
             previous_source = {
                 "source_url": previous.get("source_url"),
                 "diary_number": previous.get("diary_number"),
@@ -147,52 +149,45 @@ def main() -> None:
                 "links": candidate.get("links", []),
             }
             previous_queries = set(previous.get("queries_seen", []))
-            previous_queries.add(previous.get("query_term", search_term))
+            if previous.get("query_term"):
+                previous_queries.add(previous["query_term"])
             previous_queries.add(search_term)
+            updated = {
+                **previous,
+                "last_observed_at": observed_at,
+                "observation_count": int(previous.get("observation_count", 0)) + 1,
+                "queries_seen": sorted(previous_queries),
+                "query_term": search_term,
+                "last_query_total": total,
+                "last_query_page": raw.get("page_number"),
+            }
             if previous_source != candidate_source:
                 event_type = "record_changed"
-
-                record = {
-                    **candidate,
+                updated.update(candidate)
+                updated.update({
                     "first_observed_at": previous.get("first_observed_at", observed_at),
                     "last_observed_at": observed_at,
                     "observation_count": int(previous.get("observation_count", 0)) + 1,
                     "queries_seen": sorted(previous_queries),
-                    "content_hash": candidate_hash,
-                }
-                records[key] = record
+                    "content_hash": content_hash(candidate_source),
+                })
+                records[key] = updated
                 events.append({
-                    "event_id": hashlib.sha256(f"{key}|{event_type}|{observed_at}|{candidate_hash}".encode()).hexdigest(),
+                    "event_id": hashlib.sha256(f"{key}|{event_type}|{observed_at}|{updated['content_hash']}".encode()).hexdigest(),
                     "event_type": event_type,
                     "record_key": key,
                     "diary_number": diary_number,
                     "diary": county,
                     "observed_at": observed_at,
                     "previous_hash": previous.get("content_hash"),
-                    "content_hash": candidate_hash,
+                    "content_hash": updated["content_hash"],
                     "before": {k: previous.get(k) for k in ("title", "status", "source_date")},
-                    "after": {k: record.get(k) for k in ("title", "status", "source_date")},
-                    "note": "A source-row change was detected. Review the before/after fields; don't infer a legal status change automatically.",
+                    "after": {k: updated.get(k) for k in ("title", "status", "source_date")},
+                    "note": "A source-row change was detected. Review before/after fields; query metadata is not itself treated as a change.",
                 })
             else:
-                # Same case row seen again: refresh observability metadata without
-                # creating a false change event. Keep first-observed timestamp intact.
-                previous["last_observed_at"] = observed_at
-                previous["observation_count"] = int(previous.get("observation_count", 0)) + 1
-                previous["queries_seen"] = sorted(previous_queries)
-                previous["query_term"] = search_term
-                previous["last_query_total"] = total
-                previous["content_hash"] = content_hash({
-                    "source_url": previous.get("source_url"),
-                    "diary_number": previous.get("diary_number"),
-                    "diary": previous.get("diary"),
-                    "title": previous.get("title"),
-                    "status": previous.get("status"),
-                    "source_date": previous.get("source_date"),
-                    "columns": previous.get("columns", {}),
-                    "links": previous.get("links", []),
-                })
-                records[key] = previous
+                updated["content_hash"] = content_hash(previous_source)
+                records[key] = updated
 
 
     args.state.parent.mkdir(parents=True, exist_ok=True)
