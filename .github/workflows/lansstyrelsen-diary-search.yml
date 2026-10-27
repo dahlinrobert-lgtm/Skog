@@ -51,6 +51,14 @@ jobs:
             --county "$county" \
             --search-term "$search_term" \
             --output diary-search.json
+      - name: Persist validated result rows
+        if: success()
+        run: |
+          python scripts/persist_lansstyrelsen_diary.py \
+            --input diary-search.json \
+            --state data/lansstyrelsen-diary/state.json \
+            --events data/lansstyrelsen-diary/events.jsonl \
+            --summary data/lansstyrelsen-diary/last-run-summary.json
       - name: Print structured result summary
         if: always()
         run: |
@@ -73,11 +81,25 @@ jobs:
               "table_diagnostics": data.get("table_diagnostics", [])[:12],
           }, ensure_ascii=False, indent=2))
           PY
-      - name: Upload public search results
+      - name: Commit validated diary history
+        if: success() && github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/lansstyrelsen-diary/
+          if git diff --cached --quiet; then
+            echo "Diary history unchanged."
+          else
+            git commit -m "Update Länsstyrelsen diary history"
+            git push origin HEAD:main
+          fi
+      - name: Upload public search results and history summary
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lansstyrelsen-diary-search
-          path: diary-search.json
+          path: |
+            diary-search.json
+            data/lansstyrelsen-diary/last-run-summary.json
           if-no-files-found: warn
           retention-days: 30
