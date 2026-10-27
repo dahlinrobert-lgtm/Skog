@@ -70,15 +70,14 @@ jobs:
               for x in rows[:8]: print(x)
               if report["errors"]: raise SystemExit(report["errors"])
           Path("real-volume-summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          # Preserve published records for raster areas not processed in this run.
+          # Read existing lookup so single-area runs retain the other raster areas.
           target=Path("docs/volume-overlays/polygon-volume-attributes.json")
-          existing={}
+          old_doc={}
           if target.exists():
-              try:
-                  old_doc=json.loads(target.read_text(encoding="utf-8"))
-                  existing={str(r["objectid"]):r for r in old_doc.get("records",[]) if r.get("raster_code") not in {g["raster"] for g in summary}}
-              except (ValueError,KeyError,TypeError):
-                  existing={}
+              try: old_doc=json.loads(target.read_text(encoding="utf-8"))
+              except (ValueError, OSError): old_doc={}
+          processed={g["raster"] for g in summary}
+          existing={str(r["objectid"]):r for r in old_doc.get("records",[]) if r.get("raster_code") not in processed}
           records=list(existing.values())
           for group in summary:
               for row in group["rows"]:
@@ -87,16 +86,16 @@ jobs:
                         "beteckning":row["beteckning"],"area_ha":row["area_ha"],"valid_cells":row["valid_cells"],
                         "coverage_pct":row["coverage_pct"],"mean_m3sk_ha":row["mean_m3sk_ha"],
                         "estimated_total_m3sk":row["estimated_total_m3sk"]})
+          counts=dict(old_doc.get("sample_counts",{}))
+          for g in summary: counts[g["raster"]]={"sampled":g["polygon_count"],"valid":sum(r["status"]=="ok" for r in g["rows"])}
           payload={"dataset":"Skogsstyrelsen Skogliga grunddata – volym omdrev 3",
             "method":"cell-centre inclusion; NoData excluded; valid zero retained",
-            "sample_limit_per_raster":len(summary[0]["rows"]) if summary else 0,
-            "note":"Only sampled polygons with valid raster cells are listed. Missing IDs mean not yet calculated in this sample, not necessarily missing forest volume.",
+            "sample_limit_per_raster":max((g["polygon_count"] for g in summary),default=0),
+            "note":"Records are computed from the selected original raster and source polygons. Missing IDs mean no valid cell-centre samples in this run, not necessarily missing forest volume.",
             "generated_at_utc":__import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
-            "sample_counts":{**(old_doc.get("sample_counts",{}) if "old_doc" in globals() else {}), **{g["raster"]:{"sampled":g["polygon_count"],"valid":sum(r["status"]=="ok" for r in g["rows"])} for g in summary}},
-            "records":records}
-          target=Path("docs/volume-overlays/polygon-volume-attributes.json")
+            "sample_counts":counts,"records":records}
           target.parent.mkdir(parents=True,exist_ok=True)
-          target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
           print(f"Prepared public popup lookup: {len(records)} polygons have valid raster values")
           PY
       - name: Publish sampled volume attributes to Pages
