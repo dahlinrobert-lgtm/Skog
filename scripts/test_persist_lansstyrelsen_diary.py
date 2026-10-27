@@ -153,6 +153,38 @@ class DiaryHistoryTests(unittest.TestCase):
             self.assertFalse(after["absent_ids_interpreted_as_removed"])
 
 
+    def test_records_are_persisted_under_each_county_in_all_counties_run(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state, events, summary = root / "state.json", root / "events.jsonl", root / "summary.json"
+            run = self.make_run("naturvårdsbränning")
+            run["requested_county"] = "Alla län"
+            run["counties"] = ["Länsstyrelsen i Norrbottens län", "Länsstyrelsen i Västerbottens län"]
+            run["results"] = [
+                {**run["results"][0], "diary": run["counties"][0], "diary_number": "1234-2026"},
+                {**run["results"][0], "diary": run["counties"][1], "diary_number": "1234-2026"},
+            ]
+            run["result_count"] = 2
+            run["reported_total_results"] = 2
+            run["queries"] = [{
+                "search_term": "naturvårdsbränning", "requested_county": c,
+                "request_ok": True, "result_count": 1, "reported_total_results": 1,
+                "total_reconciled": True, "pagination": {"pages_read": 1, "has_next_page": False},
+                "results": [r],
+            } for c, r in zip(run["counties"], run["results"])]
+            run["per_query_counts"] = [{} for _ in run["queries"]]
+            result = self.invoke(run, state, events, summary)
+            saved = json.loads(state.read_text(encoding="utf-8"))
+            self.assertEqual(len(saved["records"]), 2)
+            self.assertIn("länsstyrelsen i norrbottens län::1234-2026", saved["records"])
+            self.assertIn("länsstyrelsen i västerbottens län::1234-2026", saved["records"])
+            after = json.loads(summary.read_text(encoding="utf-8"))
+            self.assertEqual(after["diary"], "Alla län")
+            self.assertEqual(after["counties"], run["counties"])
+            self.assertEqual(after["query_count"], 2)
+
+
+
 class DiaryMultiSearchValidationTests(unittest.TestCase):
     def test_parse_search_terms_deduplicates_case_insensitively(self):
         terms = ["naturvårdsbränning"]
