@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       sample_limit:
-        description: Maximum real polygons per raster area (validation sample)
+        description: Maximum real polygons per raster area (validation sample; 0 means all)
         required: true
         default: "0"
         type: string
@@ -33,12 +33,15 @@ jobs:
           import json
           from pathlib import Path
           doc=json.loads(Path("real-volume-polygons.geojson").read_text(encoding="utf-8"))
-          summary=[]
-          for group in doc["raster_groups"]:
-              code=group["metadata"]["raster_code"]
+          codes=[x.strip() for x in "${{ inputs.raster_codes || '13' }}".split(",") if x.strip()]
+          groups={str(g["metadata"]["raster_code"]):g for g in doc["raster_groups"]}
+          for code in codes:
+              group=groups.get(code)
+              if group is None:
+                  raise SystemExit(f"Raster group {code} missing from fetched GeoJSON")
               path=Path(f"real-polygons-{code}.geojson")
               path.write_text(json.dumps({"type":"FeatureCollection","features":group["features"]},ensure_ascii=False),encoding="utf-8")
-              print(f"raster {code}: {len(group['features'])} real polygons")
+              print(f"raster {code}: {len(group['features'])} real polygons",flush=True)
           PY
           set -e
           for code in $(echo "${{ inputs.raster_codes || '13' }}" | tr ',' ' '); do
@@ -56,7 +59,8 @@ jobs:
               code=report_path.stem.rsplit("-",1)[-1]
               report=json.loads(report_path.read_text(encoding="utf-8"))
               raster=next((r for r in report["rasters"] if r["source_archive"].endswith(f"_{code}.zip")),None)
-              if raster is None: raise SystemExit(f"Raster {code} missing in analysis report")
+              if raster is None:
+                  raise SystemExit(f"Raster {code} missing in analysis report. Errors: {report.get('errors',[])}")
               rows=[]
               for item in raster["per_polygon"]:
                   s=item["stats"]
@@ -70,14 +74,13 @@ jobs:
               for x in rows[:8]: print(x)
               if report["errors"]: raise SystemExit(report["errors"])
           Path("real-volume-summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          # Read existing lookup so single-area runs retain the other raster areas.
           target=Path("docs/volume-overlays/polygon-volume-attributes.json")
           old_doc={}
           if target.exists():
               try: old_doc=json.loads(target.read_text(encoding="utf-8"))
               except (ValueError, OSError): old_doc={}
           processed={g["raster"] for g in summary}
-          existing={str(r["objectid"]):r for r in old_doc.get("records",[]) if r.get("raster_code") not in processed}
+          existing={f"{r.get('raster_code')}:{r.get('objectid')}":r for r in old_doc.get("records",[]) if str(r.get("raster_code")) not in processed}
           records=list(existing.values())
           for group in summary:
               for row in group["rows"]:
@@ -95,7 +98,7 @@ jobs:
             "generated_at_utc":__import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
             "sample_counts":counts,"records":records}
           target.parent.mkdir(parents=True,exist_ok=True)
-          target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+          target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
           print(f"Prepared public popup lookup: {len(records)} polygons have valid raster values")
           PY
       - name: Publish sampled volume attributes to Pages
@@ -107,8 +110,6 @@ jobs:
             echo "Volume attribute lookup unchanged."
           else
             git commit -m "Update sampled polygon volume attributes"
-            # Monitoring and Pages workflows may push while this analysis is running.
-            # Rebase generated output onto the latest main before pushing.
             for attempt in 1 2 3 4 5; do
               git fetch origin main
               git rebase origin/main
@@ -123,14 +124,15 @@ jobs:
               sleep 2
             done
           fi
-      - name: Upload real polygon volume analysis
+      - name: Upload real polygon volume analysis and diagnostics
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: real-harvest-volume-analysis
           path: |
             real-volume-polygons.geojson
+            real-polygons-*.geojson
             real-volume-report-*.json
             real-volume-summary.json
-          if-no-files-found: error
-
-# Re-run trigger marker: workflow is manual-only for long raster runs.
+          if-no-files-found: warn
+          retention-days: 30
