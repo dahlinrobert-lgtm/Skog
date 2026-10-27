@@ -157,6 +157,13 @@ def main() -> None:
             body_text = clean(page.locator("body").inner_text(timeout=20000))
             result["http_status"] = 200 if page.locator("body").count() else 0
             result["reported_total_results"] = parse_total(body_text)
+            # Preserve enough source diagnostics to explain portal/layout changes
+            # without accepting an unvalidated response as a successful search.
+            result["body_text_excerpt"] = body_text[:2500]
+            result["result_grid_present"] = grid_present
+            result["result_grid_selector"] = RESULT_GRID
+            result["current_url"] = page.url
+            result["title_input_value"] = page.locator(TITLE_INPUT).input_value() if page.locator(TITLE_INPUT).count() else None
             result["criterion_validation_message"] = (
                 "Minst ett sökkriterium förutom diarium måste vara angivet" in body_text
             )
