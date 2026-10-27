@@ -219,6 +219,8 @@ def main() -> None:
         "observed_at": observed_at,
         "diary": county,
         "search_term": search_term,
+        "search_terms": run.get("search_terms") or [search_term],
+        "per_query_counts": run.get("per_query_counts", []),
         "request_ok": True,
         "extracted_count": len(run["results"]),
         "reported_total_results": total,
