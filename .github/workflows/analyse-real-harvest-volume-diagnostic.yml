@@ -1,0 +1,86 @@
+name: Diagnose real harvest volume analysis
+
+on:
+  workflow_dispatch:
+    inputs:
+      sample_limit:
+        description: Diagnostic sample size per raster (use 10000 to reproduce early failure)
+        required: true
+        default: "10000"
+        type: string
+      raster_codes:
+        description: Raster areas to test
+        required: true
+        default: "13"
+        type: string
+  push:
+    paths:
+      - "scripts/analyze_volume_for_polygon.py"
+      - "scripts/fetch_real_harvests_for_volume_rasters.py"
+      - ".github/workflows/analyse-real-harvest-volume-diagnostic.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install analysis dependencies
+        run: python -m pip install requests numpy rasterio shapely pyproj
+      - name: Fetch a bounded polygon sample
+        env:
+          LIMIT_INPUT: ${{ inputs.sample_limit }}
+          CODES_INPUT: ${{ inputs.raster_codes }}
+        run: |
+          limit="${LIMIT_INPUT:-10000}"
+          codes="${CODES_INPUT:-13}"
+          python scripts/fetch_real_harvests_for_volume_rasters.py \
+            --output real-volume-polygons.geojson \
+            --limit "$limit" \
+            --raster-codes "$codes"
+      - name: Analyse sample and preserve diagnostics on failure
+        env:
+          CODES_INPUT: ${{ inputs.raster_codes }}
+        run: |
+          set +e
+          codes="${CODES_INPUT:-13}"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          doc=json.loads(Path("real-volume-polygons.geojson").read_text(encoding="utf-8"))
+          groups={str(g["metadata"]["raster_code"]):g for g in doc["raster_groups"]}
+          codes=[x.strip() for x in os.environ.get("CODES_INPUT","13").split(",") if x.strip()]
+          for code in codes:
+              group=groups[code]
+              Path(f"real-polygons-{code}.geojson").write_text(
+                  json.dumps({"type":"FeatureCollection","features":group["features"]},ensure_ascii=False),
+                  encoding="utf-8")
+          PY
+          status=0
+          for code in $(echo "$codes" | tr ',' ' '); do
+            mkdir -p "raster-data-$code"
+            cp "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" "raster-data-$code/"
+            python scripts/analyze_volume_for_polygon.py \
+              --polygon "real-polygons-$code.geojson" \
+              --data-dir "raster-data-$code" \
+              --output "real-volume-report-$code.json" || status=$?
+          done
+          echo "ANALYSIS_EXIT_CODE=$status"
+          exit "$status"
+      - name: Upload diagnostic input, reports and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-harvest-volume-diagnostic
+          path: |
+            real-volume-polygons.geojson
+            real-polygons-*.geojson
+            real-volume-report-*.json
+          if-no-files-found: warn
+          retention-days: 14
