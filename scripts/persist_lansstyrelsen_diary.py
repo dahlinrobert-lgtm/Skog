@@ -94,7 +94,6 @@ def main() -> None:
     seen_this_run: set[str] = set()
     invalid_count = 0
 
-    per_query_counts = run.get("per_query_counts", [])
     for raw in run["results"]:
         if not isinstance(raw, dict):
             invalid_count += 1
@@ -234,7 +233,6 @@ def main() -> None:
         "diary": county,
         "search_term": search_term,
         "search_terms": run.get("search_terms") or [search_term],
-        "per_query_counts": per_query_counts,
         "request_ok": True,
         "extracted_count": len(run["results"]),
         "reported_total_results": total,
