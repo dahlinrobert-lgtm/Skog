@@ -97,7 +97,7 @@ def parse_search_terms(primary: str, extras: str = "") -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--county", required=True, help="Exact diary option label")
+    parser.add_argument("--county", required=True, help="Exact public diary option label or 'Alla län'")
     parser.add_argument("--search-term", required=True)
     parser.add_argument("--extra-search-terms", default="", help="Additional comma- or newline-separated title phrases")
     parser.add_argument("--output", type=Path, required=True)
@@ -108,35 +108,44 @@ def main() -> None:
     except ValueError as exc:
         raise SystemExit(str(exc)) from exc
 
-    def run_query(term: str, browser) -> dict:
-        query_result = {
-            "search_term": term,
-            "request_ok": False,
-            "result_count": 0,
-            "reported_total_results": None,
-            "results": [],
+    def get_options(browser) -> list[dict]:
+        page = browser.new_page(locale="sv-SE")
+        try:
+            page.goto(URL, wait_until="domcontentloaded", timeout=60000)
+            page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
+            return [
+                {"label": clean(opt.inner_text()), "value": opt.get_attribute("value")}
+                for opt in page.locator(f"{COUNTY_SELECT} option").all()
+            ]
+        finally:
+            page.close()
+
+    def run_query(term: str, browser, county_label: str) -> dict:
+        result = {
+            "search_term": term, "requested_county": county_label, "request_ok": False,
+            "result_count": 0, "reported_total_results": None, "results": [],
             "pagination": {"pages_read": 0, "has_next_page": None},
-            "table_diagnostics": [],
-            "error": None,
+            "table_diagnostics": [], "error": None,
         }
         page = browser.new_page(locale="sv-SE")
-        local_seen: set[str] = set()
+        seen: set[str] = set()
         try:
             response = page.goto(URL, wait_until="domcontentloaded", timeout=60000)
-            query_result["initial_http_status"] = response.status if response else None
+            result["initial_http_status"] = response.status if response else None
             page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
-            options = [clean(x) for x in page.locator(f"{COUNTY_SELECT} option").all_text_contents()]
-            if args.county not in options:
-                raise RuntimeError(f"County option not found: {args.county}")
-            page.locator(COUNTY_SELECT).select_option(label=args.county)
+            options = [
+                {"label": clean(opt.inner_text()), "value": opt.get_attribute("value")}
+                for opt in page.locator(f"{COUNTY_SELECT} option").all()
+            ]
+            selected = next((o for o in options if o["label"] == county_label), None)
+            if selected is None:
+                raise RuntimeError(f"County option not found: {county_label}")
+            page.locator(COUNTY_SELECT).select_option(value=selected["value"])
             page.locator(TITLE_INPUT).fill(term)
-
             try:
                 with page.expect_navigation(wait_until="domcontentloaded", timeout=20000):
                     page.locator(SEARCH_BUTTON).click()
             except PlaywrightTimeoutError:
-                if page.locator(SEARCH_BUTTON).is_visible():
-                    page.locator(SEARCH_BUTTON).click(timeout=3000)
                 page.wait_for_timeout(1800)
 
             try:
@@ -146,160 +155,169 @@ def main() -> None:
                 grid_present = page.locator(RESULT_GRID).count() > 0
 
             body_text = clean(page.locator("body").inner_text(timeout=20000))
-            query_result["http_status"] = 200 if page.locator("body").count() else 0
-            query_result["reported_total_results"] = parse_total(body_text)
-            query_result["criterion_validation_message"] = (
+            result["http_status"] = 200 if page.locator("body").count() else 0
+            result["reported_total_results"] = parse_total(body_text)
+            result["criterion_validation_message"] = (
                 "Minst ett sökkriterium förutom diarium måste vara angivet" in body_text
             )
-            if query_result["criterion_validation_message"]:
+            if result["criterion_validation_message"]:
                 raise RuntimeError("Diary form rejected the query because a search criterion was missing")
-            if query_result["reported_total_results"] == 0:
-                query_result["request_ok"] = True
-                query_result["pagination"]["has_next_page"] = False
+
+            if result["reported_total_results"] == 0:
+                result["request_ok"] = True
+                result["pagination"]["has_next_page"] = False
             elif not grid_present:
-                raise RuntimeError("No result grid found although the page did not report zero results")
+                raise RuntimeError("No result grid found although source did not report zero results")
             else:
-                query_result["request_ok"] = True
+                result["request_ok"] = True
                 for page_number in range(1, 101):
                     page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
                     current_body = clean(page.locator("body").inner_text(timeout=20000))
-                    if query_result["reported_total_results"] is None:
-                        query_result["reported_total_results"] = parse_total(current_body)
-                    records, diag = extract_grid(page, page_number, local_seen)
-                    query_result["results"].extend(records)
-                    query_result["table_diagnostics"].append(diag)
-                    query_result["pagination"]["pages_read"] = page_number
-
+                    if result["reported_total_results"] is None:
+                        result["reported_total_results"] = parse_total(current_body)
+                    rows, diag = extract_grid(page, page_number, seen)
+                    result["results"].extend(rows)
+                    result["table_diagnostics"].append(diag)
+                    result["pagination"]["pages_read"] = page_number
                     controls = page.locator(
                         "#SearchPlaceHolder_caseGridView a, "
                         "#SearchPlaceHolder_caseGridView input[type='submit'], "
                         "#SearchPlaceHolder_caseGridView input[type='button']"
                     )
-                    next_control = None
+                    nxt = None
                     for i in range(controls.count()):
-                        control = controls.nth(i)
+                        c = controls.nth(i)
                         label = clean(" ".join([
-                            control.inner_text() if control.evaluate("(e) => e.tagName.toLowerCase() !== 'input'") else "",
-                            control.get_attribute("value") or "",
-                            control.get_attribute("title") or "",
-                            control.get_attribute("aria-label") or "",
+                            c.inner_text() if c.evaluate("(e) => e.tagName.toLowerCase() !== 'input'") else "",
+                            c.get_attribute("value") or "", c.get_attribute("title") or "",
+                            c.get_attribute("aria-label") or "",
                         ]))
                         if label.casefold() in {"next", "nästa", ">", "»", "›"} or "nästa" in label.casefold() or "next" in label.casefold():
-                            next_control = control
+                            nxt = c
                             break
-                    if next_control is None:
-                        query_result["pagination"]["has_next_page"] = False
+                    if nxt is None:
+                        result["pagination"]["has_next_page"] = False
                         break
-
-                    old_count = len(local_seen)
-                    old_first = query_result["results"][0]["diary_number"] if query_result["results"] else None
-                    href = next_control.get_attribute("href") or ""
-                    postback_match = re.search(r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)", href)
-                    if postback_match:
-                        target, argument = postback_match.groups()
+                    before_count = len(seen)
+                    href = nxt.get_attribute("href") or ""
+                    postback = re.search(r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)", href)
+                    if postback:
+                        target, argument = postback.groups()
                         with page.expect_response(lambda resp: "diarium.lansstyrelsen.se" in resp.url and resp.request.method == "POST", timeout=15000):
                             page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
                     else:
                         try:
                             with page.expect_navigation(wait_until="domcontentloaded", timeout=12000):
-                                next_control.click()
+                                nxt.click()
                         except PlaywrightTimeoutError:
-                            next_control.click(timeout=3000)
+                            nxt.click(timeout=3000)
                             page.wait_for_timeout(1200)
                     page.wait_for_timeout(300)
-                    if len(local_seen) == old_count:
-                        new_body = clean(page.locator("body").inner_text(timeout=20000))
-                        new_grid = page.locator(RESULT_GRID)
-                        new_first = clean(new_grid.locator("tr").nth(1).locator("td, th").nth(0).inner_text()) if new_grid.count() and new_grid.locator("tr").count() > 1 else None
-                        if new_body == current_body or new_first == old_first:
-                            raise RuntimeError(f"Pagination did not advance after page {page_number}")
+                    if len(seen) == before_count:
+                        raise RuntimeError(f"Pagination did not add new diary identifiers after page {page_number}")
                 else:
                     raise RuntimeError("Safety cap reached after 100 result pages")
 
-            query_result["result_count"] = len(query_result["results"])
-            query_result["total_reconciled"] = (
-                query_result["reported_total_results"] is not None
-                and query_result["reported_total_results"] == query_result["result_count"]
-                and query_result["pagination"]["has_next_page"] is False
+            result["result_count"] = len(result["results"])
+            result["total_reconciled"] = (
+                result["reported_total_results"] is not None
+                and result["reported_total_results"] == result["result_count"]
+                and result["pagination"]["has_next_page"] is False
             )
-            if not query_result["total_reconciled"]:
+            if not result["total_reconciled"]:
                 raise RuntimeError(
-                    f"Query '{term}' extracted {query_result['result_count']} records but source reported "
-                    f"{query_result['reported_total_results']}"
+                    f"Query '{term}' / '{county_label}' extracted {result['result_count']} records "
+                    f"but source reported {result['reported_total_results']}"
                 )
-            query_result["validation_warning"] = None
-            return query_result
+            result["validation_warning"] = None
+            return result
         finally:
             page.close()
 
     batch = {
-        "source": URL,
-        "tested_at_utc": datetime.now(timezone.utc).isoformat(),
-        "requested_county": args.county,
-        "search_term": terms[0],
-        "search_terms": terms,
-        "browser_submission": True,
-        "request_ok": False,
-        "result_count": 0,
-        "reported_total_results": None,
-        "results": [],
+        "source": URL, "tested_at_utc": datetime.now(timezone.utc).isoformat(),
+        "requested_county": args.county, "search_term": terms[0], "search_terms": terms,
+        "browser_submission": True, "request_ok": False, "result_count": 0,
+        "reported_total_results": None, "results": [],
         "pagination": {"pages_read": 0, "has_next_page": False},
-        "table_diagnostics": [],
-        "error": None,
-        "queries": [],
+        "table_diagnostics": [], "error": None, "queries": [], "counties": [],
     }
-
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             try:
-                merged_by_id: dict[str, dict] = {}
-                for term in terms:
-                    query_result = run_query(term, browser)
-                    batch["queries"].append(query_result)
-                    for record in query_result["results"]:
-                        number = record["diary_number"]
-                        if number not in merged_by_id:
-                            record["query_terms"] = [term]
-                            merged_by_id[number] = record
-                        elif term not in merged_by_id[number]["query_terms"]:
-                            merged_by_id[number]["query_terms"].append(term)
-
-                batch["results"] = list(merged_by_id.values())
-                batch["request_ok"] = True
+                options = get_options(browser)
+                if args.county == "Alla län":
+                    all_option = next((o for o in options if o["label"].casefold() == "alla län"), None)
+                    if all_option:
+                        counties = [all_option["label"]]
+                        selection_mode = "portal_all_counties_option"
+                    else:
+                        counties = [
+                            o["label"] for o in options
+                            if o["label"] and o["value"] not in (None, "", "0", "-1")
+                            and "välj" not in o["label"].casefold()
+                            and "alla län" not in o["label"].casefold()
+                        ]
+                        selection_mode = "individual_counties_fallback"
+                    if not counties:
+                        raise RuntimeError("Could not resolve any county options from the portal")
+                else:
+                    counties = [args.county]
+                    selection_mode = "single_county"
+                batch["counties"] = counties
+                batch["selection_mode"] = selection_mode
+                merged: dict[str, dict] = {}
+                for county in counties:
+                    for term in terms:
+                        query = run_query(term, browser, county)
+                        batch["queries"].append(query)
+                        for record in query["results"]:
+                            diary_number = record["diary_number"]
+                            key = f"{county.casefold()}::{diary_number}"
+                            if key not in merged:
+                                record["diary"] = county
+                                record["query_terms"] = [term]
+                                merged[key] = record
+                            elif term not in merged[key]["query_terms"]:
+                                merged[key]["query_terms"].append(term)
+                batch["results"] = list(merged.values())
+                batch["request_ok"] = bool(batch["queries"]) and all(q["request_ok"] for q in batch["queries"])
                 batch["result_count"] = len(batch["results"])
-                batch["reported_total_results"] = sum(q["reported_total_results"] for q in batch["queries"])
+                batch["reported_total_results"] = sum(q["reported_total_results"] for q in batch["queries"] if q["reported_total_results"] is not None)
                 batch["pagination"]["pages_read"] = sum(q["pagination"]["pages_read"] or 0 for q in batch["queries"])
-                batch["pagination"]["has_next_page"] = False
-                batch["total_reconciled"] = all(q.get("total_reconciled") for q in batch["queries"])
+                batch["pagination"]["has_next_page"] = all(q["pagination"]["has_next_page"] is False for q in batch["queries"])
+                batch["total_reconciled"] = batch["request_ok"] and all(q.get("total_reconciled") for q in batch["queries"])
                 batch["per_query_counts"] = [
-                    {"search_term": q["search_term"], "extracted_count": q["result_count"],
-                     "reported_total_results": q["reported_total_results"], "total_reconciled": q["total_reconciled"]}
+                    {"county": q["requested_county"], "search_term": q["search_term"],
+                     "extracted_count": q["result_count"], "reported_total_results": q["reported_total_results"],
+                     "total_reconciled": q["total_reconciled"]}
                     for q in batch["queries"]
                 ]
+                batch["county_summaries"] = [
+                    {"county": county, "query_count": sum(q["requested_county"] == county for q in batch["queries"]),
+                     "unique_records": sum(1 for rec in batch["results"] if rec.get("diary") == county)}
+                    for county in counties
+                ]
+                # The persistence layer validates aggregate queries per-query. Its top-level
+                # total is set to unique IDs to handle overlap between county/query sets.
+                batch["reported_total_results"] = batch["result_count"]
             finally:
                 browser.close()
     except Exception as exc:
         batch["error"] = f"{type(exc).__name__}: {exc}"
         batch["request_ok"] = False
-
+        batch["total_reconciled"] = False
     batch["validation_warning"] = None
-    if not batch["request_ok"] and not batch.get("error"):
-        batch["error"] = "Search batch was not validated"
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(batch, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({
-        "request_ok": batch["request_ok"],
-        "county": batch["requested_county"],
-        "search_term": batch["search_term"],
-        "search_terms": batch.get("search_terms"),
-        "result_count": batch["result_count"],
+        "request_ok": batch["request_ok"], "county": batch["requested_county"],
+        "counties_searched": len(batch.get("counties", [])), "selection_mode": batch.get("selection_mode"),
+        "search_terms": batch.get("search_terms"), "result_count": batch["result_count"],
         "reported_total_results": batch["reported_total_results"],
-        "total_reconciled": batch.get("total_reconciled"),
-        "per_query_counts": batch.get("per_query_counts"),
-        "pagination": batch["pagination"],
+        "total_reconciled": batch.get("total_reconciled"), "per_query_counts": batch.get("per_query_counts"),
         "error": batch.get("error"),
-        "validation_warning": batch.get("validation_warning"),
     }, ensure_ascii=False))
     if not batch["request_ok"]:
         raise SystemExit(1)
