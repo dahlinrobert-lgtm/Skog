@@ -126,28 +126,21 @@ def main() -> None:
                 "note": "First observation by this tool; not proof that the case was newly registered.",
             })
         else:
-            # Compare only source-provided case fields. Search term, row position,
-            # query totals, and page number are query metadata, not case changes.
-            previous_source = {
-                "source_url": previous.get("source_url"),
-                "diary_number": previous.get("diary_number"),
-                "diary": previous.get("diary"),
-                "title": previous.get("title"),
-                "status": previous.get("status"),
-                "source_date": previous.get("source_date"),
-                "columns": previous.get("columns", {}),
-                "links": previous.get("links", []),
-            }
-            candidate_source = {
-                "source_url": candidate.get("source_url"),
-                "diary_number": candidate.get("diary_number"),
-                "diary": candidate.get("diary"),
-                "title": candidate.get("title"),
-                "status": candidate.get("status"),
-                "source_date": candidate.get("source_date"),
-                "columns": candidate.get("columns", {}),
-                "links": candidate.get("links", []),
-            }
+            # Compare source fields, ignoring query metadata and any column/header
+            # fields that are absent from a given search-page extract.
+            def source_projection(record: dict[str, Any]) -> dict[str, Any]:
+                columns = record.get("columns", {})
+                return {
+                    "source_url": record.get("source_url"),
+                    "diary_number": record.get("diary_number"),
+                    "diary": record.get("diary"),
+                    "title": record.get("title") or columns.get("Ärenderubrik"),
+                    "status": record.get("status") or columns.get("Status"),
+                    "source_date": record.get("source_date") or columns.get("In/Upp-datum"),
+                }
+
+            previous_source = source_projection(previous)
+            candidate_source = source_projection(candidate)
             previous_queries = set(previous.get("queries_seen", []))
             if previous.get("query_term"):
                 previous_queries.add(previous["query_term"])
@@ -164,12 +157,13 @@ def main() -> None:
             if previous_source != candidate_source:
                 event_type = "record_changed"
                 updated.update(candidate)
+                updated["columns"] = {**previous.get("columns", {}), **candidate.get("columns", {})}
                 updated.update({
                     "first_observed_at": previous.get("first_observed_at", observed_at),
                     "last_observed_at": observed_at,
                     "observation_count": int(previous.get("observation_count", 0)) + 1,
                     "queries_seen": sorted(previous_queries),
-                    "content_hash": content_hash(candidate_source),
+                    "content_hash": content_hash(source_projection(updated)),
                 })
                 records[key] = updated
                 events.append({
@@ -186,7 +180,7 @@ def main() -> None:
                     "note": "A source-row change was detected. Review before/after fields; query metadata is not itself treated as a change.",
                 })
             else:
-                updated["content_hash"] = content_hash(previous_source)
+                updated["content_hash"] = content_hash(candidate_source)
                 records[key] = updated
 
 
