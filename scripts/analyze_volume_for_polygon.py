@@ -96,35 +96,49 @@ def extract_tif(archive_path: Path, target_dir: Path) -> Path:
 
 
 def summarize_feature(ds: rasterio.io.DatasetReader, geom, nodata: float | int) -> dict[str, Any]:
-    if not geom.intersects(shape({
+    raster_extent = shape({
         "type": "Polygon",
         "coordinates": [[
             [ds.bounds.left, ds.bounds.bottom], [ds.bounds.right, ds.bounds.bottom],
             [ds.bounds.right, ds.bounds.top], [ds.bounds.left, ds.bounds.top],
             [ds.bounds.left, ds.bounds.bottom]
         ]]
-    })):
+    })
+    if not geom.intersects(raster_extent):
         return empty_stats("outside_raster_extent")
 
-    intersection = geom.intersection(shape({
-        "type": "Polygon",
-        "coordinates": [[
-            [ds.bounds.left, ds.bounds.bottom], [ds.bounds.right, ds.bounds.bottom],
-            [ds.bounds.right, ds.bounds.top], [ds.bounds.left, ds.bounds.top],
-            [ds.bounds.left, ds.bounds.bottom]
-        ]]
-    }))
+    intersection = geom.intersection(raster_extent)
     if intersection.is_empty:
         return empty_stats("outside_raster_extent")
 
-    win = from_bounds(*intersection.bounds, transform=ds.transform)
-    win = win.round_offsets().round_lengths()
-    win = win.intersection(rasterio.windows.Window(0, 0, ds.width, ds.height))
-    if win.width <= 0 or win.height <= 0:
+    # A polygon can touch the raster boundary while containing no pixel centres.
+    # In that case rounded bounds may yield a zero-height/width window, or a
+    # window that only touches the raster. Avoid Window.intersection() raising
+    # WindowError for these legitimate edge cases by clamping integer indices
+    # to the raster dimensions and checking the resulting dimensions explicitly.
+    raw = from_bounds(*intersection.bounds, transform=ds.transform)
+    rounded = raw.round_offsets().round_lengths()
+    col_start = max(0, int(rounded.col_off))
+    row_start = max(0, int(rounded.row_off))
+    col_stop = min(ds.width, int(rounded.col_off + rounded.width))
+    row_stop = min(ds.height, int(rounded.row_off + rounded.height))
+    if col_stop <= col_start or row_stop <= row_start:
         return empty_stats("no_raster_cells_in_extent")
+
+    from rasterio.windows import Window
+    win = Window(col_start, row_start, col_stop - col_start, row_stop - row_start)
     arr = ds.read(1, window=win, masked=False)
+    if arr.size == 0:
+        return empty_stats("no_raster_cells_in_extent")
+
     transform = ds.window_transform(win)
-    inside = geometry_mask([mapping(geom)], out_shape=arr.shape, transform=transform, invert=True, all_touched=False)
+    inside = geometry_mask(
+        [mapping(intersection)],
+        out_shape=arr.shape,
+        transform=transform,
+        invert=True,
+        all_touched=False,
+    )
     valid = inside & (arr != nodata)
     zeros = valid & (arr == 0)
     positive = valid & (arr > 0)
@@ -155,7 +169,6 @@ def summarize_feature(ds: rasterio.io.DatasetReader, geom, nodata: float | int) 
         "pixel_assignment_rule": "cell-centre inclusion (all_touched=False); adjacent polygons aligned to pixel edges do not share cells",
         "method": "cell-centre inclusion; raster cell value treated as m3sk/ha; NoData excluded; zero retained",
     }
-
 
 def empty_stats(status: str) -> dict[str, Any]:
     return {
