@@ -27,7 +27,7 @@ DEFAULT_DATA_DIR = ROOT / "data" / "skogliga-grunddata"
 NODATA_FALLBACK = -1
 
 
-def load_features(path: Path) -> tuple[list[dict[str, Any]], CRS]:
+def load_features(path: Path) -> tuple[list[dict[str, Any]], CRS, list[dict[str, Any]]]:
     doc = json.loads(path.read_text(encoding="utf-8"))
     declared_crs = doc.get("crs")
     # GeoJSON RFC 7946 coordinates are WGS84 unless a legacy CRS member says otherwise.
@@ -47,21 +47,36 @@ def load_features(path: Path) -> tuple[list[dict[str, Any]], CRS]:
         raise ValueError("Input must be a GeoJSON Polygon, MultiPolygon, Feature or FeatureCollection.")
 
     clean = []
+    rejected = []
     for i, feature in enumerate(features):
         geom_json = feature.get("geometry")
+        props = feature.get("properties") or {}
+        feature_id = str(feature.get("id", props.get("id", i)))
         if not geom_json or geom_json.get("type") not in {"Polygon", "MultiPolygon"}:
+            rejected.append({"feature_index": i, "feature_id": feature_id, "reason": "missing_or_non_polygon_geometry"})
             continue
-        geom = shape(geom_json)
-        if geom.is_empty or not geom.is_valid:
-            raise ValueError(f"Feature {i} has an empty or invalid polygon geometry.")
-        clean.append({
-            "feature_id": str(feature.get("id", feature.get("properties", {}).get("id", i))),
-            "properties": feature.get("properties") or {},
-            "geometry": geom,
-        })
+        try:
+            geom = shape(geom_json)
+            if geom.is_empty:
+                rejected.append({"feature_index": i, "feature_id": feature_id, "reason": "empty_geometry"})
+                continue
+            if not geom.is_valid:
+                # Attempt a conservative repair; retain only polygonal parts.
+                repaired = geom.buffer(0)
+                if repaired.is_empty or not repaired.is_valid or repaired.geom_type not in {"Polygon", "MultiPolygon"}:
+                    rejected.append({"feature_index": i, "feature_id": feature_id, "reason": "invalid_geometry_unrepairable"})
+                    continue
+                geom = repaired
+            clean.append({
+                "feature_id": feature_id,
+                "properties": props,
+                "geometry": geom,
+            })
+        except Exception as exc:
+            rejected.append({"feature_index": i, "feature_id": feature_id, "reason": f"geometry_parse_error: {type(exc).__name__}: {exc}"})
     if not clean:
-        raise ValueError("No valid Polygon or MultiPolygon features found.")
-    return clean, source_crs
+        raise ValueError(f"No valid Polygon or MultiPolygon features found; rejected={len(rejected)}.")
+    return clean, source_crs, rejected
 
 
 def extract_tif(archive_path: Path, target_dir: Path) -> Path:
@@ -165,7 +180,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, help="Optional output JSON path; stdout if omitted")
     args = parser.parse_args()
 
-    features, inferred_crs = load_features(args.polygon)
+    features, inferred_crs, rejected_features = load_features(args.polygon)
     source_crs = CRS.from_user_input(args.polygon_crs) if args.polygon_crs else inferred_crs
     archives = sorted(args.data_dir.glob("*.zip"))
     if not archives:
@@ -213,6 +228,12 @@ def main() -> int:
         "input_geojson": str(args.polygon),
         "input_crs": source_crs.to_string(),
         "polygon_count": len(features),
+        "input_feature_count": len(features) + len(rejected_features),
+        "rejected_or_repaired_geometry_count": len(rejected_features),
+        "geometry_quality": {
+            "rejected_features": rejected_features,
+            "note": "Invalid polygon geometries are repaired with buffer(0) when the result remains polygonal; unrepairable or non-polygon features are listed and skipped instead of aborting the entire analysis."
+        },
         "value_unit": "m³sk/ha",
         "warnings": [
             "Modelled raster estimates describe the forest at the local laser-scanning date, not necessarily the current date.",
@@ -229,7 +250,7 @@ def main() -> int:
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(payload, encoding="utf-8")
-        print(f"Wrote {args.output}; polygons={len(features)}; rasters={len(results)}; errors={len(errors)}")
+        print(f"Wrote {args.output}; valid_polygons={len(features)}; rejected_geometries={len(rejected_features)}; rasters={len(results)}; errors={len(errors)}")
     else:
         print(payload, end="")
     return 1 if errors else 0
