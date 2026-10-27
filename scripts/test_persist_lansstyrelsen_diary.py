@@ -130,6 +130,7 @@ class DiaryHistoryTests(unittest.TestCase):
             self.assertEqual(after["state_record_count_after"], 1)
             self.assertEqual(after["extracted_count"], 1)
             self.assertEqual(after["per_query_counts"][0]["reported_total_results"], 1)
+            self.assertEqual(after["per_query_counts"][1]["reported_total_results"], 1)
             self.assertEqual(len(after["per_query_counts"]), 2)
             saved_events = [json.loads(line) for line in events.read_text(encoding="utf-8").splitlines()]
             self.assertEqual(len(saved_events), 1)
