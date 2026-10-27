@@ -22,6 +22,8 @@ on:
     paths:
       - "scripts/search_lansstyrelsen_diary.py"
       - "scripts/search_lansstyrelsen_diary_browser.py"
+      - "scripts/persist_lansstyrelsen_diary.py"
+      - "scripts/test_persist_lansstyrelsen_diary.py"
       - ".github/workflows/lansstyrelsen-diary-search.yml"
 
 permissions:
