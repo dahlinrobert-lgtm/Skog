@@ -56,7 +56,10 @@ jobs:
           doc=json.loads(Path("real-volume-polygons.geojson").read_text(encoding="utf-8"))
           # Fetcher returns raster groups under "raster_groups"; expose a clear
           # diagnostic if this output contract changes unexpectedly.
+          print("FETCH_OUTPUT_KEYS", list(doc), flush=True)
+          print("RASTER_GROUPS_TYPE", type(doc.get("raster_groups")).__name__, flush=True)
           groups={str(g["metadata"]["raster_code"]):g for g in doc.get("raster_groups", [])}
+          print("AVAILABLE_RASTER_GROUPS", list(groups), flush=True)
           codes=[x.strip() for x in os.environ.get("CODES_INPUT","13").split(",") if x.strip()]
           for code in codes:
               group=groups.get(code)
