@@ -212,6 +212,9 @@ def main() -> None:
     summary = {
         "observed_at": observed_at,
         "diary": county,
+        "counties": run.get("counties") or [county],
+        "county_summaries": run.get("county_summaries") or [],
+        "query_count": len(run.get("queries") or []),
         "search_term": search_term,
         "search_terms": run.get("search_terms") or [search_term],
         "request_ok": True,
