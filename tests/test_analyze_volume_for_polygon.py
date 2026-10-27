@@ -44,6 +44,27 @@ class PolygonInputTests(unittest.TestCase):
             self.assertEqual(features[0]["feature_id"], "a")
 
 
+
+    def test_invalid_geometry_is_repaired_or_reported_without_crashing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "invalid.json"
+            path.write_text(json.dumps({
+                "type": "FeatureCollection",
+                "features": [
+                    {"type": "Feature", "properties": {"OBJECTID": 1}, "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[[0, 0], [2, 2], [0, 2], [2, 0], [0, 0]]]
+                    }},
+                    {"type": "Feature", "properties": {"OBJECTID": 2}, "geometry": None}
+                ]
+            }), encoding="utf-8")
+            features, crs, rejected = load_features(path, include_rejected=True)
+            self.assertEqual(crs.to_epsg(), 4326)
+            self.assertEqual(len(features), 1)
+            self.assertTrue(features[0]["geometry"].is_valid)
+            self.assertEqual(len(rejected), 1)
+            self.assertEqual(rejected[0]["reason"], "missing_or_non_polygon_geometry")
+
     def test_polygon_statistics_keep_zero_and_exclude_nodata(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "synthetic.tif"
