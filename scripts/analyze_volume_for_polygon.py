@@ -221,7 +221,20 @@ def main() -> int:
                         "per_polygon": per_feature,
                     })
             except Exception as exc:
-                errors.append({"archive": archive.name, "error": f"{type(exc).__name__}: {exc}"})
+                # Preserve archive-level diagnostics in the JSON report, including
+                # the traceback: otherwise a 6-hour workflow can fail after the
+                # expensive fetch phase with no downloadable report artifact.
+                import traceback
+                errors.append({
+                    "archive": archive.name,
+                    "error": f"{type(exc).__name__}: {exc}",
+                    "traceback": traceback.format_exc(limit=12),
+                })
+                print(
+                    f"ERROR analysing raster archive {archive.name}: "
+                    f"{type(exc).__name__}: {exc}",
+                    flush=True,
+                )
 
     report = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
