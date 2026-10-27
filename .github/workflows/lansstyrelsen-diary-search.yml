@@ -25,7 +25,7 @@ on:
       - ".github/workflows/lansstyrelsen-diary-search.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   search:
