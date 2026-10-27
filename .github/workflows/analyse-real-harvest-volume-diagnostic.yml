@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       sample_limit:
-        description: Diagnostic sample size per raster (use 10000 to reproduce early failure)
+        description: Small diagnostic sample per raster; increase only after the smoke test passes
         required: true
-        default: "10000"
+        default: "100"
         type: string
       raster_codes:
         description: Raster areas to test
@@ -22,6 +22,10 @@ on:
 
 permissions:
   contents: read
+
+concurrency:
+  group: real-harvest-volume-diagnostic
+  cancel-in-progress: true
 
 jobs:
   diagnose:
@@ -39,7 +43,7 @@ jobs:
           LIMIT_INPUT: ${{ inputs.sample_limit }}
           CODES_INPUT: ${{ inputs.raster_codes }}
         run: |
-          limit="${LIMIT_INPUT:-10000}"
+          limit="${LIMIT_INPUT:-100}"
           codes="${CODES_INPUT:-13}"
           python scripts/fetch_real_harvests_for_volume_rasters.py \
             --output real-volume-polygons.geojson \
@@ -86,5 +90,6 @@ jobs:
             real-volume-polygons.geojson
             real-polygons-*.geojson
             real-volume-report-*.json
+            scripts/split_real_harvest_volume_groups.py
           if-no-files-found: warn
           retention-days: 14
