@@ -137,6 +137,10 @@ def main() -> None:
                     "title": record.get("title") or columns.get("Ärenderubrik"),
                     "status": record.get("status") or columns.get("Status"),
                     "source_date": record.get("source_date") or columns.get("In/Upp-datum"),
+                    "sender_recipient": columns.get("Avsändare/mottagare"),
+                    "postal_place": columns.get("Postort"),
+                    "municipality": columns.get("Kommun"),
+                    "decision_date": columns.get("Beslutsdatum"),
                 }
 
             previous_source = source_projection(previous)
