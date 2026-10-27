@@ -263,20 +263,23 @@ def main() -> None:
         result["error"] = f"{type(exc).__name__}: {exc}"
         result["request_ok"] = False
 
+    batch["validation_warning"] = None
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(json.dumps(batch, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({
-        "request_ok": result["request_ok"],
-        "county": result["requested_county"],
-        "search_term": result["search_term"],
-        "result_count": result["result_count"],
-        "reported_total_results": result["reported_total_results"],
-        "total_reconciled": result.get("total_reconciled"),
-        "pagination": result["pagination"],
-        "error": result.get("error"),
-        "validation_warning": result.get("validation_warning"),
+        "request_ok": batch["request_ok"],
+        "county": batch["requested_county"],
+        "search_term": batch["search_term"],
+        "search_terms": batch.get("search_terms"),
+        "result_count": batch["result_count"],
+        "reported_total_results": batch["reported_total_results"],
+        "total_reconciled": batch.get("total_reconciled"),
+        "per_query_counts": batch.get("per_query_counts"),
+        "pagination": batch["pagination"],
+        "error": batch.get("error"),
+        "validation_warning": batch.get("validation_warning"),
     }, ensure_ascii=False))
-    if not result["request_ok"]:
+    if not batch["request_ok"]:
         raise SystemExit(1)
 
 
