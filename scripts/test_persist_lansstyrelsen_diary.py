@@ -99,6 +99,36 @@ class DiaryHistoryTests(unittest.TestCase):
             self.assertNotEqual(proc.returncode, 0)
             self.assertIn("extracted count matches", proc.stderr)
 
+    def test_overlapping_search_terms_are_merged_without_duplicate_records(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state, events, summary = root / "state.json", root / "events.jsonl", root / "summary.json"
+            run = self.make_run("naturvårdsbränning")
+            record = run["results"][0]
+            record["query_terms"] = ["naturvårdsbränning", "reservat"]
+            run["search_terms"] = ["naturvårdsbränning", "reservat"]
+            run["queries"] = [
+                {
+                    "search_term": term,
+                    "request_ok": True,
+                    "result_count": 1,
+                    "reported_total_results": 1,
+                    "total_reconciled": True,
+                    "pagination": {"pages_read": 1, "has_next_page": False},
+                    "results": [record],
+                }
+                for term in run["search_terms"]
+            ]
+            run["reported_total_results"] = 2
+            self.invoke(run, state, events, summary)
+            saved = json.loads(state.read_text(encoding="utf-8"))
+            self.assertEqual(len(saved["records"]), 1)
+            saved_record = next(iter(saved["records"].values()))
+            self.assertEqual(saved_record["queries_seen"], ["naturvårdsbränning", "reservat"])
+            saved_events = [json.loads(line) for line in events.read_text(encoding="utf-8").splitlines()]
+            self.assertEqual(len(saved_events), 1)
+            self.assertTrue(saved_events[0]["baseline_only"])
+
     def test_does_not_mark_missing_ids_removed(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
