@@ -76,6 +76,10 @@ def main() -> None:
         }
         if len(unique_numbers) != len(run.get("results", [])) or len(unique_numbers) != run.get("result_count"):
             raise SystemExit("Refusing to persist: result count must match unique diary numbers across query overlap")
+        if sum(query.get("reported_total_results", 0) for query in queries) != total:
+            raise SystemExit("Refusing to persist: aggregate source total does not match per-query totals")
+    elif run.get("result_count") != total:
+        raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
     elif run.get("result_count") != total:
         raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
 
