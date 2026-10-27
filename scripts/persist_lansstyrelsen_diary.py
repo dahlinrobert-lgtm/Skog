@@ -98,12 +98,17 @@ def main() -> None:
         }
         candidate_hash = content_hash(candidate)
         previous = records.get(key)
+        # First observation of a diary identifier is a baseline, not a new-case alert.
+        # When that identifier appears under a different search term later, merge query
+        # coverage into the existing record rather than treating the query metadata as a
+        # change to the case itself.
         if previous is None:
             record = {
                 **candidate,
                 "first_observed_at": observed_at,
                 "last_observed_at": observed_at,
                 "observation_count": 1,
+                "queries_seen": [search_term],
                 "content_hash": candidate_hash,
             }
             records[key] = record
@@ -120,34 +125,75 @@ def main() -> None:
                 "baseline_only": True,
                 "note": "First observation by this tool; not proof that the case was newly registered.",
             })
-        elif previous.get("content_hash") != candidate_hash:
-            event_type = "record_changed"
-            record = {
-                **candidate,
-                "first_observed_at": previous.get("first_observed_at", observed_at),
-                "last_observed_at": observed_at,
-                "observation_count": int(previous.get("observation_count", 0)) + 1,
-                "content_hash": candidate_hash,
-            }
-            records[key] = record
-            events.append({
-                "event_id": hashlib.sha256(f"{key}|{event_type}|{observed_at}|{candidate_hash}".encode()).hexdigest(),
-                "event_type": event_type,
-                "record_key": key,
-                "diary_number": diary_number,
-                "diary": county,
-                "observed_at": observed_at,
-                "previous_hash": previous.get("content_hash"),
-                "content_hash": candidate_hash,
-                "before": {k: previous.get(k) for k in ("title", "status", "source_date")},
-                "after": {k: record.get(k) for k in ("title", "status", "source_date")},
-                "note": "A difference was detected in captured search-row data; verify source semantics before treating it as a legal status change.",
-            })
         else:
-            previous["last_observed_at"] = observed_at
-            previous["observation_count"] = int(previous.get("observation_count", 0)) + 1
-            previous["last_query_total"] = total
-            records[key] = previous
+            previous_source = {
+                "source_url": previous.get("source_url"),
+                "diary_number": previous.get("diary_number"),
+                "diary": previous.get("diary"),
+                "title": previous.get("title"),
+                "status": previous.get("status"),
+                "source_date": previous.get("source_date"),
+                "columns": previous.get("columns", {}),
+                "links": previous.get("links", []),
+            }
+            candidate_source = {
+                "source_url": candidate.get("source_url"),
+                "diary_number": candidate.get("diary_number"),
+                "diary": candidate.get("diary"),
+                "title": candidate.get("title"),
+                "status": candidate.get("status"),
+                "source_date": candidate.get("source_date"),
+                "columns": candidate.get("columns", {}),
+                "links": candidate.get("links", []),
+            }
+            previous_queries = set(previous.get("queries_seen", []))
+            previous_queries.add(previous.get("query_term", search_term))
+            previous_queries.add(search_term)
+            if previous_source != candidate_source:
+                event_type = "record_changed"
+
+                record = {
+                    **candidate,
+                    "first_observed_at": previous.get("first_observed_at", observed_at),
+                    "last_observed_at": observed_at,
+                    "observation_count": int(previous.get("observation_count", 0)) + 1,
+                    "queries_seen": sorted(previous_queries),
+                    "content_hash": candidate_hash,
+                }
+                records[key] = record
+                events.append({
+                    "event_id": hashlib.sha256(f"{key}|{event_type}|{observed_at}|{candidate_hash}".encode()).hexdigest(),
+                    "event_type": event_type,
+                    "record_key": key,
+                    "diary_number": diary_number,
+                    "diary": county,
+                    "observed_at": observed_at,
+                    "previous_hash": previous.get("content_hash"),
+                    "content_hash": candidate_hash,
+                    "before": {k: previous.get(k) for k in ("title", "status", "source_date")},
+                    "after": {k: record.get(k) for k in ("title", "status", "source_date")},
+                    "note": "A source-row change was detected. Review the before/after fields; don't infer a legal status change automatically.",
+                })
+            else:
+                # Same case row seen again: refresh observability metadata without
+                # creating a false change event. Keep first-observed timestamp intact.
+                previous["last_observed_at"] = observed_at
+                previous["observation_count"] = int(previous.get("observation_count", 0)) + 1
+                previous["queries_seen"] = sorted(previous_queries)
+                previous["query_term"] = search_term
+                previous["last_query_total"] = total
+                previous["content_hash"] = content_hash({
+                    "source_url": previous.get("source_url"),
+                    "diary_number": previous.get("diary_number"),
+                    "diary": previous.get("diary"),
+                    "title": previous.get("title"),
+                    "status": previous.get("status"),
+                    "source_date": previous.get("source_date"),
+                    "columns": previous.get("columns", {}),
+                    "links": previous.get("links", []),
+                })
+                records[key] = previous
+
 
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.events.parent.mkdir(parents=True, exist_ok=True)
