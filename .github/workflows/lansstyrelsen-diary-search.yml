@@ -82,7 +82,7 @@ jobs:
           }, ensure_ascii=False, indent=2))
           PY
       - name: Commit validated diary history
-        if: success() && github.event_name == 'workflow_dispatch'
+        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
