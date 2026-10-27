@@ -48,10 +48,23 @@ def main() -> None:
     if run.get("error"):
         raise SystemExit(f"Refusing to persist a search with error: {run['error']}")
     total = run.get("reported_total_results")
-    if total is None or not run.get("total_reconciled") or total != run.get("result_count"):
+    if total is None or not run.get("total_reconciled") or run.get("result_count") != total:
         raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
     if run.get("pagination", {}).get("has_next_page") is not False:
         raise SystemExit("Refusing to persist results until pagination is confirmed complete")
+    queries = run.get("queries")
+    if isinstance(queries, list) and queries:
+        for query in queries:
+            query_total = query.get("reported_total_results")
+            if (
+                not query.get("request_ok")
+                or query.get("error")
+                or query_total is None
+                or query.get("result_count") != query_total
+                or not query.get("total_reconciled")
+                or query.get("pagination", {}).get("has_next_page") is not False
+            ):
+                raise SystemExit(f"Refusing to persist: query failed validation: {query.get('search_term')}")
 
     county = str(run.get("requested_county") or "").strip()
     search_term = str(run.get("search_term") or "").strip()
@@ -81,12 +94,18 @@ def main() -> None:
             invalid_count += 1
             continue
         seen_this_run.add(key)
+        query_terms = raw.get("query_terms")
+        if not isinstance(query_terms, list) or not query_terms:
+            query_terms = [search_term]
+        query_terms = sorted({str(term).strip() for term in query_terms if str(term).strip()})
+        record_query_label = query_terms[0] if query_terms else search_term
 
         candidate = {
             "record_key": key,
             "diary_number": diary_number,
             "diary": county,
-            "query_term": search_term,
+            "query_term": record_query_label,
+            "queries_seen": query_terms or [search_term],
             "source_url": run.get("source"),
             "title": raw.get("title") or raw.get("Ärenderubrik"),
             "status": raw.get("status") or raw.get("Status"),
@@ -148,7 +167,7 @@ def main() -> None:
             previous_queries = set(previous.get("queries_seen", []))
             if previous.get("query_term"):
                 previous_queries.add(previous["query_term"])
-            previous_queries.add(search_term)
+            previous_queries.update(query_terms or [search_term])
             updated = {
                 **previous,
                 "last_observed_at": observed_at,
