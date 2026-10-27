@@ -79,6 +79,22 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
     return records, diag
 
 
+def parse_search_terms(primary: str, extras: str = "") -> list[str]:
+    """Normalize a primary phrase and optional comma/semicolon/newline-separated phrases."""
+    terms: list[str] = []
+    for candidate in [primary, *re.split(r"[,;\n\r]+", extras or "")]:
+        term = candidate.strip()
+        if term and term.casefold() not in {existing.casefold() for existing in terms}:
+            terms.append(term)
+    if not terms:
+        raise ValueError("At least one non-empty search term is required")
+    if any(len(term) < 2 for term in terms):
+        raise ValueError("Search terms must contain at least two characters")
+    if len(terms) > 10:
+        raise ValueError("A maximum of 10 search terms can be searched in one batch")
+    return terms
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--county", required=True, help="Exact diary option label")
@@ -87,17 +103,10 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    terms = [args.search_term.strip()]
-    for extra in re.split(r"[,;\n\r]+", args.extra_search_terms or ""):
-        extra = extra.strip()
-        if extra and extra.casefold() not in {t.casefold() for t in terms}:
-            terms.append(extra)
-    if not terms or any(not term for term in terms):
-        raise SystemExit("At least one non-empty search term is required")
-    if any(len(term) < 2 for term in terms):
-        raise SystemExit("Search terms must contain at least two characters")
-    if len(terms) > 10:
-        raise SystemExit("A maximum of 10 search terms can be searched in one batch")
+    try:
+        terms = parse_search_terms(args.search_term, args.extra_search_terms)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
 
     def run_query(term: str, browser) -> dict:
         query_result = {
