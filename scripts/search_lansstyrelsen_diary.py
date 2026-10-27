@@ -25,7 +25,7 @@ SEARCH_BUTTON = PREFIX + "btnSearch"
 
 
 def norm(node) -> str:
-    return re.sub(r"\\s+", " ", node.get_text(" ", strip=True)).strip()
+    return re.sub(r"\s+", " ", node.get_text(" ", strip=True)).strip()
 
 
 def parse_results(soup: BeautifulSoup) -> tuple[list[dict], str | None]:
@@ -35,11 +35,12 @@ def parse_results(soup: BeautifulSoup) -> tuple[list[dict], str | None]:
         rows = table.find_all("tr")
         if len(rows) < 2:
             continue
-        # ASP.NET layouts often put the real header in a thead; also inspect first row.
+        # ASP.NET layouts can split headings over nested spans or line breaks.
         header_row = table.find("tr")
         headers = [norm(c) for c in header_row.find_all(["th", "td"])] if header_row else []
         joined = " ".join(headers)
-        if not re.search(r"ärende|diarie|rubrik|datum|status|handling", joined, re.I):
+        is_result_table = bool(re.search(r"ärende|diarie|rubrik|datum|status|handling", joined, re.I))
+        if not is_result_table:
             continue
         for row in rows[1:]:
             cells = [norm(c) for c in row.find_all(["td", "th"])]
@@ -161,7 +162,23 @@ def main() -> None:
         result["results"] = results
         result["result_count"] = len(results)
         result["pagination_diagnostics"] = diagnostics
-        result["response_excerpt"] = norm(output_soup.body)[:2200] if output_soup.body else ""
+        body_text = norm(output_soup.body) if output_soup.body else ""
+        result["response_excerpt"] = body_text[:2200]
+        result["response_tail_excerpt"] = body_text[-2200:]
+        result["response_text_length"] = len(body_text)
+        result["table_diagnostics"] = [
+            {
+                "id": table.get("id"),
+                "class": table.get("class"),
+                "row_count": len(table.find_all("tr")),
+                "header_text": " | ".join(
+                    norm(c) for c in (table.find("tr").find_all(["th", "td"]) if table.find("tr") else [])
+                )[:500],
+                "first_row_text": norm(table.find_all("tr")[1])[:500] if len(table.find_all("tr")) > 1 else "",
+            }
+            for table in output_soup.find_all("table")
+        ][:30]
+        result["body_query_occurrences"] = body_text.casefold().count(args.search_term.casefold())
         result["selected_county_after_post"] = next(
             (norm(opt) for opt in (output_soup.find("select", {"name": DIARY_FIELD}) or BeautifulSoup("", "html.parser")).find_all("option")
              if opt.get("selected")),
