@@ -1,6 +1,10 @@
 name: Debug Länsstyrelsen diary form
 
 on:
+  push:
+    paths:
+      - "scripts/probe_lansstyrelsen_diary.py"
+      - ".github/workflows/lansstyrelsen-diary-form-debug.yml"
   workflow_dispatch:
     inputs:
       county:
