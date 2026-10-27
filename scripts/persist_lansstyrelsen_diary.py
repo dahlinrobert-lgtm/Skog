@@ -49,6 +49,8 @@ def main() -> None:
         raise SystemExit(f"Refusing to persist a search with error: {run['error']}")
     total = run.get("reported_total_results")
     if not run.get("total_reconciled"):
+        if total is None or run.get("result_count") != total:
+            raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
         raise SystemExit("Refusing to persist results until all source queries are reconciled")
     if total is None:
         raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
