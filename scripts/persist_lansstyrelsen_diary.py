@@ -90,6 +90,7 @@ def main() -> None:
     seen_this_run: set[str] = set()
     invalid_count = 0
 
+    per_query_counts = run.get("per_query_counts", [])
     for raw in run["results"]:
         if not isinstance(raw, dict):
             invalid_count += 1
@@ -182,7 +183,7 @@ def main() -> None:
                 "last_observed_at": observed_at,
                 "observation_count": int(previous.get("observation_count", 0)) + 1,
                 "queries_seen": sorted(previous_queries),
-                "query_term": search_term,
+                "query_term": record_query_label,
                 "last_query_total": total,
                 "last_query_page": raw.get("page_number"),
             }
@@ -229,7 +230,7 @@ def main() -> None:
         "diary": county,
         "search_term": search_term,
         "search_terms": run.get("search_terms") or [search_term],
-        "per_query_counts": run.get("per_query_counts", []),
+        "per_query_counts": per_query_counts,
         "request_ok": True,
         "extracted_count": len(run["results"]),
         "reported_total_results": total,
