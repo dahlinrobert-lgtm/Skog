@@ -644,6 +644,98 @@
       "queries_seen": [
         "naturvårdsbränning"
       ]
+    },
+    "länsstyrelsen i norrbottens län::2333-2026": {
+      "record_key": "länsstyrelsen i norrbottens län::2333-2026",
+      "diary_number": "2333-2026",
+      "diary": "Länsstyrelsen i Norrbottens län",
+      "query_term": "naturvårdsbränning",
+      "source_url": "https://diarium.lansstyrelsen.se/default.aspx",
+      "title": "Avropsförfrågan från ramavtal Helikoptertjänster (114-7068-2022), i samband med naturvårdsbränning i Puolva naturreservat",
+      "status": "Avslutat",
+      "source_date": "2026-02-11",
+      "columns": {
+        "Diarienummer": "2333-2026",
+        "Status": "Avslutat",
+        "In/Upp-datum": "2026-02-11",
+        "Ärenderubrik": "Avropsförfrågan från ramavtal Helikoptertjänster (114-7068-2022), i samband med naturvårdsbränning i Puolva naturreservat",
+        "Avsändare/mottagare": "Personuppgift",
+        "Postort": "",
+        "Kommun": "",
+        "Beslutsdatum": "2026-05-25",
+        "diary_number": "2333-2026",
+        "status": "Avslutat",
+        "date": "2026-02-11",
+        "title": "Avropsförfrågan från ramavtal Helikoptertjänster (114-7068-2022), i samband med naturvårdsbränning i Puolva naturreservat",
+        "links": [
+          {
+            "text": "2333-2026",
+            "href": "CaseInfo.aspx?caseID=5396208"
+          }
+        ],
+        "page_number": 1
+      },
+      "links": [
+        {
+          "text": "2333-2026",
+          "href": "CaseInfo.aspx?caseID=5396208"
+        }
+      ],
+      "last_query_total": 2,
+      "last_query_page": 1,
+      "first_observed_at": "2026-10-27T20:44:53.580254+00:00",
+      "last_observed_at": "2026-10-27T20:44:53.580254+00:00",
+      "observation_count": 1,
+      "queries_seen": [
+        "naturvårdsbränning"
+      ],
+      "content_hash": "7b817e6362b7b395a3b2da4d96769978da1ada1281f3dfaae8812d9da917e86f"
+    },
+    "länsstyrelsen i norrbottens län::17884-2025": {
+      "record_key": "länsstyrelsen i norrbottens län::17884-2025",
+      "diary_number": "17884-2025",
+      "diary": "Länsstyrelsen i Norrbottens län",
+      "query_term": "naturvårdsbränning",
+      "source_url": "https://diarium.lansstyrelsen.se/default.aspx",
+      "title": "Upphandling av kurs i naturvårdsbränning och efterbevakning",
+      "status": "Handläggning",
+      "source_date": "2025-11-10",
+      "columns": {
+        "Diarienummer": "17884-2025",
+        "Status": "Handläggning",
+        "In/Upp-datum": "2025-11-10",
+        "Ärenderubrik": "Upphandling av kurs i naturvårdsbränning och efterbevakning",
+        "Avsändare/mottagare": "Länsstyrelsen Norrbotten",
+        "Postort": "",
+        "Kommun": "",
+        "Beslutsdatum": "",
+        "diary_number": "17884-2025",
+        "status": "Handläggning",
+        "date": "2025-11-10",
+        "title": "Upphandling av kurs i naturvårdsbränning och efterbevakning",
+        "links": [
+          {
+            "text": "17884-2025",
+            "href": "CaseInfo.aspx?caseID=5307802"
+          }
+        ],
+        "page_number": 1
+      },
+      "links": [
+        {
+          "text": "17884-2025",
+          "href": "CaseInfo.aspx?caseID=5307802"
+        }
+      ],
+      "last_query_total": 2,
+      "last_query_page": 1,
+      "first_observed_at": "2026-10-27T20:44:53.580254+00:00",
+      "last_observed_at": "2026-10-27T20:44:53.580254+00:00",
+      "observation_count": 1,
+      "queries_seen": [
+        "naturvårdsbränning"
+      ],
+      "content_hash": "3d6d67e021ff4194666ae599d5fe5eaad5b091b1a1e220e371fd9ad8d622fac6"
     }
   }
 }
