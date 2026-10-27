@@ -48,8 +48,8 @@ def main() -> None:
     if run.get("error"):
         raise SystemExit(f"Refusing to persist a search with error: {run['error']}")
     total = run.get("reported_total_results")
-    if total is not None and (not run.get("total_reconciled") or total != run.get("result_count")):
-        raise SystemExit("Refusing to persist unreconciled results: reported total != extracted count")
+    if total is None or not run.get("total_reconciled") or total != run.get("result_count"):
+        raise SystemExit("Refusing to persist results until the extracted count matches a reported source total")
     if run.get("pagination", {}).get("has_next_page") is not False:
         raise SystemExit("Refusing to persist results until pagination is confirmed complete")
 
