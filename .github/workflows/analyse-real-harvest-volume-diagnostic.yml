@@ -16,6 +16,7 @@ on:
   push:
     paths:
       - "scripts/analyze_volume_for_polygon.py"
+      - "scripts/split_real_harvest_volume_groups.py"
       - "scripts/fetch_real_harvests_for_volume_rasters.py"
       - ".github/workflows/analyse-real-harvest-volume-diagnostic.yml"
 
