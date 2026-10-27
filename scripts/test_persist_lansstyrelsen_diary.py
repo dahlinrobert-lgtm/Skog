@@ -153,5 +153,39 @@ class DiaryHistoryTests(unittest.TestCase):
             self.assertFalse(after["absent_ids_interpreted_as_removed"])
 
 
+class DiaryMultiSearchValidationTests(unittest.TestCase):
+    def test_parse_search_terms_deduplicates_case_insensitively(self):
+        terms = ["naturvårdsbränning"]
+        extras = "reservat, naturvårdsbränning\nbrand"
+        import re
+        for extra in re.split(r"[,;\n\r]+", extras or ""):
+            extra = extra.strip()
+            if extra and extra.casefold() not in {term.casefold() for term in terms}:
+                terms.append(extra)
+        self.assertEqual(terms, ["naturvårdsbränning", "reservat", "brand"])
+
+    def test_overlapping_search_results_merge_by_diary_number(self):
+        merged_by_id = {}
+        inputs = [
+            ("naturvårdsbränning", [{"diary_number": "1234-2026", "title": "A"}]),
+            ("reservat", [
+                {"diary_number": "1234-2026", "title": "A"},
+                {"diary_number": "5678-2025", "title": "B"},
+            ]),
+        ]
+        for term, records in inputs:
+            for record in records:
+                number = record["diary_number"]
+                if number not in merged_by_id:
+                    record["query_terms"] = [term]
+                    merged_by_id[number] = record
+                elif term not in merged_by_id[number]["query_terms"]:
+                    merged_by_id[number]["query_terms"].append(term)
+        self.assertEqual(len(merged_by_id), 2)
+        self.assertEqual(
+            merged_by_id["1234-2026"]["query_terms"],
+            ["naturvårdsbränning", "reservat"],
+        )
+
 if __name__ == "__main__":
     unittest.main()
