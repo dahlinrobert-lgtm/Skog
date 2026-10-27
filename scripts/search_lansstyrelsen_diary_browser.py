@@ -286,7 +286,7 @@ def main() -> None:
                 batch["result_count"] = len(batch["results"])
                 batch["reported_total_results"] = sum(q["reported_total_results"] for q in batch["queries"] if q["reported_total_results"] is not None)
                 batch["pagination"]["pages_read"] = sum(q["pagination"]["pages_read"] or 0 for q in batch["queries"])
-                batch["pagination"]["has_next_page"] = all(q["pagination"]["has_next_page"] is False for q in batch["queries"])
+                batch["pagination"]["has_next_page"] = False if all(q["pagination"]["has_next_page"] is False for q in batch["queries"]) else None
                 batch["total_reconciled"] = batch["request_ok"] and all(q.get("total_reconciled") for q in batch["queries"])
                 batch["per_query_counts"] = [
                     {"county": q["requested_county"], "search_term": q["search_term"],
