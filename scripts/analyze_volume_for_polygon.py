@@ -27,7 +27,7 @@ DEFAULT_DATA_DIR = ROOT / "data" / "skogliga-grunddata"
 NODATA_FALLBACK = -1
 
 
-def load_features(path: Path) -> tuple[list[dict[str, Any]], CRS, list[dict[str, Any]]]:
+def load_features(path: Path, *, include_rejected: bool = False):
     doc = json.loads(path.read_text(encoding="utf-8"))
     declared_crs = doc.get("crs")
     # GeoJSON RFC 7946 coordinates are WGS84 unless a legacy CRS member says otherwise.
@@ -76,7 +76,9 @@ def load_features(path: Path) -> tuple[list[dict[str, Any]], CRS, list[dict[str,
             rejected.append({"feature_index": i, "feature_id": feature_id, "reason": f"geometry_parse_error: {type(exc).__name__}: {exc}"})
     if not clean:
         raise ValueError(f"No valid Polygon or MultiPolygon features found; rejected={len(rejected)}.")
-    return clean, source_crs, rejected
+    if include_rejected:
+        return clean, source_crs, rejected
+    return clean, source_crs
 
 
 def extract_tif(archive_path: Path, target_dir: Path) -> Path:
@@ -180,7 +182,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, help="Optional output JSON path; stdout if omitted")
     args = parser.parse_args()
 
-    features, inferred_crs, rejected_features = load_features(args.polygon)
+    features, inferred_crs, rejected_features = load_features(args.polygon, include_rejected=True)
     source_crs = CRS.from_user_input(args.polygon_crs) if args.polygon_crs else inferred_crs
     archives = sorted(args.data_dir.glob("*.zip"))
     if not archives:
