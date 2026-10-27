@@ -49,6 +49,25 @@ def main():
         soup = BeautifulSoup(response.text, "html.parser")
         result["request_ok"] = True
         result["page_title"] = soup.title.get_text(" ", strip=True) if soup.title else None
+        result["script_sources"] = [
+            urljoin(response.url, tag.get("src"))
+            for tag in soup.find_all("script", src=True)
+        ]
+        script_snippets = []
+        needles = ("btnSearch", "btnHiddenSearch", "__doPostBack", "txtHiddenDiaryID", "WebForm_DoPostBackWithOptions")
+        for tag in soup.find_all("script"):
+            raw = tag.string or tag.get_text()
+            if not raw:
+                continue
+            for needle in needles:
+                pos = raw.find(needle)
+                if pos >= 0:
+                    script_snippets.append({
+                        "needle": needle,
+                        "source": tag.get("src"),
+                        "snippet": re.sub(r"\\s+", " ", raw[max(0, pos-260):pos+500])[:800],
+                    })
+        result["inline_script_snippets"] = script_snippets[:30]
         for form in soup.find_all("form"):
             result["forms"].append({
                 "id": form.get("id"),
