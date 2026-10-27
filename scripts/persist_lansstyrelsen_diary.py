@@ -50,7 +50,7 @@ def main() -> None:
     total = run.get("reported_total_results")
     queries = run.get("queries")
     if not run.get("total_reconciled"):
-        raise SystemExit("Refusing to persist results until all source queries are reconciled")
+        raise SystemExit("Refusing to persist results until the extracted count matches a reported source total and all source queries are reconciled")
     if total is None:
         raise SystemExit("Refusing to persist results until a validated source total is present")
     if run.get("pagination", {}).get("has_next_page") is not False:
