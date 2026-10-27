@@ -204,14 +204,38 @@ def main() -> int:
                     project = transformer_cache[key]
                     nodata = ds.nodata if ds.nodata is not None else NODATA_FALLBACK
                     per_feature = []
-                    for feature in features:
-                        geom = transform_geometry(project, feature["geometry"])
-                        stats = summarize_feature(ds, geom, nodata)
+                    feature_errors = []
+                    for feature_index, feature in enumerate(features):
+                        try:
+                            geom = transform_geometry(project, feature["geometry"])
+                            stats = summarize_feature(ds, geom, nodata)
+                        except Exception as exc:
+                            import traceback
+                            # One troublesome source polygon must not discard the
+                            # statistics already computed for the entire raster.
+                            feature_errors.append({
+                                "feature_id": feature["feature_id"],
+                                "feature_index": feature_index,
+                                "error": f"{type(exc).__name__}: {exc}",
+                                "traceback": traceback.format_exc(limit=8),
+                            })
+                            stats = empty_stats("analysis_error")
                         per_feature.append({
                             "feature_id": feature["feature_id"],
                             "properties": feature["properties"],
                             "stats": stats,
                         })
+                    if feature_errors:
+                        errors.extend({
+                            "archive": archive.name,
+                            "scope": "polygon",
+                            **entry,
+                        } for entry in feature_errors)
+                        print(
+                            f"{archive.name}: {len(feature_errors)} polygon-level failures; "
+                            f"first={feature_errors[0]['feature_id']}: {feature_errors[0]['error']}",
+                            flush=True,
+                        )
                     results.append({
                         "source_archive": archive.name,
                         "raster": tif.name,
