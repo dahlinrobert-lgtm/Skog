@@ -140,9 +140,12 @@ def main() -> None:
         # ASP.NET Web Forms requires its hidden state fields and the actual event target.
         payload[DIARY_FIELD] = county_value
         payload[TITLE_FIELD] = args.search_term
-        payload["__EVENTTARGET"] = SEARCH_BUTTON
+        # The visible "Sök" control is type=button and is wired through JavaScript.
+        # Its hidden submit companion is the actual ASP.NET postback target.
+        payload[PREFIX + "txtHiddenDiaryID"] = county_value
+        payload["__EVENTTARGET"] = PREFIX + "btnHiddenSearch"
         payload["__EVENTARGUMENT"] = ""
-        payload[SEARCH_BUTTON] = "Sök"
+        payload[PREFIX + "btnHiddenSearch"] = ""
 
         action = urljoin(initial.url, form.get("action") or initial.url)
         response = session.post(action, data=payload, timeout=(15, 60))
@@ -160,6 +163,9 @@ def main() -> None:
         result["response_excerpt"] = norm(output_soup.body)[:2200] if output_soup.body else ""
         result["submitted_field_names"] = sorted(payload.keys())
         result["response_title_contains_query"] = args.search_term.casefold() in norm(output_soup.body).casefold() if output_soup.body else False
+        result["response_contains_no_results_marker"] = bool(
+            output_soup.body and re.search(r"inga (träffar|ärenden)|hittade inga|0 träff", norm(output_soup.body), re.I)
+        )
 
     except Exception as exc:
         result["error"] = f"{type(exc).__name__}: {exc}"
