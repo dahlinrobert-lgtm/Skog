@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       sample_limit:
-        description: Diagnostic sample size per raster (start with 100; increase after smoke test passes)
+        description: Polygon sample per raster; 50,000 is the next scale-up test
         required: true
-        default: "100"
+        default: "50000"
         type: string
       raster_codes:
         description: Raster areas to test
@@ -43,7 +43,7 @@ jobs:
           LIMIT_INPUT: ${{ inputs.sample_limit }}
           CODES_INPUT: ${{ inputs.raster_codes }}
         run: |
-          limit="${LIMIT_INPUT:-100}"
+          limit="${LIMIT_INPUT:-50000}"
           codes="${CODES_INPUT:-13}"
           python scripts/fetch_real_harvests_for_volume_rasters.py \
             --output real-volume-polygons.geojson \
