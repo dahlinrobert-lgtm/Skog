@@ -248,20 +248,19 @@ def main() -> None:
             try:
                 options = get_options(browser)
                 if args.county == "Alla län":
-                    all_option = next((o for o in options if o["label"].casefold() == "alla län"), None)
-                    if all_option:
-                        counties = [all_option["label"]]
-                        selection_mode = "portal_all_counties_option"
-                    else:
-                        counties = [
-                            o["label"] for o in options
-                            if o["label"] and o["value"] not in (None, "", "0", "-1")
-                            and "välj" not in o["label"].casefold()
-                            and "alla län" not in o["label"].casefold()
-                        ]
-                        selection_mode = "individual_counties_fallback"
+                    # Search each county separately. The public result grid does not
+                    # reliably include the county label on each row, so using a portal
+                    # wide "Alla län" option would make us misattribute every record
+                    # to the aggregate label in persistent history.
+                    counties = [
+                        o["label"] for o in options
+                        if o["label"] and o["value"] not in (None, "", "0", "-1")
+                        and "välj" not in o["label"].casefold()
+                        and "alla län" not in o["label"].casefold()
+                    ]
+                    selection_mode = "individual_counties"
                     if not counties:
-                        raise RuntimeError("Could not resolve any county options from the portal")
+                        raise RuntimeError("Could not resolve individual county options from the portal")
                 else:
                     counties = [args.county]
                     selection_mode = "single_county"
