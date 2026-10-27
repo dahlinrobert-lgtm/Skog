@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       county:
-        description: County diary to probe
+        description: County diary to inspect
         required: true
         default: "Västra Götalands län"
         type: choice
@@ -12,7 +12,7 @@ on:
           - "Västra Götalands län"
           - "Alla län"
       search_term:
-        description: Search term for the first test
+        description: Example search phrase for diagnostic context
         required: true
         default: "naturvårdsbränning"
         type: string
@@ -31,12 +31,13 @@ jobs:
           python-version: "3.12"
       - name: Install probe dependency
         run: python -m pip install requests beautifulsoup4
-      - name: Inspect public diary search form
+      - name: Inspect public diary form
         run: |
           python scripts/probe_lansstyrelsen_diary.py --county "${{ inputs.county }}" --search-term "${{ inputs.search_term }}" --output diary-probe.json
-      - name: Upload probe diagnostics
+      - name: Upload form diagnostics
         uses: actions/upload-artifact@v4
         with:
           name: lansstyrelsen-diary-probe
           path: diary-probe.json
           if-no-files-found: error
+          retention-days: 30
