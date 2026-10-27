@@ -1,0 +1,42 @@
+name: Probe Länsstyrelsen diary search
+
+on:
+  workflow_dispatch:
+    inputs:
+      county:
+        description: County diary to probe
+        required: true
+        default: "Västra Götalands län"
+        type: choice
+        options:
+          - "Västra Götalands län"
+          - "Alla län"
+      search_term:
+        description: Search term for the first test
+        required: true
+        default: "naturvårdsbränning"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install probe dependency
+        run: python -m pip install requests beautifulsoup4
+      - name: Inspect public diary search form
+        run: |
+          python scripts/probe_lansstyrelsen_diary.py --county "${{ inputs.county }}" --search-term "${{ inputs.search_term }}" --output diary-probe.json
+      - name: Upload probe diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-diary-probe
+          path: diary-probe.json
+          if-no-files-found: error
