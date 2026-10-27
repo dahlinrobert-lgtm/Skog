@@ -120,6 +120,7 @@ class DiaryHistoryTests(unittest.TestCase):
                 for term in run["search_terms"]
             ]
             run["reported_total_results"] = 2
+            run["result_count"] = 1
             self.invoke(run, state, events, summary)
             saved = json.loads(state.read_text(encoding="utf-8"))
             self.assertEqual(len(saved["records"]), 1)
