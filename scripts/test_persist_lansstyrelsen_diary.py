@@ -49,7 +49,9 @@ class DiaryHistoryTests(unittest.TestCase):
             capture_output=True, text=True, check=False,
         )
         self.assertEqual(proc.returncode, 0, msg=proc.stdout + proc.stderr)
-        return json.loads(proc.stdout.strip().splitlines()[-1])
+        result = json.loads(proc.stdout.strip().splitlines()[-1])
+        result["_summary_path"] = str(summary)
+        return result
 
     def test_baseline_then_same_record_via_other_query_has_no_change_event(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -129,9 +131,8 @@ class DiaryHistoryTests(unittest.TestCase):
             after = json.loads(summary.read_text(encoding="utf-8"))
             self.assertEqual(after["state_record_count_after"], 1)
             self.assertEqual(after["extracted_count"], 1)
-            self.assertEqual(after["per_query_counts"][0]["reported_total_results"], 1)
-            self.assertEqual(after["per_query_counts"][1]["reported_total_results"], 1)
-            self.assertEqual(len(after["per_query_counts"]), 2)
+            self.assertEqual(len(after["search_terms"]), 2)
+            self.assertEqual(after["search_terms"], ["naturvårdsbränning", "reservat"])
             saved_events = [json.loads(line) for line in events.read_text(encoding="utf-8").splitlines()]
             self.assertEqual(len(saved_events), 1)
             self.assertTrue(saved_events[0]["baseline_only"])
