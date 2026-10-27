@@ -109,7 +109,8 @@ def main() -> None:
         if not diary_number or "-" not in diary_number:
             invalid_count += 1
             continue
-        key = f"{county.casefold()}::{diary_number}"
+        record_county = str(raw.get("diary") or county).strip()
+        key = f"{record_county.casefold()}::{diary_number}"
         if key in seen_this_run:
             invalid_count += 1
             continue
@@ -123,7 +124,7 @@ def main() -> None:
         candidate = {
             "record_key": key,
             "diary_number": diary_number,
-            "diary": county,
+            "diary": record_county,
             "query_term": record_query_label,
             "queries_seen": query_terms or [search_term],
             "source_url": run.get("source"),
@@ -137,51 +138,33 @@ def main() -> None:
         }
         candidate_hash = content_hash(candidate)
         previous = records.get(key)
-        # First observation of a diary identifier is a baseline, not a new-case alert.
-        # When that identifier appears under a different search term later, merge query
-        # coverage into the existing record rather than treating the query metadata as a
-        # change to the case itself.
+
         if previous is None:
             record = {
-                **candidate,
-                "first_observed_at": observed_at,
-                "last_observed_at": observed_at,
-                "observation_count": 1,
-                "queries_seen": sorted(set(query_terms or [search_term])),
+                **candidate, "first_observed_at": observed_at, "last_observed_at": observed_at,
+                "observation_count": 1, "queries_seen": sorted(set(query_terms or [search_term])),
                 "content_hash": candidate_hash,
             }
             records[key] = record
             events.append({
                 "event_id": hashlib.sha256(f"{key}|first_seen|{observed_at}".encode()).hexdigest(),
-                "event_type": "first_seen",
-                "record_key": key,
-                "diary_number": diary_number,
-                "diary": county,
-                "observed_at": observed_at,
-                "source_date": candidate["source_date"],
-                "title": candidate["title"],
-                "content_hash": candidate_hash,
-                "baseline_only": True,
+                "event_type": "first_seen", "record_key": key, "diary_number": diary_number,
+                "diary": record_county, "observed_at": observed_at, "source_date": candidate["source_date"],
+                "title": candidate["title"], "content_hash": candidate_hash, "baseline_only": True,
                 "note": "First observation by this tool; not proof that the case was newly registered.",
             })
         else:
-            # Compare source fields, ignoring query metadata and any column/header
-            # fields that are absent from a given search-page extract.
             def source_projection(record: dict[str, Any]) -> dict[str, Any]:
                 columns = record.get("columns", {})
                 return {
-                    "source_url": record.get("source_url"),
-                    "diary_number": record.get("diary_number"),
-                    "diary": record.get("diary"),
-                    "title": record.get("title") or columns.get("Ärenderubrik"),
+                    "source_url": record.get("source_url"), "diary_number": record.get("diary_number"),
+                    "diary": record.get("diary"), "title": record.get("title") or columns.get("Ärenderubrik"),
                     "status": record.get("status") or columns.get("Status"),
                     "source_date": record.get("source_date") or columns.get("In/Upp-datum"),
                     "sender_recipient": columns.get("Avsändare/mottagare"),
-                    "postal_place": columns.get("Postort"),
-                    "municipality": columns.get("Kommun"),
+                    "postal_place": columns.get("Postort"), "municipality": columns.get("Kommun"),
                     "decision_date": columns.get("Beslutsdatum"),
                 }
-
             previous_source = source_projection(previous)
             candidate_source = source_projection(candidate)
             previous_queries = set(previous.get("queries_seen", []))
@@ -189,16 +172,12 @@ def main() -> None:
                 previous_queries.add(previous["query_term"])
             previous_queries.update(query_terms or [search_term])
             updated = {
-                **previous,
-                "last_observed_at": observed_at,
+                **previous, "last_observed_at": observed_at,
                 "observation_count": int(previous.get("observation_count", 0)) + 1,
-                "queries_seen": sorted(previous_queries),
-                "query_term": record_query_label,
-                "last_query_total": total,
-                "last_query_page": raw.get("page_number"),
+                "queries_seen": sorted(previous_queries), "query_term": record_query_label,
+                "last_query_total": total, "last_query_page": raw.get("page_number"),
             }
             if previous_source != candidate_source:
-                event_type = "record_changed"
                 updated.update(candidate)
                 updated["columns"] = {**previous.get("columns", {}), **candidate.get("columns", {})}
                 updated.update({
@@ -210,22 +189,17 @@ def main() -> None:
                 })
                 records[key] = updated
                 events.append({
-                    "event_id": hashlib.sha256(f"{key}|{event_type}|{observed_at}|{updated['content_hash']}".encode()).hexdigest(),
-                    "event_type": event_type,
-                    "record_key": key,
-                    "diary_number": diary_number,
-                    "diary": county,
-                    "observed_at": observed_at,
-                    "previous_hash": previous.get("content_hash"),
+                    "event_id": hashlib.sha256(f"{key}|record_changed|{observed_at}|{updated['content_hash']}".encode()).hexdigest(),
+                    "event_type": "record_changed", "record_key": key, "diary_number": diary_number,
+                    "diary": record_county, "observed_at": observed_at, "previous_hash": previous.get("content_hash"),
                     "content_hash": updated["content_hash"],
                     "before": {k: previous.get(k) for k in ("title", "status", "source_date")},
                     "after": {k: updated.get(k) for k in ("title", "status", "source_date")},
-                    "note": "A source-row change was detected. Review before/after fields; query metadata is not itself treated as a change.",
+                    "note": "A source-row change was detected. Query metadata alone is not a change.",
                 })
             else:
                 updated["content_hash"] = content_hash(candidate_source)
                 records[key] = updated
-
 
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.events.parent.mkdir(parents=True, exist_ok=True)
