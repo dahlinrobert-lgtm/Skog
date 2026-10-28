@@ -142,19 +142,31 @@ def main() -> None:
                 raise RuntimeError(f"County option not found: {county_label}")
             page.locator(COUNTY_SELECT).select_option(value=selected["value"])
             page.locator(TITLE_INPUT).fill(term)
+            # The portal may submit through a full navigation or an ASP.NET
+            # asynchronous postback. Do not treat a timed-out navigation wait as
+            # proof that the submit failed; wait for either results or validation.
             try:
-                with page.expect_navigation(wait_until="domcontentloaded", timeout=20000):
-                    page.locator(SEARCH_BUTTON).click()
+                with page.expect_navigation(wait_until="domcontentloaded", timeout=12000):
+                    page.locator(SEARCH_BUTTON).click(timeout=10000)
             except PlaywrightTimeoutError:
-                page.wait_for_timeout(1800)
+                pass
 
             try:
-                page.locator(RESULT_GRID).wait_for(state="attached", timeout=12000)
+                page.locator(RESULT_GRID).wait_for(state="attached", timeout=20000)
                 grid_present = True
             except PlaywrightTimeoutError:
                 grid_present = page.locator(RESULT_GRID).count() > 0
 
             body_text = clean(page.locator("body").inner_text(timeout=20000))
+            result["submit_button_present"] = page.locator(SEARCH_BUTTON).count() > 0
+            result["submit_button_text"] = (
+                clean(page.locator(SEARCH_BUTTON).inner_text())
+                if page.locator(SEARCH_BUTTON).count() else None
+            )
+            result["document_ready_state"] = page.evaluate("document.readyState")
+            result["form_action"] = page.locator(SEARCH_BUTTON).evaluate(
+                "(e) => ({tag: e.tagName, type: e.getAttribute('type'), name: e.getAttribute('name'), value: e.getAttribute('value'), disabled: e.disabled, formAction: e.form ? e.form.action : null})"
+            ) if page.locator(SEARCH_BUTTON).count() else None
             result["http_status"] = 200 if page.locator("body").count() else 0
             result["reported_total_results"] = parse_total(body_text)
             # Preserve enough source diagnostics to explain portal/layout changes
