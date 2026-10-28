@@ -107,6 +107,31 @@ class BurnEventTimelineTests(unittest.TestCase):
             self.assertTrue(candidate["shared_years"])
         self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
 
+    def test_diary_source_date_is_record_date_not_burn_date(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om planerad naturvårdsbränning i reservatet",
+            "source_date": "2026-04-02",
+            "columns": {"Diarienummer": "123-2026", "In/Upp-datum": "2026-04-02", "date": "2026-04-02"}
+        }}}
+        report = build_timeline(state, {"features": []})
+        event = report["events"][0]
+        self.assertIsNone(event["event_date"])
+        self.assertEqual(event["record_date"], "2026-04-02")
+        self.assertEqual(event["record_date_source_field"], "source_date")
+
+    def test_in_up_date_column_is_used_when_top_level_source_date_missing(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "124-2026",
+            "title": "Anmälan om naturvårdsbränning",
+            "columns": {"Diarienummer": "124-2026", "In/Upp-datum": "2026-04-03"}
+        }}}
+        report = build_timeline(state, {"features": []})
+        event = report["events"][0]
+        self.assertIsNone(event["event_date"])
+        self.assertEqual(event["record_date"], "2026-04-03")
+        self.assertEqual(event["record_date_source_field"], "In/Upp-datum")
+
     def test_build_keeps_sources_separate_and_undated(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
