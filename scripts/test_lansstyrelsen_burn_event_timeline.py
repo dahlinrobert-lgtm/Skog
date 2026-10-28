@@ -1,0 +1,41 @@
+"""Tests for the auditable burn-event timeline."""
+import unittest
+
+from lansstyrelsen_burn_event_timeline import build_timeline, classify_text
+
+
+class BurnEventTimelineTests(unittest.TestCase):
+    def test_plan_is_not_classified_as_completed(self):
+        result = classify_text("Bränningsplan inför naturvårdsbränning i reservatet")
+        self.assertEqual(result["stage"], "planning_or_action_plan")
+        self.assertNotEqual(result["stage"], "completed_burn")
+
+    def test_application_is_not_proof_of_burn(self):
+        result = classify_text("Anmälan om naturvårdsbränning")
+        self.assertEqual(result["stage"], "application_notification_or_consultation")
+
+    def test_explicit_completed_burn_is_completed(self):
+        result = classify_text("Genomförd bränning i naturreservat")
+        self.assertEqual(result["stage"], "completed_burn")
+        self.assertEqual(result["confidence"], "high")
+
+    def test_build_keeps_sources_separate_and_undated(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Handlingsplan för naturvårdsbränning",
+            "source_url": "https://example.test/diary",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"source_url": "https://example.test/layer", "features": [{
+            "id": 9, "properties": {"OBJECTID": 9, "Typ": "T2.3 Controlled burning"},
+            "geometry": {"type": "Polygon", "coordinates": []}
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["event_count"], 2)
+        self.assertEqual({e["source_type"] for e in report["events"]}, {"lansstyrelsen_diary", "lifetaiga_action_polygon"})
+        self.assertTrue(all(e["event_date"] is None for e in report["events"]))
+        self.assertTrue(all(e["link_status"] == "unlinked" for e in report["events"]))
+
+
+if __name__ == "__main__":
+    unittest.main()
