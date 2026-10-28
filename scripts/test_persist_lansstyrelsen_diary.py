@@ -58,8 +58,13 @@ class DiaryHistoryTests(unittest.TestCase):
             root = Path(temp)
             state, events, summary = root / "state.json", root / "events.jsonl", root / "summary.json"
             first = self.invoke(self.make_run("naturvårdsbränning"), state, events, summary)
+            state_after_first = json.loads(state.read_text(encoding="utf-8"))
+            first_hash = next(iter(state_after_first["records"].values()))["content_hash"]
             second = self.invoke(self.make_run("reservat", page=2), state, events, summary)
+            state_after_second = json.loads(state.read_text(encoding="utf-8"))
+            second_hash = next(iter(state_after_second["records"].values()))["content_hash"]
 
+            self.assertEqual(first_hash, second_hash)
             self.assertEqual(first["first_seen_events"], 1)
             self.assertEqual(first["changed_events"], 0)
             self.assertEqual(second["first_seen_events"], 0)
