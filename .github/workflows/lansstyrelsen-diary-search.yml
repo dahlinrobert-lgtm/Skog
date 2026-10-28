@@ -23,6 +23,9 @@ on:
         required: false
         default: ""
         type: string
+  schedule:
+    # Refresh all county diaries daily; stagger away from the top of the hour.
+    - cron: "17 4 * * *"
   push:
     branches:
       - main
@@ -66,6 +69,9 @@ jobs:
           SEARCH_TERMS_INPUT: ${{ inputs.search_terms }}
         run: |
           county="${COUNTY_INPUT:-Länsstyrelsen i Västra Götalands län}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then
+            county="Alla län"
+          fi
           search_term="${SEARCH_TERM_INPUT:-naturvårdsbränning}"
           extra_terms="${SEARCH_TERMS_INPUT:-}"
           python scripts/search_lansstyrelsen_diary_browser.py \
