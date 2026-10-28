@@ -6,17 +6,28 @@ on:
       - "scripts/lansstyrelsen_diary_geocoding.py"
       - "scripts/lansstyrelsen_diary_fetch_protected_areas.py"
       - "scripts/lansstyrelsen_diary_protected_area_match.py"
+      - "scripts/lansstyrelsen_diary_web_export.py"
+      - "scripts/test_lansstyrelsen_diary_web_export.py"
       - "data/lansstyrelsen-diary/state.json"
+      - "docs/karta.html"
       - ".github/workflows/lansstyrelsen-diary-geocoding-integration.yml"
   push:
-    branches:
-      - feature/diary-protected-area-matching
+    branches: [main, feature/diary-geocoding-map-layer]
+    paths:
+      - "scripts/lansstyrelsen_diary_geocoding.py"
+      - "scripts/lansstyrelsen_diary_fetch_protected_areas.py"
+      - "scripts/lansstyrelsen_diary_protected_area_match.py"
+      - "scripts/lansstyrelsen_diary_web_export.py"
+      - "scripts/test_lansstyrelsen_diary_web_export.py"
+      - "data/lansstyrelsen-diary/state.json"
+      - "docs/karta.html"
+      - ".github/workflows/lansstyrelsen-diary-geocoding-integration.yml"
   workflow_dispatch:
   schedule:
     - cron: "45 6 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   geocode:
@@ -24,7 +35,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install geospatial dependencies
@@ -35,24 +47,42 @@ jobs:
         run: python scripts/lansstyrelsen_diary_fetch_protected_areas.py
       - name: Match candidates against official areas
         run: python scripts/lansstyrelsen_diary_protected_area_match.py --official-geojson data/lansstyrelsen-diary/official-protected-areas.geojson
+      - name: Test map export
+        run: python -m unittest discover -s scripts -p 'test_lansstyrelsen_diary_web_export.py' -v
+      - name: Validate inline JavaScript syntax
+        run: python tests/test_web_javascript_syntax.py
+      - name: Export stable public map data
+        run: python scripts/lansstyrelsen_diary_web_export.py --output docs/data/lansstyrelsen-geocoding.json
       - name: Summarize generated report
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          path = Path("data/lansstyrelsen-diary/geocoding-matches.json")
-          report = json.loads(path.read_text(encoding="utf-8"))
+          report = json.loads(Path("data/lansstyrelsen-diary/geocoding-matches.json").read_text(encoding="utf-8"))
+          public = json.loads(Path("docs/data/lansstyrelsen-geocoding.json").read_text(encoding="utf-8"))
           print(json.dumps({
               "record_count": report["record_count"],
               "official_feature_count": report["official_feature_count"],
               "summary": report["summary"],
-              "name_fields_used": report["name_fields_used"],
+              "public_map_location_count": public["map_location_count"],
           }, ensure_ascii=False, indent=2))
           if report["record_count"] == 0:
               raise SystemExit("No diary records were processed")
           if report["official_feature_count"] == 0:
               raise SystemExit("No official protected areas were downloaded")
           PY
+      - name: Publish map data to main
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data/lansstyrelsen-geocoding.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish updated diary geocoding map data"
+            git push origin HEAD:main
+          else
+            echo "Published geocoding data unchanged."
+          fi
       - name: Upload geocoding review artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -60,5 +90,6 @@ jobs:
           path: |
             data/lansstyrelsen-diary/geocoding-candidates.json
             data/lansstyrelsen-diary/geocoding-matches.json
+            docs/data/lansstyrelsen-geocoding.json
           if-no-files-found: error
           retention-days: 30
