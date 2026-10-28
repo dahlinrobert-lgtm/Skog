@@ -1,6 +1,9 @@
 name: Länsstyrelsen diary geocoding integration
 
 on:
+  push:
+    branches:
+      - feature/diary-protected-area-matching
   workflow_dispatch:
   schedule:
     - cron: "45 6 * * *"
