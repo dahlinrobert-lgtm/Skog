@@ -49,6 +49,8 @@ jobs:
         run: python scripts/lansstyrelsen_diary_protected_area_match.py --official-geojson data/lansstyrelsen-diary/official-protected-areas.geojson
       - name: Test map export
         run: python -m unittest discover -s scripts -p 'test_lansstyrelsen_diary_web_export.py' -v
+      - name: Validate inline JavaScript syntax
+        run: python tests/test_web_javascript_syntax.py
       - name: Export stable public map data
         run: python scripts/lansstyrelsen_diary_web_export.py --output docs/data/lansstyrelsen-geocoding.json
       - name: Summarize generated report
