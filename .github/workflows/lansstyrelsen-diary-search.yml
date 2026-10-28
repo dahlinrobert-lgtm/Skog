@@ -43,8 +43,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test diary history persistence core
-        run: python -m unittest scripts/test_persist_lansstyrelsen_diary.py
+      - name: Test diary history and source-response validation
+        run: python -m unittest scripts/test_persist_lansstyrelsen_diary.py scripts/test_lansstyrelsen_diary_validation.py
       - name: Install browser dependencies
         run: |
           python -m pip install playwright
