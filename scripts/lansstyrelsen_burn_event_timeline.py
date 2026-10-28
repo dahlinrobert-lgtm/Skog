@@ -8,6 +8,7 @@ not proof that a burn happened.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 from collections import Counter
@@ -157,6 +158,30 @@ def _name_tokens(value: str) -> set[str]:
     return {t for t in _normalized_place(value).split() if len(t) >= 4 and t not in generic}
 
 
+def _event_year_clues(title: str, event_date: str | None, props: dict[str, Any] | None = None) -> list[str]:
+    """Return years supported by event text/date fields, excluding administrative dates."""
+    years = set(YEAR_RE.findall(title or ""))
+    if event_date:
+        years.add(event_date[:4])
+    if props:
+        for key, value in props.items():
+            key_norm = str(key).casefold()
+            # Only explicitly action-related year attributes are admitted. Generic
+            # created/updated/edited/registration years must not boost a match.
+            action_key = any(term in key_norm for term in (
+                "åtgärd", "atgard", "bränn", "brann", "burn", "genomför",
+                "genomfor", "utförd", "utford", "insats", "action",
+            ))
+            year_key = "år" in key_norm or "ar" == key_norm or "year" in key_norm
+            administrative_key = any(term in key_norm for term in (
+                "created", "updated", "edited", "registr", "diarie", "source",
+                "uppdater", "ändrad", "andrad", "last_edit",
+            ))
+            if action_key and year_key and not administrative_key:
+                years.update(YEAR_RE.findall(_normal(value)))
+    return sorted(years)
+
+
 def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Emit review-only links; do not mutate event.link_status or claim verified links."""
     diary_events = [e for e in events if e["source_type"] == "lansstyrelsen_diary"]
@@ -165,18 +190,14 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     for diary in diary_events:
         diary_text = _normal(diary.get("title", ""))
         diary_tokens = _name_tokens(diary_text + " " + " ".join(diary.get("place_candidates") or []))
-        # Avoid using record/created dates as event dates. They may only add weak temporal context.
-        diary_years = set(YEAR_RE.findall(diary_text))
-        if diary.get("event_date"):
-            diary_years.add(diary["event_date"][:4])
+        # Use event-specific clues only: never use diary registration dates for matching.
+        diary_years = set(diary.get("event_year_clues") or [])
         for geometry in geometry_events:
             geo_tokens = _name_tokens(geometry.get("title", "") + " " + " ".join(geometry.get("place_candidates") or []))
             overlap = sorted(diary_tokens & geo_tokens)
             if not overlap:
                 continue
-            geom_years = set(YEAR_RE.findall(geometry.get("evidence_text", "")))
-            if geometry.get("event_date"):
-                geom_years.add(geometry["event_date"][:4])
+            geom_years = set(geometry.get("event_year_clues") or [])
             year_overlap = sorted(diary_years & geom_years)
             # A shared descriptive token is a candidate clue, not sufficient identity evidence.
             score = min(0.65, 0.35 + 0.10 * (len(overlap) - 1))
@@ -244,6 +265,7 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
             "title": title or "Diariepost utan rubrik",
             **dates,
             **classification,
+            "event_year_clues": _event_year_clues(title, dates.get("event_date")),
             "place_candidates": _place_candidates(record.get("columns") or {}, title),
             "geometry": None,
             "link_status": "unlinked",
@@ -267,6 +289,7 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
             "title": _normal(props.get("title") or props.get("Namn") or props.get("namn") or "Life2Taiga naturvårdsåtgärd"),
             **dates,
             **classification,
+            "event_year_clues": _event_year_clues(_normal(props.get("title") or props.get("Namn") or props.get("namn") or ""), dates.get("event_date"), props),
             "place_candidates": _place_candidates(props),
             "geometry": geometry if isinstance(geometry, dict) else None,
             "link_status": "unlinked",
@@ -301,11 +324,59 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
     }
 
 
+def write_review_csv(report: dict[str, Any], output_path: Path) -> int:
+    """Write a spreadsheet-friendly, evidence-focused review queue for candidate pairs."""
+    events = {event["event_id"]: event for event in report.get("events", [])}
+    candidates = list(report.get("link_candidates", []))
+    candidates.sort(key=lambda c: (
+        c.get("review_priority") != "higher",
+        -float(c.get("score") or 0),
+        c.get("diary_event_id", ""),
+        c.get("geometry_event_id", ""),
+    ))
+    columns = [
+        "review_priority", "score", "confidence", "evidence_tier",
+        "shared_place_tokens", "shared_years", "ambiguity",
+        "diary_candidate_count", "geometry_candidate_count",
+        "diary_event_id", "diary_number", "diary_title",
+        "diary_event_date", "diary_record_date", "diary_source_url",
+        "geometry_event_id", "geometry_record_id", "geometry_title",
+        "geometry_event_date", "geometry_record_date", "geometry_source_url",
+        "status", "evidence_summary",
+    ]
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    temp = output_path.with_suffix(output_path.suffix + ".tmp")
+    with temp.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
+        writer.writeheader()
+        for candidate in candidates:
+            diary = events.get(candidate.get("diary_event_id"), {})
+            geometry = events.get(candidate.get("geometry_event_id"), {})
+            writer.writerow({
+                **candidate,
+                "shared_place_tokens": " | ".join(candidate.get("shared_place_tokens") or []),
+                "shared_years": " | ".join(candidate.get("shared_years") or []),
+                "diary_number": diary.get("source_record_id", ""),
+                "diary_title": diary.get("title", ""),
+                "diary_event_date": diary.get("event_date") or "",
+                "diary_record_date": diary.get("record_date") or "",
+                "diary_source_url": diary.get("source_url", ""),
+                "geometry_record_id": geometry.get("source_record_id", ""),
+                "geometry_title": geometry.get("title", ""),
+                "geometry_event_date": geometry.get("event_date") or "",
+                "geometry_record_date": geometry.get("record_date") or "",
+                "geometry_source_url": geometry.get("source_url", ""),
+            })
+    temp.replace(output_path)
+    return len(candidates)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--diary-state", type=Path, default=Path("data/lansstyrelsen-diary/state.json"))
     parser.add_argument("--lifetaiga", type=Path, default=Path("docs/data/lifetaiga-naturvardsatgarder.geojson"))
     parser.add_argument("--output", type=Path, default=Path("docs/data/burn-event-timeline.json"))
+    parser.add_argument("--review-csv", type=Path, default=Path("docs/data/burn-event-link-review.csv"))
     args = parser.parse_args()
     diary_state = json.loads(args.diary_state.read_text(encoding="utf-8"))
     lifetaiga = json.loads(args.lifetaiga.read_text(encoding="utf-8"))
@@ -314,7 +385,8 @@ def main() -> int:
     temp = args.output.with_suffix(args.output.suffix + ".tmp")
     temp.write_text(json.dumps(report, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     temp.replace(args.output)
-    print(json.dumps({"output": str(args.output), "event_count": report["event_count"], "stage_counts": report["stage_counts"], "source_counts": report["source_counts"]}, ensure_ascii=False))
+    review_count = write_review_csv(report, args.review_csv)
+    print(json.dumps({"output": str(args.output), "event_count": report["event_count"], "stage_counts": report["stage_counts"], "source_counts": report["source_counts"], "review_csv": str(args.review_csv), "review_candidate_count": review_count, "link_candidate_summary": report["link_candidate_summary"]}, ensure_ascii=False))
     return 0
 
 
