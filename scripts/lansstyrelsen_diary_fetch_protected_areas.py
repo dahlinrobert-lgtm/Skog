@@ -24,7 +24,11 @@ def request_json(url: str, timeout: int = 90) -> dict:
     try:
         return json.loads(body.decode("utf-8"))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise RuntimeError(f"WFS response was not valid JSON (Content-Type: {content_type})") from exc
+        detail = body.decode("utf-8", errors="replace").strip()[:1200]
+        raise RuntimeError(
+            f"WFS response was not valid JSON (Content-Type: {content_type}); "
+            f"response excerpt: {detail}"
+        ) from exc
 
 
 def fetch_all(page_size: int = 1000, max_features: int = 100000) -> dict:
