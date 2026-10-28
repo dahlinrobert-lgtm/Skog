@@ -73,7 +73,8 @@ class DiaryHistoryTests(unittest.TestCase):
             record = next(iter(saved["records"].values()))
             self.assertEqual(record["queries_seen"], ["naturvårdsbränning", "reservat"])
             self.assertEqual(record["observation_count"], 2)
-            self.assertEqual(len(events.read_text(encoding="utf-8").splitlines()), 1)
+            saved_events = [json.loads(line) for line in events.read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([event["event_type"] for event in saved_events], ["first_seen", "observed"])
 
     def test_unchanged_source_record_appends_observation_event(self):
         with tempfile.TemporaryDirectory() as temp:
