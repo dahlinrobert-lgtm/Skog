@@ -49,6 +49,37 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertEqual(result["stage"], "publicity_or_logistics_preparation")
         self.assertNotEqual(result["stage"], "completed_burn")
 
+    def test_candidate_link_uses_place_overlap_but_does_not_link_sources(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om planerad naturvårdsbränning i Fågelmossen naturreservat, Motala kommun",
+            "source_url": "https://example.test/diary",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"source_url": "https://example.test/layer", "features": [{
+            "id": 9, "properties": {"OBJECTID": 9, "Namn": "Fågelmossen", "Typ": "T2.3 Controlled burning"},
+            "geometry": {"type": "Polygon", "coordinates": []}
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 1)
+        candidate = report["link_candidates"][0]
+        self.assertEqual(candidate["status"], "candidate_for_manual_review")
+        self.assertIn("fågelmossen", candidate["shared_place_tokens"])
+        self.assertTrue(all(e["link_status"] == "unlinked" for e in report["events"]))
+
+    def test_candidate_links_do_not_form_on_generic_burn_words_alone(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om naturvårdsbränning",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {"OBJECTID": 9, "Typ": "T2.3 Controlled burning"},
+            "geometry": {"type": "Polygon", "coordinates": []}
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 0)
+
     def test_build_keeps_sources_separate_and_undated(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
