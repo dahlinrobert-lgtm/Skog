@@ -80,6 +80,33 @@ class BurnEventTimelineTests(unittest.TestCase):
         report = build_timeline(state, source)
         self.assertEqual(report["link_candidate_count"], 0)
 
+    def test_candidate_diagnostics_explain_evidence_and_ambiguity(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om planerad naturvårdsbränning i Fågelmossen naturreservat 2026",
+            "source_url": "https://example.test/diary",
+            "columns": {"Diarienummer": "123-2026"}
+        }, "r2": {
+            "record_key": "r2", "diary_number": "124-2026",
+            "title": "Uppföljning vid Fågelmossen naturreservat 2026",
+            "source_url": "https://example.test/diary2",
+            "columns": {"Diarienummer": "124-2026"}
+        }}}
+        source = {"source_url": "https://example.test/layer", "features": [{
+            "id": 9, "properties": {"OBJECTID": 9, "Namn": "Fågelmossen", "Åtgärdsår": 2026, "Typ": "T2.3 Controlled burning"},
+            "geometry": {"type": "Polygon", "coordinates": []}
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 2)
+        self.assertEqual(report["link_candidate_summary"]["by_ambiguity"], {
+            "geometry_matches_multiple_diary_records": 2
+        })
+        for candidate in report["link_candidates"]:
+            self.assertIn("Shared place token(s): fågelmossen", candidate["evidence_summary"])
+            self.assertEqual(candidate["ambiguity"], "geometry_matches_multiple_diary_records")
+            self.assertTrue(candidate["shared_years"])
+        self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
+
     def test_build_keeps_sources_separate_and_undated(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
