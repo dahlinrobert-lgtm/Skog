@@ -1,0 +1,73 @@
+name: Länsstyrelsen burn event timeline
+
+on:
+  pull_request:
+    paths:
+      - "scripts/lansstyrelsen_burn_event_timeline.py"
+      - "scripts/test_lansstyrelsen_burn_event_timeline.py"
+      - "scripts/lifetaiga_fetch_naturvardsatgarder.py"
+      - "scripts/lansstyrelsen_diary_geocoding.py"
+      - "data/lansstyrelsen-diary/state.json"
+      - "docs/data/lifetaiga-naturvardsatgarder.geojson"
+      - ".github/workflows/lansstyrelsen-burn-event-timeline.yml"
+  push:
+    branches: [main, feature/burn-event-timeline]
+    paths:
+      - "scripts/lansstyrelsen_burn_event_timeline.py"
+      - "scripts/test_lansstyrelsen_burn_event_timeline.py"
+      - "scripts/lifetaiga_fetch_naturvardsatgarder.py"
+      - "scripts/lansstyrelsen_diary_geocoding.py"
+      - "data/lansstyrelsen-diary/state.json"
+      - "docs/data/lifetaiga-naturvardsatgarder.geojson"
+      - ".github/workflows/lansstyrelsen-burn-event-timeline.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "10 7 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  timeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test timeline classification and source separation
+        run: python -m unittest discover -s scripts -p 'test_lansstyrelsen_burn_event_timeline.py' -v
+      - name: Build source-separated timeline
+        run: python scripts/lansstyrelsen_burn_event_timeline.py
+      - name: Validate timeline and report stage counts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("docs/data/burn-event-timeline.json").read_text(encoding="utf-8"))
+          if report.get("schema_version") != 1 or not report.get("events"):
+              raise SystemExit("Timeline is empty or has an unknown schema")
+          if report.get("event_count") != len(report["events"]):
+              raise SystemExit("Timeline event count mismatch")
+          if any(event.get("link_status") != "unlinked" for event in report["events"]):
+              raise SystemExit("Unverified cross-source links must not be published")
+          print(json.dumps({
+              "event_count": report["event_count"],
+              "source_counts": report["source_counts"],
+              "stage_counts": report["stage_counts"],
+              "undated_count": sum(event.get("event_date") is None for event in report["events"]),
+          }, ensure_ascii=False, indent=2))
+          PY
+      - name: Publish timeline data
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data/burn-event-timeline.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish updated burn event timeline"
+            git push origin HEAD:main
+          else
+            echo "Burn event timeline unchanged."
+          fi
