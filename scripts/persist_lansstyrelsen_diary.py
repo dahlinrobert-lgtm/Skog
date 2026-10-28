@@ -203,6 +203,15 @@ def main() -> None:
             else:
                 updated["content_hash"] = content_hash(candidate_source)
                 records[key] = updated
+                events.append({
+                    "event_id": hashlib.sha256(
+                        f"{key}|observed|{observed_at}|{updated['content_hash']}".encode()
+                    ).hexdigest(),
+                    "event_type": "observed", "record_key": key, "diary_number": diary_number,
+                    "diary": record_county, "observed_at": observed_at,
+                    "content_hash": updated["content_hash"],
+                    "note": "The same source-owned fields were observed again; no source change detected.",
+                })
 
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.events.parent.mkdir(parents=True, exist_ok=True)
@@ -229,6 +238,7 @@ def main() -> None:
         "state_record_count_after": len(records),
         "first_seen_events": sum(e["event_type"] == "first_seen" for e in events),
         "changed_events": sum(e["event_type"] == "record_changed" for e in events),
+        "observation_events": sum(e["event_type"] == "observed" for e in events),
         "invalid_or_duplicate_records": invalid_count,
         "absent_ids_interpreted_as_removed": False,
         "note": "Records absent from a search are not marked removed: they may not match the current search phrase or may be outside the source's current result window.",
