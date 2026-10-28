@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "source_url": "https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13",
+  "source_layer_id": 13,
+  "source_layer_name": "WP_2_Restoration_measures",
+  "generated_at": "2026-10-28T18:56:25.219154+00:00",
+  "feature_count": 337,
+  "field_count": 29,
+  "date_or_action_field_candidates": [
+    "area_ha",
+    "artal",
+    "arter",
+    "atgardsdatum",
+    "brann",
+    "created_date",
+    "kommentar",
+    "last_edited_date",
+    "mark",
+    "markag_1",
+    "markag_2",
+    "SHAPE__Area"
+  ],
+  "fields": [
+    {
+      "field": "area_ha",
+      "non_null_count": 335,
+      "value_types": {
+        "float": 335
+      },
+      "examples": [
+        "15.1444",
+        "7.00985",
+        "6.40793572"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "artal",
+      "non_null_count": 159,
+      "value_types": {
+        "str": 159
+      },
+      "examples": [
+        "2024",
+        "2023",
+        "2025"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "arter",
+      "non_null_count": 29,
+      "value_types": {
+        "str": 29
+      },
+      "examples": [
+        "Slät tallkapuschongbagge (Stephanopachys linearis) och Grov tallkapuschongbagge (Stephanopachys substriatus)",
+        "Pulsatilla vernalis (mosippa)",
+        "Vedsvamp och insekter"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "atgardsdatum",
+      "non_null_count": 120,
+      "value_types": {
+        "int": 120
+      },
+      "examples": [
+        "1717020000000",
+        "1686693600000",
+        "1717068600000"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "brann",
+      "non_null_count": 336,
+      "value_types": {
+        "str": 336
+      },
+      "examples": [
+        "Nej",
+        "Ja",
+        "Utgår eventuellt"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "created_date",
+      "non_null_count": 337,
+      "value_types": {
+        "int": 337
+      },
+      "examples": [
+        "1688389197000",
+        "1694521258102",
+        "1706260298007"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "kommentar",
+      "non_null_count": 191,
+      "value_types": {
+        "str": 191
+      },
+      "examples": [
+        "Bränningsförberedande röjning, kräver ordentlig arbetsledning.",
+        "Området utgår pga för mycket graninväxt i området.",
+        "Planerad naturvårdsbränning 2025."
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "last_edited_date",
+      "non_null_count": 337,
+      "value_types": {
+        "int": 337
+      },
+      "examples": [
+        "1771319204484",
+        "1792421662658",
+        "1792422035205"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "mark",
+      "non_null_count": 258,
+      "value_types": {
+        "str": 258
+      },
+      "examples": [
+        "Nej",
+        "Ja",
+        "nej"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "markag_1",
+      "non_null_count": 303,
+      "value_types": {
+        "str": 303
+      },
+      "examples": [
+        "Privat",
+        "NV",
+        "Annan"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "markag_2",
+      "non_null_count": 10,
+      "value_types": {
+        "str": 10
+      },
+      "examples": [
+        "Privat",
+        "a",
+        "Annan"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "SHAPE__Area",
+      "non_null_count": 337,
+      "value_types": {
+        "int": 42,
+        "float": 295
+      },
+      "examples": [
+        "151444",
+        "70098.5",
+        "64079.357212815"
+      ],
+      "date_or_action_field_candidate": true
+    },
+    {
+      "field": "dod_ved",
+      "non_null_count": 266,
+      "value_types": {
+        "str": 266
+      },
+      "examples": [
+        "Nej",
+        "Ja",
+        "ja"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "frist_trad",
+      "non_null_count": 270,
+      "value_types": {
+        "str": 270
+      },
+      "examples": [
+        "Nej",
+        "Ja",
+        "nej"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "globalid",
+      "non_null_count": 337,
+      "value_types": {
+        "str": 337
+      },
+      "examples": [
+        "{EFDDD905-29BB-44C3-8BE1-7D19B4A2FD0A}",
+        "{E1633D6F-29B9-4574-8CDA-1E55106A3697}",
+        "{0A2C7884-2355-4099-8D86-0707313EA66A}"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "knamn",
+      "non_null_count": 335,
+      "value_types": {
+        "str": 335
+      },
+      "examples": [
+        "Årjäng",
+        "Strömsund",
+        "Krokom"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "kod_n2000",
+      "non_null_count": 329,
+      "value_types": {
+        "str": 329
+      },
+      "examples": [
+        "SE0610244",
+        "SE0720390",
+        "SE0720446"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "lan",
+      "non_null_count": 335,
+      "value_types": {
+        "str": 335
+      },
+      "examples": [
+        "Värmlands län",
+        "Jämtlands län",
+        "Östergötlands län"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "lanskod",
+      "non_null_count": 335,
+      "value_types": {
+        "str": 335
+      },
+      "examples": [
+        "S",
+        "Z",
+        "E"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "luck",
+      "non_null_count": 260,
+      "value_types": {
+        "str": 260
+      },
+      "examples": [
+        "Nej",
+        "Ja",
+        "nej"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "namn",
+      "non_null_count": 334,
+      "value_types": {
+        "str": 334
+      },
+      "examples": [
+        "Brännan röjning",
+        "Källberget-Storberget",
+        "Malmån"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "namn_n2000",
+      "non_null_count": 335,
+      "value_types": {
+        "str": 335
+      },
+      "examples": [
+        "Brännan",
+        "Källberget-Storberget",
+        "Malmån"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "objectid",
+      "non_null_count": 337,
+      "value_types": {
+        "int": 337
+      },
+      "examples": [
+        "1",
+        "5",
+        "6"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "roj_gallr",
+      "non_null_count": 270,
+      "value_types": {
+        "str": 270
+      },
+      "examples": [
+        "Ja",
+        "Nej",
+        "nej"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "SHAPE__Length",
+      "non_null_count": 337,
+      "value_types": {
+        "float": 337
+      },
+      "examples": [
+        "2219.2993134632043",
+        "1222.910921996075",
+        "1100.2502735878934"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "stangsl",
+      "non_null_count": 259,
+      "value_types": {
+        "str": 259
+      },
+      "examples": [
+        "Nej",
+        "Ja",
+        "nej"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "symbology",
+      "non_null_count": 337,
+      "value_types": {
+        "str": 337
+      },
+      "examples": [
+        "T2.4 Fire-mimicking measures",
+        "T2.3 Controlled burning",
+        "T2.4 Forest fencing"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "uppfoljning",
+      "non_null_count": 6,
+      "value_types": {
+        "str": 6
+      },
+      "examples": [
+        "Insektsuppföljning",
+        "Ja (Life Taiga)",
+        "Ja"
+      ],
+      "date_or_action_field_candidate": false
+    },
+    {
+      "field": "veter",
+      "non_null_count": 267,
+      "value_types": {
+        "str": 267
+      },
+      "examples": [
+        "Nej",
+        "Ja",
+        "nej"
+      ],
+      "date_or_action_field_candidate": false
+    }
+  ],
+  "interpretation_policy": "Field-name matching is only a discovery aid. A field is not treated as an event date or completion indicator until its meaning and values have been verified."
+}
