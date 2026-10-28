@@ -217,7 +217,7 @@ async function loadDiaryGeocoding(){
 const lifeTaigaLayer=L.geoJSON(null,{
  style:feature=>{
   const values=Object.entries(feature?.properties||{}).map(([k,v])=>String(k)+" "+String(v??"")).join(" ").toLocaleLowerCase("sv");
-  const burn=/bränn|burn|t2\\.3|controlled burning/.test(values);
+  const burn=/bränn|burn|t2\.3|controlled burning/.test(values);
   return {color:burn?"#e67700":"#3f6b58",weight:1.8,opacity:.9,fillColor:burn?"#ff9f1c":"#68a68a",fillOpacity:.3};
  },
  onEachFeature:(feature,layer)=>{
@@ -233,7 +233,7 @@ function renderLifeTaiga(){
  const filtered=filterToRadius(lifeTaigaSource);
  lifeTaigaLayer.clearLayers();
  lifeTaigaLayer.addData(filtered);
- const burns=filtered.features.filter(f=>/bränn|burn|t2\\.3|controlled burning/i.test(Object.entries(f.properties||{}).map(([k,v])=>String(k)+" "+String(v??"")).join(" "))).length;
+ const burns=filtered.features.filter(f=>/bränn|burn|t2\.3|controlled burning/i.test(Object.entries(f.properties||{}).map(([k,v])=>String(k)+" "+String(v??"")).join(" "))).length;
  lifeTaigaStatus.textContent="Life2Taiga: "+filtered.features.length.toLocaleString("sv-SE")+" objekt inom vald radie; "+burns.toLocaleString("sv-SE")+" innehåller bränningsrelaterade attribut. Orange markering är en textbaserad ledtråd, inte en verifierad statusklassning. Källa: Länsstyrelsen.";
 }
 async function loadLifeTaiga(){
