@@ -262,7 +262,18 @@ document.getElementById("showLifeTaiga").addEventListener("change",async e=>{
 
 const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
-const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
+// High-contrast fallback palette for categories not listed explicitly below.
+const CATEGORY_COLORS=["#0072b2","#d55e00","#009e73","#cc79a7","#e69f00","#6a3d9a","#d62728","#4d4d4d","#56b4e9","#8c6d31"];
+const SAMRAD_ACTION_COLORS=new Map([
+ ["annan skogsbrukatgard","#d55e00"],
+ ["askaterforing","#009e73"],
+ ["basvag","#cc79a7"],
+ ["dikesrensning","#e69f00"],
+ ["skogsgodsling","#0072b2"],
+ ["skogsavverkning","#6a3d9a"],
+ ["skogsbilvag","#8c6d31"],
+ ["traktorvag","#d62728"]
+]);
 const FOUR_COLOR_PALETTE=["#0072B2","#E69F00","#009E73","#CC79A7"];
 function makeCaseGroupPalette(){
  const palette=[],seen=new Set();
@@ -481,9 +492,11 @@ function categoryValue(feature,mode){
 }
 function categoryColor(value){
  if(value==="Okänd / saknas")return "#d3d3d3";
- // Keep this consultation category consistently purple on both the map and legend.
- if(value==="Annan skogsbruksåtgärd")return "#a21caf";
- if(value==="Askåterföring")return "#0f766e";
+ // Use explicit, stable colors for common Samrådsåtgärd values. Normalize accents
+ // so small source spelling differences cannot silently assign a different color.
+ const normalized=String(value??"").trim().toLocaleLowerCase("sv").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+ const samradColor=SAMRAD_ACTION_COLORS.get(normalized);
+ if(samradColor)return samradColor;
  if(!categoryColorMap.has(value)){
   const index=categoryColorMap.size;
   categoryColorMap.set(value,CATEGORY_COLORS[index%CATEGORY_COLORS.length]);

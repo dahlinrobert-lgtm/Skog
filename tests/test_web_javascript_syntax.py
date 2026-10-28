@@ -31,7 +31,12 @@ def test_map_layer_selection_and_legend_colors():
     html = (ROOT / "docs/karta.html").read_text(encoding="utf-8")
     # The common consultation action must use the same purple in map and legend.
     assert '.samrad{border-color:#a21caf}' in html
-    assert 'if(value==="Annan skogsbruksåtgärd")return "#a21caf";' in html
+    # Samrådsåtgärder use fixed, contrast-tested colors rather than adjacent palette slots.
+    assert '["annan skogsbrukatgard","#d55e00"]' in html
+    assert '["skogsgodsling","#0072b2"]' in html
+    assert '["askaterforing","#009e73"]' in html
+    assert 'const SAMRAD_ACTION_COLORS=new Map([' in html
+    assert 'const CATEGORY_COLORS=["#0072b2","#d55e00","#009e73","#cc79a7","#e69f00","#6a3d9a","#d62728","#4d4d4d","#56b4e9","#8c6d31"];' in html
     assert 'wantPlanned:document.getElementById("showPlanned").checked' in html
     assert 'wantPerformed:document.getElementById("showPerformed").checked' in html
     assert 'const plannedPromise=wantPlanned' in html
