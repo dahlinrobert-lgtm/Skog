@@ -1,6 +1,13 @@
 name: Länsstyrelsen diary geocoding integration
 
 on:
+  pull_request:
+    paths:
+      - "scripts/lansstyrelsen_diary_geocoding.py"
+      - "scripts/lansstyrelsen_diary_fetch_protected_areas.py"
+      - "scripts/lansstyrelsen_diary_protected_area_match.py"
+      - "data/lansstyrelsen-diary/state.json"
+      - ".github/workflows/lansstyrelsen-diary-geocoding-integration.yml"
   push:
     branches:
       - feature/diary-protected-area-matching
