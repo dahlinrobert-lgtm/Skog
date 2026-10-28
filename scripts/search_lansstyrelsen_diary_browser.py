@@ -11,7 +11,11 @@ from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
-from lansstyrelsen_diary_validation import has_explicit_zero_results, resolve_county_labels
+from lansstyrelsen_diary_validation import (
+    has_explicit_zero_results,
+    resolve_county_labels,
+    summarize_county_coverage,
+)
 
 URL = "https://diarium.lansstyrelsen.se/default.aspx"
 COUNTY_SELECT = "#SearchPlaceHolder_CaseSearch_ddDiaryID"
@@ -394,30 +398,16 @@ def main() -> None:
                      "total_reconciled": q["total_reconciled"]}
                     for q in batch["queries"]
                 ]
-                county_summaries = [
-                    {"county": county, "query_count": sum(q["requested_county"] == county for q in batch["queries"]),
-                     "unique_records": sum(1 for rec in batch["results"] if rec.get("diary") == county),
-                     "successful_queries": sum(q["requested_county"] == county and q.get("request_ok") for q in batch["queries"]),
-                     "failed_queries": sum(q["requested_county"] == county and not q.get("request_ok") for q in batch["queries"])}
-                    for county in counties
-                ]
-                batch["county_summaries"] = county_summaries
-                batch["completed_counties"] = sum(
-                    row["query_count"] > 0 and row["failed_queries"] == 0
-                    for row in county_summaries
+                coverage = summarize_county_coverage(
+                    counties, batch["queries"], is_all_counties=args.county == "Alla län"
                 )
-                batch["failed_counties"] = [
-                    row["county"] for row in county_summaries
-                    if row["query_count"] == 0 or row["failed_queries"] > 0
-                ]
+                batch.update(coverage)
+                for row in batch["county_summaries"]:
+                    row["unique_records"] = sum(
+                        1 for rec in batch["results"] if rec.get("diary") == row["county"]
+                    )
                 # National search must verify not just the portal dropdown but that
                 # every county/term query returned a validated, reconciled response.
-                batch["county_coverage_ok"] = (
-                    batch["county_coverage_ok"]
-                    and batch["completed_counties"] == batch["expected_county_count"]
-                    and not batch["failed_counties"]
-                    and all(q.get("request_ok") and q.get("total_reconciled") for q in batch["queries"])
-                )
                 if args.county == "Alla län" and not batch["county_coverage_ok"]:
                     raise RuntimeError(
                         "All-county coverage validation failed: "
