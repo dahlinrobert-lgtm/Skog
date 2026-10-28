@@ -70,6 +70,30 @@ class DiaryHistoryAuditTests(unittest.TestCase):
             self.assertFalse(report["ok"])
             self.assertEqual(report["duplicate_event_ids"], ["same"])
 
+    def test_orphan_event_key_fails_audit(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state_path = root / "state.json"
+            events_path = root / "events.jsonl"
+            state_path.write_text(json.dumps({"records": {}}), encoding="utf-8")
+            events_path.write_text(json.dumps({
+                "event_id": "orphan", "event_type": "observed", "record_key": "missing::123-2026"
+            }) + "\\n", encoding="utf-8")
+            report = audit_history(state_path, events_path)
+            self.assertFalse(report["ok"])
+            self.assertEqual(report["event_keys_without_state_record"], ["missing::123-2026"])
+
+    def test_non_object_event_json_fails_cleanly(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state_path = root / "state.json"
+            events_path = root / "events.jsonl"
+            state_path.write_text(json.dumps({"records": {}}), encoding="utf-8")
+            events_path.write_text(json.dumps(["not", "an", "event"]) + "\\n", encoding="utf-8")
+            report = audit_history(state_path, events_path)
+            self.assertFalse(report["ok"])
+            self.assertEqual(report["error"], "invalid_event_shape")
+
     def test_record_without_first_seen_fails_audit(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
