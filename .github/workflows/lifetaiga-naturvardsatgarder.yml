@@ -1,0 +1,60 @@
+name: Life2Taiga naturvårdsåtgärder
+
+on:
+  pull_request:
+    paths:
+      - "scripts/lifetaiga_fetch_naturvardsatgarder.py"
+      - "scripts/test_lifetaiga_fetch_naturvardsatgarder.py"
+      - "docs/karta.html"
+      - ".github/workflows/lifetaiga-naturvardsatgarder.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "25 6 * * *"
+  push:
+    branches: [main, feature/lifetaiga-burnings-layer]
+    paths:
+      - "scripts/lifetaiga_fetch_naturvardsatgarder.py"
+      - "scripts/test_lifetaiga_fetch_naturvardsatgarder.py"
+      - ".github/workflows/lifetaiga-naturvardsatgarder.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test collector
+        run: python -m unittest discover -s scripts -p 'test_lifetaiga_fetch_naturvardsatgarder.py' -v
+      - name: Fetch official Life2Taiga polygons
+        run: python scripts/lifetaiga_fetch_naturvardsatgarder.py
+      - name: Validate published dataset
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("docs/data/lifetaiga-naturvardsatgarder.geojson")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          if data.get("type") != "FeatureCollection" or not data.get("features"):
+              raise SystemExit("Life2Taiga output is not a non-empty FeatureCollection")
+          if data.get("feature_count") != len(data["features"]):
+              raise SystemExit("Life2Taiga feature_count does not match features")
+          print(f"Validated {len(data['features'])} source features from {data.get('source_layer_name')}")
+          PY
+      - name: Publish latest source data
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data/lifetaiga-naturvardsatgarder.geojson
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish updated Life2Taiga action polygons"
+            git push origin HEAD:main
+          else
+            echo "Life2Taiga source data unchanged."
+          fi
