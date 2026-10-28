@@ -9,7 +9,7 @@ on:
         default: "50000"
         type: string
       raster_codes:
-        description: Raster areas to test
+        description: Raster areas to test (07, 10, 12, 13, 21, 23; selected ZIPs must be committed)
         required: true
         default: "13"
         type: string
