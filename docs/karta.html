@@ -494,7 +494,7 @@ function categoryColor(value){
  if(value==="Okänd / saknas")return "#d3d3d3";
  // Use explicit, stable colors for common Samrådsåtgärd values. Normalize accents
  // so small source spelling differences cannot silently assign a different color.
- const normalized=String(value??"").trim().toLocaleLowerCase("sv").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
+ const normalized=String(value??"").trim().toLocaleLowerCase("sv").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
  const samradColor=SAMRAD_ACTION_COLORS.get(normalized);
  if(samradColor)return samradColor;
  if(!categoryColorMap.has(value)){
