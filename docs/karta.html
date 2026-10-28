@@ -1108,6 +1108,10 @@ async function load(){
   if(wantSamrad){
    samradPointLayer.addData(samradPoints);samradLineLayer.addData(samradLines);samradAreaLayer.addData(samradAreas);
    samradPointHitLayer.addData(samradPoints);samradLineHitLayer.addData(samradLines);
+   // The first color refresh happens before optional Samråd finishes loading.
+   // Rebuild the shared category/numeric scale now that Samråd features exist,
+   // so map styles and the visible legend use the same complete dataset.
+   refreshPerformedColors();
   }
   // Samråd may finish after the first histogram render; refresh it with loaded data.
   if(document.getElementById("histogramAttribute").value==="samradAction")updateDurationHistogram(performedLayer.toGeoJSON().features);
