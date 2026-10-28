@@ -182,6 +182,9 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
             score = min(0.65, 0.35 + 0.10 * (len(overlap) - 1))
             if year_overlap:
                 score = min(0.85, score + 0.20)
+            # Keep the heuristic score, but explicitly expose evidence strength.
+            # A shared year is only supportive when present in event-specific text/date
+            # evidence; record/registration dates are deliberately excluded.
             candidates.append({
                 "candidate_id": f'{diary["event_id"]}~{geometry["event_id"]}',
                 "diary_event_id": diary["event_id"],
@@ -190,8 +193,16 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "confidence": "medium" if score >= 0.55 else "low",
                 "shared_place_tokens": overlap,
                 "shared_years": year_overlap,
+                "evidence_tier": (
+                    "place_and_event_year" if overlap and year_overlap else
+                    "place_only"
+                ),
+                "review_priority": (
+                    "higher" if overlap and year_overlap and len(overlap) >= 2 else
+                    "normal"
+                ),
                 "status": "candidate_for_manual_review",
-                "evidence_policy": "Text overlap suggests a review candidate only. No source records are linked and no burn is inferred."
+                "evidence_policy": "Text overlap suggests a review candidate only. A shared event-year clue is supportive, not proof. No source records are linked and no burn is inferred."
             })
     candidates.sort(key=lambda c: (-c["score"], c["diary_event_id"], c["geometry_event_id"]))
     # Quantify ambiguity so reviewers can spot one-to-many and many-to-one cases.
@@ -277,9 +288,11 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
         "link_candidate_summary": {
             "by_confidence": dict(sorted(Counter(c["confidence"] for c in link_candidates).items())),
             "by_ambiguity": dict(sorted(Counter(c["ambiguity"] for c in link_candidates).items())),
+            "by_evidence_tier": dict(sorted(Counter(c["evidence_tier"] for c in link_candidates).items())),
+            "by_review_priority": dict(sorted(Counter(c["review_priority"] for c in link_candidates).items())),
             "diary_events_with_candidates": len({c["diary_event_id"] for c in link_candidates}),
             "geometry_events_with_candidates": len({c["geometry_event_id"] for c in link_candidates}),
-            "policy": "Candidate metrics are triage indicators, not calibrated probabilities. Ambiguous matches require manual review; original events remain unlinked."
+            "policy": "Candidate metrics are triage indicators, not calibrated probabilities. Shared event-year clues exclude record/registration dates. Ambiguous matches require manual review; original events remain unlinked."
         },
         "link_candidates": link_candidates,
         "stage_counts": dict(sorted(stage_counts.items())),

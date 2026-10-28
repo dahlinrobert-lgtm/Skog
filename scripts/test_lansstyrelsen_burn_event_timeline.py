@@ -106,6 +106,46 @@ class BurnEventTimelineTests(unittest.TestCase):
             self.assertEqual(candidate["ambiguity"], "geometry_matches_multiple_diary_records")
             self.assertTrue(candidate["shared_years"])
         self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
+        self.assertEqual(report["link_candidate_summary"]["by_evidence_tier"], {"place_and_event_year": 2})
+        self.assertEqual(report["link_candidate_summary"]["by_review_priority"], {"normal": 2})
+
+    def test_record_date_does_not_create_shared_event_year_evidence(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om planerad naturvårdsbränning vid Fågelmossen",
+            "source_date": "2026-04-02",
+            "columns": {"Diarienummer": "123-2026", "In/Upp-datum": "2026-04-02"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "Namn": "Fågelmossen", "Åtgärdsår": 2026,
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 1)
+        candidate = report["link_candidates"][0]
+        self.assertEqual(candidate["shared_years"], [])
+        self.assertEqual(candidate["evidence_tier"], "place_only")
+        self.assertEqual(candidate["review_priority"], "normal")
+
+    def test_higher_priority_requires_place_and_year_and_multiple_place_tokens(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Planerad naturvårdsbränning vid Fågelmossen i Motala 2026",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "Namn": "Fågelmossen i Motala", "Åtgärdsår": 2026,
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 1)
+        candidate = report["link_candidates"][0]
+        self.assertEqual(candidate["evidence_tier"], "place_and_event_year")
+        self.assertEqual(candidate["review_priority"], "higher")
 
     def test_diary_source_date_is_record_date_not_burn_date(self):
         state = {"records": {"r1": {
