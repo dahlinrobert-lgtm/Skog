@@ -34,13 +34,13 @@ jobs:
           node --input-type=module -e '
             import { readFileSync } from "node:fs";
             const html = readFileSync("docs/karta.html", "utf8");
-            if (!html.includes("<script type=\"module\">")) throw new Error("Map inline script must be a module to import the shared filter");
-            if (!html.includes("filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from \"./map-radius-filter.mjs\";")) throw new Error("Map must import radius filter and polygon clipper from published docs asset");
+            if (!html.includes("<script type=\\"module\\">")) throw new Error("Map inline script must be a module to import the shared filter");
+            if (!html.includes("filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from \\"./map-radius-filter.mjs\\";")) throw new Error("Map must import radius filter and polygon clipper from published docs asset");
             if (!html.includes("planned=filterToRadius(planned);performed=filterToRadius(performed);")) throw new Error("Filtered planned and performed collections must be assigned before rendering");
-            if (!html.includes("if(wantSamrad){samradPoints=filterToRadius(samradPoints);samradLines=filterToRadius(samradLines);samradAreas=filterToRadius(samradAreas);}")) throw new Error("Filtered consultation collections must be assigned before rendering");
-            if (!html.includes("await import(\"https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm\")")) throw new Error("Polygon clipping library must load dynamically");
+            if (!/if\\s*\\(wantSamrad\\)\\s*\\{[\\s\\S]*?samradPoints=filterToRadius\\(samradPoints\\);[\\s\\S]*?samradLines=filterToRadius\\(samradLines\\);[\\s\\S]*?samradAreas=filterToRadius\\(samradAreas\\);/.test(html)) throw new Error("Filtered consultation collections must be assigned before rendering");
+            if (!html.includes("await import(\\"https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm\\")")) throw new Error("Polygon clipping library must load dynamically");
             if (!html.includes("planned=clipPolygonCollection(planned,turf);performed=clipPolygonCollection(performed,turf);")) throw new Error("Harvest polygons must be clipped to the circle before rendering");
-            if (!html.includes("if(wantSamrad)samradAreas=clipPolygonCollection(samradAreas,turf);")) throw new Error("Consultation polygons must be clipped to the circle before rendering");
+            if (!/if\\s*\\(wantSamrad\\)\\s*samradAreas=clipPolygonCollection\\(samradAreas,turf\\);/.test(html)) throw new Error("Consultation polygons must be clipped to the circle before rendering");
             if (!html.includes("catch(clipError)")) throw new Error("Clipping-library failures must be caught so map startup can recover");
             console.log("Map uses shared radius filter for planned, performed and consultation layers.");
           '
