@@ -43,7 +43,7 @@ jobs:
           assert(/if\s*\(wantSamrad\)\s*\{[\s\S]*?samradPoints=filterToRadius\(samradPoints\);[\s\S]*?samradLines=filterToRadius\(samradLines\);[\s\S]*?samradAreas=filterToRadius\(samradAreas\);/.test(html), "Filtered consultation collections must be assigned before rendering");
           assert(html.includes('await import("https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm")'), "Polygon clipping library must load dynamically");
           assert(html.includes("planned=clipPolygonCollection(planned,turf);performed=clipPolygonCollection(performed,turf);"), "Harvest polygons must be clipped to the circle before rendering");
-          assert(/if\s*\(wantSamrad\)\s*samradAreas=clipPolygonCollection\(samradAreas,turf\);/.test(html), "Consultation polygons must be clipped to the circle before rendering");
+          assert(/if\s*\(turf\)\s*\{\s*try\s*\{\s*samradAreas=clipPolygonCollection\(samradAreas,turf\);/.test(html), "Consultation polygons must be clipped to the circle before rendering when clipping is available");
           assert(html.includes("catch(clipError)"), "Clipping-library failures must be caught so map startup can recover");
           console.log("Map uses shared radius filter for planned, performed and consultation layers.");
           NODE
