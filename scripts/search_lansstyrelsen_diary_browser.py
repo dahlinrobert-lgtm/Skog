@@ -11,6 +11,8 @@ from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
+from lansstyrelsen_diary_validation import has_explicit_zero_results
+
 URL = "https://diarium.lansstyrelsen.se/default.aspx"
 COUNTY_SELECT = "#SearchPlaceHolder_CaseSearch_ddDiaryID"
 TITLE_INPUT = "#SearchPlaceHolder_CaseSearch_title"
@@ -172,7 +174,7 @@ def main() -> None:
             # Search results can legitimately contain zero matches. The result page
             # may not render the original ASP.NET grid in that case, but it displays
             # "Sökresultat: 0". Accept only an explicit zero count, never an unknown one.
-            if not grid_present and re.search(r"\bSökresultat\s*:\s*0\b", body_text.replace("\u00a0", " "), re.I):
+            if not grid_present and has_explicit_zero_results(body_text):\s*0\b", body_text.replace("\u00a0", " "), re.I):
                 result["reported_total_results"] = 0
                 result["request_ok"] = True
                 result["pagination"]["has_next_page"] = False
