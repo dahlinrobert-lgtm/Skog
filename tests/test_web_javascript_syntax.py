@@ -44,7 +44,9 @@ def test_map_layer_selection_and_legend_colors():
     # not only during the earlier first-paint refresh for planned/performed layers.
     assert 'samradAreaLayer.addData(samradAreas);' in html
     assert 'The first color refresh happens before optional Samråd finishes loading.' in html
-    assert 'refreshPerformedColors();\\n  }\\n  // Samråd may finish after the first histogram render;' in html
+    color_refresh_comment = html.index("The first color refresh happens before optional Samråd finishes loading.")
+    assert color_refresh_comment < html.index("refreshPerformedColors();", color_refresh_comment)
+    assert html.index("refreshPerformedColors();", color_refresh_comment) < html.index("// Samråd may finish after the first histogram render;", color_refresh_comment)
     assert 'document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()})' in html
 
 
