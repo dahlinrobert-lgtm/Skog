@@ -52,11 +52,25 @@ jobs:
               raise SystemExit("Timeline event count mismatch")
           if any(event.get("link_status") != "unlinked" for event in report["events"]):
               raise SystemExit("Unverified cross-source links must not be published")
+          events = report["events"]
           print(json.dumps({
               "event_count": report["event_count"],
               "source_counts": report["source_counts"],
               "stage_counts": report["stage_counts"],
-              "undated_count": sum(event.get("event_date") is None for event in report["events"]),
+              "date_coverage": {
+                  "with_event_date": sum(event.get("event_date") is not None for event in events),
+                  "with_record_date": sum(event.get("record_date") is not None for event in events),
+                  "with_either_date": sum(
+                      event.get("event_date") is not None or event.get("record_date") is not None
+                      for event in events
+                  ),
+                  "missing_both_dates": sum(
+                      event.get("event_date") is None and event.get("record_date") is None
+                      for event in events
+                  ),
+              },
+              "link_candidate_count": report.get("link_candidate_count", 0),
+              "link_candidate_summary": report.get("link_candidate_summary", {}),
           }, ensure_ascii=False, indent=2))
           PY
       - name: Publish timeline data
