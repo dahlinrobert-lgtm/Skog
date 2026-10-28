@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-10-28T16:53:40.806394+00:00",
+  "observed_at": "2026-10-28T17:05:14.792268+00:00",
   "diary": "Länsstyrelsen i Västra Götalands län",
   "counties": [
     "Länsstyrelsen i Västra Götalands län"
@@ -8,6 +8,8 @@
     {
       "county": "Länsstyrelsen i Västra Götalands län",
       "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
       "unique_records": 14
     }
   ],
