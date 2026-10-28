@@ -78,7 +78,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/burn-event-timeline.json
+          git add docs/data/burn-event-timeline.json docs/data/burn-event-link-review.csv
           if ! git diff --cached --quiet; then
             git commit -m "Publish updated burn event timeline"
             git push origin HEAD:main
