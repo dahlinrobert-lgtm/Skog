@@ -21,10 +21,13 @@ PLACE_KEYS = ("omrade", "område", "reservat", "plats", "objekt", "lokal", "namn
 EVENT_DATE_KEYS = ("brann", "bränn", "burn", "genomfor", "genomför", "utford", "utförd", "planerad", "atgardsdatum", "åtgärdsdatum", "insatsdatum", "startdatum", "slutdatum", "event_date", "burn_date")
 RECORD_DATE_KEYS = ("inkomdatum", "registreringsdatum", "created_date", "created_at", "last_edited_date", "updated_at", "diariedatum")
 COMPLETED = ("genomförd bränning", "genomförda bränningar", "utförd bränning", "utförda bränningar", "completed burn", "burn completed", "burning completed")
-POST_BURN = ("efterbevakning", "uppföljning efter bränning", "uppfoljning efter branning", "tillsyn efter utförd naturvårdsbränning")
-PRE_BURN_SPECIES = ("varglav", "fridlysningsbestämmelser", "fridlysningsbestammelser", "artinventering inför", "inventering inför bränning", "inventering infor branning", "plocka ", "flytta arter", "artskydd inför", "artskydd infor")
+CANCELLED_OR_POSTPONED = ("inställd bränning", "inställd naturvårdsbränning", "inställt på grund av", "bränningen ställs in", "bränningen skjuts upp", "uppskjuten bränning", "avblåst bränning", "cancelled burn", "postponed burn")
+POST_BURN = ("efterbevakning", "efterbevakning av naturvårdsbränning", "uppföljning efter bränning", "uppfoljning efter branning", "tillsyn efter utförd naturvårdsbränning", "uppföljning av naturvårdsbränning")
+PRE_BURN_SPECIES = ("varglav", "fridlysningsbestämmelser", "fridlysningsbestammelser", "artinventering inför", "inventering inför bränning", "inventering infor branning", "plocka ", "flytta arter", "artskydd inför", "artskydd infor", "dispens från fridlysningsbestämmelserna")
+PRE_BURN_WORK = ("byggnation av spång inför", "byggande av spång inför", "röjning inför bränning", "rojning infor branning", "anläggning inför bränning", "anlaggning infor branning", "förberedande arbete inför bränning", "forberedande arbete infor branning", "brandgata inför bränning", "brandgata infor branning")
 AGREEMENT = ("avtal om naturvårdsbränning", "avtal om naturvardsbranning", "avtalsförlängning naturvårdsbränning", "avtalsforlangning naturvardsbranning", "contract for prescribed burn")
 PROCUREMENT = ("upphandling av naturvårdsbränning", "upphandling av naturvardsbranning", "direktupphandling av naturvårdsbränning", "direktupphandling av naturvardsbranning", "inköp av entreprenad för naturvårdsbränning")
+PREP_WORK = ("beställning av trycktjänst", "beställning av distribution av samhällsinfo", "trafikskyltar för naturvårdsbränning", "trafikskyltar for naturvardsbranning", "informationsbrev om naturvårdsbränning")
 PLAN_WORDS = ("handlingsplan", "bränningsplan", "branningsplan", "planering", "planerad bränning", "planned burn", "burn plan")
 PUBLIC_INFO = ("information om", "informationsmöte", "allmänheten", "kungörelse", "public information", "public notice")
 APPLICATION = ("ansökan", "anmälan", "dispens", "tillstånd", "samråd", "upphandling", "application", "permit", "consultation")
@@ -59,14 +62,20 @@ def _classify(text: str, source_kind: str) -> tuple[str, str, str]:
     # Classify the most specific process step before generic words such as
     # "ansökan" or "naturvårdsbränning" to avoid flattening preparation into
     # a generic administrative case.
+    if any(term in value for term in CANCELLED_OR_POSTPONED):
+        return "cancelled_or_postponed", "medium", "Source text indicates cancellation or postponement; verify whether a later record documents rescheduling or completion."
     if any(term in value for term in COMPLETED):
         return "completed_burn", "high", "Source text explicitly describes a completed burn."
     if any(term in value for term in POST_BURN):
         return "post_burn_follow_up", "medium", "Source text refers to follow-up or monitoring after a burn; the wording is not independently proof of the burn date."
     if any(term in value for term in PRE_BURN_SPECIES):
         return "pre_burn_species_protection", "medium", "Source text indicates a species-protection or handling step before a burn; it does not prove that the burn later occurred."
+    if any(term in value for term in PRE_BURN_WORK):
+        return "pre_burn_site_preparation", "medium", "Source text indicates physical or site preparation before a burn; it does not prove that the burn later occurred."
     if any(term in value for term in PLAN_WORDS):
         return "planning_or_action_plan", "medium", "Source text refers to planning or a burn/action plan; implementation is not implied."
+    if any(term in value for term in PREP_WORK):
+        return "publicity_or_logistics_preparation", "medium", "Source text indicates information or logistical preparation for a burn; it is not proof that the burn took place."
     if any(term in value for term in PUBLIC_INFO):
         return "public_information", "medium", "Source text indicates information or public notice; burn status is not implied."
     if any(term in value for term in AGREEMENT):
