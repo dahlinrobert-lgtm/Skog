@@ -18,7 +18,7 @@ from pyproj import Transformer
 from shapely.geometry import shape, mapping
 from shapely.ops import transform
 
-OFFICIAL_SOURCE = "https://geodata.naturvardsverket.se/naturvardsregistret/wfs"
+OFFICIAL_SOURCE = "https://geodata.naturvardsverket.se/nedladdning/naturvardsregistret/"
 TO_METERS = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True).transform
 TO_WGS84 = Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True).transform
 
@@ -99,7 +99,14 @@ def match_candidate(candidate: dict[str, Any], official_features: list[dict[str,
     for candidate_name in candidates:
         for feature in official_features:
             official_name = feature_name(feature, name_fields)
-            if not official_name or normalize(official_name) != candidate_name["normalized"]:
+            official_normalized = normalize(official_name) if official_name else ""
+            if not official_normalized:
+                continue
+            if official_normalized == candidate_name["normalized"]:
+                match_method = "normalized_exact_name_unique"
+            elif f"{official_normalized}s" == candidate_name["normalized"]:
+                match_method = "normalized_swedish_genitive_suffix"
+            else:
                 continue
             key = (candidate_name["normalized"], str((feature.get("properties") or {}).get("NVRID") or (feature.get("properties") or {}).get("OBJECTID") or official_name))
             if key in seen:
@@ -111,6 +118,9 @@ def match_candidate(candidate: dict[str, Any], official_features: list[dict[str,
                 "official_name": official_name,
                 "properties": feature.get("properties") or {},
                 "geometry": feature.get("geometry"),
+                "match_method": match_method,
+                "source_dataset": (feature.get("properties") or {}).get("SOURCE_DATASET"),
+                "source_url": (feature.get("properties") or {}).get("SOURCE_URL"),
             })
 
     result = dict(candidate)
@@ -130,9 +140,10 @@ def match_candidate(candidate: dict[str, Any], official_features: list[dict[str,
                 "official_name": match["official_name"],
                 "candidate_name": match["candidate_name"],
                 "candidate_source": match["candidate_source"],
-                "source": OFFICIAL_SOURCE,
+                "source": match.get("source_url") or OFFICIAL_SOURCE,
+                "source_dataset": match.get("source_dataset"),
                 "official_properties": match["properties"],
-                "match_method": "normalized_exact_name_unique",
+                "match_method": match["match_method"],
             },
         })
     elif matches:
@@ -172,8 +183,11 @@ def main() -> int:
     official_doc = json.loads(args.official_geojson.read_text(encoding="utf-8"))
     features = official_doc.get("features") or []
     fields = find_name_fields(features)
-    if not features or not fields:
-        raise SystemExit("Official GeoJSON has no features or no recognizable name field; refusing to geocode.")
+    source_feature_count = official_doc.get("source_feature_count")
+    if not features and not isinstance(source_feature_count, int):
+        raise SystemExit("Official GeoJSON has no features and no successful source count; refusing to geocode.")
+    if features and not fields:
+        raise SystemExit("Official GeoJSON has no recognizable name field; refusing to geocode.")
     matched = [match_candidate(item, features, fields) for item in candidates_doc.get("features", [])]
     counts: dict[str, int] = {}
     for item in matched:
@@ -182,15 +196,17 @@ def main() -> int:
     output = {
         "schema_version": 1,
         "source": OFFICIAL_SOURCE,
-        "official_feature_count": len(features),
+        "official_feature_count": source_feature_count if isinstance(source_feature_count, int) else len(features),
+        "candidate_matching_feature_count": len(features),
         "name_fields_used": fields,
+        "dataset_counts": official_doc.get("dataset_counts", {}),
         "record_count": len(matched),
         "summary": dict(sorted(counts.items())),
         "features": matched,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"output": str(args.output), "record_count": len(matched), "official_feature_count": len(features), "name_fields_used": fields, "summary": output["summary"]}, ensure_ascii=False))
+    print(json.dumps({"output": str(args.output), "record_count": len(matched), "official_feature_count": output["official_feature_count"], "candidate_matching_feature_count": len(features), "name_fields_used": fields, "summary": output["summary"]}, ensure_ascii=False))
     return 0
 
 
