@@ -1,0 +1,60 @@
+name: Länsstyrelsen diary history audit
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "scripts/audit_lansstyrelsen_diary_history.py"
+      - "scripts/test_audit_lansstyrelsen_diary_history.py"
+      - "scripts/persist_lansstyrelsen_diary.py"
+      - "scripts/test_persist_lansstyrelsen_diary.py"
+      - "scripts/test_lansstyrelsen_diary_validation.py"
+      - "data/lansstyrelsen-diary/**"
+      - ".github/workflows/lansstyrelsen-diary-search.yml"
+      - ".github/workflows/diary-history-audit.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/audit_lansstyrelsen_diary_history.py"
+      - "scripts/test_audit_lansstyrelsen_diary_history.py"
+      - "scripts/persist_lansstyrelsen_diary.py"
+      - "scripts/test_persist_lansstyrelsen_diary.py"
+      - "scripts/test_lansstyrelsen_diary_validation.py"
+      - "data/lansstyrelsen-diary/**"
+      - ".github/workflows/lansstyrelsen-diary-search.yml"
+      - ".github/workflows/diary-history-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run diary regression tests
+        run: |
+          python -m unittest \
+            scripts.test_persist_lansstyrelsen_diary \
+            scripts.test_lansstyrelsen_diary_validation \
+            scripts.test_audit_lansstyrelsen_diary_history
+      - name: Audit current diary history
+        run: |
+          python scripts/audit_lansstyrelsen_diary_history.py \
+            --state data/lansstyrelsen-diary/state.json \
+            --events data/lansstyrelsen-diary/events.jsonl \
+            --output diary-history-audit.json
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diary-history-audit
+          path: diary-history-audit.json
+          if-no-files-found: warn
+          retention-days: 30
