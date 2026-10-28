@@ -72,15 +72,15 @@
         56.84381181876087
       ],
       "display_resolution": [
-        400,
-        400
+        60,
+        60
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
         10,
         10
       ],
-      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+      "note": "Low-resolution vector preview generated from nearest-neighbour sampling; visual orientation only, not for measurement. Original 10 m raster remains the source for analysis."
     },
     {
       "archive": "sks_Volym_omdrev3_21.zip",
@@ -92,15 +92,15 @@
         62.680541278718195
       ],
       "display_resolution": [
-        333,
-        400
+        50,
+        60
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
         10,
         10
       ],
-      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+      "note": "Low-resolution vector preview generated from nearest-neighbour sampling; visual orientation only, not for measurement. Original 10 m raster remains the source for analysis."
     },
     {
       "archive": "sks_Volym_omdrev3_23.zip",
@@ -112,15 +112,15 @@
         65.37269795058188
       ],
       "display_resolution": [
-        311,
-        400
+        47,
+        60
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
         10,
         10
       ],
-      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+      "note": "Low-resolution vector preview generated from nearest-neighbour sampling; visual orientation only, not for measurement. Original 10 m raster remains the source for analysis."
     }
   ]
 }
