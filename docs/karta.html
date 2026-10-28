@@ -161,6 +161,57 @@ const samradPointHitLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarke
 const samradLineHitLayer=L.geoJSON(null,{style:()=>({color:"#000",weight:16,opacity:0,fill:false,interactive:true}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 plannedLayer.addTo(map);performedLayer.addTo(map);
 const esc=v=>String(v??"–").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const diaryGeocodingLayer=L.layerGroup();
+const diaryGeocodingStatus=document.getElementById("diaryGeocodingStatus");
+function diaryGeocodingColor(confidence,mismatch){
+ if(mismatch)return "#b45309";
+ return confidence==="high"?"#16803c":confidence==="medium"?"#1769aa":confidence==="low"?"#b45309":"#687076";
+}
+function diaryGeocodingPopup(p){
+ const clueLabels={protected_area_name:"Skyddat område",place_name_candidate:"Ortnamnskandidat",municipality:"Kommun",postort:"Postort",county_context:"Län"};
+ const clues=Array.isArray(p.clues)?p.clues:[];
+ const clueHtml=clues.length?'<ul style="padding-left:18px;margin:4px 0">'+clues.map(c=>'<li><b>'+esc(clueLabels[c.type]||c.type)+'</b>: '+esc(c.value)+' <span style="color:#687076">('+esc(c.source)+')</span></li>').join("")+'</ul>':"<p>Inga textledtrådar registrerade.</p>";
+ const source=p.source_url?'<p><a href="'+esc(p.source_url)+'" target="_blank" rel="noopener noreferrer">Öppna officiell källa</a></p>':"";
+ const reason=p.confidence_reason||"Ingen säkerhetsförklaring finns.";
+ return '<div style="width:300px;max-width:300px;overflow-wrap:anywhere;line-height:1.4">'+
+  '<strong>'+esc(p.title||"Naturvårdsbränning")+'</strong>'+
+  '<p style="margin:5px 0;color:#59665e">Diarienummer: <b>'+esc(p.diary_number)+'</b></p>'+
+  '<p style="margin:5px 0">Matchat område: <b>'+esc(p.official_name||p.candidate_name)+'</b></p>'+
+  '<p style="margin:5px 0">Säkerhet: <b>'+esc(p.confidence||"okänd")+'</b></p>'+
+  '<p style="margin:5px 0">'+esc(reason)+'</p>'+
+  '<p style="margin:5px 0">Cirkelradie: <b>'+esc(Number(p.circle_radius_m||0).toLocaleString("sv-SE"))+' m</b></p>'+
+  '<p style="margin:5px 0">'+esc(p.circle_explanation||"Cirkeln visar det matchade områdets utbredning, inte bränningsytan.")+'</p>'+
+  '<details><summary>Geografiska ledtrådar och metod</summary>'+clueHtml+
+  '<p>Matchningsmetod: '+esc(p.match_method||"ej angiven")+'</p>'+
+  '<p>Dataset: '+esc(p.source_dataset||"Naturvårdsverkets skyddade områden")+'</p></details>'+source+'</div>';
+}
+async function loadDiaryGeocoding(){
+ try{
+  const response=await fetch("./data/lansstyrelsen-geocoding.json",{cache:"no-store"});
+  if(!response.ok)throw new Error("Publicerad geokodningsfil saknas (HTTP "+response.status+")");
+  const data=await response.json();
+  if(!Array.isArray(data.features))throw new Error("Geokodningsfilen saknar en features-lista");
+  diaryGeocodingLayer.clearLayers();
+  let count=0,low=0,mismatch=0;
+  for(const feature of data.features){
+   const coords=feature?.geometry?.coordinates,p=feature?.properties||{};
+   if(!Array.isArray(coords)||coords.length<2)continue;
+   const lon=Number(coords[0]),lat=Number(coords[1]),radius=Number(p.circle_radius_m);
+   if(!Number.isFinite(lon)||!Number.isFinite(lat)||!Number.isFinite(radius)||radius<=0)continue;
+   const color=diaryGeocodingColor(p.confidence,Boolean(p.category_mismatch));
+   L.circle([lat,lon],{radius,color,weight:1.5,opacity:.7,fillColor:color,fillOpacity:.08,interactive:false}).addTo(diaryGeocodingLayer);
+   L.circleMarker([lat,lon],{radius:6,color,weight:2,fillColor:"#fff",fillOpacity:1,bubblingMouseEvents:false})
+    .bindPopup(diaryGeocodingPopup(p),{maxWidth:340})
+    .addTo(diaryGeocodingLayer);
+   count++;if(p.confidence==="low")low++;if(p.category_mismatch)mismatch++;
+  }
+  diaryGeocodingStatus.textContent="Geokodade diarieträffar: "+count+" platser. Lägre säkerhet: "+low+". Avvikelse i skyddstyp: "+mismatch+". Klicka på en punkt för källa, metod och ledtrådar. Cirkeln visar områdets utbredning – inte bränningsytan.";
+  if(document.getElementById("showDiaryGeocoding").checked&&!map.hasLayer(diaryGeocodingLayer))diaryGeocodingLayer.addTo(map);
+ }catch(error){
+  diaryGeocodingStatus.textContent="Geokodade diarieträffar kunde inte laddas. Kontrollera att den dagliga geokodningsrapporten har publicerats.";
+  console.error("Diary geocoding layer failed",error);
+ }
+}
 const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
 const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
@@ -1037,13 +1088,14 @@ function applyVisibility(){
 }
 document.getElementById("radiusSelect").addEventListener("change",()=>{RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));load();});
 document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);
-document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("performedColorMode").addEventListener("change",()=>{refreshPerformedColors();if(document.getElementById("performedColorMode").value==="samradAction")load()});document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
+document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("showDiaryGeocoding").addEventListener("change",applyVisibility);document.getElementById("performedColorMode").addEventListener("change",()=>{refreshPerformedColors();if(document.getElementById("performedColorMode").value==="samradAction")load()});document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
 // Clicking the map selects a new search-area center and reloads the data for that area.
 map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});document.getElementById("histogramType").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
 function radiusZoom(radius){return 13-Math.log2(Math.max(2000,radius)/2000);}
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
 map.on("baselayerchange",applyVisibility);
+loadDiaryGeocoding();
 load();
 })();
 </script>
