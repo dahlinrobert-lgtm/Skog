@@ -14,6 +14,8 @@ import sys
 import zipfile
 from datetime import date, datetime
 from pathlib import Path
+from time import sleep
+from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 import shapefile
@@ -36,17 +38,42 @@ DATASETS = {
     "VSO": "Vattenskyddsområde",
 }
 USER_AGENT = "Skog-protected-area-geocoder/1.0"
+DOWNLOAD_RETRIES = 3
+RETRY_BACKOFF_SECONDS = (2, 5)
 
 
-def request_bytes(url: str, timeout: int = 120) -> bytes:
+def request_bytes(url: str, timeout: int = 120, retries: int = DOWNLOAD_RETRIES) -> bytes:
+    """Download an official archive, retrying transient network/TLS failures.
+
+    Downloads are read fully before being returned, so callers never parse a
+    partial response. Retries are intentionally limited to network-level errors;
+    invalid ZIPs and unexpected response contents still fail clearly.
+    """
+    if retries < 1:
+        raise ValueError("retries must be at least 1")
     req = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/zip, application/octet-stream"})
-    with urlopen(req, timeout=timeout) as response:
-        body = response.read()
-        if response.status < 200 or response.status >= 300:
-            raise RuntimeError(f"Download returned HTTP {response.status}: {url}")
-        if not body:
-            raise RuntimeError(f"Download was empty: {url}")
-        return body
+    last_error = None
+    for attempt in range(retries):
+        try:
+            with urlopen(req, timeout=timeout) as response:
+                body = response.read()
+                if response.status < 200 or response.status >= 300:
+                    raise RuntimeError(f"Download returned HTTP {response.status}: {url}")
+                if not body:
+                    raise RuntimeError(f"Download was empty: {url}")
+                return body
+        except (URLError, TimeoutError, ConnectionError) as exc:
+            last_error = exc
+            if attempt + 1 >= retries:
+                break
+            delay = RETRY_BACKOFF_SECONDS[min(attempt, len(RETRY_BACKOFF_SECONDS) - 1)]
+            print(
+                f"Temporary download failure for {url} "
+                f"(attempt {attempt + 1}/{retries}): {exc}; retrying in {delay}s",
+                file=sys.stderr,
+            )
+            sleep(delay)
+    raise RuntimeError(f"Download failed after {retries} attempts: {url}: {last_error}") from last_error
 
 
 def candidate_names(candidates_doc: dict) -> set[str]:
