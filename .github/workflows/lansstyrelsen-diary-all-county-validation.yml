@@ -1,0 +1,73 @@
+name: Validate Länsstyrelsen all-county diary search
+
+on:
+  workflow_dispatch:
+    inputs:
+      search_term:
+        description: Phrase searched in case title
+        required: true
+        default: "naturvårdsbränning"
+        type: string
+  push:
+    paths:
+      - ".github/workflows/lansstyrelsen-diary-all-county-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test diary history and source-response validation
+        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Search every county separately and validate result totals
+        env:
+          SEARCH_TERM_INPUT: ${{ inputs.search_term }}
+        run: |
+          search_term="${SEARCH_TERM_INPUT:-naturvårdsbränning}"
+          python scripts/search_lansstyrelsen_diary_browser.py \
+            --county "Alla län" \
+            --search-term "$search_term" \
+            --output diary-search-all-counties.json
+      - name: Print all-county validation summary
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("diary-search-all-counties.json")
+          if not p.exists():
+              print("No all-county result file was produced.")
+              raise SystemExit(0)
+          data = json.loads(p.read_text(encoding="utf-8"))
+          print(json.dumps({
+              "request_ok": data.get("request_ok"),
+              "requested_county": data.get("requested_county"),
+              "counties_searched": len(data.get("counties", [])),
+              "counties": data.get("counties", []),
+              "query_count": len(data.get("queries", [])),
+              "result_count": data.get("result_count"),
+              "reported_total_results": data.get("reported_total_results"),
+              "total_reconciled": data.get("total_reconciled"),
+              "per_query_counts": data.get("per_query_counts"),
+              "error": data.get("error"),
+          }, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload all-county diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-all-county-validation
+          path: diary-search-all-counties.json
+          if-no-files-found: warn
+          retention-days: 30
