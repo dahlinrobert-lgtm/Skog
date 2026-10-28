@@ -21,6 +21,16 @@ AREA_PATTERN = re.compile(
     r"(?i)\b([\wÅÄÖåäöÉéÜüÖöÄäÅå'’\-]+(?:\s+[\wÅÄÖåäöÉéÜü'’\-]+){0,5})\s+"
     r"(naturreservatet|naturreservat|nationalparken|nationalpark|Natura\s+2000-?område)\b"
 )
+# Recognize named Natura 2000 sites even when the title doesn't call them a reserve.
+NATURA_PATTERN = re.compile(
+    r"(?i)\b(?:Natura\s*2000[- ]?(?:området|område))\s+([\wÅÄÖåäöÉéÜü'’\-]+(?:\s+(?:och|i|på|av|den|det|de|[A-ZÅÄÖÉÜ][\wÅÄÖåäöÉéÜü'’\-]*)){0,5})"
+)
+IN_NATURA_PATTERN = re.compile(
+    r"(?i)\b(?:i|inom|på)\s+([\wÅÄÖåäöÉéÜü'’\-]+(?:\s+[\wÅÄÖåäöÉéÜü'’\-]+){0,5})\s+Natura\s*2000[- ]?(?:området|område)\b"
+)
+DIRECT_PLACE_PATTERN = re.compile(
+    r"(?i)\b(?:vid|på|för)\s+([A-ZÅÄÖÉÜ][\wÅÄÖåäöÉéÜü'’\-]*(?:\s+(?:och|i|på|av|den|det|de|[A-ZÅÄÖÉÜ][\wÅÄÖåäöÉéÜü'’\-]*)){0,4})"
+)
 PREPOSITION_PATTERN = re.compile(
     r"(?i)\b(?:i|på|vid|inom|kring|nära)\s+"
     r"([A-ZÅÄÖÉÜ][\wÅÄÖåäöÉéÜü'’\-]*(?:\s+(?:och|i|på|av|den|det|de|[A-ZÅÄÖÉÜ][\wÅÄÖåäöÉéÜü'’\-]*)){0,5})"
@@ -55,7 +65,15 @@ def extract_geographic_clues(record: dict[str, Any]) -> dict[str, Any]:
     diary = str(record.get("diary") or "")
     municipality_mentions = _unique(MUNICIPALITY_PATTERN.findall(title))
     area_names = _unique([m.group(1) for m in AREA_PATTERN.finditer(title)])
+    area_names.extend(NATURA_PATTERN.findall(title))
+    area_names.extend(IN_NATURA_PATTERN.findall(title))
+    area_names = _unique(area_names)
     place_names = []
+    # Explicit place clauses catch names such as "för Krångdalen" and "vid Knappåsen".
+    for match in DIRECT_PLACE_PATTERN.finditer(title):
+        candidate = match.group(1).strip()
+        if candidate.split()[0].casefold() not in STOP_WORDS:
+            place_names.append(candidate)
     for match in PREPOSITION_PATTERN.finditer(title):
         candidate = match.group(1).strip()
         first = candidate.split()[0].casefold()
