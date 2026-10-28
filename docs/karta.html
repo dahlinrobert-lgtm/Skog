@@ -23,6 +23,7 @@
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <label><input id="showSamrad" type="checkbox"> Samråd</label>
 <label title="Visa diarieträffar som matchats mot officiella skyddade områden. Cirkeln visar områdets utbredning, inte bränningsytan."><input id="showDiaryGeocoding" type="checkbox" checked> Naturvårdsbränningar (geokodade)</label>
+<label title="Officiella Life2Taiga-geometrier från Länsstyrelsens FeatureServer. Åtgärdstypen visas i attributen; inte alla objekt är bränningar."><input id="showLifeTaiga" type="checkbox"> Life2Taiga naturvårdsåtgärder</label>
 <label title="Testlager med nedskalad skogsvolym från Skogsstyrelsens raster (omdrev 3). Visas endast där data finns."><input id="showVolumeRaster" type="checkbox"> Skogsvolym – testlager</label>
 <label title="Visa syntetiska testpolygoner i Halland och zooma till dem."><input id="showHallandTestAreas" type="checkbox" checked> Testområden – Halland</label>
 
@@ -36,6 +37,7 @@
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span><i class="swatch samrad"></i>Samråd</span><span>Välj en polygon för attribut och datum.</span></div>
 <p id="volumeRasterStatus" class="muted" style="display:none" aria-live="polite"></p>
 <p id="diaryGeocodingStatus" class="muted" aria-live="polite">Hämtar geokodade diarieträffar…</p>
+<p id="lifeTaigaStatus" class="muted" aria-live="polite">Life2Taiga-lagret laddas vid behov.</p>
 <p id="hallandTestStatus" class="muted" aria-live="polite">Testområden i Halland laddas…</p>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
@@ -212,6 +214,52 @@ async function loadDiaryGeocoding(){
   console.error("Diary geocoding layer failed",error);
  }
 }
+const lifeTaigaLayer=L.geoJSON(null,{
+ style:feature=>{
+  const values=Object.entries(feature?.properties||{}).map(([k,v])=>String(k)+" "+String(v??"")).join(" ").toLocaleLowerCase("sv");
+  const burn=/bränn|burn|t2\\.3|controlled burning/.test(values);
+  return {color:burn?"#e67700":"#3f6b58",weight:1.8,opacity:.9,fillColor:burn?"#ff9f1c":"#68a68a",fillOpacity:.3};
+ },
+ onEachFeature:(feature,layer)=>{
+  const props=feature?.properties||{};
+  const rows=Object.entries(props).filter(([k,v])=>v!==null&&v!==undefined&&String(v)!=="").map(([k,v])=>"<tr><th style='text-align:left;vertical-align:top;padding:3px 6px 3px 0'>"+esc(k)+"</th><td style='padding:3px 0;overflow-wrap:anywhere'>"+esc(typeof v==="object"?JSON.stringify(v):v)+"</td></tr>").join("");
+  layer.bindPopup("<div style='max-width:360px;max-height:300px;overflow:auto'><strong>Life2Taiga – naturvårdsåtgärd</strong><p>Officiell geometri från Länsstyrelsens Life2Taiga-tjänst. Kontrollera åtgärdstyp och datum i attributen innan objektet tolkas som en genomförd bränning.</p><table>"+rows+"</table><p><a href='https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13' target='_blank' rel='noopener noreferrer'>Öppna originaltjänsten</a></p></div>",{maxWidth:390});
+ }
+});
+const lifeTaigaStatus=document.getElementById("lifeTaigaStatus");
+let lifeTaigaSource=null,lifeTaigaLoadPromise=null;
+function renderLifeTaiga(){
+ if(!lifeTaigaSource)return;
+ const filtered=filterToRadius(lifeTaigaSource);
+ lifeTaigaLayer.clearLayers();
+ lifeTaigaLayer.addData(filtered);
+ const burns=filtered.features.filter(f=>/bränn|burn|t2\\.3|controlled burning/i.test(Object.entries(f.properties||{}).map(([k,v])=>String(k)+" "+String(v??"")).join(" "))).length;
+ lifeTaigaStatus.textContent="Life2Taiga: "+filtered.features.length.toLocaleString("sv-SE")+" objekt inom vald radie; "+burns.toLocaleString("sv-SE")+" innehåller bränningsrelaterade attribut. Orange markering är en textbaserad ledtråd, inte en verifierad statusklassning. Källa: Länsstyrelsen.";
+}
+async function loadLifeTaiga(){
+ if(lifeTaigaLoadPromise)return lifeTaigaLoadPromise;
+ lifeTaigaLoadPromise=(async()=>{
+  try{
+   const response=await fetch("./data/lifetaiga-naturvardsatgarder.geojson",{cache:"no-store"});
+   if(!response.ok)throw new Error("HTTP "+response.status);
+   const data=await response.json();
+   if(data.type!=="FeatureCollection"||!Array.isArray(data.features)||!data.features.length)throw new Error("Tom eller ogiltig FeatureCollection");
+   lifeTaigaSource=data;
+   renderLifeTaiga();
+   if(document.getElementById("showLifeTaiga").checked&&!map.hasLayer(lifeTaigaLayer))lifeTaigaLayer.addTo(map);
+  }catch(error){
+   lifeTaigaStatus.textContent="Life2Taiga-data kunde inte laddas. Kör arbetsflödet för att hämta Länsstyrelsens geometrier.";
+   console.error("Life2Taiga layer failed",error);
+   lifeTaigaLoadPromise=null;
+  }
+ })();
+ return lifeTaigaLoadPromise;
+}
+document.getElementById("showLifeTaiga").addEventListener("change",async e=>{
+ if(e.target.checked){await loadLifeTaiga();if(lifeTaigaSource&&!map.hasLayer(lifeTaigaLayer))lifeTaigaLayer.addTo(map);}
+ else if(map.hasLayer(lifeTaigaLayer))map.removeLayer(lifeTaigaLayer);
+});
+
 const COLOR_LOW=[255,224,102],COLOR_HIGH=[153,0,76];
 let performedScaleCache={mode:"none",min:null,max:null};
 const CATEGORY_COLORS=["#e6007e","#ff6d00","#7b2cbf","#d00000","#6f1d1b","#f72585","#9d0208","#ffba08","#5a189a","#c1121f","#f77f00","#7209b7","#b5179e","#9a031e","#fb5607","#8338ec","#d90429","#ff9f1c"];
@@ -1086,11 +1134,11 @@ function applyVisibility(){
  // Keep transparent hit targets above visible consultation geometries.
  if(showSamrad){samradLineHitLayer.bringToFront();samradPointHitLayer.bringToFront()}
 }
-document.getElementById("radiusSelect").addEventListener("change",()=>{RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));load();});
+document.getElementById("radiusSelect").addEventListener("change",()=>{RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));if(lifeTaigaSource)renderLifeTaiga();load();});
 document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);
 document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("showDiaryGeocoding").addEventListener("change",applyVisibility);document.getElementById("performedColorMode").addEventListener("change",()=>{refreshPerformedColors();if(document.getElementById("performedColorMode").value==="samradAction")load()});document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
 // Clicking the map selects a new search-area center and reloads the data for that area.
-map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});document.getElementById("histogramType").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
+map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);if(lifeTaigaSource)renderLifeTaiga();load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});document.getElementById("histogramType").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
 function radiusZoom(radius){return 13-Math.log2(Math.max(2000,radius)/2000);}
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
