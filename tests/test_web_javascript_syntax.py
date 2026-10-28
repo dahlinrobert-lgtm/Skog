@@ -40,6 +40,11 @@ def test_map_layer_selection_and_legend_colors():
     assert 'getLayerForView(PERFORMED,' in html
     # A Samråd-only selection must still enter the separate optional layer path.
     assert 'const samradPromise=wantSamrad?Promise.all([' in html
+    # Samråd styles and category legend must refresh after its async data is added,
+    # not only during the earlier first-paint refresh for planned/performed layers.
+    assert 'samradAreaLayer.addData(samradAreas);' in html
+    assert 'The first color refresh happens before optional Samråd finishes loading.' in html
+    assert 'refreshPerformedColors();\\n  }\\n  // Samråd may finish after the first histogram render;' in html
     assert 'document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()})' in html
 
 
