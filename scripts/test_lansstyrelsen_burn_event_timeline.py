@@ -147,6 +147,68 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertEqual(candidate["evidence_tier"], "place_and_event_year")
         self.assertEqual(candidate["review_priority"], "higher")
 
+    def test_admin_geometry_date_does_not_create_event_year_match(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om planerad naturvårdsbränning vid Fågelmossen",
+            "source_date": "2026-04-02",
+            "columns": {"Diarienummer": "123-2026", "In/Upp-datum": "2026-04-02"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "Namn": "Fågelmossen",
+                "last_edited_date": "2026-11-01T00:00:00Z",
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 1)
+        candidate = report["link_candidates"][0]
+        self.assertEqual(candidate["shared_years"], [])
+        self.assertEqual(candidate["evidence_tier"], "place_only")
+
+    def test_action_year_attribute_can_support_event_year_candidate(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Planerad naturvårdsbränning vid Fågelmossen 2026",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "Namn": "Fågelmossen", "Åtgärdsår": 2026,
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 1)
+        self.assertIn("2026", report["link_candidates"][0]["shared_years"])
+
+    def test_review_csv_contains_joined_titles_and_review_priority(self):
+        from pathlib import Path
+        import csv
+        import tempfile
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om planerad naturvårdsbränning i Fågelmossen 2026",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {"OBJECTID": 9, "Namn": "Fågelmossen", "Åtgärdsår": 2026},
+            "geometry": {"type": "Polygon", "coordinates": []}
+        }]}
+        report = build_timeline(state, source)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "review.csv"
+            from lansstyrelsen_burn_event_timeline import write_review_csv
+            count = write_review_csv(report, path)
+            self.assertEqual(count, 1)
+            with path.open(encoding="utf-8-sig", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+            self.assertEqual(len(rows), 1)
+            self.assertIn("Fågelmossen", rows[0]["diary_title"])
+            self.assertIn("Fågelmossen", rows[0]["geometry_title"])
+            self.assertEqual(rows[0]["review_priority"], "higher")
+
     def test_diary_source_date_is_record_date_not_burn_date(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
