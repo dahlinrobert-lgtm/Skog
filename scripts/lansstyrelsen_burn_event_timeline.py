@@ -135,6 +135,63 @@ def _place_candidates(props: dict[str, Any], title: str = "") -> list[str]:
     return out[:20]
 
 
+
+def _normalized_place(value: str) -> str:
+    """Normalize place text conservatively for candidate comparisons."""
+    value = value.casefold().replace("naturreservatet", "").replace("naturreservat", "")
+    value = value.replace("natura 2000-område", "").replace("natura 2000 område", "")
+    value = re.sub(r"[^0-9a-zåäöéü]+", " ", value)
+    return re.sub(r"\\s+", " ", value).strip()
+
+
+def _name_tokens(value: str) -> set[str]:
+    # Drop generic administrative words: they create false matches by themselves.
+    generic = {"lansstyrelsen", "länsstyrelsen", "kommun", "län", "naturreservat",
+               "naturreservatet", "naturvårdsbränning", "naturvardsbranning",
+               "bränning", "branning", "information", "planerad", "planering"}
+    return {t for t in _normalized_place(value).split() if len(t) >= 4 and t not in generic}
+
+
+def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Emit review-only links; do not mutate event.link_status or claim verified links."""
+    diary_events = [e for e in events if e["source_type"] == "lansstyrelsen_diary"]
+    geometry_events = [e for e in events if e["source_type"] == "lifetaiga_action_polygon"]
+    candidates = []
+    for diary in diary_events:
+        diary_text = _normal(diary.get("title", ""))
+        diary_tokens = _name_tokens(diary_text + " " + " ".join(diary.get("place_candidates") or []))
+        # Avoid using record/created dates as event dates. They may only add weak temporal context.
+        diary_years = set(YEAR_RE.findall(diary_text))
+        if diary.get("event_date"):
+            diary_years.add(diary["event_date"][:4])
+        for geometry in geometry_events:
+            geo_tokens = _name_tokens(geometry.get("title", "") + " " + " ".join(geometry.get("place_candidates") or []))
+            overlap = sorted(diary_tokens & geo_tokens)
+            if not overlap:
+                continue
+            geom_years = set(YEAR_RE.findall(geometry.get("evidence_text", "")))
+            if geometry.get("event_date"):
+                geom_years.add(geometry["event_date"][:4])
+            year_overlap = sorted(diary_years & geom_years)
+            # A shared descriptive token is a candidate clue, not sufficient identity evidence.
+            score = min(0.65, 0.35 + 0.10 * (len(overlap) - 1))
+            if year_overlap:
+                score = min(0.85, score + 0.20)
+            candidates.append({
+                "candidate_id": f'{diary["event_id"]}~{geometry["event_id"]}',
+                "diary_event_id": diary["event_id"],
+                "geometry_event_id": geometry["event_id"],
+                "score": round(score, 2),
+                "confidence": "medium" if score >= 0.55 else "low",
+                "shared_place_tokens": overlap,
+                "shared_years": year_overlap,
+                "status": "candidate_for_manual_review",
+                "evidence_policy": "Text overlap suggests a review candidate only. No source records are linked and no burn is inferred."
+            })
+    candidates.sort(key=lambda c: (-c["score"], c["diary_event_id"], c["geometry_event_id"]))
+    return candidates
+
+
 def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> dict[str, Any]:
     events = []
     for key, record in (diary_state.get("records") or {}).items():
@@ -186,11 +243,14 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
     events.sort(key=lambda event: ((event["event_date"] or event["record_date"]) is None, event["event_date"] or event["record_date"] or "", event["source_type"], event["event_id"]))
     stage_counts = Counter(event["stage"] for event in events)
     source_counts = Counter(event["source_type"] for event in events)
+    link_candidates = _candidate_links(events)
     return {
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_policy": "Diary and Life2Taiga records remain separate unless linked by verified evidence. Diary presence is not proof that a burn occurred. Missing dates remain null.",
         "event_count": len(events),
+        "link_candidate_count": len(link_candidates),
+        "link_candidates": link_candidates,
         "stage_counts": dict(sorted(stage_counts.items())),
         "source_counts": dict(sorted(source_counts.items())),
         "events": events,
