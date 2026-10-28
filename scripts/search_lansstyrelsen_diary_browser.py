@@ -11,7 +11,7 @@ from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
-from lansstyrelsen_diary_validation import has_explicit_zero_results
+from lansstyrelsen_diary_validation import has_explicit_zero_results, resolve_county_labels
 
 URL = "https://diarium.lansstyrelsen.se/default.aspx"
 COUNTY_SELECT = "#SearchPlaceHolder_CaseSearch_ddDiaryID"
@@ -304,15 +304,15 @@ def main() -> None:
                     # reliably include the county label on each row, so using a portal
                     # wide "Alla län" option would make us misattribute every record
                     # to the aggregate label in persistent history.
-                    counties = [
-                        o["label"] for o in options
-                        if o["label"] and o["value"] not in (None, "", "0", "-1")
-                        and "välj" not in o["label"].casefold()
-                        and "alla län" not in o["label"].casefold()
-                    ]
+                    try:
+                        counties = resolve_county_labels(options)
+                    except ValueError as exc:
+                        raise RuntimeError(
+                            "The portal's county diary list is incomplete or ambiguous; "
+                            "refusing to report an all-county search as successful. "
+                            f"{exc}"
+                        ) from exc
                     selection_mode = "individual_counties"
-                    if not counties:
-                        raise RuntimeError("Could not resolve individual county options from the portal")
                 else:
                     counties = [args.county]
                     selection_mode = "single_county"
