@@ -189,6 +189,25 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "evidence_policy": "Text overlap suggests a review candidate only. No source records are linked and no burn is inferred."
             })
     candidates.sort(key=lambda c: (-c["score"], c["diary_event_id"], c["geometry_event_id"]))
+    # Quantify ambiguity so reviewers can spot one-to-many and many-to-one cases.
+    diary_counts = Counter(c["diary_event_id"] for c in candidates)
+    geometry_counts = Counter(c["geometry_event_id"] for c in candidates)
+    for candidate in candidates:
+        diary_count = diary_counts[candidate["diary_event_id"]]
+        geometry_count = geometry_counts[candidate["geometry_event_id"]]
+        candidate["diary_candidate_count"] = diary_count
+        candidate["geometry_candidate_count"] = geometry_count
+        candidate["ambiguity"] = (
+            "many_to_many" if diary_count > 1 and geometry_count > 1 else
+            "diary_matches_multiple_geometries" if diary_count > 1 else
+            "geometry_matches_multiple_diary_records" if geometry_count > 1 else
+            "single_candidate_pair"
+        )
+        candidate["evidence_summary"] = (
+            "Shared place token(s): " + ", ".join(candidate["shared_place_tokens"]) +
+            ("; shared year(s): " + ", ".join(candidate["shared_years"]) if candidate["shared_years"] else
+             "; no shared year clue")
+        )
     return candidates
 
 
@@ -250,6 +269,13 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
         "source_policy": "Diary and Life2Taiga records remain separate unless linked by verified evidence. Diary presence is not proof that a burn occurred. Missing dates remain null.",
         "event_count": len(events),
         "link_candidate_count": len(link_candidates),
+        "link_candidate_summary": {
+            "by_confidence": dict(sorted(Counter(c["confidence"] for c in link_candidates).items())),
+            "by_ambiguity": dict(sorted(Counter(c["ambiguity"] for c in link_candidates).items())),
+            "diary_events_with_candidates": len({c["diary_event_id"] for c in link_candidates}),
+            "geometry_events_with_candidates": len({c["geometry_event_id"] for c in link_candidates}),
+            "policy": "Candidate metrics are triage indicators, not calibrated probabilities. Ambiguous matches require manual review; original events remain unlinked."
+        },
         "link_candidates": link_candidates,
         "stage_counts": dict(sorted(stage_counts.items())),
         "source_counts": dict(sorted(source_counts.items())),
