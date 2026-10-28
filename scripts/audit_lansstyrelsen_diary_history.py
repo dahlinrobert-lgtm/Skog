@@ -30,6 +30,11 @@ def audit_history(state_path: Path, events_path: Path) -> dict[str, Any]:
                     "ok": False, "error": "invalid_event_json",
                     "line": line_number, "detail": str(exc),
                 }
+            if not isinstance(event, dict):
+                return {
+                    "ok": False, "error": "invalid_event_shape",
+                    "line": line_number, "detail": "Each JSONL event must be a JSON object.",
+                }
             event["_line_number"] = line_number
             events.append(event)
 
@@ -41,10 +46,16 @@ def audit_history(state_path: Path, events_path: Path) -> dict[str, Any]:
         if key:
             events_by_key.setdefault(str(key), []).append(event)
 
+    event_keys_without_state = sorted(str(key) for key in events_by_key if str(key) not in records)
     first_seen_without_state = sorted(
         str(key) for key in events_by_key
         if str(key) not in records and any(e.get("event_type") == "first_seen" for e in events_by_key[str(key)])
     )
+    allowed_event_types = {"first_seen", "observed", "record_changed"}
+    unknown_event_types = sorted({
+        str(e.get("event_type") or "unknown") for e in events
+        if e.get("event_type") not in allowed_event_types
+    })
     missing_first_seen = []
     count_mismatches = []
     for key, record in records.items():
@@ -81,14 +92,16 @@ def audit_history(state_path: Path, events_path: Path) -> dict[str, Any]:
         "event_row_count": len(events),
         "event_types": dict(Counter(e.get("event_type", "unknown") for e in events)),
         "duplicate_event_ids": duplicate_event_ids,
+        "event_keys_without_state_record": event_keys_without_state,
         "first_seen_events_without_state_record": first_seen_without_state,
+        "unknown_event_types": unknown_event_types,
         "records_missing_first_seen_event": sorted(missing_first_seen),
         "records_with_observation_count_mismatch": count_mismatches,
         "invalid_record_keys": invalid_record_keys,
         "absent_ids_interpreted_as_removed": False,
     }
     report["ok"] = not (
-        duplicate_event_ids or first_seen_without_state or missing_first_seen or invalid_record_keys
+        duplicate_event_ids or event_keys_without_state or unknown_event_types or first_seen_without_state or missing_first_seen or invalid_record_keys
     )
     report["legacy_observation_count_mismatches"] = len(count_mismatches)
     report["note"] = (
