@@ -78,7 +78,7 @@ class DiaryHistoryAuditTests(unittest.TestCase):
             state_path.write_text(json.dumps({"records": {}}), encoding="utf-8")
             events_path.write_text(json.dumps({
                 "event_id": "orphan", "event_type": "observed", "record_key": "missing::123-2026"
-            }) + "\\n", encoding="utf-8")
+            }) + "\n", encoding="utf-8")
             report = audit_history(state_path, events_path)
             self.assertFalse(report["ok"])
             self.assertEqual(report["event_keys_without_state_record"], ["missing::123-2026"])
@@ -89,7 +89,7 @@ class DiaryHistoryAuditTests(unittest.TestCase):
             state_path = root / "state.json"
             events_path = root / "events.jsonl"
             state_path.write_text(json.dumps({"records": {}}), encoding="utf-8")
-            events_path.write_text(json.dumps(["not", "an", "event"]) + "\\n", encoding="utf-8")
+            events_path.write_text(json.dumps(["not", "an", "event"]) + "\n", encoding="utf-8")
             report = audit_history(state_path, events_path)
             self.assertFalse(report["ok"])
             self.assertEqual(report["error"], "invalid_event_shape")
