@@ -34,6 +34,21 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertEqual(result["stage"], "post_burn_follow_up")
         self.assertNotEqual(result["stage"], "completed_burn")
 
+    def test_cancelled_burn_is_not_classified_as_completed(self):
+        result = classify_text("Naturvårdsbränningen ställs in på grund av olämpligt väder")
+        self.assertEqual(result["stage"], "cancelled_or_postponed")
+        self.assertNotEqual(result["stage"], "completed_burn")
+
+    def test_site_preparation_is_separate_from_burn(self):
+        result = classify_text("Byggnation av spång inför naturvårdsbränning i reservatet")
+        self.assertEqual(result["stage"], "pre_burn_site_preparation")
+        self.assertNotEqual(result["stage"], "completed_burn")
+
+    def test_logistics_preparation_is_separate(self):
+        result = classify_text("Beställning av distribution av samhällsinfo inför naturvårdsbränning 2026")
+        self.assertEqual(result["stage"], "publicity_or_logistics_preparation")
+        self.assertNotEqual(result["stage"], "completed_burn")
+
     def test_build_keeps_sources_separate_and_undated(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
