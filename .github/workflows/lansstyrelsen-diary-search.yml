@@ -31,6 +31,8 @@ on:
       - "scripts/search_lansstyrelsen_diary_browser.py"
       - "scripts/persist_lansstyrelsen_diary.py"
       - "scripts/test_persist_lansstyrelsen_diary.py"
+      - "scripts/audit_lansstyrelsen_diary_history.py"
+      - "scripts/test_audit_lansstyrelsen_diary_history.py"
       - ".github/workflows/lansstyrelsen-diary-search.yml"
 
 permissions:
