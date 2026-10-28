@@ -174,7 +174,7 @@ def main() -> None:
             # Search results can legitimately contain zero matches. The result page
             # may not render the original ASP.NET grid in that case, but it displays
             # "Sökresultat: 0". Accept only an explicit zero count, never an unknown one.
-            if not grid_present and has_explicit_zero_results(body_text):\s*0\b", body_text.replace("\u00a0", " "), re.I):
+            if not grid_present and has_explicit_zero_results(body_text):
                 result["reported_total_results"] = 0
                 result["request_ok"] = True
                 result["pagination"]["has_next_page"] = False
