@@ -22,6 +22,7 @@
 <label><input id="showPlanned" type="checkbox" checked> Planerade avverkningar</label>
 <label><input id="showPerformed" type="checkbox" checked> Utförda avverkningar</label>
 <label><input id="showSamrad" type="checkbox"> Samråd</label>
+<label title="Visa diarieträffar som matchats mot officiella skyddade områden. Cirkeln visar områdets utbredning, inte bränningsytan."><input id="showDiaryGeocoding" type="checkbox" checked> Naturvårdsbränningar (geokodade)</label>
 <label title="Testlager med nedskalad skogsvolym från Skogsstyrelsens raster (omdrev 3). Visas endast där data finns."><input id="showVolumeRaster" type="checkbox"> Skogsvolym – testlager</label>
 <label title="Visa syntetiska testpolygoner i Halland och zooma till dem."><input id="showHallandTestAreas" type="checkbox" checked> Testområden – Halland</label>
 
@@ -34,6 +35,7 @@
 <p id="status" class="muted" aria-live="polite" style="display:none"></p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span><i class="swatch samrad"></i>Samråd</span><span>Välj en polygon för attribut och datum.</span></div>
 <p id="volumeRasterStatus" class="muted" style="display:none" aria-live="polite"></p>
+<p id="diaryGeocodingStatus" class="muted" aria-live="polite">Hämtar geokodade diarieträffar…</p>
 <p id="hallandTestStatus" class="muted" aria-live="polite">Testområden i Halland laddas…</p>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
