@@ -1,0 +1,64 @@
+name: Länsstyrelsen diary geocoding integration
+
+on:
+  pull_request:
+    paths:
+      - "scripts/lansstyrelsen_diary_geocoding.py"
+      - "scripts/lansstyrelsen_diary_fetch_protected_areas.py"
+      - "scripts/lansstyrelsen_diary_protected_area_match.py"
+      - "data/lansstyrelsen-diary/state.json"
+      - ".github/workflows/lansstyrelsen-diary-geocoding-integration.yml"
+  push:
+    branches:
+      - feature/diary-protected-area-matching
+  workflow_dispatch:
+  schedule:
+    - cron: "45 6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  geocode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install geospatial dependencies
+        run: python -m pip install "shapely>=2.0,<3" "pyproj>=3.6,<4" "pyshp>=2.3,<3"
+      - name: Extract geography clues from current diary history
+        run: python scripts/lansstyrelsen_diary_geocoding.py
+      - name: Download official protected area polygons
+        run: python scripts/lansstyrelsen_diary_fetch_protected_areas.py
+      - name: Match candidates against official areas
+        run: python scripts/lansstyrelsen_diary_protected_area_match.py --official-geojson data/lansstyrelsen-diary/official-protected-areas.geojson
+      - name: Summarize generated report
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("data/lansstyrelsen-diary/geocoding-matches.json")
+          report = json.loads(path.read_text(encoding="utf-8"))
+          print(json.dumps({
+              "record_count": report["record_count"],
+              "official_feature_count": report["official_feature_count"],
+              "summary": report["summary"],
+              "name_fields_used": report["name_fields_used"],
+          }, ensure_ascii=False, indent=2))
+          if report["record_count"] == 0:
+              raise SystemExit("No diary records were processed")
+          if report["official_feature_count"] == 0:
+              raise SystemExit("No official protected areas were downloaded")
+          PY
+      - name: Upload geocoding review artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-diary-geocoding-review
+          path: |
+            data/lansstyrelsen-diary/geocoding-candidates.json
+            data/lansstyrelsen-diary/geocoding-matches.json
+          if-no-files-found: error
+          retention-days: 30
