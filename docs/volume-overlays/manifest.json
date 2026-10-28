@@ -64,7 +64,7 @@
     },
     {
       "archive": "sks_Volym_omdrev3_12.zip",
-      "image": "sks_Volym_omdrev3_12.svg",
+      "image": "sks_Volym_omdrev3_12.png",
       "bounds_wgs84": [
         11.72446539050107,
         55.00660410217304,
@@ -72,19 +72,19 @@
         56.84381181876087
       ],
       "display_resolution": [
-        60,
-        60
+        400,
+        400
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
         10,
         10
       ],
-      "note": "Low-resolution vector preview generated from nearest-neighbour sampling; visual orientation only, not for measurement. Original 10 m raster remains the source for analysis."
+      "note": "400 px downsampled display image derived from the source raster; display only, not for measurement. Original 10 m raster remains the source for analysis."
     },
     {
       "archive": "sks_Volym_omdrev3_21.zip",
-      "image": "sks_Volym_omdrev3_21.svg",
+      "image": "sks_Volym_omdrev3_21.png",
       "bounds_wgs84": [
         14.023621514994584,
         59.93874335329784,
@@ -92,19 +92,19 @@
         62.680541278718195
       ],
       "display_resolution": [
-        50,
-        60
+        333,
+        400
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
         10,
         10
       ],
-      "note": "Low-resolution vector preview generated from nearest-neighbour sampling; visual orientation only, not for measurement. Original 10 m raster remains the source for analysis."
+      "note": "400 px high downsampled display image derived from the source raster; display only, not for measurement. Original 10 m raster remains the source for analysis."
     },
     {
       "archive": "sks_Volym_omdrev3_23.zip",
-      "image": "sks_Volym_omdrev3_23.svg",
+      "image": "sks_Volym_omdrev3_23.png",
       "bounds_wgs84": [
         10.706141946598779,
         61.28276736635075,
@@ -112,15 +112,15 @@
         65.37269795058188
       ],
       "display_resolution": [
-        47,
-        60
+        311,
+        400
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
         10,
         10
       ],
-      "note": "Low-resolution vector preview generated from nearest-neighbour sampling; visual orientation only, not for measurement. Original 10 m raster remains the source for analysis."
+      "note": "400 px high downsampled display image derived from the source raster; display only, not for measurement. Original 10 m raster remains the source for analysis."
     }
   ]
 }
