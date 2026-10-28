@@ -36,9 +36,9 @@
 <p id="status" class="muted" aria-live="polite" style="display:none"></p>
 <div class="legend"><span><i class="swatch planned"></i>Planerad anmälan</span><span><i class="swatch performed"></i>Utförd avverkning (normalfärg)</span><span><i class="swatch samrad"></i>Samråd</span><span>Välj en polygon för attribut och datum.</span></div>
 <p id="volumeRasterStatus" class="muted" style="display:none" aria-live="polite"></p>
-<p id="diaryGeocodingStatus" class="muted" aria-live="polite">Hämtar geokodade diarieträffar…</p>
-<p id="lifeTaigaStatus" class="muted" aria-live="polite">Life2Taiga-lagret laddas vid behov.</p>
-<p id="hallandTestStatus" class="muted" aria-live="polite">Testområden i Halland laddas…</p>
+<p id="diaryGeocodingStatus" class="muted" aria-live="polite" style="display:none"></p>
+<p id="lifeTaigaStatus" class="muted" aria-live="polite" style="display:none"></p>
+<p id="hallandTestStatus" class="muted" aria-live="polite" style="display:none"></p>
 <div id="performedColorLegend" class="color-legend"><span id="legendMin">Lågt</span><span id="legendGradient" class="color-gradient"></span><span id="legendMax">Högt</span><span id="legendNote"></span><div id="categoryLegend" style="display:flex;gap:8px;flex-wrap:wrap"></div></div>
 </section>
 <section class="panel">
@@ -153,11 +153,11 @@ const radiusSelect=document.getElementById("radiusSelect");
 const radiusChoices=[2000,4000,6000,8000,10000,20000,30000,40000];
 radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADIUS)<Math.abs(best-RADIUS)?value:best,radiusChoices[0]));
 RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
-const plannedLayer=L.geoJSON(null,{style:plannedStyle,onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
+const plannedLayer=L.geoJSON(null,{style:feature=>({...plannedStyle(feature),color:"#111111",weight:2.2}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
 const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>bindFeaturePopup(l,f,"performed")});
 const samradPointLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:5,color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"samrad")});
-const samradLineLayer=L.geoJSON(null,{style:()=>({color:"#ea580c",weight:3,opacity:.9}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
-const samradAreaLayer=L.geoJSON(null,{style:()=>({color:"#a21caf",weight:2,opacity:.9,fillColor:"#d946ef",fillOpacity:.22}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
+const samradLineLayer=L.geoJSON(null,{style:()=>({color:"#ea580c",weight:3,opacity:.9,dashArray:"6 4"}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
+const samradAreaLayer=L.geoJSON(null,{style:()=>({color:"#a21caf",weight:2.2,opacity:.95,dashArray:"6 4",fillColor:"#d946ef",fillOpacity:.18}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 // Transparent interaction-only buffers make thin consultation geometries easier to click without changing their appearance.
 const samradPointHitLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:12,stroke:false,fill:true,fillColor:"#000",fillOpacity:0,interactive:true}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
 const samradLineHitLayer=L.geoJSON(null,{style:()=>({color:"#000",weight:16,opacity:0,fill:false,interactive:true}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
@@ -473,10 +473,15 @@ function categoryValue(feature,mode){
  const raw=mode==="forestType"?p.Skogstyp:mode==="harvestType"?p.Avverktyp:p.Samradsatgard??p.Samrådsåtgärd;
  let value=String(raw??"").trim();
  if(mode==="harvestType")value=value.replace(/\s*\/\s*försöksver\s*$/i,"").trim();
+ if(mode==="samradAction"){
+  const normalized=value.toLocaleLowerCase("sv").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/å/g,"a");
+  if(/ask(?:at|å)erf/.test(normalized)||/askat/.test(normalized))return "Askåterföring";
+ }
  return value||"Okänd / saknas";
 }
 function categoryColor(value){
  if(value==="Okänd / saknas")return "#d3d3d3";
+ if(value==="Askåterföring")return "#0f766e";
  if(!categoryColorMap.has(value)){
   const index=categoryColorMap.size;
   categoryColorMap.set(value,CATEGORY_COLORS[index%CATEGORY_COLORS.length]);
@@ -985,11 +990,18 @@ async function getLayer(base,fields,bounds,signal,stats){
 }
 let viewRequestId=0,viewAbortController=null,viewDebounce=null,lastRenderedViewKey=null;
 function currentViewKey(wantSamrad){
- // Include every setting that changes which source layers must be loaded.
- // Presentation-only settings deliberately do not invalidate the data view.
- return JSON.stringify({lat:Number(CENTER[0].toFixed(7)),lon:Number(CENTER[1].toFixed(7)),radius:RADIUS,wantSamrad});
+ // Layer visibility changes which remote datasets are necessary. Keep presentation-only
+ // settings out of this key so color/style changes do not trigger expensive requests.
+ return JSON.stringify({
+  lat:Number(CENTER[0].toFixed(7)),lon:Number(CENTER[1].toFixed(7)),radius:RADIUS,
+  wantPlanned:document.getElementById("showPlanned").checked,
+  wantPerformed:document.getElementById("showPerformed").checked,
+  wantSamrad
+ });
 }
 async function load(){
+ const wantPlanned=document.getElementById("showPlanned").checked;
+ const wantPerformed=document.getElementById("showPerformed").checked;
  const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
  const viewKey=currentViewKey(wantSamrad);
  if(viewKey===lastRenderedViewKey){
@@ -1008,8 +1020,13 @@ async function load(){
  const perf={startedAt:performance.now(),apiRequests:0,responseCacheHits:0,spatialOverlapHits:0,spatialCacheHits:0,containedViews:0,incrementalViews:0,incrementalStrips:0,reusedSpatialFeatures:0,fullViewFetches:0,pagesCompleted:0};
  perf.onProgress=()=>setLoadProgress(Math.min(62,8+perf.pagesCompleted*1.5),"Hämtar kartdata…");
  try{
-  const plannedPromise=getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal,perf);
-  const performedPromise=getLayerForView(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal,perf);
+  const emptyCollection=()=>({type:"FeatureCollection",features:[],pages:0,truncated:false});
+  const plannedPromise=wantPlanned
+   ?getLayerForView(PLANNED,"OBJECTID,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Avverktyp,Andamal,Skogstyp,Inkomdatum,AnmaldHa,SkogsodlHa,NatforHa,ArendeStatus,AvvSasong,AvvHa",bounds,signal,perf)
+   :Promise.resolve(emptyCollection());
+  const performedPromise=wantPerformed
+   ?getLayerForView(PERFORMED,"OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,SkogsodlHa,Natforha,Avvdatum,KallaDatum,KallaAreal,Forebild,Efterbild,Arealha",bounds,signal,perf)
+   :Promise.resolve(emptyCollection());
   // Samråd loads concurrently but cannot block first paint of the two main layers.
   const samradPromise=wantSamrad?Promise.all([
    getLayerForView(SAMRAD_POINTS,"ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",bounds,signal,perf),
@@ -1135,7 +1152,7 @@ function applyVisibility(){
  if(showSamrad){samradLineHitLayer.bringToFront();samradPointHitLayer.bringToFront()}
 }
 document.getElementById("radiusSelect").addEventListener("change",()=>{RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));if(lifeTaigaSource)renderLifeTaiga();load();});
-document.getElementById("showPlanned").addEventListener("change",applyVisibility);document.getElementById("showPerformed").addEventListener("change",applyVisibility);
+document.getElementById("showPlanned").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("showPerformed").addEventListener("change",()=>{applyVisibility();load()});
 document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("showDiaryGeocoding").addEventListener("change",applyVisibility);document.getElementById("performedColorMode").addEventListener("change",()=>{refreshPerformedColors();if(document.getElementById("performedColorMode").value==="samradAction")load()});document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
 // Clicking the map selects a new search-area center and reloads the data for that area.
 map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);if(lifeTaigaSource)renderLifeTaiga();load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});document.getElementById("histogramType").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
