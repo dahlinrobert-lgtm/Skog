@@ -276,7 +276,49 @@ def main() -> None:
                 merged: dict[str, dict] = {}
                 for county in counties:
                     for term in terms:
-                        query = run_query(term, browser, county)
+                        try:
+                            query = run_query(term, browser, county)
+                        except Exception as query_exc:
+                            # Keep diagnostics from the failing county/term. Without
+                            # this wrapper, the batch-level error loses the page text
+                            # and URL needed to troubleshoot a portal response.
+                            query = {
+                                "search_term": term,
+                                "requested_county": county,
+                                "request_ok": False,
+                                "result_count": 0,
+                                "reported_total_results": None,
+                                "results": [],
+                                "pagination": {"pages_read": 0, "has_next_page": None},
+                                "table_diagnostics": [],
+                                "error": f"{type(query_exc).__name__}: {query_exc}",
+                            }
+                            try:
+                                diag_page = browser.new_page(locale="sv-SE")
+                                try:
+                                    diag_page.goto(URL, wait_until="domcontentloaded", timeout=30000)
+                                    query["diagnostic_url"] = diag_page.url
+                                    query["diagnostic_http_status"] = 200
+                                    query["diagnostic_body_text_excerpt"] = clean(
+                                        diag_page.locator("body").inner_text(timeout=10000)
+                                    )[:2500]
+                                    query["diagnostic_result_grid_present"] = (
+                                        diag_page.locator(RESULT_GRID).count() > 0
+                                    )
+                                    query["diagnostic_county_select_present"] = (
+                                        diag_page.locator(COUNTY_SELECT).count() > 0
+                                    )
+                                finally:
+                                    diag_page.close()
+                            except Exception as diag_exc:
+                                query["diagnostic_capture_error"] = (
+                                    f"{type(diag_exc).__name__}: {diag_exc}"
+                                )
+                            batch["queries"].append(query)
+                            raise RuntimeError(
+                                f"Search failed for '{term}' in '{county}': {query['error']}; "
+                                f"diagnostics: {json.dumps({k: query.get(k) for k in ('diagnostic_url', 'diagnostic_http_status', 'diagnostic_body_text_excerpt', 'diagnostic_result_grid_present', 'diagnostic_county_select_present', 'diagnostic_capture_error')}, ensure_ascii=False)}"
+                            ) from query_exc
                         batch["queries"].append(query)
                         for record in query["results"]:
                             diary_number = record["diary_number"]
