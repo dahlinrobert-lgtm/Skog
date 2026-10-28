@@ -318,6 +318,13 @@ def main() -> None:
                     selection_mode = "single_county"
                 batch["counties"] = counties
                 batch["selection_mode"] = selection_mode
+                batch["expected_county_count"] = len(counties)
+                batch["county_coverage_ok"] = (
+                    len(counties) == 21
+                    and len(set(counties)) == 21
+                    if args.county == "Alla län"
+                    else True
+                )
                 merged: dict[str, dict] = {}
                 for county in counties:
                     for term in terms:
@@ -387,11 +394,36 @@ def main() -> None:
                      "total_reconciled": q["total_reconciled"]}
                     for q in batch["queries"]
                 ]
-                batch["county_summaries"] = [
+                county_summaries = [
                     {"county": county, "query_count": sum(q["requested_county"] == county for q in batch["queries"]),
-                     "unique_records": sum(1 for rec in batch["results"] if rec.get("diary") == county)}
+                     "unique_records": sum(1 for rec in batch["results"] if rec.get("diary") == county),
+                     "successful_queries": sum(q["requested_county"] == county and q.get("request_ok") for q in batch["queries"]),
+                     "failed_queries": sum(q["requested_county"] == county and not q.get("request_ok") for q in batch["queries"])}
                     for county in counties
                 ]
+                batch["county_summaries"] = county_summaries
+                batch["completed_counties"] = sum(
+                    row["query_count"] > 0 and row["failed_queries"] == 0
+                    for row in county_summaries
+                )
+                batch["failed_counties"] = [
+                    row["county"] for row in county_summaries
+                    if row["query_count"] == 0 or row["failed_queries"] > 0
+                ]
+                # National search must verify not just the portal dropdown but that
+                # every county/term query returned a validated, reconciled response.
+                batch["county_coverage_ok"] = (
+                    batch["county_coverage_ok"]
+                    and batch["completed_counties"] == batch["expected_county_count"]
+                    and not batch["failed_counties"]
+                    and all(q.get("request_ok") and q.get("total_reconciled") for q in batch["queries"])
+                )
+                if args.county == "Alla län" and not batch["county_coverage_ok"]:
+                    raise RuntimeError(
+                        "All-county coverage validation failed: "
+                        f"{batch['completed_counties']}/{batch['expected_county_count']} counties complete; "
+                        f"failed counties: {batch['failed_counties']!r}"
+                    )
                 # The persistence layer validates aggregate queries per-query. Its top-level
                 # total is set to unique IDs to handle overlap between county/query sets.
                 batch["reported_total_results"] = batch["result_count"]
@@ -407,6 +439,10 @@ def main() -> None:
     print(json.dumps({
         "request_ok": batch["request_ok"], "county": batch["requested_county"],
         "counties_searched": len(batch.get("counties", [])), "selection_mode": batch.get("selection_mode"),
+        "expected_county_count": batch.get("expected_county_count"),
+        "completed_counties": batch.get("completed_counties"),
+        "failed_counties": batch.get("failed_counties"),
+        "county_coverage_ok": batch.get("county_coverage_ok"),
         "search_terms": batch.get("search_terms"), "result_count": batch["result_count"],
         "reported_total_results": batch["reported_total_results"],
         "total_reconciled": batch.get("total_reconciled"), "per_query_counts": batch.get("per_query_counts"),
