@@ -21,6 +21,10 @@ PLACE_KEYS = ("omrade", "område", "reservat", "plats", "objekt", "lokal", "namn
 EVENT_DATE_KEYS = ("brann", "bränn", "burn", "genomfor", "genomför", "utford", "utförd", "planerad", "atgardsdatum", "åtgärdsdatum", "insatsdatum", "startdatum", "slutdatum", "event_date", "burn_date")
 RECORD_DATE_KEYS = ("inkomdatum", "registreringsdatum", "created_date", "created_at", "last_edited_date", "updated_at", "diariedatum")
 COMPLETED = ("genomförd bränning", "genomförda bränningar", "utförd bränning", "utförda bränningar", "completed burn", "burn completed", "burning completed")
+POST_BURN = ("efterbevakning", "uppföljning efter bränning", "uppfoljning efter branning", "tillsyn efter utförd naturvårdsbränning")
+PRE_BURN_SPECIES = ("varglav", "fridlysningsbestämmelser", "fridlysningsbestammelser", "artinventering inför", "inventering inför bränning", "inventering infor branning", "plocka ", "flytta arter", "artskydd inför", "artskydd infor")
+AGREEMENT = ("avtal om naturvårdsbränning", "avtal om naturvardsbranning", "avtalsförlängning naturvårdsbränning", "avtalsforlangning naturvardsbranning", "contract for prescribed burn")
+PROCUREMENT = ("upphandling av naturvårdsbränning", "upphandling av naturvardsbranning", "direktupphandling av naturvårdsbränning", "direktupphandling av naturvardsbranning", "inköp av entreprenad för naturvårdsbränning")
 PLAN_WORDS = ("handlingsplan", "bränningsplan", "branningsplan", "planering", "planerad bränning", "planned burn", "burn plan")
 PUBLIC_INFO = ("information om", "informationsmöte", "allmänheten", "kungörelse", "public information", "public notice")
 APPLICATION = ("ansökan", "anmälan", "dispens", "tillstånd", "samråd", "upphandling", "application", "permit", "consultation")
@@ -52,12 +56,23 @@ def _date_from_value(value: Any) -> str | None:
 
 def _classify(text: str, source_kind: str) -> tuple[str, str, str]:
     value = text.casefold()
+    # Classify the most specific process step before generic words such as
+    # "ansökan" or "naturvårdsbränning" to avoid flattening preparation into
+    # a generic administrative case.
     if any(term in value for term in COMPLETED):
         return "completed_burn", "high", "Source text explicitly describes a completed burn."
+    if any(term in value for term in POST_BURN):
+        return "post_burn_follow_up", "medium", "Source text refers to follow-up or monitoring after a burn; the wording is not independently proof of the burn date."
+    if any(term in value for term in PRE_BURN_SPECIES):
+        return "pre_burn_species_protection", "medium", "Source text indicates a species-protection or handling step before a burn; it does not prove that the burn later occurred."
     if any(term in value for term in PLAN_WORDS):
         return "planning_or_action_plan", "medium", "Source text refers to planning or a burn/action plan; implementation is not implied."
     if any(term in value for term in PUBLIC_INFO):
         return "public_information", "medium", "Source text indicates information or public notice; burn status is not implied."
+    if any(term in value for term in AGREEMENT):
+        return "agreement_or_contract", "medium", "Source text indicates an agreement/contract related to a burn; this is a preparatory or administrative step, not proof of implementation."
+    if any(term in value for term in PROCUREMENT):
+        return "procurement_or_contracting", "medium", "Source text indicates procurement/contracting for a burn; this is not proof that the work was performed."
     if any(term in value for term in APPLICATION):
         return "application_notification_or_consultation", "medium", "Source text indicates an administrative process; it is not proof of a completed burn."
     if any(term in value for term in BURN_WORDS):

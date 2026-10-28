@@ -19,6 +19,21 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertEqual(result["stage"], "completed_burn")
         self.assertEqual(result["confidence"], "high")
 
+    def test_agreement_is_a_preparatory_step_not_a_completed_burn(self):
+        result = classify_text("Avtal om naturvårdsbränning i Fågelmossen naturreservat/natura 2000 område, Motala kommun")
+        self.assertEqual(result["stage"], "agreement_or_contract")
+        self.assertNotEqual(result["stage"], "completed_burn")
+
+    def test_species_exemption_before_burn_is_species_protection(self):
+        result = classify_text("Ansökan om dispens från fridlysningsbestämmelserna - plocka varglav inför naturvårdsbränning i Drevfjällens naturreservat, Dalarnas län")
+        self.assertEqual(result["stage"], "pre_burn_species_protection")
+        self.assertNotEqual(result["stage"], "completed_burn")
+
+    def test_aftercare_is_not_misclassified_as_completed_burn(self):
+        result = classify_text("Avtal om efterbevakning av naturvårdsbränning")
+        self.assertEqual(result["stage"], "post_burn_follow_up")
+        self.assertNotEqual(result["stage"], "completed_burn")
+
     def test_build_keeps_sources_separate_and_undated(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
