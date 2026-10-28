@@ -51,7 +51,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Test diary history and source-response validation
-        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history
+        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history scripts.test_diary_county_coverage
       - name: Audit persisted diary history
         run: |
           python scripts/audit_lansstyrelsen_diary_history.py \
@@ -101,6 +101,10 @@ jobs:
           print(json.dumps({
               "request_ok": data.get("request_ok"),
               "county": data.get("requested_county"),
+              "expected_county_count": data.get("expected_county_count"),
+              "completed_counties": data.get("completed_counties"),
+              "failed_counties": data.get("failed_counties"),
+              "county_coverage_ok": data.get("county_coverage_ok"),
               "search_term": data.get("search_term"),
               "result_count": data.get("result_count"),
               "visible_case_count_hint": data.get("visible_case_count_hint"),
