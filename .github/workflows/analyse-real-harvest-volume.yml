@@ -8,7 +8,7 @@ on:
         default: "0"
         type: string
       raster_codes:
-        description: Raster areas to process (07, 10, 13); Halland is 13
+        description: Raster areas to process (07, 10, 12, 13, 21, 23); selected original ZIPs must exist under data/skogliga-grunddata
         required: true
         default: "13"
         type: string
