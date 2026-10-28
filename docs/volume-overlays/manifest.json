@@ -17,8 +17,8 @@
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
-        10.0,
-        10.0
+        10,
+        10
       ],
       "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
     },
@@ -37,8 +37,8 @@
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
-        10.0,
-        10.0
+        10,
+        10
       ],
       "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
     },
@@ -57,8 +57,68 @@
       ],
       "crs_source": "EPSG:3006",
       "source_resolution_m": [
-        10.0,
-        10.0
+        10,
+        10
+      ],
+      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+    },
+    {
+      "archive": "sks_Volym_omdrev3_12.zip",
+      "image": "sks_Volym_omdrev3_12.svg",
+      "bounds_wgs84": [
+        11.72446539050107,
+        55.00660410217304,
+        14.999999999999982,
+        56.84381181876087
+      ],
+      "display_resolution": [
+        400,
+        400
+      ],
+      "crs_source": "EPSG:3006",
+      "source_resolution_m": [
+        10,
+        10
+      ],
+      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+    },
+    {
+      "archive": "sks_Volym_omdrev3_21.zip",
+      "image": "sks_Volym_omdrev3_21.svg",
+      "bounds_wgs84": [
+        14.023621514994584,
+        59.93874335329784,
+        18.90045211332984,
+        62.680541278718195
+      ],
+      "display_resolution": [
+        333,
+        400
+      ],
+      "crs_source": "EPSG:3006",
+      "source_resolution_m": [
+        10,
+        10
+      ],
+      "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
+    },
+    {
+      "archive": "sks_Volym_omdrev3_23.zip",
+      "image": "sks_Volym_omdrev3_23.svg",
+      "bounds_wgs84": [
+        10.706141946598779,
+        61.28276736635075,
+        18.222802894213824,
+        65.37269795058188
+      ],
+      "display_resolution": [
+        311,
+        400
+      ],
+      "crs_source": "EPSG:3006",
+      "source_resolution_m": [
+        10,
+        10
       ],
       "note": "Downsampled nearest-neighbour display only; source raster must be used for analysis."
     }
