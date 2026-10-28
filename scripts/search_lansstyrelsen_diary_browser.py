@@ -169,6 +169,18 @@ def main() -> None:
             ) if page.locator(SEARCH_BUTTON).count() else None
             result["http_status"] = 200 if page.locator("body").count() else 0
             result["reported_total_results"] = parse_total(body_text)
+            # Search results can legitimately contain zero matches. The result page
+            # may not render the original ASP.NET grid in that case, but it displays
+            # "Sökresultat: 0". Accept only an explicit zero count, never an unknown one.
+            if not grid_present and re.search(r"\bSökresultat\s*:\s*0\b", body_text, re.I):
+                result["reported_total_results"] = 0
+                result["request_ok"] = True
+                result["pagination"]["has_next_page"] = False
+                result["result_count"] = 0
+                result["total_reconciled"] = True
+                result["validation_warning"] = None
+                result["zero_results_confirmed_by_source"] = True
+                return result
             # Preserve enough source diagnostics to explain portal/layout changes
             # without accepting an unvalidated response as a successful search.
             result["body_text_excerpt"] = body_text[:2500]
