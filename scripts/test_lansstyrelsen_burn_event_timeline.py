@@ -189,11 +189,11 @@ class BurnEventTimelineTests(unittest.TestCase):
         import tempfile
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
-            "title": "Information om planerad naturvårdsbränning i Fågelmossen 2026",
+            "title": "Information om planerad naturvårdsbränning i Fågelmossen i Motala 2026",
             "columns": {"Diarienummer": "123-2026"}
         }}}
         source = {"features": [{
-            "id": 9, "properties": {"OBJECTID": 9, "Namn": "Fågelmossen", "Åtgärdsår": 2026},
+            "id": 9, "properties": {"OBJECTID": 9, "Namn": "Fågelmossen i Motala", "Åtgärdsår": 2026},
             "geometry": {"type": "Polygon", "coordinates": []}
         }]}
         report = build_timeline(state, source)
