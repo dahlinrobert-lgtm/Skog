@@ -141,7 +141,7 @@ def _normalized_place(value: str) -> str:
     value = value.casefold().replace("naturreservatet", "").replace("naturreservat", "")
     value = value.replace("natura 2000-område", "").replace("natura 2000 område", "")
     value = re.sub(r"[^0-9a-zåäöéü]+", " ", value)
-    return re.sub(r"\\s+", " ", value).strip()
+    return re.sub(r"\s+", " ", value).strip()
 
 
 def _name_tokens(value: str) -> set[str]:
