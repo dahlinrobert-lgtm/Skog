@@ -17,7 +17,7 @@ from urllib3.util.retry import Retry
 
 URL = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query"
 FIELDS = "OBJECTID,Lannr,Lan,Kommunnr,Kommun,Arendear,Beteckn,Avverktyp,Skogstyp,AnmaldHa,Avvdatum,Arealha"
-RASTER_CODES = ("07", "10", "13")
+RASTER_CODES = ("07", "10", "12", "13", "21", "23")
 DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "skogliga-grunddata"
 PAGE_SIZE = 200
 MAX_CONSECUTIVE_FAILURES = 8
@@ -164,13 +164,13 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--limit", type=int, default=0, help="Maximum features per raster; 0 fetches all")
-    parser.add_argument("--raster-codes", default="07,10,13")
+    parser.add_argument("--raster-codes", default="07,10,12,13,21,23")
     args = parser.parse_args()
     if args.limit < 0:
         raise ValueError("--limit must be >= 0")
     codes = tuple(value.strip() for value in args.raster_codes.split(",") if value.strip())
     if not codes or any(code not in RASTER_CODES for code in codes):
-        raise ValueError("--raster-codes must contain 07, 10 and/or 13")
+        raise ValueError("--raster-codes must contain one or more of: " + ", ".join(RASTER_CODES))
 
     with make_session() as session:
         groups = [fetch(code, raster_extent(code), args.limit, session) for code in codes]
