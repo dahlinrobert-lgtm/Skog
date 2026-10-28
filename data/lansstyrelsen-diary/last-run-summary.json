@@ -1,36 +1,196 @@
 {
-  "observed_at": "2026-10-28T17:13:16.844416+00:00",
-  "diary": "Länsstyrelsen i Västra Götalands län",
+  "observed_at": "2026-10-28T17:18:52.663730+00:00",
+  "diary": "Alla län",
   "counties": [
-    "Länsstyrelsen i Västra Götalands län"
+    "Länsstyrelsen i Blekinge län",
+    "Länsstyrelsen i Dalarnas län",
+    "Länsstyrelsen i Gotlands län",
+    "Länsstyrelsen i Gävleborgs län",
+    "Länsstyrelsen i Hallands län",
+    "Länsstyrelsen i Jämtlands län",
+    "Länsstyrelsen i Jönköpings län",
+    "Länsstyrelsen i Kalmar län",
+    "Länsstyrelsen i Kronobergs län",
+    "Länsstyrelsen i Norrbottens län",
+    "Länsstyrelsen i Skåne län",
+    "Länsstyrelsen i Stockholms län",
+    "Länsstyrelsen i Södermanlands län",
+    "Länsstyrelsen i Uppsala län",
+    "Länsstyrelsen i Värmlands län",
+    "Länsstyrelsen i Västerbottens län",
+    "Länsstyrelsen i Västernorrlands län",
+    "Länsstyrelsen i Västmanlands län",
+    "Länsstyrelsen i Västra Götalands län",
+    "Länsstyrelsen i Örebro län",
+    "Länsstyrelsen i Östergötlands län"
   ],
   "county_summaries": [
+    {
+      "county": "Länsstyrelsen i Blekinge län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 0
+    },
+    {
+      "county": "Länsstyrelsen i Dalarnas län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 22
+    },
+    {
+      "county": "Länsstyrelsen i Gotlands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 2
+    },
+    {
+      "county": "Länsstyrelsen i Gävleborgs län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 4
+    },
+    {
+      "county": "Länsstyrelsen i Hallands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 4
+    },
+    {
+      "county": "Länsstyrelsen i Jämtlands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 3
+    },
+    {
+      "county": "Länsstyrelsen i Jönköpings län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 8
+    },
+    {
+      "county": "Länsstyrelsen i Kalmar län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 6
+    },
+    {
+      "county": "Länsstyrelsen i Kronobergs län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 4
+    },
+    {
+      "county": "Länsstyrelsen i Norrbottens län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 2
+    },
+    {
+      "county": "Länsstyrelsen i Skåne län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 2
+    },
+    {
+      "county": "Länsstyrelsen i Stockholms län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 0
+    },
+    {
+      "county": "Länsstyrelsen i Södermanlands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 14
+    },
+    {
+      "county": "Länsstyrelsen i Uppsala län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 7
+    },
+    {
+      "county": "Länsstyrelsen i Värmlands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 9
+    },
+    {
+      "county": "Länsstyrelsen i Västerbottens län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 2
+    },
+    {
+      "county": "Länsstyrelsen i Västernorrlands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 0
+    },
+    {
+      "county": "Länsstyrelsen i Västmanlands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 8
+    },
     {
       "county": "Länsstyrelsen i Västra Götalands län",
       "query_count": 1,
       "successful_queries": 1,
       "failed_queries": 0,
       "unique_records": 14
+    },
+    {
+      "county": "Länsstyrelsen i Örebro län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 5
+    },
+    {
+      "county": "Länsstyrelsen i Östergötlands län",
+      "query_count": 1,
+      "successful_queries": 1,
+      "failed_queries": 0,
+      "unique_records": 9
     }
   ],
-  "query_count": 1,
+  "query_count": 21,
   "search_term": "naturvårdsbränning",
   "search_terms": [
     "naturvårdsbränning"
   ],
   "request_ok": true,
-  "extracted_count": 14,
-  "reported_total_results": 14,
+  "extracted_count": 125,
+  "reported_total_results": 125,
   "total_reconciled": true,
   "pagination": {
-    "pages_read": 1,
+    "pages_read": 18,
     "has_next_page": false
   },
   "state_record_count_before": 125,
   "state_record_count_after": 125,
   "first_seen_events": 0,
   "changed_events": 0,
-  "observation_events": 14,
+  "observation_events": 125,
   "invalid_or_duplicate_records": 0,
   "absent_ids_interpreted_as_removed": false,
   "note": "Records absent from a search are not marked removed: they may not match the current search phrase or may be outside the source's current result window."
