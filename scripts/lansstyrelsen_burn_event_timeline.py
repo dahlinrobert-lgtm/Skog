@@ -248,6 +248,71 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return candidates
 
 
+def build_field_inventory(lifetaiga: dict[str, Any]) -> dict[str, Any]:
+    """Summarize real Life2Taiga property names and values to guide safe date mapping."""
+    features = [f for f in (lifetaiga.get("features") or []) if isinstance(f, dict)]
+    stats: dict[str, dict[str, Any]] = {}
+    for feature in features:
+        props = feature.get("properties") or {}
+        if not isinstance(props, dict):
+            continue
+        for key, value in props.items():
+            name = str(key)
+            item = stats.setdefault(name, {
+                "field": name,
+                "non_null_count": 0,
+                "value_types": {},
+                "examples": [],
+            })
+            if value is None or value == "":
+                continue
+            item["non_null_count"] += 1
+            value_type = type(value).__name__
+            item["value_types"][value_type] = item["value_types"].get(value_type, 0) + 1
+            example = _normal(value)
+            if example and len(example) <= 120 and example not in item["examples"] and len(item["examples"]) < 3:
+                item["examples"].append(example)
+    entries = []
+    for name, item in stats.items():
+        key_norm = name.casefold()
+        date_related = any(term in key_norm for term in (
+            "date", "datum", "time", "år", "ar", "year", "bränn", "brann",
+            "burn", "åtgärd", "atgard", "genomför", "genomfor", "utförd", "utford",
+        ))
+        item["date_or_action_field_candidate"] = date_related
+        entries.append(item)
+    entries.sort(key=lambda item: (
+        not item["date_or_action_field_candidate"],
+        item["field"].casefold(),
+    ))
+    return {
+        "schema_version": 1,
+        "source_url": lifetaiga.get("source_url") or "",
+        "source_layer_id": lifetaiga.get("source_layer_id"),
+        "source_layer_name": lifetaiga.get("source_layer_name") or lifetaiga.get("name") or "",
+        "generated_at": lifetaiga.get("generated_at") or "",
+        "feature_count": len(features),
+        "field_count": len(entries),
+        "date_or_action_field_candidates": [
+            item["field"] for item in entries if item["date_or_action_field_candidate"]
+        ],
+        "fields": entries,
+        "interpretation_policy": (
+            "Field-name matching is only a discovery aid. A field is not treated as an event date or "
+            "completion indicator until its meaning and values have been verified."
+        ),
+    }
+
+
+def write_field_inventory(lifetaiga: dict[str, Any], output_path: Path) -> dict[str, Any]:
+    inventory = build_field_inventory(lifetaiga)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    temp = output_path.with_suffix(output_path.suffix + ".tmp")
+    temp.write_text(json.dumps(inventory, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temp.replace(output_path)
+    return inventory
+
+
 def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> dict[str, Any]:
     events = []
     for key, record in (diary_state.get("records") or {}).items():
@@ -377,6 +442,7 @@ def main() -> int:
     parser.add_argument("--lifetaiga", type=Path, default=Path("docs/data/lifetaiga-naturvardsatgarder.geojson"))
     parser.add_argument("--output", type=Path, default=Path("docs/data/burn-event-timeline.json"))
     parser.add_argument("--review-csv", type=Path, default=Path("docs/data/burn-event-link-review.csv"))
+    parser.add_argument("--field-inventory", type=Path, default=Path("docs/data/lifetaiga-field-inventory.json"))
     args = parser.parse_args()
     diary_state = json.loads(args.diary_state.read_text(encoding="utf-8"))
     lifetaiga = json.loads(args.lifetaiga.read_text(encoding="utf-8"))
@@ -386,7 +452,19 @@ def main() -> int:
     temp.write_text(json.dumps(report, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     temp.replace(args.output)
     review_count = write_review_csv(report, args.review_csv)
-    print(json.dumps({"output": str(args.output), "event_count": report["event_count"], "stage_counts": report["stage_counts"], "source_counts": report["source_counts"], "review_csv": str(args.review_csv), "review_candidate_count": review_count, "link_candidate_summary": report["link_candidate_summary"]}, ensure_ascii=False))
+    inventory = write_field_inventory(lifetaiga, args.field_inventory)
+    print(json.dumps({
+        "output": str(args.output),
+        "event_count": report["event_count"],
+        "stage_counts": report["stage_counts"],
+        "source_counts": report["source_counts"],
+        "review_csv": str(args.review_csv),
+        "review_candidate_count": review_count,
+        "link_candidate_summary": report["link_candidate_summary"],
+        "field_inventory": str(args.field_inventory),
+        "field_count": inventory["field_count"],
+        "date_or_action_field_candidates": inventory["date_or_action_field_candidates"],
+    }, ensure_ascii=False))
     return 0
 
 

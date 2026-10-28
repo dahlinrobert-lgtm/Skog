@@ -209,6 +209,26 @@ class BurnEventTimelineTests(unittest.TestCase):
             self.assertIn("Fågelmossen", rows[0]["geometry_title"])
             self.assertEqual(rows[0]["review_priority"], "higher")
 
+    def test_field_inventory_finds_action_and_date_fields_without_asserting_meaning(self):
+        from lansstyrelsen_burn_event_timeline import build_field_inventory
+        source = {
+            "source_url": "https://example.test/layer",
+            "source_layer_id": 13,
+            "features": [
+                {"properties": {"OBJECTID": 1, "Namn": "Fågelmossen", "Åtgärdsår": 2026, "EditDate": 1790000000000}},
+                {"properties": {"OBJECTID": 2, "Namn": "Vändåtberget", "Åtgärdsår": None, "EditDate": 1790000000000}},
+            ],
+        }
+        report = build_field_inventory(source)
+        self.assertEqual(report["feature_count"], 2)
+        self.assertEqual(report["field_count"], 4)
+        self.assertIn("Åtgärdsår", report["date_or_action_field_candidates"])
+        action_year = next(field for field in report["fields"] if field["field"] == "Åtgärdsår")
+        self.assertEqual(action_year["non_null_count"], 1)
+        self.assertEqual(action_year["examples"], ["2026"])
+        self.assertIn("EditDate", report["date_or_action_field_candidates"])
+        self.assertIn("not treated as an event date", report["interpretation_policy"])
+
     def test_diary_source_date_is_record_date_not_burn_date(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
