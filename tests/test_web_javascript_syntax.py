@@ -29,10 +29,9 @@ class InlineScripts(HTMLParser):
 
 def test_map_layer_selection_and_legend_colors():
     html = (ROOT / "docs/karta.html").read_text(encoding="utf-8")
-    # "Annan skogsbruksåtgärd" is the first category in the stable palette;
-    # keep its legend swatch aligned with the lila/pink consultation polygons.
+    # The common consultation action must use the same purple in map and legend.
     assert '.samrad{border-color:#a21caf}' in html
-    assert 'const CATEGORY_COLORS=["#e6007e"' in html
+    assert 'if(value==="Annan skogsbruksåtgärd")return "#a21caf";' in html
     assert 'wantPlanned:document.getElementById("showPlanned").checked' in html
     assert 'wantPerformed:document.getElementById("showPerformed").checked' in html
     assert 'const plannedPromise=wantPlanned' in html
