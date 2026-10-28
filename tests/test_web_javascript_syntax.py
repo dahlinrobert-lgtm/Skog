@@ -27,6 +27,23 @@ class InlineScripts(HTMLParser):
             self.current = None
             self.external = False
 
+def test_map_layer_selection_and_legend_colors():
+    html = (ROOT / "docs/karta.html").read_text(encoding="utf-8")
+    # "Annan skogsbruksåtgärd" is the first category in the stable palette;
+    # keep its legend swatch aligned with the lila/pink consultation polygons.
+    assert '.samrad{border-color:#a21caf}' in html
+    assert 'const CATEGORY_COLORS=["#e6007e"' in html
+    assert 'wantPlanned:document.getElementById("showPlanned").checked' in html
+    assert 'wantPerformed:document.getElementById("showPerformed").checked' in html
+    assert 'const plannedPromise=wantPlanned' in html
+    assert 'const performedPromise=wantPerformed' in html
+    assert 'getLayerForView(PLANNED,' in html
+    assert 'getLayerForView(PERFORMED,' in html
+    # A Samråd-only selection must still enter the separate optional layer path.
+    assert 'const samradPromise=wantSamrad?Promise.all([' in html
+    assert 'document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()})' in html
+
+
 def test_inline_javascript_syntax():
     for relative in ("docs/karta.html", "docs/utforda.html", "docs/index.html", "docs/historik.html"):
         parser = InlineScripts()
@@ -38,5 +55,6 @@ def test_inline_javascript_syntax():
                 subprocess.run(["node", "--check", f.name], check=True, capture_output=True, text=True)
 
 if __name__ == "__main__":
+    test_map_layer_selection_and_legend_colors()
     test_inline_javascript_syntax()
     print("Inline JavaScript syntax checks passed.")
