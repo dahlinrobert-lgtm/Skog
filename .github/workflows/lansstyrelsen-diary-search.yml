@@ -24,6 +24,8 @@ on:
         default: ""
         type: string
   push:
+    branches:
+      - main
     paths:
       - "scripts/search_lansstyrelsen_diary.py"
       - "scripts/search_lansstyrelsen_diary_browser.py"
@@ -94,7 +96,7 @@ jobs:
           }, ensure_ascii=False, indent=2))
           PY
       - name: Publish validated diary history with concurrency-safe retry
-        if: success()
+        if: success() && github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
