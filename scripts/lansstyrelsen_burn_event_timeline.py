@@ -60,8 +60,8 @@ def _classify(text: str, source_kind: str) -> tuple[str, str, str]:
     if any(term in value for term in APPLICATION):
         return "application_notification_or_consultation", "medium", "Source text indicates an administrative process; it is not proof of a completed burn."
     if any(term in value for term in BURN_WORDS):
-        return ("life2taiga_burn_related_geometry" if source_kind == "lifetaiga" else "burn_related_diary"),
-            "low", "Burn-related wording found, but the lifecycle stage is not explicit."
+        return (("life2taiga_burn_related_geometry" if source_kind == "lifetaiga" else "burn_related_diary"),
+                "low", "Burn-related wording found, but the lifecycle stage is not explicit.")
     return "other_or_unclassified", "low", "No lifecycle stage could be safely inferred from the available text."
 
 
