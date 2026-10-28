@@ -18,7 +18,8 @@ from typing import Any
 DATE_RE = re.compile(r"(?<!\d)((?:19|20)\d{2})[-/.](\d{1,2})[-/.](\d{1,2})(?!\d)")
 YEAR_RE = re.compile(r"(?<!\d)((?:19|20)\d{2})(?!\d)")
 PLACE_KEYS = ("omrade", "område", "reservat", "plats", "objekt", "lokal", "namn", "kommun", "site", "location", "place")
-DATE_KEYS = ("datum", "date", "arende", "ärende", "brann", "bränn", "burn", "start", "slut", "genomfor", "genomför", "plan", "created", "edited", "last")
+EVENT_DATE_KEYS = ("brann", "bränn", "burn", "genomfor", "genomför", "utford", "utförd", "planerad", "atgardsdatum", "åtgärdsdatum", "insatsdatum", "startdatum", "slutdatum", "event_date", "burn_date")
+RECORD_DATE_KEYS = ("inkomdatum", "registreringsdatum", "created_date", "created_at", "last_edited_date", "updated_at", "diariedatum")
 COMPLETED = ("genomförd bränning", "genomförda bränningar", "utförd bränning", "utförda bränningar", "completed burn", "burn completed", "burning completed")
 PLAN_WORDS = ("handlingsplan", "bränningsplan", "branningsplan", "planering", "planerad bränning", "planned burn", "burn plan")
 PUBLIC_INFO = ("information om", "informationsmöte", "allmänheten", "kungörelse", "public information", "public notice")
@@ -70,22 +71,27 @@ def classify_text(text: str, source_kind: str = "diary") -> dict[str, str]:
     return {"stage": stage, "confidence": confidence, "explanation": explanation}
 
 
-def _record_date(record: dict[str, Any], props: dict[str, Any] | None = None) -> tuple[str | None, str | None]:
+def _record_dates(record: dict[str, Any], props: dict[str, Any] | None = None) -> dict[str, str | None]:
     values = []
     if props:
         values.extend((key, value) for key, value in props.items())
     columns = record.get("columns") or {}
     values.extend((key, value) for key, value in columns.items())
+    result = {"event_date": None, "event_date_source_field": None,
+              "record_date": None, "record_date_source_field": None}
     for key, value in values:
-        if any(term in str(key).casefold() for term in DATE_KEYS):
-            found = _date_from_value(value)
-            if found:
-                return found, str(key)
-    # Only accept explicit ISO-like dates in titles, not a bare year.
-    title = _normal(record.get("title") or (props or {}).get("title"))
-    found = _date_from_value(title)
-    return (found, "title") if found else (None, None)
-
+        key_norm = str(key).casefold()
+        found = _date_from_value(value)
+        if not found:
+            continue
+        if result["event_date"] is None and any(term in key_norm for term in EVENT_DATE_KEYS):
+            if not any(term in key_norm for term in ("last_edited", "updated", "created")):
+                result["event_date"] = found
+                result["event_date_source_field"] = str(key)
+        if result["record_date"] is None and any(term in key_norm for term in RECORD_DATE_KEYS):
+            result["record_date"] = found
+            result["record_date_source_field"] = str(key)
+    return result
 
 def _place_candidates(props: dict[str, Any], title: str = "") -> list[str]:
     candidates = []
@@ -113,15 +119,14 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
         title = _normal(record.get("title") or (record.get("columns") or {}).get("Ärenderubrik"))
         searchable = " ".join([title] + [_normal(v) for v in (record.get("columns") or {}).values() if not isinstance(v, (dict, list))])
         classification = classify_text(searchable, "diary")
-        event_date, date_source = _record_date(record)
+        dates = _record_dates(record)
         diary_number = _normal(record.get("diary_number") or (record.get("columns") or {}).get("Diarienummer"))
         events.append({
             "event_id": "diary:" + _normal(record.get("record_key") or diary_number or key),
             "source_type": "lansstyrelsen_diary",
             "source_record_id": diary_number or _normal(key),
             "title": title or "Diariepost utan rubrik",
-            "event_date": event_date,
-            "event_date_source_field": date_source,
+            **dates,
             **classification,
             "place_candidates": _place_candidates(record.get("columns") or {}, title),
             "geometry": None,
@@ -136,7 +141,7 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
         props = feature.get("properties") or {}
         searchable = " ".join([_normal(k) + ": " + _normal(v) for k, v in props.items() if not isinstance(v, (dict, list))])
         classification = classify_text(searchable, "lifetaiga")
-        event_date, date_source = _record_date({}, props)
+        dates = _record_dates({}, props)
         oid = props.get("OBJECTID") or props.get("ObjectId") or feature.get("id")
         geometry = feature.get("geometry")
         events.append({
@@ -155,7 +160,7 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
         })
 
     # Dates first; undated items remain visible at the end and are not assigned a fake date.
-    events.sort(key=lambda event: (event["event_date"] is None, event["event_date"] or "", event["source_type"], event["event_id"]))
+    events.sort(key=lambda event: ((event["event_date"] or event["record_date"]) is None, event["event_date"] or event["record_date"] or "", event["source_type"], event["event_id"]))
     stage_counts = Counter(event["stage"] for event in events)
     source_counts = Counter(event["source_type"] for event in events)
     return {
