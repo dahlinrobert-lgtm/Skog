@@ -75,6 +75,23 @@ class DiaryHistoryTests(unittest.TestCase):
             self.assertEqual(record["observation_count"], 2)
             self.assertEqual(len(events.read_text(encoding="utf-8").splitlines()), 1)
 
+    def test_unchanged_source_record_appends_observation_event(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state, events, summary = root / "state.json", root / "events.jsonl", root / "summary.json"
+            self.invoke(self.make_run("naturvårdsbränning"), state, events, summary)
+            second_run = self.make_run("reservat", page=2)
+            second_run["tested_at_utc"] = "2026-10-27T11:00:00+00:00"
+            result = self.invoke(second_run, state, events, summary)
+
+            saved_events = [json.loads(line) for line in events.read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([event["event_type"] for event in saved_events], ["first_seen", "observed"])
+            self.assertEqual(result["observation_events"], 1)
+            self.assertEqual(result["changed_events"], 0)
+            saved = json.loads(state.read_text(encoding="utf-8"))
+            record = next(iter(saved["records"].values()))
+            self.assertEqual(record["observation_count"], 2)
+
     def test_source_title_change_is_recorded(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
