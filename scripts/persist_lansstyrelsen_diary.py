@@ -27,6 +27,20 @@ def content_hash(record: dict[str, Any]) -> str:
     return hashlib.sha256(canonical_json(tracked).encode("utf-8")).hexdigest()
 
 
+def source_projection(record: dict[str, Any]) -> dict[str, Any]:
+    """Return stable source-owned fields, excluding pagination/query metadata."""
+    columns = record.get("columns", {})
+    return {
+        "source_url": record.get("source_url"), "diary_number": record.get("diary_number"),
+        "diary": record.get("diary"), "title": record.get("title") or columns.get("Ärenderubrik"),
+        "status": record.get("status") or columns.get("Status"),
+        "source_date": record.get("source_date") or columns.get("In/Upp-datum"),
+        "sender_recipient": columns.get("Avsändare/mottagare"),
+        "postal_place": columns.get("Postort"), "municipality": columns.get("Kommun"),
+        "decision_date": columns.get("Beslutsdatum"),
+    }
+
+
 def read_json(path: Path, default: Any) -> Any:
     if not path.exists():
         return default
@@ -136,7 +150,7 @@ def main() -> None:
             "last_query_total": total,
             "last_query_page": raw.get("page_number"),
         }
-        candidate_hash = content_hash(candidate)
+        candidate_hash = content_hash(source_projection(candidate))
         previous = records.get(key)
 
         if previous is None:
@@ -154,17 +168,6 @@ def main() -> None:
                 "note": "First observation by this tool; not proof that the case was newly registered.",
             })
         else:
-            def source_projection(record: dict[str, Any]) -> dict[str, Any]:
-                columns = record.get("columns", {})
-                return {
-                    "source_url": record.get("source_url"), "diary_number": record.get("diary_number"),
-                    "diary": record.get("diary"), "title": record.get("title") or columns.get("Ärenderubrik"),
-                    "status": record.get("status") or columns.get("Status"),
-                    "source_date": record.get("source_date") or columns.get("In/Upp-datum"),
-                    "sender_recipient": columns.get("Avsändare/mottagare"),
-                    "postal_place": columns.get("Postort"), "municipality": columns.get("Kommun"),
-                    "decision_date": columns.get("Beslutsdatum"),
-                }
             previous_source = source_projection(previous)
             candidate_source = source_projection(candidate)
             previous_queries = set(previous.get("queries_seen", []))
