@@ -481,6 +481,8 @@ function categoryValue(feature,mode){
 }
 function categoryColor(value){
  if(value==="Okänd / saknas")return "#d3d3d3";
+ // Keep this consultation category consistently purple on both the map and legend.
+ if(value==="Annan skogsbruksåtgärd")return "#a21caf";
  if(value==="Askåterföring")return "#0f766e";
  if(!categoryColorMap.has(value)){
   const index=categoryColorMap.size;
