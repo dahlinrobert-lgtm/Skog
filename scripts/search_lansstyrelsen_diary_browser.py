@@ -186,7 +186,26 @@ def main() -> None:
                 result["request_ok"] = True
                 result["pagination"]["has_next_page"] = False
             elif not grid_present:
-                raise RuntimeError("No result grid found although source did not report zero results")
+                # Include diagnostics from the actual submitted page in the error.
+                # A fresh-page probe only shows the initial form and cannot tell
+                # whether the submit was rejected, intercepted, or postback failed.
+                result["diagnostic_after_submit"] = {
+                    "body_text_excerpt": body_text[:2500],
+                    "current_url": page.url,
+                    "result_grid_present": grid_present,
+                    "title_input_value": result.get("title_input_value"),
+                    "county_selected_value": page.locator(COUNTY_SELECT).input_value()
+                        if page.locator(COUNTY_SELECT).count() else None,
+                    "county_selected_label": page.locator(
+                        f"{COUNTY_SELECT} option:checked"
+                    ).inner_text() if page.locator(f"{COUNTY_SELECT} option:checked").count() else None,
+                    "submit_button": result.get("form_action"),
+                    "document_ready_state": result.get("document_ready_state"),
+                }
+                raise RuntimeError(
+                    "No result grid found although source did not report zero results; "
+                    f"submitted-page diagnostics: {json.dumps(result['diagnostic_after_submit'], ensure_ascii=False)}"
+                )
             else:
                 result["request_ok"] = True
                 for page_number in range(1, 101):
