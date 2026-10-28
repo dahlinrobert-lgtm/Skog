@@ -32,3 +32,49 @@ def resolve_county_labels(options: list[dict]) -> list[str]:
             f"found {len(labels)}: {labels!r}"
         )
     return labels
+
+
+def summarize_county_coverage(
+    counties: list[str],
+    queries: list[dict],
+    *,
+    is_all_counties: bool,
+) -> dict:
+    """Summarize and validate whether all requested county searches completed."""
+    labels = [str(label).strip() for label in counties]
+    expected = EXPECTED_SWEDISH_COUNTIES if is_all_counties else len(labels)
+    summaries = []
+    for county in labels:
+        matching = [q for q in queries if q.get("requested_county") == county]
+        successful = sum(
+            bool(q.get("request_ok") and q.get("total_reconciled"))
+            for q in matching
+        )
+        summaries.append({
+            "county": county,
+            "query_count": len(matching),
+            "successful_queries": successful,
+            "failed_queries": len(matching) - successful,
+        })
+    completed = sum(
+        row["query_count"] > 0 and row["failed_queries"] == 0
+        for row in summaries
+    )
+    failed = [
+        row["county"] for row in summaries
+        if row["query_count"] == 0 or row["failed_queries"] > 0
+    ]
+    valid = (
+        len(labels) == expected
+        and len(set(labels)) == expected
+        and completed == expected
+        and not failed
+        and all(q.get("request_ok") and q.get("total_reconciled") for q in queries)
+    )
+    return {
+        "expected_county_count": expected,
+        "completed_counties": completed,
+        "failed_counties": failed,
+        "county_summaries": summaries,
+        "county_coverage_ok": valid,
+    }
