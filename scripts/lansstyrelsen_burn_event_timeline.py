@@ -19,7 +19,7 @@ DATE_RE = re.compile(r"(?<!\d)((?:19|20)\d{2})[-/.](\d{1,2})[-/.](\d{1,2})(?!\d)
 YEAR_RE = re.compile(r"(?<!\d)((?:19|20)\d{2})(?!\d)")
 PLACE_KEYS = ("omrade", "område", "reservat", "plats", "objekt", "lokal", "namn", "kommun", "site", "location", "place")
 EVENT_DATE_KEYS = ("brann", "bränn", "burn", "genomfor", "genomför", "utford", "utförd", "planerad", "atgardsdatum", "åtgärdsdatum", "insatsdatum", "startdatum", "slutdatum", "event_date", "burn_date")
-RECORD_DATE_KEYS = ("inkomdatum", "registreringsdatum", "created_date", "created_at", "last_edited_date", "updated_at", "diariedatum")
+RECORD_DATE_KEYS = ("inkomdatum", "in/upp-datum", "registreringsdatum", "source_date", "created_date", "created_at", "last_edited_date", "updated_at", "diariedatum")
 COMPLETED = ("genomförd bränning", "genomförda bränningar", "utförd bränning", "utförda bränningar", "completed burn", "burn completed", "burning completed")
 CANCELLED_OR_POSTPONED = ("inställd bränning", "inställd naturvårdsbränning", "inställt på grund av", "bränningen ställs in", "bränningen skjuts upp", "uppskjuten bränning", "avblåst bränning", "cancelled burn", "postponed burn")
 POST_BURN = ("efterbevakning", "efterbevakning av naturvårdsbränning", "uppföljning efter bränning", "uppfoljning efter branning", "tillsyn efter utförd naturvårdsbränning", "uppföljning av naturvårdsbränning")
@@ -97,6 +97,11 @@ def classify_text(text: str, source_kind: str = "diary") -> dict[str, str]:
 
 def _record_dates(record: dict[str, Any], props: dict[str, Any] | None = None) -> dict[str, str | None]:
     values = []
+    # The diary collector stores the source's In/Upp-datum both as a top-level
+    # source_date and as a column. These are record/registration dates, not burn dates.
+    for key in ("source_date", "created_at", "updated_at"):
+        if record.get(key) is not None:
+            values.append((key, record[key]))
     if props:
         values.extend((key, value) for key, value in props.items())
     columns = record.get("columns") or {}
