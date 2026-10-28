@@ -118,6 +118,11 @@ jobs:
               --state data/lansstyrelsen-diary/state.json \
               --events data/lansstyrelsen-diary/events.jsonl \
               --summary data/lansstyrelsen-diary/last-run-summary.json
+            # Audit the exact latest-main-derived files that this attempt will publish.
+            python scripts/audit_lansstyrelsen_diary_history.py \
+              --state data/lansstyrelsen-diary/state.json \
+              --events data/lansstyrelsen-diary/events.jsonl \
+              --output diary-history-audit.json
             git add data/lansstyrelsen-diary/
             if git diff --cached --quiet; then
               echo "Diary history unchanged."
@@ -134,13 +139,14 @@ jobs:
             fi
             sleep 2
           done
-      - name: Upload public search results and history summary
+      - name: Upload public search results, history summary and audit report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lansstyrelsen-diary-search
           path: |
             diary-search.json
+            diary-history-audit.json
             data/lansstyrelsen-diary/last-run-summary.json
           if-no-files-found: warn
           retention-days: 30
