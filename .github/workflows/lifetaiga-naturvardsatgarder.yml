@@ -1,6 +1,12 @@
 name: Life2Taiga naturvårdsåtgärder
 
 on:
+  pull_request:
+    paths:
+      - "scripts/lifetaiga_fetch_naturvardsatgarder.py"
+      - "scripts/test_lifetaiga_fetch_naturvardsatgarder.py"
+      - "docs/karta.html"
+      - ".github/workflows/lifetaiga-naturvardsatgarder.yml"
   workflow_dispatch:
   schedule:
     - cron: "25 6 * * *"
