@@ -13,6 +13,11 @@ on:
           - "Länsstyrelsen i Norrbottens län"
           - "Länsstyrelsen i Västerbottens län"
           - "Alla län"
+      confirm_all_counties:
+        description: Set true to run an intentional all-county coverage check
+        required: false
+        default: false
+        type: boolean
       search_term:
         description: Phrase searched in case title
         required: true
@@ -65,11 +70,12 @@ jobs:
       - name: Submit public diary search in Chromium
         env:
           COUNTY_INPUT: ${{ inputs.county }}
+          CONFIRM_ALL_COUNTIES_INPUT: ${{ inputs.confirm_all_counties }}
           SEARCH_TERM_INPUT: ${{ inputs.search_term }}
           SEARCH_TERMS_INPUT: ${{ inputs.search_terms }}
         run: |
           county="${COUNTY_INPUT:-Länsstyrelsen i Västra Götalands län}"
-          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ]; then
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ] || [ "${CONFIRM_ALL_COUNTIES_INPUT:-false}" = "true" ]; then
             county="Alla län"
           fi
           search_term="${SEARCH_TERM_INPUT:-naturvårdsbränning}"
