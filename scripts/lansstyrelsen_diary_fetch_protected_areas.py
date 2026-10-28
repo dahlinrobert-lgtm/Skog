@@ -35,7 +35,7 @@ def fetch_all(page_size: int = 1000, max_features: int = 100000) -> dict:
         params = {
             "service": "WFS", "version": "2.0.0", "request": "GetFeature",
             "typeNames": TYPE_NAME, "outputFormat": "application/json",
-            "srsName": "urn:ogc:def:crs:EPSG::4326",
+            "srsName": "urn:ogc:def:crs:OGC::CRS84",
             "count": page_size, "startIndex": start_index,
         }
         url = BASE_URL + "?" + urlencode(params)
