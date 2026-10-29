@@ -114,7 +114,7 @@ let polygonVolumeAttributesById=new Map();
 let polygonVolumeAttributesLoadError=false;
 const polygonVolumeAttributesReady=fetch("./volume-overlays/polygon-volume-attributes.json")
  .then(r=>{if(!r.ok)throw new Error("Volymrapporten saknas");return r.json();})
- .then(doc=>{for(const row of doc.records||[])polygonVolumeAttributesById.set(String(row.objectid),row);return doc;})
+ .then(doc=>{for(const row of doc.records||[]){const id=String(row.objectid??"");if(id)polygonVolumeAttributesById.set(String(row.raster_code||"")+":"+id,row);if(id&&!polygonVolumeAttributesById.has(id))polygonVolumeAttributesById.set(id,row);}return doc;})
  .catch(error=>{polygonVolumeAttributesLoadError=true;console.warn("Polygon volume attributes unavailable",error);return null;});
 function bindFeaturePopup(layer,feature,type){
  layer.bindPopup(()=>popup(feature,type));
@@ -700,35 +700,49 @@ function popup(f,type){
  ["Ärendegrupp",caseLabel(f)],["Polygon-ID (OBJECTID)",polygonId(f)],["Beteckning",p.Beteckn??p.Beteckning],["Ärendeår",p.Arendear],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
  ];
  const rows=items=>'<table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:5px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+items.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table>';
- const rasterSourceForFeature=feature=>{
+ const rasterSources=[
+  {name:"07",label:"Kronoberg (07)",b:[12.5125229467,55.921984389,16.6588126036,57.2929756606]},
+  {name:"10",label:"Blekinge (10)",b:[14.1804041628,55.4858810517,16.6389064285,56.8438062613]},
+  {name:"12",label:"Södra Sverige (12)",b:[11.7244653905,55.0066041022,15.0,56.8438118188]},
+  {name:"13",label:"Halland (13)",b:[10.8071192771,55.8804620749,14.1994771963,57.7393350499]},
+  {name:"21",label:"Mellersta Sverige (21)",b:[14.023621515,59.9387433533,18.9004521133,62.6805412787]},
+  {name:"23",label:"Norra Sverige (23)",b:[10.7061419466,61.2827673664,18.2228028942,65.3726979506]}
+ ];
+ const featureBounds=feature=>{
   const g=feature?.geometry;if(!g?.coordinates)return null;
-  const points=[];const walk=x=>{if(!Array.isArray(x))return;if(typeof x[0]==="number"&&typeof x[1]==="number"){points.push(x);return;}x.forEach(walk);};walk(g.coordinates);
-  if(!points.length)return null;
-  const lon=points.reduce((s,p)=>s+p[0],0)/points.length,lat=points.reduce((s,p)=>s+p[1],0)/points.length;
-  const sources=[{name:"07",label:"Kronoberg (07)",b:[12.5125,55.922,16.6588,57.293]},{name:"10",label:"Blekinge (10)",b:[14.1804,55.4859,16.6389,56.8438]},{name:"13",label:"Halland (13)",b:[10.8071,55.8805,14.1995,57.7393]}];
-  return sources.find(s=>lon>=s.b[0]&&lon<=s.b[2]&&lat>=s.b[1]&&lat<=s.b[3])||null;
+  const b=[Infinity,Infinity,-Infinity,-Infinity];
+  const walk=x=>{if(!Array.isArray(x))return;if(typeof x[0]==="number"&&typeof x[1]==="number"){b[0]=Math.min(b[0],x[0]);b[1]=Math.min(b[1],x[1]);b[2]=Math.max(b[2],x[0]);b[3]=Math.max(b[3],x[1]);return;}x.forEach(walk);};
+  walk(g.coordinates);return Number.isFinite(b[0])?b:null;
  };
- const rasterSource=rasterSourceForFeature(f);
+ const rasterSourcesForFeature=feature=>{
+  const b=featureBounds(feature);if(!b)return [];
+  return rasterSources.filter(r=>b[0]<=r.b[2]&&b[2]>=r.b[0]&&b[1]<=r.b[3]&&b[3]>=r.b[1]);
+ };
+ const rasterSource=rasterSourcesForFeature(f)[0]||null;
  const volumeLookupId=String(p.OBJECTID??p.ObjectId??p.ObjectID??f.id??"");
- const volumeRecord=polygonVolumeAttributesById.get(volumeLookupId);
- const rasterSourceLabel=volumeRecord?({"07":"Kronoberg (07)","10":"Blekinge (10)","13":"Halland (13)"}[volumeRecord.raster_code]||("Raster "+volumeRecord.raster_code)):(rasterSource?rasterSource.label:"Ej fastställt");
+ const sourceCandidates=rasterSourcesForFeature(f);
+ const volumeRecord=sourceCandidates.map(r=>polygonVolumeAttributesById.get(r.name+":"+volumeLookupId)).find(Boolean)||polygonVolumeAttributesById.get(volumeLookupId)||null;
+ const rasterCode=volumeRecord?.raster_code||rasterSource?.name||null;
+ const rasterSourceLabel=rasterCode?(rasterSources.find(r=>r.name===String(rasterCode))?.label||("Raster "+rasterCode)):"Ej fastställt";
  const fmtNumber=(v,d=1)=>v==null||!Number.isFinite(Number(v))?"Ej tillgängligt":Number(v).toLocaleString("sv-SE",{maximumFractionDigits:d});
+ const statusLabels={ok:"Beräkning klar",outside_raster_extent:"Utanför rasterutbredning",no_raster_cells_in_extent:"Inga rasterceller i polygonen",no_valid_cells:"Inga giltiga celler (NoData eller tomt urval)",analysis_error:"Analysfel"};
  const rasterRows=volumeRecord?[
   ["Rasterområde",rasterSourceLabel],
   ["Rasterprodukt","Skogsstyrelsen – Skogliga grunddata, volym omdrev 3"],
   ["Upplösning","10 × 10 m"],
-  ["Medelvolym"," "+fmtNumber(volumeRecord.mean_m3sk_ha,2)+" m³sk/ha"],
+  ["Status",statusLabels[volumeRecord.status]||volumeRecord.status||"Beräkning klar"],
+  ["Medelvolym",fmtNumber(volumeRecord.mean_m3sk_ha,2)+" m³sk/ha"],
   ["Uppskattad totalvolym",fmtNumber(volumeRecord.estimated_total_m3sk,2)+" m³sk"],
   ["Giltig rastertäckning",fmtNumber(volumeRecord.coverage_pct,2)+" %"],
   ["Antal giltiga celler",fmtNumber(volumeRecord.valid_cells,0)],
   ["Metod","Cellcentrum; NoData utesluts, giltiga nollvärden behålls"]
  ]:[
   ["Rasterområde",rasterSourceLabel],
-  ["Volymberäkning","Ingen giltig beräkning för denna polygon i det aktuella testurvalet."],
-  ["Viktigt","Det betyder inte säkert att volymdata saknas. Polygonen kan ännu inte ha analyserats eller ligga i en del av rasterfilen med NoData."],
-  ["Metod","Cellcentrum; originalraster med 10 m celler"],
-  ["Status",polygonVolumeAttributesLoadError?"Volymrapporten kunde inte hämtas":"Polygonen saknas i det begränsade testurvalet"],
-  ["Polygon-ID",volumeLookupId||"Saknas"]
+  ["Status",polygonVolumeAttributesLoadError?"Volymrapporten kunde inte hämtas":sourceCandidates.length?"Polygonen har ännu inget publicerat beräkningsresultat":"Ingen rasterutbredning matchar polygonens begränsningsruta"],
+  ["Volymberäkning","Inget resultat hittades för denna polygon. Det betyder inte att skogen saknar volym."],
+  ["Metod","Originalraster med 10 m celler; cellcentrum inom polygonen"],
+  ["Polygon-ID",volumeLookupId||"Saknas"],
+  ["Matchningsnyckel",rasterCode&&volumeLookupId?rasterCode+":"+volumeLookupId:"Ej tillgänglig"]
  ];
  return '<div style="width:280px;max-width:280px;min-width:0;overflow-wrap:anywhere;word-break:break-word"><strong>'+(type==="planned"?"Planerad avverkningsanmälan":"Utförd avverkning")+'</strong><details open style="margin-top:7px;border-top:1px solid #dce4dd;padding-top:5px"><summary style="cursor:pointer;font-weight:700">Befintliga uppgifter – kommun och beteckning</summary>'+rows(fields)+'</details><details style="margin-top:7px;border-top:1px solid #dce4dd;padding-top:5px"><summary style="cursor:pointer;font-weight:700">Skogliga grunddata – raster och volym</summary>'+rows(rasterRows)+'<p style="font-size:11px;color:#59665e;margin:5px 0 0">Rasterbilderna på kartan är endast översiktsbilder och används inte för volymberäkning. Volymvärden ska beräknas från originalraster, inte uppskattas från bildens färger.</p></details></div>';
 }
