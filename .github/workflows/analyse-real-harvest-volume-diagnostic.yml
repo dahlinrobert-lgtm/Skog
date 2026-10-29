@@ -24,8 +24,9 @@ permissions:
   contents: read
 
 concurrency:
+  # Queue diagnostics instead of cancelling an active long-running polygon fetch.
   group: real-harvest-volume-diagnostic
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   diagnose:
