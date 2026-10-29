@@ -32,7 +32,9 @@ def test_map_layer_selection_and_legend_colors():
     # The common consultation action must use the same purple in map and legend.
     assert '.samrad{border-color:#a21caf}' in html
     # Samrådsåtgärder use fixed, contrast-tested colors rather than adjacent palette slots.
-    assert '["annan skogsbrukatgard","#d55e00"]' in html
+    assert '["annan skogsbruksatgard","#d55e00"]' in html
+    # The normalized source label "Annan skogsbruksåtgärd" retains the compound-s.
+    assert '["annan skogsbrukatgard","#d55e00"]' not in html
     assert '["skogsgodsling","#0072b2"]' in html
     assert '["askaterforing","#009e73"]' in html
     assert 'const SAMRAD_ACTION_COLORS=new Map([' in html
