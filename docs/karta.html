@@ -77,7 +77,7 @@ import { filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from "
 const initialParams=new URLSearchParams(window.location.search);
 const focusLayer=initialParams.get("focus");
 const focusObjectId=initialParams.get("objectid");
-const focusedView=Boolean(focusLayer&&focusObjectId);
+const focusedView=Boolean(focusLayer&&focusObjectId&&initialParams.get("focusVersion")==="2");
 let CENTER=[Number(initialParams.get("lat"))||63.74646,Number(initialParams.get("lon"))||19.66455], RADIUS=Number(initialParams.get("radius"))||10000;
 if(focusedView){RADIUS=Number(initialParams.get("radius"))||2000;}
 let searchCircle=null;
@@ -1131,7 +1131,7 @@ async function load(){
   return;
  }
  const requestId=++viewRequestId;
- setLoadProgress(2,focusedView?"Förbereder hämtning av vald polygon…":"Startar laddning…");
+ setLoadProgress(focusedView?10:2,focusedView?"Hämtar vald polygon direkt…":"Startar laddning…");
  if(viewAbortController)viewAbortController.abort();
  viewAbortController=new AbortController();
  const signal=viewAbortController.signal;
