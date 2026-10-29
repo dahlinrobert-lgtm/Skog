@@ -330,14 +330,18 @@ function polygonId(feature){
 }
 function caseId(feature){
  const p=feature?.properties||{};
- const raw=String(p.Beteckn??p.Beteckning??"").trim();
+ const raw=String(p.ArendeID??p.ArendeId??p["ÄrendeID"]??p.Beteckn??p.Beteckning??"").trim();
  const designation=raw.toLocaleLowerCase("sv");
  const unavailable=!raw||["visas ej","visa ej","ej tillgänglig","saknas","okänd","null","undefined","-"].includes(designation);
- const year=String(p.Arendear??"").trim();
+ const year=String(p.Arendear??p.ArendeAr??p.Arendeår??p["Ärendeår"]??"").trim();
  const municipality=String(p.Kommunnr??"").trim();
- // "Visas ej" is a display placeholder, not a real case number. Use polygon-level fallback
- // so these records do not all collapse into one false shared case group.
- if(!unavailable&&year)return [municipality||"kommun-okänd",year,raw].join("|");
+ // Planned notifications commonly identify a case directly in Beteckn (e.g. "A 24173-2025").
+ // Use that identifier even when the planned layer has no separate issue-year field.
+ if(!unavailable){
+  if(year)return [municipality||"kommun-okänd",year,raw].join("|");
+  return [municipality||"kommun-okänd",raw].join("|");
+ }
+ // "Visas ej" is a display placeholder, not a real case number.
  const oid=polygonId(feature);
  if(oid!=="saknas")return "polygon:"+String(oid);
  return null;
@@ -551,8 +555,21 @@ function colorForNumericValue(value){const scale=performedScaleCache;if(value===
 function samradStyle(feature){const mode=document.getElementById("performedColorMode")?.value||"none";if(mode==="year")return colorForYearValue(samradYear(feature));if(mode==="hectares")return colorForNumericValue(reportedHectares(feature));if(mode==="forestType"||mode==="samradAction"){const color=categoryColor(categoryValue(feature,mode==="forestType"?"forestType":"samradAction"));return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}return null;}
 function plannedStyle(feature){
  const mode=document.getElementById("performedColorMode")?.value||"none";
+ if(mode==="caseId"){
+  const id=caseId(feature);
+  const color=id?stableCaseColor(id):"#d3d3d3";
+  return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
+ }
  if(mode==="year")return colorForNumericYear(feature,true);
  if(mode==="hectares")return colorForNumericValue(reportedHectares(feature));
+ // Planned notifications do not normally have a completed/registered area, so
+ // the registered/anmäld ratio is null. Render missing ratios with the same gray
+ // used by the "Okänd / saknas" category instead of leaving them blue.
+ if(mode==="ratio"){
+  const value=performedRatio(feature);
+  if(value===null)return {color:"#d3d3d3",weight:2,opacity:.95,fillColor:"#d3d3d3",fillOpacity:.62};
+  return colorForNumericValue(value);
+ }
  if(mode==="forestType"||mode==="harvestType"||mode==="samradAction"){
   const color=categoryColor(categoryValue(feature,mode));
   return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.62};
@@ -653,7 +670,7 @@ function popup(f,type){
   return '<div style="width:260px;max-width:260px;min-width:0;overflow-wrap:anywhere"><strong>Samråd</strong><table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;margin-top:6px"><colgroup><col style="width:42%"><col style="width:58%"></colgroup>'+fields.map(([k,v])=>'<tr><td style="padding:3px 6px 3px 0;color:#59665e;vertical-align:top;overflow-wrap:anywhere;word-break:break-word">'+esc(k)+'</td><td style="padding:3px 0;vertical-align:top;overflow-wrap:anywhere;word-break:break-word"><b>'+esc(v)+'</b></td></tr>').join("")+'</table></div>';
  }
  const fields=type==="planned"?[
- ["Ärende",p.Beteckn],["Inkomdatum",date(p.Inkomdatum)],["Kommun",p.Kommun],["Avverkningstyp",p.Avverktyp],["Anmäld areal",ha(p.AnmaldHa)],["Status",p.ArendeStatus],["Skogstyp",p.Skogstyp],["Ändamål",p.Andamal],["Areal plantering",ha(p.SkogsodlHa)],["Areal naturlig föryngring",ha(p.NatforHa)],["Län",p.Lan]
+ ["Ärende-ID",p.ArendeID??p.ArendeId??p["ÄrendeID"]??p.Beteckn??p.Beteckning],["Inkomdatum",date(p.Inkomdatum)],["Kommun",p.Kommun],["Avverkningstyp",p.Avverktyp],["Anmäld areal",ha(p.AnmaldHa)],["Status",p.ArendeStatus],["Skogstyp",p.Skogstyp],["Ändamål",p.Andamal],["Areal plantering",ha(p.SkogsodlHa)],["Areal naturlig föryngring",ha(p.NatforHa)],["Län",p.Lan]
  ]:[
  ["Ärendegrupp",caseLabel(f)],["Polygon-ID (OBJECTID)",polygonId(f)],["Beteckning",p.Beteckn??p.Beteckning],["Ärendeår",p.Arendear],["Kommun",p.Kommun],["Avverkningsdatum",date(p.Avvdatum)],["Registrerad areal",ha(p.Arealha)],["Anmäld areal",ha(p.AnmaldHa)],["Andel (registrerad/anmäld)",ratio()],["Avverkningstyp",p.Avverktyp],["Skogstyp",p.Skogstyp]
  ];
