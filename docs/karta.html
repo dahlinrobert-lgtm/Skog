@@ -726,7 +726,7 @@ function popup(f,type){
  const rasterSource=rasterSourcesForFeature(f)[0]||null;
  const volumeLookupId=String(p.OBJECTID??p.ObjectId??p.ObjectID??f.id??"");
  const sourceCandidates=rasterSourcesForFeature(f);
- const volumeRecord=sourceCandidates.map(r=>polygonVolumeAttributesById.get(r.name+":"+volumeLookupId)).find(Boolean)||polygonVolumeAttributesById.get(volumeLookupId)||null;
+ const volumeRecord=(sourceCandidates.length?polygonVolumeAttributesById.get(sourceCandidates[0].name+":"+volumeLookupId):null)||polygonVolumeAttributesById.get(volumeLookupId)||null;
  const rasterCode=volumeRecord?.raster_code||rasterSource?.name||null;
  const rasterSourceLabel=rasterCode?(rasterSources.find(r=>r.name===String(rasterCode))?.label||("Raster "+rasterCode)):"Ej fastställt";
  const fmtNumber=(v,d=1)=>v==null||!Number.isFinite(Number(v))?"Ej tillgängligt":Number(v).toLocaleString("sv-SE",{maximumFractionDigits:d});
