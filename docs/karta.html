@@ -155,20 +155,32 @@ radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADI
 RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
 const plannedLayer=L.geoJSON(null,{style:feature=>({...plannedStyle(feature),color:"#111111",weight:2.2}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
 const plannedVertexLayer=L.layerGroup();
+let plannedVertexCollection=null;
 function updatePlannedVertexMarkers(collection){
+ if(collection)plannedVertexCollection=collection;
  plannedVertexLayer.clearLayers();
- const seen=new Set();
- const visit=coords=>{
+ // Hide vertex markers when zoomed out; they become visual clutter at overview scale.
+ if(map.getZoom()<11||!document.getElementById("showPlanned").checked){
+  if(map.hasLayer(plannedVertexLayer))map.removeLayer(plannedVertexLayer);
+  return;
+ }
+ const visit=(coords,color)=>{
   if(!Array.isArray(coords))return;
   if(coords.length>=2&&typeof coords[0]==="number"&&typeof coords[1]==="number"){
-   const key=coords[0].toFixed(7)+","+coords[1].toFixed(7);
-   if(!seen.has(key)){seen.add(key);L.circleMarker([coords[1],coords[0]],{radius:3.2,color:"#111111",weight:1,opacity:.95,fillColor:"#ffffff",fillOpacity:.95,interactive:false}).addTo(plannedVertexLayer);}
+   L.circleMarker([coords[1],coords[0]],{
+    radius:2.8,stroke:false,weight:0,fillColor:color,fillOpacity:1,interactive:false
+   }).addTo(plannedVertexLayer);
    return;
   }
-  for(const child of coords)visit(child);
+  for(const child of coords)visit(child,color);
  };
- for(const feature of collection?.features||[])if(feature.geometry?.coordinates)visit(feature.geometry.coordinates);
- if(document.getElementById("showPlanned").checked&&!map.hasLayer(plannedVertexLayer))plannedVertexLayer.addTo(map);
+ for(const feature of plannedVertexCollection?.features||[]){
+  if(!feature.geometry?.coordinates)continue;
+  const style=plannedStyle(feature)||{};
+  const fillColor=style.fillColor||style.color||"#1680ff";
+  visit(feature.geometry.coordinates,fillColor);
+ }
+ if(!map.hasLayer(plannedVertexLayer))plannedVertexLayer.addTo(map);
 }
 const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>bindFeaturePopup(l,f,"performed")});
 const samradPointLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:5,color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"samrad")});
@@ -1208,6 +1220,7 @@ map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CEN
 function radiusZoom(radius){return 13-Math.log2(Math.max(2000,radius)/2000);}
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
+map.on("zoomend",()=>updatePlannedVertexMarkers());
 map.on("baselayerchange",applyVisibility);
 loadDiaryGeocoding();
 load();
