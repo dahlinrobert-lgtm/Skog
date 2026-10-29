@@ -716,7 +716,12 @@ function popup(f,type){
  };
  const rasterSourcesForFeature=feature=>{
   const b=featureBounds(feature);if(!b)return [];
-  return rasterSources.filter(r=>b[0]<=r.b[2]&&b[2]>=r.b[0]&&b[1]<=r.b[3]&&b[3]>=r.b[1]);
+  const width=Math.max(0,b[2]-b[0]),height=Math.max(0,b[3]-b[1]);
+  return rasterSources.map(r=>{
+   const ix=Math.max(0,Math.min(b[2],r.b[2])-Math.max(b[0],r.b[0]));
+   const iy=Math.max(0,Math.min(b[3],r.b[3])-Math.max(b[1],r.b[1]));
+   return {source:r,overlap:ix*iy,fraction:(ix*iy)/Math.max(1e-15,width*height)};
+  }).filter(x=>x.overlap>0).sort((a,b)=>b.fraction-a.fraction||b.overlap-a.overlap).map(x=>x.source);
  };
  const rasterSource=rasterSourcesForFeature(f)[0]||null;
  const volumeLookupId=String(p.OBJECTID??p.ObjectId??p.ObjectID??f.id??"");
