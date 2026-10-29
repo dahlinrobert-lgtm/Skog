@@ -330,17 +330,12 @@ function polygonId(feature){
 }
 function caseId(feature){
  const p=feature?.properties||{};
+ // Beteckning is the shared case ID for Samråd (e.g. "S 440-2026").
+ // Prefer explicit case-ID fields when present, then use the designation verbatim.
  const raw=String(p.ArendeID??p.ArendeId??p["ÄrendeID"]??p.Beteckn??p.Beteckning??"").trim();
  const designation=raw.toLocaleLowerCase("sv");
  const unavailable=!raw||["visas ej","visa ej","ej tillgänglig","saknas","okänd","null","undefined","-"].includes(designation);
- const year=String(p.Arendear??p.ArendeAr??p.Arendeår??p["Ärendeår"]??"").trim();
- const municipality=String(p.Kommunnr??"").trim();
- // Planned notifications commonly identify a case directly in Beteckn (e.g. "A 24173-2025").
- // Use that identifier even when the planned layer has no separate issue-year field.
- if(!unavailable){
-  if(year)return [municipality||"kommun-okänd",year,raw].join("|");
-  return [municipality||"kommun-okänd",raw].join("|");
- }
+ if(!unavailable)return raw;
  // "Visas ej" is a display placeholder, not a real case number.
  const oid=polygonId(feature);
  if(oid!=="saknas")return "polygon:"+String(oid);
@@ -515,10 +510,12 @@ function mixColor(t){
 function currentColorScale(){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  if(mode==="caseId"){
-  // Avoid serializing every polygon geometry to GeoJSON just to calculate its ID color.
+  // Use the same Beteckning/ID value across planned, performed and all Samråd geometries.
+  // Avoid serializing polygon geometry just to calculate ID colors.
   const features=[];
-  performedLayer.eachLayer(layer=>{if(layer.feature)features.push(layer.feature);});
-  plannedLayer.eachLayer(layer=>{if(layer.feature)features.push(layer.feature);});
+  for(const layer of [performedLayer,plannedLayer,samradPointLayer,samradLineLayer,samradAreaLayer]){
+   layer.eachLayer(item=>{if(item.feature)features.push(item.feature);});
+  }
   const diagnostic=assignFourColors(features);
   return {mode,diagnostic};
  }
@@ -552,7 +549,7 @@ function colorForNumericYear(feature,isPlanned){
 }
 function colorForYearValue(value){const scale=performedScaleCache;if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min),color=mixColor(t);return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.68};}
 function colorForNumericValue(value){const scale=performedScaleCache;if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min),color=mixColor(t);return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.68};}
-function samradStyle(feature){const mode=document.getElementById("performedColorMode")?.value||"none";if(mode==="year")return colorForYearValue(samradYear(feature));if(mode==="hectares")return colorForNumericValue(reportedHectares(feature));if(mode==="forestType"||mode==="samradAction"){const color=categoryColor(categoryValue(feature,mode==="forestType"?"forestType":"samradAction"));return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}return null;}
+function samradStyle(feature){const mode=document.getElementById("performedColorMode")?.value||"none";if(mode==="caseId"){const id=caseId(feature);const color=id?stableCaseColor(id):"#d3d3d3";return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}if(mode==="year")return colorForYearValue(samradYear(feature));if(mode==="hectares")return colorForNumericValue(reportedHectares(feature));if(mode==="forestType"||mode==="samradAction"){const color=categoryColor(categoryValue(feature,mode==="forestType"?"forestType":"samradAction"));return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}return null;}
 function plannedStyle(feature){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  if(mode==="caseId"){
