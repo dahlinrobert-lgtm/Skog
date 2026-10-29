@@ -28,6 +28,13 @@ jobs:
           python-version: "3.12"
       - name: Install analysis dependencies
         run: python -m pip install requests numpy rasterio shapely pyproj
+      - name: Download missing original rasters from personal OneDrive
+        env:
+          RASTER_CODES: ${{ inputs.raster_codes || '13' }}
+          ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
+          ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
+          ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
+        run: python scripts/download_rasters_from_onedrive.py
       - name: Fetch real polygons in selected raster extents
         run: python scripts/fetch_real_harvests_for_volume_rasters.py --output real-volume-polygons.geojson --limit "${{ inputs.sample_limit || '0' }}" --raster-codes "${{ inputs.raster_codes || '13' }}"
       - name: Split groups and calculate volume statistics from original rasters
@@ -69,7 +76,8 @@ jobs:
                   s=item["stats"]
                   rows.append({"objectid":item["properties"].get("OBJECTID"),"kommun":item["properties"].get("Kommun"),
                     "beteckning":item["properties"].get("Beteckn"),"area_ha":item["properties"].get("Arealha"),
-                    "status":s["status"],"valid_cells":s["valid_cells"],"coverage_pct":s["valid_coverage_pct"],
+                    "status":s["status"],"valid_cells":s["valid_cells"],"cells_inside_polygon":s.get("cells_inside_polygon",0),
+                    "nodata_cells":s.get("nodata_cells_inside_polygon",0),"coverage_pct":s["valid_coverage_pct"],
                     "mean_m3sk_ha":s["mean_volume_m3sk_per_ha_including_zero"],
                     "estimated_total_m3sk":s["estimated_volume_m3sk_from_valid_cells"]})
               summary.append({"raster":code,"polygon_count":len(rows),"rows":rows})
@@ -87,11 +95,11 @@ jobs:
           records=list(existing.values())
           for group in summary:
               for row in group["rows"]:
-                  if row["status"] == "ok":
-                      records.append({"objectid":row["objectid"],"raster_code":group["raster"],"kommun":row["kommun"],
-                        "beteckning":row["beteckning"],"area_ha":row["area_ha"],"valid_cells":row["valid_cells"],
-                        "coverage_pct":row["coverage_pct"],"mean_m3sk_ha":row["mean_m3sk_ha"],
-                        "estimated_total_m3sk":row["estimated_total_m3sk"]})
+                  records.append({"objectid":row["objectid"],"raster_code":group["raster"],"kommun":row["kommun"],
+                    "beteckning":row["beteckning"],"area_ha":row["area_ha"],"status":row["status"],
+                    "cells_inside_polygon":row["cells_inside_polygon"],"valid_cells":row["valid_cells"],
+                    "nodata_cells":row["nodata_cells"],"coverage_pct":row["coverage_pct"],
+                    "mean_m3sk_ha":row["mean_m3sk_ha"],"estimated_total_m3sk":row["estimated_total_m3sk"]})
           counts=dict(old_doc.get("sample_counts",{}))
           for g in summary: counts[g["raster"]]={"sampled":g["polygon_count"],"valid":sum(r["status"]=="ok" for r in g["rows"])}
           payload={"dataset":"Skogsstyrelsen Skogliga grunddata – volym omdrev 3",
