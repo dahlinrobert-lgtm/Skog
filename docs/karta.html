@@ -75,7 +75,11 @@ import { filterFeatureCollectionToRadius, clipPolygonCollectionToRadius } from "
 (function(){
 "use strict";
 const initialParams=new URLSearchParams(window.location.search);
+const focusLayer=initialParams.get("focus");
+const focusObjectId=initialParams.get("objectid");
+const focusedView=Boolean(focusLayer&&focusObjectId);
 let CENTER=[Number(initialParams.get("lat"))||63.74646,Number(initialParams.get("lon"))||19.66455], RADIUS=Number(initialParams.get("radius"))||10000;
+if(focusedView){RADIUS=2000;}
 let searchCircle=null;
 const PLANNED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query";
 const PERFORMED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query";
@@ -86,6 +90,12 @@ const map=L.map("map",{preferCanvas:true,zoomSnap:0.25}).setView(CENTER,radiusZo
 const standardBaseLayer=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 const imageryBaseLayer=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'Tiles &copy; Esri and its imagery providers'});
 standardBaseLayer.addTo(map);
+if(focusedView){
+ const selected=focusLayer==="planned"?"showPlanned":"showPerformed";
+ for(const id of ["showPlanned","showPerformed","showSamrad","showDiaryGeocoding","showLifeTaiga","showVolumeRaster","showHallandTestAreas"])document.getElementById(id).checked=id===selected;
+ document.getElementById("performedColorMode").value="none";
+ document.getElementById("performedColorMode").disabled=true;
+}
 const hallandTestStatus=document.getElementById("hallandTestStatus");
 const hallandTestLayer=L.geoJSON(null,{style:feature=>({color:"#00a6a6",weight:3,opacity:1,fillColor:"#22d3ee",fillOpacity:0.3,dashArray:"6 4"}),onEachFeature:(feature,layer)=>{const p=feature.properties||{};layer.bindPopup('<strong>'+esc(p.test_area||feature.id||"Halland testområde")+'</strong><br>Testgeometri – inte ett verifierat avverkningsområde.');}});
 hallandTestLayer.addTo(map);
@@ -173,7 +183,7 @@ searchCircle=L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"
 const radiusSelect=document.getElementById("radiusSelect");
 const radiusChoices=[2000,4000,6000,8000,10000,20000,30000,40000];
 radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADIUS)<Math.abs(best-RADIUS)?value:best,radiusChoices[0]));
-RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
+if(focusedView){radiusSelect.value="2000";}RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
 const plannedLayer=L.geoJSON(null,{style:feature=>({...plannedStyle(feature),color:"#111111",weight:2.2}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
 const plannedVertexLayer=L.layerGroup();
 let plannedVertexCollection=null;
@@ -1097,8 +1107,8 @@ function currentViewKey(wantSamrad){
  });
 }
 async function load(){
- const wantPlanned=document.getElementById("showPlanned").checked;
- const wantPerformed=document.getElementById("showPerformed").checked;
+ const wantPlanned=focusedView?focusLayer==="planned":document.getElementById("showPlanned").checked;
+ const wantPerformed=focusedView?focusLayer==="performed":document.getElementById("showPerformed").checked;
  const wantSamrad=document.getElementById("showSamrad").checked||document.getElementById("performedColorMode").value==="samradAction"||document.getElementById("histogramAttribute").value==="samradAction";
  const viewKey=currentViewKey(wantSamrad);
  if(viewKey===lastRenderedViewKey){
@@ -1135,6 +1145,12 @@ async function load(){
   setLoadProgress(68,"Bearbetar områden…");
   const filterStartedAt=performance.now();
   planned=filterToRadius(planned);performed=filterToRadius(performed);
+  if(focusedView){
+   const target=Number(focusObjectId);
+   const keepTarget=fc=>({...fc,features:(fc.features||[]).filter(feature=>Number(feature?.properties?.OBJECTID??feature?.properties?.ObjectId??feature?.id)===target)});
+   if(focusLayer==="planned"){planned=keepTarget(planned);performed={...performed,features:[]};}
+   else if(focusLayer==="performed"){performed=keepTarget(performed);planned={...planned,features:[]};}
+  }
   perf.filterMs=Math.round((performance.now()-filterStartedAt)*100)/100;
   perf.filteredFeatures=(planned.filterStats?.inputFeatures||0)+(performed.filterStats?.inputFeatures||0);
   perf.retainedFeatures=planned.features.length+performed.features.length;
@@ -1243,9 +1259,9 @@ function scheduleViewLoad(){
  viewDebounce=setTimeout(load,250);
 }
 function applyVisibility(){
- if(document.getElementById("showPlanned").checked){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map);if(!map.hasLayer(plannedVertexLayer))plannedVertexLayer.addTo(map)}else{map.removeLayer(plannedLayer);map.removeLayer(plannedVertexLayer)}
- if(document.getElementById("showPerformed").checked){if(!map.hasLayer(performedLayer))performedLayer.addTo(map)}else map.removeLayer(performedLayer);
- const showSamrad=document.getElementById("showSamrad").checked;
+ if((focusedView?focusLayer==="planned":document.getElementById("showPlanned").checked)){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map);if(!map.hasLayer(plannedVertexLayer))plannedVertexLayer.addTo(map)}else{map.removeLayer(plannedLayer);map.removeLayer(plannedVertexLayer)}
+ if((focusedView?focusLayer==="performed":document.getElementById("showPerformed").checked)){if(!map.hasLayer(performedLayer))performedLayer.addTo(map)}else map.removeLayer(performedLayer);
+ const showSamrad=!focusedView&&document.getElementById("showSamrad").checked;
  for(const layer of [samradAreaLayer,samradLineLayer,samradPointLayer,samradLineHitLayer,samradPointHitLayer]){
   if(showSamrad){if(!map.hasLayer(layer))layer.addTo(map)}else map.removeLayer(layer);
  }
