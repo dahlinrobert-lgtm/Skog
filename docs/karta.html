@@ -1267,6 +1267,10 @@ function applyVisibility(){
  }
  // Keep transparent hit targets above visible consultation geometries.
  if(showSamrad){samradLineHitLayer.bringToFront();samradPointHitLayer.bringToFront()}
+ if(focusedView){
+  const keep=focusLayer==="planned"?plannedLayer:performedLayer;
+  map.eachLayer(layer=>{if(layer!==standardBaseLayer&&layer!==imageryBaseLayer&&layer!==searchCircle&&layer!==keep)map.removeLayer(layer);});
+ }
 }
 document.getElementById("radiusSelect").addEventListener("change",()=>{RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));if(lifeTaigaSource)renderLifeTaiga();load();});
 document.getElementById("showPlanned").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("showPerformed").addEventListener("change",()=>{applyVisibility();load()});
