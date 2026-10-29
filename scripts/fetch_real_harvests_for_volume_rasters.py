@@ -155,6 +155,9 @@ def fetch(code, extent, limit, session):
                 "Polygons intersecting the exact original raster extent; limit 0 means "
                 "all returned features. Results are deduplicated by OBJECTID."
             ),
+            "source_crs": "EPSG:4326",
+            "source_extent_crs": "EPSG:3006",
+            "fetch_limit_per_raster": limit or "all",
         },
         "features": features,
     }
