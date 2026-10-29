@@ -184,7 +184,7 @@ const radiusSelect=document.getElementById("radiusSelect");
 const radiusChoices=[2000,4000,6000,8000,10000,20000,30000,40000];
 radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADIUS)<Math.abs(best-RADIUS)?value:best,radiusChoices[0]));
 if(focusedView){radiusSelect.value=String(RADIUS);}RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
-const plannedLayer=L.geoJSON(null,{style:feature=>({...plannedStyle(feature),color:"#111111",weight:2.2}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
+const plannedLayer=L.geoJSON(null,{style:feature=>({...plannedStyle(feature),color:focusedView?"#111111":"#111111",weight:focusedView?2.8:2.2,fillOpacity:focusedView?Math.max(plannedStyle(feature).fillOpacity||0,0.28):plannedStyle(feature).fillOpacity}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
 const plannedVertexLayer=L.layerGroup();
 let plannedVertexCollection=null;
 function updatePlannedVertexMarkers(collection){
@@ -1177,6 +1177,17 @@ async function load(){
   const renderStartedAt=performance.now();
   plannedLayer.clearLayers();performedLayer.clearLayers();plannedVertexLayer.clearLayers();
   plannedLayer.addData(planned);performedLayer.addData(performed);updatePlannedVertexMarkers(planned);
+  if(focusedView){
+   const selectedLayer=focusLayer==="planned"?plannedLayer:performedLayer;
+   const selectedFeatures=selectedLayer.getLayers();
+   if(selectedFeatures.length){
+    const bounds=selectedLayer.getBounds();
+    if(bounds.isValid())map.fitBounds(bounds,{padding:[70,70],maxZoom:16,animate:false});
+   }else{
+    console.warn("[Skogskoll] Focused feature not found in source response",{focusLayer,focusObjectId});
+    setLoadProgress(100,"Händelsen hittades inte i kartlagret",true);
+   }
+  }
   // First useful render: don't wait for optional consultation layers.
   refreshPerformedColors();
   updateDurationHistogram(performed.features);
