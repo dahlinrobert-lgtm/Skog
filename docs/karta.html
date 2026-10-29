@@ -29,7 +29,7 @@
 
 <label>Ändra färgläggning <select id="performedColorMode"><option value="none">Åtgärd</option><option value="year">År</option><option value="hectares">Hektar</option><option value="ratio">Andel (registrerad/anmäld)</option><option value="forestType">Skogstyp</option><option value="harvestType">Avverkningstyp</option><option value="samradAction">Samrådsåtgärd</option><option value="caseId">ID (ärendenummer/ärende/beteckning)</option></select></label>
 <button id="home">Centrera område</button>
-<label>Bakgrundskarta <select id="baseMapSelect"><option value="standard">Standardkarta</option><option value="imagery">Flygfoto / satellit</option></select></label>
+
 <label title="Ju mindre radius desto snabbare laddar kartan.">Radius <select id="radiusSelect" title="Ju mindre radius desto snabbare laddar kartan."><option value="2000">2 km</option><option value="4000">4 km</option><option value="6000">6 km</option><option value="8000">8 km</option><option value="10000">10 km</option><option value="20000">20 km</option><option value="30000">30 km</option><option value="40000">40 km</option></select></label>
 <div id="loadProgress" role="status" aria-live="polite" title="Ungefärlig andel av kartladdningen som är klar" style="display:none;min-width:150px;max-width:220px;flex:1 1 150px;padding:6px 9px;border:1px solid #c8d4ca;border-radius:8px;background:#fff;font-size:.85rem"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:4px"><span id="loadProgressLabel">Laddar data…</span><strong id="loadProgressPercent">0%</strong></div><div style="height:7px;background:#e5ebe5;border-radius:5px;overflow:hidden"><div id="loadProgressBar" style="height:100%;width:0%;background:#27834a;transition:width .18s ease"></div></div></div>
 </div>
@@ -146,8 +146,29 @@ async function setVolumeRasterVisibility(show){
  }
 }
 document.getElementById("showVolumeRaster").addEventListener("change",e=>setVolumeRasterVisibility(e.target.checked));
-const baseMapSelect=document.getElementById("baseMapSelect");
-baseMapSelect.addEventListener("change",()=>{const next=baseMapSelect.value==="imagery"?imageryBaseLayer:standardBaseLayer;const other=next===imageryBaseLayer?standardBaseLayer:imageryBaseLayer;if(map.hasLayer(other))map.removeLayer(other);if(!map.hasLayer(next))next.addTo(map);});
+L.control.layers({"Standardkarta":standardBaseLayer,"Flygfoto / satellit":imageryBaseLayer},null,{position:"topright",collapsed:true}).addTo(map);
+const measurementLayer=L.featureGroup().addTo(map);
+let measureMode=null,measurePoints=[],measurePreview=null;
+const measureControl=L.control({position:"topleft"});
+measureControl.onAdd=()=>{
+ const panel=L.DomUtil.create("div","leaflet-bar measurement-control");
+ panel.style.cssText="background:#fff;padding:6px;display:flex;flex-direction:column;gap:5px;max-width:190px;box-shadow:0 1px 5px #999;border-radius:5px";
+ panel.innerHTML='<button type="button" data-measure="length" aria-pressed="false">📏 Mät längd</button><button type="button" data-measure="area" aria-pressed="false">▱ Mät areal</button><button type="button" data-measure="clear">Rensa mätning</button><small class="measure-hint" style="font-size:11px;line-height:1.3">Klicka för att mäta. Dubbelklick avslutar.</small>';
+ L.DomEvent.disableClickPropagation(panel);L.DomEvent.disableScrollPropagation(panel);
+ panel.querySelectorAll("button").forEach(b=>{b.style.cssText="cursor:pointer;padding:5px;border:1px solid #bdcbbf;background:#fff;border-radius:4px;text-align:left";b.addEventListener("click",()=>{if(b.dataset.measure==="clear"){clearMeasurement();return;}startMeasurement(b.dataset.measure);});});
+ return panel;
+};
+measureControl.addTo(map);
+const measurePanel=document.querySelector(".measurement-control");
+const measureHint=measurePanel.querySelector(".measure-hint");
+function updateMeasureButtons(){measurePanel.querySelectorAll("[data-measure]").forEach(b=>{const active=b.dataset.measure===measureMode;b.setAttribute("aria-pressed",String(active));b.style.background=active?"#d7eede":"#fff";});}
+function clearMeasurement(){measureMode=null;measurePoints=[];measurementLayer.clearLayers();measurePreview=null;map.doubleClickZoom.enable();map.getContainer().style.cursor="";measureHint.textContent="Klicka för att mäta. Dubbelklick avslutar.";updateMeasureButtons();}
+function startMeasurement(mode){measurementLayer.clearLayers();measurePreview=null;measurePoints=[];measureMode=mode;map.doubleClickZoom.disable();map.getContainer().style.cursor="crosshair";measureHint.textContent=mode==="length"?"Klicka längs sträckan. Dubbelklick avslutar.":"Klicka runt ytan. Dubbelklick avslutar.";updateMeasureButtons();}
+function measurementArea(points){const R=6378137;let sum=0;for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length];sum+=(b.lng-a.lng)*Math.PI/180*(2+Math.sin(a.lat*Math.PI/180)+Math.sin(b.lat*Math.PI/180));}return Math.abs(sum*R*R/2);}
+function measurementText(){if(measureMode==="length"){let meters=0;for(let i=1;i<measurePoints.length;i++)meters+=map.distance(measurePoints[i-1],measurePoints[i]);return meters>=1000?(meters/1000).toLocaleString("sv-SE",{maximumFractionDigits:2})+" km":Math.round(meters).toLocaleString("sv-SE")+" m";}const area=measurePoints.length>=3?measurementArea(measurePoints):0;return area>=10000?(area/10000).toLocaleString("sv-SE",{maximumFractionDigits:2})+" ha":Math.round(area).toLocaleString("sv-SE")+" m²";}
+function redrawMeasurement(finished=false){measurementLayer.clearLayers();if(!measurePoints.length)return;measurePoints.forEach(p=>L.circleMarker(p,{radius:4,color:"#124c90",fillColor:"#fff",fillOpacity:1,weight:2,interactive:false}).addTo(measurementLayer));if(measurePoints.length>=2){const shape=measureMode==="area"&&measurePoints.length>=3?L.polygon(measurePoints,{color:"#1469a5",weight:3,fillOpacity:.15,interactive:false}):L.polyline(measurePoints,{color:"#1469a5",weight:3,interactive:false});shape.addTo(measurementLayer);}const label=L.marker(measurePoints[measurePoints.length-1],{icon:L.divIcon({className:"",html:'<span style="white-space:nowrap;background:white;padding:3px 6px;border:1px solid #1469a5;border-radius:4px;font-weight:600">'+measurementText()+'</span>',iconSize:[0,0]}),interactive:false}).addTo(measurementLayer);if(finished)measureHint.textContent="Mätning klar: "+measurementText()+". Välj verktyg för ny mätning.";}
+map.on("dblclick",e=>{if(!measureMode)return;L.DomEvent.stop(e.originalEvent);if(measurePoints.length>1){const last=measurePoints[measurePoints.length-1];if(map.distance(last,e.latlng)>0.1)measurePoints.push(e.latlng);}redrawMeasurement(true);measureMode=null;map.doubleClickZoom.enable();map.getContainer().style.cursor="";updateMeasureButtons();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&measureMode)clearMeasurement();});
 searchCircle=L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false}).addTo(map);
 const radiusSelect=document.getElementById("radiusSelect");
 const radiusChoices=[2000,4000,6000,8000,10000,20000,30000,40000];
@@ -1235,7 +1256,7 @@ document.getElementById("radiusSelect").addEventListener("change",()=>{RADIUS=Nu
 document.getElementById("showPlanned").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("showPerformed").addEventListener("change",()=>{applyVisibility();load()});
 document.getElementById("showSamrad").addEventListener("change",()=>{applyVisibility();load()});document.getElementById("showDiaryGeocoding").addEventListener("change",applyVisibility);document.getElementById("performedColorMode").addEventListener("change",()=>{refreshPerformedColors();if(document.getElementById("performedColorMode").value==="samradAction")load()});document.getElementById("home").addEventListener("click",()=>{map.setView(CENTER,radiusZoom(RADIUS));});
 // Clicking the map selects a new search-area center and reloads the data for that area.
-map.on("click",e=>{CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);if(lifeTaigaSource)renderLifeTaiga();load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});document.getElementById("histogramType").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
+map.on("click",e=>{if(measureMode){if(measurePoints.length===0||map.distance(measurePoints[measurePoints.length-1],e.latlng)>0.1)measurePoints.push(e.latlng);redrawMeasurement();return;}CENTER=[e.latlng.lat,e.latlng.lng];searchCircle.setLatLng(CENTER);if(lifeTaigaSource)renderLifeTaiga();load();});document.getElementById("histogramAttribute").addEventListener("change",()=>{updateDurationHistogram(performedLayer.toGeoJSON().features);if(document.getElementById("histogramAttribute").value==="samradAction")load()});document.getElementById("histogramType").addEventListener("change",()=>updateDurationHistogram(performedLayer.toGeoJSON().features));
 function radiusZoom(radius){return 13-Math.log2(Math.max(2000,radius)/2000);}
 // Area selection, not incidental pan/zoom, controls the query extent.
 // This makes the returned features match the explicitly selected center and radius.
