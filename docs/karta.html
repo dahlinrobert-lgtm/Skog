@@ -6,7 +6,7 @@
 <title>Gräsmyr – karta över avverkningar</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f5f7f4;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:white;padding:24px max(18px,calc((100% - 1250px)/2))}header h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem)}header p{margin:0;color:#e1eee5}header a{color:#e1eee5}main{max-width:1250px;margin:auto;padding:20px 16px 40px}.panel{background:#fff;border:1px solid #dce4dd;border-radius:12px;padding:15px;margin-bottom:14px}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.controls label{display:inline-flex;gap:7px;align-items:center;background:#f0f5f0;padding:8px 10px;border-radius:8px}.controls button{font:inherit;border:1px solid #c8d4ca;border-radius:8px;background:white;padding:8px 11px;cursor:pointer}.controls button:hover{background:#edf4ed}.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.duration-row{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;align-items:stretch;margin:9px 0;font-size:.9rem}.duration-label{min-width:0;overflow-wrap:anywhere;word-break:normal}.duration-row-main{display:grid;grid-template-columns:minmax(90px,1fr) minmax(78px,110px);gap:10px;align-items:center}.duration-row-main .duration-track{min-width:0}.duration-row-main .duration-value{text-align:right;font-variant-numeric:tabular-nums}.duration-track{position:relative;height:30px;background:#f0f2ef;border-radius:4px;overflow:hidden}.duration-bar{height:100%;background:#c2185b;min-width:0}.duration-track-label{position:absolute;inset:0 auto 0 7px;display:flex;align-items:center;z-index:2;max-width:calc(100% - 14px);overflow:hidden;white-space:nowrap;font-weight:700;font-size:.88rem;letter-spacing:.01em;color:#fff;text-shadow:0 1px 2px rgba(55,0,24,.9),1px 0 2px rgba(55,0,24,.8),-1px 0 2px rgba(55,0,24,.8);pointer-events:none}.duration-value{text-align:right;font-variant-numeric:tabular-nums}@media(max-width:520px){.duration-row{gap:4px;font-size:.82rem}.duration-row-main{grid-template-columns:minmax(60px,1fr) 82px;gap:6px}}.pill{background:#eef4ee;padding:7px 10px;border-radius:8px}.pill strong{display:block;font-size:1.2rem;color:#145b37}.muted{color:#5d6b62;font-size:.9rem}#map{height:min(72vh,780px);min-height:480px;border-radius:10px;border:1px solid #dce4dd;z-index:1}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.9rem}.swatch{display:inline-block;width:14px;height:14px;border:3px solid;border-radius:3px;vertical-align:-2px;margin-right:5px}.planned{border-color:#111111}.performed{border-color:#e03131}.samrad{border-color:#a21caf}.status{font-weight:600}.color-legend{display:none;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:.85rem}.color-gradient{height:12px;width:180px;border:1px solid #cbd5cc;border-radius:3px;background:linear-gradient(to right,#b9e8ff,#14532d)}footer{font-size:.85rem;color:#5d6b62;margin-top:12px}@media(max-width:600px){#map{min-height:430px;height:65vh}.panel{padding:11px}}
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f5f7f4;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:white;padding:24px max(18px,calc((100% - 1250px)/2))}header h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem)}header p{margin:0;color:#e1eee5}header a{color:#e1eee5}main{max-width:1250px;margin:auto;padding:20px 16px 40px}.panel{background:#fff;border:1px solid #dce4dd;border-radius:12px;padding:15px;margin-bottom:14px}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;position:relative}#loadProgress{position:fixed!important;top:12px;right:12px;z-index:2000;flex:none!important;width:205px;min-width:205px;max-width:205px;box-shadow:0 2px 10px rgba(0,0,0,.12)}.controls label{display:inline-flex;gap:7px;align-items:center;background:#f0f5f0;padding:8px 10px;border-radius:8px}.controls button{font:inherit;border:1px solid #c8d4ca;border-radius:8px;background:white;padding:8px 11px;cursor:pointer}.controls button:hover{background:#edf4ed}.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.duration-row{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;align-items:stretch;margin:9px 0;font-size:.9rem}.duration-label{min-width:0;overflow-wrap:anywhere;word-break:normal}.duration-row-main{display:grid;grid-template-columns:minmax(90px,1fr) minmax(78px,110px);gap:10px;align-items:center}.duration-row-main .duration-track{min-width:0}.duration-row-main .duration-value{text-align:right;font-variant-numeric:tabular-nums}.duration-track{position:relative;height:30px;background:#f0f2ef;border-radius:4px;overflow:hidden}.duration-bar{height:100%;background:#c2185b;min-width:0}.duration-track-label{position:absolute;inset:0 auto 0 7px;display:flex;align-items:center;z-index:2;max-width:calc(100% - 14px);overflow:hidden;white-space:nowrap;font-weight:700;font-size:.88rem;letter-spacing:.01em;color:#fff;text-shadow:0 1px 2px rgba(55,0,24,.9),1px 0 2px rgba(55,0,24,.8),-1px 0 2px rgba(55,0,24,.8);pointer-events:none}.duration-value{text-align:right;font-variant-numeric:tabular-nums}@media(max-width:520px){.duration-row{gap:4px;font-size:.82rem}.duration-row-main{grid-template-columns:minmax(60px,1fr) 82px;gap:6px}}.pill{background:#eef4ee;padding:7px 10px;border-radius:8px}.pill strong{display:block;font-size:1.2rem;color:#145b37}.muted{color:#5d6b62;font-size:.9rem}#map{height:min(72vh,780px);min-height:480px;border-radius:10px;border:1px solid #dce4dd;z-index:1}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.9rem}.swatch{display:inline-block;width:14px;height:14px;border:3px solid;border-radius:3px;vertical-align:-2px;margin-right:5px}.planned{border-color:#111111}.performed{border-color:#e03131}.samrad{border-color:#a21caf}.status{font-weight:600}.color-legend{display:none;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:.85rem}.color-gradient{height:12px;width:180px;border:1px solid #cbd5cc;border-radius:3px;background:linear-gradient(to right,#b9e8ff,#14532d)}footer{font-size:.85rem;color:#5d6b62;margin-top:12px}@media(max-width:600px){#map{min-height:430px;height:65vh}.panel{padding:11px}}
 </style>
 </head>
 <body>
@@ -154,6 +154,22 @@ const radiusChoices=[2000,4000,6000,8000,10000,20000,30000,40000];
 radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADIUS)<Math.abs(best-RADIUS)?value:best,radiusChoices[0]));
 RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
 const plannedLayer=L.geoJSON(null,{style:feature=>({...plannedStyle(feature),color:"#111111",weight:2.2}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
+const plannedVertexLayer=L.layerGroup();
+function updatePlannedVertexMarkers(collection){
+ plannedVertexLayer.clearLayers();
+ const seen=new Set();
+ const visit=coords=>{
+  if(!Array.isArray(coords))return;
+  if(coords.length>=2&&typeof coords[0]==="number"&&typeof coords[1]==="number"){
+   const key=coords[0].toFixed(7)+","+coords[1].toFixed(7);
+   if(!seen.has(key)){seen.add(key);L.circleMarker([coords[1],coords[0]],{radius:3.2,color:"#111111",weight:1,opacity:.95,fillColor:"#ffffff",fillOpacity:.95,interactive:false}).addTo(plannedVertexLayer);}
+   return;
+  }
+  for(const child of coords)visit(child);
+ };
+ for(const feature of collection?.features||[])if(feature.geometry?.coordinates)visit(feature.geometry.coordinates);
+ if(document.getElementById("showPlanned").checked&&!map.hasLayer(plannedVertexLayer))plannedVertexLayer.addTo(map);
+}
 const performedLayer=L.geoJSON(null,{style:performedStyle,onEachFeature:(f,l)=>bindFeaturePopup(l,f,"performed")});
 const samradPointLayer=L.geoJSON(null,{pointToLayer:(f,latlng)=>L.circleMarker(latlng,{radius:5,color:"#86198f",weight:1.5,fillColor:"#d946ef",fillOpacity:.85}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"samrad")});
 const samradLineLayer=L.geoJSON(null,{style:()=>({color:"#ea580c",weight:3,opacity:.9,dashArray:"6 4"}),onEachFeature:(f,l)=>l.bindPopup(popup(f,"samrad"))});
@@ -549,7 +565,7 @@ function colorForNumericYear(feature,isPlanned){
 }
 function colorForYearValue(value){const scale=performedScaleCache;if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min),color=mixColor(t);return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.68};}
 function colorForNumericValue(value){const scale=performedScaleCache;if(value===null||scale.min===null||scale.max===null)return {color:"#7b8580",weight:2,opacity:.9,fillColor:"#aab3ae",fillOpacity:.4,dashArray:"3 3"};const t=scale.max===scale.min?1:(value-scale.min)/(scale.max-scale.min),color=mixColor(t);return {color,weight:2,opacity:.95,fillColor:color,fillOpacity:.68};}
-function samradStyle(feature){const mode=document.getElementById("performedColorMode")?.value||"none";if(mode==="caseId"){const id=caseId(feature);const color=id?stableCaseColor(id):"#d3d3d3";return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}if(mode==="year")return colorForYearValue(samradYear(feature));if(mode==="hectares")return colorForNumericValue(reportedHectares(feature));if(mode==="forestType"||mode==="samradAction"){const color=categoryColor(categoryValue(feature,mode==="forestType"?"forestType":"samradAction"));return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}return null;}
+function samradStyle(feature){const mode=document.getElementById("performedColorMode")?.value||"none";if(mode==="caseId"){const id=caseId(feature);const color=id?stableCaseColor(id):"#d3d3d3";return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}if(mode==="year")return colorForYearValue(samradYear(feature));if(mode==="hectares")return colorForNumericValue(reportedHectares(feature));if(mode==="forestType"||mode==="harvestType"||mode==="samradAction"){const color=categoryColor(categoryValue(feature,mode));return {color,weight:3,opacity:.95,fillColor:color,fillOpacity:.62};}if(mode==="ratio")return {color:"#d3d3d3",weight:3,opacity:.95,fillColor:"#d3d3d3",fillOpacity:.62};return null;}
 function plannedStyle(feature){
  const mode=document.getElementById("performedColorMode")?.value||"none";
  if(mode==="caseId"){
@@ -1091,8 +1107,8 @@ async function load(){
   perf.performedTruncated=Boolean(performed.truncated);
   if(requestId!==viewRequestId||signal.aborted)return;
   const renderStartedAt=performance.now();
-  plannedLayer.clearLayers();performedLayer.clearLayers();
-  plannedLayer.addData(planned);performedLayer.addData(performed);
+  plannedLayer.clearLayers();performedLayer.clearLayers();plannedVertexLayer.clearLayers();
+  plannedLayer.addData(planned);performedLayer.addData(performed);updatePlannedVertexMarkers(planned);
   // First useful render: don't wait for optional consultation layers.
   refreshPerformedColors();
   updateDurationHistogram(performed.features);
@@ -1175,7 +1191,7 @@ function scheduleViewLoad(){
  viewDebounce=setTimeout(load,250);
 }
 function applyVisibility(){
- if(document.getElementById("showPlanned").checked){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map)}else map.removeLayer(plannedLayer);
+ if(document.getElementById("showPlanned").checked){if(!map.hasLayer(plannedLayer))plannedLayer.addTo(map);if(!map.hasLayer(plannedVertexLayer))plannedVertexLayer.addTo(map)}else{map.removeLayer(plannedLayer);map.removeLayer(plannedVertexLayer)}
  if(document.getElementById("showPerformed").checked){if(!map.hasLayer(performedLayer))performedLayer.addTo(map)}else map.removeLayer(performedLayer);
  const showSamrad=document.getElementById("showSamrad").checked;
  for(const layer of [samradAreaLayer,samradLineLayer,samradPointLayer,samradLineHitLayer,samradPointHitLayer]){
