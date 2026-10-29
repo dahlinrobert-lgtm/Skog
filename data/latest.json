@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-29T11:30:19.068198Z",
+  "checked_at": "2026-10-29T19:16:42.899651Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27890,6 +27890,19 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1C_IW_GRDH_1SDV_20261029T162139_20261029T162204_010102_0142A9_D731_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-10-29T16:21:39.188055Z",
+        "published_at": "2026-10-29T17:13:32.583096Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          14.982899,
+          62.666828,
+          20.963539,
+          64.61721
+        ]
+      },
+      {
         "id": "S1C_IW_GRDH_1SDV_20261029T050507_20261029T050532_010095_014269_78C4_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-10-29T05:05:07.437207Z",
@@ -30475,19 +30488,6 @@
           20.70306,
           65.360039
         ]
-      },
-      {
-        "id": "S1A_IW_GRDH_1SDV_20260606T162217_20260606T162242_064851_082BF9_192C_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-06T16:22:17.509913Z",
-        "published_at": "2026-06-06T15:22:59.674325Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          15.432517,
-          61.930038,
-          21.212082,
-          63.871914
-        ]
       }
     ],
     "count": 200,
@@ -30499,6 +30499,32 @@
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
     "collection": "sentinel-2-l2a",
     "items": [
+      {
+        "id": "S2A_MSIL2A_20261029T102051_N0513_R065_T34VDR_20261029T150008",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-10-29T10:20:51.024000Z",
+        "published_at": "2026-10-29T15:45:46.000000Z",
+        "cloud_cover_percent": 19.62,
+        "bbox": [
+          18.953501523280057,
+          63.02793322568484,
+          21.199734465434084,
+          64.02701663648664
+        ]
+      },
+      {
+        "id": "S2B_MSIL2A_20261029T101129_N0513_R022_T34VDR_20261029T153419",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-10-29T10:11:29.024000Z",
+        "published_at": "2026-10-29T16:09:44.000000Z",
+        "cloud_cover_percent": 18.57,
+        "bbox": [
+          18.95680806197714,
+          63.02793322568484,
+          21.199734465434084,
+          64.02701663648664
+        ]
+      },
       {
         "id": "S2C_MSIL2A_20261027T102121_N0513_R065_T34VDR_20261027T134204",
         "collection": "sentinel-2-l2a",
@@ -33072,39 +33098,53 @@
           21.199734465434084,
           64.02701663648664
         ]
-      },
-      {
-        "id": "S2C_MSIL2A_20260321T101721_N0512_R065_T34VDR_20260321T155809",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-03-21T10:17:21.025000Z",
-        "published_at": "2026-03-21T17:00:24.000000Z",
-        "cloud_cover_percent": 57.83,
-        "bbox": [
-          18.953501523280057,
-          63.02793322568484,
-          21.199734465434084,
-          64.02701663648664
-        ]
-      },
-      {
-        "id": "S2A_MSIL2A_20260320T101051_N0512_R022_T34VDR_20260320T171910",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-03-20T10:10:51.024000Z",
-        "published_at": "2026-03-20T18:17:17.000000Z",
-        "cloud_cover_percent": 95.66,
-        "bbox": [
-          18.954883739381664,
-          63.02793322568484,
-          21.199734465434084,
-          64.02701663648664
-        ]
       }
     ],
     "count": 200,
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [],
+  "new_scenes_since_previous_run": [
+    {
+      "id": "S1C_IW_GRDH_1SDV_20261029T162139_20261029T162204_010102_0142A9_D731_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-10-29T16:21:39.188055Z",
+      "published_at": "2026-10-29T17:13:32.583096Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        14.982899,
+        62.666828,
+        20.963539,
+        64.61721
+      ]
+    },
+    {
+      "id": "S2A_MSIL2A_20261029T102051_N0513_R065_T34VDR_20261029T150008",
+      "collection": "sentinel-2-l2a",
+      "acquired_at": "2026-10-29T10:20:51.024000Z",
+      "published_at": "2026-10-29T15:45:46.000000Z",
+      "cloud_cover_percent": 19.62,
+      "bbox": [
+        18.953501523280057,
+        63.02793322568484,
+        21.199734465434084,
+        64.02701663648664
+      ]
+    },
+    {
+      "id": "S2B_MSIL2A_20261029T101129_N0513_R022_T34VDR_20261029T153419",
+      "collection": "sentinel-2-l2a",
+      "acquired_at": "2026-10-29T10:11:29.024000Z",
+      "published_at": "2026-10-29T16:09:44.000000Z",
+      "cloud_cover_percent": 18.57,
+      "bbox": [
+        18.95680806197714,
+        63.02793322568484,
+        21.199734465434084,
+        64.02701663648664
+      ]
+    }
+  ],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
