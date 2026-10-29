@@ -79,7 +79,7 @@ const focusLayer=initialParams.get("focus");
 const focusObjectId=initialParams.get("objectid");
 const focusedView=Boolean(focusLayer&&focusObjectId);
 let CENTER=[Number(initialParams.get("lat"))||63.74646,Number(initialParams.get("lon"))||19.66455], RADIUS=Number(initialParams.get("radius"))||10000;
-if(focusedView){RADIUS=2000;}
+if(focusedView){RADIUS=Number(initialParams.get("radius"))||2000;}
 let searchCircle=null;
 const PLANNED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0/query";
 const PERFORMED="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaUtfordavverkning/MapServer/1/query";
@@ -179,11 +179,11 @@ function measurementText(){if(measureMode==="length"){let meters=0;for(let i=1;i
 function redrawMeasurement(finished=false){measurementLayer.clearLayers();if(!measurePoints.length)return;measurePoints.forEach(p=>L.circleMarker(p,{radius:4,color:"#124c90",fillColor:"#fff",fillOpacity:1,weight:2,interactive:false}).addTo(measurementLayer));if(measurePoints.length>=2){const shape=measureMode==="area"&&measurePoints.length>=3?L.polygon(measurePoints,{color:"#1469a5",weight:3,fillOpacity:.15,interactive:false}):L.polyline(measurePoints,{color:"#1469a5",weight:3,interactive:false});shape.addTo(measurementLayer);}const label=L.marker(measurePoints[measurePoints.length-1],{icon:L.divIcon({className:"",html:'<span style="white-space:nowrap;background:white;padding:3px 6px;border:1px solid #1469a5;border-radius:4px;font-weight:600">'+measurementText()+'</span>',iconSize:[0,0]}),interactive:false}).addTo(measurementLayer);if(finished)measureHint.textContent="Mätning klar: "+measurementText()+". Välj verktyg för ny mätning.";}
 map.on("dblclick",e=>{if(!measureMode)return;L.DomEvent.stop(e.originalEvent);if(measurePoints.length>1){const last=measurePoints[measurePoints.length-1];if(map.distance(last,e.latlng)>0.1)measurePoints.push(e.latlng);}redrawMeasurement(true);measureMode=null;map.doubleClickZoom.enable();map.getContainer().style.cursor="";updateMeasureButtons();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&measureMode)clearMeasurement();});
-searchCircle=L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false}).addTo(map);
+searchCircle=L.circle(CENTER,{radius:RADIUS,color:"#173d2b",weight:1,dashArray:"5 6",fill:false,interactive:false});if(!focusedView)searchCircle.addTo(map);
 const radiusSelect=document.getElementById("radiusSelect");
 const radiusChoices=[2000,4000,6000,8000,10000,20000,30000,40000];
 radiusSelect.value=String(radiusChoices.reduce((best,value)=>Math.abs(value-RADIUS)<Math.abs(best-RADIUS)?value:best,radiusChoices[0]));
-if(focusedView){radiusSelect.value="2000";}RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
+if(focusedView){radiusSelect.value=String(RADIUS);}RADIUS=Number(radiusSelect.value);searchCircle.setRadius(RADIUS);map.setView(CENTER,radiusZoom(RADIUS));
 const plannedLayer=L.geoJSON(null,{style:feature=>({...plannedStyle(feature),color:"#111111",weight:2.2}),onEachFeature:(f,l)=>bindFeaturePopup(l,f,"planned")});
 const plannedVertexLayer=L.layerGroup();
 let plannedVertexCollection=null;
@@ -191,7 +191,7 @@ function updatePlannedVertexMarkers(collection){
  if(collection)plannedVertexCollection=collection;
  plannedVertexLayer.clearLayers();
  // Hide vertex markers when zoomed out; they become visual clutter at overview scale.
- if(map.getZoom()<10||!document.getElementById("showPlanned").checked){
+ if(focusedView||map.getZoom()<10||!document.getElementById("showPlanned").checked){
   if(map.hasLayer(plannedVertexLayer))map.removeLayer(plannedVertexLayer);
   return;
  }
@@ -1144,7 +1144,7 @@ async function load(){
   if(requestId!==viewRequestId)return;
   setLoadProgress(68,"Bearbetar områden…");
   const filterStartedAt=performance.now();
-  planned=filterToRadius(planned);performed=filterToRadius(performed);
+  if(!focusedView){planned=filterToRadius(planned);performed=filterToRadius(performed);}
   if(focusedView){
    const target=Number(focusObjectId);
    const keepTarget=fc=>({...fc,features:(fc.features||[]).filter(feature=>Number(feature?.properties?.OBJECTID??feature?.properties?.ObjectId??feature?.id)===target)});
@@ -1159,7 +1159,7 @@ async function load(){
   try{
    const turfModule=await import("https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/+esm");
    turf=turfModule.default??turfModule;
-   planned=clipPolygonCollection(planned,turf);performed=clipPolygonCollection(performed,turf);
+   if(!focusedView){planned=clipPolygonCollection(planned,turf);performed=clipPolygonCollection(performed,turf);}
   }catch(clipError){
    clippingAvailable=false;
    console.error("Polygon clipping unavailable; showing radius-filtered original polygons",clipError);
