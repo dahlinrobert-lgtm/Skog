@@ -1,0 +1,88 @@
+# Canonical forest-domain contract, version 1.
+# This is a logical contract, not a physical database migration.
+schema_version: 1
+
+common_fields:
+  record_type: {type: string, required: true}
+  record_id: {type: string, required: true, description: "Stable platform ID"}
+  source_id: {type: string, required: true}
+  source_record_id: {type: string, required: true}
+  source_url: {type: string, required: false}
+  source_created_at: {type: datetime, required: false}
+  source_updated_at: {type: datetime, required: false}
+  retrieved_at: {type: datetime, required: true}
+  valid_from: {type: datetime, required: false}
+  valid_to: {type: datetime, required: false}
+  geometry: {type: geometry, required: false}
+  geometry_crs: {type: string, required: false}
+  attributes: {type: object, required: true}
+  content_hash: {type: string, required: true}
+  schema_version: {type: integer, required: true}
+  quality_status: {type: string, required: true}
+
+record_types:
+  forest_area:
+    description: "A forest area or management unit; not automatically a cadastral property."
+    required_attributes: [name]
+    optional_attributes: [area_ha, area_source, area_method]
+
+  forest_observation:
+    description: "A measured or modelled forest attribute at a location and time."
+    required_attributes: [observed_at, variable, value, unit, method]
+    optional_attributes: [uncertainty, reference_period, raster_asset_id, band]
+
+  raster_asset:
+    description: "A versioned raster file or tiled raster collection."
+    required_attributes: [product, source_version, checksum, format, crs, bounds, width, height, band_count]
+    optional_attributes: [resolution, nodata, units, scale, offset, acquisition_date, valid_pixel_count]
+
+  forestry_event:
+    description: "A planned, reported or completed forestry measure."
+    required_attributes: [event_type, event_status]
+    optional_attributes: [reported_at, planned_at, completed_at, area_ha, geometry]
+
+  authority_case:
+    description: "A public authority diary case or municipal matter."
+    required_attributes: [case_title, authority]
+    optional_attributes: [case_number, registered_at, status, document_ids]
+
+  decision:
+    description: "A decision made by a municipality, committee or authority."
+    required_attributes: [decision_title, decision_maker]
+    optional_attributes: [decision_date, meeting_id, paragraph_number, document_ids]
+
+  document:
+    description: "An original or derived document with provenance."
+    required_attributes: [document_type, checksum]
+    optional_attributes: [title, url, mime_type, published_at, extracted_text_ref]
+
+  relationship:
+    description: "An evidenced, typed relationship between canonical records."
+    required_attributes: [from_record_id, relationship_type, to_record_id, evidence]
+    optional_attributes: [confidence, review_status, matched_at]
+
+identity_rules:
+  source_record_key: [source_id, source_record_id]
+  canonical_identity_is_separate: true
+  never_match_only_on:
+    - geometry
+    - title
+    - parcel_name
+  matching_must_record:
+    - method
+    - evidence
+    - confidence
+    - review_status
+
+quality_status_values:
+  - valid
+  - warning
+  - rejected
+  - unverified
+
+time_semantics:
+  retrieved_at: "When Skog retrieved the record; system transaction time."
+  source_created_at: "Only when the source explicitly supplies this timestamp."
+  source_updated_at: "Only when the source explicitly supplies this timestamp."
+  valid_from: "When the fact/event applies in the real world, if known."
+  valid_to: "End of real-world validity, if known."
