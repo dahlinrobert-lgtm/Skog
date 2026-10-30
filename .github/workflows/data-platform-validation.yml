@@ -1,0 +1,34 @@
+name: Data platform validation
+
+on:
+  pull_request:
+    paths:
+      - "data-platform/**"
+      - "docs/data-platform-architecture.md"
+      - ".github/workflows/data-platform-validation.yml"
+  push:
+    branches: [main]
+    paths:
+      - "data-platform/**"
+      - "docs/data-platform-architecture.md"
+      - ".github/workflows/data-platform-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate YAML source registry and model contract
+        run: node data-platform/tests/validate-config.mjs
+      - name: Test run manifest invariants
+        run: node --test data-platform/tests/run-manifest.test.mjs
+      - name: Validate run manifest JSON schema syntax
+        run: node --input-type=module -e 'JSON.parse(await (await import("node:fs/promises")).readFile("data-platform/schemas/run-manifest.schema.json", "utf8")); console.log("Run manifest schema JSON is valid")'
