@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skog.example/schemas/run-manifest.schema.json",
+  "title": "Skog data platform run manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "source_id",
+    "started_at",
+    "status",
+    "scope",
+    "counts",
+    "output"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "success",
+        "warning",
+        "failed"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "source_snapshot": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "checkpoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fetched",
+        "inserted",
+        "updated",
+        "unchanged",
+        "rejected"
+      ],
+      "properties": {
+        "fetched": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inserted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "updated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unchanged": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rejected": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "published"
+      ],
+      "properties": {
+        "published": {
+          "type": "boolean"
+        },
+        "dataset_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "manifest_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
