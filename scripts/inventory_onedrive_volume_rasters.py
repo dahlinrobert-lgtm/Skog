@@ -43,7 +43,11 @@ def raster_info(path):
             "band_tags": [ds.tags(i) for i in range(1, ds.count + 1)],
         }
 def main():
-    selected=[x.strip() for x in os.getenv("RASTER_KEYS", ",".join(ITEMS)).split(",") if x.strip()]
+    raw_keys = os.getenv("RASTER_KEYS", "").strip()
+    # A blank optional GitHub Actions input means inventory every configured raster.
+    selected = [x.strip() for x in raw_keys.split(",") if x.strip()] if raw_keys else list(ITEMS)
+    if not selected:
+        raise SystemExit("No raster keys selected; provide valid keys or leave the input blank for all rasters.")
     unknown=sorted(set(selected)-set(ITEMS))
     if unknown: raise SystemExit("Unknown raster key(s): "+", ".join(unknown))
     client=os.environ["ONEDRIVE_CLIENT_ID"]; refresh=os.environ["ONEDRIVE_REFRESH_TOKEN"]
@@ -54,6 +58,7 @@ def main():
     token=tr.json().get("access_token")
     if not token: raise SystemExit("OAuth response did not contain access_token")
     s=requests.Session(); s.headers.update({"Authorization":f"Bearer {token}","User-Agent":"Skogskoll-raster-inventory/1.0"})
+    print("Raster inventory selection: %s" % len(selected), flush=True)
     results=[]
     with tempfile.TemporaryDirectory(prefix="skog-raster-inventory-") as tmp:
       for key in selected:
@@ -92,5 +97,6 @@ def main():
             "success_count":sum(x["status"]=="ok" for x in results),"error_count":sum(x["status"]!="ok" for x in results),
             "rasters":results}
     Path("raster-inventory/inventory.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    if report["error_count"]: raise SystemExit(f"{report['error_count']} raster(s) failed inventory; see artifact/logs")
+    if report["selected_count"] == 0 or report["success_count"] != report["selected_count"]:
+        raise SystemExit("Inventory incomplete: selected=%s successful=%s errors=%s" % (report["selected_count"], report["success_count"], report["error_count"]))
 if __name__=="__main__": main()
