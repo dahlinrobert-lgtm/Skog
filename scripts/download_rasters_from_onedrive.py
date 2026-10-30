@@ -62,13 +62,41 @@ def main() -> int:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
     session.headers.update({"Authorization": f"Bearer {token}", "User-Agent": "Skogskoll-volume-analysis/1.0"})
+    # Resolve item metadata first. The stored source identifiers include a
+    # drive prefix and a custom "s" marker; the Graph item ID must be the
+    # complete driveItem ID returned by Graph, not a guessed suffix.
     for code in missing:
+        stored_id = ITEMS[code]
+        metadata_url = f"https://graph.microsoft.com/v1.0/drives/{DRIVE_ID}/items/{stored_id}"
+        metadata = session.get(metadata_url, timeout=60)
+        if not metadata.ok:
+            body = metadata.text[:1200].replace("\\n", " ")
+            raise SystemExit(
+                f"Graph could not resolve the configured OneDrive item for raster {code} "
+                f"(HTTP {metadata.status_code}): {body}"
+            )
+        item = metadata.json()
+        item_id = item.get("id")
+        if not item_id or "file" not in item:
+            raise SystemExit(
+                f"Configured OneDrive item for raster {code} is not a file; "
+                f"Graph returned item name={item.get('name', '<unknown>')!r}."
+            )
+        print(
+            f"Resolved raster {code} OneDrive item: name={item.get('name')!r}, "
+            f"size={item.get('size')}, item_id={item_id}",
+            flush=True,
+        )
         target = DATA_DIR / f"sks_Volym_omdrev3_{code}.zip"
-        url = f"https://graph.microsoft.com/v1.0/drives/{DRIVE_ID}/items/{ITEMS[code].split('!', 1)[1]}/content"
+        url = f"https://graph.microsoft.com/v1.0/drives/{DRIVE_ID}/items/{item_id}/content"
         temp = target.with_suffix(target.suffix + ".part")
         with session.get(url, stream=True, allow_redirects=True, timeout=(60, 300)) as download:
             if not download.ok:
-                raise SystemExit(f"OneDrive download for raster {code} failed (HTTP {download.status_code}).")
+                body = download.text[:1200].replace("\\n", " ")
+                raise SystemExit(
+                    f"OneDrive content download for raster {code} failed "
+                    f"(HTTP {download.status_code}): {body}"
+                )
             digest = hashlib.sha256()
             size = 0
             with temp.open("wb") as stream:
