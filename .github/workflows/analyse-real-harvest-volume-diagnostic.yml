@@ -46,6 +46,11 @@ jobs:
           ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
           ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
         run: python scripts/download_rasters_from_onedrive.py
+      - name: Verify Skogsstyrelsen metadata and extreme raster cells
+        env:
+          RASTER_CODES: ${{ inputs.raster_codes || '13' }}
+          MAX_METADATA_SAMPLES: "2500"
+        run: python scripts/verify_skogliga_metadata.py
       - name: Fetch a bounded polygon sample
         env:
           LIMIT_INPUT: ${{ inputs.sample_limit }}
@@ -117,6 +122,7 @@ jobs:
             real-volume-polygons.geojson
             real-polygons-*.geojson
             real-volume-report-*.json
+            data/skogliga-grunddata/metadata-outlier-verification.json
             scripts/split_real_harvest_volume_groups.py
           if-no-files-found: warn
           retention-days: 14
