@@ -1,0 +1,101 @@
+# Initial registry for the forest-specific data platform.
+# Descriptive configuration only: connectors/workflows are not enabled by this file.
+# Never put credentials, refresh tokens, or personal OneDrive item IDs here.
+
+schema_version: 1
+
+sources:
+  - source_id: skogsstyrelsen.volume.omdrev3
+    name: Skogsstyrelsen – Skogliga grunddata, volym omdrev 3
+    source_type: raster
+    provider: Skogsstyrelsen
+    access_method: file_download
+    connector: onedrive_raster
+    status: pilot
+    cadence: on_demand
+    geography: Sweden
+    format:
+      - GeoTIFF
+      - ZIP
+    expected_crs: EPSG:3006
+    expected_units: m3sk/ha
+    notes:
+      - Original archives are retained unchanged.
+      - Zero is a valid value; NoData is tracked separately.
+      - Verify product version, acquisition date and coverage for every asset.
+      - OneDrive authentication is handled by the existing server-side workflow secrets.
+
+  - source_id: sakfraga.decisions
+    name: Sakfråga – municipal decisions
+    source_type: decision_api
+    provider: Sakfråga
+    access_method: rest_api
+    connector: sakfraga_api
+    status: pilot
+    cadence: daily
+    geography: Sweden
+    format:
+      - JSON
+    notes:
+      - Search endpoint is title-oriented and keyword results are discovery candidates.
+      - Meeting-list q filtering is not decision-text search.
+      - Respect API pagination and tested request limits; do not assume limit 100 works.
+      - Keep meeting, decision and document identifiers distinct.
+
+  - source_id: skogsstyrelsen.harvest_notifications
+    name: Skogsstyrelsen – avverkningsanmälningar
+    source_type: vector_observations
+    provider: Skogsstyrelsen
+    access_method: arcgis_rest
+    connector: skogskoll_arcgis
+    status: existing
+    cadence: every_6_hours
+    geography: Sweden
+    format:
+      - GeoJSON
+    notes:
+      - Existing Skogskoll ingestion core and Supabase persistence are authoritative for alert workflow.
+      - Do not duplicate or replace the existing scan/session safety logic.
+
+  - source_id: lansstyrelsen.public_diary
+    name: Länsstyrelsen – offentliga diarier
+    source_type: authority_cases
+    provider: Länsstyrelserna
+    access_method: web_search_or_api
+    connector: lansstyrelsen_diary
+    status: development
+    cadence: daily
+    geography: Sweden
+    format:
+      - JSON
+    notes:
+      - Coverage and search behavior vary by county.
+      - A zero-result response is not evidence that no relevant cases exist.
+
+  - source_id: naturvardsverket.protected_areas
+    name: Naturvårdsverket – skyddade områden
+    source_type: vector_reference
+    provider: Naturvårdsverket
+    access_method: to_be_verified
+    connector: naturvardsverket
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format:
+      - to_be_verified
+    notes:
+      - Confirm service, licence, update frequency and stable identifiers before implementation.
+
+  - source_id: lantmateriet.property_reference
+    name: Lantmäteriet – fastighetsreferenser
+    source_type: cadastral_reference
+    provider: Lantmäteriet
+    access_method: licensed_service
+    connector: lantmateriet
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format:
+      - to_be_verified
+    notes:
+      - Confirm product terms and commercial use rights before ingestion or redistribution.
