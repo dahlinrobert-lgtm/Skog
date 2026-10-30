@@ -92,10 +92,7 @@ jobs:
               continue
             fi
             cp "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" "raster-data-$code/"
-            python scripts/diagnose_raster_polygon_coverage.py \\
-              --raster "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" \\
-              --polygon "real-polygons-$code.geojson" \\
-              --output "real-raster-coverage-diagnostic-$code.json"
+            python scripts/diagnose_raster_polygon_coverage.py --raster "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" --polygon "real-polygons-$code.geojson" --output "real-raster-coverage-diagnostic-$code.json"
             python scripts/analyze_volume_for_polygon.py \
               --polygon "real-polygons-$code.geojson" \
               --data-dir "raster-data-$code" \
