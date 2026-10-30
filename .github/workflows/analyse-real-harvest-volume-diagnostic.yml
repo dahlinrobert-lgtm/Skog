@@ -9,7 +9,7 @@ on:
         default: "50000"
         type: string
       raster_codes:
-        description: Raster areas to test (07, 10, 12, 13, 21, 23; selected ZIPs must be committed)
+        description: Raster areas to test (07, 10, 12, 13, 21, 23; missing 12/21/23 archives are downloaded from OneDrive)
         required: true
         default: "13"
         type: string
@@ -18,6 +18,7 @@ on:
       - "scripts/analyze_volume_for_polygon.py"
       - "scripts/split_real_harvest_volume_groups.py"
       - "scripts/fetch_real_harvests_for_volume_rasters.py"
+      - "scripts/verify_skogliga_metadata.py"
       - ".github/workflows/analyse-real-harvest-volume-diagnostic.yml"
 
 permissions:
