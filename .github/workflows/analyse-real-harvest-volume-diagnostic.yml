@@ -11,11 +11,12 @@ on:
       raster_codes:
         description: Raster areas to test (07, 10, 12, 13, 21, 23; missing 12/21/23 archives are downloaded from OneDrive)
         required: true
-        default: "13"
+        default: "23"
         type: string
   push:
     paths:
       - "scripts/analyze_volume_for_polygon.py"
+      - "scripts/diagnose_raster_polygon_coverage.py"
       - "scripts/split_real_harvest_volume_groups.py"
       - "scripts/fetch_real_harvests_for_volume_rasters.py"
       - "scripts/verify_skogliga_metadata.py"
@@ -42,14 +43,15 @@ jobs:
         run: python -m pip install requests numpy rasterio shapely pyproj
       - name: Download missing original rasters from personal OneDrive
         env:
-          RASTER_CODES: ${{ inputs.raster_codes || '13' }}
+          RASTER_CODES: ${{ inputs.raster_codes || '23' }}
           ONEDRIVE_CLIENT_ID: ${{ secrets.ONEDRIVE_CLIENT_ID }}
-          ONEDRIVE_CLIENT_SECRET: ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
           ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
         run: python scripts/download_rasters_from_onedrive.py
       - name: Verify Skogsstyrelsen metadata and extreme raster cells
+        # Keep metadata/outlier verification findings in the artifact without blocking raster coverage diagnostics.
+        continue-on-error: true
         env:
-          RASTER_CODES: ${{ inputs.raster_codes || '13' }}
+          RASTER_CODES: ${{ inputs.raster_codes || '23' }}
           MAX_METADATA_SAMPLES: "2500"
         run: python scripts/verify_skogliga_metadata.py
       - name: Fetch a bounded polygon sample
@@ -58,7 +60,7 @@ jobs:
           CODES_INPUT: ${{ inputs.raster_codes }}
         run: |
           limit="${LIMIT_INPUT:-50000}"
-          codes="${CODES_INPUT:-13}"
+          codes="${CODES_INPUT:-23}"
           python scripts/fetch_real_harvests_for_volume_rasters.py \
             --output real-volume-polygons.geojson \
             --limit "$limit" \
@@ -68,7 +70,7 @@ jobs:
           CODES_INPUT: ${{ inputs.raster_codes }}
         run: |
           set +e
-          codes="${CODES_INPUT:-13}"
+          codes="${CODES_INPUT:-23}"
           python scripts/split_real_harvest_volume_groups.py \
             --input real-volume-polygons.geojson \
             --raster-codes "$codes"
@@ -92,6 +94,7 @@ jobs:
               continue
             fi
             cp "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" "raster-data-$code/"
+            python scripts/diagnose_raster_polygon_coverage.py --raster "data/skogliga-grunddata/sks_Volym_omdrev3_$code.zip" --polygon "real-polygons-$code.geojson" --output "real-raster-coverage-diagnostic-$code.json"
             python scripts/analyze_volume_for_polygon.py \
               --polygon "real-polygons-$code.geojson" \
               --data-dir "raster-data-$code" \
@@ -123,6 +126,7 @@ jobs:
             real-volume-polygons.geojson
             real-polygons-*.geojson
             real-volume-report-*.json
+            real-raster-coverage-diagnostic-*.json
             data/skogliga-grunddata/metadata-outlier-verification.json
             scripts/split_real_harvest_volume_groups.py
           if-no-files-found: warn
