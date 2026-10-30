@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 import os
-import sys
 from pathlib import Path
 
 import requests
@@ -21,26 +20,28 @@ ITEMS = {
 
 def main() -> int:
     codes = [x.strip() for x in os.environ.get("RASTER_CODES", "12,21,23").split(",") if x.strip()]
+    unknown = [code for code in codes if code not in ITEMS]
+    if unknown:
+        raise SystemExit(f"No OneDrive item mapping configured for raster code(s): {','.join(unknown)}.")
+
     missing = [code for code in codes if not (DATA_DIR / f"sks_Volym_omdrev3_{code}.zip").exists()]
     if not missing:
         print("All selected raster archives already exist; no OneDrive download needed.")
         return 0
 
     client_id = os.environ.get("ONEDRIVE_CLIENT_ID", "")
-    client_secret = os.environ.get("ONEDRIVE_CLIENT_SECRET", "")
     refresh_token = os.environ.get("ONEDRIVE_REFRESH_TOKEN", "")
-    if not (client_id and client_secret and refresh_token):
+    if not (client_id and refresh_token):
         raise SystemExit(
-            "Missing GitHub Actions secrets. Configure ONEDRIVE_CLIENT_ID, "
-            "ONEDRIVE_CLIENT_SECRET and ONEDRIVE_REFRESH_TOKEN to download missing "
-            f"archives from personal OneDrive. Missing raster codes: {','.join(missing)}"
+            "Missing GitHub Actions secrets. Configure ONEDRIVE_CLIENT_ID and "
+            "ONEDRIVE_REFRESH_TOKEN to download missing archives from personal "
+            f"OneDrive. Missing raster codes: {','.join(missing)}"
         )
 
     response = requests.post(
         "https://login.microsoftonline.com/consumers/oauth2/v2.0/token",
         data={
             "client_id": client_id,
-            "client_secret": client_secret,
             "grant_type": "refresh_token",
             "refresh_token": refresh_token,
             "scope": "https://graph.microsoft.com/Files.Read offline_access",
@@ -48,7 +49,12 @@ def main() -> int:
         timeout=60,
     )
     if not response.ok:
-        raise SystemExit(f"OneDrive OAuth refresh failed (HTTP {response.status_code}): {response.text[:500]}")
+        error = response.json().get("error", "unknown_error")
+        raise SystemExit(
+            f"OneDrive OAuth refresh failed (HTTP {response.status_code}, {error}). "
+            "Re-authenticate with scripts/onedrive_device_login.py and replace "
+            "the ONEDRIVE_REFRESH_TOKEN GitHub secret."
+        )
     token = response.json().get("access_token")
     if not token:
         raise SystemExit("OAuth response did not contain an access token.")
@@ -57,10 +63,8 @@ def main() -> int:
     session = requests.Session()
     session.headers.update({"Authorization": f"Bearer {token}", "User-Agent": "Skogskoll-volume-analysis/1.0"})
     for code in missing:
-        if code not in ITEMS:
-            raise SystemExit(f"No OneDrive item mapping configured for raster code {code}.")
         target = DATA_DIR / f"sks_Volym_omdrev3_{code}.zip"
-        url = f"https://graph.microsoft.com/v1.0/drives/{DRIVE_ID}/items/{ITEMS[code].split('!',1)[1]}/content"
+        url = f"https://graph.microsoft.com/v1.0/drives/{DRIVE_ID}/items/{ITEMS[code].split('!', 1)[1]}/content"
         temp = target.with_suffix(target.suffix + ".part")
         with session.get(url, stream=True, allow_redirects=True, timeout=(60, 300)) as download:
             if not download.ok:
