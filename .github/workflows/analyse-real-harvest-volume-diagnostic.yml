@@ -48,6 +48,8 @@ jobs:
           ONEDRIVE_REFRESH_TOKEN: ${{ secrets.ONEDRIVE_REFRESH_TOKEN }}
         run: python scripts/download_rasters_from_onedrive.py
       - name: Verify Skogsstyrelsen metadata and extreme raster cells
+        # Keep metadata/outlier verification findings in the artifact without blocking raster coverage diagnostics.
+        continue-on-error: true
         env:
           RASTER_CODES: ${{ inputs.raster_codes || '23' }}
           MAX_METADATA_SAMPLES: "2500"
