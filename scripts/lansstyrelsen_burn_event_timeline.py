@@ -155,6 +155,7 @@ def _name_tokens(value: str) -> set[str]:
     generic = {"lansstyrelsen", "länsstyrelsen", "kommun", "län", "naturreservat",
                "naturreservatet", "naturvårdsbränning", "naturvardsbranning",
                "bränning", "branning", "information", "planerad", "planering"}
+    generic.update(COUNTY_NAMES)
     return {t for t in _normalized_place(value).split() if len(t) >= 4 and t not in generic}
 
 
