@@ -272,12 +272,21 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
         diary_counties = _county_clues(diary_text)
         for geometry in geometry_events:
             geo_text = _normal(geometry.get("title", "")) + " " + _normal(geometry.get("evidence_text", ""))
-            geo_place_text = geo_text + " " + " ".join(geometry.get("place_candidates") or [])
+            geo_place_text = _normal(geometry.get("title", "")) + " " + " ".join(geometry.get("place_candidates") or [])
             geo_tokens, geo_context_tokens = _place_token_groups(geo_place_text)
             overlap = sorted(diary_tokens & geo_tokens)
             context_overlap = sorted(
                 (diary_context_tokens & (geo_context_tokens | geo_tokens)) |
                 (geo_context_tokens & diary_tokens)
+            )
+            # Distinguish a broad shared reserve/landscape from agreement on the
+            # actual named site. Different specific names are a conflict signal,
+            # not proof of different events; retain the candidate for review.
+            place_relation = (
+                "specific_place_overlap" if overlap else
+                "conflicting_specific_place_names" if context_overlap and diary_tokens and geo_tokens else
+                "context_only_insufficient_specific_detail" if context_overlap else
+                "county_only_no_place_detail"
             )
             geo_years = set(geometry.get("event_year_clues") or [])
             geo_counties = _county_clues(geo_text)
@@ -313,6 +322,9 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "uniqueness_points": 0,
                 "shared_place_tokens": overlap,
                 "shared_context_place_tokens": context_overlap,
+                "diary_specific_place_tokens": sorted(diary_tokens),
+                "geometry_specific_place_tokens": sorted(geo_tokens),
+                "place_relation": place_relation,
                 "shared_counties": shared_counties,
                 "shared_years": year_overlap,
                 "evidence_tier": (
@@ -529,6 +541,7 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
             "by_confidence": dict(sorted(Counter(c["confidence"] for c in link_candidates).items())),
             "by_ambiguity": dict(sorted(Counter(c["ambiguity"] for c in link_candidates).items())),
             "by_evidence_tier": dict(sorted(Counter(c["evidence_tier"] for c in link_candidates).items())),
+            "by_place_relation": dict(sorted(Counter(c["place_relation"] for c in link_candidates).items())),
             "by_review_priority": dict(sorted(Counter(c["review_priority"] for c in link_candidates).items())),
             "context_only_candidate_count": sum(bool(c.get("shared_context_place_tokens")) and not bool(c.get("shared_place_tokens")) for c in link_candidates),
             "specific_place_candidate_count": sum(bool(c.get("shared_place_tokens")) for c in link_candidates),
@@ -560,7 +573,8 @@ def write_review_csv(report: dict[str, Any], output_path: Path) -> int:
     ))
     columns = [
         "review_priority", "score", "confidence", "evidence_tier",
-        "shared_place_tokens", "shared_context_place_tokens", "shared_counties", "shared_years", "ambiguity",
+        "shared_place_tokens", "shared_context_place_tokens", "diary_specific_place_tokens",
+        "geometry_specific_place_tokens", "place_relation", "shared_counties", "shared_years", "ambiguity",
         "place_points", "county_points", "time_points", "lifecycle_points", "uniqueness_points", "data_coverage",
         "diary_candidate_count", "geometry_candidate_count",
         "diary_event_id", "diary_number", "diary_title",
