@@ -124,6 +124,12 @@ def main() -> int:
                 "url": url,
             })
             break
+    # Rotate through the complete national case set: least recently observed first.
+    # New cases have no prior snapshot and are therefore prioritized automatically.
+    targets.sort(key=lambda target: (
+        (cases.get("{}::{}".format(target["diary"].strip().casefold(), target["diary_number"].strip())) or {}).get("last_seen_at", ""),
+        target["diary"], target["diary_number"],
+    ))
     if args.limit:
         targets = targets[:args.limit]
 
