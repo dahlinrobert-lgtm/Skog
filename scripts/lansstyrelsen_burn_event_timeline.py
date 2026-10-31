@@ -18,7 +18,7 @@ from typing import Any
 
 DATE_RE = re.compile(r"(?<!\d)((?:19|20)\d{2})[-/.](\d{1,2})[-/.](\d{1,2})(?!\d)")
 YEAR_RE = re.compile(r"(?<!\d)((?:19|20)\d{2})(?!\d)")
-PLACE_KEYS = ("omrade", "område", "reservat", "plats", "objekt", "lokal", "namn", "kommun", "site", "location", "place")
+PLACE_KEYS = ("omrade", "område", "reservat", "plats", "objekt", "lokal", "namn", "site", "location", "place")
 EVENT_DATE_KEYS = ("brann", "bränn", "burn", "genomfor", "genomför", "utford", "utförd", "planerad", "atgardsdatum", "åtgärdsdatum", "insatsdatum", "startdatum", "slutdatum", "event_date", "burn_date")
 RECORD_DATE_KEYS = ("inkomdatum", "in/upp-datum", "registreringsdatum", "source_date", "created_date", "created_at", "last_edited_date", "updated_at", "diariedatum")
 COMPLETED = ("genomförd bränning", "genomförda bränningar", "utförd bränning", "utförda bränningar", "completed burn", "burn completed", "burning completed")
@@ -146,6 +146,8 @@ def _normalized_place(value: str) -> str:
     """Normalize place text conservatively for candidate comparisons."""
     value = value.casefold().replace("naturreservatet", "").replace("naturreservat", "")
     value = value.replace("natura 2000-område", "").replace("natura 2000 område", "")
+    # Municipality labels describe administrative location, not the burn site.
+    value = re.sub(r"\\b[\\wåäöéü-]+\\s+kommun\\b", " ", value)
     value = re.sub(r"[^0-9a-zåäöéü]+", " ", value)
     return re.sub(r"\s+", " ", value).strip()
 
@@ -174,6 +176,12 @@ def _name_tokens(value: str) -> set[str]:
         "entreprenad", "entreprenören", "avtal", "avtalade", "ersättning",
         "skada", "kontraktsbrott", "beställning", "distribution",
         "skog", "skogs", "nationalpark", "nationalparken", "sveaskog",
+        # Diary/process and metadata words that are not place names.
+        "anmälan", "anmalan", "föranmälan", "foranmalan", "handläggning",
+        "personuppgift", "avslutat", "region", "brandgata", "åtgärder",
+        "atgarder", "avropsförfrågan", "avropsforfragan", "eftersläckning",
+        "efterslackning", "eldningsförbud", "eldningsforbud",
+        "bränningstillfället", "branningstillfallet", "life2taiga",
     })
     return {t for t in _normalized_place(value).split() if len(t) >= 4 and not t.isdigit() and t not in generic}
 
