@@ -301,7 +301,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
       <span class="result-count" id="mapSummary">– objekt</span>
     </div>
     <div class="map-layout">
-      <div id="activityMap" role="img" aria-label="Karta över planerade och utförda avverkningar i Nordmalings kommun"></div>
+      <div id="activityMap" role="region" aria-label="Karta över planerade och utförda avverkningar i Nordmalings kommun"></div>
       <aside class="case-preview" id="casePreview" aria-live="polite">
         <div class="preview-empty">Välj en aktivitet i listan eller klicka på en kartgeometri för att se ärendeuppgifter här.</div>
       </aside>
@@ -359,7 +359,7 @@ async function fetchSource(src){
     if(data.error)throw new Error(data.error.message||"ArcGIS-fel");
     const batch=data.features||[];
     features.push(...batch);
-    if(batch.length<1000&&!data.exceededTransferLimit)break;
+    if(!batch.length||!data.exceededTransferLimit)break;
     if(page===19){truncated=true;break;}
     offset+=batch.length;
    }
