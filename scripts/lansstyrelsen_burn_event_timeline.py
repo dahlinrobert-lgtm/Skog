@@ -226,6 +226,16 @@ BROAD_PLACE_TOKENS = {
 
 def _place_token_groups(value: str) -> tuple[set[str], set[str]]:
     tokens = _name_tokens(value)
+    # Canonicalize common Swedish genitive forms so a broad reserve name is
+    # classified consistently whether a source writes e.g. Skattlösberg or
+    # Skattlösbergs stormosse.
+    canonical = {
+        "skattlösbergs": "skattlösberg",
+        "skattlosbergs": "skattlosberg",
+        "kölarna": "kölarna",
+        "kolarna": "kolarna",
+    }
+    tokens = {canonical.get(token, token) for token in tokens}
     context = tokens & BROAD_PLACE_TOKENS
     return tokens - context, context
 
