@@ -1,20 +1,269 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Skogsbevakning – Nordmalings kommun</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173b2b">
+<meta name="description" content="Följ anmälda och registrerade utförda avverkningar i Nordmalings kommun.">
+<title>Skogsbevakning – Nordmaling</title>
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d2922;background:#f4f7f4;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#173d2b;color:#fff;padding:28px max(18px,calc((100% - 1120px)/2))}header h1{margin:0 0 6px;font-size:clamp(1.7rem,4vw,2.35rem)}header p{margin:0;color:#e1eee5}header a{color:#e1eee5}main{max-width:1120px;margin:auto;padding:22px 16px 44px}.panel{background:white;border:1px solid #dce4dd;border-radius:14px;padding:18px;margin-bottom:16px}.eyebrow{text-transform:uppercase;letter-spacing:.08em;font-size:.75rem;font-weight:800;color:#39724e}h2{font-size:1.2rem;margin:0 0 8px}.muted{color:#5d6b62;font-size:.91rem}.toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:14px 0}select,input,button{font:inherit;border:1px solid #c8d4ca;border-radius:8px;background:white;padding:9px 11px}button{cursor:pointer}button:hover{background:#edf4ed}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.stat{background:#f0f5f0;border:1px solid #dce5dc;border-radius:10px;padding:13px}.stat strong{display:block;font-size:1.55rem;color:#205b3c;line-height:1.2}.stat span{font-size:.88rem;color:#435248}.feed{display:flex;flex-direction:column;gap:10px}.activity{display:grid;grid-template-columns:94px minmax(0,1fr);gap:13px;padding:14px;border:1px solid #e0e7e0;border-radius:11px;background:#fff}.date{font-weight:750;color:#345b43;font-variant-numeric:tabular-nums}.kind{display:inline-block;font-size:.75rem;font-weight:750;border-radius:999px;padding:3px 8px;margin-bottom:5px}.planned{background:#fff0d9;color:#8a4b08}.done{background:#dff3e5;color:#17633a}.title{font-weight:750;font-size:1.02rem}.meta{display:flex;gap:7px 14px;flex-wrap:wrap;color:#5d6b62;font-size:.89rem;margin-top:5px}.activity a{color:#246342}.empty{padding:24px;text-align:center;color:#5d6b62;background:#f7f9f7;border-radius:10px}.error{color:#9d2d25}.statusline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.dot{width:9px;height:9px;border-radius:50%;background:#d9a441;display:inline-block}.dot.ok{background:#2f8b50}.dot.error{background:#b83232}footer{color:#5d6b62;font-size:.85rem;margin:18px 0}@media(max-width:640px){.summary{grid-template-columns:1fr 1fr}.summary .stat:last-child{grid-column:1/-1}.activity{grid-template-columns:1fr;gap:3px}.date{font-size:.9rem}.panel{padding:13px}}
-</style></head>
+:root{
+  color-scheme:light;
+  --ink:#1c2c23;
+  --forest:#173b2b;
+  --forest-2:#24543b;
+  --moss:#dce8dc;
+  --paper:#f4f6f1;
+  --surface:#fff;
+  --line:#e4e9e2;
+  --muted:#68766d;
+  --gold:#d7ad67;
+  --shadow:0 18px 48px rgba(27,48,34,.08);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.55;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-width:320px;background:var(--paper)}
+a{color:inherit}
+button,input,select{font:inherit}
+.site-header{
+  position:relative;isolation:isolate;overflow:hidden;color:#fff;
+  background:
+    radial-gradient(ellipse at 78% 10%,rgba(130,165,119,.22),transparent 34%),
+    radial-gradient(ellipse at 10% 100%,rgba(92,131,92,.22),transparent 40%),
+    linear-gradient(125deg,#112f22 0%,#1a4430 58%,#254d36 100%);
+}
+.site-header:before,.site-header:after{content:"";position:absolute;z-index:-1;border:1px solid rgba(235,245,232,.10);border-radius:50%;pointer-events:none}
+.site-header:before{width:570px;height:570px;right:-125px;top:-330px;box-shadow:0 0 0 34px rgba(235,245,232,.025),0 0 0 72px rgba(235,245,232,.02),0 0 0 112px rgba(235,245,232,.018)}
+.site-header:after{width:340px;height:340px;right:8%;bottom:-275px;box-shadow:0 0 0 28px rgba(235,245,232,.025),0 0 0 60px rgba(235,245,232,.02)}
+.nav-wrap,.hero,.container{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+.top-nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid rgba(255,255,255,.13)}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:780;letter-spacing:-.02em}
+.brand-mark{width:36px;height:36px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.28);border-radius:12px;background:rgba(255,255,255,.08)}
+.brand-mark svg{width:21px;height:21px}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-links a{padding:9px 13px;border-radius:999px;text-decoration:none;color:rgba(255,255,255,.78);font-size:.9rem;transition:background .18s,color .18s}
+.nav-links a:hover,.nav-links a[aria-current=page]{background:rgba(255,255,255,.12);color:#fff}
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);align-items:center;gap:54px;padding:58px 0 68px}
+.kicker{display:inline-flex;align-items:center;gap:9px;color:#d5e4d5;font-size:.76rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.kicker:before{content:"";width:23px;height:1px;background:var(--gold)}
+.hero h1{max-width:720px;margin:15px 0 15px;font-size:clamp(2.45rem,5.2vw,4.45rem);line-height:1.02;letter-spacing:-.055em;font-weight:760}
+.hero h1 em{font-style:normal;color:#d7e5d1}
+.hero-copy{max-width:650px;margin:0;color:rgba(246,250,244,.78);font-size:1.08rem;line-height:1.7}
+.hero-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:27px}
+.hero-link{display:inline-flex;align-items:center;gap:9px;padding:11px 16px;border:1px solid rgba(255,255,255,.22);border-radius:999px;text-decoration:none;font-size:.9rem;font-weight:680;color:#fff;transition:background .18s,transform .18s}
+.hero-link:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
+.hero-link.primary{background:#f2f5ed;border-color:#f2f5ed;color:#1c3c2a}
+.hero-link.primary:hover{background:#fff}
+.hero-art{position:relative;min-height:245px;display:grid;place-items:center}
+.orbit{position:relative;width:min(270px,75vw);aspect-ratio:1;border:1px solid rgba(233,243,227,.24);border-radius:50%;display:grid;place-items:center}
+.orbit:before,.orbit:after{content:"";position:absolute;border:1px solid rgba(233,243,227,.17);border-radius:50%}
+.orbit:before{inset:22px}.orbit:after{inset:47px}
+.orbit-core{width:104px;height:104px;display:grid;place-items:center;border-radius:32px;background:linear-gradient(145deg,rgba(229,239,221,.2),rgba(229,239,221,.06));border:1px solid rgba(239,247,234,.32);box-shadow:0 18px 45px rgba(0,0,0,.12);transform:rotate(-8deg)}
+.orbit-core svg{width:48px;height:48px}
+.orbit-tag{position:absolute;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(14,43,29,.72);backdrop-filter:blur(10px);font-size:.78rem;color:#eef5eb;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.orbit-tag.one{top:22px;right:-4px}.orbit-tag.two{bottom:26px;left:-18px}
+.orbit-tag i{width:7px;height:7px;border-radius:50%;background:#a9cf9d;box-shadow:0 0 0 4px rgba(169,207,157,.13)}
+.container{padding:34px 0 58px}
+.overview-card,.filter-card,.feed-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.overview-card{padding:27px 29px 29px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:21px}
+.eyebrow{margin:0 0 6px;color:#54745b;font-size:.72rem;font-weight:820;letter-spacing:.13em;text-transform:uppercase}
+h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:1.2;letter-spacing:-.035em}
+.section-intro{max-width:650px;margin:9px 0 0;color:var(--muted);font-size:.91rem}
+.year-chip{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:8px 12px;border:1px solid #e1e9df;border-radius:999px;background:#f7faf5;color:#49664f;font-size:.78rem;font-weight:750}
+.year-chip:before{content:"";width:7px;height:7px;border-radius:50%;background:#8da984}
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.stat{position:relative;overflow:hidden;min-height:142px;padding:18px 19px;border:1px solid #e5ebe3;border-radius:16px;background:linear-gradient(145deg,#fbfcfa,#f5f8f2)}
+.stat:after{content:"";position:absolute;width:100px;height:100px;right:-35px;bottom:-56px;border:1px solid rgba(76,112,79,.11);border-radius:50%;box-shadow:0 0 0 14px rgba(76,112,79,.025),0 0 0 29px rgba(76,112,79,.02)}
+.stat-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stat-label{color:#64736a;font-size:.84rem;font-weight:650}
+.stat-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#e8f0e5;color:#376348}
+.stat-icon svg{width:18px;height:18px}
+.stat strong{display:block;margin-top:10px;color:#1d4c32;font-size:clamp(1.8rem,3vw,2.35rem);line-height:1.05;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.stat-note{display:block;margin-top:7px;color:#7a877d;font-size:.76rem}
+.filter-card{margin-top:18px;padding:22px 25px 19px}
+.filter-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}
+.filter-title{margin:0;font-size:1.02rem;font-weight:760;letter-spacing:-.02em}
+.filter-hint{color:#849087;font-size:.78rem}
+.toolbar{display:grid;grid-template-columns:minmax(170px,.75fr) minmax(150px,.65fr) minmax(230px,1.45fr) auto;gap:10px;align-items:center}
+.control{position:relative;min-width:0}
+.control select,.control input{width:100%;height:48px;padding:0 14px;border:1px solid #dce4db;border-radius:11px;background:#fff;color:#26372b;outline:none;transition:border-color .18s,box-shadow .18s}
+.control input{padding-left:43px}
+.control select:focus,.control input:focus{border-color:#6d9270;box-shadow:0 0 0 3px rgba(80,126,86,.12)}
+.control input::placeholder{color:#9aa49c}
+.search-icon{position:absolute;left:15px;top:50%;width:17px;height:17px;transform:translateY(-50%);color:#859188;pointer-events:none}
+.reload{height:48px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:0 17px;border:1px solid #d8e3d6;border-radius:11px;background:#edf4e9;color:#285238;font-size:.88rem;font-weight:750;white-space:nowrap;cursor:pointer;transition:background .18s,transform .18s}
+.reload:hover{background:#e2eddd;transform:translateY(-1px)}
+.reload:disabled{opacity:.55;cursor:wait;transform:none}
+.reload svg{width:16px;height:16px}
+.statusline{display:flex;align-items:center;gap:9px;margin-top:15px;color:#748078;font-size:.8rem}
+.dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#d5a74f;box-shadow:0 0 0 4px rgba(213,167,79,.13)}
+.dot.ok{background:#4c9561;box-shadow:0 0 0 4px rgba(76,149,97,.13)}
+.dot.error{background:#c35b50;box-shadow:0 0 0 4px rgba(195,91,80,.12)}
+#coverage{margin:6px 0 0 17px;color:#8a958d;font-size:.76rem}
+.feed-card{margin-top:18px;padding:26px 25px 25px}
+.feed-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:19px}
+.feed-subtitle{margin:7px 0 0;color:var(--muted);font-size:.88rem}
+.result-count{display:inline-flex;align-items:center;justify-content:center;min-width:76px;padding:8px 12px;border:1px solid #e3eae1;border-radius:999px;background:#f7faf6;color:#536b56;font-size:.78rem;font-weight:750}
+.feed{display:flex;flex-direction:column;gap:10px}
+.activity{display:grid;grid-template-columns:112px minmax(0,1fr);gap:18px;padding:17px 18px;border:1px solid #e7ece6;border-radius:15px;background:#fff;transition:border-color .18s,box-shadow .18s,transform .18s}
+.activity:hover{border-color:#cbdac9;box-shadow:0 8px 24px rgba(35,66,43,.06);transform:translateY(-1px)}
+.date-block{padding-top:2px}
+.date{color:#315b3e;font-size:.88rem;font-weight:780;font-variant-numeric:tabular-nums}
+.date-year{display:block;margin-top:3px;color:#9aa39b;font-size:.72rem}
+.activity-main{min-width:0}
+.activity-top{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.kind{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border-radius:999px;font-size:.72rem;font-weight:780;line-height:1.2}
+.kind:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.planned{background:#fff2df;color:#98601d}
+.done{background:#e5f2e6;color:#347047}
+.title{color:#26372b;font-size:1.04rem;font-weight:760;letter-spacing:-.018em}
+.meta{display:flex;gap:7px 15px;flex-wrap:wrap;margin-top:8px;color:#748078;font-size:.8rem}
+.meta span{display:inline-flex;align-items:center;gap:6px}
+.meta span:before{content:"";width:4px;height:4px;border-radius:50%;background:#b5c0b5}
+.activity-action{display:inline-flex;align-items:center;gap:7px;margin-top:12px;color:#326345;font-size:.82rem;font-weight:760;text-decoration:none}
+.activity-action:hover{color:#173b2b;text-decoration:underline;text-underline-offset:3px}
+.activity-action svg{width:14px;height:14px;transition:transform .18s}
+.activity-action:hover svg{transform:translateX(3px)}
+.empty{padding:35px 20px;text-align:center;border:1px dashed #dce5da;border-radius:14px;background:#f9fbf8;color:#77847a;font-size:.9rem}
+.empty a{color:#326345;font-weight:700}
+.empty.error{color:#a13c32}
+.footer{display:flex;justify-content:space-between;gap:25px;margin:22px 3px 0;padding-top:17px;border-top:1px solid #dfe6dd;color:#7b877e;font-size:.76rem}
+.footer strong{color:#526b57}
+@media(max-width:850px){
+  .hero{gap:20px;grid-template-columns:minmax(0,1.2fr) minmax(190px,.8fr);padding:48px 0 55px}
+  .toolbar{grid-template-columns:1fr 1fr}
+  .control.search-control{grid-column:1/2}
+  .reload{grid-column:2/3}
+}
+@media(max-width:620px){
+  .nav-wrap,.hero,.container{width:min(100% - 28px,1180px)}
+  .top-nav{min-height:66px}
+  .brand{font-size:.9rem}
+  .brand-mark{width:33px;height:33px}
+  .nav-links{gap:2px}
+  .nav-links a{padding:8px 9px;font-size:.78rem}
+  .hero{display:block;padding:43px 0 45px}
+  .hero h1{font-size:clamp(2.5rem,12vw,3.45rem)}
+  .hero-copy{font-size:.97rem}
+  .hero-art{display:none}
+  .container{padding-top:18px;padding-bottom:38px}
+  .overview-card,.filter-card,.feed-card{border-radius:17px}
+  .overview-card{padding:21px 17px}
+  .section-head{align-items:flex-start;flex-direction:column;gap:12px}
+  .summary{grid-template-columns:1fr 1fr;gap:9px}
+  .stat{min-height:128px;padding:14px}
+  .stat:last-child{grid-column:1/-1}
+  .stat strong{font-size:1.9rem}
+  .filter-card,.feed-card{padding:19px 15px}
+  .filter-head{align-items:flex-start;flex-direction:column;gap:3px}
+  .toolbar{grid-template-columns:1fr 1fr;gap:8px}
+  .control.search-control{grid-column:1/-1}
+  .reload{grid-column:1/-1;width:100%}
+  .feed-head{align-items:flex-start}
+  .activity{grid-template-columns:1fr;gap:6px;padding:15px}
+  .date-block{display:flex;align-items:center;gap:8px}
+  .date-year{display:inline;margin:0}
+  .footer{display:block;line-height:1.65}
+  .footer span{display:block;margin-top:7px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
 <body>
-<header><h1>Skogsbevakning – Nordmaling</h1><p>Aktivitetsflöde över anmälda och registrerade utförda avverkningar under 2026.</p><p style="margin-top:9px"><a href="index.html">Äldre bevakningssida</a> · <a href="karta.html">Avverkningskarta</a> · <a href="utforda.html">Utförda avverkningar</a></p></header>
-<main>
-<section class="panel"><div class="eyebrow">Kommunöversikt · 1 jan–31 dec 2026</div><h2>Senaste skogsaktiviteterna</h2><p class="muted">Planerade avverkningar sorteras efter inkomdatum. Utförda avverkningar sorteras efter registrerat avverkningsdatum. En anmälan är inte ett bevis på att avverkningen genomförts.</p>
-<div class="summary"><div class="stat"><strong id="plannedCount">–</strong><span>Planerade anmälningar</span></div><div class="stat"><strong id="doneCount">–</strong><span>Registrerade utförda ytor</span></div><div class="stat"><strong id="totalArea">–</strong><span>Sammanlagd registrerad areal</span></div></div>
-<div class="toolbar"><select id="kindFilter" aria-label="Aktivitetstyp"><option value="all">Alla aktiviteter</option><option value="planned">Planerade avverkningar</option><option value="done">Utförda avverkningar</option></select><select id="monthFilter" aria-label="Månad"><option value="all">Hela 2026</option><option value="01">Januari</option><option value="02">Februari</option><option value="03">Mars</option><option value="04">April</option><option value="05">Maj</option><option value="06">Juni</option><option value="07">Juli</option><option value="08">Augusti</option><option value="09">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">December</option></select><input id="search" type="search" placeholder="Sök ärende, typ eller fastighet…" aria-label="Sök aktiviteter"><button id="reload" type="button">Uppdatera data</button></div>
-<div class="statusline muted"><span id="statusDot" class="dot"></span><span id="status">Hämtar data från Skogsstyrelsen …</span></div><p id="coverage" class="muted"></p></section>
-<section class="panel"><div class="eyebrow">Aktivitetsflöde</div><h2>Nyast först</h2><div id="feed" class="feed"><div class="empty">Hämtar aktiviteter …</div></div></section>
-<footer>Datakälla: Skogsstyrelsens öppna geodatatjänster. Resultaten beror på vad källagren publicerar och kommunattributet i respektive objekt. Utförda ytor är fjärranalysbaserade registreringar, inte en garanti för fältverifiering.</footer>
+<header class="site-header">
+  <div class="nav-wrap">
+    <nav class="top-nav" aria-label="Huvudmeny">
+      <a class="brand" href="bevakning.html" aria-label="Skogsbevakning, startsida">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5.5 12h4L6.8 17h10.4L14.5 12h4L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <span>Skogsbevakning</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Översikt</a>
+        <a href="karta.html">Karta</a>
+        <a href="utforda.html">Utförda</a>
+      </div>
+    </nav>
+  </div>
+  <div class="hero">
+    <div>
+      <div class="kicker">Skoglig lägesbild · Nordmaling</div>
+      <h1>Se vad som händer <em>i skogen.</em></h1>
+      <p class="hero-copy">En samlad överblick över anmälda och registrerade utförda avverkningar. Följ utvecklingen, hitta enskilda ärenden och gå vidare till kartan.</p>
+      <div class="hero-links">
+        <a class="hero-link primary" href="#aktiviteter">Utforska aktiviteter <span aria-hidden="true">↓</span></a>
+        <a class="hero-link" href="karta.html">Öppna avverkningskartan <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit">
+        <div class="orbit-core"><svg viewBox="0 0 48 48" fill="none"><path d="M24 5 11 23h8l-6 10h22l-6-10h8L24 5Z" stroke="#e5f0df" stroke-width="1.8" stroke-linejoin="round"/><path d="M24 33v10M8 43h32" stroke="#e5f0df" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <div class="orbit-tag one"><i></i> Öppna geodata</div>
+        <div class="orbit-tag two"><i></i> Nordmalings kommun</div>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="container">
+  <section class="overview-card" aria-labelledby="overview-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Kommunöversikt</p>
+        <h2 id="overview-title">Skogsaktiviteter under 2026</h2>
+        <p class="section-intro">En anmälan betyder inte att avverkningen har genomförts. Utförda ytor redovisas separat utifrån Skogsstyrelsens registreringar.</p>
+      </div>
+      <span class="year-chip">1 jan – 31 dec 2026</span>
+    </div>
+    <div class="summary">
+      <article class="stat">
+        <div class="stat-top"><span class="stat-label">Planerade anmälningar</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19V7l7-3 7 3v12M9 19v-5h6v5M3 19h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <strong id="plannedCount">–</strong><span class="stat-note">Inkomna anmälningar under året</span>
+      </article>
+      <article class="stat">
+        <div class="stat-top"><span class="stat-label">Registrerade utförda ytor</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m4.5 7.3 7.5 4 7.5-4M12 21V11.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
+        <strong id="doneCount">–</strong><span class="stat-note">Registrerade objekt i källan</span>
+      </article>
+      <article class="stat">
+        <div class="stat-top"><span class="stat-label">Sammanlagd registrerad areal</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8M8 13h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="m15 16 2 2 3-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <strong id="totalArea">–</strong><span class="stat-note">Areal för registrerade utförda ytor</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="filter-card" aria-labelledby="filter-title">
+    <div class="filter-head">
+      <h2 class="filter-title" id="filter-title">Hitta en aktivitet</h2>
+      <span class="filter-hint">Filtrera i kommunens hämtade objekt</span>
+    </div>
+    <div class="toolbar">
+      <div class="control"><select id="kindFilter" aria-label="Aktivitetstyp"><option value="all">Alla aktiviteter</option><option value="planned">Planerade avverkningar</option><option value="done">Utförda avverkningar</option></select></div>
+      <div class="control"><select id="monthFilter" aria-label="Månad"><option value="all">Hela 2026</option><option value="01">Januari</option><option value="02">Februari</option><option value="03">Mars</option><option value="04">April</option><option value="05">Maj</option><option value="06">Juni</option><option value="07">Juli</option><option value="08">Augusti</option><option value="09">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">December</option></select></div>
+      <div class="control search-control">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <input id="search" type="search" placeholder="Sök ärende, typ eller fastighet…" aria-label="Sök aktiviteter">
+      </div>
+      <button id="reload" class="reload" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.7-4L3 10m0-5v5h5M4 13a8 8 0 0 0 14.7 4L21 14m0 5v-5h-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Uppdatera data</button>
+    </div>
+    <div class="statusline" aria-live="polite"><span id="statusDot" class="dot"></span><span id="status">Hämtar data från Skogsstyrelsen …</span></div>
+    <p id="coverage"></p>
+  </section>
+
+  <section class="feed-card" id="aktiviteter" aria-labelledby="feed-title">
+    <div class="feed-head">
+      <div><p class="eyebrow">Aktivitetsflöde</p><h2 id="feed-title">Senaste händelserna</h2><p class="feed-subtitle">Senast registrerade datum först. Välj en aktivitet för att se dess läge på kartan.</p></div>
+      <span class="result-count" id="resultCount" aria-live="polite">– träffar</span>
+    </div>
+    <div id="feed" class="feed" aria-live="polite"><div class="empty">Hämtar aktiviteter …</div></div>
+  </section>
+
+  <footer class="footer">
+    <strong>Datakälla: Skogsstyrelsens öppna geodatatjänster.</strong>
+    <span>Resultaten beror på vad källagren publicerar och kommunattributet i respektive objekt. Utförda ytor är fjärranalysbaserade registreringar, inte en garanti för fältverifiering.</span>
+  </footer>
 </main>
 <script>
 const ROOT="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/";
@@ -22,7 +271,8 @@ const sources=[
  {kind:"planned",label:"Planerad avverkning",url:ROOT+"GeodataportalVisaAvverkningsanmalan/MapServer/0/query",dateField:"Inkomdatum",areaField:"AnmaldHa",fields:"OBJECTID,Inkomdatum,Arendear,Kommun,Avverktyp,AnmaldHa,ArendeStatus,Beteckn,Lan,Kommunnr"},
  {kind:"done",label:"Utförd avverkning",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"}
 ];
-let all=[];const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let all=[];
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const num=v=>v===null||v===undefined||v===""?null:Number(v);
 function dateValue(v){if(v===null||v===undefined||v==="")return null;if(typeof v==="number")return new Date(v);const d=new Date(v);return Number.isNaN(d.getTime())?null:d;}
 function dateLabel(v){const d=dateValue(v);return d?new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"short",day:"numeric"}).format(d):"Datum saknas";}
@@ -36,7 +286,53 @@ function geometryInfo(geometry){if(!geometry)return null;let minX=Infinity,minY=
 function mapUrl(item){const info=geometryInfo(item.geometry);if(!info)return "karta.html";const objectId=get(item.properties,"OBJECTID","ObjectId","objectid")??item.properties.OBJECTID;const q=new URLSearchParams({lat:info.lat.toFixed(6),lon:info.lon.toFixed(6),radius:String(Math.ceil(info.radius/1000)*1000),focus:item.kind==="done"?"performed":"planned",objectid:String(objectId),focusVersion:"2"});return "karta.html?"+q.toString();}
 function normalize(item){const p=item.properties;const rawDate=get(p,item.source.dateField,"Inkomdatum","Avvdatum","KallaDatum");const date=dateValue(rawDate);const area=get(p,item.source.areaField,"Arealha","AnmaldHa");const caseNo=get(p,"Beteckn","Beteckning","OBJECTID");return {...item,date,area,caseNo,municipality:get(p,"Kommun")||"Nordmaling",activityType:get(p,"Avverktyp","Skogstyp")||"Avverkning",status:get(p,"ArendeStatus"),year:get(p,"Arendear")};}
 function filtered(){const kind=document.getElementById("kindFilter").value,month=document.getElementById("monthFilter").value,search=document.getElementById("search").value.trim().toLocaleLowerCase("sv");return all.filter(x=>{if(kind!=="all"&&x.kind!==kind)return false;if(!x.date||x.date.getFullYear()!==2026)return false;if(month!=="all"&&String(x.date.getMonth()+1).padStart(2,"0")!==month)return false;const p=x.properties;const hay=[x.label,x.caseNo,x.municipality,x.activityType,x.status,get(p,"Beteckn","Beteckning")].join(" ").toLocaleLowerCase("sv");return !search||hay.includes(search);}).sort((a,b)=>(b.date?.getTime()||0)-(a.date?.getTime()||0));}
-function render(){const list=filtered();document.getElementById("feed").innerHTML=list.length?list.map(x=>{const p=x.properties;const caseText=x.caseNo?"Ärende / objekt "+esc(x.caseNo):"Ärende-ID saknas";const area=areaLabel(x.area);const year=x.year?"Ärendeår "+esc(x.year):"";const status=x.status?'<span>Status: '+esc(x.status)+'</span>':"";const props=get(p,"Beteckn","Beteckning");return '<article class="activity"><div class="date">'+esc(dateLabel(x.date))+'</div><div><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><div style="margin-top:9px"><a href="'+esc(mapUrl(x))+'">Visa plats på kartan →</a></div></div></article>';}).join(""):'<div class="empty">Inga aktiviteter matchar filtren för 2026. Det kan också betyda att källan inte returnerar data för detta kommunfilter.</div>';document.getElementById("plannedCount").textContent=all.filter(x=>x.kind==="planned").length.toLocaleString("sv-SE");document.getElementById("doneCount").textContent=all.filter(x=>x.kind==="done").length.toLocaleString("sv-SE");const total=all.filter(x=>x.kind==="done").reduce((s,x)=>s+(num(x.area)||0),0);document.getElementById("totalArea").textContent=total.toLocaleString("sv-SE",{maximumFractionDigits:1})+" ha";document.getElementById("coverage").textContent="Visar "+list.length+" aktiviteter av "+all.length+" hämtade objekt för kalenderåret 2026. Sortering: senaste händelsedatum först.";}
-async function load(){const status=document.getElementById("status"),dot=document.getElementById("statusDot"),feed=document.getElementById("feed");status.textContent="Hämtar kommunens avverkningsanmälningar och utförda ytor …";dot.className="dot";feed.innerHTML='<div class="empty">Hämtar aktiviteter …</div>';document.getElementById("reload").disabled=true;try{const results=await Promise.allSettled(sources.map(fetchSource));all=results.flatMap(r=>r.status==="fulfilled"?r.value:[]).map(normalize);const errors=results.filter(r=>r.status==="rejected");if(!all.length&&errors.length)throw new Error(errors.map(e=>e.reason?.message||String(e.reason)).join("; "));render();status.textContent="Uppdaterad "+new Intl.DateTimeFormat("sv-SE",{dateStyle:"medium",timeStyle:"short"}).format(new Date())+(errors.length?"; en datakälla kunde inte läsas":"");dot.className="dot "+(errors.length?"error":"ok");if(errors.length)document.getElementById("coverage").textContent+=" Varning: "+errors.length+" datakälla(or) misslyckades."; }catch(e){status.textContent="Kunde inte läsa aktivitetsdata: "+(e.message||e);dot.className="dot error";feed.innerHTML='<div class="empty error">Data kunde inte hämtas direkt från Skogsstyrelsens tjänster. Kontrollera anslutningen eller öppna kartan för källstatus.<br><br><a href="karta.html">Öppna avverkningskartan</a></div>'; }finally{document.getElementById("reload").disabled=false;}}
-document.getElementById("kindFilter").addEventListener("change",render);document.getElementById("monthFilter").addEventListener("change",render);document.getElementById("search").addEventListener("input",render);document.getElementById("reload").addEventListener("click",load);load();
-</script></body></html>
+function render(){
+ const list=filtered();
+ document.getElementById("feed").innerHTML=list.length?list.map(x=>{
+  const p=x.properties;
+  const caseText=x.caseNo?"Ärende / objekt "+esc(x.caseNo):"Ärende-ID saknas";
+  const area=areaLabel(x.area);
+  const year=x.year?"Ärendeår "+esc(x.year):"";
+  const status=x.status?'<span>Status: '+esc(x.status)+'</span>':"";
+  const props=get(p,"Beteckn","Beteckning");
+  const d=x.date;
+  const dateYear=d?String(d.getFullYear()):"";
+  return '<article class="activity"><div class="date-block"><div class="date">'+esc(dateLabel(x.date))+'</div><span class="date-year">'+esc(dateYear)+'</span></div><div class="activity-main"><div class="activity-top"><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span></div><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><a class="activity-action" href="'+esc(mapUrl(x))+'">Visa plats på kartan <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></article>';
+ }).join(""):'<div class="empty">Inga aktiviteter matchar filtren för 2026. Det kan också betyda att källan inte returnerar data för detta kommunfilter.</div>';
+ document.getElementById("plannedCount").textContent=all.filter(x=>x.kind==="planned").length.toLocaleString("sv-SE");
+ document.getElementById("doneCount").textContent=all.filter(x=>x.kind==="done").length.toLocaleString("sv-SE");
+ const total=all.filter(x=>x.kind==="done").reduce((s,x)=>s+(num(x.area)||0),0);
+ document.getElementById("totalArea").textContent=total.toLocaleString("sv-SE",{maximumFractionDigits:1})+" ha";
+ document.getElementById("coverage").textContent="Visar "+list.length+" aktiviteter av "+all.length+" hämtade objekt för kalenderåret 2026. Sortering: senaste händelsedatum först.";
+ document.getElementById("resultCount").textContent=list.length.toLocaleString("sv-SE")+" träffar";
+}
+async function load(){
+ const status=document.getElementById("status"),dot=document.getElementById("statusDot"),feed=document.getElementById("feed");
+ status.textContent="Hämtar kommunens avverkningsanmälningar och utförda ytor …";
+ dot.className="dot";
+ feed.innerHTML='<div class="empty">Hämtar aktiviteter …</div>';
+ document.getElementById("reload").disabled=true;
+ try{
+  const results=await Promise.allSettled(sources.map(fetchSource));
+  all=results.flatMap(r=>r.status==="fulfilled"?r.value:[]).map(normalize);
+  const errors=results.filter(r=>r.status==="rejected");
+  if(!all.length&&errors.length)throw new Error(errors.map(e=>e.reason?.message||String(e.reason)).join("; "));
+  render();
+  status.textContent="Uppdaterad "+new Intl.DateTimeFormat("sv-SE",{dateStyle:"medium",timeStyle:"short"}).format(new Date())+(errors.length?"; en datakälla kunde inte läsas":"");
+  dot.className="dot "+(errors.length?"error":"ok");
+  if(errors.length)document.getElementById("coverage").textContent+=" Varning: "+errors.length+" datakälla(or) misslyckades.";
+ }catch(e){
+  status.textContent="Kunde inte läsa aktivitetsdata: "+(e.message||e);
+  dot.className="dot error";
+  feed.innerHTML='<div class="empty error">Data kunde inte hämtas direkt från Skogsstyrelsens tjänster. Kontrollera anslutningen eller öppna kartan för källstatus.<br><br><a href="karta.html">Öppna avverkningskartan</a></div>';
+  document.getElementById("resultCount").textContent="0 träffar";
+ }finally{document.getElementById("reload").disabled=false;}
+}
+document.getElementById("kindFilter").addEventListener("change",render);
+document.getElementById("monthFilter").addEventListener("change",render);
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("reload").addEventListener("click",load);
+load();
+</script>
+</body>
+</html>
