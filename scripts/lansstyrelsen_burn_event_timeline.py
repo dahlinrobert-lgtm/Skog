@@ -289,8 +289,11 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     for candidate in candidates:
         diary_count = diary_counts[candidate["diary_event_id"]]
         geometry_count = geometry_counts[candidate["geometry_event_id"]]
-        if candidate["shared_counties"]:
-            candidate["uniqueness_points"] = 10 if diary_count == 1 else 5 if diary_count <= 3 else 0
+        # Award uniqueness only for a genuinely one-to-one candidate pair.
+        # A diary record matching one polygon is not unique if that polygon also
+        # matches other diary records, and vice versa.
+        if candidate["shared_counties"] and diary_count == 1 and geometry_count == 1:
+            candidate["uniqueness_points"] = 10
         candidate["score"] = min(100, candidate["score"] + candidate["uniqueness_points"])
         candidate["confidence"] = (
             "high" if candidate["score"] >= 80 and candidate["data_coverage"] >= 0.75 else
