@@ -120,6 +120,43 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertEqual(left_specific & right_specific, set())
         self.assertTrue({"skattlösberg", "stormosse"}.issubset(left_context & right_context))
 
+    def test_broad_context_with_different_specific_sites_is_flagged_as_conflict(self):
+        state = {"records": {"d1": {
+            "record_key": "d1", "title": "Anmälan naturvårdsbränning vid Allgunnen Värlekärret",
+            "columns": {"Län": "Kalmar län"}
+        }}}
+        source = {"features": [{
+            "id": 1, "properties": {
+                "OBJECTID": 1, "title": "Allgunnen Brantehallar", "Län": "Kalmar län",
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        candidate = report["link_candidates"][0]
+        self.assertEqual(candidate["place_relation"], "conflicting_specific_place_names")
+        self.assertIn("värlekärret", candidate["diary_specific_place_tokens"])
+        self.assertIn("brantehallar", candidate["geometry_specific_place_tokens"])
+        self.assertEqual(candidate["shared_place_tokens"], [])
+        self.assertEqual(
+            report["link_candidate_summary"]["by_place_relation"]["conflicting_specific_place_names"], 1
+        )
+        self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
+
+    def test_context_only_without_specific_site_names_is_not_a_conflict(self):
+        state = {"records": {"d1": {
+            "record_key": "d1", "title": "Anmälan naturvårdsbränning på Gotska Sandön",
+            "columns": {"Län": "Gotlands län"}
+        }}}
+        source = {"features": [{
+            "id": 1, "properties": {
+                "OBJECTID": 1, "title": "Gotska Sandön", "Län": "Gotlands län",
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidates"][0]["place_relation"],
+                         "context_only_insufficient_specific_detail")
+
     def test_candidate_links_do_not_form_on_generic_burn_words_alone(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
