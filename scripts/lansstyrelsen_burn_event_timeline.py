@@ -272,7 +272,7 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
         diary_counties = _county_clues(diary_text)
         for geometry in geometry_events:
             geo_text = _normal(geometry.get("title", "")) + " " + _normal(geometry.get("evidence_text", ""))
-            geo_place_text = geo_text + " " + " ".join(geometry.get("place_candidates") or [])
+            geo_place_text = _normal(geometry.get("title", "")) + " " + " ".join(geometry.get("place_candidates") or [])
             geo_tokens, geo_context_tokens = _place_token_groups(geo_place_text)
             overlap = sorted(diary_tokens & geo_tokens)
             context_overlap = sorted(
