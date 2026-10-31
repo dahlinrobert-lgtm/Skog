@@ -89,8 +89,26 @@ def main():
     token_resp=requests.post("https://login.microsoftonline.com/consumers/oauth2/v2.0/token",
       data={"client_id":os.environ["ONEDRIVE_CLIENT_ID"],"grant_type":"refresh_token",
             "refresh_token":os.environ["ONEDRIVE_REFRESH_TOKEN"],"scope":"https://graph.microsoft.com/Files.Read offline_access"},timeout=60)
-    token_resp.raise_for_status(); session=requests.Session()
-    session.headers.update({"Authorization":"Bearer "+token_resp.json()["access_token"]})
+    if not token_resp.ok:
+        # Microsoft error bodies contain useful AADSTS codes; never print credentials.
+        try:
+            error_body=token_resp.json()
+            error_code=error_body.get("error","unknown")
+            error_description=error_body.get("error_description","")
+        except ValueError:
+            error_code="non_json_response"
+            error_description=token_resp.text[:500]
+        raise SystemExit(
+            f"OAuth refresh failed: HTTP {token_resp.status_code}; "
+            f"error={error_code}; details={error_description[:700]}. "
+            "Check ONEDRIVE_CLIENT_ID and ONEDRIVE_REFRESH_TOKEN GitHub Actions secrets; "
+            "the refresh token may have expired or been revoked."
+        )
+    token=token_resp.json().get("access_token")
+    if not token:
+        raise SystemExit("OAuth refresh response did not contain access_token")
+    session=requests.Session()
+    session.headers.update({"Authorization":"Bearer "+token,"User-Agent":"Skogskoll-three-omdrev-compare/1.0"})
     Path("raster-three-omdrev").mkdir(exist_ok=True)
     report={"generated_at_utc":datetime.now(timezone.utc).isoformat(),"common_grid_resolution_m":OUT_RES,
       "aggregation":"exact block mean (4x4 at 12.5m; 5x5 at 10m); output valid only if all source pixels in a block are valid",
