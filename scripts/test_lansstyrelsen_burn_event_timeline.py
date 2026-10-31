@@ -318,5 +318,32 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertIn("unikhet 10/10", candidate["evidence_summary"])
 
 
+    def test_ambiguous_candidate_pair_receives_no_uniqueness_bonus(self):
+        state = {"records": {
+            "r1": {
+                "record_key": "r1", "diary_number": "123-2026",
+                "title": "Anmälan om naturvårdsbränning vid Fågelmossen i Västerbotten",
+                "columns": {"Diarienummer": "123-2026"}
+            },
+            "r2": {
+                "record_key": "r2", "diary_number": "124-2026",
+                "title": "Uppföljning efter naturvårdsbränning vid Fågelmossen i Västerbotten",
+                "columns": {"Diarienummer": "124-2026"}
+            }
+        }}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "Namn": "Fågelmossen",
+                "Län": "Västerbotten", "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 2)
+        for candidate in report["link_candidates"]:
+            self.assertEqual(candidate["geometry_candidate_count"], 2)
+            self.assertEqual(candidate["uniqueness_points"], 0)
+            self.assertEqual(candidate["ambiguity"], "geometry_matches_multiple_diary_records")
+
+
 if __name__ == "__main__":
     unittest.main()
