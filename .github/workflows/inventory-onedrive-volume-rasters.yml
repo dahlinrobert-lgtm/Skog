@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       raster_keys:
-        description: "Comma-separated keys, e.g. omdrev2_23,omdrev3_23. Leave blank for all 17."
+        description: "Comma-separated keys, e.g. omdrev2_23,omdrev3_23. Leave blank for all 37."
         required: false
         default: ""
         type: string
