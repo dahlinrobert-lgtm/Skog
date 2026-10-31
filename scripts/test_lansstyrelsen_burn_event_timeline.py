@@ -219,6 +219,35 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertEqual(report["link_candidate_summary"]["by_evidence_tier"], {"place_and_year": 2})
         self.assertEqual(report["link_candidate_summary"]["by_review_priority"], {"normal": 2})
 
+    def test_county_only_summary_groups_pairs_and_distinct_diary_records_by_stage(self):
+        state = {"records": {
+            "d1": {
+                "record_key": "d1", "diary_number": "101-2026",
+                "title": "Upphandling av naturvårdsbränning i Dalarnas län",
+                "columns": {"Diarienummer": "101-2026"}
+            },
+            "d2": {
+                "record_key": "d2", "diary_number": "102-2026",
+                "title": "Anmälan om naturvårdsbränning i Dalarnas län",
+                "columns": {"Diarienummer": "102-2026"}
+            }
+        }}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "title": "Life2Taiga burn action",
+                "Län": "Dalarnas län", "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        summary = report["link_candidate_summary"]
+        self.assertEqual(summary["county_only_candidate_pair_count"], 2)
+        self.assertEqual(summary["county_only_distinct_diary_event_count"], 2)
+        by_stage = summary["county_only_by_diary_stage"]
+        self.assertEqual(by_stage["procurement_or_contracting"]["candidate_pair_count"], 1)
+        self.assertEqual(by_stage["application_notification_or_consultation"]["candidate_pair_count"], 1)
+        self.assertEqual(by_stage["procurement_or_contracting"]["diary_event_count"], 1)
+        self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
+
     def test_record_date_does_not_create_shared_event_year_evidence(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
