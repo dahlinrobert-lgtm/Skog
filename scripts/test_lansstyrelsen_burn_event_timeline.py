@@ -133,6 +133,14 @@ class BurnEventTimelineTests(unittest.TestCase):
         report = build_timeline(state, source)
         self.assertEqual(report["link_candidate_count"], 0)
 
+    def test_timeline_summary_includes_bounded_context_only_examples(self):
+        diary = {"records": {"d1": {"record_key": "d1", "title": "Bränning vid Gotska Sandön", "columns": {"Län": "Gotlands län"}}}}
+        lifetaiga = {"features": [{"id": 1, "properties": {"OBJECTID": 1, "title": "Gotska Sandön Slyngdynen", "lansnamn": "Gotlands län"}, "geometry": {"type": "Polygon", "coordinates": []}}]}
+        report = build_timeline(diary, lifetaiga)
+        examples = report["link_candidate_summary"]["context_only_examples"]
+        self.assertLessEqual(len(examples), 20)
+        self.assertTrue(all(item["shared_context_place_tokens"] for item in examples))
+
     def test_candidate_diagnostics_explain_evidence_and_ambiguity(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
