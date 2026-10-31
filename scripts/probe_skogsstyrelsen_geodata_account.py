@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 import os
-import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -90,7 +89,7 @@ def main() -> int:
 
 def write_report(report: dict) -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
