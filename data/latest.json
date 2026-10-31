@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-31T16:56:44.748842Z",
+  "checked_at": "2026-10-31T17:25:06.948992Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -33104,21 +33104,7 @@
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [
-    {
-      "id": "S1C_IW_GRDH_1SDV_20261031T160522_20261031T160547_010131_014387_98DD_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-31T16:05:22.911498Z",
-      "published_at": "2026-10-31T15:44:51.491276Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        18.707092,
-        63.33252,
-        24.831329,
-        65.288239
-      ]
-    }
-  ],
+  "new_scenes_since_previous_run": [],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
