@@ -142,6 +142,18 @@ class BurnEventTimelineTests(unittest.TestCase):
         )
         self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
 
+    def test_admin_process_and_municipality_words_do_not_create_place_conflicts(self):
+        from lansstyrelsen_burn_event_timeline import _name_tokens, _normalized_place
+        from lansstyrelsen_burn_event_timeline import _place_token_groups
+        specific, context = _place_token_groups("Anmälan om naturvårdsbränning på Gotska Sandön")
+        self.assertEqual(specific, set())
+        self.assertEqual(context, {"gotska", "sandön"})
+        site_tokens, context_tokens = _place_token_groups("Allgunnen Mjösjögöl Nybro kommun")
+        self.assertEqual(site_tokens, {"mjösjögöl"})
+        self.assertEqual(context_tokens, {"allgunnen"})
+        site_tokens, _ = _place_token_groups("Värlekärret, Högsby kommun")
+        self.assertEqual(site_tokens, {"värlekärret"})
+
     def test_context_only_without_specific_site_names_is_not_a_conflict(self):
         state = {"records": {"d1": {
             "record_key": "d1", "title": "Anmälan naturvårdsbränning på Gotska Sandön",
