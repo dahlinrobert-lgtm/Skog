@@ -512,6 +512,12 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
             "by_ambiguity": dict(sorted(Counter(c["ambiguity"] for c in link_candidates).items())),
             "by_evidence_tier": dict(sorted(Counter(c["evidence_tier"] for c in link_candidates).items())),
             "by_review_priority": dict(sorted(Counter(c["review_priority"] for c in link_candidates).items())),
+            "context_only_candidate_count": sum(bool(c.get("shared_context_place_tokens")) and not bool(c.get("shared_place_tokens")) for c in link_candidates),
+            "specific_place_candidate_count": sum(bool(c.get("shared_place_tokens")) for c in link_candidates),
+            "context_and_specific_candidate_count": sum(bool(c.get("shared_context_place_tokens")) and bool(c.get("shared_place_tokens")) for c in link_candidates),
+            "by_context_place_token": dict(sorted(Counter(
+                token for c in link_candidates for token in c.get("shared_context_place_tokens", [])
+            ).items())),
             "diary_events_with_candidates": len({c["diary_event_id"] for c in link_candidates}),
             "geometry_events_with_candidates": len({c["geometry_event_id"] for c in link_candidates}),
             "policy": "Candidate metrics are triage indicators, not calibrated probabilities. Shared event-year clues exclude record/registration dates. Ambiguous matches require manual review; original events remain unlinked."
@@ -535,7 +541,7 @@ def write_review_csv(report: dict[str, Any], output_path: Path) -> int:
     ))
     columns = [
         "review_priority", "score", "confidence", "evidence_tier",
-        "shared_place_tokens", "shared_counties", "shared_years", "ambiguity",
+        "shared_place_tokens", "shared_context_place_tokens", "shared_counties", "shared_years", "ambiguity",
         "place_points", "county_points", "time_points", "lifecycle_points", "uniqueness_points", "data_coverage",
         "diary_candidate_count", "geometry_candidate_count",
         "diary_event_id", "diary_number", "diary_title",
