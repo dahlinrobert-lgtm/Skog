@@ -212,6 +212,34 @@ COUNTY_NAMES = (
 )
 
 
+# Broad landscape/protected-area names found to cause cross-site matches in the
+# current review queue. These remain useful context, but are not treated as
+# evidence that two records refer to the same burn site.
+BROAD_PLACE_TOKENS = {
+    "gotska", "sandön", "sandon",       # island context; individual sites differ
+    "allgunnen",                         # reserve/landscape context; subareas differ
+    "skattlösberg", "skattlösbergs", "skattlosberg", "skattlosbergs", # mire/reserve context; subareas differ
+    "stormosse",                         # broad mire context; named sites differ
+    "kölarna", "kolarna",               # Natura 2000/landscape context
+}
+
+
+def _place_token_groups(value: str) -> tuple[set[str], set[str]]:
+    tokens = _name_tokens(value)
+    # Canonicalize common Swedish genitive forms so a broad reserve name is
+    # classified consistently whether a source writes e.g. Skattlösberg or
+    # Skattlösbergs stormosse.
+    canonical = {
+        "skattlösbergs": "skattlösberg",
+        "skattlosbergs": "skattlosberg",
+        "kölarna": "kölarna",
+        "kolarna": "kolarna",
+    }
+    tokens = {canonical.get(token, token) for token in tokens}
+    context = tokens & BROAD_PLACE_TOKENS
+    return tokens - context, context
+
+
 def _county_clues(text: str) -> set[str]:
     value = _normal(text).casefold()
     return {name for name in COUNTY_NAMES if name in value}
@@ -238,19 +266,25 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
     candidates = []
     for diary in diary_events:
         diary_text = _normal(diary.get("title", "")) + " " + _normal(diary.get("evidence_text", ""))
-        diary_tokens = _name_tokens(diary_text + " " + " ".join(diary.get("place_candidates") or []))
+        diary_place_text = diary_text + " " + " ".join(diary.get("place_candidates") or [])
+        diary_tokens, diary_context_tokens = _place_token_groups(diary_place_text)
         diary_years = set(diary.get("event_year_clues") or [])
         diary_counties = _county_clues(diary_text)
         for geometry in geometry_events:
             geo_text = _normal(geometry.get("title", "")) + " " + _normal(geometry.get("evidence_text", ""))
-            geo_tokens = _name_tokens(geo_text + " " + " ".join(geometry.get("place_candidates") or []))
+            geo_place_text = geo_text + " " + " ".join(geometry.get("place_candidates") or [])
+            geo_tokens, geo_context_tokens = _place_token_groups(geo_place_text)
             overlap = sorted(diary_tokens & geo_tokens)
+            context_overlap = sorted(
+                (diary_context_tokens & (geo_context_tokens | geo_tokens)) |
+                (geo_context_tokens & diary_tokens)
+            )
             geo_years = set(geometry.get("event_year_clues") or [])
             geo_counties = _county_clues(geo_text)
             shared_counties = sorted(diary_counties & geo_counties)
             # Candidate discovery is deliberately permissive within a named county,
             # while generic burn wording alone still cannot create a candidate.
-            if not overlap and not shared_counties:
+            if not overlap and not context_overlap and not shared_counties:
                 continue
 
             # Five transparent components, each capped at its published weight.
@@ -278,6 +312,7 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "lifecycle_points": lifecycle_points,
                 "uniqueness_points": 0,
                 "shared_place_tokens": overlap,
+                "shared_context_place_tokens": context_overlap,
                 "shared_counties": shared_counties,
                 "shared_years": year_overlap,
                 "evidence_tier": (
@@ -285,7 +320,8 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     "place_and_year" if overlap and year_overlap else
                     "county_and_year" if shared_counties and year_overlap else
                     "place_and_county" if overlap and shared_counties else
-                    "place_only" if overlap else "county_only"
+                    "place_only" if overlap else
+                    "context_only" if context_overlap else "county_only"
                 ),
                 "data_coverage": round(evidence_dimensions / 4, 2),
                 "data_coverage_note": (
