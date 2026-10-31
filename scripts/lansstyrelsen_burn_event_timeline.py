@@ -156,7 +156,7 @@ def _name_tokens(value: str) -> set[str]:
                "naturreservatet", "naturvårdsbränning", "naturvardsbranning",
                "bränning", "branning", "information", "planerad", "planering"}
     generic.update(COUNTY_NAMES)
-    return {t for t in _normalized_place(value).split() if len(t) >= 4 and t not in generic}
+    return {t for t in _normalized_place(value).split() if len(t) >= 4 and not t.isdigit() and t not in generic}
 
 
 def _event_year_clues(title: str, event_date: str | None, props: dict[str, Any] | None = None) -> list[str]:
