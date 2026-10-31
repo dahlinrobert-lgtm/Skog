@@ -166,6 +166,14 @@ def _name_tokens(value: str) -> set[str]:
         "östra", "ostra", "västra", "vastra", "mellersta", "inre", "yttre",
         "nordöstra", "nordvastra", "sydöstra", "sydvästra", "sydvastra",
         "nordvästra", "nordvastra", "övre", "ovre", "nedre",
+        # Common Swedish function words and diary/procurement language.
+        "inför", "från", "till", "för", "vid", "på", "inom", "under",
+        "mellan", "genom", "efter", "före", "av", "om", "i", "på",
+        "eventuellt", "gäller", "giltighetstid", "ansökan", "dispens",
+        "upphandling", "upphandlingar", "tjänst", "tjänster", "avrop",
+        "entreprenad", "entreprenören", "avtal", "avtalade", "ersättning",
+        "skada", "kontraktsbrott", "beställning", "distribution",
+        "skog", "skogs", "nationalpark", "nationalparken", "sveaskog",
     })
     return {t for t in _normalized_place(value).split() if len(t) >= 4 and not t.isdigit() and t not in generic}
 

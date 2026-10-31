@@ -77,6 +77,19 @@ class BurnEventTimelineTests(unittest.TestCase):
         tokens = _name_tokens("Dalarnas län samt södra området vid Hornbobrändan")
         self.assertEqual(tokens, {"hornbobrändan"})
 
+    def test_place_tokens_ignore_diary_and_procurement_vocabulary(self):
+        from lansstyrelsen_burn_event_timeline import _name_tokens
+        tokens = _name_tokens(
+            "Ansökan om dispens från naturvårdsbränning inför upphandling "
+            "av tjänst i nationalparken"
+        )
+        self.assertEqual(tokens, set())
+
+    def test_generic_nationalpark_and_forest_terms_do_not_outvote_site_name(self):
+        from lansstyrelsen_burn_event_timeline import _name_tokens
+        tokens = _name_tokens("Fulufjällets nationalpark samt skog")
+        self.assertEqual(tokens, {"fulufjällets"})
+
     def test_candidate_links_do_not_form_on_generic_burn_words_alone(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
