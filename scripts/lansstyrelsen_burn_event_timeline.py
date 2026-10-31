@@ -155,7 +155,18 @@ def _name_tokens(value: str) -> set[str]:
     generic = {"lansstyrelsen", "länsstyrelsen", "kommun", "län", "naturreservat",
                "naturreservatet", "naturvårdsbränning", "naturvardsbranning",
                "bränning", "branning", "information", "planerad", "planering"}
-    generic.update(COUNTY_NAMES)
+    # County names and common inflections are administrative context, not site names.
+    for county in COUNTY_NAMES:
+        generic.add(county)
+        generic.add(county + "s")
+    # Frequent connective, directional and area-description words found in the
+    # real review queue (for example "Dalarnas ... samt södra ... området").
+    generic.update({
+        "samt", "området", "omrade", "område", "södra", "sodra", "norra",
+        "östra", "ostra", "västra", "vastra", "mellersta", "inre", "yttre",
+        "nordöstra", "nordvastra", "sydöstra", "sydvästra", "sydvastra",
+        "nordvästra", "nordvastra", "övre", "ovre", "nedre",
+    })
     return {t for t in _normalized_place(value).split() if len(t) >= 4 and not t.isdigit() and t not in generic}
 
 
