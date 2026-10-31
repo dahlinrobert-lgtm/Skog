@@ -218,7 +218,7 @@ COUNTY_NAMES = (
 BROAD_PLACE_TOKENS = {
     "gotska", "sandön", "sandon",       # island context; individual sites differ
     "allgunnen",                         # reserve/landscape context; subareas differ
-    "skattlösberg", "skattlosberg",     # mire/reserve context; subareas differ
+    "skattlösberg", "skattlösbergs", "skattlosberg", "skattlosbergs", # mire/reserve context; subareas differ
     "stormosse",                         # broad mire context; named sites differ
     "kölarna", "kolarna",               # Natura 2000/landscape context
 }
