@@ -67,6 +67,16 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertIn("fågelmossen", candidate["shared_place_tokens"])
         self.assertTrue(all(e["link_status"] == "unlinked" for e in report["events"]))
 
+    def test_place_tokens_ignore_county_inflections_and_generic_area_words(self):
+        from lansstyrelsen_burn_event_timeline import _name_tokens
+        tokens = _name_tokens("Dalarnas län samt södra området vid naturvårdsbränning")
+        self.assertEqual(tokens, set())
+
+    def test_specific_site_name_survives_generic_area_filter(self):
+        from lansstyrelsen_burn_event_timeline import _name_tokens
+        tokens = _name_tokens("Dalarnas län samt södra området vid Hornbobrändan")
+        self.assertEqual(tokens, {"hornbobrändan"})
+
     def test_candidate_links_do_not_form_on_generic_burn_words_alone(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
