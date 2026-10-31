@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "investigate/**"
+      - main
     paths:
       - "scripts/probe_sveaskog_arcgis.py"
       - ".github/workflows/probe-sveaskog-arcgis.yml"
