@@ -144,10 +144,10 @@ class BurnEventTimelineTests(unittest.TestCase):
 
     def test_admin_process_and_municipality_words_do_not_create_place_conflicts(self):
         from lansstyrelsen_burn_event_timeline import _name_tokens, _normalized_place
-        self.assertEqual(
-            _name_tokens("Anmälan om naturvårdsbränning på Gotska Sandön"),
-            set()
-        )
+        from lansstyrelsen_burn_event_timeline import _place_token_groups
+        specific, context = _place_token_groups("Anmälan om naturvårdsbränning på Gotska Sandön")
+        self.assertEqual(specific, set())
+        self.assertEqual(context, {"gotska", "sandön"})
         self.assertEqual(
             _name_tokens("Allgunnen Mjösjögöl Nybro kommun"),
             {"mjösjögöl"}
