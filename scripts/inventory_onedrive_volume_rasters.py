@@ -36,7 +36,7 @@ def raster_info(path):
             "resolution": list(ds.res), "transform": list(ds.transform),
             "dtype": list(ds.dtypes), "nodata": list(ds.nodatavals),
             "block_shapes": [list(x) for x in ds.block_shapes],
-            "compression": [str(x) if x else None for x in ds.compression],
+            "compression": str(ds.compression) if ds.compression else None,
             "overviews": [ds.overviews(i) for i in range(1, ds.count + 1)],
             "units": list(ds.units), "scales": list(ds.scales), "offsets": list(ds.offsets),
             "descriptions": list(ds.descriptions), "dataset_tags": ds.tags(),
