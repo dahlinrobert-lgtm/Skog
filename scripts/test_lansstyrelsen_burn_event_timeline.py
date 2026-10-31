@@ -102,7 +102,7 @@ class BurnEventTimelineTests(unittest.TestCase):
             "geometry_matches_multiple_diary_records": 2
         })
         for candidate in report["link_candidates"]:
-            self.assertIn("Shared place token(s): fågelmossen", candidate["evidence_summary"])
+            self.assertIn("Gemensamma platsindicier: fågelmossen", candidate["evidence_summary"])
             self.assertEqual(candidate["ambiguity"], "geometry_matches_multiple_diary_records")
             self.assertTrue(candidate["shared_years"])
         self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
@@ -144,7 +144,7 @@ class BurnEventTimelineTests(unittest.TestCase):
         report = build_timeline(state, source)
         self.assertEqual(report["link_candidate_count"], 1)
         candidate = report["link_candidates"][0]
-        self.assertEqual(candidate["evidence_tier"], "place_and_event_year")
+        self.assertEqual(candidate["evidence_tier"], "place_and_year")
         self.assertEqual(candidate["review_priority"], "higher")
 
     def test_admin_geometry_date_does_not_create_event_year_match(self):
