@@ -272,5 +272,51 @@ class BurnEventTimelineTests(unittest.TestCase):
         self.assertTrue(all(e["link_status"] == "unlinked" for e in report["events"]))
 
 
+    def test_county_context_can_create_candidate_without_exact_site_name(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Information om naturvårdsbränning i Västerbottens län",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "Län": "Västerbotten",
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        self.assertEqual(report["link_candidate_count"], 1)
+        candidate = report["link_candidates"][0]
+        self.assertEqual(candidate["shared_counties"], ["västerbotten"])
+        self.assertEqual(candidate["place_points"], 0)
+        self.assertEqual(candidate["county_points"], 15)
+        self.assertEqual(candidate["status"], "candidate_for_manual_review")
+        self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
+
+    def test_correlation_score_exposes_components_and_data_coverage(self):
+        state = {"records": {"r1": {
+            "record_key": "r1", "diary_number": "123-2026",
+            "title": "Planerad naturvårdsbränning vid Fågelmossen i Västerbotten 2026",
+            "columns": {"Diarienummer": "123-2026"}
+        }}}
+        source = {"features": [{
+            "id": 9, "properties": {
+                "OBJECTID": 9, "Namn": "Fågelmossen",
+                "Län": "Västerbotten", "Åtgärdsår": 2026,
+                "Typ": "T2.3 Controlled burning"
+            }
+        }]}
+        report = build_timeline(state, source)
+        candidate = report["link_candidates"][0]
+        self.assertEqual(candidate["place_points"], 20)
+        self.assertEqual(candidate["county_points"], 15)
+        self.assertEqual(candidate["time_points"], 20)
+        self.assertEqual(candidate["lifecycle_points"], 15)
+        self.assertEqual(candidate["uniqueness_points"], 10)
+        self.assertEqual(candidate["score"], 80)
+        self.assertEqual(candidate["data_coverage"], 1.0)
+        self.assertIn("unikhet 10/10", candidate["evidence_summary"])
+
+
 if __name__ == "__main__":
     unittest.main()
