@@ -17,6 +17,15 @@ def getj(session,url,params):
         raise RuntimeError(json.dumps(data["error"],ensure_ascii=False))
     return data
 
+def postj(session,url,data):
+    """POST long ArcGIS query parameters to avoid oversized request URLs."""
+    response=session.post(url,data=data,timeout=120)
+    response.raise_for_status()
+    payload=response.json()
+    if "error" in payload:
+        raise RuntimeError(json.dumps(payload["error"],ensure_ascii=False))
+    return payload
+
 def choose_field(fields, candidates):
     lookup={name.lower():name for name in fields}
     return next((lookup[name.lower()] for name in candidates if name.lower() in lookup),None)
@@ -58,7 +67,7 @@ def main():
         area_ids[area]=set(ids)
         for offset in range(0,len(ids),500):
             batch=ids[offset:offset+500]
-            result=getj(session,LAYER+"/query",{
+            result=postj(session,LAYER+"/query",{
                 "f":"json","objectIds":",".join(map(str,batch)),
                 "outFields":"*","returnGeometry":"true","outSR":3006
             })
