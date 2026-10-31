@@ -244,8 +244,8 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
             )
             raw_score = place_points + county_points + time_points + lifecycle_points
             evidence_dimensions = sum((
-                bool(overlap), bool(shared_counties),
-                bool(diary_years or geo_years), bool(lifecycle_points),
+                bool(overlap), bool(diary_counties and geo_counties),
+                bool(diary_years and geo_years), bool(lifecycle_points),
             ))
             candidates.append({
                 "candidate_id": f'{diary["event_id"]}~{geometry["event_id"]}',
