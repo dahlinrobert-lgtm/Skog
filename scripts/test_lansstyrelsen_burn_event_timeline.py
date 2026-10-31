@@ -90,6 +90,36 @@ class BurnEventTimelineTests(unittest.TestCase):
         tokens = _name_tokens("Fulufjällets nationalpark samt skog")
         self.assertEqual(tokens, {"fulufjällets"})
 
+    def test_broad_landscape_names_are_context_not_specific_site_evidence(self):
+        from lansstyrelsen_burn_event_timeline import _place_token_groups
+        diary_specific, diary_context = _place_token_groups(
+            "Bränning vid Gotska Sandön, Slyngdynen"
+        )
+        geometry_specific, geometry_context = _place_token_groups(
+            "Slyngdynen, Gotska Sandön"
+        )
+        other_specific, other_context = _place_token_groups(
+            "Tomtebo, Gotska Sandön"
+        )
+        self.assertEqual(diary_specific & geometry_specific, {"slyngdynen"})
+        self.assertEqual(diary_context & geometry_context, {"gotska", "sandön"})
+        self.assertEqual(diary_specific & other_specific, set())
+        self.assertEqual(diary_context & other_context, {"gotska", "sandön"})
+
+    def test_allgunnen_context_does_not_count_as_specific_overlap(self):
+        from lansstyrelsen_burn_event_timeline import _place_token_groups
+        left_specific, left_context = _place_token_groups("Allgunnen Värlekärret")
+        right_specific, right_context = _place_token_groups("Allgunnen Brantehallar")
+        self.assertEqual(left_specific & right_specific, set())
+        self.assertEqual(left_context & right_context, {"allgunnen"})
+
+    def test_skattlosberg_context_does_not_count_as_specific_overlap(self):
+        from lansstyrelsen_burn_event_timeline import _place_token_groups
+        left_specific, left_context = _place_token_groups("Skattlösbergs stormosse Lövmosstrupen")
+        right_specific, right_context = _place_token_groups("Skattlösbergs stormosse Tuppmossheden")
+        self.assertEqual(left_specific & right_specific, set())
+        self.assertTrue({"skattlösberg", "stormosse"}.issubset(left_context & right_context))
+
     def test_candidate_links_do_not_form_on_generic_burn_words_alone(self):
         state = {"records": {"r1": {
             "record_key": "r1", "diary_number": "123-2026",
