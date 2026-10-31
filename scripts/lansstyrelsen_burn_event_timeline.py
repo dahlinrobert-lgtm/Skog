@@ -501,6 +501,24 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
     stage_counts = Counter(event["stage"] for event in events)
     source_counts = Counter(event["source_type"] for event in events)
     link_candidates = _candidate_links(events)
+    event_by_id = {event["event_id"]: event for event in events}
+    context_only_examples = []
+    for candidate in link_candidates:
+        if candidate.get("shared_context_place_tokens") and not candidate.get("shared_place_tokens"):
+            diary_event = event_by_id.get(candidate["diary_event_id"], {})
+            geometry_event = event_by_id.get(candidate["geometry_event_id"], {})
+            context_only_examples.append({
+                "diary_title": diary_event.get("title", ""),
+                "geometry_title": geometry_event.get("title", ""),
+                "shared_context_place_tokens": candidate["shared_context_place_tokens"],
+                "shared_counties": candidate["shared_counties"],
+                "score": candidate["score"],
+                "ambiguity": candidate["ambiguity"],
+                "diary_candidate_count": candidate["diary_candidate_count"],
+                "geometry_candidate_count": candidate["geometry_candidate_count"],
+            })
+            if len(context_only_examples) >= 20:
+                break
     return {
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -518,6 +536,7 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
             "by_context_place_token": dict(sorted(Counter(
                 token for c in link_candidates for token in c.get("shared_context_place_tokens", [])
             ).items())),
+            "context_only_examples": context_only_examples,
             "diary_events_with_candidates": len({c["diary_event_id"] for c in link_candidates}),
             "geometry_events_with_candidates": len({c["geometry_event_id"] for c in link_candidates}),
             "policy": "Candidate metrics are triage indicators, not calibrated probabilities. Shared event-year clues exclude record/registration dates. Ambiguous matches require manual review; original events remain unlinked."
