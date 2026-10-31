@@ -1,0 +1,45 @@
+name: Probe Länsstyrelsen diary case details
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: Number of case pages to inspect (1–50)
+        required: true
+        default: "12"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Probe public case pages
+        run: |
+          python scripts/probe_lansstyrelsen_diary_case_details.py --limit "${{ inputs.limit }}" --output case-detail-probe.json
+
+      - name: Upload diagnostic artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-case-detail-probe
+          path: case-detail-probe.json
+          if-no-files-found: warn
+          retention-days: 7
