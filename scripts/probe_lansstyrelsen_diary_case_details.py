@@ -19,6 +19,16 @@ from playwright.sync_api import sync_playwright
 BASE_URL = "https://diarium.lansstyrelsen.se/"
 
 
+def build_case_url(href: str) -> str:
+    """Resolve result-grid CaseInfo links under the portal's /Case/ route."""
+    if href.startswith(("http://", "https://")):
+        return href
+    path = href.lstrip("/")
+    if not path.casefold().startswith("case/"):
+        path = "Case/" + path
+    return urljoin(BASE_URL, path)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--state", type=Path, default=Path("data/lansstyrelsen-diary/state.json"))
@@ -37,7 +47,7 @@ def main() -> int:
             href = link.get("href") if isinstance(link, dict) else None
             if not href or "caseinfo.aspx" not in href.casefold():
                 continue
-            url = urljoin(BASE_URL, href)
+            url = build_case_url(href)
             if url in seen:
                 continue
             seen.add(url)
