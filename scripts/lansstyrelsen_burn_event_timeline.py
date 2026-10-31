@@ -539,6 +539,42 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
             })
             if len(context_only_examples) >= 20:
                 break
+    # County-only rows can multiply because one diary record may pair with many
+    # geometries in the same county. Count both pairs and distinct diary records.
+    county_only_candidates = [
+        c for c in link_candidates
+        if c.get("place_relation") == "county_only_no_place_detail"
+    ]
+    county_only_by_stage: dict[str, dict[str, Any]] = {}
+    for candidate in county_only_candidates:
+        diary_event = event_by_id.get(candidate["diary_event_id"], {})
+        stage = diary_event.get("stage") or "unknown"
+        bucket = county_only_by_stage.setdefault(stage, {
+            "candidate_pair_count": 0,
+            "diary_event_ids": set(),
+            "geometry_event_ids": set(),
+            "examples": [],
+        })
+        bucket["candidate_pair_count"] += 1
+        bucket["diary_event_ids"].add(candidate["diary_event_id"])
+        bucket["geometry_event_ids"].add(candidate["geometry_event_id"])
+        if len(bucket["examples"]) < 5 and candidate["diary_event_id"] not in {
+            item["diary_event_id"] for item in bucket["examples"]
+        }:
+            bucket["examples"].append({
+                "diary_event_id": candidate["diary_event_id"],
+                "diary_number": diary_event.get("source_record_id", ""),
+                "diary_title": diary_event.get("title", ""),
+                "geometry_title": event_by_id.get(candidate["geometry_event_id"], {}).get("title", ""),
+                "shared_counties": candidate.get("shared_counties", []),
+                "score": candidate.get("score", 0),
+            })
+    for bucket in county_only_by_stage.values():
+        bucket["diary_event_count"] = len(bucket["diary_event_ids"])
+        bucket["geometry_event_count"] = len(bucket["geometry_event_ids"])
+        del bucket["diary_event_ids"]
+        del bucket["geometry_event_ids"]
+
     return {
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -558,6 +594,9 @@ def build_timeline(diary_state: dict[str, Any], lifetaiga: dict[str, Any]) -> di
                 token for c in link_candidates for token in c.get("shared_context_place_tokens", [])
             ).items())),
             "context_only_examples": context_only_examples,
+            "county_only_by_diary_stage": dict(sorted(county_only_by_stage.items())),
+            "county_only_candidate_pair_count": len(county_only_candidates),
+            "county_only_distinct_diary_event_count": len({c["diary_event_id"] for c in county_only_candidates}),
             "diary_events_with_candidates": len({c["diary_event_id"] for c in link_candidates}),
             "geometry_events_with_candidates": len({c["geometry_event_id"] for c in link_candidates}),
             "policy": "Candidate metrics are triage indicators, not calibrated probabilities. Shared event-year clues exclude record/registration dates. Ambiguous matches require manual review; original events remain unlinked."
@@ -585,7 +624,7 @@ def write_review_csv(report: dict[str, Any], output_path: Path) -> int:
         "geometry_specific_place_tokens", "place_relation", "shared_counties", "shared_years", "ambiguity",
         "place_points", "county_points", "time_points", "lifecycle_points", "uniqueness_points", "data_coverage",
         "diary_candidate_count", "geometry_candidate_count",
-        "diary_event_id", "diary_number", "diary_title",
+        "diary_event_id", "diary_number", "diary_stage", "diary_title",
         "diary_event_date", "diary_record_date", "diary_source_url",
         "geometry_event_id", "geometry_record_id", "geometry_title",
         "geometry_event_date", "geometry_record_date", "geometry_source_url",
@@ -605,6 +644,7 @@ def write_review_csv(report: dict[str, Any], output_path: Path) -> int:
                 "shared_counties": " | ".join(candidate.get("shared_counties") or []),
                 "shared_years": " | ".join(candidate.get("shared_years") or []),
                 "diary_number": diary.get("source_record_id", ""),
+                "diary_stage": diary.get("stage", ""),
                 "diary_title": diary.get("title", ""),
                 "diary_event_date": diary.get("event_date") or "",
                 "diary_record_date": diary.get("record_date") or "",
