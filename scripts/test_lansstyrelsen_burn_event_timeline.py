@@ -106,7 +106,7 @@ class BurnEventTimelineTests(unittest.TestCase):
             self.assertEqual(candidate["ambiguity"], "geometry_matches_multiple_diary_records")
             self.assertTrue(candidate["shared_years"])
         self.assertTrue(all(event["link_status"] == "unlinked" for event in report["events"]))
-        self.assertEqual(report["link_candidate_summary"]["by_evidence_tier"], {"place_and_event_year": 2})
+        self.assertEqual(report["link_candidate_summary"]["by_evidence_tier"], {"place_and_year": 2})
         self.assertEqual(report["link_candidate_summary"]["by_review_priority"], {"normal": 2})
 
     def test_record_date_does_not_create_shared_event_year_evidence(self):
