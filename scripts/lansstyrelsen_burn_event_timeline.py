@@ -155,7 +155,8 @@ def _name_tokens(value: str) -> set[str]:
     generic = {"lansstyrelsen", "länsstyrelsen", "kommun", "län", "naturreservat",
                "naturreservatet", "naturvårdsbränning", "naturvardsbranning",
                "bränning", "branning", "information", "planerad", "planering"}
-    return {t for t in _normalized_place(value).split() if len(t) >= 4 and t not in generic}
+    generic.update(COUNTY_NAMES)
+    return {t for t in _normalized_place(value).split() if len(t) >= 4 and not t.isdigit() and t not in generic}
 
 
 def _event_year_clues(title: str, event_date: str | None, props: dict[str, Any] | None = None) -> list[str]:
@@ -182,56 +183,120 @@ def _event_year_clues(title: str, event_date: str | None, props: dict[str, Any] 
     return sorted(years)
 
 
+COUNTY_NAMES = (
+    "blekinge", "dalarna", "gotland", "gavleborg", "gävleborg", "halland",
+    "jämtland", "jamtland", "jönköping", "jonkoping", "kalmar", "kronoberg",
+    "norrbotten", "skåne", "skane", "stockholm", "södermanland", "sodermanland",
+    "uppsala", "värmland", "varmland", "västerbotten", "vasterbotten",
+    "västernorrland", "vasternorrland", "västmanland", "vastmanland",
+    "västra götaland", "vastra gotaland", "östergötland", "ostergotland",
+)
+
+
+def _county_clues(text: str) -> set[str]:
+    value = _normal(text).casefold()
+    return {name for name in COUNTY_NAMES if name in value}
+
+
+def _lifecycle_compatibility(diary_stage: str, geometry_stage: str) -> tuple[int, str]:
+    """Score whether a diary lifecycle step plausibly relates to a mapped burn action."""
+    compatible = {
+        "planning_or_action_plan", "publicity_or_logistics_preparation",
+        "public_information", "agreement_or_contract", "procurement_or_contracting",
+        "application_notification_or_consultation", "pre_burn_species_protection",
+        "pre_burn_site_preparation", "completed_burn", "post_burn_follow_up",
+        "cancelled_or_postponed", "burn_related_diary",
+    }
+    if diary_stage in compatible and geometry_stage == "life2taiga_burn_related_geometry":
+        return 15, "diary_lifecycle_step_is_consistent_with_burn_action_layer"
+    return 0, "lifecycle_relation_not_specific_enough"
+
+
 def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Emit review-only links; do not mutate event.link_status or claim verified links."""
+    """Score review candidates using explainable clues; never auto-link source events."""
     diary_events = [e for e in events if e["source_type"] == "lansstyrelsen_diary"]
     geometry_events = [e for e in events if e["source_type"] == "lifetaiga_action_polygon"]
     candidates = []
     for diary in diary_events:
-        diary_text = _normal(diary.get("title", ""))
+        diary_text = _normal(diary.get("title", "")) + " " + _normal(diary.get("evidence_text", ""))
         diary_tokens = _name_tokens(diary_text + " " + " ".join(diary.get("place_candidates") or []))
-        # Use event-specific clues only: never use diary registration dates for matching.
         diary_years = set(diary.get("event_year_clues") or [])
+        diary_counties = _county_clues(diary_text)
         for geometry in geometry_events:
-            geo_tokens = _name_tokens(geometry.get("title", "") + " " + " ".join(geometry.get("place_candidates") or []))
+            geo_text = _normal(geometry.get("title", "")) + " " + _normal(geometry.get("evidence_text", ""))
+            geo_tokens = _name_tokens(geo_text + " " + " ".join(geometry.get("place_candidates") or []))
             overlap = sorted(diary_tokens & geo_tokens)
-            if not overlap:
+            geo_years = set(geometry.get("event_year_clues") or [])
+            geo_counties = _county_clues(geo_text)
+            shared_counties = sorted(diary_counties & geo_counties)
+            # Candidate discovery is deliberately permissive within a named county,
+            # while generic burn wording alone still cannot create a candidate.
+            if not overlap and not shared_counties:
                 continue
-            geom_years = set(geometry.get("event_year_clues") or [])
-            year_overlap = sorted(diary_years & geom_years)
-            # A shared descriptive token is a candidate clue, not sufficient identity evidence.
-            score = min(0.65, 0.35 + 0.10 * (len(overlap) - 1))
-            if year_overlap:
-                score = min(0.85, score + 0.20)
-            # Keep the heuristic score, but explicitly expose evidence strength.
-            # A shared year is only supportive when present in event-specific text/date
-            # evidence; record/registration dates are deliberately excluded.
+
+            # Five transparent components, each capped at its published weight.
+            place_points = min(40, 20 * len(overlap))
+            county_points = 15 if shared_counties else 0
+            year_overlap = sorted(diary_years & geo_years)
+            time_points = 20 if year_overlap else 0
+            lifecycle_points, lifecycle_reason = _lifecycle_compatibility(
+                diary.get("stage", ""), geometry.get("stage", "")
+            )
+            raw_score = place_points + county_points + time_points + lifecycle_points
+            evidence_dimensions = sum((
+                bool(overlap), bool(diary_counties and geo_counties),
+                bool(diary_years and geo_years), bool(lifecycle_points),
+            ))
             candidates.append({
                 "candidate_id": f'{diary["event_id"]}~{geometry["event_id"]}',
                 "diary_event_id": diary["event_id"],
                 "geometry_event_id": geometry["event_id"],
-                "score": round(score, 2),
-                "confidence": "medium" if score >= 0.55 else "low",
+                "score": raw_score,  # uniqueness is added after alternatives are counted
+                "confidence": "unassessed",
+                "place_points": place_points,
+                "county_points": county_points,
+                "time_points": time_points,
+                "lifecycle_points": lifecycle_points,
+                "uniqueness_points": 0,
                 "shared_place_tokens": overlap,
+                "shared_counties": shared_counties,
                 "shared_years": year_overlap,
                 "evidence_tier": (
-                    "place_and_event_year" if overlap and year_overlap else
-                    "place_only"
+                    "place_county_and_year" if overlap and shared_counties and year_overlap else
+                    "place_and_year" if overlap and year_overlap else
+                    "county_and_year" if shared_counties and year_overlap else
+                    "place_and_county" if overlap and shared_counties else
+                    "place_only" if overlap else "county_only"
                 ),
-                "review_priority": (
-                    "higher" if overlap and year_overlap and len(overlap) >= 2 else
-                    "normal"
+                "data_coverage": round(evidence_dimensions / 4, 2),
+                "data_coverage_note": (
+                    "Coverage measures available comparison dimensions, not truth probability. "
+                    "Missing source details are not treated as contradictory evidence."
                 ),
+                "lifecycle_reason": lifecycle_reason,
                 "status": "candidate_for_manual_review",
-                "evidence_policy": "Text overlap suggests a review candidate only. A shared event-year clue is supportive, not proof. No source records are linked and no burn is inferred."
+                "evidence_policy": (
+                    "Weighted clue score is a triage aid, not a calibrated probability. "
+                    "County-level candidates may have sparse site details. Source events remain "
+                    "unlinked until independently verified."
+                ),
             })
-    candidates.sort(key=lambda c: (-c["score"], c["diary_event_id"], c["geometry_event_id"]))
-    # Quantify ambiguity so reviewers can spot one-to-many and many-to-one cases.
+
+    # Geographic uniqueness is assessed among candidates for the same diary event.
+    # It is not awarded when there is no shared county context.
     diary_counts = Counter(c["diary_event_id"] for c in candidates)
     geometry_counts = Counter(c["geometry_event_id"] for c in candidates)
     for candidate in candidates:
         diary_count = diary_counts[candidate["diary_event_id"]]
         geometry_count = geometry_counts[candidate["geometry_event_id"]]
+        if candidate["shared_counties"]:
+            candidate["uniqueness_points"] = 10 if diary_count == 1 else 5 if diary_count <= 3 else 0
+        candidate["score"] = min(100, candidate["score"] + candidate["uniqueness_points"])
+        candidate["confidence"] = (
+            "high" if candidate["score"] >= 80 and candidate["data_coverage"] >= 0.75 else
+            "medium" if candidate["score"] >= 55 and candidate["data_coverage"] >= 0.5 else
+            "low"
+        )
         candidate["diary_candidate_count"] = diary_count
         candidate["geometry_candidate_count"] = geometry_count
         candidate["ambiguity"] = (
@@ -240,11 +305,22 @@ def _candidate_links(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "geometry_matches_multiple_diary_records" if geometry_count > 1 else
             "single_candidate_pair"
         )
-        candidate["evidence_summary"] = (
-            "Shared place token(s): " + ", ".join(candidate["shared_place_tokens"]) +
-            ("; shared year(s): " + ", ".join(candidate["shared_years"]) if candidate["shared_years"] else
-             "; no shared year clue")
+        candidate["review_priority"] = (
+            "higher" if candidate["score"] >= 60 and candidate["data_coverage"] >= 0.5 else
+            "normal"
         )
+        candidate["evidence_summary"] = (
+            f'Plats {candidate["place_points"]}/40; län {candidate["county_points"]}/15; '
+            f'tid {candidate["time_points"]}/20; händelseförlopp {candidate["lifecycle_points"]}/15; '
+            f'unikhet {candidate["uniqueness_points"]}/10. '
+            + ("Gemensamma platsindicier: " + ", ".join(candidate["shared_place_tokens"]) + ". "
+               if candidate["shared_place_tokens"] else "Inget gemensamt specifikt platsnamn. ")
+            + ("Gemensamt län: " + ", ".join(candidate["shared_counties"]) + ". "
+               if candidate["shared_counties"] else "Inget gemensamt län identifierat. ")
+            + ("Gemensamt händelseår: " + ", ".join(candidate["shared_years"]) + "."
+               if candidate["shared_years"] else "Inget gemensamt händelseår.")
+        )
+    candidates.sort(key=lambda c: (-c["score"], c["diary_event_id"], c["geometry_event_id"]))
     return candidates
 
 
@@ -401,7 +477,8 @@ def write_review_csv(report: dict[str, Any], output_path: Path) -> int:
     ))
     columns = [
         "review_priority", "score", "confidence", "evidence_tier",
-        "shared_place_tokens", "shared_years", "ambiguity",
+        "shared_place_tokens", "shared_counties", "shared_years", "ambiguity",
+        "place_points", "county_points", "time_points", "lifecycle_points", "uniqueness_points", "data_coverage",
         "diary_candidate_count", "geometry_candidate_count",
         "diary_event_id", "diary_number", "diary_title",
         "diary_event_date", "diary_record_date", "diary_source_url",
@@ -420,6 +497,7 @@ def write_review_csv(report: dict[str, Any], output_path: Path) -> int:
             writer.writerow({
                 **candidate,
                 "shared_place_tokens": " | ".join(candidate.get("shared_place_tokens") or []),
+                "shared_counties": " | ".join(candidate.get("shared_counties") or []),
                 "shared_years": " | ".join(candidate.get("shared_years") or []),
                 "diary_number": diary.get("source_record_id", ""),
                 "diary_title": diary.get("title", ""),
