@@ -1,0 +1,29 @@
+name: Test Skogsbevakning
+on:
+  pull_request:
+    paths:
+      - "docs/bevakning.html"
+      - "docs/bevakning-core.mjs"
+      - "tests/bevakning-core.test.mjs"
+      - "scripts/test_bevakning_page.mjs"
+      - ".github/workflows/test-bevakning.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/bevakning.html"
+      - "docs/bevakning-core.mjs"
+      - "tests/bevakning-core.test.mjs"
+      - "scripts/test_bevakning_page.mjs"
+      - ".github/workflows/test-bevakning.yml"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test comparison and geometry helpers
+        run: node --test tests/bevakning-core.test.mjs
+      - name: Validate page markup and inline JavaScript
+        run: node --test scripts/test_bevakning_page.mjs
