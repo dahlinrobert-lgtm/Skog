@@ -148,11 +148,11 @@ class BurnEventTimelineTests(unittest.TestCase):
         specific, context = _place_token_groups("Anmälan om naturvårdsbränning på Gotska Sandön")
         self.assertEqual(specific, set())
         self.assertEqual(context, {"gotska", "sandön"})
-        self.assertEqual(
-            _name_tokens("Allgunnen Mjösjögöl Nybro kommun"),
-            {"mjösjögöl"}
-        )
-        self.assertNotIn("högsby", _name_tokens("Värlekärret, Högsby kommun"))
+        site_tokens, context_tokens = _place_token_groups("Allgunnen Mjösjögöl Nybro kommun")
+        self.assertEqual(site_tokens, {"mjösjögöl"})
+        self.assertEqual(context_tokens, {"allgunnen"})
+        site_tokens, _ = _place_token_groups("Värlekärret, Högsby kommun")
+        self.assertEqual(site_tokens, {"värlekärret"})
 
     def test_context_only_without_specific_site_names_is_not_a_conflict(self):
         state = {"records": {"d1": {
