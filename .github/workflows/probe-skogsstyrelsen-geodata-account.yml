@@ -1,0 +1,36 @@
+name: Probe Skogsstyrelsen geodata account
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skogsstyrelsen-geodata-account-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SKOGSSTYRELSEN_GEODATA_USERNAME: ${{ secrets.SKOGSSTYRELSEN_GEODATA_USERNAME }}
+      SKOGSSTYRELSEN_GEODATA_PASSWORD: ${{ secrets.SKOGSSTYRELSEN_GEODATA_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependency
+        run: python -m pip install requests
+      - name: Check protected REST service access
+        run: python scripts/probe_skogsstyrelsen_geodata_account.py
+      - name: Upload sanitized diagnostic report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsstyrelsen-geodata-account-probe
+          path: artifacts/skogsstyrelsen-geodata-account-probe.json
+          if-no-files-found: warn
+          retention-days: 14
