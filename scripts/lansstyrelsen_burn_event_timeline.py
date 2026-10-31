@@ -169,7 +169,7 @@ def _name_tokens(value: str) -> set[str]:
         # Common Swedish function words and diary/procurement language.
         "inför", "från", "till", "för", "vid", "på", "inom", "under",
         "mellan", "genom", "efter", "före", "av", "om", "i", "på",
-        "eventuellt", "gäller", "giltighetstid", "ansökan", "ansökan", "dispens",
+        "eventuellt", "gäller", "giltighetstid", "ansökan", "dispens",
         "upphandling", "upphandlingar", "tjänst", "tjänster", "avrop",
         "entreprenad", "entreprenören", "avtal", "avtalade", "ersättning",
         "skada", "kontraktsbrott", "beställning", "distribution",
