@@ -11,6 +11,11 @@ on:
   push:
     paths:
       - ".github/workflows/lansstyrelsen-diary-all-county-validation.yml"
+      - "scripts/search_lansstyrelsen_diary_browser.py"
+      - "scripts/lansstyrelsen_diary_validation.py"
+      - "scripts/test_lansstyrelsen_pager_window.py"
+      - "scripts/test_lansstyrelsen_diary_validation.py"
+      - "scripts/test_diary_county_coverage.py"
 
 permissions:
   contents: read
