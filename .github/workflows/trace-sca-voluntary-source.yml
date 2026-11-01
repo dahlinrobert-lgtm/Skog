@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "scripts/trace_sca_voluntary_source.py"
+      - "scripts/trace_sca_voluntary_source_config_fix.py"
       - ".github/workflows/trace-sca-voluntary-source.yml"
 
 permissions:
