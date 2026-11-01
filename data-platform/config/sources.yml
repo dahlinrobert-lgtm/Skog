@@ -279,16 +279,16 @@ sources:
     format: [SAFE, GeoTIFF, COG, STAC_JSON]
     rights:
       licence: "Copernicus Sentinel data policy – free, full and open access, subject to applicable attribution and security restrictions"
-      licence_url: "https://dataspace.copernicus.eu/"
-      review_status: conditional_green
+      licence_url: "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice"
+      review_status: conditional_green_for_sentinel_data
       commercial_use: yes
       historical_storage: yes
       derivatives: yes
-      redistribution: yes_subject_to_data_policy_and_provider_terms
-      attribution: "Use the applicable Copernicus/Sentinel attribution and identify processing/derived products where appropriate."
-      api_or_service_constraints: "Respect Data Space account, fair-use, quotas, download and API terms. Separate data licence from platform access conditions."
+      redistribution: yes_for_sentinel_data_subject_to_lawful_use_and_restrictions
+      attribution: "Follow the current Sentinel legal notice and applicable product/processing attribution."
+      api_or_service_constraints: "Respect Data Space account, fair-use, quotas, download and API terms. These are separate from the Sentinel data reuse rights."
       evidence_checked_on: "2026-11-01"
-      caveat: "Confirm the current legal notice and any third-party component terms for each collection/product before redistribution."
+      caveat: "This entry covers Sentinel data, not all portal content. Other Data Space portal materials are subject to separate copyright terms and may be non-commercial only."
     notes:
       - "Keep source scene IDs, acquisition time, publication time, processing baseline and checksums."
 
@@ -303,16 +303,17 @@ sources:
     geography: Sweden
     format: [to_be_verified]
     rights:
-      licence: unknown_per_product
-      review_status: amber_pending_product_check
-      commercial_use: unknown
-      historical_storage: unknown
-      derivatives: unknown
-      redistribution: unknown
-      attribution: "To be confirmed per product."
-      api_or_service_constraints: "Check the exact product's metadata, licence, download/service terms and any third-party content."
+      licence: "CC0 1.0 for SGU geological open data"
+      licence_url: "https://www.sgu.se/produkter-och-tjanster/geologiska-data/om-geologiska-data/licensvillkor/"
+      review_status: green_for_geological_open_data
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required under CC0; recommended to cite SGU and product."
+      api_or_service_constraints: "Check product metadata and service conditions; website photos, illustrations and other non-product material are not included."
       evidence_checked_on: "2026-11-01"
-      caveat: "Do not assume all SGU products have identical licence terms."
+      caveat: "CC0 applies to SGU geological data. Reports, images, illustrations and other website material may have separate terms."
     notes:
       - "Prioritise soil, bedrock, groundwater and mineral-resource products relevant to forest analysis."
 
