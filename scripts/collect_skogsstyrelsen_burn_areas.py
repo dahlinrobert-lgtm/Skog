@@ -177,7 +177,10 @@ def main() -> int:
         "feature_count": len(features),
         "features": features,
     }
-    write_snapshot(current_path, snapshot)
+    # Do not rewrite the full snapshot merely to update its observation timestamp.
+    # This keeps Git history quiet when the source has not changed.
+    if not previous or changes:
+        write_snapshot(current_path, snapshot)
 
     report = {
         "observed_at": observed_at,
