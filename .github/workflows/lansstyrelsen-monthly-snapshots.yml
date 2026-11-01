@@ -152,4 +152,88 @@ jobs:
           name: lansstyrelsen-monthly-snapshot-diagnostics
           path: monthly-snapshot-runs/
           if-no-files-found: warn
+          retention-days: 30      - name: Resolve target month
+        id: setup
+        env:
+          YEAR_INPUT: ${{ inputs.year }}
+          MONTH_INPUT: ${{ inputs.month }}
+        run: |
+          year="$YEAR_INPUT"; month="$MONTH_INPUT"
+          if [[ -z "$year" ]]; then year="$(date -u +%Y)"; fi
+          if [[ -z "$month" ]]; then month="$(date -u +%m)"; fi
+          python - "$year" "$month" <<'PY'
+          import calendar,sys
+          y,m=map(int,sys.argv[1:])
+          if not 1900 <= y <= 2100 or not 1 <= m <= 12: raise SystemExit("Invalid year/month")
+          print(f"Validated period: {y:04d}-{m:02d}-01 to {y:04d}-{m:02d}-{calendar.monthrange(y,m)[1]:02d}")
+          PY
+          echo "year=$year" >> "$GITHUB_OUTPUT"
+          echo "month=$month" >> "$GITHUB_OUTPUT"
+          mkdir -p monthly-snapshot-runs
+      - name: Collect all configured county/category intervals
+        env:
+          PYTHONPATH: scripts
+          YEAR: ${{ steps.setup.outputs.year }}
+          MONTH: ${{ steps.setup.outputs.month }}
+          COUNTY_INPUT: ${{ inputs.county_scope }}
+          CATEGORY_INPUT: ${{ inputs.category }}
+        run: |
+          set -euo pipefail
+          if [[ "$COUNTY_INPUT" == "norrbotten" ]]; then counties=("Länsstyrelsen i Norrbottens län")
+          elif [[ "$COUNTY_INPUT" == "vasterbotten" ]]; then counties=("Länsstyrelsen i Västerbottens län")
+          else counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län"); fi
+          if [[ "$CATEGORY_INPUT" == "A" ]]; then categories=("A")
+          elif [[ "$CATEGORY_INPUT" == "B" ]]; then categories=("B")
+          else categories=("A" "B"); fi
+          termsA=("skogsbilväg" "vägbyggnad" "ledningsdragning" "schaktning" "utfyllnad" "massupplag")
+          termsB=("vattenverksamhet" "markavvattning" "dikesrensning" "trumma" "våtmarksanläggning" "omgrävning av vattendrag")
+          failed=0
+          for county in "${counties[@]}"; do
+            slug="norrbotten"; [[ "$county" == *Västerbottens* ]] && slug="vasterbotten"
+            for category in "${categories[@]}"; do
+              terms=("${termsA[@]}"); [[ "$category" == "B" ]] && terms=("${termsB[@]}")
+              for i in "${!terms[@]}"; do
+                term="${terms[$i]}"
+                outfile="monthly-snapshot-runs/${slug}-${category}-${i}.json"
+                echo "Collecting $county / $category / $term / $YEAR-$MONTH"
+                if ! python scripts/collect_lansstyrelsen_monthly_snapshot.py \
+                    --county "$county" --term "$term" --year "$YEAR" --month "$MONTH" \
+                    --output "$outfile"; then
+                  echo "FAILED: $county / $category / $term"
+                  failed=1
+                fi
+              done
+            done
+          done
+          if [[ "$failed" -ne 0 ]]; then
+            echo "At least one configured interval failed; refusing publication." >&2
+            exit 1
+          fi
+      - name: Publish immutable snapshots and manifests
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            git add data/lansstyrelsen-diary/snapshots data/lansstyrelsen-diary/snapshot-runs.jsonl
+            if git diff --cached --quiet; then
+              echo "No complete new snapshots to publish."
+              exit 0
+            fi
+            git commit -m "Archive monthly Länsstyrelsen diary snapshots"
+            if git push origin HEAD:main; then exit 0; fi
+            git reset --hard
+          done
+          echo "Failed to publish snapshots after retries" >&2
+          exit 1
+      - name: Upload monthly collection diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-monthly-snapshot-diagnostics
+          path: monthly-snapshot-runs/
+          if-no-files-found: warn
           retention-days: 30
