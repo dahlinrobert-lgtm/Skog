@@ -15,7 +15,7 @@ SEARCH = "#SearchPlaceHolder_CaseSearch_btnSearch"
 GRID = "#SearchPlaceHolder_caseGridView"
 
 def clean(s):
-    return re.sub(r"\\s+", " ", s or "").strip()
+    return re.sub(r"\s+", " ", s or "").strip()
 
 def query(page, start, end):
     page.goto(URL, wait_until="domcontentloaded", timeout=60000)
@@ -31,11 +31,11 @@ def query(page, start, end):
         pass
     page.locator(GRID).wait_for(state="attached", timeout=20000)
     body = clean(page.locator("body").inner_text(timeout=20000))
-    m = re.search(r"Sökresultat\\s*:?\\s*[\\d\\s–-]+\\s+av\\s+(\\d+)", body, re.I)
+    m = re.search(r"Sökresultat\s*:?\s*[\d\s–-]+\s+av\s+(\d+)", body, re.I)
     rows = page.locator(GRID).locator("tr")
     ids=[]
     for i in range(rows.count()):
-        ids.extend(re.findall(r"\\b\\d{1,6}-\\d{4}\\b", clean(rows.nth(i).inner_text())))
+        ids.extend(re.findall(r"\b\d{1,6}-\d{4}\b", clean(rows.nth(i).inner_text())))
     return {"from":start,"to":end,"reported_total":int(m.group(1)) if m else None,
             "visible_unique_ids":len(set(ids)),"grid_rows":rows.count()}
 
@@ -60,7 +60,7 @@ def main():
              "monthly_results":results,
              "sum_monthly_totals":sum(x["reported_total"] or 0 for x in results)}
     Path("lansstyrelsen-monthly-partition-probe.json").write_text(
-        json.dumps(payload,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+        json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("SUMMARY "+json.dumps({"sum_monthly_totals":payload["sum_monthly_totals"],
         "months_with_results":sum(1 for x in results if (x["reported_total"] or 0)>0),
         "months_missing_count":sum(1 for x in results if x["reported_total"] is None)},ensure_ascii=False))
