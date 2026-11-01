@@ -1,0 +1,30 @@
+name: Probe Skogsindustrierna WMS configuration
+on:
+  push:
+    branches: [investigate/**]
+    paths:
+      - "scripts/probe_skogsindustrierna_wms_config.py"
+      - ".github/workflows/probe-skogsindustrierna-wms-config.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "requests>=2.31,<3"
+      - name: Extract public WMS and WMTS configuration
+        run: python scripts/probe_skogsindustrierna_wms_config.py
+      - name: Upload configuration report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsindustrierna-wms-config
+          path: artifacts/skogsindustrierna-wms-config.json
+          if-no-files-found: warn
+          retention-days: 30
