@@ -6,9 +6,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
 
+from lansstyrelsen_pager import select_next_pager_action
 from search_lansstyrelsen_diary_browser import (
  URL, COUNTY_SELECT, TITLE_INPUT, SEARCH_BUTTON, RESULT_GRID, clean, parse_total,
- extract_grid, select_next_pager_action
+ extract_grid
 )
 
 DATE_FROM="#SearchPlaceHolder_CaseSearch_ddDatefrom"
