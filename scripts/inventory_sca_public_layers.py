@@ -20,16 +20,16 @@ def matching_end(source: str, start: int, opening: str, closing: str) -> int:
         if quoted:
             if escaped:
                 escaped = False
-            elif ch == "\\":
+            elif ch == "\\\\":
                 escaped = True
-            elif ch == "\\":
+            elif ch == '"':
                 quoted = False
             continue
         if ch == '"':
             quoted = True
-            elif ch == "\\":
+        elif ch == opening:
             depth += 1
-            elif ch == "\\":
+        elif ch == closing:
             depth -= 1
             if depth == 0:
                 return i
