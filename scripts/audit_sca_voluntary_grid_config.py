@@ -30,7 +30,7 @@ def balanced_end(source: str, start: int, opening: str, closing: str) -> int:
         if quoted:
             if escaped:
                 escaped = False
-            elif ch == "\\\\":
+            elif ch == "\\":
                 escaped = True
             elif ch == '"':
                 quoted = False
@@ -53,7 +53,7 @@ def extract_layer_config(html: str) -> list[dict]:
     start = html.find("{", m.start())
     end = balanced_end(html, start, "{", "}")
     config = html[start:end + 1]
-    lm = re.search(r'"layers"\\s*:\\s*\\[', config)
+    lm = re.search(r'"layers"\s*:\s*\[', config)
     if not lm:
         return []
     a = config.find("[", lm.start())
