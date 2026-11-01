@@ -419,55 +419,73 @@ sources:
       - "Layer currently used: Hosted/Life2Taiga_v3_Extern/FeatureServer/13."
       - "Keep source events distinct from diary-derived events; do not assume geometries prove completed actions."
 
-  - source_id: skogsdatalabbet.torvkarta
-    name: "Skogsdatalabbet – Torvkarta 1.0"
-    source_type: raster_service
-    provider: to_be_verified
-    access_method: arcgis_image_server
+  - source_id: slu.peat_map.v1
+    name: "SLU Torvkarta 1.0 – klassad och kontinuerlig"
+    source_type: raster
+    provider: SLU
+    co_producers:
+      - Skogsstyrelsen
+      - Naturvårdsverket_project_funding
+    access_method: download_and_arcgis_image_server
     connector: geodata_timeline
     status: pilot
-    cadence: weekly
-    geography: Sweden
-    format: [ImageServer]
+    cadence: weekly_sampling
+    geography: Sweden_except_areas_without_input_data
+    format: [GeoTIFF, ImageServer]
+    expected_crs: EPSG:3006
+    expected_resolution: "2 m x 2 m"
     rights:
-      licence: unknown_pending_producer_and_product_terms
-      review_status: amber_no_national_scaling_before_rights_check
-      commercial_use: unknown
-      historical_storage: unknown
-      derivatives: unknown
-      redistribution: unknown
-      attribution: "To be confirmed from service metadata and product owner."
-      api_or_service_constraints: "Probe exportImage dimensions, quotas, cache/version metadata and permitted sampling/download scope."
+      licence: "Not explicitly identified in the located SLU product description; do not infer a licence from open download availability"
+      licence_url: "https://www.slu.se/contentassets/2368b3706efb45799ce0427f00455068/produktbeskrivning_slu_torvkarta1.0.pdf"
+      review_status: amber_written_confirmation_recommended
+      commercial_use: pending_rights_confirmation
+      historical_storage: pending_rights_confirmation
+      derivatives: pending_rights_confirmation
+      redistribution: pending_rights_confirmation
+      attribution: "Proposed citation: SLU Torvkarta 1.0, Anneli Ågren (2022); also acknowledge Skogsstyrelsen/Naturvårdsverket project where appropriate. Confirm exact wording with SLU."
+      api_or_service_constraints: "Skogsdatalabbet REST/WMS requires a user account. SLU publishes downloadable rasters, including large national mosaics. Obtain terms for bulk download and repeated extraction."
       evidence_checked_on: "2026-11-01"
-      caveat: "Service is hosted under Skogsstyrelsen's geodata domain, but hosting alone does not establish who produced the dataset or its reuse terms."
+      caveat: "Product uses GSD-Höjddata grid 2+ © Lantmäteriet as model basis. Confirm whether the source licence permits the specific derived product and planned commercial use."
     notes:
-      - "Service: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/Torvkarta_1_0/ImageServer."
-      - "Current workflow samples a fixed 1 km window; do not scale nationally before licence, service and storage checks."
+      - "Product contains classified peat-depth classes and continuous organic-layer thickness."
+      - "Classified values: 0 water, 1 mineral soil, 2 >=30 cm, 3 >=40 cm, 4 >=50 cm."
+      - "Continuous raster values represent organic-layer thickness in cm; 0 denotes water."
+      - "Product description reports 2 m cells, SWEREF 99 TM and NoData where input data were missing."
+      - "Validation against 2,883 field locations: RMSE for continuous map approximately +/-19 cm; categorical metrics are described in product documentation."
+      - "Download catalogue: https://gis.slu.se/data/peat_1_0/."
+      - "REST service: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/Torvkarta_1_0/ImageServer."
 
-  - source_id: skogsdatalabbet.sis
-    name: "Skogsdatalabbet – SIS 1.0"
-    source_type: raster_service
-    provider: to_be_verified
-    access_method: arcgis_image_server
+  - source_id: skogsstyrelsen.standortsindex_sis
+    name: "Skogliga grunddata – Ståndortsindex SIS (gran och tall)"
+    source_type: raster
+    provider: Skogsstyrelsen
+    scientific_development_partner: SLU
+    project_context: "Mistra Digital Forest / national forest data collaboration"
+    access_method: download_and_arcgis_image_server
     connector: geodata_timeline
     status: pilot
-    cadence: weekly
-    geography: Sweden
-    format: [ImageServer]
+    cadence: weekly_sampling
+    geography: Sweden_coverage_depends_on_laserdata
+    format: [GeoTIFF, ImageServer]
     rights:
-      licence: unknown_pending_producer_and_product_terms
-      review_status: amber_no_national_scaling_before_rights_check
-      commercial_use: unknown
-      historical_storage: unknown
-      derivatives: unknown
-      redistribution: unknown
-      attribution: "To be confirmed from service metadata and product owner."
-      api_or_service_constraints: "Probe exportImage dimensions, quotas, cache/version metadata and permitted sampling/download scope."
+      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless the product description states otherwise"
+      licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
+      product_description_url: "https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/raster-skogligagrunddata-standortsindexsis---produktbeskrivning.pdf"
+      review_status: conditional_green_product_description_check
+      commercial_use: yes_if_product_description_does_not_override_cc0
+      historical_storage: yes_if_product_description_does_not_override_cc0
+      derivatives: yes_if_product_description_does_not_override_cc0
+      redistribution: yes_if_product_description_does_not_override_cc0
+      attribution: "Recommended: Skogsstyrelsen and SLU; follow the exact product description's acknowledgement wording."
+      api_or_service_constraints: "REST/WMS service requires an account. Download catalogue lists separate gran and tall products. Confirm current service limits and available historical versions."
       evidence_checked_on: "2026-11-01"
-      caveat: "Service is hosted under Skogsstyrelsen's geodata domain, but hosting alone does not establish who produced the dataset or its reuse terms."
+      caveat: "The product description was updated 2026-10-02 and includes a dedicated licence/acknowledgement section; verify its exact wording against the PDF before final commercial approval."
     notes:
+      - "SIS means site index estimated from site properties; it is distinct from stand-based SIH."
+      - "Separate products exist for spruce and pine."
+      - "Model uses laser data from two acquisition periods and reference/environmental information; it is an estimate, not a field measurement."
       - "Service: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/SIS_1_0/ImageServer."
-      - "Current workflow samples a fixed 1 km window; do not scale nationally before licence, service and storage checks."
+      - "Skogsstyrelsen download catalogue: https://www.skogsstyrelsen.se/laddanergeodata."
 
   - source_id: sca.data
     name: "SCA – företagsdata och geodata"
