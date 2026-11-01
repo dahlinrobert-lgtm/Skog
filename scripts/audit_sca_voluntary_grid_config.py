@@ -104,7 +104,7 @@ def main() -> None:
     html = page_response.text
     host = urlparse(PAGE).netloc
     scripts = []
-    for src in re.findall(r'<script[^>]+src=["\\']([^"\\']+)["\\']', html, re.I):
+    for src in re.findall(r"""<script[^>]+src=["']([^"']+)["']""", html, re.I):
         url = urljoin(PAGE, src)
         if urlparse(url).netloc == host and url not in scripts:
             scripts.append(url)
