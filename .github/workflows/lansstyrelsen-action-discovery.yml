@@ -101,7 +101,7 @@ jobs:
           # Failed/partial counties are never passed to the persistence script.
           echo "county_search_failures=$failed" >> "$GITHUB_OUTPUT"
       - name: Publish validated results with concurrency-safe retry
-        if: always() && github.ref == 'refs/heads/main'
+        if: success() && github.ref == 'refs/heads/main'
         env:
           COUNTY_SCOPE_INPUT: ${{ inputs.county_scope }}
           CATEGORY_INPUT: ${{ inputs.category }}
