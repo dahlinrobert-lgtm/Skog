@@ -115,3 +115,77 @@ En enkel licenssida räcker inte ensam. Källinformationen bör följa med varje
 3. Kontrollera övriga Vindbrukskollen-delar separat, särskilt havsbaserade projekt och bakgrundskartor.
 4. Sök fler regionala grön-infrastruktur-dataset med relevans för Norrbotten/Västerbotten; kontrollera CC0/CC BY per post.
 5. Håll EBH till det externa CC BY-lagret; begär inte eller använd inte interna EBH-uppgifter utan separat behörighet/avtal.
+
+## 5. Fördjupning: Life2Taiga – kontakt och rättighetsfråga
+
+Den officiella projektsidan anger att Life2Taiga koordineras av Länsstyrelsen i Västmanlands län. Den publicerade kontaktvägen till projektledningen är **life2taiga@lansstyrelsen.se** (växel 010-224 90 00). Projektet omfattar 17 länsstyrelser, Naturvårdsverket och Metsähallitus; den publika kartan visar både genomförda och planerade naturvårdsbränningar.
+
+Detta identifierar en relevant mottagare, men innebär inte att frågan redan är ställd eller att rättigheter är beviljade. För vårt externa lager:
+
+`https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13`
+
+bör projektledningen bekräfta vem som äger/förvaltar datat och vilken licens som gäller för just detta FeatureServer-lager. Begär uttryckligt besked om:
+- kommersiell användning i en abonnemangstjänst,
+- regelbunden hämtning och permanent historisk lagring/snapshots,
+- bearbetning, geometriunioner och egna härledda analyser,
+- visning av originaldata och bearbetade data för kunder,
+- nedladdning/export och vidare distribution,
+- krav på attribution, versionsangivelse och eventuella begränsningar i API-användning.
+
+**Registerstatus:** gul – kontaktväg identifierad, men skriftligt besked saknas. Ingen kommersiell insamling eller vidarepublicering ska startas innan svaret har dokumenterats.
+
+Källor:
+- https://www.lansstyrelsen.se/vastmanland/natur-och-landsbygd/skyddad-natur/skotsel-av-skyddad-natur/naturvardsbranning/life2taiga/life2taiga-english.html
+- https://www.lansstyrelsen.se/uppsala/natur-och-landsbygd/skyddad-natur/skotsel-av-skyddad-natur/life2taiga.html
+
+## 6. Regional inventering: Norrbotten och Västerbotten
+
+### Västerbotten – Värdefulla naturområden (extern WMS/REST)
+
+Länsstyrelsens publika information beskriver ett samlat underlag med främst skogsområden men även värdefulla våtmarker, vattendrag, fjäll- och havsmiljöer. Underlaget bygger på inventeringar över längre tid och anges uttryckligen inte vara heltäckande.
+
+Geodatakatalogens tjänstepost:
+- Titel: `LstAC Natur Intressant Naturomr (extern) – Karttjänst`
+- UUID: `32f86036-487e-4362-883b-8bd1ba8d9c3d`
+- Ansvarig: Länsstyrelsen Västerbotten / Miljöanalysenheten
+- Tjänster: WMS och ArcGIS REST
+- Metadata anger att åtkomstrestriktioner ska kontrolleras i posterna för de ingående lagren.
+
+Det är därför **inte** korrekt att tilldela hela karttjänsten en enda licens utifrån att den är publik. Nästa kontroll är att öppna varje ingående lagers metadatapost och kontrollera licens, producent och eventuell tredje parts data. Tills dess gul status.
+
+Källor:
+- https://www.lansstyrelsen.se/vasterbotten/natur-och-landsbygd/skyddad-natur/bevara-naturvarden-och-fa-ersattning.html
+- https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/GetMetaDataById?id=32f86036-487e-4362-883b-8bd1ba8d9c3d
+
+### Västerbotten – skogliga värdetrakter i västra länsdelen
+
+I januari 2026 publicerade Länsstyrelsen att nya preciserade skogliga värdetrakter och nätverk tagits fram väster om E45, kompletterande tidigare material för länets östra delar. Områdena omfattar skog både ovan och nedan gränsen för fjällnära skog.
+
+Detta är relevant för skoglig landskapsanalys, men är ett kunskapsunderlag för planering – inte en skyddsform. Dessutom måste vi kontrollera metadata för just den nya västliga produkten. Den tidigare posten för barrskog värdetrakter med CC BY 4.0 får inte automatiskt anses täcka det nya datasetet.
+
+Källa:
+- https://www.lansstyrelsen.se/vasterbotten/om-oss/nyheter-och-press/nyheter---vasterbotten/2026-01-12-skogliga-vardetrakter-i-vasterbottens-vastra-delar-i-lansstyrelsens-karttjanst.html
+
+### Norrbotten – våtmarksanalys inom grön infrastruktur
+
+Länsstyrelsen Norrbotten beskriver en våtmarksanalys som underlag för att avgränsa värdetrakter. Analysen bygger på kända värdekärnor från våtmarksinventeringen och rikkärrsinventeringen, täthetsanalys och manuell bearbetning utifrån aktuell kunskap.
+
+Geodatakatalogen pekas ut som platsen där metadata och dataset finns. Sök särskilt efter:
+- `GI Andelsanalys alla våtmarker`
+- `GI andelsanalys värdefulla våtmarker`
+
+Detta är en intressant kandidat för skoglig mark- och landskapskontext. Licensen måste dock kontrolleras i den exakta metadataposten; den regionala informationssidan anger inte återanvändningslicensen.
+
+Källa:
+- https://www.lansstyrelsen.se/norrbotten/samhalle/planera-bygga-och-bo/gron-infrastruktur/kartor-och-underlag-for-planeringsarbete-med-gron-infrastruktur.html
+
+### Samlad bedömning
+
+| Dataset/kandidat | Relevans för Skog | Rättighetsläge | Rekommendation |
+|---|---|---|---|
+| Life2Taiga FeatureServer | Mycket hög – planerade/genomförda naturvårdsbränningar | Okänd | Begär skriftligt besked från projektledningen |
+| Västerbotten Värdefulla naturområden | Hög – skog, våtmark, vatten och fjäll | Licens måste kontrolleras per ingående lager | Hämta inte för kommersiell vidarepublicering ännu |
+| Västerbotten skogliga värdetrakter väst | Hög – landskapskontext för skog | Ny produkt, metadata/licens ej verifierad | Identifiera exakt metadatapost |
+| Norrbotten GI våtmarksanalys | Medel/hög – våtmarkernas landskapsmönster | Exakt katalogpost och licens återstår | Identifiera post och kontrollera villkor |
+
+Viktigt: att en datamängd är gratis att visa eller ladda ned är inte i sig ett besked om kommersiell vidareanvändning. För varje kandidat måste vi kontrollera licens, rättighetsinnehavare, åtkomstvillkor och eventuella tredjepartsinslag separat.
