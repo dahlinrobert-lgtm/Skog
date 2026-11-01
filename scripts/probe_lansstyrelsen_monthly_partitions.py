@@ -1,62 +1,62 @@
 #!/usr/bin/env python3
-"""Probe monthly diary date filters robustly and retain per-month diagnostics."""
+"""Probe Länsstyrelsen diary month partitions with the production search parser."""
 from __future__ import annotations
-import calendar, json, re
+import calendar, json
 from datetime import datetime, timezone
 from pathlib import Path
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
+from playwright.sync_api import sync_playwright
 
-URL = "https://diarium.lansstyrelsen.se/default.aspx"
-COUNTY = "#SearchPlaceHolder_CaseSearch_ddDiaryID"
-TITLE = "#SearchPlaceHolder_CaseSearch_title"
-DATE_FROM = "#SearchPlaceHolder_CaseSearch_ddDatefrom"
-DATE_TO = "#SearchPlaceHolder_CaseSearch_ddDateto"
-SEARCH = "#SearchPlaceHolder_CaseSearch_btnSearch"
-GRID = "#SearchPlaceHolder_caseGridView"
+from search_lansstyrelsen_diary_browser import (
+    URL, COUNTY_SELECT, TITLE_INPUT, SEARCH_BUTTON, RESULT_GRID,
+    clean, parse_total,
+)
 
-def clean(value: str) -> str:
-    return re.sub(r"\s+", " ", value or "").strip()
+COUNTY_LABEL = "Länsstyrelsen i Norrbottens län"
 
-def parse_total(body: str) -> int | None:
-    match = re.search(r"Sökresultat\s*:?\s*[\d\s–-]+\s+av\s+(\d+)", body, re.I)
-    if match:
-        return int(match.group(1))
-    if re.search(r"Sökresultat\s*:?\s*0\b", body, re.I):
-        return 0
-    return None
-
-def run_query(page, start: str, end: str) -> dict:
-    page.goto(URL, wait_until="domcontentloaded", timeout=60000)
-    page.locator(COUNTY).wait_for(state="visible", timeout=30000)
-    page.locator(COUNTY).select_option(value="21")
-    page.locator(TITLE).fill("vattenverksamhet")
-    page.locator(DATE_FROM).fill(start)
-    page.locator(DATE_TO).fill(end)
+def query(page, start: str, end: str) -> dict:
+    response = page.goto(URL, wait_until="domcontentloaded", timeout=60000)
+    page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
+    options = [
+        {"label": clean(opt.inner_text()), "value": opt.get_attribute("value")}
+        for opt in page.locator(f"{COUNTY_SELECT} option").all()
+    ]
+    county = next((x for x in options if x["label"] == COUNTY_LABEL), None)
+    if county is None:
+        raise RuntimeError(f"County option missing: {COUNTY_LABEL}")
+    page.locator(COUNTY_SELECT).select_option(value=county["value"])
+    page.locator(TITLE_INPUT).fill("vattenverksamhet")
+    page.locator("#SearchPlaceHolder_CaseSearch_ddDatefrom").fill(start)
+    page.locator("#SearchPlaceHolder_CaseSearch_ddDateto").fill(end)
     try:
         with page.expect_navigation(wait_until="domcontentloaded", timeout=12000):
-            page.locator(SEARCH).click(timeout=10000)
-    except PlaywrightTimeoutError:
+            page.locator(SEARCH_BUTTON).click(timeout=10000)
+    except Exception:
+        # ASP.NET may use an asynchronous postback rather than full navigation.
         pass
-    grid = page.locator(GRID)
+    grid = page.locator(RESULT_GRID)
     try:
         grid.wait_for(state="attached", timeout=20000)
-    except PlaywrightTimeoutError:
+    except Exception:
         pass
     body = clean(page.locator("body").inner_text(timeout=20000))
     total = parse_total(body)
     if grid.count() == 0:
-        return {"from":start,"to":end,"reported_total":total,"visible_unique_ids":0,
-                "grid_rows":0,"grid_present":False,"result_text_excerpt":body[:1400],
-                "page_url":page.url,"error":None if total == 0 else "No result grid and no explicit source total"}
-    rows = grid.locator("tr")
-    ids=[]
-    for i in range(rows.count()):
-        ids.extend(re.findall(r"\b\d{1,6}-\d{4}\b", clean(rows.nth(i).inner_text())))
-    unique=len(set(ids))
-    return {"from":start,"to":end,"reported_total":total,"visible_unique_ids":unique,
-            "grid_rows":rows.count(),"grid_present":True,
-            "result_text_excerpt":body[:1400],"page_url":page.url,
-            "error":None if total is not None else "Could not parse source total"}
+        explicit_zero = total == 0
+        return {"from":start,"to":end,"source_total":total,"visible_ids":0,
+                "grid_present":False,"reconciled":explicit_zero,
+                "error":None if explicit_zero else "Missing grid without explicit zero",
+                "page_url":page.url,"body_excerpt":body[:1800]}
+    grid_rows = grid.locator("tr")
+    ids = []
+    import re
+    for i in range(grid_rows.count()):
+        ids.extend(re.findall(r"\b\d{1,6}-\d{4}\b", clean(grid_rows.nth(i).inner_text())))
+    unique = len(set(ids))
+    return {"from":start,"to":end,"source_total":total,"visible_ids":unique,
+            "grid_rows":grid_rows.count(),"grid_present":True,
+            "reconciled": total is not None and unique == total,
+            "error":None if total is not None else "Source total not parseable",
+            "page_url":page.url,"body_excerpt":body[:1800]}
 
 def main():
     results=[]
@@ -66,30 +66,27 @@ def main():
         try:
             for year in (2025, 2026):
                 for month in range(1,13):
-                    last=calendar.monthrange(year,month)[1]
                     start=f"{year}-{month:02d}-01"
-                    end=f"{year}-{month:02d}-{last:02d}"
+                    end=f"{year}-{month:02d}-{calendar.monthrange(year,month)[1]:02d}"
                     try:
-                        item=run_query(page,start,end)
+                        item=query(page,start,end)
                     except Exception as exc:
-                        item={"from":start,"to":end,"reported_total":None,
-                              "visible_unique_ids":0,"grid_rows":0,"grid_present":False,
+                        item={"from":start,"to":end,"source_total":None,"visible_ids":0,
+                              "grid_present":False,"reconciled":False,
                               "error":f"{type(exc).__name__}: {exc}"}
                     results.append(item)
-                    print(json.dumps(item,ensure_ascii=False),flush=True)
+                    print(json.dumps({k:v for k,v in item.items() if k!="body_excerpt"},ensure_ascii=False),flush=True)
         finally:
             browser.close()
+    totals=[x["source_total"] for x in results if x["source_total"] is not None]
     payload={"captured_at_utc":datetime.now(timezone.utc).isoformat(),
-             "county":"Norrbotten","county_value":"21","term":"vattenverksamhet",
-             "monthly_results":results,
-             "sum_monthly_totals":sum(x["reported_total"] or 0 for x in results)}
+             "county":COUNTY_LABEL,"search_term":"vattenverksamhet","monthly_results":results,
+             "months_tested":len(results),"months_with_unknown_total":sum(x["source_total"] is None for x in results),
+             "months_reconciled":sum(bool(x["reconciled"]) for x in results),
+             "sum_monthly_totals":sum(totals)}
     Path("lansstyrelsen-monthly-partition-probe.json").write_text(
         json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print("SUMMARY "+json.dumps({"sum_monthly_totals":payload["sum_monthly_totals"],
-        "months_tested":len(results),
-        "months_with_results":sum(1 for x in results if (x["reported_total"] or 0)>0),
-        "months_missing_count":sum(1 for x in results if x["reported_total"] is None),
-        "months_with_errors":sum(1 for x in results if x.get("error"))},ensure_ascii=False))
+    print("SUMMARY "+json.dumps({k:v for k,v in payload.items() if k not in ("monthly_results","county","search_term")},ensure_ascii=False))
 
 if __name__=="__main__":
     main()
