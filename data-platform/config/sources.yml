@@ -514,3 +514,136 @@ sources:
       caveat: "Do not scrape, archive or republish private operational data based solely on public accessibility."
     notes:
       - "Treat as a commercial data-provider relationship, not a public open-data source."
+
+  - source_id: naturvardsverket.nmd2023
+    name: "Naturvårdsverket – Nationella Marktäckedata NMD2023"
+    source_type: land_cover_raster
+    provider: Naturvårdsverket_and_collaborating_producers
+    access_method: bulk_download
+    connector: to_be_implemented
+    status: planned
+    cadence: product_versioned
+    geography: Sweden
+    format: [GeoTIFF]
+    expected_crs: EPSG:3006
+    rights:
+      licence: "CC0 1.0, confirmed in NMD2023 product description"
+      licence_url: "https://geodata.naturvardsverket.se/nedladdning/marktacke/NMD2023/Tillaggsskikt/NMD2023_Produktbeskrivning_till%C3%A4ggsskikt_Markanvandning.pdf"
+      review_status: green_for_product_versions_with_cc0_documentation
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Recommended: NMD2023, Naturvårdsverket."
+      api_or_service_constraints: "Capture product version, area coverage and relevant product description; NMD2023 production/coverage is being completed in stages."
+      evidence_checked_on: "2026-11-01"
+      caveat: "The NMD programme is collaborative. Confirm the specific subproduct and version document before ingesting; do not assume all ancillary material shares the data licence."
+    notes:
+      - "Potential base layer for land-cover, forest-type and habitat-context analyses."
+      - "Product page: https://www.naturvardsverket.se/verktyg-och-tjanster/kartor-och-karttjanster/nationella-marktackedata"
+
+  - source_id: naturvardsverket.vmi_vector
+    name: "Naturvårdsverket – Våtmarksinventeringen, vektoriserade objekt"
+    source_type: wetland_inventory_vector
+    provider: Naturvårdsverket
+    access_method: bulk_download
+    connector: to_be_implemented
+    status: planned
+    cadence: staged_conversion
+    geography: Sweden_by_county
+    format: [Shapefile, raster_source_material]
+    rights:
+      licence: "CC0 1.0, as stated in the dataset metadata"
+      licence_url: "https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=cea7ad91-0b2c-4534-8f45-80e92ad4cc9d_C"
+      review_status: conditional_green_metadata_verified
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Recommended: Naturvårdsverket, Våtmarksinventeringen (VMI), dataset/version."
+      api_or_service_constraints: "Coverage and vector conversion are staged; capture county, source vintage and completeness."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Inventory largely reflects 1981–2005 field/air-photo interpretation; do not present as current complete wetland status without qualification."
+    notes:
+      - "Useful for wetland context and potential restoration screening."
+      - "Download: https://geodata.naturvardsverket.se/nedladdning/VMI/"
+
+  - source_id: sgu.soil_types_25_100k
+    name: "SGU – Jordarter 1:25 000–1:100 000"
+    source_type: soil_geology_vector
+    provider: SGU
+    access_method: bulk_download_and_ogc_api
+    connector: to_be_implemented
+    status: planned
+    cadence: product_versioned
+    geography: Sweden_partial_coverage
+    format: [GeoPackage, GeoJSON]
+    expected_crs: EPSG:3006
+    rights:
+      licence: "CC0 1.0 universell, stated in product description"
+      licence_url: "https://resource.sgu.se/dokument/produkter/jordarter-25-100000-beskrivning.pdf"
+      review_status: green_product_description_verified
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required by CC0; recommended: Källa: SGU – Jordarter 1:25 000–1:100 000."
+      api_or_service_constraints: "Capture mapping scale/type and positional accuracy; coverage and quality vary spatially."
+      evidence_checked_on: "2026-11-01"
+      caveat: "The product is mapped at varying scales and methods; do not assume uniform positional accuracy."
+    notes:
+      - "Product description identifies use in groundwater, contamination, stability, erosion, buildability and nature-value analyses."
+      - "Open data product page: https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologiska-data/"
+
+  - source_id: sgu.soil_depth_model
+    name: "SGU – Jorddjupsmodell"
+    source_type: soil_depth_raster
+    provider: SGU
+    access_method: bulk_download_and_ogc_api
+    connector: to_be_implemented
+    status: planned
+    cadence: product_versioned
+    geography: Sweden_partial_coverage
+    format: [GeoTIFF, OGC_API]
+    expected_crs: EPSG:3006
+    rights:
+      licence: "CC0 1.0 universell, stated in product description"
+      licence_url: "https://resource.sgu.se/dokument/produkter/jorddjupsmodell-beskrivning.pdf"
+      review_status: green_product_description_verified
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required by CC0; recommended: Källa: SGU – Jorddjupsmodell."
+      api_or_service_constraints: "Model is an overview/interpolation of known observations; retain resolution and uncertainty information."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Overview model; not a substitute for site-specific geotechnical investigation."
+    notes:
+      - "Potential hydrology and soil-depth context layer."
+      - "Product page: https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologiska-data/jorddjupsdata/"
+
+  - source_id: sgu.groundwater_occurrences
+    name: "SGU – Grundvattenförekomster"
+    source_type: groundwater_vector
+    provider: SGU
+    access_method: bulk_download_and_ogc_api
+    connector: to_be_implemented
+    status: planned
+    cadence: water_management_cycle
+    geography: Sweden
+    format: [GeoPackage, GeoJSON]
+    expected_crs: EPSG:3006
+    rights:
+      licence: "CC0 1.0 universell, stated in product description"
+      licence_url: "https://resource.sgu.se/dokument/produkter/grundvattenforekomster-beskrivning.pdf"
+      review_status: green_product_description_verified
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required by CC0; recommended: Källa: SGU – Grundvattenförekomster."
+      api_or_service_constraints: "Preserve water-management cycle and dataset version."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Boundaries are delineated for water-management purposes and do not represent all groundwater-bearing formations."
+    notes:
+      - "Potential context for wetland, hydrology and land-use analysis."
