@@ -35,7 +35,7 @@ Status i registret är en riskklassning för projektet, inte ett bindande juridi
 
 | Källa | Preliminär status | Viktigaste villkor / risk |
 |---|---|---|
-| Skogsstyrelsen – geodata | Villkorad grön | CC0 som huvudregel för myndighetens geodata, om inget annat anges; verifiera exakt produkt/lager |
+| Skogsstyrelsen – geodata, brandområden och återvätningsavtal | Villkorad grön | CC0 som huvudregel för myndighetens geodata, om inget annat anges; verifiera exakt produkt/lager |
 | Skogsstyrelsen – statistikdatabas | Grön för statistikdata | CC0; rapporter/analyser är CC BY; foton/illustrationer omfattas inte |
 | Lantmäteriet – listade öppna data | Grön för listade produkter | CC0, inklusive kommersiell användning |
 | Lantmäteriet – avgiftsbelagd fastighets-/geodata | Röd före avtal | Kommersiell vidareförädling och återförsäljning kan kräva särskilt avtal |
@@ -44,6 +44,8 @@ Status i registret är en riskklassning för projektet, inte ett bindande juridi
 | Copernicus Sentinel | Villkorad grön | Sentinel-data får reproduceras, distribueras och bearbetas; annat portalinnehåll har separata villkor |
 | Länsstyrelsernas diarier | Gul, per handling | Offentlig handling är inte automatiskt fri att återpublicera; sekretess, GDPR och tredje mans rättigheter |
 | Naturvårdsverket – listade öppna data | Villkorad grön | Öppna data får användas fritt; kontrollera informationsansvarig och tredjepartsrättigheter |
+| Life2Taiga – naturvårdsåtgärder | Gul | Fastställ producent, projektvillkor och rätt att lagra/återpublicera geometrier |
+| Skogsdatalabbet – Torvkarta och SIS | Gul | Fastställ dataleverantör och licens; värdskap under Skogsstyrelsens domän räcker inte |
 | SGU – geologiska data | Grön | CC0 sedan 9 juni 2024; bilder, illustrationer och annat webbmaterial kan ha separata villkor |
 | Sakfråga | Gul, avtalsgranskning | API-åtkomst fastställer inte automatiskt rätt att återanvända bilagor eller dokument kommersiellt |
 | Sveaskog / SCA | Röd utan skriftligt tillstånd | Privata företagsdata ska inte behandlas som öppna data |
@@ -94,6 +96,27 @@ EU:s rättsliga meddelande för Sentinel-data tillåter fri och öppen användni
 
 - Sentinel legal notice: https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice
 - Data Space terms: https://dataspace.copernicus.eu/terms-and-conditions
+
+### Skogsstyrelsens brandområden och återvätningsavtal
+
+Dessa lager är registrerade som separata datakällor eftersom de har egna produktbeskrivningar, attribut och semantik. Skogsstyrelsens generella geodatavillkor anger CC0 om inget annat anges. Innan kundpublicering ska respektive lager metadata och produktbeskrivning kontrolleras. Återvätningsavtal beskriver avtalade områden och ska inte tolkas som bevis på att fysiska åtgärder har genomförts.
+
+- Brandområden: https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaBrand/MapServer/0
+- Återvätningsavtal: https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAtervatningavtal/MapServer/0
+- Återvätningsavtal – produktbeskrivning: https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/atervatningsavtal---produktbeskrivning.pdf
+
+### Life2Taiga
+
+Naturvårdsåtgärdslager som används i projektet hämtas från en extern ArcGIS FeatureServer. Eftersom värdskap och dataägande inte nödvändigtvis är samma sak är licensen tills vidare okänd. Innan data används i en kommersiell produkt behöver projektets dataägare och eventuella finansierings-/partneravtal identifieras. Tills dess: ingen vidare distribution eller kommersiell publicering av råa geometrier.
+
+- Layer 13: https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13
+
+### Skogsdatalabbet – Torvkarta och SIS
+
+Dessa två ImageServer-tjänster ingår i det veckovisa pilotflödet. De är hostade under Skogsstyrelsens geodata-domän, men det fastställer inte i sig vem som äger/producerat innehållet eller vilka licensvillkor som gäller. Därför är de gulmarkerade. Innan geografisk uppskalning eller kommersiell publicering ska vi hämta tjänstemetadata, identifiera producent och produktbeskrivning, kontrollera licens, dokumentera tillåten historisk lagring och pixel-/bildderivat samt undersöka tekniska gränser.
+
+- Torvkarta 1.0: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/Torvkarta_1_0/ImageServer
+- SIS 1.0: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/SIS_1_0/ImageServer
 
 ### Länsstyrelsernas diarier
 
