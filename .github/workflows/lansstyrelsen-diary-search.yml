@@ -56,7 +56,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Test diary history and source-response validation
-        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history scripts.test_diary_county_coverage
+        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history scripts.test_diary_county_coverage tests.test_lansstyrelsen_action_leads
       - name: Audit persisted diary history
         run: |
           python scripts/audit_lansstyrelsen_diary_history.py \
