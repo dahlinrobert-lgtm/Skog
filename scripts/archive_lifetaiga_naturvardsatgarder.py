@@ -147,11 +147,9 @@ def fetch_features(layer_url: str = LAYER_URL, *, batch_size: int = 250, delay: 
                     f"Feature missing object ID field {oid_field!r}; "
                     f"returned attribute keys={sorted(attrs)}"
                 )
-            if not isinstance(feature.get("geometry"), dict):
-                raise RuntimeError(
-                    f"Feature {oid} has no polygon geometry; "
-                    f"geometry value={feature.get('geometry')!r}"
-                )
+            # Some source records are attribute-only (the live probe found
+            # OBJECTID 512 with geometry=null). Keep them rather than silently
+            # dropping source records; the report makes the geometry gap explicit.
             returned.add(int(oid))
             features.append(feature)
         if delay:
@@ -164,7 +162,7 @@ def fetch_features(layer_url: str = LAYER_URL, *, batch_size: int = 250, delay: 
     keys = [stable_key(feature) for feature in features]
     if len(set(keys)) != len(keys):
         raise RuntimeError("Duplicate GlobalID values detected; refusing to write ambiguous history")
-    features.sort(key=lambda feature: int(feature["attributes"][oid_field]))
+    features.sort(key=lambda feature: int(attribute_value(feature["attributes"], oid_field)))
     metadata["_archive_object_id_field"] = oid_field
     return metadata, features, query_url
 
@@ -218,7 +216,7 @@ def main() -> int:
         "schema_version": 1, "source": LAYER_URL, "query_endpoint": query_url,
         "layer_name": metadata.get("name"), "service_description": metadata.get("description"),
         "object_id_field": oid_field, "global_id_field": "globalid",
-        "spatial_reference": metadata.get("extent", {}).get("spatialReference") or metadata.get("spatialReference"),
+        "spatial_reference": (metadata.get("extent") or {}).get("spatialReference") or metadata.get("spatialReference"),
         "source_extent": metadata.get("extent"), "observed_at": observed_at,
         "feature_count": len(features), "features": features,
     }
@@ -230,6 +228,7 @@ def main() -> int:
             for event in changes:
                 stream.write(json.dumps(event, ensure_ascii=False, separators=(",", ":")) + "\n")
 
+    missing_geometry = sum(not isinstance(feature.get("geometry"), dict) for feature in features)
     report = {
         "observed_at": observed_at, "source": LAYER_URL, "query_endpoint": query_url,
         "layer_name": metadata.get("name"), "expected_feature_count": len(features),
@@ -238,6 +237,8 @@ def main() -> int:
         "updated_features": sum(item["change"] == "updated" for item in changes),
         "removed_from_source": sum(item["change"] == "removed_from_source" for item in changes),
         "history_events_written": len(changes),
+        "features_without_geometry": missing_geometry,
+        "geometry_warning": "Source records without polygon geometry are retained with their attributes; inspect before using the layer for spatial analysis." if missing_geometry else None,
         "action_category_counts": dict(sorted(action_counts.items())),
         "county_counts": dict(sorted(county_counts.items())),
         "note": "Life2Taiga project layer only; not a complete national register. Source attributes retained without inferring planned/completed status.",
