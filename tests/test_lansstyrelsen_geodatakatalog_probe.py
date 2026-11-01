@@ -21,6 +21,11 @@ class CatalogueProbeTests(unittest.TestCase):
             "n",
         )
 
+    def test_search_terms_include_completed_action_phrases(self):
+        self.assertIn("genomförda åtgärder", module.SEARCH_TERMS)
+        self.assertIn("utförda åtgärder", module.SEARCH_TERMS)
+        self.assertIn("åtgärdade träd", module.SEARCH_TERMS)
+
     def test_invalid_search_and_pagination_are_rejected(self):
         with self.assertRaises(ValueError):
             module.build_query(" ")
