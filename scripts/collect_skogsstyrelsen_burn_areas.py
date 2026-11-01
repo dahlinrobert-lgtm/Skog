@@ -100,20 +100,41 @@ def main() -> int:
     if metadata.get("geometryType") != "esriGeometryPolygon":
         raise RuntimeError(f"Unexpected geometry type: {metadata.get('geometryType')}")
 
-    ids_response = request_json(
+    # Probe the documented MapServer layer query endpoint first. Some ArcGIS
+    # installations expose layer metadata at /MapServer/0 but only support
+    # querying via the service-level /MapServer/query endpoint.
+    query_candidates = [
         LAYER_URL + "/query",
-        {"where": "1=1", "returnIdsOnly": "true", "returnGeometry": "false", "f": "json"},
-    )
-    object_ids = sorted(set(ids_response.get("objectIds") or []))
-    if ids_response.get("objectIds") is None:
-        raise RuntimeError("ArcGIS did not return objectIds; refusing to publish an empty snapshot")
+        LAYER_URL.rsplit("/0", 1)[0] + "/query",
+    ]
+    query_url = None
+    ids_response = None
+    failures = []
+    for candidate in query_candidates:
+        try:
+            probe = request_json(
+                candidate,
+                {"where": "1=1", "returnIdsOnly": "true", "returnGeometry": "false", "f": "json"},
+                retries=1,
+            )
+            if isinstance(probe.get("objectIds"), list):
+                query_url, ids_response = candidate, probe
+                break
+            failures.append(f"{candidate}: no objectIds returned ({list(probe.keys())})")
+        except Exception as exc:
+            failures.append(f"{candidate}: {exc}")
+    if ids_response is None:
+        raise RuntimeError("No working ArcGIS query endpoint: " + " | ".join(failures))
+    object_ids = sorted(set(int(value) for value in ids_response["objectIds"]))
+    if not object_ids:
+        raise RuntimeError("ArcGIS returned an empty object-ID list; refusing to publish an empty snapshot")
 
     features = []
     returned_ids = set()
     for offset in range(0, len(object_ids), args.batch_size):
         batch = object_ids[offset:offset + args.batch_size]
         result = request_json(
-            LAYER_URL + "/query",
+            query_url,
             {
                 "objectIds": ",".join(map(str, batch)),
                 "outFields": "*",
@@ -171,6 +192,7 @@ def main() -> int:
     snapshot = {
         "schema_version": 1,
         "source": LAYER_URL,
+        "query_endpoint": query_url,
         "layer_name": metadata.get("name"),
         "spatial_reference": 3006,
         "observed_at": observed_at,
