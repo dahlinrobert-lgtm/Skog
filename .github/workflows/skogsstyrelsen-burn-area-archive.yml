@@ -1,0 +1,52 @@
+name: Archive Skogsstyrelsen burned areas
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/collect_skogsstyrelsen_burn_areas.py"
+      - "tests/test_skogsstyrelsen_burn_area_archive.py"
+      - ".github/workflows/skogsstyrelsen-burn-area-archive.yml"
+  schedule:
+    - cron: "17 5 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: skogsstyrelsen-burn-area-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test collector utilities
+        run: python -m unittest discover -s tests -p 'test_skogsstyrelsen_burn_area_archive.py'
+      - name: Collect and validate national burned-area layer
+        run: python scripts/collect_skogsstyrelsen_burn_areas.py
+      - name: Publish snapshot and change history
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/skogsstyrelsen-brandomraden/
+          if git diff --cached --quiet; then
+            echo "No changes in Skogsstyrelsen burned-area layer."
+          else
+            git commit -m "Archive Skogsstyrelsen burned-area layer"
+            git push origin HEAD:main
+          fi
+      - name: Upload collection report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsstyrelsen-burn-area-report
+          path: data/skogsstyrelsen-brandomraden/latest-report.json
+          if-no-files-found: warn
+          retention-days: 30
