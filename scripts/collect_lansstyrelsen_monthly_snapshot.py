@@ -103,14 +103,19 @@ def main():
    interval=collect_interval(page,a.county,a.term,start,end)
   finally: browser.close()
  observed=datetime.now(timezone.utc).isoformat()
- run={"run_id":f"diary-{a.county.split()[-2].casefold()}-{a.year:04d}{a.month:02d}-{uuid.uuid4().hex[:10]}",
+ run={"run_id":f"diary-{a.year:04d}{a.month:02d}-{uuid.uuid4().hex[:12]}",
       "observed_at":observed,"source":URL,"county":a.county,"search_term":a.term,
       "intervals":[interval]}
  a.output.parent.mkdir(parents=True,exist_ok=True)
- a.output.write_text(json.dumps(run,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- result=persist(run,a.snapshots_root,a.manifest)
+ a.output.write_text(json.dumps(run,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+ # Snapshot publication is orchestrated by the workflow after all configured
+ # county/phrase runs succeed, preventing partial monthly publication.
+ status={"run_complete":bool(interval.get("reconciled")),
+         "source_total":interval.get("source_total"),
+         "extracted_unique_ids":interval.get("extracted_unique_ids"),
+         "pager_complete":interval.get("pager_complete")}
  print(json.dumps({"interval":{k:v for k,v in interval.items() if k!="records"},
-                   "persistence":result},ensure_ascii=False))
- if not result["run_complete"]: raise SystemExit(1)
+                   "run":run,"status":status},ensure_ascii=False))
+ if not status["run_complete"]: raise SystemExit(1)
 
 if __name__=="__main__": main()
