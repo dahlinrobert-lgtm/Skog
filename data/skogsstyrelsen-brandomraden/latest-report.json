@@ -1,0 +1,32 @@
+{
+  "observed_at": "2026-11-01T10:59:01.621152+00:00",
+  "source": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaBrand/MapServer/0",
+  "layer_name": "Ungefarligt_brandomrade",
+  "expected_feature_count": 1747,
+  "returned_feature_count": 1747,
+  "missing_object_ids": [],
+  "unexpected_object_ids": [],
+  "brand_type_counts": {
+    "Hyggesbränning": 62,
+    "NULL": 367,
+    "Naturvårdsbränning": 195,
+    "Skogsbrand": 923,
+    "Uppgift saknas": 200
+  },
+  "year_counts": {
+    "2019": 8,
+    "2020": 59,
+    "2021": 105,
+    "2022": 121,
+    "2023": 230,
+    "2024": 185,
+    "2025": 360,
+    "2026": 354,
+    "NULL": 325
+  },
+  "new_features": 0,
+  "changed_features": 0,
+  "removed_features": 0,
+  "baseline_created": true,
+  "history_events_written": 0
+}
