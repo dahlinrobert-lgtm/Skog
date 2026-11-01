@@ -23,6 +23,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -38,10 +40,25 @@ jobs:
           git add data/skogsstyrelsen-brandomraden/
           if git diff --cached --quiet; then
             echo "No changes in Skogsstyrelsen burned-area layer."
-          else
-            git commit -m "Archive Skogsstyrelsen burned-area layer"
-            git push origin HEAD:main
+            exit 0
           fi
+
+          git commit -m "Archive Skogsstyrelsen burned-area layer"
+
+          # Rebase the archive commit onto the latest main because
+          # other workflows may update main during data collection.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo "Published burned-area snapshot to main."
+              exit 0
+            fi
+            echo "Push rejected because main moved; retrying attempt $attempt/3."
+          done
+
+          echo "Could not publish after three attempts." >&2
+          exit 1
       - name: Upload collection report
         if: always()
         uses: actions/upload-artifact@v4
