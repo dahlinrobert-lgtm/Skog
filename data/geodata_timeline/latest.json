@@ -1,6 +1,6 @@
 {
-  "snapshot_id": "20261101T094009Z",
-  "observed_at_utc": "2026-11-01T09:40:09.129134+00:00",
+  "snapshot_id": "20261101T102426Z",
+  "observed_at_utc": "2026-11-01T10:24:26.752424+00:00",
   "purpose": "weekly information-flow change detection; not a map layer",
   "sample_area": {
     "name": "Gräsmyr, Nordmalings kommun",
@@ -29,6 +29,8 @@
         "pixel_size_x": 2,
         "pixel_size_y": 2,
         "wkid": 3006,
+        "no_data_value": null,
+        "no_data_values": null,
         "extent": {
           "xmin": 260000,
           "ymin": 6130000,
@@ -36,7 +38,7 @@
           "ymax": 7680000
         }
       },
-      "metadata_hash": "a3e0163169e17ea8cc6091f39dfd5628dfe8b0c786fffd44e00321d672d3be97",
+      "metadata_hash": "7044034b3ceff77504b2be67f439d82b7755ed2f98fa145f2825fe4997343f73",
       "pixel_hash": "51d8ccb0f6366c14a6d1b9166ff89d862d0f454b7b8b8df276d70deda18bb5b6",
       "array_shape": [
         500,
@@ -56,8 +58,16 @@
         500
       ],
       "http_status": 200,
-      "change_status": "baseline",
-      "previous_snapshot_id": null
+      "sample_file": "data/geodata_timeline/samples/20261101T102426Z_torvkarta.npz",
+      "change_status": "changed",
+      "previous_snapshot_id": "20261101T094009Z",
+      "changes": [
+        "service_metadata_changed"
+      ],
+      "pixel_comparison": {
+        "comparison_status": "previous_array_unavailable",
+        "note": "A previous hash exists, but no stored pixel array is available for band-level comparison."
+      }
     },
     {
       "service_key": "sis",
@@ -70,6 +80,8 @@
         "pixel_size_x": 12.5,
         "pixel_size_y": 12.5,
         "wkid": 3006,
+        "no_data_value": null,
+        "no_data_values": null,
         "extent": {
           "xmin": 200000,
           "ymin": 6100000,
@@ -77,7 +89,7 @@
           "ymax": 7500000
         }
       },
-      "metadata_hash": "b0550f491dbc03c667acfef8b233a7010475bf833c00dac1d6c6cf3fb4e3f04a",
+      "metadata_hash": "3211ce0d2573bd4609b98cb22397dbb88ea12c07dff7ce7826d3c31dce6fad39",
       "pixel_hash": "84bd8cf17655d726da797352720f0ec933c01691ff3a5334bcc9874533ec747b",
       "array_shape": [
         80,
@@ -97,8 +109,16 @@
         80
       ],
       "http_status": 200,
-      "change_status": "baseline",
-      "previous_snapshot_id": null
+      "sample_file": "data/geodata_timeline/samples/20261101T102426Z_sis.npz",
+      "change_status": "changed",
+      "previous_snapshot_id": "20261101T094009Z",
+      "changes": [
+        "service_metadata_changed"
+      ],
+      "pixel_comparison": {
+        "comparison_status": "previous_array_unavailable",
+        "note": "A previous hash exists, but no stored pixel array is available for band-level comparison."
+      }
     }
   ]
-}
+}\n

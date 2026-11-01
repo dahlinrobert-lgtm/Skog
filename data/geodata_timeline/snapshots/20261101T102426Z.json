@@ -1,0 +1,124 @@
+{
+  "snapshot_id": "20261101T102426Z",
+  "observed_at_utc": "2026-11-01T10:24:26.752424+00:00",
+  "purpose": "weekly information-flow change detection; not a map layer",
+  "sample_area": {
+    "name": "Gräsmyr, Nordmalings kommun",
+    "centre_epsg3006": [
+      730063.407,
+      7077167.365
+    ],
+    "bbox_epsg3006": [
+      729563.4071194617,
+      7076667.364693753,
+      730563.4071194617,
+      7077667.364693753
+    ],
+    "width_metres": 1000,
+    "height_metres": 1000
+  },
+  "services": [
+    {
+      "service_key": "torvkarta",
+      "status": "ok",
+      "metadata": {
+        "name": "Skogsdatalabbet/Torvkarta_1_0",
+        "description": "Torvdjup i dm samt torvklasser",
+        "pixel_type": "U8",
+        "band_count": 2,
+        "pixel_size_x": 2,
+        "pixel_size_y": 2,
+        "wkid": 3006,
+        "no_data_value": null,
+        "no_data_values": null,
+        "extent": {
+          "xmin": 260000,
+          "ymin": 6130000,
+          "xmax": 930000,
+          "ymax": 7680000
+        }
+      },
+      "metadata_hash": "7044034b3ceff77504b2be67f439d82b7755ed2f98fa145f2825fe4997343f73",
+      "pixel_hash": "51d8ccb0f6366c14a6d1b9166ff89d862d0f454b7b8b8df276d70deda18bb5b6",
+      "array_shape": [
+        500,
+        500,
+        2
+      ],
+      "array_dtype": "uint8",
+      "sample_bbox_epsg3006": [
+        729563.4071194617,
+        7076667.364693753,
+        730563.4071194617,
+        7077667.364693753
+      ],
+      "sample_window_metres": 1000,
+      "requested_dimensions": [
+        500,
+        500
+      ],
+      "http_status": 200,
+      "sample_file": "data/geodata_timeline/samples/20261101T102426Z_torvkarta.npz",
+      "change_status": "changed",
+      "previous_snapshot_id": "20261101T094009Z",
+      "changes": [
+        "service_metadata_changed"
+      ],
+      "pixel_comparison": {
+        "comparison_status": "previous_array_unavailable",
+        "note": "A previous hash exists, but no stored pixel array is available for band-level comparison."
+      }
+    },
+    {
+      "service_key": "sis",
+      "status": "ok",
+      "metadata": {
+        "name": "Skogsdatalabbet/SIS_1_0",
+        "description": "Ståndortsindex för gran och tall",
+        "pixel_type": "S16",
+        "band_count": 2,
+        "pixel_size_x": 12.5,
+        "pixel_size_y": 12.5,
+        "wkid": 3006,
+        "no_data_value": null,
+        "no_data_values": null,
+        "extent": {
+          "xmin": 200000,
+          "ymin": 6100000,
+          "xmax": 1000000,
+          "ymax": 7500000
+        }
+      },
+      "metadata_hash": "3211ce0d2573bd4609b98cb22397dbb88ea12c07dff7ce7826d3c31dce6fad39",
+      "pixel_hash": "84bd8cf17655d726da797352720f0ec933c01691ff3a5334bcc9874533ec747b",
+      "array_shape": [
+        80,
+        80,
+        2
+      ],
+      "array_dtype": "int16",
+      "sample_bbox_epsg3006": [
+        729563.4071194617,
+        7076667.364693753,
+        730563.4071194617,
+        7077667.364693753
+      ],
+      "sample_window_metres": 1000,
+      "requested_dimensions": [
+        80,
+        80
+      ],
+      "http_status": 200,
+      "sample_file": "data/geodata_timeline/samples/20261101T102426Z_sis.npz",
+      "change_status": "changed",
+      "previous_snapshot_id": "20261101T094009Z",
+      "changes": [
+        "service_metadata_changed"
+      ],
+      "pixel_comparison": {
+        "comparison_status": "previous_array_unavailable",
+        "note": "A previous hash exists, but no stored pixel array is available for band-level comparison."
+      }
+    }
+  ]
+}\n
