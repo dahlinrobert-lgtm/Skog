@@ -21,6 +21,9 @@ class Life2TaigaArchiveTests(unittest.TestCase):
     def test_globalid_is_stable_when_objectid_changes(self):
         self.assertEqual(module.stable_key(feature(1, "ABC")), module.stable_key(feature(99, "abc")))
 
+    def test_arcgis_attribute_lookup_is_case_insensitive(self):
+        self.assertEqual(module.attribute_value({"OBJECTID": 512}, "objectid"), 512)
+
     def test_detects_add_update_and_removal(self):
         previous = {"features": [feature(1, "a"), feature(2, "b")]}
         current = [feature(10, "a", "changed"), feature(2, "b"), feature(3, "c")]
