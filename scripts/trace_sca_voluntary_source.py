@@ -83,7 +83,7 @@ def main():
       "interpretation":"Only a call-site chain joining the named layer object to a source factory/grid or URL function is conclusive. Candidate snippets are not proof.",
       "tile_requests":0
     }
-    Path("sca-voluntary-source-trace.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+    Path("sca-voluntary-source-trace.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps({"layer":out["named_layer_config"],"assets":[{"url":x["url"],"bytes":x["bytes"],"match_count":len(x["matches"]),"matches":x["matches"][:8]} for x in assets]},ensure_ascii=False,indent=2))
 
 if __name__=="__main__": main()
