@@ -13,7 +13,7 @@ Katalogen bygger på GeoNetwork 4. Den publika söktjänsten används via:
 - Fritextindex: \`anytext\`
 - Mallposter filtreras bort med \`isTemplate = n\`.
 
-Sökorden omfattar naturvårdsbränning, naturvårdande skötsel, naturvårdsåtgärder, slåtter, bete, hamling, död ved, veteranisering, skogsrestaurering, invasiva arter, ängs- och betesmark samt Natura 2000-skötsel.
+Sökorden omfattar naturvårdsbränning, naturvårdande skötsel, naturvårdsåtgärder, slåtter, bete, hamling, död ved, veteranisering, skogsrestaurering, invasiva arter, ängs- och betesmark, Natura 2000-skötsel samt uttryck för genomförda/utförda åtgärder, restaureringsåtgärder, skötselåtgärder, naturvårdsinsatser, åtgärdade träd och frihuggning.
 
 ## Resultatformat
 
@@ -22,7 +22,7 @@ Workflow-artifacten innehåller:
 - \`catalogue-inventory.json\`: unika metadata-ID:n, titel, råa indexerade metadatafält och vilka sökord som gav träffen.
 - \`catalogue-report.json\`: antal träffar per sökord och övergripande kvalitetsinformation.
 
-Sökningen begränsas till 200 poster per sökord i första inventeringspasset. Om ett sökord har fler träffar flaggas det som avklippt och behöver följas upp med paginering eller mer precisa termer.
+Sökningen begränsas till 200 poster per sökord i varje inventeringspass. Efter den första körningen utökades sökordslistan med uttryck som explicit signalerar genomförda eller utförda åtgärder. Om ett sökord har fler träffar flaggas det som avklippt och behöver följas upp med paginering eller mer precisa termer.
 
 ## Urvalskriterier för att gå vidare
 
