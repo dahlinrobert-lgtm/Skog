@@ -31,6 +31,7 @@ jobs:
       - name: Collect and validate national burned-area layer
         run: python scripts/collect_skogsstyrelsen_burn_areas.py
       - name: Publish snapshot and change history
+        if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
