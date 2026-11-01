@@ -25,8 +25,8 @@ def is_forward_page_argument(argument, current_page, label=""):
 
 
 
-def select_next_pager_action(candidates, current_page_index):
-    """Select a WebForms result-page or sliding-window continuation."""
+def select_next_pager_action(candidates, current_page_index, window_end=None):
+    """Select a continuation from a WebForms GridView pager window."""
     numeric = []
     for item in candidates:
         match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
@@ -34,11 +34,20 @@ def select_next_pager_action(candidates, current_page_index):
             numeric.append((int(match.group(1)), item))
     if numeric:
         return min(numeric, key=lambda pair: pair[0])[1]
+
+    # GridView's ellipsis commonly emits Page$1, which advances the pager
+    # window rather than navigating to result page 1.
     for item in candidates:
         if item["argument"].casefold() == "page$1" and item["label"] in {"...", "…"}:
             return item
+
+    # At the right edge, some GridView implementations expose Page$Last.
     for item in candidates:
-        if item["argument"].casefold() in {"next", "page$next", "last", "page$last"}:
+        if item["argument"].casefold() in {"last", "page$last"}:
+            return item
+
+    for item in candidates:
+        if item["argument"].casefold() in {"next", "page$next"}:
             return item
     return None
 
