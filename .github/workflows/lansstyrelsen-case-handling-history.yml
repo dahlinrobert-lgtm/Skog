@@ -40,7 +40,9 @@ jobs:
       - name: Analyze quality, handling classes and execution leads
         run: |
           python -m unittest discover -s tests -p 'test_lansstyrelsen_handlings_analysis.py'
+          python -m unittest discover -s tests -p 'test_lansstyrelsen_action_leads.py'
           python scripts/analyze_lansstyrelsen_handlings.py
+          python scripts/classify_lansstyrelsen_action_leads.py
       - name: Publish metadata history and analysis
         if: success() && github.ref == 'refs/heads/main'
         run: |
