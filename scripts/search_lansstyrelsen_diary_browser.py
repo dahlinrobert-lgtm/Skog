@@ -263,167 +263,138 @@ def main() -> None:
             else:
                 result["request_ok"] = True
                 visited_page_signatures: set[tuple[str, ...]] = set()
-                for page_number in range(1, 101):
+                current_page_index = 0
+                for iteration in range(1, 501):
                     page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
                     visible_ids = tuple(
-                        re.findall(r"\b\d{1,6}-\d{4}\b", clean(row.inner_text()))
+                        match
                         for row in page.locator(f"{RESULT_GRID} tr").all()
+                        for match in re.findall(r"\b\d{1,6}-\d{4}\b", clean(row.inner_text()))
                     )
-                    visible_ids = tuple(item for group in visible_ids for item in group)
                     if visible_ids in visited_page_signatures:
                         raise RuntimeError(
-                            f"Pagination loop detected on page {page_number}: "
-                            f"same diary-number signature repeated ({visible_ids[:5]!r})"
+                            f"Pagination loop detected at iteration {iteration}: "
+                            f"repeated result page with {len(visible_ids)} diary IDs"
                         )
                     visited_page_signatures.add(visible_ids)
+
                     current_body = clean(page.locator("body").inner_text(timeout=20000))
                     if result["reported_total_results"] is None:
                         result["reported_total_results"] = parse_total(current_body)
-                    rows, diag = extract_grid(page, page_number, seen)
+
+                    rows, diag = extract_grid(page, iteration, seen)
                     result["results"].extend(rows)
                     result["table_diagnostics"].append(diag)
-                    result["pagination"]["pages_read"] = page_number
-                    # ASP.NET GridView pager can expose the active page as text
-                    # and the forward-window control as an ellipsis ("..."), not
-                    # as a link labelled Next. Inspect controls in the pager row
-                    # and use their WebForms postback target/argument.
+                    result["pagination"]["pages_read"] = iteration
+                    result["pagination"]["current_page_index"] = current_page_index
+
+                    # The portal uses a sliding GridView page window. Its ellipsis
+                    # postback argument "Page$1" advances the *window*, not the
+                    # result-page index. The first/last links use Page$First/Last.
                     pager_rows = page.locator(f"{RESULT_GRID} tr")
                     pager = pager_rows.last
                     pager_text = clean(pager.inner_text()) if pager.count() else ""
                     controls = pager.locator("a, input, button, [role='button']") if pager.count() else page.locator(
-                        "#SearchPlaceHolder_caseGridView a, "
-                        "#SearchPlaceHolder_caseGridView input, "
-                        "#SearchPlaceHolder_caseGridView button"
+                        f"{RESULT_GRID} a, {RESULT_GRID} input, {RESULT_GRID} button"
                     )
-                    nxt = None
-                    pager_candidates = []
+
+                    candidates = []
                     for i in range(controls.count()):
-                        c = controls.nth(i)
-                        tag = c.evaluate("(e) => e.tagName.toLowerCase()")
+                        control = controls.nth(i)
+                        tag = control.evaluate("(e) => e.tagName.toLowerCase()")
                         label = clean(" ".join([
-                            c.inner_text() if tag not in {"input", "button"} else "",
-                            c.get_attribute("value") or "",
-                            c.get_attribute("title") or "",
-                            c.get_attribute("aria-label") or "",
-                            c.get_attribute("alt") or "",
+                            control.inner_text() if tag not in {"input", "button"} else "",
+                            control.get_attribute("value") or "",
+                            control.get_attribute("title") or "",
+                            control.get_attribute("aria-label") or "",
+                            control.get_attribute("alt") or "",
                         ])).casefold()
-                        href = c.get_attribute("href") or ""
-                        onclick = c.get_attribute("onclick") or ""
-                        postback_text = " ".join([href, onclick])
-                        postback = re.search(
-                            r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)",
-                            postback_text
+                        href = control.get_attribute("href") or ""
+                        onclick = control.get_attribute("onclick") or ""
+                        event = re.search(
+                            r"""__doPostBack\(['"]([^'"]+)['"]\s*,\s*['"]([^'"]*)['"]\)""",
+                            " ".join((href, onclick)),
                         )
-                        disabled = c.get_attribute("disabled") is not None or c.get_attribute("aria-disabled") == "true"
-                        if disabled:
-                            continue
-                        pager_candidates.append({
-                            "label": label, "href": href, "onclick": onclick,
-                            "postback": postback.groups() if postback else None,
-                        })
-                        if postback:
-                            target, argument = postback.groups()
-                            # Forward page navigation is commonly "Page$N" or
-                            # a numeric page argument. Never click the current page.
-                            page_match = re.fullmatch(r"Page\$(\d+)", argument, re.I)
-                            is_forward = (
-                                (page_match is not None and int(page_match.group(1)) > page_number)
-                                or (argument.isdigit() and int(argument) > page_number)
-                                or (
-                                    label in {"...", "…", ">", "»", "›", ">>", "»»", "next", "nästa"}
-                                    and page_match is not None
-                                    and int(page_match.group(1)) > page_number
-                                )
-                            )
-                            if is_forward:
-                                nxt = c
-                                break
-                        elif label in {"next", "nästa", ">", "»", "›", ">>", "»»"}:
-                            nxt = c
-                            break
+                        if event:
+                            target, argument = event.groups()
+                            candidates.append({
+                                "label": label, "target": target, "argument": argument,
+                                "element": control,
+                            })
 
-                    if nxt is None:
-                        # Some GridView pagers render the ellipsis as a literal
-                        # text node or image. Find a postback event in the pager
-                        # row's outer HTML and use it only when it points forward.
-                        pager_html = pager.evaluate("(e) => e.outerHTML") if pager.count() else ""
-                        html_postbacks = re.findall(
-                            r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)",
-                            pager_html
-                        )
-                        for target, argument in html_postbacks:
-                            page_match = re.fullmatch(r"Page\$(\d+)", argument, re.I)
-                            if (
-                                (page_match is not None and int(page_match.group(1)) > page_number)
-                                or (argument.isdigit() and int(argument) > page_number)
-                            ):
-                                nxt = (target, argument)
+                    # Prefer a numeric next page in the currently visible window.
+                    numeric = []
+                    for item in candidates:
+                        match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
+                        if match and int(match.group(1)) > current_page_index + 1:
+                            numeric.append((int(match.group(1)), item))
+                    next_item = min(numeric, key=lambda pair: pair[0])[1] if numeric else None
+
+                    # At the end of a sliding window, the literal ellipsis uses
+                    # Page$1. That command advances the page window; it is not
+                    # the first result page. Page$Last is a final fallback.
+                    if next_item is None:
+                        for item in candidates:
+                            if item["argument"].casefold() == "page$1" and item["label"] in {"...", "…"}:
+                                next_item = item
                                 break
 
-                    if nxt is None:
-                        current_text = clean(page.locator("body").inner_text())
-                        reported_now = parse_total(current_text)
+                    if next_item is None:
+                        # A GridView may expose a direct Next or Last control.
+                        for item in candidates:
+                            if item["argument"].casefold() in {"next", "page$next", "last", "page$last"}:
+                                next_item = item
+                                break
+
+                    if next_item is None:
+                        reported_now = parse_total(current_body)
                         if reported_now is not None and len(seen) < reported_now:
                             raise RuntimeError(
-                                "Source reports additional results but no forward pager postback was identified; "
-                                f"page={page_number}, extracted={len(seen)}, reported={reported_now}, "
-                                f"pager_text={pager_text!r}, candidates={pager_candidates!r}"
+                                "Portal pager exposes no continuation although source total is larger: "
+                                f"iteration={iteration}, extracted={len(seen)}, reported={reported_now}, "
+                                f"pager_text={pager_text!r}, candidates="
+                                f"{[(x['label'], x['argument']) for x in candidates]!r}"
                             )
                         result["pagination"]["has_next_page"] = False
                         break
-                    before_count = len(seen)
-                    if isinstance(nxt, tuple):
-                        target, argument = nxt
-                        postback = True
-                    else:
-                        href = nxt.get_attribute("href") or ""
-                        onclick = nxt.get_attribute("onclick") or ""
-                        postback_text = " ".join([href, onclick])
-                        postback = re.search(
-                            r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)",
-                            postback_text
-                        )
-                    if postback:
-                        if not isinstance(nxt, tuple):
-                            target, argument = postback.groups()
-                        try:
-                            with page.expect_response(
-                                lambda resp: "diarium.lansstyrelsen.se" in resp.url
-                                and resp.request.method == "POST",
-                                timeout=20000
-                            ):
-                                page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
-                        except PlaywrightTimeoutError:
-                            # Some WebForms pages post back without a matching
-                            # response event in Playwright; wait for row content
-                            # to change and validate it below.
-                            pass
-                    else:
-                        try:
-                            with page.expect_navigation(wait_until="domcontentloaded", timeout=15000):
-                                nxt.click(timeout=10000)
-                        except PlaywrightTimeoutError:
-                            nxt.click(timeout=5000, force=True)
+
+                    target = next_item["target"]
+                    argument = next_item["argument"]
+                    before_signature = visible_ids
+                    response_seen = False
+                    try:
+                        with page.expect_response(
+                            lambda resp: "diarium.lansstyrelsen.se" in resp.url
+                            and resp.request.method == "POST",
+                            timeout=25000,
+                        ):
+                            page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
+                        response_seen = True
+                    except PlaywrightTimeoutError:
+                        pass
+
                     try:
                         page.wait_for_function(
                             """({selector, previous}) => {
                                 const grid = document.querySelector(selector);
                                 if (!grid) return false;
                                 const ids = Array.from(grid.querySelectorAll('tr'))
-                                  .map(row => (row.innerText || '').match(/\\b\\d{1,6}-\\d{4}\\b/))
-                                  .filter(Boolean).map(match => match[0]);
-                                return ids.length > 0 && ids.some(match => !previous.includes(match[0]));
+                                  .flatMap(row => Array.from((row.innerText || '').matchAll(/\\b\\d{1,6}-\\d{4}\\b/g), m => m[0]));
+                                return ids.length > 0 && ids.join('|') !== previous.join('|');
                             }""",
-                            arg={"selector": RESULT_GRID, "previous": list(seen)},
-                            timeout=25000
+                            arg={"selector": RESULT_GRID, "previous": list(before_signature)},
+                            timeout=25000,
                         )
                     except PlaywrightTimeoutError as exc:
                         raise RuntimeError(
-                            f"Pagination control {label!r} was activated but the result grid did not change "
-                            f"after page {page_number}; current URL={page.url}"
+                            "WebForms page-window postback did not change the visible result page: "
+                            f"iteration={iteration}, argument={argument!r}, response_seen={response_seen}, "
+                            f"current_ids={before_signature[:4]!r}"
                         ) from exc
+
+                    current_page_index += 1
                 else:
-                    raise RuntimeError("Safety cap reached after 100 result pages")
+                    raise RuntimeError("Safety cap reached after 500 result-page transitions")
 
             result["result_count"] = len(result["results"])
             result["total_reconciled"] = (
