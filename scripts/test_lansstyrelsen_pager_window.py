@@ -3,7 +3,7 @@
 from __future__ import annotations
 import unittest
 from unittest.mock import Mock
-from scripts.search_lansstyrelsen_diary_browser import select_next_pager_action
+from scripts.lansstyrelsen_pager import select_next_pager_action
 
 
 class SlidingPagerWindowTests(unittest.TestCase):
