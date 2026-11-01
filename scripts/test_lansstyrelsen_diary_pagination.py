@@ -23,6 +23,25 @@ def is_forward_page_argument(argument, current_page, label=""):
     return argument.isdigit() and int(argument) > current_page
 
 
+
+
+def select_next_pager_action(candidates, current_page_index):
+    """Select a WebForms result-page or sliding-window continuation."""
+    numeric = []
+    for item in candidates:
+        match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
+        if match and int(match.group(1)) > current_page_index + 1:
+            numeric.append((int(match.group(1)), item))
+    if numeric:
+        return min(numeric, key=lambda pair: pair[0])[1]
+    for item in candidates:
+        if item["argument"].casefold() == "page$1" and item["label"] in {"...", "…"}:
+            return item
+    for item in candidates:
+        if item["argument"].casefold() in {"next", "page$next", "last", "page$last"}:
+            return item
+    return None
+
 def parse_search_terms(primary, extras=""):
     terms = []
     for candidate in [primary, *re.split(r"[,;\n\r]+", extras or "")]:
@@ -70,6 +89,39 @@ class DiaryPaginationSafetyTests(unittest.TestCase):
 
     def test_non_numeric_page_argument_is_not_forward(self):
         self.assertFalse(is_forward_page_argument("Page$Next", 6, "next"))
+
+
+    def test_sliding_window_ellipsis_page_one_is_continuation(self):
+        candidates = [
+            {"label": "<<", "argument": "Page$First"},
+            {"label": "...", "argument": "Page$1"},
+            {"label": "2", "argument": "Page$2"},
+            {"label": "3", "argument": "Page$3"},
+            {"label": "6", "argument": "Page$6"},
+        ]
+        selected = select_next_pager_action(candidates, 6)
+        self.assertEqual(selected["label"], "...")
+
+    def test_next_numeric_page_in_window_is_selected(self):
+        candidates = [
+            {"label": "4", "argument": "Page$4"},
+            {"label": "5", "argument": "Page$5"},
+            {"label": "6", "argument": "Page$6"},
+        ]
+        selected = select_next_pager_action(candidates, 3)
+        self.assertEqual(selected["argument"], "Page$4")
+
+    def test_first_page_link_is_not_selected_as_forward(self):
+        candidates = [{"label": "<<", "argument": "Page$First"}]
+        self.assertIsNone(select_next_pager_action(candidates, 6))
+
+    def test_no_continuation_when_only_current_and_previous_pages(self):
+        candidates = [
+            {"label": "1", "argument": "Page$1"},
+            {"label": "2", "argument": "Page$2"},
+            {"label": "3", "argument": "Page$3"},
+        ]
+        self.assertIsNone(select_next_pager_action(candidates, 3))
 
     def test_webforms_javascript_postback_href_is_parsed(self):
         href = "javascript:__doPostBack('ctl00$SearchPlaceHolder$caseGridView','Page$2')"
