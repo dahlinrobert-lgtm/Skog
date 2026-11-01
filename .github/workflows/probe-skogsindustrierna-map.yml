@@ -1,0 +1,31 @@
+name: Probe Skogsindustrierna map discovery
+on:
+  push:
+    branches: [investigate/**]
+    paths:
+      - "scripts/probe_skogsindustrierna_map.py"
+      - ".github/workflows/probe-skogsindustrierna-map.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "requests>=2.31,<3"
+      - name: Discover application assets and service references
+        run: python scripts/probe_skogsindustrierna_map.py
+      - name: Upload bounded discovery report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsindustrierna-map-discovery-report
+          path: artifacts/skogsindustrierna-map-discovery.json
+          if-no-files-found: warn
+          retention-days: 30
