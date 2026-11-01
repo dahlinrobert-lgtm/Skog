@@ -1,0 +1,30 @@
+name: Probe Skogsindustrierna WMS GetCapabilities
+on:
+  push:
+    branches: [investigate/**]
+    paths:
+      - "scripts/probe_skogsindustrierna_wms_capabilities.py"
+      - ".github/workflows/probe-skogsindustrierna-wms-capabilities.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "requests>=2.31,<3"
+      - name: Request public WMS GetCapabilities only
+        run: python scripts/probe_skogsindustrierna_wms_capabilities.py
+      - name: Upload WMS capabilities report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsindustrierna-wms-capabilities
+          path: artifacts/skogsindustrierna-wms-capabilities.json
+          if-no-files-found: warn
+          retention-days: 30
