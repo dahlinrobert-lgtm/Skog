@@ -33,6 +33,8 @@ def main():
     if not body.lstrip().startswith("<"):
         raise RuntimeError("WMS response is not XML; response starts: "+body[:300])
     root=ET.fromstring(r.content)
+    exception_text = " ".join((x.text or "").strip() for x in root.iter() if local(x.tag).lower() in ("exceptiontext","serviceexception","message"))
+    root_tag = local(root.tag)
     layers=[]
     for node in root.iter():
         if local(node.tag)!="Layer":
@@ -59,7 +61,8 @@ def main():
     report={
       "generated_at_utc":datetime.now(timezone.utc).isoformat(),
       "request_url":r.url,"http_status":r.status_code,"content_type":content_type,
-      "response_bytes":len(r.content),"wms_version":root.attrib.get("version"),
+      "response_bytes":len(r.content),"root_element":root_tag,"wms_version":root.attrib.get("version"),
+      "exception_text":exception_text[:4000],"response_preview":body[:4000],
       "service_metadata":service,"layers":layers,
       "expected_layer_presence":{n:(n in names) for n in EXPECTED},
       "all_expected_layers_found":all(n in names for n in EXPECTED),
@@ -73,6 +76,7 @@ def main():
     print(json.dumps({"status":r.status_code,"content_type":content_type,"bytes":len(r.content),
       "wms_version":report["wms_version"],"layer_count":len(layers),
       "expected_layers_found":sum(report["expected_layer_presence"].values()),
-      "all_expected_layers_found":report["all_expected_layers_found"]},ensure_ascii=False))
+      "all_expected_layers_found":report["all_expected_layers_found"],"root_element":root_tag,
+      "exception_text":exception_text[:1000],"response_preview":body[:1500]},ensure_ascii=False))
 if __name__=="__main__":
     main()
