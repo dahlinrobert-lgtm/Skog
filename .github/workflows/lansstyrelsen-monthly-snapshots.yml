@@ -158,7 +158,24 @@ jobs:
             exit 0
           fi
           git commit -m "Archive monthly Länsstyrelsen diary snapshots"
-          git push origin HEAD:main
+          # Other Skog workflows may update main while this long browser run is
+          # collecting. Rebase the local snapshot commit onto the newest main
+          # without resetting or discarding generated files.
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+              git rebase --abort || true
+            else
+              git rebase --abort || true
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
+          echo "Could not publish snapshot commit after rebasing onto latest main." >&2
+          exit 1
       - name: Upload monthly collection diagnostics
         if: always()
         uses: actions/upload-artifact@v4
