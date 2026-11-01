@@ -95,7 +95,7 @@ def classify_case(record: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=Path, default=Path("data/lansstyrelsen-diary/case-details.json"))
-    parser.add_argument("--output", type=Path, default=Path("data/lansstyrelsen-diary/action-leads.json"))
+    parser.add_argument("--output", type=Path, default=Path("data/lansstyrelsen-diary/analysis/action-leads.json"))
     args = parser.parse_args()
     payload = json.loads(args.input.read_text(encoding="utf-8"))
     cases = list((payload.get("cases") or {}).values())
