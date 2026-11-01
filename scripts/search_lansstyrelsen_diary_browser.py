@@ -265,6 +265,7 @@ def main() -> None:
             else:
                 result["request_ok"] = True
                 visited_page_signatures: set[tuple[str, ...]] = set()
+                visited_pager_actions: set[tuple[tuple[str, ...], str, str]] = set()
                 current_page_index = 0
                 for iteration in range(1, 501):
                     page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
@@ -393,6 +394,14 @@ def main() -> None:
                     argument = next_item["argument"]
                     before_signature = visible_ids
                     before_count = len(seen)
+                    action_signature = (before_signature, target, argument)
+                    if action_signature in visited_pager_actions:
+                        raise RuntimeError(
+                            "Pager action repeated without reaching a reconciled terminal state: "
+                            f"iteration={iteration}, argument={argument!r}, "
+                            f"extracted={before_count}, reported={result['reported_total_results']}"
+                        )
+                    visited_pager_actions.add(action_signature)
                     response_seen = False
                     try:
                         with page.expect_response(
