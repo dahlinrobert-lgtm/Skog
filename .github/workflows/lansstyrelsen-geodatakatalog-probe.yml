@@ -1,0 +1,38 @@
+name: Probe Länsstyrelsen geodata catalogue
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/probe_lansstyrelsen_geodatakatalog.py"
+      - "tests/test_lansstyrelsen_geodatakatalog_probe.py"
+      - ".github/workflows/lansstyrelsen-geodatakatalog-probe.yml"
+      - "docs/data/lansstyrelsen-geodatakatalog-inventory.md"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lansstyrelsen-geodata-catalogue-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test catalogue query and response handling
+        run: python -m unittest discover -s tests -p 'test_lansstyrelsen_geodatakatalog_probe.py' -v
+      - name: Search public catalogue metadata
+        run: python scripts/probe_lansstyrelsen_geodatakatalog.py --size 100 --max-records-per-term 200
+      - name: Upload catalogue inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-geodatakatalog-inventory
+          path: catalogue-probe/
+          if-no-files-found: error
+          retention-days: 30
