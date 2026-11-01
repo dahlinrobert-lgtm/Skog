@@ -5,9 +5,9 @@ import unittest
 
 def parse_total(text):
     patterns = (
-        r"Sökresultat\\s*:?\\s*[\\d\\s–-]+\\s+av\\s+(\\d+)",
-        r"\\b(?:träffar|ärenden)\\s*:?\\s*(\\d+)\\b",
-        r"\\bantal\\s+(?:träffar|ärenden)\\s*:?\\s*(\\d+)\\b",
+        r"Sökresultat\s*:?\s*[\d\s–-]+\s+av\s+(\d+)",
+        r"\b(?:träffar|ärenden)\s*:?\s*(\d+)\b",
+        r"\bantal\s+(?:träffar|ärenden)\s*:?\s*(\d+)\b",
     )
     for pattern in patterns:
         match = re.search(pattern, text, re.I)
@@ -29,7 +29,7 @@ def is_forward_page_argument(argument, current_page, label=""):
 
 def parse_search_terms(primary, extras=""):
     terms = []
-    for candidate in [primary, *re.split(r"[,;\\n\\r]+", extras or "")]:
+    for candidate in [primary, *re.split(r"[,;\n\r]+", extras or "")]:
         term = candidate.strip()
         if term and term.casefold() not in {v.casefold() for v in terms}:
             terms.append(term)
@@ -53,7 +53,7 @@ class DiaryPaginationSafetyTests(unittest.TestCase):
     def test_water_query_has_six_terms(self):
         terms = parse_search_terms(
             "vattenverksamhet",
-            "markavvattning\\ndikesrensning\\ntrumma\\nvåtmarksanläggning\\nomgrävning av vattendrag",
+            "markavvattning\ndikesrensning\ntrumma\nvåtmarksanläggning\nomgrävning av vattendrag",
         )
         self.assertEqual(len(terms), 6)
 
