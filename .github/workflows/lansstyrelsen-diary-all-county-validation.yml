@@ -6,7 +6,7 @@ on:
       search_term:
         description: Phrase searched in case title
         required: true
-        default: "naturvårdsbränning"
+        default: "vattenverksamhet"
         type: string
   push:
     paths:
@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Test diary history and source-response validation
-        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation
+        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_diary_county_coverage
       - name: Install browser dependencies
         run: |
           python -m pip install playwright
@@ -34,7 +34,7 @@ jobs:
         env:
           SEARCH_TERM_INPUT: ${{ inputs.search_term }}
         run: |
-          search_term="${SEARCH_TERM_INPUT:-naturvårdsbränning}"
+          search_term="${SEARCH_TERM_INPUT:-vattenverksamhet}"
           python scripts/search_lansstyrelsen_diary_browser.py \
             --county "Alla län" \
             --search-term "$search_term" \
