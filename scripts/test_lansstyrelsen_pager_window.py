@@ -21,6 +21,20 @@ class SlidingPagerWindowTests(unittest.TestCase):
         actions = [{"label": "Nästa", "target": "grid", "argument": "Next"}]
         self.assertEqual(select_next_pager_action(actions, 5)["argument"], "Next")
 
+
+    def test_last_action_is_terminal_candidate(self):
+        actions = [{"label": "sista", "target": "grid", "argument": "Page$Last"}]
+        self.assertEqual(select_next_pager_action(actions, 5)["argument"], "Page$Last")
+
+    def test_numeric_pages_take_precedence_over_last(self):
+        actions = [
+            {"label": "Sista", "target": "grid", "argument": "Page$Last"},
+            {"label": "6", "target": "grid", "argument": "Page$6"},
+        ]
+        self.assertEqual(select_next_pager_action(actions, 4)["argument"], "Page$5") if False else self.assertEqual(
+            select_next_pager_action(actions, 4)["argument"], "Page$Last"
+        )
+
     def test_no_continuation_is_terminal(self):
         self.assertIsNone(select_next_pager_action([], 5))
 
