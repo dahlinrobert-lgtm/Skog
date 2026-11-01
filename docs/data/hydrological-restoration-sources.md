@@ -9,7 +9,7 @@ Det första automatiserade spåret arkiverar Skogsstyrelsens offentliga polygonl
 - Källa: https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAtervatningavtal/MapServer/0
 - Produktbeskrivning: https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/atervatningsavtal---produktbeskrivning.pdf
 
-Skogsstyrelsens produktbeskrivning anger att lagret visar tecknade återvätningsavtal, har nationell geografisk täckning och uppdateras varje natt. Det är därför ett lämpligt första historikspår.
+Skogsstyrelsens produktbeskrivning anger att lagret visar tecknade återvätningsavtal, har nationell geografisk täckning och uppdateras varje natt. Det är därför ett lämpligt första historikspår. Samtidigt visar lagrets aktuella ArcGIS-metadata en faktisk datautbredning på ungefär X 281 968–730 863 och Y 6 229 741–7 074 783 i SWEREF99 TM. Denna utbredning är snävare än produktbeskrivningens nationella täckningsram och måste kontrolleras mot den faktiska exporten innan vi kallar det en komplett nationell täckning.
 
 ## Viktig tolkningsgräns
 
@@ -22,7 +22,8 @@ Lagret visar avtals-/förvaltningsområden. Det bekräftar inte i sig att dikesp
 - Senaste körningsrapport: `data/skogsstyrelsen-atervatning/latest-report.json` (Actions-artifact)
 - Första körningen skapar baslinje och inga historiska förändringshändelser.
 - Senare körningar registrerar tillagda, ändrade och från källan borttagna objekt.
-- Objekt-ID och UUID bevaras tillsammans med samtliga källattribut och geometrier.
+- UUID används som stabil historisk identitet; OBJECTID bevaras som källattribut men antas inte vara stabilt mellan publiceringar.
+- Samtliga källattribut och geometrier bevaras.
 
 ## Nationell dataprodukt för våtmarksåtgärder
 
