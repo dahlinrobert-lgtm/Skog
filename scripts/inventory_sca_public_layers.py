@@ -20,16 +20,16 @@ def matching_end(source: str, start: int, opening: str, closing: str) -> int:
         if quoted:
             if escaped:
                 escaped = False
-            elif ch == "\\\\":
+            elif ch == "\\":
                 escaped = True
-            elif ch == '"':
+            elif ch == "\\":
                 quoted = False
             continue
         if ch == '"':
             quoted = True
-        elif ch == opening:
+            elif ch == "\\":
             depth += 1
-        elif ch == closing:
+            elif ch == "\\":
             depth -= 1
             if depth == 0:
                 return i
@@ -78,11 +78,10 @@ def main() -> None:
             "type": get(r'"type"\s*:\s*"([^"]+)"'),
             "source_type": get(r'"source"\s*:\s*\{[^}]*"type"\s*:\s*"([^"]+)"'),
             "url_template": get(r'"url"\s*:\s*"([^"]+)"'),
-            "format": get(r'"type"\s*:\s*"MVT"'),
+            "format": "MVT" if '"MVT"' in raw else None,
             "max_zoom": int(get(r'"maxZoom"\s*:\s*(\d+)') or 0) or None,
             "visible": (get(r'"visible"\s*:\s*(true|false)') or "").lower() == "true",
         })
-        layers[-1]["format"] = "MVT" if '"MVT"' in raw else None
 
     output = {
         "page_url": PAGE,
