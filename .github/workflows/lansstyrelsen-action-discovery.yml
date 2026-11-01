@@ -80,22 +80,31 @@ jobs:
           esac
 
           mkdir -p action-discovery-results
+          failed=0
           for county in "${counties[@]}"; do
             slug="northern-counties"
             if [[ "$county" == *Norrbottens* ]]; then slug="norrbotten"; fi
             if [[ "$county" == *Västerbottens* ]]; then slug="vasterbotten"; fi
             output="action-discovery-results/${slug}.json"
             echo "Searching $county for $CATEGORY_INPUT"
-            python scripts/search_lansstyrelsen_diary_browser.py \
+            if ! python scripts/search_lansstyrelsen_diary_browser.py \
               --county "$county" \
               --search-term "$primary" \
               --extra-search-terms "$extras" \
-              --output "$output"
+              --output "$output"; then
+              echo "Search failed for $county; retaining other validated county results."
+              failed=1
+            fi
           done
+
+          # Do not fail here: valid county outputs can still be safely published.
+          # Failed/partial counties are never passed to the persistence script.
+          echo "county_search_failures=$failed" >> "$GITHUB_OUTPUT"
       - name: Publish validated results with concurrency-safe retry
-        if: success() && github.ref == 'refs/heads/main'
+        if: always() && github.ref == 'refs/heads/main'
         env:
           COUNTY_SCOPE_INPUT: ${{ inputs.county_scope }}
+          CATEGORY_INPUT: ${{ inputs.category }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -109,14 +118,15 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            if [[ "$COUNTY_SCOPE_INPUT" == "both" || "$COUNTY_SCOPE_INPUT" == "norrbotten" ]]; then
+            # Only persist a county output that exists and passed all source checks.
+            if [[ -s action-discovery-results/norrbotten.json ]] && python -c "import json; d=json.load(open('action-discovery-results/norrbotten.json')); assert d.get('request_ok') and d.get('total_reconciled')"; then
               python scripts/persist_lansstyrelsen_diary.py \
                 --input action-discovery-results/norrbotten.json \
                 --state data/lansstyrelsen-diary/state.json \
                 --events data/lansstyrelsen-diary/events.jsonl \
                 --summary action-discovery-results/norrbotten-summary.json
             fi
-            if [[ "$COUNTY_SCOPE_INPUT" == "both" || "$COUNTY_SCOPE_INPUT" == "vasterbotten" ]]; then
+            if [[ -s action-discovery-results/vasterbotten.json ]] && python -c "import json; d=json.load(open('action-discovery-results/vasterbotten.json')); assert d.get('request_ok') and d.get('total_reconciled')"; then
               python scripts/persist_lansstyrelsen_diary.py \
                 --input action-discovery-results/vasterbotten.json \
                 --state data/lansstyrelsen-diary/state.json \
