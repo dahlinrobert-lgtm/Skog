@@ -25,19 +25,24 @@ class RewettingArchiveTests(unittest.TestCase):
 
     def test_change_detection_add_update_and_remove(self):
         old = {"features": [
-            {"attributes": {"OBJECTID": 1, "value": "old"}, "geometry": {"rings": []}},
-            {"attributes": {"OBJECTID": 2, "value": "same"}, "geometry": {"rings": []}},
+            {"attributes": {"OBJECTID": 1, "Uuid": "{uuid-1}", "value": "old"}, "geometry": {"rings": []}},
+            {"attributes": {"OBJECTID": 2, "Uuid": "{uuid-2}", "value": "same"}, "geometry": {"rings": []}},
         ]}
         current = [
-            {"attributes": {"OBJECTID": 1, "value": "new"}, "geometry": {"rings": []}},
-            {"attributes": {"OBJECTID": 2, "value": "same"}, "geometry": {"rings": []}},
-            {"attributes": {"OBJECTID": 3, "value": "added"}, "geometry": {"rings": []}},
+            {"attributes": {"OBJECTID": 10, "Uuid": "{UUID-1}", "value": "new"}, "geometry": {"rings": []}},
+            {"attributes": {"OBJECTID": 2, "Uuid": "{uuid-2}", "value": "same"}, "geometry": {"rings": []}},
+            {"attributes": {"OBJECTID": 3, "Uuid": "{uuid-3}", "value": "added"}, "geometry": {"rings": []}},
         ]
         changes = module.detect_changes(old, current, "2026-11-01T00:00:00+00:00")
         self.assertEqual(
-            [(item["change"], item["object_id"]) for item in changes],
-            [("updated", 1), ("added", 3), ("removed_from_source", 2)],
+            [(item["change"], item["source_uuid"]) for item in changes],
+            [("updated", "uuid-1"), ("added", "uuid-3")],
         )
+
+    def test_uuid_is_stable_identity_when_objectid_changes(self):
+        a = {"attributes": {"OBJECTID": 1, "Uuid": "{ABC-123}"}}
+        b = {"attributes": {"OBJECTID": 99, "Uuid": "abc-123"}}
+        self.assertEqual(module.feature_key(a), module.feature_key(b))
 
     def test_endpoint_points_to_skogsstyrelsen_rewetting_layer(self):
         self.assertIn("GeodataportalVisaAtervatningavtal/MapServer/0", module.LAYER_URL)
