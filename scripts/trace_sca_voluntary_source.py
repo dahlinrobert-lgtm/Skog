@@ -12,7 +12,7 @@ import requests
 
 PAGE = "https://olga.scaskog.com/map/index.html"
 HEADERS = {"User-Agent": "Skog-SCA-source-trace/1.0"}
-NAME = re.compile(r"Frivilliga\\s+avsättningar|Frivilliga.?avsättningar", re.I)
+NAME = re.compile(r"Frivilliga\s+avsättningar|Frivilliga.?avsättningar", re.I)
 KEYS = re.compile(r"name|url|source|type|format|projection|tileGrid|tileUrlFunction|resolutions|origin|extent|matrixSet|visible|maxZoom", re.I)
 
 def balanced_end(s, start, op, cl):
@@ -33,11 +33,11 @@ def balanced_end(s, start, op, cl):
     raise ValueError("Unclosed block")
 
 def extract_named_config(html):
-    m=re.search(r"olgaConfig\\s*=\\s*\\{",html)
+    m=re.search(r"olgaConfig\s*=\s*\{",html)
     if not m: return {"found":False,"reason":"olgaConfig assignment missing"}
     start=html.find("{",m.start()); end=balanced_end(html,start,"{","}")
     raw=html[start:end+1]
-    lm=re.search(r'"layers"\\s*:\\s*\\[',raw)
+    lm=re.search(r'"layers"\s*:\s*\[',raw)
     if not lm: return {"found":False,"reason":"layers array missing"}
     a=raw.find("[",lm.start()); z=balanced_end(raw,a,"[","]")
     arr=raw[a+1:z]
