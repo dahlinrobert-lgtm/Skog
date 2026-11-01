@@ -18,6 +18,8 @@ jobs:
           python-version: "3.12"
       - name: Install MVT decoder
         run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3"
+      - name: Compile feature inspection script
+        run: python -m py_compile scripts/inspect_sca_feature_schema.py
       - name: Decode bounded feature samples
         run: python scripts/inspect_sca_feature_schema.py
       - name: Validate report
