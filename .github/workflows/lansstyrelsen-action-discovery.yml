@@ -91,30 +91,60 @@ jobs:
               --search-term "$primary" \
               --extra-search-terms "$extras" \
               --output "$output"
-            python scripts/persist_lansstyrelsen_diary.py \
-              --input "$output" \
-              --state data/lansstyrelsen-diary/state.json \
-              --events data/lansstyrelsen-diary/events.jsonl \
-              --summary "action-discovery-results/${slug}-summary.json"
           done
-      - name: Audit updated diary history
-        run: |
-          python scripts/audit_lansstyrelsen_diary_history.py \
-            --state data/lansstyrelsen-diary/state.json \
-            --events data/lansstyrelsen-diary/events.jsonl \
-            --output action-discovery-results/history-audit.json
-      - name: Publish new diary records with retry
+      - name: Publish validated results with concurrency-safe retry
         if: success() && github.ref == 'refs/heads/main'
+        env:
+          COUNTY_SCOPE_INPUT: ${{ inputs.county_scope }}
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/lansstyrelsen-diary/state.json data/lansstyrelsen-diary/events.jsonl data/lansstyrelsen-diary/last-run-summary.json
-          if git diff --cached --quiet; then
-            echo "No new diary records."
-          else
+
+          # Rebuild the state from the newest main on every attempt. This avoids
+          # overwriting concurrent diary snapshots and gives each failed push a
+          # clean retry rather than rebasing conflicting JSON/JSONL changes.
+          for attempt in 1 2 3 4 5; do
+            echo "Publish attempt $attempt/5"
+            git fetch origin main
+            git reset --hard origin/main
+
+            if [[ "$COUNTY_SCOPE_INPUT" == "both" || "$COUNTY_SCOPE_INPUT" == "norrbotten" ]]; then
+              python scripts/persist_lansstyrelsen_diary.py \
+                --input action-discovery-results/norrbotten.json \
+                --state data/lansstyrelsen-diary/state.json \
+                --events data/lansstyrelsen-diary/events.jsonl \
+                --summary action-discovery-results/norrbotten-summary.json
+            fi
+            if [[ "$COUNTY_SCOPE_INPUT" == "both" || "$COUNTY_SCOPE_INPUT" == "vasterbotten" ]]; then
+              python scripts/persist_lansstyrelsen_diary.py \
+                --input action-discovery-results/vasterbotten.json \
+                --state data/lansstyrelsen-diary/state.json \
+                --events data/lansstyrelsen-diary/events.jsonl \
+                --summary action-discovery-results/vasterbotten-summary.json
+            fi
+
+            python scripts/audit_lansstyrelsen_diary_history.py \
+              --state data/lansstyrelsen-diary/state.json \
+              --events data/lansstyrelsen-diary/events.jsonl \
+              --output action-discovery-results/history-audit.json
+
+            git add data/lansstyrelsen-diary/state.json data/lansstyrelsen-diary/events.jsonl data/lansstyrelsen-diary/last-run-summary.json
+            if git diff --cached --quiet; then
+              echo "No diary changes to publish."
+              exit 0
+            fi
             git commit -m "Discover Länsstyrelsen A/B action cases"
-            git push origin HEAD:main
-          fi
+            if git push origin HEAD:main; then
+              echo "Published validated diary results."
+              exit 0
+            fi
+            echo "Push rejected because main moved; retrying from latest main."
+            git reset --hard
+          done
+
+          echo "Could not publish after five concurrency-safe attempts." >&2
+          exit 1
       - name: Upload search results and audit
         if: always()
         uses: actions/upload-artifact@v4
