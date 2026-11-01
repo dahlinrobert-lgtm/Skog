@@ -113,7 +113,7 @@ class DiaryPaginationSafetyTests(unittest.TestCase):
             {"label": "5", "argument": "Page$5"},
             {"label": "6", "argument": "Page$6"},
         ]
-        selected = select_next_pager_action(candidates, 3)
+        selected = select_next_pager_action(candidates, 2)
         self.assertEqual(selected["argument"], "Page$4")
 
     def test_first_page_link_is_not_selected_as_forward(self):
