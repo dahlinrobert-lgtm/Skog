@@ -66,6 +66,15 @@ class DiaryPaginationSafetyTests(unittest.TestCase):
     def test_numeric_later_page_is_forward(self):
         self.assertTrue(is_forward_page_argument("7", 6, "7"))
 
+    def test_current_page_argument_is_not_forward(self):
+        self.assertFalse(is_forward_page_argument("Page$6", 6, "6"))
+
+    def test_later_webforms_page_argument_is_forward(self):
+        self.assertTrue(is_forward_page_argument("Page$7", 6, "7"))
+
+    def test_non_numeric_page_argument_is_not_forward(self):
+        self.assertFalse(is_forward_page_argument("Page$Next", 6, "next"))
+
     def test_webforms_javascript_postback_href_is_parsed(self):
         href = "javascript:__doPostBack('ctl00$SearchPlaceHolder$caseGridView','Page$2')"
         match = re.search(
