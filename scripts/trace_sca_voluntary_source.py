@@ -41,17 +41,24 @@ def extract_named_config(html):
     if not lm: return {"found":False,"reason":"layers array missing"}
     a=raw.find("[",lm.start()); z=balanced_end(raw,a,"[","]")
     arr=raw[a+1:z]
-    found=[]; i=0
+    # Emit concise diagnostics for every configured layer object and use
+    # decoded JSON strings rather than matching only the literal display name.
+    found=[]; inventory=[]; i=0
     while i<len(arr):
         if arr[i]=="{":
             e=balanced_end(arr,i,"{","}")
             obj=arr[i:e+1]
-            if NAME.search(obj):
-                try: found.append(json.loads(obj))
-                except Exception: found.append({"raw":obj})
+            try:
+                decoded=json.loads(obj)
+            except Exception:
+                decoded={"raw":obj}
+            inventory.append(decoded)
+            searchable=json.dumps(decoded,ensure_ascii=False)
+            if NAME.search(searchable) or any("frivillig" in str(v).casefold() or "avsättning" in str(v).casefold() or "avsattning" in str(v).casefold() for v in decoded.values()):
+                found.append(decoded)
             i=e+1
         else: i+=1
-    return {"found":bool(found),"layers":found,"total_inline_layer_objects":sum(1 for c in arr if c=="{")}
+    return {"found":bool(found),"layers":found,"total_inline_layer_objects":len(inventory),"layer_name_inventory":[{"name":x.get("name"),"keys":list(x.keys()),"source":x.get("source")} for x in inventory if isinstance(x,dict)]}
 
 def windows(s, pos, before=1400, after=2400):
     return s[max(0,pos-before):min(len(s),pos+after)]
