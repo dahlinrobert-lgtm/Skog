@@ -20,6 +20,8 @@ jobs:
           python -m pip install playwright
           python -m playwright install --with-deps chromium
       - name: Count monthly registration-date partitions
+        env:
+          PYTHONPATH: scripts
         run: python scripts/probe_lansstyrelsen_monthly_partitions.py
       - name: Upload monthly partition diagnostics
         if: always()
