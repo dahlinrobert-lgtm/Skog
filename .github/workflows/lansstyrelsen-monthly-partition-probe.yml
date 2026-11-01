@@ -19,6 +19,10 @@ jobs:
         run: |
           python -m pip install playwright
           python -m playwright install --with-deps chromium
+      - name: Test snapshot parsing and pager logic
+        env:
+          PYTHONPATH: scripts
+        run: python -m unittest scripts.test_lansstyrelsen_snapshot_extraction scripts.test_lansstyrelsen_diary_pagination
       - name: Count monthly registration-date partitions
         env:
           PYTHONPATH: scripts
