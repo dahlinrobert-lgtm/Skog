@@ -10,6 +10,13 @@ on:
       - "docs/data/nature-conservation-measures.md"
   schedule:
     - cron: "52 6 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/archive_lifetaiga_naturvardsatgarder.py"
+      - "tests/test_lifetaiga_naturvardsatgarder_archive.py"
+      - ".github/workflows/lifetaiga-naturvardsatgarder-archive.yml"
+      - "docs/data/nature-conservation-measures.md"
 
 permissions:
   contents: write
