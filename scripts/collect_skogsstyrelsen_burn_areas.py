@@ -159,18 +159,19 @@ def main() -> int:
     returned_ids = set()
     for offset in range(0, len(object_ids), args.batch_size):
         batch = object_ids[offset:offset + args.batch_size]
-        result = request_json(
-            query_url,
-            {
-                "objectIds": ",".join(map(str, batch)),
-                "outFields": "*",
-                "returnGeometry": "true",
-                "outSR": "3006",
-                "returnZ": "false",
-                "returnM": "false",
-                "f": "json",
-            },
-        )
+        batch_params = {
+            "objectIds": ",".join(map(str, batch)),
+            "outFields": "*",
+            "returnGeometry": "true",
+            "outSR": "3006",
+            "returnZ": "false",
+            "returnM": "false",
+            "f": "json",
+        }
+        try:
+            result = request_json(query_url, batch_params, retries=1)
+        except Exception:
+            result = request_post_json(query_url, batch_params)
         batch_features = result.get("features") or []
         if result.get("exceededTransferLimit"):
             raise RuntimeError(f"Transfer limit exceeded for object ID batch at offset {offset}")
