@@ -1,0 +1,31 @@
+name: Inspect Skogsindustrierna frontend bundle
+on:
+  push:
+    branches: [investigate/**]
+    paths:
+      - "scripts/inspect_skogsindustrierna_frontend.py"
+      - ".github/workflows/inspect-skogsindustrierna-frontend.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "requests>=2.31,<3"
+      - name: Inspect public frontend text assets only
+        run: python scripts/inspect_skogsindustrierna_frontend.py
+      - name: Upload frontend inspection report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsindustrierna-frontend-inspection
+          path: artifacts/skogsindustrierna-frontend-inspection.json
+          if-no-files-found: warn
+          retention-days: 30
