@@ -435,9 +435,11 @@ sources:
     expected_crs: EPSG:3006
     expected_resolution: "2 m x 2 m"
     rights:
-      licence: "Not explicitly identified in the located SLU product description; do not infer a licence from open download availability"
-      licence_url: "https://www.slu.se/contentassets/2368b3706efb45799ce0427f00455068/produktbeskrivning_slu_torvkarta1.0.pdf"
+      licence: "SLU metadata states that anyone may download and use the Torvkarta; exact scope for commercial services, storage and redistribution is being confirmed"
+      licence_url: "https://www.slu.se/om-slu/organisation/institutioner/skogens-ekologi-skotsel/forskning/teman/digital-landskap/torvkartor/om-torvkartan/"
       review_status: amber_written_confirmation_recommended
+      rights_contact: "Anneli Ågren, SLU (anneli.agren@slu.se); GIS support (gis-support@slu.se)"
+      correspondence_status: "Written clarification request sent 2026-11-01; awaiting response"
       commercial_use: pending_rights_confirmation
       historical_storage: pending_rights_confirmation
       derivatives: pending_rights_confirmation
@@ -445,13 +447,14 @@ sources:
       attribution: "Proposed citation: SLU Torvkarta 1.0, Anneli Ågren (2022); also acknowledge Skogsstyrelsen/Naturvårdsverket project where appropriate. Confirm exact wording with SLU."
       api_or_service_constraints: "Skogsdatalabbet REST/WMS requires a user account. SLU publishes downloadable rasters, including large national mosaics. Obtain terms for bulk download and repeated extraction."
       evidence_checked_on: "2026-11-01"
-      caveat: "Product uses GSD-Höjddata grid 2+ © Lantmäteriet as model basis. Confirm whether the source licence permits the specific derived product and planned commercial use."
+      caveat: "SLU's product page says anyone may download and use the Torvkarta and gives a required source citation for publication. The precise scope for commercial subscription services, permanent historical storage, derivatives and customer redistribution remains under written clarification. Product uses GSD-Höjddata grid 2+ © Lantmäteriet as model basis; confirm any applicable restrictions."
     notes:
       - "Product contains classified peat-depth classes and continuous organic-layer thickness."
       - "Classified values: 0 water, 1 mineral soil, 2 >=30 cm, 3 >=40 cm, 4 >=50 cm."
       - "Continuous raster values represent organic-layer thickness in cm; 0 denotes water."
       - "Product description reports 2 m cells, SWEREF 99 TM and NoData where input data were missing."
       - "Validation against 2,883 field locations: RMSE for continuous map approximately +/-19 cm; categorical metrics are described in product documentation."
+      - "SLU metadata: https://www.slu.se/miljoanalys/statistik-och-miljodata/miljodatakatalogen/torvkarta/; source citation required at publication."
       - "Download catalogue: https://gis.slu.se/data/peat_1_0/."
       - "REST service: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/Torvkarta_1_0/ImageServer."
 
@@ -472,6 +475,7 @@ sources:
       licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
       product_description_url: "https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/raster-skogligagrunddata-standortsindexsis---produktbeskrivning.pdf"
       review_status: conditional_green_product_description_check
+      correspondence_status: "Written clarification request sent 2026-11-01; awaiting response"
       commercial_use: yes_if_product_description_does_not_override_cc0
       historical_storage: yes_if_product_description_does_not_override_cc0
       derivatives: yes_if_product_description_does_not_override_cc0
