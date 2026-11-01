@@ -5,6 +5,8 @@ import json, math
 from collections import Counter
 from pathlib import Path
 import requests, mapbox_vector_tile
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 TEMPLATES={
  "sca_ownership":"https://olga.scaskog.com/map/sca_mark/{z}/{x}/{y}.pbf",
@@ -31,8 +33,19 @@ def coord_summary(geometry):
  if not points: return None
  return {"vertex_count":len(points),"tile_coord_bounds":[min(p[0] for p in points),min(p[1] for p in points),max(p[0] for p in points),max(p[1] for p in points)]}
 
-def decode(url):
- r=requests.get(url,timeout=30,headers={"User-Agent":"Skog-SCA-feature-schema-probe/1.0"})
+def build_session():
+ retry=Retry(total=3,connect=3,read=2,backoff_factor=1.0,
+             status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])
+ session=requests.Session()
+ session.headers.update({"User-Agent":"Skog-SCA-feature-schema-probe/1.1"})
+ session.mount("https://",HTTPAdapter(max_retries=retry))
+ return session
+
+def decode(session,url):
+ try:
+  r=session.get(url,timeout=(12,35))
+ except requests.RequestException as e:
+  return {"state":"request_error","error_type":type(e).__name__,"error":str(e)[:300]}
  out={"status":r.status_code,"content_type":r.headers.get("Content-Type"),"bytes":len(r.content)}
  if r.status_code!=200:
   out["state"]="not_found_404" if r.status_code==404 else "http_error"
@@ -58,19 +71,20 @@ def decode(url):
 
 def main():
  rows=[]
+ session=build_session()
  for site,(lon,lat) in SITES.items():
   for z in ZOOMS:
    x,y=xyz(lon,lat,z)
    for key,t in TEMPLATES.items():
     url=t.format(z=z,x=x,y=y)
-    rows.append({"site":site,"lon":lon,"lat":lat,"zoom":z,"x":x,"y":y,"layer":key,"url":url,"result":decode(url)})
+    rows.append({"site":site,"lon":lon,"lat":lat,"zoom":z,"x":x,"y":y,"layer":key,"url":url,"result":decode(session,url)})
  summary={}
  for key in TEMPLATES:
   rr=[x for x in rows if x["layer"]==key]
-  summary[key]={state:sum(x["result"].get("state")==state for x in rr) for state in ["valid_mvt_with_features","valid_mvt_empty","not_found_404","http_error","decode_error"]}
+  summary[key]={state:sum(x["result"].get("state")==state for x in rr) for state in ["valid_mvt_with_features","valid_mvt_empty","not_found_404","http_error","decode_error","request_error"]}
  out={"purpose":"Inspect feature geometry, IDs and attributes for SCA-owned forest layer and voluntary set-aside layer in Sollefteå and Lycksele.",
  "sites":SITES,"zooms":ZOOMS,"summary":summary,"results":rows,
- "caveats":["Two regional point samples only; not a coverage estimate.","MVT feature IDs may be tile-local or generalized and are not assumed stable.","Tile coordinate bounds are in each MVT layer's local extent, not map coordinates.","No bulk download; 12 tile requests maximum."]}
+ "caveats":["Two regional point samples only; not a coverage estimate.","MVT feature IDs may be tile-local or generalized and are not assumed stable.","Tile coordinate bounds are in each MVT layer's local extent, not map coordinates.","No bulk download; 12 tile requests maximum.","Network errors/timeouts are recorded per tile and do not abort the report."]}
  Path("sca-feature-schema-solleftea-lycksele.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  print(json.dumps(out,ensure_ascii=False,indent=2))
 if __name__=="__main__": main()
