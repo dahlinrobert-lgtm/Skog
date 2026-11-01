@@ -53,13 +53,13 @@ def main() -> None:
     })
     response.raise_for_status()
     html = response.text
-    config_match = re.search(r"olgaConfig\\s*=\\s*\\{", html)
+    config_match = re.search(r"olgaConfig\s*=\s*\{", html)
     if not config_match:
         raise RuntimeError("Inline olgaConfig assignment not found")
     config_start = html.find("{", config_match.start())
     config_end = matching_end(html, config_start, "{", "}")
     config_text = html[config_start:config_end + 1]
-    layers_match = re.search(r'"layers"\\s*:\\s*\\[', config_text)
+    layers_match = re.search(r'"layers"\s*:\s*\[', config_text)
     if not layers_match:
         raise RuntimeError("olgaConfig.layers array not found")
     array_start = config_text.find("[", layers_match.start())
@@ -70,17 +70,17 @@ def main() -> None:
         def get(pattern):
             m = re.search(pattern, raw)
             return m.group(1) if m else None
-        name = get(r'"name"\\s*:\\s*"([^"]+)"')
+        name = get(r'"name"\s*:\s*"([^"]+)"')
         if not name:
             continue
         layers.append({
             "name": name,
-            "type": get(r'"type"\\s*:\\s*"([^"]+)"'),
-            "source_type": get(r'"source"\\s*:\\s*\\{[^}]*"type"\\s*:\\s*"([^"]+)"'),
-            "url_template": get(r'"url"\\s*:\\s*"([^"]+)"'),
-            "format": get(r'"type"\\s*:\\s*"MVT"'),
-            "max_zoom": int(get(r'"maxZoom"\\s*:\\s*(\\d+)') or 0) or None,
-            "visible": (get(r'"visible"\\s*:\\s*(true|false)') or "").lower() == "true",
+            "type": get(r'"type"\s*:\s*"([^"]+)"'),
+            "source_type": get(r'"source"\s*:\s*\{[^}]*"type"\s*:\s*"([^"]+)"'),
+            "url_template": get(r'"url"\s*:\s*"([^"]+)"'),
+            "format": get(r'"type"\s*:\s*"MVT"'),
+            "max_zoom": int(get(r'"maxZoom"\s*:\s*(\d+)') or 0) or None,
+            "visible": (get(r'"visible"\s*:\s*(true|false)') or "").lower() == "true",
         })
         layers[-1]["format"] = "MVT" if '"MVT"' in raw else None
 
