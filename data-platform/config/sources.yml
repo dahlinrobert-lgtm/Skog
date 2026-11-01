@@ -782,3 +782,111 @@ sources:
     notes:
       - "Useful forest landscape-context layer for biodiversity analysis."
       - "Metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=5e0d327e-d888-4946-bf5a-30e87036679b_C"
+
+  - source_id: lansstyrelsen.life2taiga_burns
+    name: "Länsstyrelserna – Life2Taiga naturvårdsbränningar, externt FeatureServer-lager"
+    source_type: forest_conservation_actions
+    provider: Länsstyrelsen_Västmanland_and_Life2Taiga_partners
+    access_method: arcgis_feature_service
+    connector: to_be_verified
+    status: external_contact_required
+    cadence: project_updates
+    geography: Sweden_and_Finland
+    format: [ArcGIS_FeatureServer]
+    rights:
+      licence: unknown_for_exact_external_feature_layer
+      licence_url: "https://www.lansstyrelsen.se/vastmanland/natur-och-landsbygd/skyddad-natur/skotsel-av-skyddad-natur/naturvardsbranning/life2taiga/life2taiga-english.html"
+      review_status: amber_written_confirmation_required
+      commercial_use: unknown_pending_project_coordinator
+      historical_storage: unknown_pending_project_coordinator
+      derivatives: unknown_pending_project_coordinator
+      redistribution: unknown_pending_project_coordinator
+      attribution: "To be confirmed by Life2Taiga project management/data owner."
+      api_or_service_constraints: "Confirm the rights for the exact hosted FeatureServer layer, not only the public project map. Ask about bulk access, snapshots, derived geometries, customer display and redistribution."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Project website confirms that the public map shows planned and completed prescribed burns, but does not state a reuse licence for the external FeatureServer layer."
+    notes:
+      - "Project coordination: Länsstyrelsen Västmanland."
+      - "Published project contact: life2taiga@lansstyrelsen.se; telephone switchboard 010-224 90 00."
+      - "External layer previously used in Skog: https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13"
+      - "Do not ingest for commercial redistribution until written terms are received."
+
+  - source_id: lansstyrelsen.vb_valuable_nature_areas
+    name: "Länsstyrelsen Västerbotten – Värdefulla naturområden (extern karttjänst)"
+    source_type: biodiversity_reference_vector
+    provider: Länsstyrelsen_Västerbottens_län
+    access_method: wms_and_arcgis_rest
+    connector: to_be_verified
+    status: metadata_rights_check_required
+    cadence: annual_metadata_maintenance
+    geography: Västerbotten
+    format: [WMS, ArcGIS_REST]
+    rights:
+      licence: not_verified_at_service_level_check_component_layers
+      licence_url: "https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/GetMetaDataById?id=32f86036-487e-4362-883b-8bd1ba8d9c3d"
+      review_status: amber_component_layer_licence_required
+      commercial_use: unknown_pending_component_metadata
+      historical_storage: unknown_pending_component_metadata
+      derivatives: unknown_pending_component_metadata
+      redistribution: unknown_pending_component_metadata
+      attribution: "To be confirmed per component layer."
+      api_or_service_constraints: "Service metadata explicitly directs users to the metadata records for included layers for access restrictions. The service is a WMS/REST map service and is not itself proof of downloadable/reusable vector rights."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Public page describes mainly forest areas plus valuable wetlands, watercourses, mountain and marine environments; coverage is not complete and is based on inventories over time."
+    notes:
+      - "Catalogue service record UUID: 32f86036-487e-4362-883b-8bd1ba8d9c3d."
+      - "Metadata lists Länsstyrelsen Västerbotten / Miljöanalysenheten as responsible contact."
+      - "Public information: https://www.lansstyrelsen.se/vasterbotten/natur-och-landsbygd/skyddad-natur/bevara-naturvarden-och-fa-ersattning.html"
+
+  - source_id: lansstyrelsen.norrbotten_gi_wetland_analysis
+    name: "Länsstyrelsen – GI andelsanalys våtmarker / värdefulla våtmarker"
+    source_type: biodiversity_planning_analysis
+    provider: Länsstyrelserna
+    access_method: geodata_catalogue
+    connector: to_be_verified
+    status: candidate_metadata_review_required
+    cadence: to_be_verified
+    geography: Sweden_including_Norrbotten
+    format: [geospatial_dataset]
+    rights:
+      licence: unknown_until_exact_catalogue_record_checked
+      licence_url: "https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/"
+      review_status: amber_candidate_only
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed in exact dataset metadata."
+      api_or_service_constraints: "Search the exact records 'GI Andelsanalys alla våtmarker' and 'GI andelsanalys värdefulla våtmarker'; do not infer rights from the general green-infrastructure initiative."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Norrbotten's public green-infrastructure page describes the analysis method and its use as landscape-level planning context; this does not establish a licence."
+    notes:
+      - "Analysis is based on known wetland value cores, including the wetland inventory and rich-fen inventory, followed by density analysis and manual adjustment."
+      - "Potentially useful forest-landscape context; not a formal protection designation."
+      - "Public description: https://www.lansstyrelsen.se/norrbotten/samhalle/planera-bygga-och-bo/gron-infrastruktur/kartor-och-underlag-for-planeringsarbete-med-gron-infrastruktur.html"
+
+  - source_id: lansstyrelsen.vb_forest_value_tracts_west
+    name: "Länsstyrelsen Västerbotten – skogliga värdetrakter och nätverk, västra länsdelen"
+    source_type: biodiversity_planning_vector
+    provider: Länsstyrelsen_Västerbottens_län
+    access_method: webgis_and_geodata_catalogue
+    connector: to_be_verified
+    status: candidate_metadata_review_required
+    cadence: to_be_verified
+    geography: Västerbotten_west_of_E45
+    format: [geospatial_dataset]
+    rights:
+      licence: unknown_until_exact_dataset_metadata_checked
+      licence_url: "https://www.lansstyrelsen.se/vasterbotten/om-oss/nyheter-och-press/nyheter---vasterbotten/2026-01-12-skogliga-vardetrakter-i-vasterbottens-vastra-delar-i-lansstyrelsens-karttjanst.html"
+      review_status: amber_candidate_only
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed in exact dataset metadata."
+      api_or_service_constraints: "Find separate metadata for the western and previously published eastern datasets; do not assume the existing CC BY 4.0 licence for the earlier barrskog value-tract dataset covers this newer western layer."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Landscape planning knowledge base, not a formal protection designation; not every location within a value tract has high nature value."
+    notes:
+      - "Published 2026-01-12; covers areas west of E45, above and below the boundary for montane forest."
+      - "Public description: https://www.lansstyrelsen.se/vasterbotten/om-oss/nyheter-och-press/nyheter---vasterbotten/2026-01-12-skogliga-vardetrakter-i-vasterbottens-vastra-delar-i-lansstyrelsens-karttjanst.html"
