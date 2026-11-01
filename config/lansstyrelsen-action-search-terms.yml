@@ -1,0 +1,23 @@
+# Search phrases for the public Länsstyrelsen diary.
+# These are discovery queries, not legal conclusions. Keep each phrase narrow.
+# The diary workflow supports a maximum of 10 phrases per batch including the primary phrase.
+
+physical_works:
+  priority: high
+  search_terms:
+    - skogsbilväg
+    - vägbyggnad
+    - ledningsdragning
+    - schaktning
+    - utfyllnad
+    - massupplag
+
+water_operations:
+  priority: high
+  search_terms:
+    - vattenverksamhet
+    - markavvattning
+    - dikesrensning
+    - trumma
+    - våtmarksanläggning
+    - omgrävning av vattendrag
