@@ -1,0 +1,30 @@
+name: Inspect SCA feature schema in Solleftea and Lycksele
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/inspect_sca_feature_schema.py"
+      - ".github/workflows/inspect-sca-feature-schema.yml"
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT decoder
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3"
+      - name: Decode bounded feature samples
+        run: python scripts/inspect_sca_feature_schema.py
+      - name: Validate report
+        run: python -m json.tool sca-feature-schema-solleftea-lycksele.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-feature-schema-solleftea-lycksele
+          path: sca-feature-schema-solleftea-lycksele.json
+          if-no-files-found: error
+          retention-days: 30
