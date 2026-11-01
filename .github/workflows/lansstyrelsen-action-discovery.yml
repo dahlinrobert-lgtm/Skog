@@ -38,7 +38,7 @@ jobs:
           python-version: "3.12"
       - name: Test diary persistence and A/B classification
         run: |
-          python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history tests.test_lansstyrelsen_action_leads
+          python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history tests.test_lansstyrelsen_action_leads scripts.test_lansstyrelsen_diary_pagination
       - name: Install browser dependencies
         run: |
           python -m pip install playwright
