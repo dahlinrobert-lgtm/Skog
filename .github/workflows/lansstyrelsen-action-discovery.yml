@@ -1,0 +1,125 @@
+name: Discover Länsstyrelsen physical works and water cases
+
+on:
+  workflow_dispatch:
+    inputs:
+      category:
+        description: Search category
+        required: true
+        type: choice
+        options:
+          - A – Physical works
+          - B – Water operations
+      county_scope:
+        description: County coverage
+        required: true
+        default: both
+        type: choice
+        options:
+          - both
+          - norrbotten
+          - vasterbotten
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lansstyrelsen-action-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test diary persistence and A/B classification
+        run: |
+          python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history tests.test_lansstyrelsen_action_leads
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Search selected northern county diaries
+        env:
+          CATEGORY_INPUT: ${{ inputs.category }}
+          COUNTY_SCOPE_INPUT: ${{ inputs.county_scope }}
+        run: |
+          case "$CATEGORY_INPUT" in
+            "A – Physical works")
+              primary="skogsbilväg"
+              extras=$'vägbyggnad\nledningsdragning\nschaktning\nutfyllnad\nmassupplag'
+              ;;
+            "B – Water operations")
+              primary="vattenverksamhet"
+              extras=$'markavvattning\ndikesrensning\ntrumma\nvåtmarksanläggning\nomgrävning av vattendrag'
+              ;;
+            *)
+              echo "Unknown category: $CATEGORY_INPUT" >&2
+              exit 1
+              ;;
+          esac
+
+          case "$COUNTY_SCOPE_INPUT" in
+            both)
+              counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län")
+              ;;
+            norrbotten)
+              counties=("Länsstyrelsen i Norrbottens län")
+              ;;
+            vasterbotten)
+              counties=("Länsstyrelsen i Västerbottens län")
+              ;;
+            *)
+              echo "Unknown county scope: $COUNTY_SCOPE_INPUT" >&2
+              exit 1
+              ;;
+          esac
+
+          mkdir -p action-discovery-results
+          for county in "${counties[@]}"; do
+            slug="northern-counties"
+            if [[ "$county" == *Norrbottens* ]]; then slug="norrbotten"; fi
+            if [[ "$county" == *Västerbottens* ]]; then slug="vasterbotten"; fi
+            output="action-discovery-results/${slug}.json"
+            echo "Searching $county for $CATEGORY_INPUT"
+            python scripts/search_lansstyrelsen_diary_browser.py \
+              --county "$county" \
+              --search-term "$primary" \
+              --extra-search-terms "$extras" \
+              --output "$output"
+            python scripts/persist_lansstyrelsen_diary.py \
+              --input "$output" \
+              --state data/lansstyrelsen-diary/state.json \
+              --events data/lansstyrelsen-diary/events.jsonl \
+              --summary "action-discovery-results/${slug}-summary.json"
+          done
+      - name: Audit updated diary history
+        run: |
+          python scripts/audit_lansstyrelsen_diary_history.py \
+            --state data/lansstyrelsen-diary/state.json \
+            --events data/lansstyrelsen-diary/events.jsonl \
+            --output action-discovery-results/history-audit.json
+      - name: Publish new diary records with retry
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/lansstyrelsen-diary/state.json data/lansstyrelsen-diary/events.jsonl data/lansstyrelsen-diary/last-run-summary.json
+          if git diff --cached --quiet; then
+            echo "No new diary records."
+          else
+            git commit -m "Discover Länsstyrelsen A/B action cases"
+            git push origin HEAD:main
+          fi
+      - name: Upload search results and audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-action-discovery
+          path: action-discovery-results/
+          if-no-files-found: warn
+          retention-days: 30
