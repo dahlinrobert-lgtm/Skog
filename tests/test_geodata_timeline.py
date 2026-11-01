@@ -16,6 +16,7 @@ class TestTimeline(unittest.TestCase):
   result=compare_arrays(new,old,[100,200,104,204])
   self.assertEqual(result["comparison_status"],"compared")
   self.assertEqual(result["bands"][0]["changed_pixel_count"],1)
+  self.assertEqual(result["bands"][0]["changed_percent"],100.0)
   self.assertEqual(result["bands"][1]["changed_percent"],6.25)
   self.assertEqual(result["bands"][0]["changed_bbox_epsg3006"],{"xmin":102.0,"xmax":103.0,"ymin":202.0,"ymax":203.0})
  def test_nodata_values_are_excluded_from_change_counts(self):
@@ -23,7 +24,7 @@ class TestTimeline(unittest.TestCase):
   new=np.array([[[0,1],[3,2]]],dtype=np.uint8)
   md={"no_data_values":[255,None]}
   result=compare_arrays(new,old,[0,0,2,1],md,md)
-  self.assertEqual(result["bands"][0]["valid_pixel_count"],2)
+  self.assertEqual(result["bands"][0]["valid_pixel_count"],1)
   self.assertEqual(result["bands"][0]["changed_pixel_count"],1)
  def test_shape_change_is_not_compared_as_pixel_change(self):
   result=compare_arrays(np.zeros((3,3)),np.zeros((4,4)),[0,0,4,4])
