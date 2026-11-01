@@ -31,9 +31,7 @@ class SlidingPagerWindowTests(unittest.TestCase):
             {"label": "Sista", "target": "grid", "argument": "Page$Last"},
             {"label": "6", "target": "grid", "argument": "Page$6"},
         ]
-        self.assertEqual(select_next_pager_action(actions, 4)["argument"], "Page$5") if False else self.assertEqual(
-            select_next_pager_action(actions, 4)["argument"], "Page$Last"
-        )
+        self.assertEqual(select_next_pager_action(actions, 4)["argument"], "Page$6")
 
     def test_no_continuation_is_terminal(self):
         self.assertIsNone(select_next_pager_action([], 5))
