@@ -1,0 +1,31 @@
+name: Probe Länsstyrelsen diary date filters
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Test registration date filters
+        run: python scripts/probe_lansstyrelsen_date_filters.py
+      - name: Upload date filter diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-date-filter-probe
+          path: lansstyrelsen-date-filter-probe.json
+          if-no-files-found: error
+          retention-days: 14
