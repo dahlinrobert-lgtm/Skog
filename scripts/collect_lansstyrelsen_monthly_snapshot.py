@@ -10,7 +10,6 @@ from search_lansstyrelsen_diary_browser import (
  URL, COUNTY_SELECT, TITLE_INPUT, SEARCH_BUTTON, RESULT_GRID, clean, parse_total,
  extract_grid, select_next_pager_action
 )
-from persist_lansstyrelsen_snapshots import persist
 
 DATE_FROM="#SearchPlaceHolder_CaseSearch_ddDatefrom"
 DATE_TO="#SearchPlaceHolder_CaseSearch_ddDateto"
@@ -107,7 +106,7 @@ def main():
       "observed_at":observed,"source":URL,"county":a.county,"search_term":a.term,
       "intervals":[interval]}
  a.output.parent.mkdir(parents=True,exist_ok=True)
- a.output.write_text(json.dumps(run,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+ a.output.write_text(json.dumps(run,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  # Snapshot publication is orchestrated by the workflow after all configured
  # county/phrase runs succeed, preventing partial monthly publication.
  status={"run_complete":bool(interval.get("reconciled")),
