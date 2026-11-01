@@ -323,6 +323,19 @@ def main() -> None:
                     if result["reported_total_results"] is None:
                         result["reported_total_results"] = parse_total(current_body)
 
+                    # Reconcile against the source-reported total before acting on
+                    # another pager control. Some regional GridViews leave an
+                    # ellipsis (Page$1) visible after the final result page; clicking
+                    # it again restarts the sliding pager window instead of advancing.
+                    if (
+                        result["reported_total_results"] is not None
+                        and len(seen) == result["reported_total_results"]
+                    ):
+                        result["pagination"]["has_next_page"] = False
+                        result["pagination"]["terminal_action"] = "source_total_reconciled"
+                        result["pagination"]["terminal_same_page_confirmed"] = True
+                        break
+
                     rows, diag = extract_grid(page, iteration, seen)
                     result["results"].extend(rows)
                     result["table_diagnostics"].append(diag)
