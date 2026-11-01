@@ -294,10 +294,48 @@ def main() -> None:
                         for match in re.findall(r"\b\d{1,6}-\d{4}\b", clean(row.inner_text()))
                     )
                     if visible_ids in visited_page_signatures:
-                        raise RuntimeError(
-                            f"Pagination loop detected at iteration {iteration}: "
-                            f"repeated result page with {len(visible_ids)} diary IDs"
+                        # The diary uses an ASP.NET sliding pager. Its Page$1
+                        # ellipsis command advances the visible page-number window,
+                        # not always the underlying result page. A window transition
+                        # can briefly leave the same 50 result rows visible. Detect
+                        # a loop only after the pager itself offers no new action.
+                        current_pager_row = page.locator(f"{RESULT_GRID} tr").last
+                        current_controls = (
+                            current_pager_row.locator("a, input, button, [role='button']")
+                            if current_pager_row.count()
+                            else page.locator(f"{RESULT_GRID} a, {RESULT_GRID} input, {RESULT_GRID} button")
                         )
+                        current_actions = []
+                        for control_index in range(current_controls.count()):
+                            control = current_controls.nth(control_index)
+                            tag_name = control.evaluate("(e) => e.tagName.toLowerCase()")
+                            control_label = clean(" ".join([
+                                control.inner_text() if tag_name not in {"input", "button"} else "",
+                                control.get_attribute("value") or "",
+                                control.get_attribute("title") or "",
+                                control.get_attribute("aria-label") or "",
+                                control.get_attribute("alt") or "",
+                            ])).casefold()
+                            href_value = control.get_attribute("href") or ""
+                            onclick_value = control.get_attribute("onclick") or ""
+                            postback = re.search(
+                                r"""__doPostBack\(['"]([^'"]+)['"]\s*,\s*['"]([^'"]*)['"]\)""",
+                                " ".join((href_value, onclick_value)),
+                            )
+                            if postback:
+                                action_target, action_argument = postback.groups()
+                                current_actions.append({
+                                    "label": control_label,
+                                    "target": action_target,
+                                    "argument": action_argument,
+                                })
+                        continuation = select_next_pager_action(current_actions, current_page_index)
+                        if continuation is None:
+                            raise RuntimeError(
+                                f"Pagination loop detected at iteration {iteration}: "
+                                f"repeated result page with {len(visible_ids)} diary IDs "
+                                "and no valid pager continuation"
+                            )
                     visited_page_signatures.add(visible_ids)
 
                     current_body = clean(page.locator("body").inner_text(timeout=20000))
