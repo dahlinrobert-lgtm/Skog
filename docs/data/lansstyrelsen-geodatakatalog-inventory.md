@@ -75,3 +75,17 @@ Metadata beskriver detta som genomförda åtgärder, vilket gör det till en sta
 - **LstM Karttjänst Betesförmedling**: förmedling av betesmarker och foderskörd, inte register över faktiskt utfört bete.
 
 Dessa ska klassas som planerings-, inventerings- eller stödunderlag, inte som genomförda åtgärder.
+
+
+### Teknisk kontroll av tjänsten (2026-11-01)
+
+Metadata-only-proben mot ArcGIS REST-lagret lyckades:
+
+- Lagertyp: Feature Layer, punktgeometri.
+- Antal objekt enligt \`returnCountOnly\`: **5 235**.
+- Koordinatsystem: SWEREF 99 TM (EPSG:3006).
+- Fält som verkar relevanta för händelsemodellen: \`TILLKDATUM\` (datum), \`ATGARD\` (åtgärd), \`FINANSIAR\` (finansiär), \`TRAD_ID\` och \`LOKAL_ID\`.
+- Även \`NORTH\` och \`EAST\` finns som koordinatattribut.
+- ArcGIS-lagermetadata lämnade \`objectIdField\` och \`globalIdField\` tomma, trots att fältlistan innehåller \`OBJECTID\`. Vi ska därför inte anta att \`OBJECTID\`, \`TRAD_ID\` eller kombinationen \`LOKAL_ID + TRAD_ID\` är beständig identitet utan att verifiera detta med dataägaren.
+
+Proben hämtade endast lagermetadata och ett aggregerat antal. Inga objekt-ID:n, attributrader eller koordinater hämtades. K2 och \`isOpenData=false\` gäller fortfarande. Föreslagen åtgärd är att fråga Länsstyrelsen Jönköping om villkorad åtkomst, användningsrätt, lagringsrätt, publicering av aggregerade resultat samt om identitets- och datumfälten är stabila och semantiskt definierade.
