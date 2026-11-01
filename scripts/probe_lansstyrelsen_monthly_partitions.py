@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Measure monthly result counts to size safe date partitions for Länsstyrelsen diary searches."""
+"""Probe monthly diary date filters robustly and retain per-month diagnostics."""
 from __future__ import annotations
 import calendar, json, re
 from datetime import datetime, timezone
@@ -14,10 +14,18 @@ DATE_TO = "#SearchPlaceHolder_CaseSearch_ddDateto"
 SEARCH = "#SearchPlaceHolder_CaseSearch_btnSearch"
 GRID = "#SearchPlaceHolder_caseGridView"
 
-def clean(s):
-    return re.sub(r"\s+", " ", s or "").strip()
+def clean(value: str) -> str:
+    return re.sub(r"\s+", " ", value or "").strip()
 
-def query(page, start, end):
+def parse_total(body: str) -> int | None:
+    match = re.search(r"Sökresultat\s*:?\s*[\d\s–-]+\s+av\s+(\d+)", body, re.I)
+    if match:
+        return int(match.group(1))
+    if re.search(r"Sökresultat\s*:?\s*0\b", body, re.I):
+        return 0
+    return None
+
+def run_query(page, start: str, end: str) -> dict:
     page.goto(URL, wait_until="domcontentloaded", timeout=60000)
     page.locator(COUNTY).wait_for(state="visible", timeout=30000)
     page.locator(COUNTY).select_option(value="21")
@@ -29,15 +37,26 @@ def query(page, start, end):
             page.locator(SEARCH).click(timeout=10000)
     except PlaywrightTimeoutError:
         pass
-    page.locator(GRID).wait_for(state="attached", timeout=20000)
+    grid = page.locator(GRID)
+    try:
+        grid.wait_for(state="attached", timeout=20000)
+    except PlaywrightTimeoutError:
+        pass
     body = clean(page.locator("body").inner_text(timeout=20000))
-    m = re.search(r"Sökresultat\s*:?\s*[\d\s–-]+\s+av\s+(\d+)", body, re.I)
-    rows = page.locator(GRID).locator("tr")
+    total = parse_total(body)
+    if grid.count() == 0:
+        return {"from":start,"to":end,"reported_total":total,"visible_unique_ids":0,
+                "grid_rows":0,"grid_present":False,"result_text_excerpt":body[:1400],
+                "page_url":page.url,"error":None if total == 0 else "No result grid and no explicit source total"}
+    rows = grid.locator("tr")
     ids=[]
     for i in range(rows.count()):
         ids.extend(re.findall(r"\b\d{1,6}-\d{4}\b", clean(rows.nth(i).inner_text())))
-    return {"from":start,"to":end,"reported_total":int(m.group(1)) if m else None,
-            "visible_unique_ids":len(set(ids)),"grid_rows":rows.count()}
+    unique=len(set(ids))
+    return {"from":start,"to":end,"reported_total":total,"visible_unique_ids":unique,
+            "grid_rows":rows.count(),"grid_present":True,
+            "result_text_excerpt":body[:1400],"page_url":page.url,
+            "error":None if total is not None else "Could not parse source total"}
 
 def main():
     results=[]
@@ -50,7 +69,12 @@ def main():
                     last=calendar.monthrange(year,month)[1]
                     start=f"{year}-{month:02d}-01"
                     end=f"{year}-{month:02d}-{last:02d}"
-                    item=query(page,start,end)
+                    try:
+                        item=run_query(page,start,end)
+                    except Exception as exc:
+                        item={"from":start,"to":end,"reported_total":None,
+                              "visible_unique_ids":0,"grid_rows":0,"grid_present":False,
+                              "error":f"{type(exc).__name__}: {exc}"}
                     results.append(item)
                     print(json.dumps(item,ensure_ascii=False),flush=True)
         finally:
@@ -62,8 +86,10 @@ def main():
     Path("lansstyrelsen-monthly-partition-probe.json").write_text(
         json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("SUMMARY "+json.dumps({"sum_monthly_totals":payload["sum_monthly_totals"],
+        "months_tested":len(results),
         "months_with_results":sum(1 for x in results if (x["reported_total"] or 0)>0),
-        "months_missing_count":sum(1 for x in results if x["reported_total"] is None)},ensure_ascii=False))
+        "months_missing_count":sum(1 for x in results if x["reported_total"] is None),
+        "months_with_errors":sum(1 for x in results if x.get("error"))},ensure_ascii=False))
 
 if __name__=="__main__":
     main()
