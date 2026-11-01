@@ -105,26 +105,22 @@ jobs:
           if [[ "$CATEGORY_INPUT" == "A" ]]; then categories=("A")
           elif [[ "$CATEGORY_INPUT" == "B" ]]; then categories=("B")
           else categories=("A" "B"); fi
-          failed=0
-          declare -A termsA=([0]="skogsbilväg" [1]="vägbyggnad" [2]="ledningsdragning" [3]="schaktning" [4]="utfyllnad" [5]="massupplag")
-          declare -A termsB=([0]="vattenverksamhet" [1]="markavvattning" [2]="dikesrensning" [3]="trumma" [4]="våtmarksanläggning" [5]="omgrävning av vattendrag")
+          termsA=("skogsbilväg" "vägbyggnad" "ledningsdragning" "schaktning" "utfyllnad" "massupplag")
+          termsB=("vattenverksamhet" "markavvattning" "dikesrensning" "trumma" "våtmarksanläggning" "omgrävning av vattendrag")
           for county in "${counties[@]}"; do
+            slug="norrbotten"; [[ "$county" == *Västerbottens* ]] && slug="vasterbotten"
             for category in "${categories[@]}"; do
-              for i in 0 1 2 3 4 5; do
-                if [[ "$category" == "A" ]]; then term="${termsA[$i]}"; else term="${termsB[$i]}"; fi
-                slug="norrbotten"; [[ "$county" == *Västerbottens* ]] && slug="vasterbotten"
+              terms=("${termsA[@]}"); [[ "$category" == "B" ]] && terms=("${termsB[@]}")
+              for i in "${!terms[@]}"; do
+                term="${terms[$i]}"
                 outfile="monthly-snapshot-runs/${slug}-${category}-${i}.json"
                 echo "Collecting $county / $category / $term / $YEAR-$MONTH"
-                if ! python scripts/collect_lansstyrelsen_monthly_snapshot.py \
-                    --county "$county" --term "$term" --year "$YEAR" --month "$MONTH" \
-                    --output "$outfile"; then
-                  echo "FAILED: $county / $category / $term"
-                  failed=1
-                fi
+                python scripts/collect_lansstyrelsen_monthly_snapshot.py \
+                  --county "$county" --term "$term" --year "$YEAR" --month "$MONTH" \
+                  --output "$outfile"
               done
             done
           done
-          echo "collection_failed=$failed" >> "$GITHUB_OUTPUT"
       - name: Validate batch and persist complete query snapshots
         env:
           PYTHONPATH: scripts
@@ -237,11 +233,3 @@ jobs:
           done
           echo "Failed to publish snapshots after retries" >&2
           exit 1
-      - name: Upload monthly collection diagnostics
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lansstyrelsen-monthly-snapshot-diagnostics
-          path: monthly-snapshot-runs/
-          if-no-files-found: warn
-          retention-days: 30
