@@ -48,3 +48,30 @@ Länsstyrelsernas Geodatakatalog beskriver länsstyrelsernas egna geodata och tj
 - GeoNetwork 4 Search API: https://docs.geonetwork-opensource.org/4.4/api/search/
 - Geodatakatalogens API-dokumentation: https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/doc/api/index.html
 - Naturvårdsregistrets metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=50FE77C1-43A0-445A-B56C-6B729E21DC67_C
+
+
+## Prioriterad kandidat som kräver åtkomstbesked
+
+Katalogsökningen den 2026-11-01 gav en särskilt relevant träff:
+
+- Titel: **LstF Skyddsvärda träd - genomförda åtgärder**
+- Metadata-UUID: \`05d91b89-f2e9-42a8-9795-44c5edd125cf\`
+- Ansvarig: Länsstyrelsen Jönköpings län
+- Geometri: punkt (skyddsvärda träd)
+- Metadatarevision: 2026-10-19
+- Uppdateringsfrekvens enligt metadata: veckovis / årligen
+- Beskrivning: visar träd som har åtgärdats, bland annat med finansiering av Åtgärdsprogrammet för skyddsvärda träd, Trädprojektet eller nationellt stöd för hamling.
+- Tjänst: \`https://ext-geodata-lokala-visning.lansstyrelsen.se/arcgis/rest/services/LSTF/LSTF_inventerade_skyddsvarda_trad_EXT/MapServer/1\`
+- Alternativ nedladdningslänk: Atom-flöde.
+
+**Viktig begränsning:** katalogposten anger \`isOpenData=false\`, konfidentialitet K2 (måttlig skada) och andra åtkomstbegränsningar. Därför hämtar probe-flödet endast tjänstens lagermetadata och ett aggregerat antal objekt. Det hämtar inte objekt-ID:n, attributrader eller koordinater. Ingen arkiverare får byggas innan Länsstyrelsen Jönköping skriftligen bekräftat åtkomst, licens, återanvändning och om punkternas lägesinformation får lagras och publiceras.
+
+Metadata beskriver detta som genomförda åtgärder, vilket gör det till en stark kandidat för naturvårdshändelser – men datakällan är regional och får inte generaliseras till nationell täckning.
+
+## Andra träffar – inte likvärdiga händelseregister
+
+- **LstF Bränningslandskap Eldskäl**: planerings-/analysunderlag för bränningslandskap i fem län, inte en lista över genomförda bränningar. Katalogen anger endast Atom-nedladdning.
+- **LstC Inventerade lövskogar vitrygg**: inventeringsunderlag med beskrivningar av skötselbehov och död ved, inte bevis på genomförda åtgärder.
+- **LstM Karttjänst Betesförmedling**: förmedling av betesmarker och foderskörd, inte register över faktiskt utfört bete.
+
+Dessa ska klassas som planerings-, inventerings- eller stödunderlag, inte som genomförda åtgärder.
