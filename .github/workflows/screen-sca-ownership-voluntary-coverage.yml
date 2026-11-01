@@ -1,0 +1,30 @@
+name: Screen SCA ownership and voluntary layer coverage
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/screen_sca_ownership_voluntary_coverage.py"
+      - ".github/workflows/screen-sca-ownership-voluntary-coverage.yml"
+permissions:
+  contents: read
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT decoder
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3"
+      - name: Compare ownership and voluntary tiles
+        run: python scripts/screen_sca_ownership_voluntary_coverage.py
+      - name: Validate JSON
+        run: python -m json.tool sca-ownership-voluntary-coverage-screen.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-ownership-voluntary-coverage-screen
+          path: sca-ownership-voluntary-coverage-screen.json
+          if-no-files-found: error
+          retention-days: 30
