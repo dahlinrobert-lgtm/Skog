@@ -20,7 +20,7 @@ def matching_end(source: str, start: int, opening: str, closing: str) -> int:
         if quoted:
             if escaped:
                 escaped = False
-            elif ch == "\\\\":
+            elif ch == "\\":
                 escaped = True
             elif ch == '"':
                 quoted = False
