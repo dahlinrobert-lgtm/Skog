@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Inspect SCA's published map configuration and vector-tile URL handling.
+"""Inspect SCA's published map layer configuration and vector-tile URL handling.
 
-No tile requests are made. The output is limited to public client configuration
-and short source-code excerpts needed to understand URL and grid resolution.
+No tile requests are made. The output captures public client configuration
+needed to resolve the map's actual layer names, URLs and tile-grid semantics.
 """
 from __future__ import annotations
 
@@ -48,9 +48,22 @@ def extract_object_containing(text: str, needle: str) -> str | None:
     return None
 
 
+def all_named_vector_layers(html: str) -> list[dict]:
+    layers = []
+    for match in re.finditer(r'"name"\\s*:\\s*"([^"]+)"', html):
+        name = match.group(1)
+        raw = extract_object_containing(html, match.group(0))
+        if raw and '"VectorTile"' in raw:
+            layers.append({"name": name, "config": raw})
+    # Keep first occurrence if the same name appears more than once.
+    unique = {}
+    for layer in layers:
+        unique.setdefault(layer["name"], layer)
+    return list(unique.values())
+
+
 def excerpts(text: str, terms: list[str], radius: int = 700) -> list[dict]:
-    found = []
-    seen = set()
+    found, seen = [], set()
     for term in terms:
         start = 0
         while True:
@@ -58,39 +71,23 @@ def excerpts(text: str, terms: list[str], radius: int = 700) -> list[dict]:
             if pos < 0:
                 break
             lo, hi = max(0, pos - radius), min(len(text), pos + radius)
-            key = (lo, hi)
-            if key not in seen:
-                seen.add(key)
+            if (lo, hi) not in seen:
+                seen.add((lo, hi))
                 found.append({"term": term, "offset": pos, "context": text[lo:hi]})
             start = pos + len(term)
-            if len(found) >= 30:
+            if len(found) >= 40:
                 return found
     return found
 
 
 def main() -> None:
-    s = requests.Session()
-    s.headers.update(HEADERS)
-    page = s.get(PAGE, timeout=30)
+    session = requests.Session()
+    session.headers.update(HEADERS)
+    page = session.get(PAGE, timeout=30)
     page.raise_for_status()
-    js = s.get(JS, timeout=45)
+    js = session.get(JS, timeout=45)
     js.raise_for_status()
     html, bundle = page.text, js.text
-
-    labels = ["Frivilliga avsättningar", "Alternativa metoder",
-              "Anpassad hänsyn", "SCA innehav"]
-    layers = []
-    for label in labels:
-        raw = extract_object_containing(html, '"name": "' + label + '"')
-        layers.append({"label": label, "raw_config_object": raw})
-
-    base_tags = re.findall(r"<base\\b[^>]*>", html, flags=re.I)
-    scripts = re.findall(r"<script\\b[^>]*src=['\\\"]([^'\\\"]+)", html, flags=re.I)
-    html_terms = ["projection", "tileGrid", "matrixIds", "resolutions",
-                  "origin", "extent", "center", "view"]
-    js_terms = ["createVectorTileLayer", "VectorTile", "tileUrlFunction",
-                "new URL(", "urlTemplate", "tileGrid", "matrixIds",
-                "projection", "setUrl("]
 
     output = {
         "page_url": PAGE,
@@ -99,11 +96,19 @@ def main() -> None:
         "js_status": js.status_code,
         "page_bytes": len(page.content),
         "js_bytes": len(js.content),
-        "base_tags": base_tags,
-        "script_references": scripts,
-        "layer_configs": layers,
-        "html_config_contexts": excerpts(html, html_terms, 900),
-        "javascript_url_and_grid_contexts": excerpts(bundle, js_terms, 850),
+        "base_tags": re.findall(r"<base\\b[^>]*>", html, flags=re.I),
+        "script_references": re.findall(
+            r"<script\\b[^>]*src=['\\\"]([^'\\\"]+)", html, flags=re.I
+        ),
+        "vector_tile_layers": all_named_vector_layers(html),
+        "html_config_contexts": excerpts(
+            html, ["olgaConfig", "tileGrid", "matrixIds", "resolutions",
+                   "origin", "projection", "renderMode"], 1000
+        ),
+        "javascript_url_and_grid_contexts": excerpts(
+            bundle, ["tileUrlFunction", "setUrl(", "setUrls(", "urlTemplate",
+                     "VectorTile", "getTileCoordForCoordAndResolution"], 1000
+        ),
         "tile_requests_made": 0,
     }
     Path("sca-tile-url-resolution-audit.json").write_text(
@@ -113,11 +118,9 @@ def main() -> None:
     print(json.dumps({
         "page_status": output["page_status"],
         "js_status": output["js_status"],
-        "layer_configs_found": [x["label"] for x in layers if x["raw_config_object"]],
-        "base_tags": base_tags,
-        "script_references": scripts,
-        "html_context_count": len(output["html_config_contexts"]),
-        "js_context_count": len(output["javascript_url_and_grid_contexts"]),
+        "vector_tile_layer_names": [x["name"] for x in output["vector_tile_layers"]],
+        "base_tags": output["base_tags"],
+        "script_references": output["script_references"],
         "tile_requests_made": 0,
     }, ensure_ascii=False, indent=2))
 
