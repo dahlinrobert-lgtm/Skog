@@ -1,0 +1,64 @@
+name: Archive Skogsstyrelsen rewetting agreements
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/collect_skogsstyrelsen_rewetting.py"
+      - "tests/test_skogsstyrelsen_rewetting_archive.py"
+      - ".github/workflows/skogsstyrelsen-rewetting-archive.yml"
+  schedule:
+    - cron: "37 5 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: skogsstyrelsen-rewetting-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test collector
+        run: python -m unittest discover -s tests -p 'test_skogsstyrelsen_rewetting_archive.py' -v
+      - name: Collect and validate rewetting agreement polygons
+        run: python scripts/collect_skogsstyrelsen_rewetting.py
+      - name: Publish snapshot and history
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/skogsstyrelsen-atervatning/current.json.gz data/skogsstyrelsen-atervatning/history/
+          if git diff --cached --quiet; then
+            echo "No changes in Skogsstyrelsen rewetting agreement layer."
+            exit 0
+          fi
+          git commit -m "Archive Skogsstyrelsen rewetting agreement changes"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo "Published rewetting agreement snapshot."
+              exit 0
+            fi
+            echo "Push rejected because main moved; retrying attempt $attempt/3."
+          done
+          echo "Could not publish after three attempts." >&2
+          exit 1
+      - name: Upload collection report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsstyrelsen-rewetting-report
+          path: data/skogsstyrelsen-atervatning/latest-report.json
+          if-no-files-found: warn
+          retention-days: 30
