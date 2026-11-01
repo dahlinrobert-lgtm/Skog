@@ -392,6 +392,7 @@ def main() -> None:
                     target = next_item["target"]
                     argument = next_item["argument"]
                     before_signature = visible_ids
+                    before_count = len(seen)
                     response_seen = False
                     try:
                         with page.expect_response(
@@ -404,6 +405,11 @@ def main() -> None:
                     except PlaywrightTimeoutError:
                         pass
 
+                    # Page$Last is also the pager's terminal action. If the page
+                    # already contains every source-reported result, ASP.NET may
+                    # legitimately return the same rows for Page$Last. Treat that
+                    # as completion only when extracted IDs reconcile exactly with
+                    # the source total; otherwise it remains a pagination failure.
                     try:
                         page.wait_for_function(
                             """({selector, previous}) => {
@@ -414,12 +420,22 @@ def main() -> None:
                                 return ids.length > 0 && ids.join('|') !== previous.join('|');
                             }""",
                             arg={"selector": RESULT_GRID, "previous": list(before_signature)},
-                            timeout=25000,
+                            timeout=12000,
                         )
                     except PlaywrightTimeoutError as exc:
+                        if argument.casefold() in {"last", "page$last"}:
+                            stable_body = clean(page.locator("body").inner_text(timeout=15000))
+                            stable_total = parse_total(stable_body)
+                            if stable_total is not None and len(seen) == stable_total:
+                                result["reported_total_results"] = stable_total
+                                result["pagination"]["terminal_action"] = argument
+                                result["pagination"]["terminal_same_page_confirmed"] = True
+                                result["pagination"]["has_next_page"] = False
+                                break
                         raise RuntimeError(
-                            "WebForms page-window postback did not change the visible result page: "
+                            "WebForms pager postback did not change the visible result page: "
                             f"iteration={iteration}, argument={argument!r}, response_seen={response_seen}, "
+                            f"extracted_before_postback={before_count}, reported_total={parse_total(clean(page.locator('body').inner_text(timeout=15000)))}, "
                             f"current_ids={before_signature[:4]!r}"
                         ) from exc
 
