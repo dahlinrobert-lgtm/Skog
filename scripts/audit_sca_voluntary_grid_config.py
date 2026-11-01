@@ -47,7 +47,7 @@ def balanced_end(source: str, start: int, opening: str, closing: str) -> int:
 
 
 def extract_layer_config(html: str) -> list[dict]:
-    m = re.search(r"olgaConfig\\s*=\\s*\\{", html)
+    m = re.search(r"olgaConfig\s*=\s*\{", html)
     if not m:
         return []
     start = html.find("{", m.start())
