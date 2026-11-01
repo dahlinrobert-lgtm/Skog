@@ -163,3 +163,28 @@ jobs:
           path: action-discovery-results/
           if-no-files-found: warn
           retention-days: 30
+      - name: Verify at least one county search completed
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          files = [
+              Path("action-discovery-results/norrbotten.json"),
+              Path("action-discovery-results/vasterbotten.json"),
+          ]
+          valid = []
+          for path in files:
+              if not path.exists():
+                  continue
+              try:
+                  payload = json.loads(path.read_text(encoding="utf-8"))
+              except Exception:
+                  continue
+              if payload.get("request_ok") and payload.get("total_reconciled"):
+                  valid.append(path.name)
+          print(f"Validated county searches: {valid}")
+          if not valid:
+              raise SystemExit("No county search passed source-total and pagination validation.")
+          PY
