@@ -2,6 +2,11 @@ name: Archive Skogsstyrelsen burned areas
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/collect_skogsstyrelsen_burn_areas.py"
+      - "tests/test_skogsstyrelsen_burn_area_archive.py"
+      - ".github/workflows/skogsstyrelsen-burn-area-archive.yml"
   schedule:
     - cron: "17 5 * * *"
 
