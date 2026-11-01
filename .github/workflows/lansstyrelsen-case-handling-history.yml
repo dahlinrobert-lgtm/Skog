@@ -37,23 +37,29 @@ jobs:
           limit="${{ inputs.limit }}"
           if [ -z "$limit" ]; then limit="50"; fi
           python scripts/collect_lansstyrelsen_case_handlings.py --limit "$limit"
-      - name: Publish metadata history
+      - name: Analyze quality, handling classes and execution leads
+        run: |
+          python -m unittest discover -s tests -p 'test_lansstyrelsen_handlings_analysis.py'
+          python scripts/analyze_lansstyrelsen_handlings.py
+      - name: Publish metadata history and analysis
         if: success() && github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/lansstyrelsen-diary/case-details.json data/lansstyrelsen-diary/handling-events.jsonl
+          git add data/lansstyrelsen-diary/case-details.json data/lansstyrelsen-diary/handling-events.jsonl data/lansstyrelsen-diary/analysis/
           if git diff --cached --quiet; then
-            echo "No case or handling metadata changes."
+            echo "No case, handling metadata or analysis changes."
           else
-            git commit -m "Update Länsstyrelsen case handling history"
+            git commit -m "Update Länsstyrelsen case handling history and analysis"
             git push origin HEAD:main
           fi
-      - name: Upload collection report
+      - name: Upload collection and analysis reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lansstyrelsen-case-handling-history
-          path: case-handling-run.json
+          name: lansstyrelsen-case-handling-analysis
+          path: |
+            case-handling-run.json
+            data/lansstyrelsen-diary/analysis/
           if-no-files-found: warn
           retention-days: 30
