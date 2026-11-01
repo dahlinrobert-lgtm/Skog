@@ -273,38 +273,107 @@ def main() -> None:
                     result["pagination"]["pages_read"] = page_number
                     controls = page.locator(
                         "#SearchPlaceHolder_caseGridView a, "
-                        "#SearchPlaceHolder_caseGridView input[type='submit'], "
-                        "#SearchPlaceHolder_caseGridView input[type='button']"
+                        "#SearchPlaceHolder_caseGridView input, "
+                        "#SearchPlaceHolder_caseGridView button, "
+                        "#SearchPlaceHolder_caseGridView [role='button']"
                     )
                     nxt = None
                     for i in range(controls.count()):
                         c = controls.nth(i)
+                        tag = c.evaluate("(e) => e.tagName.toLowerCase()")
                         label = clean(" ".join([
-                            c.inner_text() if c.evaluate("(e) => e.tagName.toLowerCase() !== 'input'") else "",
-                            c.get_attribute("value") or "", c.get_attribute("title") or "",
+                            c.inner_text() if tag not in {"input", "button"} else "",
+                            c.get_attribute("value") or "",
+                            c.get_attribute("title") or "",
                             c.get_attribute("aria-label") or "",
-                        ]))
-                        if label.casefold() in {"next", "nästa", ">", "»", "›"} or "nästa" in label.casefold() or "next" in label.casefold():
+                            c.get_attribute("alt") or "",
+                        ])).casefold()
+                        classes = (c.get_attribute("class") or "").casefold()
+                        disabled = c.get_attribute("disabled") is not None or c.get_attribute("aria-disabled") == "true"
+                        if disabled:
+                            continue
+                        is_next = (
+                            label in {"next", "nästa", ">", "»", "›", "»»", ">>"}
+                            or "nästa" in label or "next" in label
+                            or "pager_next" in classes or "next" in classes
+                        )
+                        if is_next:
                             nxt = c
                             break
+
                     if nxt is None:
-                        result["pagination"]["has_next_page"] = False
-                        break
+                        # ASP.NET GridView commonly renders numeric page links
+                        # and a non-textual next control. If the grid still
+                        # reports more records than have been extracted, inspect
+                        # the server-side pager before accepting completion.
+                        pager = page.locator(
+                            "#SearchPlaceHolder_caseGridView tr:last-child"
+                        )
+                        pager_text = clean(pager.inner_text()) if pager.count() else ""
+                        numeric_links = page.locator(
+                            "#SearchPlaceHolder_caseGridView a"
+                        )
+                        for i in range(numeric_links.count()):
+                            c = numeric_links.nth(i)
+                            label = clean(c.inner_text())
+                            if label.isdigit() and int(label) > page_number:
+                                nxt = c
+                                break
+                        if nxt is None:
+                            current_text = clean(page.locator("body").inner_text())
+                            reported_now = parse_total(current_text)
+                            remaining_hint = (
+                                reported_now is not None and len(seen) < reported_now
+                            )
+                            if remaining_hint or page_number == 1 and reported_now and reported_now > len(seen):
+                                raise RuntimeError(
+                                    "Source reports additional results but no next-page control was identified; "
+                                    f"page={page_number}, extracted={len(seen)}, reported={reported_now}, "
+                                    f"pager_text={pager_text!r}"
+                                )
+                            result["pagination"]["has_next_page"] = False
+                            break
+
                     before_count = len(seen)
                     href = nxt.get_attribute("href") or ""
-                    postback = re.search(r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)", href)
+                    onclick = nxt.get_attribute("onclick") or ""
+                    postback_text = " ".join([href, onclick])
+                    postback = re.search(
+                        r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
+                        postback_text
+                    )
                     if postback:
                         target, argument = postback.groups()
-                        with page.expect_response(lambda resp: "diarium.lansstyrelsen.se" in resp.url and resp.request.method == "POST", timeout=15000):
-                            page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
+                        try:
+                            with page.expect_response(
+                                lambda resp: "diarium.lansstyrelsen.se" in resp.url
+                                and resp.request.method == "POST",
+                                timeout=20000
+                            ):
+                                page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
+                        except PlaywrightTimeoutError:
+                            # Some WebForms pages post back without a matching
+                            # response event in Playwright; wait for row content
+                            # to change and validate it below.
+                            pass
                     else:
                         try:
-                            with page.expect_navigation(wait_until="domcontentloaded", timeout=12000):
-                                nxt.click()
+                            with page.expect_navigation(wait_until="domcontentloaded", timeout=15000):
+                                nxt.click(timeout=10000)
                         except PlaywrightTimeoutError:
-                            nxt.click(timeout=3000)
-                            page.wait_for_timeout(1200)
-                    page.wait_for_timeout(300)
+                            nxt.click(timeout=5000, force=True)
+                    page.wait_for_function(
+                        """({selector, previous}) => {
+                            const grid = document.querySelector(selector);
+                            if (!grid) return false;
+                            const ids = Array.from(grid.querySelectorAll('tr'))
+                              .map(row => (row.innerText || '').match(/\\b\\d{1,6}-\\d{4}\\b/))
+                              .filter(Boolean).map(match => match[0]);
+                            return ids.length > 0 && ids.some(id => !previous.includes(id));
+                        }""",
+                        arg={"selector": RESULT_GRID, "previous": list(seen)},
+                        timeout=20000
+                    )
                     if len(seen) == before_count:
                         raise RuntimeError(f"Pagination did not add new diary identifiers after page {page_number}")
                 else:
