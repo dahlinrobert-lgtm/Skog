@@ -999,6 +999,11 @@
     "acquired_at": "2026-06-08T04:56:40.232917Z",
     "published_at": "2026-06-08T03:57:39.033955Z"
   },
+  "S2A_MSIL2A_20261101T103111_N0513_R108_T34VDR_20261101T151614": {
+    "collection": "sentinel-2-l2a",
+    "acquired_at": "2026-11-01T10:31:11.024000Z",
+    "published_at": "2026-11-01T16:04:02.000000Z"
+  },
   "S2C_MSIL2A_20261030T103141_N0513_R108_T34VDR_20261030T134007": {
     "collection": "sentinel-2-l2a",
     "acquired_at": "2026-10-30T10:31:41.025000Z",
@@ -1993,10 +1998,5 @@
     "collection": "sentinel-2-l2a",
     "acquired_at": "2026-03-26T10:20:19.024000Z",
     "published_at": "2026-03-26T16:26:21.000000Z"
-  },
-  "S2B_MSIL2A_20260326T102019_N0512_R065_T34VDR_20260326T143731": {
-    "collection": "sentinel-2-l2a",
-    "acquired_at": "2026-03-26T10:20:19.024000Z",
-    "published_at": "2026-03-26T15:05:23.000000Z"
   }
 }
