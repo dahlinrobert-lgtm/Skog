@@ -85,6 +85,28 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
     return records, diag
 
 
+def select_next_pager_action(candidates: list[dict], current_page_index: int) -> dict | None:
+    """Select the next action from a sliding ASP.NET GridView pager."""
+    numeric = []
+    for item in candidates:
+        match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
+        if match and int(match.group(1)) > current_page_index + 1:
+            numeric.append((int(match.group(1)), item))
+    if numeric:
+        return min(numeric, key=lambda pair: pair[0])[1]
+    # In this portal, the ellipsis's Page$1 command advances the pager window.
+    for item in candidates:
+        if item["argument"].casefold() == "page$1" and item["label"] in {"...", "…"}:
+            return item
+    for item in candidates:
+        if item["argument"].casefold() in {"last", "page$last"}:
+            return item
+    for item in candidates:
+        if item["argument"].casefold() in {"next", "page$next"}:
+            return item
+    return None
+
+
 def parse_search_terms(primary: str, extras: str = "") -> list[str]:
     """Normalize a primary phrase and optional comma/semicolon/newline-separated phrases."""
     terms: list[str] = []
@@ -322,17 +344,8 @@ def main() -> None:
                                 "element": control,
                             })
 
-                    # Prefer a numeric next page in the currently visible window.
-                    numeric = []
-                    for item in candidates:
-                        match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
-                        if match and int(match.group(1)) > current_page_index + 1:
-                            numeric.append((int(match.group(1)), item))
-                    next_item = min(numeric, key=lambda pair: pair[0])[1] if numeric else None
+                    next_item = select_next_pager_action(candidates, current_page_index)
 
-                    # At the end of a sliding window, the literal ellipsis uses
-                    # Page$1. That command advances the page window; it is not
-                    # the first result page. Page$Last is a final fallback.
                     if next_item is None:
                         for item in candidates:
                             if item["argument"].casefold() == "page$1" and item["label"] in {"...", "…"}:
@@ -392,7 +405,13 @@ def main() -> None:
                             f"current_ids={before_signature[:4]!r}"
                         ) from exc
 
+                    page_after = tuple(
+                        match
+                        for row in page.locator(f"{RESULT_GRID} tr").all()
+                        for match in re.findall(r"\\b\\d{1,6}-\\d{4}\\b", clean(row.inner_text()))
+                    )
                     current_page_index += 1
+                    result["pagination"]["last_page_signature"] = list(page_after[:5])
                 else:
                     raise RuntimeError("Safety cap reached after 500 result-page transitions")
 
