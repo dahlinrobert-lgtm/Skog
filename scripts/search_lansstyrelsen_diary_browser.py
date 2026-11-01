@@ -262,8 +262,20 @@ def main() -> None:
                 )
             else:
                 result["request_ok"] = True
+                visited_page_signatures: set[tuple[str, ...]] = set()
                 for page_number in range(1, 101):
                     page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
+                    visible_ids = tuple(
+                        re.findall(r"\b\d{1,6}-\d{4}\b", clean(row.inner_text()))
+                        for row in page.locator(f"{RESULT_GRID} tr").all()
+                    )
+                    visible_ids = tuple(item for group in visible_ids for item in group)
+                    if visible_ids in visited_page_signatures:
+                        raise RuntimeError(
+                            f"Pagination loop detected on page {page_number}: "
+                            f"same diary-number signature repeated ({visible_ids[:5]!r})"
+                        )
+                    visited_page_signatures.add(visible_ids)
                     current_body = clean(page.locator("body").inner_text(timeout=20000))
                     if result["reported_total_results"] is None:
                         result["reported_total_results"] = parse_total(current_body)
@@ -313,11 +325,15 @@ def main() -> None:
                             target, argument = postback.groups()
                             # Forward page navigation is commonly "Page$N" or
                             # a numeric page argument. Never click the current page.
+                            page_match = re.fullmatch(r"Page\$(\d+)", argument, re.I)
                             is_forward = (
-                                "page$" in argument.casefold()
+                                (page_match is not None and int(page_match.group(1)) > page_number)
                                 or (argument.isdigit() and int(argument) > page_number)
-                                or label in {"...", "…", ">", "»", "›", ">>", "»»"}
-                                or "next" in label or "nästa" in label
+                                or (
+                                    label in {"...", "…", ">", "»", "›", ">>", "»»", "next", "nästa"}
+                                    and page_match is not None
+                                    and int(page_match.group(1)) > page_number
+                                )
                             )
                             if is_forward:
                                 nxt = c
@@ -336,7 +352,11 @@ def main() -> None:
                             pager_html
                         )
                         for target, argument in html_postbacks:
-                            if "page$" in argument.casefold() or (argument.isdigit() and int(argument) > page_number):
+                            page_match = re.fullmatch(r"Page\$(\d+)", argument, re.I)
+                            if (
+                                (page_match is not None and int(page_match.group(1)) > page_number)
+                                or (argument.isdigit() and int(argument) > page_number)
+                            ):
                                 nxt = (target, argument)
                                 break
 
