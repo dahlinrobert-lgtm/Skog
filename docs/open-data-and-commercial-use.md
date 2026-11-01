@@ -45,7 +45,8 @@ Status i registret är en riskklassning för projektet, inte ett bindande juridi
 | Länsstyrelsernas diarier | Gul, per handling | Offentlig handling är inte automatiskt fri att återpublicera; sekretess, GDPR och tredje mans rättigheter |
 | Naturvårdsverket – listade öppna data | Villkorad grön | Öppna data får användas fritt; kontrollera informationsansvarig och tredjepartsrättigheter |
 | Life2Taiga – naturvårdsåtgärder | Gul | Fastställ producent, projektvillkor och rätt att lagra/återpublicera geometrier |
-| Skogsdatalabbet – Torvkarta och SIS | Gul | Fastställ dataleverantör och licens; värdskap under Skogsstyrelsens domän räcker inte |
+| SLU Torvkarta 1.0 | Gul | SLU är produktansvarig; öppen nedladdning men licens för kommersiell återanvändning måste bekräftas, särskilt p.g.a. Lantmäteriets höjddata som modellunderlag |
+| Skogsstyrelsen – Ståndortsindex SIS | Villkorad grön | Skogsstyrelsens geodata omfattas normalt av CC0; kontrollera produktbeskrivningens särskilda licens-/erkännandesektion |
 | SGU – geologiska data | Grön | CC0 sedan 9 juni 2024; bilder, illustrationer och annat webbmaterial kan ha separata villkor |
 | Sakfråga | Gul, avtalsgranskning | API-åtkomst fastställer inte automatiskt rätt att återanvända bilagor eller dokument kommersiellt |
 | Sveaskog / SCA | Röd utan skriftligt tillstånd | Privata företagsdata ska inte behandlas som öppna data |
@@ -111,12 +112,33 @@ Naturvårdsåtgärdslager som används i projektet hämtas från en extern ArcGI
 
 - Layer 13: https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13
 
-### Skogsdatalabbet – Torvkarta och SIS
+### SLU Torvkarta 1.0
 
-Dessa två ImageServer-tjänster ingår i det veckovisa pilotflödet. De är hostade under Skogsstyrelsens geodata-domän, men det fastställer inte i sig vem som äger/producerat innehållet eller vilka licensvillkor som gäller. Därför är de gulmarkerade. Innan geografisk uppskalning eller kommersiell publicering ska vi hämta tjänstemetadata, identifiera producent och produktbeskrivning, kontrollera licens, dokumentera tillåten historisk lagring och pixel-/bildderivat samt undersöka tekniska gränser.
+Torvkartan är nu identifierad som en SLU-produkt, inte som en generisk Skogsstyrelsen-produkt. Produktbeskrivningen (Anneli Ågren, 2022-09-28) beskriver två rasterlager: en klassad karta och en kontinuerlig karta. Upplösningen är 2 × 2 meter och koordinatsystemet SWEREF 99 TM. Den klassade kartan har klasserna vatten, mineraljord och torvdjup ≥30, ≥40 respektive ≥50 cm. Den kontinuerliga kartan beskriver organiska lagrets tjocklek i centimeter. Produktbeskrivningen redovisar även saknade områden där indata saknas och en RMSE på cirka ±19 cm för den kontinuerliga kartan.
 
-- Torvkarta 1.0: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/Torvkarta_1_0/ImageServer
-- SIS 1.0: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/SIS_1_0/ImageServer
+SLU:s sida anger att kartorna kan laddas ned fritt via SLU:s filserver och att den nationella mosaiken är över 40 GB. Detta bekräftar teknisk åtkomst, men produktbeskrivningen anger inte uttryckligen en licens för kommersiell återanvändning. Kartan bygger dessutom på GSD-Höjddata grid 2+ © Lantmäteriet. Därför ska vi inte dra slutsatsen att all kommersiell återpublicering eller lagring är tillåten bara för att filerna är nedladdningsbara.
+
+**Beslut:** Behåll gul status tills SLU bekräftar skriftligen att kommersiell användning, historisk arkivering, bearbetning och distribution av härledda raster/statistik är tillåten och anger hur Lantmäteriets underliggande data påverkar villkoren.
+
+- Produktbeskrivning: https://www.slu.se/contentassets/2368b3706efb45799ce0427f00455068/produktbeskrivning_slu_torvkarta1.0.pdf
+- SLU:s nedladdning: https://gis.slu.se/data/peat_1_0/
+- REST: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/Torvkarta_1_0/ImageServer
+- Tjänster och konto: https://skogsdatalabbet.se/skogsdatalabbets-geodatatjanster/
+
+### Skogsstyrelsen – Ståndortsindex SIS
+
+SIS betyder ståndortsindex skattat utifrån ståndortsegenskaper. Det ska skiljas från SIH, som baseras på mätningar i det befintliga beståndet. Skogsstyrelsens aktuella produktbeskrivning är daterad 2026-10-02 och beskriver skattningar för gran respektive tall. Skattningen bygger på laserdata från två tidpunkter och andra referens-/miljövariabler. Skogsstyrelsens nedladdningskatalog listar separata produkter för Ståndortsindex SIS Gran och Tall.
+
+Skogsstyrelsens generella geodatavillkor anger CC0 om inget annat anges. Den specifika produktbeskrivningen har en egen sektion om licens och erkännande. Vi har identifierat den sektionen, men behöver läsa dess exakta formulering innan vi markerar produkten som helt godkänd för kommersiell distribution. Preliminär status är därför villkorad grön, inte slutligt godkänd.
+
+- Produktbeskrivning (2026-10-02): https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/raster-skogligagrunddata-standortsindexsis---produktbeskrivning.pdf
+- Generella geodatavillkor: https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/
+- Nedladdningskatalog: https://www.skogsstyrelsen.se/laddanergeodata
+- REST: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/SIS_1_0/ImageServer
+
+### Gemensamma tekniska villkor för Skogsdatalabbets rastertjänster
+
+Skogsdatalabbets REST- och WMS-tjänster kräver användarkonto. SLU anger att Torvkartan även kan laddas ned separat som klassat raster, uppdelade kontinuerliga raster eller nationell mosaik. Vi ska därför skilja mellan rätt att använda datan och de tekniska villkoren för tjänsten. Innan vi skalar upp veckosampling eller börjar lagra fullständiga nationella raster behöver vi bekräfta kontovillkor, exportbegränsningar, cache-/versionsmetadata, anropskvoter och rätt att arkivera upprepade versioner.
 
 ### Länsstyrelsernas diarier
 
