@@ -41,10 +41,10 @@ Status i registret är en riskklassning för projektet, inte ett bindande juridi
 | Lantmäteriet – avgiftsbelagd fastighets-/geodata | Röd före avtal | Kommersiell vidareförädling och återförsäljning kan kräva särskilt avtal |
 | Lantmäteriet – NGP | Villkorad grön | Konsumentvillkor måste accepteras; kontrollera producent, dataset och personuppgifter |
 | SMHI – öppna data | Grön med attribution | CC BY 4.0 SE; ange källa och ändringar; använd dokumenterade tjänster och undvik onödig belastning |
-| Copernicus Sentinel | Villkorad grön | Fri och öppen datapolicy; kontrollera aktuell attribution, produkt-/komponentvillkor och Data Space-villkor |
+| Copernicus Sentinel | Villkorad grön | Sentinel-data får reproduceras, distribueras och bearbetas; annat portalinnehåll har separata villkor |
 | Länsstyrelsernas diarier | Gul, per handling | Offentlig handling är inte automatiskt fri att återpublicera; sekretess, GDPR och tredje mans rättigheter |
-| Naturvårdsverket | Gul tills produkt verifierats | Licens och villkor måste kontrolleras per dataset |
-| SGU | Gul tills produkt verifierats | Licens och villkor måste kontrolleras per produkt |
+| Naturvårdsverket – listade öppna data | Villkorad grön | Öppna data får användas fritt; kontrollera informationsansvarig och tredjepartsrättigheter |
+| SGU – geologiska data | Grön | CC0 sedan 9 juni 2024; bilder, illustrationer och annat webbmaterial kan ha separata villkor |
 | Sakfråga | Gul, avtalsgranskning | API-åtkomst fastställer inte automatiskt rätt att återanvända bilagor eller dokument kommersiellt |
 | Sveaskog / SCA | Röd utan skriftligt tillstånd | Privata företagsdata ska inte behandlas som öppna data |
 
@@ -73,6 +73,27 @@ Lantmäteriets uttryckligen listade öppna geodata är CC0 och får användas ko
 SMHI:s öppna data omfattas av CC BY 4.0 SE. Kommersiell användning och bearbetning är tillåten, men SMHI ska anges som källa och ändringar ska anges. SMHI anger också att dokumenterade API:er ska användas och att onödig masshämtning och upprepade anrop ska undvikas. Konsekvensbaserade vädervarningar och meddelanden har separata villkor: de får användas kommersiellt men får inte ändras.
 
 - Villkor: https://www.smhi.se/data/om-smhis-data/villkor-for-anvandning
+
+### Naturvårdsverket
+
+Naturvårdsverket har en katalog över öppna miljö- och geodata. Öppna data får användas fritt, men när informationsansvaret ligger hos en annan organisation – exempelvis länsstyrelse, kommun eller vattenvårdsförbund – måste den organisationens rättigheter kontrolleras. Utgå därför från datasetets producent och metadata, inte enbart från att det finns i Naturvårdsverkets katalog.
+
+- Öppna data: https://www.naturvardsverket.se/verktyg-och-tjanster/data-databaser-och-sokregister/tillgangliggorande-av-oppna-data/
+- Datakatalog: https://oppnadata.naturvardsverket.se/
+
+### SGU
+
+SGU anger att samtliga geologiska data som myndigheten tillhandahåller är öppna data under CC0 sedan den 9 juni 2024. Detta omfattar kommersiell användning, bearbetning och återanvändning. Skilj dock geologiska dataprodukter från webbplatsens bilder, illustrationer, filmer och annat material som kan ha separata villkor.
+
+- Licensvillkor: https://www.sgu.se/produkter-och-tjanster/geologiska-data/om-geologiska-data/licensvillkor/
+- Upphovsrätt och material: https://www.sgu.se/produkter-och-tjanster/kundservice/upphovsratt-for-sgus-produkter-och-material/
+
+### Copernicus Sentinel
+
+EU:s rättsliga meddelande för Sentinel-data tillåter fri och öppen användning, inklusive reproduktion, distribution, kommunikation till allmänheten, bearbetning och kombination med andra data, så länge användningen är laglig. Det finns begränsningar bland annat för säkerhet, tredje mans rättigheter och risk för störning av tjänster. Copernicus Data Space Ecosystem skiljer uttryckligen mellan Sentinel-data och annat innehåll på portalen; det senare kan vara begränsat till icke-kommersiell användning. Använd därför Sentinel-data via den relevanta datalicensen och återanvänd inte portalens övriga material under samma antagande.
+
+- Sentinel legal notice: https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice
+- Data Space terms: https://dataspace.copernicus.eu/terms-and-conditions
 
 ### Länsstyrelsernas diarier
 
