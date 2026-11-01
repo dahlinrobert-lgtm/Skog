@@ -69,7 +69,7 @@ class DiaryPaginationSafetyTests(unittest.TestCase):
     def test_webforms_javascript_postback_href_is_parsed(self):
         href = "javascript:__doPostBack('ctl00$SearchPlaceHolder$caseGridView','Page$2')"
         match = re.search(
-            r"__doPostBack\\(['\\"]([^'\\"]+)['\\"]\\s*,\\s*['\\"]([^'\\"]*)['\\"]\\)",
+            r"""__doPostBack\(['"]([^'"]+)['"]\s*,\s*['"]([^'"]*)['"]\)""",
             href,
         )
         self.assertIsNotNone(match)
@@ -81,7 +81,7 @@ class DiaryPaginationSafetyTests(unittest.TestCase):
     def test_webforms_page_three_postback_is_parsed(self):
         href = "javascript:__doPostBack('ctl00$SearchPlaceHolder$caseGridView','Page$3')"
         match = re.search(
-            r"__doPostBack\\(['\\"]([^'\\"]+)['\\"]\\s*,\\s*['\\"]([^'\\"]*)['\\"]\\)",
+            r"""__doPostBack\(['"]([^'"]+)['"]\s*,\s*['"]([^'"]*)['"]\)""",
             href,
         )
         self.assertIsNotNone(match)
