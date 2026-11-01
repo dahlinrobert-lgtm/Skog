@@ -341,6 +341,134 @@ sources:
     notes:
       - "Treat as a commercial data-provider relationship, not a public open-data source."
 
+
+  - source_id: skogsstyrelsen.burned_areas
+    name: "Skogsstyrelsen – brandområden"
+    source_type: vector_observations
+    provider: Skogsstyrelsen
+    access_method: arcgis_rest
+    connector: skogsstyrelsen_burn_archive
+    status: existing
+    cadence: daily
+    geography: Sweden
+    format: [GeoJSON]
+    rights:
+      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
+      review_status: conditional_green
+      commercial_use: yes_if_layer_is_covered_by_geodata_terms
+      historical_storage: yes_if_layer_is_covered_by_geodata_terms
+      derivatives: yes_if_layer_is_covered_by_geodata_terms
+      redistribution: yes_if_layer_is_covered_by_geodata_terms
+      attribution: "Recommended: Skogsstyrelsen, layer name and retrieval date."
+      api_or_service_constraints: "Respect ArcGIS service limits and bounded query patterns."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Confirm layer metadata and whether any source attributes originate from third parties. Burn polygons are source observations, not a verified complete fire register."
+    notes:
+      - "Layer: GeodataportalVisaBrand/MapServer/0."
+      - "Archive current source records and changes; retain the distinction between burn year, burn date and retrieval date."
+
+  - source_id: skogsstyrelsen.rewetting_agreements
+    name: "Skogsstyrelsen – återvätningsavtal"
+    source_type: vector_observations
+    provider: Skogsstyrelsen
+    access_method: arcgis_rest
+    connector: skogsstyrelsen_rewetting_archive
+    status: existing
+    cadence: daily
+    geography: Sweden
+    format: [GeoJSON]
+    rights:
+      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
+      review_status: conditional_green
+      commercial_use: yes_if_layer_is_covered_by_geodata_terms
+      historical_storage: yes_if_layer_is_covered_by_geodata_terms
+      derivatives: yes_if_layer_is_covered_by_geodata_terms
+      redistribution: yes_if_layer_is_covered_by_geodata_terms
+      attribution: "Recommended: Skogsstyrelsen, layer name and retrieval date."
+      api_or_service_constraints: "Respect ArcGIS service limits and bounded query patterns."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Confirm exact layer metadata and product description. A signed rewetting agreement polygon is not proof that physical ditch blocking has been completed."
+    notes:
+      - "Layer: GeodataportalVisaAtervatningavtal/MapServer/0."
+      - "The source product description and actual returned geographic coverage must both be retained."
+
+  - source_id: lansstyrelsen.lifetaiga_actions
+    name: "Life2Taiga – naturvårdsåtgärder"
+    source_type: vector_observations
+    provider: Länsstyrelsen_or_project_partners
+    access_method: arcgis_rest
+    connector: lifetaiga_nature_actions
+    status: existing
+    cadence: to_be_verified
+    geography: Sweden_project_areas
+    format: [GeoJSON]
+    rights:
+      licence: unknown
+      review_status: amber_rights_owner_and_project_terms
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed with data owner/project terms."
+      api_or_service_constraints: "Hosted ArcGIS service is not itself a reuse licence. Identify the data producer, project agreement and layer metadata."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Do not infer reuse rights from public accessibility or from the fact that the service is hosted by a county administrative board."
+    notes:
+      - "Layer currently used: Hosted/Life2Taiga_v3_Extern/FeatureServer/13."
+      - "Keep source events distinct from diary-derived events; do not assume geometries prove completed actions."
+
+  - source_id: skogsdatalabbet.torvkarta
+    name: "Skogsdatalabbet – Torvkarta 1.0"
+    source_type: raster_service
+    provider: to_be_verified
+    access_method: arcgis_image_server
+    connector: geodata_timeline
+    status: pilot
+    cadence: weekly
+    geography: Sweden
+    format: [ImageServer]
+    rights:
+      licence: unknown_pending_producer_and_product_terms
+      review_status: amber_no_national_scaling_before_rights_check
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed from service metadata and product owner."
+      api_or_service_constraints: "Probe exportImage dimensions, quotas, cache/version metadata and permitted sampling/download scope."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Service is hosted under Skogsstyrelsen's geodata domain, but hosting alone does not establish who produced the dataset or its reuse terms."
+    notes:
+      - "Service: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/Torvkarta_1_0/ImageServer."
+      - "Current workflow samples a fixed 1 km window; do not scale nationally before licence, service and storage checks."
+
+  - source_id: skogsdatalabbet.sis
+    name: "Skogsdatalabbet – SIS 1.0"
+    source_type: raster_service
+    provider: to_be_verified
+    access_method: arcgis_image_server
+    connector: geodata_timeline
+    status: pilot
+    cadence: weekly
+    geography: Sweden
+    format: [ImageServer]
+    rights:
+      licence: unknown_pending_producer_and_product_terms
+      review_status: amber_no_national_scaling_before_rights_check
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed from service metadata and product owner."
+      api_or_service_constraints: "Probe exportImage dimensions, quotas, cache/version metadata and permitted sampling/download scope."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Service is hosted under Skogsstyrelsen's geodata domain, but hosting alone does not establish who produced the dataset or its reuse terms."
+    notes:
+      - "Service: https://geodata.skogsstyrelsen.se/arcgis/rest/services/Skogsdatalabbet/SIS_1_0/ImageServer."
+      - "Current workflow samples a fixed 1 km window; do not scale nationally before licence, service and storage checks."
+
   - source_id: sca.data
     name: "SCA – företagsdata och geodata"
     source_type: private_enterprise_data
