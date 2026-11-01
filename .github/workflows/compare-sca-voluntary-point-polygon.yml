@@ -1,0 +1,32 @@
+name: Compare SCA voluntary point and polygon representations
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/compare_sca_voluntary_point_polygon.py"
+      - ".github/workflows/compare-sca-voluntary-point-polygon.yml"
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT and geometry libraries
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3"
+      - name: Compile comparison script
+        run: python -m py_compile scripts/compare_sca_voluntary_point_polygon.py
+      - name: Compare bounded point and polygon tiles
+        run: python scripts/compare_sca_voluntary_point_polygon.py
+      - name: Validate JSON
+        run: python -m json.tool sca-voluntary-point-polygon-correspondence.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-voluntary-point-polygon-correspondence
+          path: sca-voluntary-point-polygon-correspondence.json
+          if-no-files-found: error
+          retention-days: 30
