@@ -52,6 +52,32 @@ def request_json(url: str, params: dict, retries: int = 4) -> dict:
     raise RuntimeError(f"Request failed after {retries} attempts: {last_error}")
 
 
+
+def request_post_json(url: str, params: dict, retries: int = 4) -> dict:
+    data = urllib.parse.urlencode(params).encode("utf-8")
+    last_error = None
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(
+                url,
+                data=data,
+                headers={
+                    "User-Agent": "Skogskoll-data-collector/1.0",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=90) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+            if "error" in payload:
+                raise RuntimeError(f"ArcGIS error: {payload['error']}")
+            return payload
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, RuntimeError) as exc:
+            last_error = exc
+            if attempt + 1 < retries:
+                time.sleep(2 ** attempt)
+    raise RuntimeError(f"POST request failed after {retries} attempts: {last_error}")
+
 def canonical_hash(value: dict) -> str:
     raw = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
