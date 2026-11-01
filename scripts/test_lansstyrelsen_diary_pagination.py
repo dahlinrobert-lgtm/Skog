@@ -17,14 +17,10 @@ def parse_total(text):
 
 
 def is_forward_page_argument(argument, current_page, label=""):
-    label = label.casefold()
-    return (
-        "page$" in argument.casefold()
-        or (argument.isdigit() and int(argument) > current_page)
-        or label in {"...", "…", ">", "»", "›", ">>", "»»"}
-        or "next" in label
-        or "nästa" in label
-    )
+    page_match = re.fullmatch(r"Page\$(\d+)", argument, re.I)
+    if page_match:
+        return int(page_match.group(1)) > current_page
+    return argument.isdigit() and int(argument) > current_page
 
 
 def parse_search_terms(primary, extras=""):
