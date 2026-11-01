@@ -137,7 +137,7 @@ def main() -> None:
         "tile_requests_made": 0,
     }
     Path("sca-voluntary-grid-config-audit.json").write_text(
-        json.dumps(output, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8"
+        json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     print(json.dumps(output, ensure_ascii=False, indent=2))
 
