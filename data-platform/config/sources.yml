@@ -1,12 +1,15 @@
-# Initial registry for the forest-specific data platform.
-# Descriptive configuration only: connectors/workflows are not enabled by this file.
-# Never put credentials, refresh tokens, or personal OneDrive item IDs here.
+# Source and rights register for the forest-specific data platform.
+# Descriptive control register only: entries do not enable connectors or grant rights.
+# Never put credentials, refresh tokens, API keys or personal OneDrive item IDs here.
+# Rights are assessed per product/dataset, not merely per provider.
 
-schema_version: 1
+schema_version: 2
+registry_checked_on: "2026-11-01"
+default_rule: "No commercial redistribution until the exact dataset, licence/version and API terms have been checked."
 
 sources:
   - source_id: skogsstyrelsen.volume.omdrev3
-    name: Skogsstyrelsen – Skogliga grunddata, volym omdrev 3
+    name: "Skogsstyrelsen – Skogliga grunddata, volym omdrev 3"
     source_type: raster
     provider: Skogsstyrelsen
     access_method: file_download
@@ -14,36 +17,29 @@ sources:
     status: pilot
     cadence: on_demand
     geography: Sweden
-    format:
-      - GeoTIFF
-      - ZIP
+    format: [GeoTIFF, ZIP]
     expected_crs: EPSG:3006
     expected_units: m3sk/ha
+    rights:
+      licence: "CC0 1.0 as default for Skogsstyrelsen-produced geodata, unless product metadata says otherwise"
+      licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
+      review_status: conditional_green
+      commercial_use: yes_if_product_is_covered_by_default_geodata_terms
+      historical_storage: yes_if_product_is_covered_by_default_geodata_terms
+      derivatives: yes_if_product_is_covered_by_default_geodata_terms
+      redistribution: yes_if_product_is_covered_by_default_geodata_terms
+      attribution: "Not required under CC0; recommended: Skogsstyrelsen, product name, source version/acquisition date."
+      api_or_service_constraints: "Download and service availability are separate from the licence; confirm the specific product's delivery terms."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Confirm the exact Omdrev 3 asset/product metadata and any product-specific conditions before commercial publication."
     notes:
       - Original archives are retained unchanged.
       - Zero is a valid value; NoData is tracked separately.
       - Verify product version, acquisition date and coverage for every asset.
-      - OneDrive authentication is handled by the existing server-side workflow secrets.
-
-  - source_id: sakfraga.decisions
-    name: Sakfråga – municipal decisions
-    source_type: decision_api
-    provider: Sakfråga
-    access_method: rest_api
-    connector: sakfraga_api
-    status: pilot
-    cadence: daily
-    geography: Sweden
-    format:
-      - JSON
-    notes:
-      - Search endpoint is title-oriented and keyword results are discovery candidates.
-      - Meeting-list q filtering is not decision-text search.
-      - Respect API pagination and tested request limits; do not assume limit 100 works.
-      - Keep meeting, decision and document identifiers distinct.
+      - OneDrive authentication is handled by existing server-side workflow secrets.
 
   - source_id: skogsstyrelsen.harvest_notifications
-    name: Skogsstyrelsen – avverkningsanmälningar
+    name: "Skogsstyrelsen – avverkningsanmälningar"
     source_type: vector_observations
     provider: Skogsstyrelsen
     access_method: arcgis_rest
@@ -51,14 +47,77 @@ sources:
     status: existing
     cadence: every_6_hours
     geography: Sweden
-    format:
-      - GeoJSON
+    format: [GeoJSON]
+    rights:
+      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
+      review_status: conditional_green
+      commercial_use: yes_if_source_layer_is_covered_by_geodata_terms
+      historical_storage: yes_if_source_layer_is_covered_by_geodata_terms
+      derivatives: yes_if_source_layer_is_covered_by_geodata_terms
+      redistribution: yes_if_source_layer_is_covered_by_geodata_terms
+      attribution: "Recommended: Skogsstyrelsen and layer/product name."
+      api_or_service_constraints: "Respect documented service behavior, pagination and reasonable request rates; technical access is not an uptime guarantee."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Verify the exact ArcGIS layer metadata and any layer-specific notices. Do not treat notifications as proof that felling occurred."
     notes:
       - Existing Skogskoll ingestion core and Supabase persistence are authoritative for alert workflow.
-      - Do not duplicate or replace the existing scan/session safety logic.
+      - Do not duplicate or replace existing scan/session safety logic.
+
+  - source_id: skogsstyrelsen.statistics
+    name: "Skogsstyrelsen – statistikdatabasen"
+    source_type: statistics
+    provider: Skogsstyrelsen
+    access_method: statistics_api
+    connector: to_be_implemented
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [JSON, CSV]
+    rights:
+      licence: "CC0 for data in the statistics database"
+      licence_url: "https://skogsstyrelse.se/statistik/bra-att-veta-om-statistiken/anvandningsvillkor/"
+      review_status: green_for_statistics_data
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required for CC0 statistical data; recommended to cite Skogsstyrelsen and retrieval date."
+      api_or_service_constraints: "API may be used without special permission according to published terms; re-check query/API documentation."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Reports, analyses and documents are CC BY, while photographs and illustrations are not covered by the free statistics-data permission. Keep these asset types separate."
+    notes:
+      - "Do not apply the statistics database licence to reports, images or other site content."
+
+  - source_id: sakfraga.decisions
+    name: "Sakfråga – municipal decisions"
+    source_type: decision_api
+    provider: Sakfråga
+    access_method: rest_api
+    connector: sakfraga_api
+    status: pilot
+    cadence: daily
+    geography: Sweden
+    format: [JSON]
+    rights:
+      licence: unknown
+      review_status: amber_contract_review
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed in API terms/contract."
+      api_or_service_constraints: "Review API terms, rate limits, retention and downstream-use provisions."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Access to decision metadata through a service does not itself establish rights to commercially reuse all indexed documents or third-party attachments."
+    notes:
+      - Search endpoint is title-oriented and keyword results are discovery candidates.
+      - Meeting-list q filtering is not decision-text search.
+      - Respect API pagination and tested request limits; do not assume limit 100 works.
+      - Keep meeting, decision and document identifiers distinct.
 
   - source_id: lansstyrelsen.public_diary
-    name: Länsstyrelsen – offentliga diarier
+    name: "Länsstyrelsen – offentliga diarier och ärendehandlingar"
     source_type: authority_cases
     provider: Länsstyrelserna
     access_method: web_search_or_api
@@ -66,14 +125,25 @@ sources:
     status: development
     cadence: daily
     geography: Sweden
-    format:
-      - JSON
+    format: [JSON, HTML, PDF]
+    rights:
+      licence: not_a_single_open_dataset_licence
+      review_status: amber_record_by_record
+      commercial_use: conditional
+      historical_storage: conditional
+      derivatives: conditional
+      redistribution: conditional
+      attribution: "Record authority, case/document identifier, URL and retrieval date."
+      api_or_service_constraints: "Public access to a record is not a blanket reuse licence. Check secrecy, personal data, copyright and third-party rights per document."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Apply public-access and reuse analysis to each record/document. Do not infer that all material in a public diary is unrestricted open data."
     notes:
       - Coverage and search behavior vary by county.
       - A zero-result response is not evidence that no relevant cases exist.
+      - Separate metadata, authority-authored decisions, maps, photographs and third-party attachments.
 
   - source_id: naturvardsverket.protected_areas
-    name: Naturvårdsverket – skyddade områden
+    name: "Naturvårdsverket – skyddade områden"
     source_type: vector_reference
     provider: Naturvårdsverket
     access_method: to_be_verified
@@ -81,13 +151,48 @@ sources:
     status: planned
     cadence: to_be_verified
     geography: Sweden
-    format:
-      - to_be_verified
+    format: [to_be_verified]
+    rights:
+      licence: unknown_per_dataset
+      review_status: amber_pending_product_check
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed per dataset."
+      api_or_service_constraints: "Identify the authoritative service and inspect dataset metadata and service terms."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Do not assume one licence covers all Naturvårdsverket datasets, map services and attached documents."
     notes:
       - Confirm service, licence, update frequency and stable identifiers before implementation.
 
+  - source_id: lantmateriet.open_data
+    name: "Lantmäteriet – uttryckligen publicerade öppna geodata"
+    source_type: geospatial_reference
+    provider: Lantmäteriet
+    access_method: open_data_download_or_service
+    connector: to_be_implemented
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [to_be_verified]
+    rights:
+      licence: "CC0 for products explicitly listed as open data"
+      licence_url: "https://www.lantmateriet.se/sv/geodata/vara-produkter/avgiftsfria-produkter/oppna-data/"
+      review_status: green_only_for_listed_open_products
+      commercial_use: yes_for_listed_open_products
+      historical_storage: yes_for_listed_open_products
+      derivatives: yes_for_listed_open_products
+      redistribution: yes_for_listed_open_products
+      attribution: "Not required under CC0; recommended to name Lantmäteriet and product."
+      api_or_service_constraints: "Use only products explicitly listed as open data; check product metadata and service conditions."
+      evidence_checked_on: "2026-11-01"
+      caveat: "This entry does not include all Lantmäteriet products or all property/land-register information."
+    notes:
+      - "Register each product separately before ingestion."
+
   - source_id: lantmateriet.property_reference
-    name: Lantmäteriet – fastighetsreferenser
+    name: "Lantmäteriet – fastighetsinformation och avgiftsbelagda geodata"
     source_type: cadastral_reference
     provider: Lantmäteriet
     access_method: licensed_service
@@ -95,7 +200,166 @@ sources:
     status: planned
     cadence: to_be_verified
     geography: Sweden
-    format:
-      - to_be_verified
+    format: [to_be_verified]
+    rights:
+      licence: "Product-specific commercial licence/contract; not presumed open"
+      licence_url: "https://www.lantmateriet.se/sv/geodata/vara-produkter/Villkor-och-avgifter/"
+      review_status: red_no_ingestion_without_contract_check
+      commercial_use: only_under_applicable_product_terms
+      historical_storage: only_if_contract_allows
+      derivatives: only_under_applicable_product_terms
+      redistribution: "Requires applicable resale/redistribution rights; commercial end-user terms alone are not sufficient."
+      attribution: "As specified in product and contract terms."
+      api_or_service_constraints: "Confirm commercial further-processing/reseller agreement where data is incorporated into products sold to customers."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Do not use paid property data in a customer-facing product until written rights and scope are confirmed."
     notes:
-      - Confirm product terms and commercial use rights before ingestion or redistribution.
+      - "Keep distinct from the CC0 open-data product catalogue."
+
+  - source_id: lantmateriet.ngp
+    name: "Lantmäteriet – Nationella geodataplattformen (NGP)"
+    source_type: geospatial_reference
+    provider: Lantmäteriet_and_connected_producers
+    access_method: ngp
+    connector: to_be_implemented
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [dataset_specific]
+    rights:
+      licence: "Open licence corresponding to CC0/PDM for datasets delivered through NGP, subject to NGP use terms"
+      licence_url: "https://www.lantmateriet.se/sv/nationella-geodataplattformen/om-ngp/avtal-och-villkor/"
+      review_status: conditional_green_after_accepting_terms
+      commercial_use: yes_subject_to_dataset_and_ngp_terms
+      historical_storage: yes_subject_to_dataset_and_ngp_terms
+      derivatives: yes_subject_to_dataset_and_ngp_terms
+      redistribution: yes_subject_to_dataset_and_ngp_terms
+      attribution: "Follow dataset metadata and applicable terms."
+      api_or_service_constraints: "Consumer must accept NGP terms; NGP consumer use is restricted for users outside EU/EEA. Check personal-data flags."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Producer and dataset-specific metadata still need to be captured. Some datasets may contain personal data."
+    notes:
+      - "Record the producer as well as NGP as delivery platform."
+
+  - source_id: smhi.open_data
+    name: "SMHI – öppna data"
+    source_type: weather_climate_hydrology
+    provider: SMHI
+    access_method: documented_api_or_download
+    connector: to_be_implemented
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [JSON, CSV, NetCDF, other_product_specific]
+    rights:
+      licence: "CC BY 4.0 SE for SMHI open data"
+      licence_url: "https://www.smhi.se/data/om-smhis-data/villkor-for-anvandning"
+      review_status: green_with_attribution_and_api_controls
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes_with_attribution
+      attribution: "Credit SMHI as source and state if the material has been modified."
+      api_or_service_constraints: "Use documented APIs/catalogue services only; avoid unnecessary repeated or bulk requests; respect cache guidance and service limits."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Consequence-based warnings/messages have separate terms: commercial use is allowed, but content must not be changed and source must be stated. Register separately if used."
+    notes:
+      - "Capture product-specific metadata, time coverage, units and version."
+      - "Do not treat a successful API response as a service-level availability guarantee."
+
+  - source_id: copernicus.sentinel
+    name: "Copernicus Data Space – Sentinel satellite data"
+    source_type: satellite_imagery
+    provider: European_Union_Copernicus
+    access_method: stac_api
+    connector: copernicus_stac
+    status: existing
+    cadence: daily
+    geography: Europe_and_global
+    format: [SAFE, GeoTIFF, COG, STAC_JSON]
+    rights:
+      licence: "Copernicus Sentinel data policy – free, full and open access, subject to applicable attribution and security restrictions"
+      licence_url: "https://dataspace.copernicus.eu/"
+      review_status: conditional_green
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes_subject_to_data_policy_and_provider_terms
+      attribution: "Use the applicable Copernicus/Sentinel attribution and identify processing/derived products where appropriate."
+      api_or_service_constraints: "Respect Data Space account, fair-use, quotas, download and API terms. Separate data licence from platform access conditions."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Confirm the current legal notice and any third-party component terms for each collection/product before redistribution."
+    notes:
+      - "Keep source scene IDs, acquisition time, publication time, processing baseline and checksums."
+
+  - source_id: sgu.geodata
+    name: "SGU – geologiska data"
+    source_type: geospatial_reference
+    provider: SGU
+    access_method: to_be_verified
+    connector: sgu
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [to_be_verified]
+    rights:
+      licence: unknown_per_product
+      review_status: amber_pending_product_check
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed per product."
+      api_or_service_constraints: "Check the exact product's metadata, licence, download/service terms and any third-party content."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Do not assume all SGU products have identical licence terms."
+    notes:
+      - "Prioritise soil, bedrock, groundwater and mineral-resource products relevant to forest analysis."
+
+  - source_id: sveaskog.data
+    name: "Sveaskog – företagsdata och geodata"
+    source_type: private_enterprise_data
+    provider: Sveaskog
+    access_method: agreement_or_publication_specific
+    connector: none
+    status: external_contact
+    cadence: to_be_verified
+    geography: Sweden
+    format: [to_be_verified]
+    rights:
+      licence: not_assumed_open_data
+      review_status: red_written_permission_required
+      commercial_use: only_if_explicitly_authorised
+      historical_storage: only_if_explicitly_authorised
+      derivatives: only_if_explicitly_authorised
+      redistribution: only_if_explicitly_authorised
+      attribution: "As agreed in writing."
+      api_or_service_constraints: "Obtain written terms covering access, retention, derived products, customer display and onward distribution."
+      evidence_checked_on: "2026-11-01"
+      caveat: "A public-facing map or downloadable file is not by itself permission for commercial reuse."
+    notes:
+      - "Treat as a commercial data-provider relationship, not a public open-data source."
+
+  - source_id: sca.data
+    name: "SCA – företagsdata och geodata"
+    source_type: private_enterprise_data
+    provider: SCA
+    access_method: agreement_or_publication_specific
+    connector: none
+    status: external_contact
+    cadence: to_be_verified
+    geography: Sweden
+    format: [to_be_verified]
+    rights:
+      licence: not_assumed_open_data
+      review_status: red_written_permission_required
+      commercial_use: only_if_explicitly_authorised
+      historical_storage: only_if_explicitly_authorised
+      derivatives: only_if_explicitly_authorised
+      redistribution: only_if_explicitly_authorised
+      attribution: "As agreed in writing."
+      api_or_service_constraints: "Obtain written terms covering access, retention, derived products, customer display and onward distribution."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Do not scrape, archive or republish private operational data based solely on public accessibility."
+    notes:
+      - "Treat as a commercial data-provider relationship, not a public open-data source."
