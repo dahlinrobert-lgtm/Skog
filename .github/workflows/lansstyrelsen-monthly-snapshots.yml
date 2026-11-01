@@ -51,15 +51,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install Python and browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
       - name: Test snapshot, pagination and persistence rules
         env:
           PYTHONPATH: scripts
         run: |
           python -m unittest scripts.test_lansstyrelsen_snapshot_extraction scripts.test_lansstyrelsen_diary_pagination scripts.test_lansstyrelsen_diary_validation scripts.test_lansstyrelsen_snapshot_persistence scripts.test_lansstyrelsen_monthly_snapshot
-      - name: Install browser dependencies
-        run: |
-          python -m pip install playwright
-          python -m playwright install --with-deps chromium
       - name: Resolve target month
         id: setup
         env:
