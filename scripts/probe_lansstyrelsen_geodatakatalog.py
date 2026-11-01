@@ -33,6 +33,14 @@ SEARCH_TERMS = (
     "invasiva arter",
     "ängs- och betesmark",
     "Natura 2000 skötsel",
+    "genomförda åtgärder",
+    "utförda åtgärder",
+    "restaureringsåtgärder",
+    "skötselåtgärder",
+    "naturvårdsinsatser",
+    "åtgärdade träd",
+    "frihuggning",
+    "naturvårdande åtgärder",
 )
 
 
