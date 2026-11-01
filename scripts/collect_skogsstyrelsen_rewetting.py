@@ -167,20 +167,29 @@ def fetch_features(layer_url: str, batch_size: int, delay: float) -> tuple[dict,
     return metadata, features, endpoint
 
 
+def feature_key(feature: dict) -> str:
+    attrs = feature.get("attributes") or {}
+    value = attrs.get("Uuid")
+    if not value:
+        raise RuntimeError("Feature missing stable source UUID")
+    return str(value).strip().strip("{}").lower()
+
+
 def detect_changes(previous: dict, features: list[dict], observed_at: str) -> list[dict]:
-    old = {
-        int(item["attributes"]["OBJECTID"]): item
-        for item in previous.get("features", [])
-    }
-    new = {int(item["attributes"]["OBJECTID"]): item for item in features}
+    old = {feature_key(item): item for item in previous.get("features", [])}
+    new = {feature_key(item): item for item in features}
+    if len(old) != len(previous.get("features", [])) or len(new) != len(features):
+        raise RuntimeError("Duplicate UUID detected in source snapshot")
     changes = []
-    for oid, feature in new.items():
-        if oid not in old:
-            changes.append({"observed_at": observed_at, "change": "added", "object_id": oid, "feature": feature})
-        elif canonical_hash(feature) != canonical_hash(old[oid]):
-            changes.append({"observed_at": observed_at, "change": "updated", "object_id": oid, "feature": feature})
-    for oid in sorted(set(old) - set(new)):
-        changes.append({"observed_at": observed_at, "change": "removed_from_source", "object_id": oid})
+    for source_id, feature in new.items():
+        object_id = (feature.get("attributes") or {}).get("OBJECTID")
+        if source_id not in old:
+            changes.append({"observed_at": observed_at, "change": "added", "source_uuid": source_id, "object_id": object_id, "feature": feature})
+        elif canonical_hash(feature) != canonical_hash(old[source_id]):
+            changes.append({"observed_at": observed_at, "change": "updated", "source_uuid": source_id, "object_id": object_id, "feature": feature})
+    for source_id in sorted(set(old) - set(new)):
+        object_id = (old[source_id].get("attributes") or {}).get("OBJECTID")
+        changes.append({"observed_at": observed_at, "change": "removed_from_source", "source_uuid": source_id, "object_id": object_id})
     return changes
 
 
@@ -213,6 +222,7 @@ def main() -> int:
         "layer_name": metadata.get("name"),
         "service_description": metadata.get("description"),
         "spatial_reference": 3006,
+        "source_extent": metadata.get("extent"),
         "observed_at": observed_at,
         "feature_count": len(features),
         "features": features,
@@ -230,6 +240,7 @@ def main() -> int:
         "source": LAYER_URL,
         "query_endpoint": endpoint,
         "layer_name": metadata.get("name"),
+        "source_extent": metadata.get("extent"),
         "expected_feature_count": len(features),
         "returned_feature_count": len(features),
         "baseline_created": baseline_created,
