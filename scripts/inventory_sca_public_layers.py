@@ -98,7 +98,7 @@ def main() -> None:
         "feature_data_downloaded": False,
     }
     Path("sca-public-layer-inventory.json").write_text(
-        json.dumps(output, ensure_ascii=False, indent=2) + "\\n",
+        json.dumps(output, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     print(json.dumps(output, ensure_ascii=False, indent=2))
