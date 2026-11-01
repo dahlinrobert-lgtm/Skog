@@ -307,11 +307,13 @@ def main() -> None:
                         # reports more records than have been extracted, inspect
                         # the server-side pager before accepting completion.
                         pager = page.locator(
-                            "#SearchPlaceHolder_caseGridView tr:last-child"
-                        )
+                            "#SearchPlaceHolder_caseGridView tr"
+                        ).last
                         pager_text = clean(pager.inner_text()) if pager.count() else ""
+                        # Some portal versions render the pager outside the
+                        # GridView, so inspect the whole document as well.
                         numeric_links = page.locator(
-                            "#SearchPlaceHolder_caseGridView a"
+                            "a, input, button, [role='button']"
                         )
                         for i in range(numeric_links.count()):
                             c = numeric_links.nth(i)
@@ -362,20 +364,24 @@ def main() -> None:
                                 nxt.click(timeout=10000)
                         except PlaywrightTimeoutError:
                             nxt.click(timeout=5000, force=True)
-                    page.wait_for_function(
-                        """({selector, previous}) => {
-                            const grid = document.querySelector(selector);
-                            if (!grid) return false;
-                            const ids = Array.from(grid.querySelectorAll('tr'))
-                              .map(row => (row.innerText || '').match(/\\b\\d{1,6}-\\d{4}\\b/))
-                              .filter(Boolean).map(match => match[0]);
-                            return ids.length > 0 && ids.some(id => !previous.includes(id));
-                        }""",
-                        arg={"selector": RESULT_GRID, "previous": list(seen)},
-                        timeout=20000
-                    )
-                    if len(seen) == before_count:
-                        raise RuntimeError(f"Pagination did not add new diary identifiers after page {page_number}")
+                    try:
+                        page.wait_for_function(
+                            """({selector, previous}) => {
+                                const grid = document.querySelector(selector);
+                                if (!grid) return false;
+                                const ids = Array.from(grid.querySelectorAll('tr'))
+                                  .map(row => (row.innerText || '').match(/\\b\\d{1,6}-\\d{4}\\b/))
+                                  .filter(Boolean).map(match => match[0]);
+                                return ids.length > 0 && ids.some(match => !previous.includes(match[0]));
+                            }""",
+                            arg={"selector": RESULT_GRID, "previous": list(seen)},
+                            timeout=25000
+                        )
+                    except PlaywrightTimeoutError as exc:
+                        raise RuntimeError(
+                            f"Pagination control {label!r} was activated but the result grid did not change "
+                            f"after page {page_number}; current URL={page.url}"
+                        ) from exc
                 else:
                     raise RuntimeError("Safety cap reached after 100 result pages")
 
