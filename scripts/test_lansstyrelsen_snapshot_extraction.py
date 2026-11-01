@@ -29,12 +29,16 @@ class _List:
     @property
     def last(self): return self.items[-1]
 
-class _Grid(_List): pass
-
-class _Page:
+class _Grid:
     def __init__(self, rows): self.rows=rows
     def locator(self, selector):
-        if selector == "#SearchPlaceHolder_caseGridView": return _Grid(self.rows)
+        if selector == "tr": return _List(self.rows)
+        raise AssertionError(selector)
+
+class _Page:
+    def __init__(self, rows): self.grid=_Grid(rows)
+    def locator(self, selector):
+        if selector == "#SearchPlaceHolder_caseGridView": return self.grid
         raise AssertionError(selector)
 
 class SnapshotGridExtractionTests(unittest.TestCase):
