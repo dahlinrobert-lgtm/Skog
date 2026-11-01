@@ -31,7 +31,6 @@ class TestTimeline(unittest.TestCase):
   self.assertEqual(result["comparison_status"],"incomparable_shape")
  def test_single_band_is_normalized(self):
   self.assertEqual(band_arrays(np.zeros((3,4))).shape,(3,4,1))
-if __name__=="__main__": unittest.main()
 
 
  def test_identical_arrays_have_zero_changed_pixels(self):
@@ -52,3 +51,7 @@ if __name__=="__main__": unittest.main()
   b=np.zeros((4,3),dtype=np.uint8)
   result=compare_arrays(a,b,[0,0,3,4])
   self.assertEqual(result["comparison_status"],"incomparable_shape")
+
+
+if __name__ == "__main__":
+ unittest.main()
