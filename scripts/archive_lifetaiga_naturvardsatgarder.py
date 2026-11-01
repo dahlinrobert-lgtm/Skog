@@ -70,9 +70,20 @@ def canonical_hash(value: dict) -> str:
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
+def attribute_value(attrs: dict, name: str):
+    """Read an ArcGIS attribute without assuming field-name casing."""
+    if name in attrs:
+        return attrs[name]
+    lowered = name.lower()
+    for key, value in attrs.items():
+        if str(key).lower() == lowered:
+            return value
+    return None
+
+
 def stable_key(feature: dict) -> str:
     attrs = feature.get("attributes") or {}
-    value = attrs.get("globalid") or attrs.get("GlobalID")
+    value = attribute_value(attrs, "globalid")
     if not value:
         raise RuntimeError("Feature missing stable GlobalID; refusing to build unreliable history")
     return str(value).strip().strip("{}").lower()
@@ -130,9 +141,17 @@ def fetch_features(layer_url: str = LAYER_URL, *, batch_size: int = 250, delay: 
             raise RuntimeError(f"Transfer limit exceeded at object-ID offset {offset}")
         for feature in batch_features:
             attrs = feature.get("attributes") or {}
-            oid = attrs.get(oid_field)
-            if oid is None or not isinstance(feature.get("geometry"), dict):
-                raise RuntimeError("Feature missing object ID or polygon geometry")
+            oid = attribute_value(attrs, oid_field)
+            if oid is None:
+                raise RuntimeError(
+                    f"Feature missing object ID field {oid_field!r}; "
+                    f"returned attribute keys={sorted(attrs)}"
+                )
+            if not isinstance(feature.get("geometry"), dict):
+                raise RuntimeError(
+                    f"Feature {oid} has no polygon geometry; "
+                    f"geometry value={feature.get('geometry')!r}"
+                )
             returned.add(int(oid))
             features.append(feature)
         if delay:
@@ -159,14 +178,14 @@ def detect_changes(previous: dict, features: list[dict], observed_at: str) -> li
     changes = []
     for key, feature in new.items():
         attrs = feature.get("attributes") or {}
-        oid = attrs.get("objectid", attrs.get("OBJECTID"))
+        oid = attribute_value(attrs, "objectid")
         if key not in old:
             changes.append({"observed_at": observed_at, "change": "added", "source_globalid": key, "object_id": oid, "feature": feature})
         elif canonical_hash(feature) != canonical_hash(old[key]):
             changes.append({"observed_at": observed_at, "change": "updated", "source_globalid": key, "object_id": oid, "feature": feature})
     for key in sorted(set(old) - set(new)):
         attrs = old[key].get("attributes") or {}
-        oid = attrs.get("objectid", attrs.get("OBJECTID"))
+        oid = attribute_value(attrs, "objectid")
         changes.append({"observed_at": observed_at, "change": "removed_from_source", "source_globalid": key, "object_id": oid})
     return changes
 
