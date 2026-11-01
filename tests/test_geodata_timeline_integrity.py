@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from scripts.geodata_timeline import compare_arrays
+from scripts.geodata_timeline import compare_arrays, pixel_hash
 
 class TestTimelineIntegrity(unittest.TestCase):
     def test_identical_arrays_have_zero_changed_pixels(self):
