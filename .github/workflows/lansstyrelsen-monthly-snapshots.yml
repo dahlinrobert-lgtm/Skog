@@ -16,12 +16,12 @@ on:
       county_scope:
         description: County coverage
         required: true
-        default: both
+        default: norrbotten
         type: choice
         options:
-          - both
           - norrbotten
           - vasterbotten
+          - both
       category:
         description: Search category
         required: true
@@ -31,8 +31,6 @@ on:
           - A
           - B
           - both
-  schedule:
-    - cron: "20 3 1 * *"
 
 permissions:
   contents: write
@@ -59,38 +57,26 @@ jobs:
         run: |
           python -m pip install playwright
           python -m playwright install --with-deps chromium
-      - name: Define monthly query set
+      - name: Resolve target month
         id: setup
         env:
           YEAR_INPUT: ${{ inputs.year }}
           MONTH_INPUT: ${{ inputs.month }}
-          COUNTY_INPUT: ${{ inputs.county_scope }}
-          CATEGORY_INPUT: ${{ inputs.category }}
         run: |
+          set -euo pipefail
           year="$YEAR_INPUT"
           month="$MONTH_INPUT"
-          if [[ -z "$year" ]]; then year="$(date -u +%Y)"; fi
-          if [[ -z "$month" ]]; then month="$(date -u +%m)"; fi
-          python - <<'PY'
-          import os, calendar
-          y=int(os.environ["YEAR_INPUT"] or __import__("datetime").datetime.now().year)
-          m=int(os.environ["MONTH_INPUT"] or __import__("datetime").datetime.now().month)
-          if not 1 <= m <= 12: raise SystemExit("month must be 1-12")
-          if not 1900 <= y <= 2100: raise SystemExit("year outside allowed range")
-          print(f"Validated collection month: {y:04d}-{m:02d}, ending {calendar.monthrange(y,m)[1]:02d}")
+          python - "$year" "$month" <<'PY'
+          import calendar, sys
+          year, month = map(int, sys.argv[1:])
+          if not 1900 <= year <= 2100 or not 1 <= month <= 12:
+              raise SystemExit("Invalid year/month")
+          print(f"Validated period: {year:04d}-{month:02d}-01 to {year:04d}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}")
           PY
-          if [[ "$COUNTY_INPUT" == "norrbotten" ]]; then counties=("Länsstyrelsen i Norrbottens län")
-          elif [[ "$COUNTY_INPUT" == "vasterbotten" ]]; then counties=("Länsstyrelsen i Västerbottens län")
-          else counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län"); fi
-          if [[ "$CATEGORY_INPUT" == "A" ]]; then categories=("A")
-          elif [[ "$CATEGORY_INPUT" == "B" ]]; then categories=("B")
-          else categories=("A" "B"); fi
-          mkdir -p monthly-snapshot-runs
-          printf '%s\n' "${counties[@]}" > monthly-snapshot-runs/counties.txt
-          printf '%s\n' "${categories[@]}" > monthly-snapshot-runs/categories.txt
           echo "year=$year" >> "$GITHUB_OUTPUT"
           echo "month=$month" >> "$GITHUB_OUTPUT"
-      - name: Collect configured county/category monthly intervals
+          mkdir -p monthly-snapshot-runs
+      - name: Collect configured county and category intervals
         env:
           PYTHONPATH: scripts
           YEAR: ${{ steps.setup.outputs.year }}
@@ -99,18 +85,26 @@ jobs:
           CATEGORY_INPUT: ${{ inputs.category }}
         run: |
           set -euo pipefail
-          if [[ "$COUNTY_INPUT" == "norrbotten" ]]; then counties=("Länsstyrelsen i Norrbottens län")
-          elif [[ "$COUNTY_INPUT" == "vasterbotten" ]]; then counties=("Länsstyrelsen i Västerbottens län")
-          else counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län"); fi
-          if [[ "$CATEGORY_INPUT" == "A" ]]; then categories=("A")
-          elif [[ "$CATEGORY_INPUT" == "B" ]]; then categories=("B")
-          else categories=("A" "B"); fi
+          case "$COUNTY_INPUT" in
+            norrbotten) counties=("Länsstyrelsen i Norrbottens län") ;;
+            vasterbotten) counties=("Länsstyrelsen i Västerbottens län") ;;
+            both) counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län") ;;
+            *) echo "Invalid county scope" >&2; exit 1 ;;
+          esac
+          case "$CATEGORY_INPUT" in
+            A) categories=("A") ;;
+            B) categories=("B") ;;
+            both) categories=("A" "B") ;;
+            *) echo "Invalid category" >&2; exit 1 ;;
+          esac
           termsA=("skogsbilväg" "vägbyggnad" "ledningsdragning" "schaktning" "utfyllnad" "massupplag")
           termsB=("vattenverksamhet" "markavvattning" "dikesrensning" "trumma" "våtmarksanläggning" "omgrävning av vattendrag")
           for county in "${counties[@]}"; do
-            slug="norrbotten"; [[ "$county" == *Västerbottens* ]] && slug="vasterbotten"
+            slug="norrbotten"
+            [[ "$county" == *Västerbottens* ]] && slug="vasterbotten"
             for category in "${categories[@]}"; do
-              terms=("${termsA[@]}"); [[ "$category" == "B" ]] && terms=("${termsB[@]}")
+              terms=("${termsA[@]}")
+              [[ "$category" == "B" ]] && terms=("${termsB[@]}")
               for i in "${!terms[@]}"; do
                 term="${terms[$i]}"
                 outfile="monthly-snapshot-runs/${slug}-${category}-${i}.json"
@@ -121,7 +115,7 @@ jobs:
               done
             done
           done
-      - name: Validate batch and persist complete query snapshots
+      - name: Validate complete batch and create immutable snapshots
         env:
           PYTHONPATH: scripts
         run: |
@@ -129,62 +123,100 @@ jobs:
           python - <<'PY'
           import glob, json, hashlib, sys
           from pathlib import Path
-          files=sorted(glob.glob("monthly-snapshot-runs/*.json"))
-          if not files: raise SystemExit("No query outputs were produced")
-          loaded=[]
-          failed=[]
+          files = sorted(glob.glob("monthly-snapshot-runs/*.json"))
+          if not files:
+              raise SystemExit("No query outputs were produced")
+          loaded, errors = [], []
           for filename in files:
-              run=json.loads(Path(filename).read_text(encoding="utf-8"))
-              intervals=run.get("intervals",[])
-              if len(intervals)!=1:
-                  failed.append((filename,"expected one month interval")); continue
-              x=intervals[0]
-              ids=[str(r.get("diary_number") or "").strip() for r in x.get("records",[])]
-              ok=(x.get("error") is None and x.get("reconciled") is True
-                  and x.get("pager_complete") is True and x.get("source_total") is not None
-                  and x.get("source_total")==x.get("extracted_unique_ids")
-                  and len(ids)==x.get("extracted_unique_ids") and all(ids)
-                  and len(set(ids))==len(ids))
-              if not ok: failed.append((filename,x.get("error") or "count, records or pager validation failed"))
-              loaded.append((filename,run,x))
-          if failed or len(loaded)!=len(files):
-              print(json.dumps(failed,ensure_ascii=False,indent=2),file=sys.stderr)
-              raise SystemExit("Incomplete batch. No snapshots published.")
-          # The complete monthly batch has passed. Persist immutable snapshots and
-          # manifest entries for each county/phrase run.
-          for filename,run,x in loaded:
-              rows=[]
-              for raw in x["records"]:
-                  row={"run_id":run["run_id"],"observed_at":run["observed_at"],
-                       "county":run["county"],"diary_number":raw["diary_number"],
-                       "search_terms":[run["search_term"]],
-                       "registration_interval":{"from":x["from"],"to":x["to"]},
-                       "source_date":raw.get("date") or raw.get("In/Upp-datum"),
-                       "title":raw.get("title") or raw.get("Ärenderubrik"),
-                       "status":raw.get("status") or raw.get("Status"),
-                       "public_case_url":next((l.get("href") for l in raw.get("links",[]) if isinstance(l,dict) and l.get("href")),None),
-                       "columns":raw}
-                  projection={k:v for k,v in row.items() if k not in {"run_id","observed_at","search_terms","registration_interval"}}
-                  row["content_hash"]=hashlib.sha256(json.dumps(projection,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+              run = json.loads(Path(filename).read_text(encoding="utf-8"))
+              intervals = run.get("intervals") or []
+              if len(intervals) != 1:
+                  errors.append((filename, "expected exactly one interval"))
+                  continue
+              interval = intervals[0]
+              records = interval.get("records")
+              ids = [str(r.get("diary_number") or "").strip() for r in records or []]
+              valid = (
+                  interval.get("error") is None
+                  and interval.get("reconciled") is True
+                  and interval.get("pager_complete") is True
+                  and interval.get("source_total") is not None
+                  and interval.get("source_total") == interval.get("extracted_unique_ids")
+                  and isinstance(records, list)
+                  and len(ids) == interval.get("extracted_unique_ids")
+                  and all(ids)
+                  and len(set(ids)) == len(ids)
+              )
+              if not valid:
+                  errors.append((filename, interval.get("error") or "count/records/pager validation failed"))
+              loaded.append((filename, run, interval))
+          if errors or len(loaded) != len(files):
+              print(json.dumps(errors, ensure_ascii=False, indent=2), file=sys.stderr)
+              raise SystemExit("Incomplete batch. No snapshots will be written or published.")
+          for filename, run, interval in loaded:
+              rows = []
+              for raw in interval["records"]:
+                  row = {
+                      "run_id": run["run_id"],
+                      "observed_at": run["observed_at"],
+                      "county": run["county"],
+                      "diary_number": raw["diary_number"],
+                      "search_terms": [run["search_term"]],
+                      "registration_interval": {"from": interval["from"], "to": interval["to"]},
+                      "source_date": raw.get("date") or raw.get("In/Upp-datum"),
+                      "title": raw.get("title") or raw.get("Ärenderubrik"),
+                      "status": raw.get("status") or raw.get("Status"),
+                      "public_case_url": next(
+                          (link.get("href") for link in raw.get("links", [])
+                           if isinstance(link, dict) and link.get("href")), None
+                      ),
+                      "columns": raw,
+                  }
+                  projection = {
+                      k: v for k, v in row.items()
+                      if k not in {"run_id", "observed_at", "search_terms", "registration_interval"}
+                  }
+                  row["content_hash"] = hashlib.sha256(
+                      json.dumps(projection, ensure_ascii=False, sort_keys=True,
+                                 separators=(",", ":")).encode("utf-8")
+                  ).hexdigest()
                   rows.append(row)
-              target=Path("data/lansstyrelsen-diary/snapshots")/run["observed_at"][:4]/run["observed_at"][5:7]/f"{run['run_id']}.jsonl"
-              target.parent.mkdir(parents=True,exist_ok=True)
-              if target.exists(): raise SystemExit(f"Refusing to overwrite immutable snapshot: {target}")
-              target.write_text("".join(json.dumps(row,ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\\n" for row in rows),encoding="utf-8")
-              manifest={"schema_version":1,"run_id":run["run_id"],"observed_at":run["observed_at"],
-                        "source":run["source"],"county":run["county"],"search_term":run["search_term"],
-                        "interval_count":1,"intervals":[{"from":x["from"],"to":x["to"],
-                        "source_total":x["source_total"],"extracted_unique_ids":x["extracted_unique_ids"],
-                        "pages_read":x["pages_read"],"pager_complete":True,"reconciled":True,
-                        "extracted_records":len(rows)}],"intervals_complete":1,"intervals_failed":0,
-                        "run_complete":True,"snapshot_unique_record_count":len(rows),
-                        "snapshot_written":True,
-                        "snapshot_path":str(target),
-                        "warning":"Absence is not interpreted as source removal; this is an observation of returned public search results."}
-              manifest_path=Path("data/lansstyrelsen-diary/snapshot-runs.jsonl")
-              manifest_path.parent.mkdir(parents=True,exist_ok=True)
-              with manifest_path.open("a",encoding="utf-8") as stream:
-                  stream.write(json.dumps(manifest,ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\\n")
+              snapshot = (
+                  Path("data/lansstyrelsen-diary/snapshots")
+                  / run["observed_at"][:4]
+                  / run["observed_at"][5:7]
+                  / f"{run['run_id']}.jsonl"
+              )
+              snapshot.parent.mkdir(parents=True, exist_ok=True)
+              if snapshot.exists():
+                  raise SystemExit(f"Refusing to overwrite immutable snapshot: {snapshot}")
+              snapshot.write_text(
+                  "".join(json.dumps(row, ensure_ascii=False, sort_keys=True,
+                                     separators=(",", ":")) + "\\n" for row in rows),
+                  encoding="utf-8"
+              )
+              manifest = {
+                  "schema_version": 1, "run_id": run["run_id"],
+                  "observed_at": run["observed_at"], "source": run["source"],
+                  "county": run["county"], "search_term": run["search_term"],
+                  "interval_count": 1,
+                  "intervals": [{
+                      "from": interval["from"], "to": interval["to"],
+                      "source_total": interval["source_total"],
+                      "extracted_unique_ids": interval["extracted_unique_ids"],
+                      "pages_read": interval["pages_read"], "pager_complete": True,
+                      "reconciled": True, "extracted_records": len(rows)
+                  }],
+                  "intervals_complete": 1, "intervals_failed": 0,
+                  "run_complete": True, "snapshot_unique_record_count": len(rows),
+                  "snapshot_written": True, "snapshot_path": str(snapshot),
+                  "warning": "Absence is not interpreted as source removal; this snapshot records returned public search results."
+              }
+              manifest_path = Path("data/lansstyrelsen-diary/snapshot-runs.jsonl")
+              manifest_path.parent.mkdir(parents=True, exist_ok=True)
+              with manifest_path.open("a", encoding="utf-8") as stream:
+                  stream.write(json.dumps(manifest, ensure_ascii=False, sort_keys=True,
+                                          separators=(",", ":")) + "\\n")
           print(f"Persisted {len(loaded)} complete county/phrase snapshots")
       - name: Publish immutable snapshots and manifests
         if: success() && github.ref == 'refs/heads/main'
@@ -214,23 +246,3 @@ jobs:
           path: monthly-snapshot-runs/
           if-no-files-found: warn
           retention-days: 30
-
-        if: success() && github.ref == 'refs/heads/main'
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for attempt in 1 2 3 4 5; do
-            git fetch origin main
-            git reset --hard origin/main
-            git add data/lansstyrelsen-diary/snapshots data/lansstyrelsen-diary/snapshot-runs.jsonl
-            if git diff --cached --quiet; then
-              echo "No complete new snapshots to publish."
-              exit 0
-            fi
-            git commit -m "Archive monthly Länsstyrelsen diary snapshots"
-            if git push origin HEAD:main; then exit 0; fi
-            git reset --hard
-          done
-          echo "Failed to publish snapshots after retries" >&2
-          exit 1
