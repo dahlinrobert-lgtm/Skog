@@ -213,7 +213,8 @@ jobs:
           name: lansstyrelsen-monthly-snapshot-diagnostics
           path: monthly-snapshot-runs/
           if-no-files-found: warn
-          retention-days: 30      - name: Publish immutable snapshots and manifests
+          retention-days: 30
+
         if: success() && github.ref == 'refs/heads/main'
         run: |
           set -euo pipefail
