@@ -29,6 +29,14 @@ class BurnAreaArchiveTests(unittest.TestCase):
         self.assertIn("DatumBrand", module.REQUIRED_FIELDS)
         self.assertIn("ArealHa", module.REQUIRED_FIELDS)
 
+    def test_query_candidates_include_layer_and_service_routes(self):
+        candidates = [
+            module.LAYER_URL + "/query",
+            module.LAYER_URL.rsplit("/0", 1)[0] + "/query",
+        ]
+        self.assertTrue(candidates[0].endswith("/MapServer/0/query"))
+        self.assertTrue(candidates[1].endswith("/MapServer/query"))
+
 
 if __name__ == "__main__":
     unittest.main()
