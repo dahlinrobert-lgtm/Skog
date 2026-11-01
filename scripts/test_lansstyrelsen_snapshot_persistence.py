@@ -42,16 +42,17 @@ class SnapshotPersistenceTests(unittest.TestCase):
             self.assertFalse((root/"snapshots").exists())
             self.assertEqual(len((root/"manifest.jsonl").read_text().splitlines()),1)
 
-    def test_repeated_diary_rows_merge_matching_intervals(self):
+    def test_rejects_duplicate_diary_ids_inside_interval(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp); run=make_run()
             row=run["intervals"][0]["records"][0]
             run["intervals"][0]["records"]=[row,row]
             run["intervals"][0]["source_total"]=1
             run["intervals"][0]["extracted_unique_ids"]=1
-            # A duplicate record is collapsed by its key.
             m=persist(run,root/"snapshots",root/"manifest.jsonl")
-            self.assertEqual(m["snapshot_unique_record_count"],1)
+            self.assertFalse(m["run_complete"])
+            self.assertFalse(m["snapshot_written"])
+            self.assertFalse((root/"snapshots").exists())
 
     def test_snapshot_never_overwrites(self):
         with tempfile.TemporaryDirectory() as tmp:
