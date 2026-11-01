@@ -16,7 +16,7 @@ ZOOMS=[9,11,13]
 def xyz(lon,lat,z):
  n=2**z; x=int((lon+180)/360*n)
  lat=max(-85.05112878,min(85.05112878,lat))
- y=int((1-math.asinh(math.tan(math.radians(lat))/math.pi)/2*n)
+ y=int((1-math.asinh(math.tan(math.radians(lat)))/math.pi)/2*n)
  return x,y
 
 def coord_summary(geometry):
