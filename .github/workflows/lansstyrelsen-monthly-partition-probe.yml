@@ -1,0 +1,31 @@
+name: Probe Länsstyrelsen monthly date partitions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Count monthly registration-date partitions
+        run: python scripts/probe_lansstyrelsen_monthly_partitions.py
+      - name: Upload monthly partition diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-monthly-partition-probe
+          path: lansstyrelsen-monthly-partition-probe.json
+          if-no-files-found: error
+          retention-days: 14
