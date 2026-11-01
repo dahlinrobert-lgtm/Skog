@@ -127,21 +127,36 @@ def main():
    cur["sample_file"]=str(sample_path.relative_to(ROOT))
    if old is None:
     cur.update(change_status="baseline",previous_snapshot_id=None,
-               comparison_status="baseline_only_no_previous_pixel_array")
+               changes=[],comparison_status="baseline_only_no_previous_pixel_array")
    else:
     old_item=old["item"]; changes=[]
-    if cur["metadata_hash"]!=old_item.get("metadata_hash"): changes.append("service_metadata_changed")
-    if cur["pixel_hash"]!=old_item.get("pixel_hash"): changes.append("sample_pixels_changed")
-    cur.update(change_status="changed" if changes else "unchanged",
-               previous_snapshot_id=old["snapshot_id"],changes=changes)
-    if old["sample_path"] is not None:
+    metadata_changed=cur["metadata_hash"]!=old_item.get("metadata_hash")
+    pixel_hash_changed=cur["pixel_hash"]!=old_item.get("pixel_hash")
+    if metadata_changed: changes.append("service_metadata_changed")
+    if pixel_hash_changed: changes.append("sample_pixels_changed")
+    same_grid=(cur["sample_bbox_epsg3006"]==old_item.get("sample_bbox_epsg3006")
+               and cur["array_shape"]==old_item.get("array_shape")
+               and cur["array_dtype"]==old_item.get("array_dtype"))
+    if old["sample_path"] is not None and same_grid:
      with np.load(old["sample_path"],allow_pickle=False) as archive:
       previous_pixels=archive["pixels"]
      cur["pixel_comparison"]=compare_arrays(pixels,previous_pixels,bbox,cur.get("metadata"),old_item.get("metadata"))
-    else:
+    elif old["sample_path"] is None:
      cur["pixel_comparison"]={"comparison_status":"previous_array_unavailable",
-                              "note":"A previous hash exists, but no stored pixel array is available for band-level comparison."}
-    if changes:
+                              "note":"Previous metadata/hash baseline exists but has no stored NPZ array."}
+    else:
+     cur["pixel_comparison"]={"comparison_status":"incomparable_grid",
+                              "note":"Sample extent, dimensions or dtype changed; pixel-level difference is not calculated."}
+    if cur["pixel_comparison"].get("comparison_status")=="compared":
+     band_changed=any(b.get("changed_pixel_count",0)>0 for b in cur["pixel_comparison"].get("bands",[]))
+     cur["pixel_content_changed"]=band_changed
+    else:
+     cur["pixel_content_changed"]=None
+    cur.update(change_status="changed" if changes else "unchanged",
+               previous_snapshot_id=old["snapshot_id"],changes=changes,
+               metadata_changed=metadata_changed,pixel_hash_changed=pixel_hash_changed,
+               comparable_grid=same_grid)
+    if changes or cur["pixel_content_changed"] is True:
      event={"event_id":f"{key}:{sid}","observed_at_utc":now.isoformat(),"service_key":key,
      "event_type":"source_change_detected","previous_snapshot_id":old["snapshot_id"],"snapshot_id":sid,
      "changes":changes,"pixel_comparison":cur["pixel_comparison"],
