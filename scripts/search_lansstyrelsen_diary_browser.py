@@ -299,7 +299,7 @@ def main() -> None:
                         onclick = c.get_attribute("onclick") or ""
                         postback_text = " ".join([href, onclick])
                         postback = re.search(
-                            r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
+                            r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)",
                             postback_text
                         )
                         disabled = c.get_attribute("disabled") is not None or c.get_attribute("aria-disabled") == "true"
@@ -332,7 +332,7 @@ def main() -> None:
                         # row's outer HTML and use it only when it points forward.
                         pager_html = pager.evaluate("(e) => e.outerHTML") if pager.count() else ""
                         html_postbacks = re.findall(
-                            r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
+                            r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)",
                             pager_html
                         )
                         for target, argument in html_postbacks:
@@ -360,7 +360,7 @@ def main() -> None:
                         onclick = nxt.get_attribute("onclick") or ""
                         postback_text = " ".join([href, onclick])
                         postback = re.search(
-                            r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
+                            r"__doPostBack\(['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]*)['\"]\)",
                             postback_text
                         )
                     if postback:
