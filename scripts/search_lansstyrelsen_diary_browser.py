@@ -271,13 +271,20 @@ def main() -> None:
                     result["results"].extend(rows)
                     result["table_diagnostics"].append(diag)
                     result["pagination"]["pages_read"] = page_number
-                    controls = page.locator(
+                    # ASP.NET GridView pager can expose the active page as text
+                    # and the forward-window control as an ellipsis ("..."), not
+                    # as a link labelled Next. Inspect controls in the pager row
+                    # and use their WebForms postback target/argument.
+                    pager_rows = page.locator(f"{RESULT_GRID} tr")
+                    pager = pager_rows.last
+                    pager_text = clean(pager.inner_text()) if pager.count() else ""
+                    controls = pager.locator("a, input, button, [role='button']") if pager.count() else page.locator(
                         "#SearchPlaceHolder_caseGridView a, "
                         "#SearchPlaceHolder_caseGridView input, "
-                        "#SearchPlaceHolder_caseGridView button, "
-                        "#SearchPlaceHolder_caseGridView [role='button']"
+                        "#SearchPlaceHolder_caseGridView button"
                     )
                     nxt = None
+                    pager_candidates = []
                     for i in range(controls.count()):
                         c = controls.nth(i)
                         tag = c.evaluate("(e) => e.tagName.toLowerCase()")
@@ -288,64 +295,77 @@ def main() -> None:
                             c.get_attribute("aria-label") or "",
                             c.get_attribute("alt") or "",
                         ])).casefold()
-                        classes = (c.get_attribute("class") or "").casefold()
+                        href = c.get_attribute("href") or ""
+                        onclick = c.get_attribute("onclick") or ""
+                        postback_text = " ".join([href, onclick])
+                        postback = re.search(
+                            r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
+                            postback_text
+                        )
                         disabled = c.get_attribute("disabled") is not None or c.get_attribute("aria-disabled") == "true"
                         if disabled:
                             continue
-                        is_next = (
-                            label in {"next", "nästa", ">", "»", "›", "»»", ">>"}
-                            or "nästa" in label or "next" in label
-                            or "pager_next" in classes or "next" in classes
-                        )
-                        if is_next:
+                        pager_candidates.append({
+                            "label": label, "href": href, "onclick": onclick,
+                            "postback": postback.groups() if postback else None,
+                        })
+                        if postback:
+                            target, argument = postback.groups()
+                            # Forward page navigation is commonly "Page$N" or
+                            # a numeric page argument. Never click the current page.
+                            is_forward = (
+                                "page$" in argument.casefold()
+                                or (argument.isdigit() and int(argument) > page_number)
+                                or label in {"...", "…", ">", "»", "›", ">>", "»»"}
+                                or "next" in label or "nästa" in label
+                            )
+                            if is_forward:
+                                nxt = c
+                                break
+                        elif label in {"next", "nästa", ">", "»", "›", ">>", "»»"}:
                             nxt = c
                             break
 
                     if nxt is None:
-                        # ASP.NET GridView commonly renders numeric page links
-                        # and a non-textual next control. If the grid still
-                        # reports more records than have been extracted, inspect
-                        # the server-side pager before accepting completion.
-                        pager = page.locator(
-                            "#SearchPlaceHolder_caseGridView tr"
-                        ).last
-                        pager_text = clean(pager.inner_text()) if pager.count() else ""
-                        # Some portal versions render the pager outside the
-                        # GridView, so inspect the whole document as well.
-                        numeric_links = page.locator(
-                            "a, input, button, [role='button']"
+                        # Some GridView pagers render the ellipsis as a literal
+                        # text node or image. Find a postback event in the pager
+                        # row's outer HTML and use it only when it points forward.
+                        pager_html = pager.evaluate("(e) => e.outerHTML") if pager.count() else ""
+                        html_postbacks = re.findall(
+                            r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
+                            pager_html
                         )
-                        for i in range(numeric_links.count()):
-                            c = numeric_links.nth(i)
-                            label = clean(c.inner_text())
-                            if label.isdigit() and int(label) > page_number:
-                                nxt = c
+                        for target, argument in html_postbacks:
+                            if "page$" in argument.casefold() or (argument.isdigit() and int(argument) > page_number):
+                                nxt = (target, argument)
                                 break
-                        if nxt is None:
-                            current_text = clean(page.locator("body").inner_text())
-                            reported_now = parse_total(current_text)
-                            remaining_hint = (
-                                reported_now is not None and len(seen) < reported_now
-                            )
-                            if remaining_hint or page_number == 1 and reported_now and reported_now > len(seen):
-                                raise RuntimeError(
-                                    "Source reports additional results but no next-page control was identified; "
-                                    f"page={page_number}, extracted={len(seen)}, reported={reported_now}, "
-                                    f"pager_text={pager_text!r}"
-                                )
-                            result["pagination"]["has_next_page"] = False
-                            break
 
+                    if nxt is None:
+                        current_text = clean(page.locator("body").inner_text())
+                        reported_now = parse_total(current_text)
+                        if reported_now is not None and len(seen) < reported_now:
+                            raise RuntimeError(
+                                "Source reports additional results but no forward pager postback was identified; "
+                                f"page={page_number}, extracted={len(seen)}, reported={reported_now}, "
+                                f"pager_text={pager_text!r}, candidates={pager_candidates!r}"
+                            )
+                        result["pagination"]["has_next_page"] = False
+                        break
                     before_count = len(seen)
-                    href = nxt.get_attribute("href") or ""
-                    onclick = nxt.get_attribute("onclick") or ""
-                    postback_text = " ".join([href, onclick])
-                    postback = re.search(
-                        r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
-                        postback_text
-                    )
+                    if isinstance(nxt, tuple):
+                        target, argument = nxt
+                        postback = True
+                    else:
+                        href = nxt.get_attribute("href") or ""
+                        onclick = nxt.get_attribute("onclick") or ""
+                        postback_text = " ".join([href, onclick])
+                        postback = re.search(
+                            r"__doPostBack\\(['\"]([^'\"]+)['\"]\\s*,\\s*['\"]([^'\"]*)['\"]\\)",
+                            postback_text
+                        )
                     if postback:
-                        target, argument = postback.groups()
+                        if not isinstance(nxt, tuple):
+                            target, argument = postback.groups()
                         try:
                             with page.expect_response(
                                 lambda resp: "diarium.lansstyrelsen.se" in resp.url
