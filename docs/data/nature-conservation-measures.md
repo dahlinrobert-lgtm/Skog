@@ -30,6 +30,7 @@ Fältnamn är inte i sig bevis för status. Vi bevarar samtliga källattribut oc
 - Nya, ändrade och från källan försvunna objekt registreras separat.
 - Första körningen skapar baslinje; den räknar inte alla befintliga objekt som nya händelser.
 - Exporten kontrollerar att samtliga annonserade OBJECTID hämtats och att GlobalID är unika.
+- En första livekontroll visade att minst ett källobjekt (OBJECTID 512) saknar polygongeometri. Sådana poster behålls med attributen intakta och räknas i rapporten som `features_without_geometry`; de får inte användas som geografiska ytor utan separat granskning.
 
 Ett objekt som inte längre returneras markeras endast \`removed_from_source\`. Det betyder inte att åtgärden har avbrutits eller att geografin har upphört att gälla.
 
