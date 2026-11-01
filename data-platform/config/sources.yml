@@ -414,10 +414,12 @@ sources:
       attribution: "To be confirmed with data owner/project terms."
       api_or_service_constraints: "Hosted ArcGIS service is not itself a reuse licence. Identify the data producer, project agreement and layer metadata."
       evidence_checked_on: "2026-11-01"
-      caveat: "Do not infer reuse rights from public accessibility or from the fact that the service is hosted by a county administrative board."
+      caveat: "Do not infer reuse rights from public accessibility or from the fact that the service is hosted by a county administrative board. Public project information confirms Life2Taiga is a multi-partner EU LIFE project coordinated by Länsstyrelsen Västmanland, but no dataset-specific reuse licence for the external FeatureServer layer was verified."
+
     notes:
       - "Layer currently used: Hosted/Life2Taiga_v3_Extern/FeatureServer/13."
       - "Keep source events distinct from diary-derived events; do not assume geometries prove completed actions."
+      - "Project information: https://www.lansstyrelsen.se/uppsala/natur-och-landsbygd/skyddad-natur/skotsel-av-skyddad-natur/life2taiga.html. Contact project coordinator/data owner for the exact layer terms."
 
   - source_id: slu.peat_map.v1
     name: "SLU Torvkarta 1.0 – klassad och kontinuerlig"
@@ -647,3 +649,136 @@ sources:
       caveat: "Boundaries are delineated for water-management purposes and do not represent all groundwater-bearing formations."
     notes:
       - "Potential context for wetland, hydrology and land-use analysis."
+
+  - source_id: lansstyrelsen.vindbrukskollen_land
+    name: "Länsstyrelserna – Vindbrukskollen, landbaserade verk och projekteringsområden"
+    source_type: vector_energy_planning
+    provider: Länsstyrelserna_and_Energimyndigheten
+    access_method: atom_wms_and_download
+    connector: to_be_implemented
+    status: planned
+    cadence: daily_or_continuous_source_updates
+    geography: Sweden
+    format: [GeoPackage, Shapefile, WMS]
+    expected_crs: EPSG:3006
+    rights:
+      licence: "CC0 1.0 Universal, stated in dataset metadata"
+      licence_url: "https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=c816bd1e-bc6c-487f-a962-770f05f677b6_C"
+      review_status: green_for_metadata_registered_dataset
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required by CC0; recommended: Länsstyrelserna – Vindbrukskollen."
+      api_or_service_constraints: "Separate source data from background maps and other copyrighted map material. Metadata links to WMS and ATOM download."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Data are continuously updated by users and project developers. Länsstyrelserna disclaim responsibility for correctness of submitted information; verify before decisions. CC0 finding applies to the named land-based dataset, not automatically all layers or map backgrounds."
+    notes:
+      - "Metadata revised 2026-10-29; WMS contains projects and turbines, ATOM offers Shape and GeoPackage."
+      - "Energy Agency says background maps have separate copyright restrictions and may only be used in permitting without permission."
+      - "Metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=c816bd1e-bc6c-487f-a962-770f05f677b6_C"
+
+  - source_id: lansstyrelsen.actions_in_water
+    name: "Länsstyrelserna och Havs- och vattenmyndigheten – Åtgärder i vatten"
+    source_type: water_restoration_actions
+    provider: Länsstyrelserna_and_Havs_och_vattenmyndigheten
+    access_method: rest_api_and_download
+    connector: to_be_implemented
+    status: planned
+    cadence: ongoing_updates
+    geography: Sweden
+    format: [JSON, REST, XLSX, Shapefile, WMS]
+    rights:
+      licence: "Published free reuse terms: copy, process and distribute; source attribution required"
+      licence_url: "https://www.lansstyrelsen.se/stockholm/om-oss/vara-tjanster/oppna-data.html"
+      review_status: conditional_green_official_reuse_terms
+      commercial_use: yes_subject_to_published_open_data_terms
+      historical_storage: yes_subject_to_source_terms
+      derivatives: yes
+      redistribution: yes_with_attribution
+      attribution: "Ange Länsstyrelsen som källa; note the joint system with Havs- och vattenmyndigheten."
+      api_or_service_constraints: "Distinguish the public search/download interface and specific API endpoints. Confirm API-specific terms, fields and rate limits before bulk ingestion."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Data are contributed by multiple actors and may include planned, ongoing, completed or status-unknown actions. Do not equate a registered action with independently verified completion."
+    notes:
+      - "National database for physical measures in rivers, lakes and coastal waters, including fish passage, biotope restoration and removal of migration barriers."
+      - "Public search requires no login; editing/registration is permission-controlled."
+      - "Official information: https://www.atgarderivatten.se/ and https://atgarderivatten.lansstyrelsen.se/Atgarder/Hitta."
+
+  - source_id: lansstyrelsen.ebh_external
+    name: "Länsstyrelserna – potentiellt förorenade områden, externt EBH-lager"
+    source_type: contaminated_sites_reference
+    provider: Länsstyrelserna
+    access_method: geodata_catalogue_and_webgis
+    connector: to_be_verified
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [geospatial_service]
+    rights:
+      licence: "CC BY 4.0 for the externally published EBH layer"
+      licence_url: "https://www.lansstyrelsen.se/download/18.1b1d393819324610c374a9f7/1732520045019/Klimatp%25C3%25A5verkan%2520p%25C3%25A5%2520f%25C3%25B6rorenade%2520omr%25C3%25A5den%2520och%2520milj%25C3%25B6farlig%2520verksamhet.pdf"
+      review_status: conditional_green_cc_by_external_layer_only
+      commercial_use: yes_with_attribution
+      historical_storage: yes_subject_to_current_layer_terms
+      derivatives: yes_with_attribution
+      redistribution: yes_with_attribution
+      attribution: "Creative Commons Erkännande 4.0 Internationell (CC BY 4.0); credit Länsstyrelserna and dataset."
+      api_or_service_constraints: "Only externally published layer is available; internal EBH-stödet is restricted to Länsstyrelserna. External layer excludes some records and suppresses property designations."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Not a complete inventory of contaminated land. Each county is responsible for its information. Coordinates may be approximate and the external map is a reduced extract."
+    notes:
+      - "Do not describe an object as confirmed contamination unless the status and underlying investigation support that statement."
+      - "Metadata: https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/1f7fca9c-4a72-4d72-b2fd-f4fb9c4e44c9"
+      - "Explanatory document: https://ext-dokument.lansstyrelsen.se/Gemensamt/Geodata/Externa%20dokument/EBH/2024-06-12%20F%C3%B6rklaring%20LST%20Potentiellt%20f%C3%B6rorenade%20omr%C3%A5den%20externt.pdf"
+
+  - source_id: lansstyrelsen.gi_vg_small_waters
+    name: "Länsstyrelsen Västra Götaland – Grön infrastruktur, småvatten värdekärnor"
+    source_type: biodiversity_planning_vector
+    provider: Länsstyrelsen_Västra_Götalands_län
+    access_method: atom_download
+    connector: to_be_implemented
+    status: planned
+    cadence: static_or_as_updated
+    geography: Västra_Götaland
+    format: [geospatial_vector]
+    rights:
+      licence: "CC0 1.0 Universal, stated in dataset metadata"
+      licence_url: "https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=b58be26d-ab66-4dd3-9894-fe2b8eb9fdf1_C"
+      review_status: green_for_named_dataset
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required by CC0; recommended: Länsstyrelsen Västra Götalands län – Småvatten Värdekärnor (GI)."
+      api_or_service_constraints: "Regional dataset; do not generalise licence or geographic coverage to other counties' green-infrastructure layers."
+      evidence_checked_on: "2026-11-01"
+      caveat: "This is a specific regional dataset, not a national uniform layer."
+    notes:
+      - "Metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=b58be26d-ab66-4dd3-9894-fe2b8eb9fdf1_C"
+
+  - source_id: lansstyrelsen.gi_vb_barrskog
+    name: "Länsstyrelsen Västerbotten – Grön infrastruktur, barrskog värdetrakter"
+    source_type: biodiversity_planning_vector
+    provider: Länsstyrelsen_Västerbottens_län
+    access_method: geodata_catalogue
+    connector: to_be_implemented
+    status: planned
+    cadence: as_updated
+    geography: Västerbotten
+    format: [geospatial_vector]
+    rights:
+      licence: "CC BY 4.0, stated in dataset metadata"
+      licence_url: "https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=5e0d327e-d888-4946-bf5a-30e87036679b_C"
+      review_status: green_with_attribution_for_named_dataset
+      commercial_use: yes_with_attribution
+      historical_storage: yes_with_attribution
+      derivatives: yes_with_attribution
+      redistribution: yes_with_attribution
+      attribution: "Credit Länsstyrelsen Västerbottens län; CC BY 4.0."
+      api_or_service_constraints: "Regional layer; preserve licence attribution and source date."
+      evidence_checked_on: "2026-11-01"
+      caveat: "Value tracts are planning information, not a formal protection designation. Do not generalise this licence to other regional green-infrastructure datasets."
+    notes:
+      - "Useful forest landscape-context layer for biodiversity analysis."
+      - "Metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=5e0d327e-d888-4946-bf5a-30e87036679b_C"
