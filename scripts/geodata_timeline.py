@@ -29,7 +29,7 @@ def band_arrays(a):
   if a.shape[0] <= 16: return np.moveaxis(a,0,-1)
  raise ValueError("Unsupported raster array dimensions")
 
-def compare_arrays(current, previous, bbox):
+def compare_arrays(current, previous, bbox, current_metadata=None, previous_metadata=None):
  cur=band_arrays(current); old=band_arrays(previous)
  if cur.shape != old.shape:
   return {"comparison_status":"incomparable_shape","previous_shape":list(old.shape),"current_shape":list(cur.shape)}
@@ -42,6 +42,16 @@ def compare_arrays(current, previous, bbox):
   valid=np.ones(a.shape,dtype=bool)
   if np.issubdtype(a.dtype,np.floating): valid &= np.isfinite(a)
   if np.issubdtype(b.dtype,np.floating): valid &= np.isfinite(b)
+  for metadata, values in ((current_metadata,a),(previous_metadata,b)):
+   if not metadata: continue
+   nodata=metadata.get("no_data_values")
+   if nodata is None and metadata.get("no_data_value") is not None: nodata=[metadata["no_data_value"]]
+   if nodata is None: continue
+   if not isinstance(nodata,(list,tuple)): nodata=[nodata]
+   nd=nodata[band] if len(nodata)>band else nodata[0]
+   if nd is not None:
+    try: valid &= values != np.asarray(nd,dtype=values.dtype)
+    except (TypeError,ValueError): pass
   changed=valid & (a!=b)
   count=int(changed.sum()); valid_count=int(valid.sum())
   item={"band_index":band+1,"valid_pixel_count":valid_count,"changed_pixel_count":count,
@@ -63,7 +73,7 @@ def meta_subset(m):
  e=m.get("fullExtent") or m.get("extent") or {}; sr=e.get("spatialReference") or m.get("spatialReference") or {}
  return {"name":m.get("name"),"description":m.get("serviceDescription"),"pixel_type":m.get("pixelType"),
  "band_count":m.get("bandCount"),"pixel_size_x":m.get("pixelSizeX"),"pixel_size_y":m.get("pixelSizeY"),
- "wkid":sr.get("latestWkid") or sr.get("wkid"),
+ "wkid":sr.get("latestWkid") or sr.get("wkid"),"no_data_value":m.get("noDataValue"),"no_data_values":m.get("noDataValues"),
  "extent":{k:e.get(k) for k in ("xmin","ymin","xmax","ymax")} if e else None}
 
 def get_bbox():
@@ -127,7 +137,7 @@ def main():
     if old["sample_path"] is not None:
      with np.load(old["sample_path"],allow_pickle=False) as archive:
       previous_pixels=archive["pixels"]
-     cur["pixel_comparison"]=compare_arrays(pixels,previous_pixels,bbox)
+     cur["pixel_comparison"]=compare_arrays(pixels,previous_pixels,bbox,cur.get("metadata"),old_item.get("metadata"))
     else:
      cur["pixel_comparison"]={"comparison_status":"previous_array_unavailable",
                               "note":"A previous hash exists, but no stored pixel array is available for band-level comparison."}
