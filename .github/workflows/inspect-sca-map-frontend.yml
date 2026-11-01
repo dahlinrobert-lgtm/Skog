@@ -1,0 +1,27 @@
+name: Inspect SCA map frontend
+on:
+  push:
+    branches: [investigate/**]
+    paths:
+      - "scripts/inspect_sca_map_frontend.py"
+      - ".github/workflows/inspect-sca-map-frontend.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "requests>=2.31,<3"
+      - run: python scripts/inspect_sca_map_frontend.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sca-map-inspection
+          path: artifacts/sca-map-inspection.json
+          retention-days: 30
