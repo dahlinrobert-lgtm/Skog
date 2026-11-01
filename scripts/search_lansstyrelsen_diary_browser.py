@@ -114,15 +114,51 @@ def main() -> None:
     except ValueError as exc:
         raise SystemExit(str(exc)) from exc
 
+    def wait_for_diary_form(page, *, attempts: int = 3) -> None:
+        """Wait for the diary form, retrying transient slow/partial portal loads."""
+        last_error = None
+        for attempt in range(1, attempts + 1):
+            try:
+                page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=45000)
+                page.locator(TITLE_INPUT).wait_for(state="visible", timeout=15000)
+                page.locator(SEARCH_BUTTON).wait_for(state="visible", timeout=15000)
+                return
+            except PlaywrightTimeoutError as exc:
+                last_error = exc
+                if attempt == attempts:
+                    break
+                # A fresh navigation is more reliable than waiting indefinitely on
+                # a partially initialized ASP.NET page.
+                try:
+                    page.goto(URL, wait_until="domcontentloaded", timeout=60000)
+                except PlaywrightTimeoutError:
+                    pass
+                page.wait_for_timeout(1500 * attempt)
+        raise RuntimeError(
+            f"Diary search form did not become ready after {attempts} attempts: {last_error}"
+        ) from last_error
+
     def get_options(browser) -> list[dict]:
         page = browser.new_page(locale="sv-SE")
         try:
-            page.goto(URL, wait_until="domcontentloaded", timeout=60000)
-            page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
-            return [
-                {"label": clean(opt.inner_text()), "value": opt.get_attribute("value")}
-                for opt in page.locator(f"{COUNTY_SELECT} option").all()
-            ]
+            for attempt in range(1, 4):
+                try:
+                    page.goto(URL, wait_until="domcontentloaded", timeout=60000)
+                except PlaywrightTimeoutError:
+                    pass
+                try:
+                    wait_for_diary_form(page, attempts=2)
+                    options = [
+                        {"label": clean(opt.inner_text()), "value": opt.get_attribute("value")}
+                        for opt in page.locator(f"{COUNTY_SELECT} option").all()
+                    ]
+                    if options:
+                        return options
+                except Exception:
+                    if attempt == 3:
+                        raise
+                    page.wait_for_timeout(1500 * attempt)
+            raise RuntimeError("Diary county list remained empty after retries")
         finally:
             page.close()
 
