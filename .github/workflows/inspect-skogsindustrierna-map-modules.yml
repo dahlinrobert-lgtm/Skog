@@ -1,0 +1,31 @@
+name: Inspect Skogsindustrierna map modules
+on:
+  push:
+    branches: [investigate/**]
+    paths:
+      - "scripts/inspect_skogsindustrierna_map_modules.py"
+      - ".github/workflows/inspect-skogsindustrierna-map-modules.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "requests>=2.31,<3"
+      - name: Follow bounded public JS imports and inspect map configuration
+        run: python scripts/inspect_skogsindustrierna_map_modules.py
+      - name: Upload module inspection report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsindustrierna-map-modules
+          path: artifacts/skogsindustrierna-map-modules.json
+          if-no-files-found: warn
+          retention-days: 30
