@@ -79,8 +79,8 @@ def main():
         for m in NAME.finditer(js):
             matches.append({"kind":"layer_name_occurrence","offset":m.start(),"context":windows(js,m.start())})
         # URL-template and tile-grid builders are only candidates until tied by a call site.
-        for pat in [r"omraden",r"parseSource",r"parseTileGrid",r"tileUrlFunction",r"new .*TileGrid"]:
-            for m in list(re.finditer(pat,js,re.I))[:25]:
+        for pat in [r"omraden",r"parseSource",r"parseTileGrid",r"tileUrlFunction",r"new .*TileGrid",r"VectorTile",r"createXYZ",r"getForProjection",r"tileGrid",r"projection"]:
+            for m in list(re.finditer(pat,js,re.I))[:80]:
                 matches.append({"kind":"candidate_"+pat.replace(" ","_"),"offset":m.start(),"context":windows(js,m.start(),500,1100)})
         assets.append({"url":u,"status":r.status_code,"bytes":len(r.content),"matches":matches})
     out={
