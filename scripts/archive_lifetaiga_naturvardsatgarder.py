@@ -173,6 +173,10 @@ def detect_changes(previous: dict, features: list[dict], observed_at: str) -> li
     new = {stable_key(feature): feature for feature in features}
     if len(old) != len(old_features) or len(new) != len(features):
         raise RuntimeError("Duplicate GlobalID in previous or current snapshot")
+    # A first successful collection is a baseline, not 338 newly observed
+    # real-world actions. Only compare after a prior complete snapshot exists.
+    if not previous:
+        return []
     changes = []
     for key, feature in new.items():
         attrs = feature.get("attributes") or {}
