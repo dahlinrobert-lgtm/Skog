@@ -15,7 +15,7 @@ SEARCH = "#SearchPlaceHolder_CaseSearch_btnSearch"
 GRID = "#SearchPlaceHolder_caseGridView"
 
 def clean(s):
-    return re.sub(r"\\s+", " ", s or "").strip()
+    return re.sub(r"\s+", " ", s or "").strip()
 
 def inspect_query(page, county_value, term, start, end):
     page.goto(URL, wait_until="domcontentloaded", timeout=60000)
@@ -34,12 +34,12 @@ def inspect_query(page, county_value, term, start, end):
     except PlaywrightTimeoutError:
         pass
     body = clean(page.locator("body").inner_text(timeout=20000))
-    match = re.search(r"Sökresultat\\s*:?\\s*[\\d\\s–-]+\\s+av\\s+(\\d+)", body, re.I)
+    match = re.search(r"Sökresultat\s*:?\s*[\d\s–-]+\s+av\s+(\d+)", body, re.I)
     grid = page.locator(GRID)
     rows = grid.locator("tr")
     ids=[]
     for i in range(rows.count()):
-        ids.extend(re.findall(r"\\b\\d{1,6}-\\d{4}\\b", clean(rows.nth(i).inner_text())))
+        ids.extend(re.findall(r"\b\d{1,6}-\d{4}\b", clean(rows.nth(i).inner_text())))
     return {
         "county_value":county_value,"term":term,"date_from":start,"date_to":end,
         "reported_total":int(match.group(1)) if match else None,
@@ -62,7 +62,7 @@ def main():
         finally:
             browser.close()
     payload={"captured_at_utc":datetime.now(timezone.utc).isoformat(),"queries":page_results}
-    Path("lansstyrelsen-date-filter-probe.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+    Path("lansstyrelsen-date-filter-probe.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps([{k:v for k,v in q.items() if k!="body_excerpt"} for q in page_results],ensure_ascii=False))
 
 if __name__=="__main__":
