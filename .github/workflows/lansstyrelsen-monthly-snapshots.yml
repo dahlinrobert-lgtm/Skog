@@ -1,0 +1,155 @@
+name: Collect Länsstyrelsen monthly diary snapshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: Registration year
+        required: true
+        default: "2026"
+        type: string
+      month:
+        description: Registration month (1-12)
+        required: true
+        default: "10"
+        type: string
+      county_scope:
+        description: County coverage
+        required: true
+        default: both
+        type: choice
+        options:
+          - both
+          - norrbotten
+          - vasterbotten
+      category:
+        description: Search category
+        required: true
+        default: B
+        type: choice
+        options:
+          - A
+          - B
+          - both
+  schedule:
+    - cron: "20 3 1 * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lansstyrelsen-monthly-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test snapshot, pagination and persistence rules
+        env:
+          PYTHONPATH: scripts
+        run: |
+          python -m unittest scripts.test_lansstyrelsen_snapshot_extraction scripts.test_lansstyrelsen_diary_pagination scripts.test_lansstyrelsen_diary_validation scripts.test_lansstyrelsen_snapshot_persistence scripts.test_lansstyrelsen_monthly_snapshot
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Define monthly query set
+        id: setup
+        env:
+          YEAR_INPUT: ${{ inputs.year }}
+          MONTH_INPUT: ${{ inputs.month }}
+          COUNTY_INPUT: ${{ inputs.county_scope }}
+          CATEGORY_INPUT: ${{ inputs.category }}
+        run: |
+          year="$YEAR_INPUT"
+          month="$MONTH_INPUT"
+          if [[ -z "$year" ]]; then year="$(date -u +%Y)"; fi
+          if [[ -z "$month" ]]; then month="$(date -u +%m)"; fi
+          python - <<'PY'
+          import os, calendar
+          y=int(os.environ["YEAR_INPUT"] or __import__("datetime").datetime.now().year)
+          m=int(os.environ["MONTH_INPUT"] or __import__("datetime").datetime.now().month)
+          if not 1 <= m <= 12: raise SystemExit("month must be 1-12")
+          if not 1900 <= y <= 2100: raise SystemExit("year outside allowed range")
+          print(f"Validated collection month: {y:04d}-{m:02d}, ending {calendar.monthrange(y,m)[1]:02d}")
+          PY
+          if [[ "$COUNTY_INPUT" == "norrbotten" ]]; then counties=("Länsstyrelsen i Norrbottens län")
+          elif [[ "$COUNTY_INPUT" == "vasterbotten" ]]; then counties=("Länsstyrelsen i Västerbottens län")
+          else counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län"); fi
+          if [[ "$CATEGORY_INPUT" == "A" ]]; then categories=("A")
+          elif [[ "$CATEGORY_INPUT" == "B" ]]; then categories=("B")
+          else categories=("A" "B"); fi
+          mkdir -p monthly-snapshot-runs
+          printf '%s\n' "${counties[@]}" > monthly-snapshot-runs/counties.txt
+          printf '%s\n' "${categories[@]}" > monthly-snapshot-runs/categories.txt
+          echo "year=$year" >> "$GITHUB_OUTPUT"
+          echo "month=$month" >> "$GITHUB_OUTPUT"
+      - name: Collect configured county/category monthly intervals
+        env:
+          PYTHONPATH: scripts
+          YEAR: ${{ steps.setup.outputs.year }}
+          MONTH: ${{ steps.setup.outputs.month }}
+          COUNTY_INPUT: ${{ inputs.county_scope }}
+          CATEGORY_INPUT: ${{ inputs.category }}
+        run: |
+          set -euo pipefail
+          if [[ "$COUNTY_INPUT" == "norrbotten" ]]; then counties=("Länsstyrelsen i Norrbottens län")
+          elif [[ "$COUNTY_INPUT" == "vasterbotten" ]]; then counties=("Länsstyrelsen i Västerbottens län")
+          else counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län"); fi
+          if [[ "$CATEGORY_INPUT" == "A" ]]; then categories=("A")
+          elif [[ "$CATEGORY_INPUT" == "B" ]]; then categories=("B")
+          else categories=("A" "B"); fi
+          failed=0
+          declare -A termsA=([0]="skogsbilväg" [1]="vägbyggnad" [2]="ledningsdragning" [3]="schaktning" [4]="utfyllnad" [5]="massupplag")
+          declare -A termsB=([0]="vattenverksamhet" [1]="markavvattning" [2]="dikesrensning" [3]="trumma" [4]="våtmarksanläggning" [5]="omgrävning av vattendrag")
+          for county in "${counties[@]}"; do
+            for category in "${categories[@]}"; do
+              for i in 0 1 2 3 4 5; do
+                if [[ "$category" == "A" ]]; then term="${termsA[$i]}"; else term="${termsB[$i]}"; fi
+                slug="norrbotten"; [[ "$county" == *Västerbottens* ]] && slug="vasterbotten"
+                outfile="monthly-snapshot-runs/${slug}-${category}-${i}.json"
+                echo "Collecting $county / $category / $term / $YEAR-$MONTH"
+                if ! python scripts/collect_lansstyrelsen_monthly_snapshot.py \
+                    --county "$county" --term "$term" --year "$YEAR" --month "$MONTH" \
+                    --output "$outfile"; then
+                  echo "FAILED: $county / $category / $term"
+                  failed=1
+                fi
+              done
+            done
+          done
+          echo "collection_failed=$failed" >> "$GITHUB_OUTPUT"
+      - name: Publish immutable snapshots and manifests
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            git add data/lansstyrelsen-diary/snapshots data/lansstyrelsen-diary/snapshot-runs.jsonl
+            if git diff --cached --quiet; then
+              echo "No complete new snapshots to publish."
+              exit 0
+            fi
+            git commit -m "Archive monthly Länsstyrelsen diary snapshots"
+            if git push origin HEAD:main; then exit 0; fi
+            git reset --hard
+          done
+          echo "Failed to publish snapshots after retries" >&2
+          exit 1
+      - name: Upload monthly collection diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-monthly-snapshot-diagnostics
+          path: monthly-snapshot-runs/
+          if-no-files-found: warn
+          retention-days: 30
