@@ -218,3 +218,8 @@ Följande rapporter innehåller mer detaljerade bedömningar för enskilda käll
 ## 9. Branschpraxis för källredovisning och attribution
 
 Se [Branschpraxis – källredovisning och återanvändning av öppen data och geodata](industry-practice-open-data-attribution.md). Rapporten samlar exempel från MapAndMove, Naturkartan, OnCoord, kart-api.se och OpenStreetMap Foundation samt kompletterande vägledning från Lantmäteriet, SMHI och lärosäten. Den används som jämförelsematerial för källsidor, attribution i kartor, licensförklaringar, proveniens i exporter och tydlig åtskillnad mellan källdata och Skogs egna analyser. Branschpraxis ersätter inte den rättsliga bedömningen av varje källa och användning.
+
+
+## 10. Teknisk modell för attribution och proveniens
+
+Den gemensamma målbilden för källmetadata, snapshots, härledda analyser, kartgränssnitt och export finns i [Specifikation – attribution och proveniens i Skog](attribution-and-provenance-spec.md). Fälten införs först efter kontroll mot befintligt YAML-schema och validering; dokumentet är en specifikation, inte ett påstående om att samtliga fält redan finns i källregistret.
