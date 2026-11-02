@@ -75,12 +75,12 @@ jobs:
           SEARCH_TERMS_INPUT: ${{ inputs.search_terms }}
         run: |
           county="${COUNTY_INPUT:-Länsstyrelsen i Västra Götalands län}"
-          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ] || [ "${CONFIRM_ALL_COUNTIES_INPUT:-false}" = "true" ]; then
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ] || [ "${GITHUB_EVENT_NAME:-}" = "push" ] || [ "${CONFIRM_ALL_COUNTIES_INPUT:-false}" = "true" ]; then
             county="Alla län"
           fi
           search_term="${SEARCH_TERM_INPUT:-naturvårdsbränning}"
           extra_terms="${SEARCH_TERMS_INPUT:-}"
-          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ] && [ -z "$extra_terms" ]; then
+          if { [ "${GITHUB_EVENT_NAME:-}" = "schedule" ] || [ "${GITHUB_EVENT_NAME:-}" = "push" ]; } && [ -z "$extra_terms" ]; then
             extra_terms="vattenverksamhet"
           fi
           python scripts/search_lansstyrelsen_diary_browser.py \
