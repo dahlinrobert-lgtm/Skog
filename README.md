@@ -1,6 +1,6 @@
-# Skog – Gräsmyr monitoring MVP
+# Skog – skoglig bevakning och händelseflöden
 
-Monitor forestry notifications and imagery freshness around Gräsmyr, Nordmaling municipality.
+Follow changes in forest-related data around monitored properties and areas. Skog discovers, connects and explains events from multiple sources, then delivers relevant alerts. The map is supporting context; the monitoring feed is the product.
 
 ## Product direction
 - [Product inspiration and roadmap](docs/product-inspiration-and-roadmap.md): lessons from Naturkartan and Skogsmonitor, current map capabilities, and prioritized next steps.
