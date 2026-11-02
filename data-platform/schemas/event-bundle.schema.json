@@ -1,0 +1,459 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dahlinrobert-lgtm.github.io/Skog/schemas/event-bundle.schema.json",
+  "title": "Skog event bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "source_runs",
+    "observations",
+    "events",
+    "evidence",
+    "relationships",
+    "chains"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_runs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceRun"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/observation"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidence"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      }
+    },
+    "chains": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/chain"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullableString": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "confidence": {
+      "enum": [
+        "verified",
+        "supported",
+        "indicative",
+        "uncertain"
+      ]
+    },
+    "sourceRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "source_id",
+        "started_at",
+        "status",
+        "scope_hash",
+        "records_seen",
+        "records_valid",
+        "records_rejected",
+        "snapshot_ref"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finished_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "status": {
+          "enum": [
+            "success",
+            "partial",
+            "failed"
+          ]
+        },
+        "scope_hash": {
+          "$ref": "#/$defs/id"
+        },
+        "source_snapshot_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "records_seen": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "records_valid": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "records_rejected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "checksum": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "diagnostics": {
+          "type": "object"
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation_id",
+        "source_id",
+        "source_record_id",
+        "run_id",
+        "observed_at",
+        "content_hash",
+        "raw_ref",
+        "quality_status"
+      ],
+      "properties": {
+        "observation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_record_id": {
+          "$ref": "#/$defs/id"
+        },
+        "run_id": {
+          "$ref": "#/$defs/id"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_created_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "source_updated_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "valid_time": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "content_hash": {
+          "$ref": "#/$defs/id"
+        },
+        "raw_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "geometry_ref": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "geometry_crs": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "quality_status": {
+          "enum": [
+            "valid",
+            "warning",
+            "rejected",
+            "unknown"
+          ]
+        },
+        "attributes": {
+          "type": "object"
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "event_type",
+        "event_status",
+        "title",
+        "summary",
+        "first_observed_at",
+        "last_observed_at",
+        "confidence_class",
+        "interpretation_version"
+      ],
+      "properties": {
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "$ref": "#/$defs/id"
+        },
+        "event_status": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string"
+        },
+        "event_time_start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "event_time_end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "first_observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "geometry_ref": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "confidence_class": {
+          "$ref": "#/$defs/confidence"
+        },
+        "interpretation_version": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "observation_id",
+        "evidence_role",
+        "match_method",
+        "confidence_class",
+        "reason_codes",
+        "review_status"
+      ],
+      "properties": {
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "observation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "evidence_role": {
+          "enum": [
+            "primary",
+            "corroborating",
+            "contradicting",
+            "contextual"
+          ]
+        },
+        "match_method": {
+          "$ref": "#/$defs/id"
+        },
+        "match_score": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "confidence_class": {
+          "$ref": "#/$defs/confidence"
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "review_status": {
+          "enum": [
+            "unreviewed",
+            "accepted",
+            "rejected",
+            "needs_review"
+          ]
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relationship_id",
+        "from_event_id",
+        "to_event_id",
+        "relationship_type",
+        "match_method",
+        "confidence_class",
+        "rule_version",
+        "review_status"
+      ],
+      "properties": {
+        "relationship_id": {
+          "$ref": "#/$defs/id"
+        },
+        "from_event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "to_event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "relationship_type": {
+          "enum": [
+            "same_area",
+            "possible_follow_up",
+            "supports",
+            "contradicts",
+            "supersedes",
+            "part_of"
+          ]
+        },
+        "match_method": {
+          "$ref": "#/$defs/id"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "confidence_class": {
+          "$ref": "#/$defs/confidence"
+        },
+        "rule_version": {
+          "$ref": "#/$defs/id"
+        },
+        "review_status": {
+          "enum": [
+            "unreviewed",
+            "accepted",
+            "rejected",
+            "needs_review"
+          ]
+        }
+      }
+    },
+    "chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "chain_id",
+        "chain_type",
+        "started_at",
+        "last_activity_at",
+        "chain_status",
+        "summary",
+        "confidence_class",
+        "event_ids"
+      ],
+      "properties": {
+        "chain_id": {
+          "$ref": "#/$defs/id"
+        },
+        "chain_type": {
+          "$ref": "#/$defs/id"
+        },
+        "primary_area_ref": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_activity_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "chain_status": {
+          "$ref": "#/$defs/id"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "confidence_class": {
+          "$ref": "#/$defs/confidence"
+        },
+        "event_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
