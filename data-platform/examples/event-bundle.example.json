@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-02T12:00:00Z",
+  "source_runs": [
+    {
+      "run_id": "run-grasmyr-notifications-20261102",
+      "source_id": "skogsstyrelsen.harvest_notifications",
+      "started_at": "2026-11-02T05:17:00Z",
+      "finished_at": "2026-11-02T05:18:00Z",
+      "status": "success",
+      "scope_hash": "sha256:example-scope",
+      "source_snapshot_at": null,
+      "records_seen": 1,
+      "records_valid": 1,
+      "records_rejected": 0,
+      "snapshot_ref": "data/snapshots/20261102T051700Z.json.gz",
+      "checksum": null,
+      "diagnostics": {
+        "example": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "obs-notification-1",
+      "source_id": "skogsstyrelsen.harvest_notifications",
+      "source_record_id": "OBJECTID:12345",
+      "run_id": "run-grasmyr-notifications-20261102",
+      "observed_at": "2026-11-02T05:18:00Z",
+      "source_created_at": null,
+      "source_updated_at": null,
+      "valid_time": null,
+      "content_hash": "sha256:example-record",
+      "raw_ref": "data/snapshots/20261102T051700Z.json.gz#12345",
+      "geometry_ref": "geometry:notification-12345",
+      "geometry_crs": "EPSG:4326",
+      "quality_status": "valid",
+      "attributes": {
+        "Beteckn": "EXEMPEL-2026"
+      }
+    }
+  ],
+  "events": [
+    {
+      "event_id": "event-planned-harvest-example",
+      "event_type": "planned_harvest",
+      "event_status": "registered",
+      "title": "Avverkningsanmälan registrerad",
+      "summary": "Exempelpost för att demonstrera kontraktet; inte en verklig händelse.",
+      "event_time_start": null,
+      "event_time_end": null,
+      "first_observed_at": "2026-11-02T05:18:00Z",
+      "last_observed_at": "2026-11-02T05:18:00Z",
+      "geometry_ref": "geometry:notification-12345",
+      "confidence_class": "verified",
+      "interpretation_version": "harvest-event-v1"
+    }
+  ],
+  "evidence": [
+    {
+      "event_id": "event-planned-harvest-example",
+      "observation_id": "obs-notification-1",
+      "evidence_role": "primary",
+      "match_method": "same_source_record",
+      "match_score": 100,
+      "confidence_class": "verified",
+      "reason_codes": [
+        "same_source_record_id"
+      ],
+      "review_status": "unreviewed"
+    }
+  ],
+  "relationships": [],
+  "chains": [
+    {
+      "chain_id": "chain-harvest-example",
+      "chain_type": "harvest_follow_up",
+      "primary_area_ref": "area:example-only",
+      "started_at": "2026-11-02T05:18:00Z",
+      "last_activity_at": "2026-11-02T05:18:00Z",
+      "chain_status": "open",
+      "summary": "Exempelkedja med enbart anmälningssteget.",
+      "confidence_class": "verified",
+      "event_ids": [
+        "event-planned-harvest-example"
+      ]
+    }
+  ]
+}
