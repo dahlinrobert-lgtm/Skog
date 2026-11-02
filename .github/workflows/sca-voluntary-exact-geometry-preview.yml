@@ -1,0 +1,44 @@
+name: SCA voluntary exact geometry preview
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/build_sca_voluntary_exact_geometry_preview.py"
+      - ".github/workflows/sca-voluntary-exact-geometry-preview.yml"
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT and geometry libraries
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3"
+      - name: Compile
+        run: python -m py_compile scripts/build_sca_voluntary_exact_geometry_preview.py
+      - name: Build exact-geometry preview and source manifest
+        run: python scripts/build_sca_voluntary_exact_geometry_preview.py
+      - name: Validate outputs
+        run: |
+          python -m json.tool sca-voluntary-exact-geometry-source-manifest.json > /dev/null
+          python -m json.tool sca-voluntary-exact-geometry-preview-summary.json > /dev/null
+          python - <<'PY'
+          import json
+          d=json.load(open("sca-voluntary-exact-geometry-preview.geojson", encoding="utf-8"))
+          assert d["type"] == "FeatureCollection"
+          assert all(f.get("geometry") for f in d["features"])
+          print("GeoJSON features:", len(d["features"]))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-voluntary-exact-geometry-preview
+          path: |
+            sca-voluntary-exact-geometry-preview.geojson
+            sca-voluntary-exact-geometry-source-manifest.json
+            sca-voluntary-exact-geometry-preview-summary.json
+          if-no-files-found: error
+          retention-days: 30
