@@ -137,10 +137,17 @@ Illustrativt exempel – inte ett fastställt produktionsschema:
 
 1. **Inventera:** identifiera exakt produkt/lager och befintliga metadatafält i `sources.yml`.
 2. **Normalisera:** bestäm gemensamma fältnamn och tillåtna statusvärden; behåll bakåtkompatibilitet.
-3. **Pilot:** välj tre källor med olika villkor, exempelvis Skogsstyrelsen CC0, en CC BY-källa och en källa med okända villkor.
+3. **Pilot:** använd tre redan registrerade källor med olika rättighetsläge:
+   - `skogsstyrelsen.volume.omdrev3`: CC0 som utgångspunkt för Skogsstyrelsens egna geodata, med kontroll av exakt produkt.
+   - `lansstyrelsen.actions_in_water`: publicerade villkor anger kopiering, bearbetning och distribution med källangivelse; kontrollera även API-specifika villkor.
+   - `naturvardsverket.protected_areas`: central tjänst anger okända villkor; använd som test av hur okänd status och begränsad publicering representeras utan att felaktigt markera alla användningar som förbjudna.
 4. **Manifest:** generera ett manifest för ett internt testuttag och kontrollera att attribution följer med.
 5. **UI:** bygg källpanel och kartattribution när datamodellen är verifierad.
 6. **Export:** lägg till manifest i CSV/GeoJSON/GeoPackage/PDF efter formatens förutsättningar.
+
+### 8.1 Befintliga registerfält – nulägeskontroll
+
+Vid kontroll av `data-platform/config/sources.yml` den 2026-11-02 fanns källfält som `provider`, `rights.licence`, `rights.licence_url` och `rights.attribution`, men inga gemensamma fält för `attribution_text`, `attribution_required`, `producer` eller `distributor`. Den här specifikationen är därför en föreslagen utvidgning, inte en beskrivning av ett redan implementerat schema. Innan produktionsändring behöver vi kontrollera YAML-läsare, validering och eventuella konsumenter av `sources.yml`.
 
 ## 9. Acceptanskriterier
 
