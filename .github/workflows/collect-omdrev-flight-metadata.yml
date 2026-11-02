@@ -2,6 +2,13 @@ name: Collect Omdrev laser scan metadata
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/collect-omdrev-flight-metadata.yml"
+      - "scripts/collect_omdrev_flight_metadata.py"
+      - "scripts/download_rasters_from_onedrive.py"
 
 permissions:
   contents: read
