@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173b2b">
+<meta name="description" content="Granskningsbart händelseflöde för skogliga ärenden, avverkningsanmälningar och samråd.">
+<title>Händelsekedjor – Skogsbevakning</title>
+<style>
+:root{color-scheme:light;--ink:#1c2c23;--forest:#173b2b;--paper:#f4f6f1;--surface:#fff;--line:#e4e9e2;--muted:#68766d;--gold:#d7ad67;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
+*{box-sizing:border-box}body{margin:0;min-width:320px}a{color:inherit}
+header{background:linear-gradient(125deg,#112f22,#1a4430 60%,#254d36);color:#fff}
+.wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+nav{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff25}
+.brand{font-weight:800;text-decoration:none}.nav{display:flex;gap:16px}.nav a{color:#e3eee1;text-decoration:none;font-size:.9rem}
+.hero{padding:44px 0 48px}.kicker{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#d7e5d1;font-weight:800}
+h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.05;letter-spacing:-.045em;margin:12px 0}
+.hero p{max-width:750px;color:#e3eee1;margin:0;font-size:1rem}
+main{padding:26px 0 56px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.stat,.panel{background:var(--surface);border:1px solid var(--line);border-radius:17px;box-shadow:0 10px 28px #1b30220a}
+.stat{padding:17px}.stat span{display:block;color:var(--muted);font-size:.8rem}.stat strong{display:block;font-size:1.8rem;color:#1d4c32;line-height:1.2;margin-top:5px;font-variant-numeric:tabular-nums}
+.panel{padding:22px;margin-top:16px}.head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:15px}
+h2{margin:0;font-size:1.25rem;letter-spacing:-.03em}.sub{color:var(--muted);font-size:.86rem;margin:6px 0 0}
+.controls{display:grid;grid-template-columns:minmax(200px,1fr) 210px;gap:10px;margin:14px 0}
+input,select{width:100%;height:44px;padding:0 12px;border:1px solid #dce4db;border-radius:10px;background:white;color:var(--ink);font:inherit}
+.list{display:grid;gap:12px}
+.chain{border:1px solid #e3eae1;border-radius:14px;padding:16px;background:#fff}
+.chain-head{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.chain h3{margin:0;font-size:1rem;line-height:1.35}.chain-summary{margin:8px 0 12px;color:#5e6d63;font-size:.85rem}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:.7rem;font-weight:800;white-space:nowrap}
+.verified{background:#e6f2e7;color:#2d6c3e}.supported{background:#edf1df;color:#68752a}.indicative{background:#fff2df;color:#98601d}.uncertain{background:#f4e8e6;color:#9a493e}
+.timeline{border-left:2px solid #dfe8dc;margin:10px 0 0 5px;padding-left:15px;display:grid;gap:10px}
+.event{position:relative;padding:10px 12px;border:1px solid #e8ede6;border-radius:11px;background:#fbfcfa}
+.event:before{content:"";position:absolute;left:-22px;top:16px;width:9px;height:9px;border-radius:50%;background:#72916e;border:2px solid #fff;box-shadow:0 0 0 1px #72916e}
+.event-title{font-weight:760;font-size:.9rem}.event-date{font-size:.74rem;color:#738078;margin-bottom:3px}.event-summary{font-size:.81rem;color:#5f6d63;margin-top:5px}
+.event-source{font-size:.72rem;color:#8a958d;margin-top:6px}
+.relations{display:grid;gap:9px}.relation{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start;padding:12px;border:1px solid #e8ede6;border-radius:11px}
+.relation strong{font-size:.84rem}.relation p{margin:4px 0 0;color:#69776d;font-size:.77rem}
+.note{padding:12px 14px;border-radius:11px;background:#f6f8f3;color:#637066;font-size:.8rem;margin-top:14px}
+.empty{padding:28px;text-align:center;color:#718076;border:1px dashed #d9e2d7;border-radius:12px}
+footer{margin-top:24px;color:#849087;font-size:.76rem;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr}.panel{padding:16px}.head{display:block}.relation{grid-template-columns:1fr}.nav{gap:10px}.nav a{font-size:.78rem}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<nav><a class="brand" href="bevakning.html">Skogsbevakning</a><div class="nav"><a href="bevakning.html">Bevakningsflöde</a><a href="karta.html">Karta</a></div></nav>
+<section class="hero"><div class="kicker">Datadrivna samband · Gräsmyr pilot</div><h1>Händelser som hänger ihop.</h1><p>Här sammanförs observationer från olika källor till granskningsbara händelsekedjor. Varje samband visar vilken evidens som ligger bakom och hur säkert det är. En geografisk närhet är en kandidat – inte ett bevis på orsakssamband.</p></section>
+</div></header>
+<main class="wrap">
+<section class="stats" aria-label="Omfattning">
+ <div class="stat"><span>Källobservationer</span><strong id="observationCount">–</strong></div>
+ <div class="stat"><span>Kanoniska händelser</span><strong id="eventCount">–</strong></div>
+ <div class="stat"><span>Händelsekedjor</span><strong id="chainCount">–</strong></div>
+ <div class="stat"><span>Kandidatrelationer</span><strong id="relationCount">–</strong></div>
+</section>
+<section class="panel">
+ <div class="head"><div><h2>Händelsekedjor</h2><p class="sub">En kedja börjar med en avverkningsanmälan och kompletteras när relaterade källhändelser hittas.</p></div><span class="pill supported" id="dataUpdated">Läser data</span></div>
+ <div class="controls"><input id="search" type="search" placeholder="Sök ärendenummer, kommun eller händelse"><select id="confidence"><option value="all">Alla säkerhetsnivåer</option><option value="verified">Verifierad källhändelse</option><option value="supported">Analytiskt stöd</option><option value="indicative">Indikation</option></select></div>
+ <div id="chains" class="list"><div class="empty">Hämtar händelsepaketet …</div></div>
+ <div class="note">Säkerhetsnivån avser källhändelsen eller sambandet – inte att en avverkning säkert har utförts. Samrådskopplingar som bygger på geometri, kommun och datum är preliminära och kräver granskning.</div>
+</section>
+<section class="panel">
+ <div class="head"><div><h2>Kandidatrelationer</h2><p class="sub">Även svagare samband visas separat så att de inte försvinner ur analysen.</p></div></div>
+ <div id="relations" class="relations"><div class="empty">Inväntar relationer …</div></div>
+</section>
+<footer><span>Skog · Händelsemodell v1</span><span id="sourceStatus">Källor: Skogsstyrelsen avverkningsanmälningar och Samråd</span></footer>
+</main>
+<script type="module">
+const DATA_URL="./data/harvest_event_bundle.json";
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const dateLabel=v=>{if(!v)return "Datum saknas";const d=new Date(v);return Number.isNaN(d.getTime())?"Datum saknas":new Intl.DateTimeFormat("sv-SE",{dateStyle:"medium"}).format(d)};
+const confidenceLabel={verified:"Källregistrerad",supported:"Analytiskt stöd",indicative:"Indikation",uncertain:"Osäker"};
+const sourceLabel={"skogsstyrelsen.harvest_notifications":"Avverkningsanmälan","skogsstyrelsen.samrad":"Samråd"};
+let bundle=null,events=new Map(),observations=new Map(),evidenceByEvent=new Map(),relationsByEvent=new Map();
+function pill(level){return '<span class="pill '+esc(level)+'">'+esc(confidenceLabel[level]||level)+'</span>';}
+function eventSource(eventId){
+ const evidence=evidenceByEvent.get(eventId)||[];
+ const rows=evidence.map(e=>observations.get(e.observation_id)).filter(Boolean);
+ return rows.map(o=>(sourceLabel[o.source_id]||o.source_id)+": "+o.source_record_id).join(" · ")||"Källreferens saknas";
+}
+function chainSearchText(chain){
+ return [chain.summary,...chain.event_ids.map(id=>{const e=events.get(id);return e?[e.title,e.summary].join(" "):"";})].join(" ").toLocaleLowerCase("sv");
+}
+function renderChains(){
+ const term=$("search").value.trim().toLocaleLowerCase("sv");
+ const level=$("confidence").value;
+ const list=bundle.chains.filter(chain=>{
+  if(level!=="all"&&chain.confidence_class!==level)return false;
+  return !term||chainSearchText(chain).includes(term);
+ }).sort((a,b)=>String(b.last_activity_at).localeCompare(String(a.last_activity_at)));
+ $("chains").innerHTML=list.length?list.map(chain=>{
+  const chainEvents=chain.event_ids.map(id=>events.get(id)).filter(Boolean).sort((a,b)=>String(a.event_time_start||a.first_observed_at).localeCompare(String(b.event_time_start||b.first_observed_at)));
+  const rels=chainEvents.flatMap(e=>relationsByEvent.get(e.event_id)||[]).filter((r,i,a)=>a.findIndex(x=>x.relationship_id===r.relationship_id)===i);
+  return '<article class="chain"><div class="chain-head"><div><h3>'+esc(chainEvents[0]?.title||chain.chain_id)+'</h3><p class="sub">'+esc(chain.chain_type)+' · '+esc(chain.chain_status)+'</p></div>'+pill(chain.confidence_class)+'</div><p class="chain-summary">'+esc(chain.summary)+'</p><div class="timeline">'+chainEvents.map(e=>'<div class="event"><div class="event-date">'+esc(dateLabel(e.event_time_start||e.first_observed_at))+'</div><div class="event-title">'+esc(e.title)+'</div><div class="event-summary">'+esc(e.summary)+'</div><div class="event-source">'+esc(eventSource(e.event_id))+'</div></div>').join("")+'</div>'+(rels.length?'<p class="event-source">Kopplade relationer: '+rels.length+'</p>':"")+'</article>';
+ }).join(""):'<div class="empty">Inga kedjor matchar sökningen eller säkerhetsfiltret.</div>';
+}
+function renderRelations(){
+ const list=bundle.relationships.slice().sort((a,b)=>({verified:0,supported:1,indicative:2,uncertain:3}[a.confidence_class]??4)-({verified:0,supported:1,indicative:2,uncertain:3}[b.confidence_class]??4));
+ $("relations").innerHTML=list.length?list.map(r=>{
+  const from=events.get(r.from_event_id),to=events.get(r.to_event_id);
+  return '<article class="relation"><div><strong>'+esc(from?.title||r.from_event_id)+' → '+esc(to?.title||r.to_event_id)+'</strong><p>'+esc(r.relationship_type)+' · '+esc(r.match_method)+' · Granskning: '+esc(r.review_status)+'</p></div>'+pill(r.confidence_class)+'</article>';
+ }).join(""):'<div class="empty">Inga kandidatrelationer har skapats ännu.</div>';
+}
+async function load(){
+ try{
+  const response=await fetch(DATA_URL,{cache:"no-store"});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  bundle=await response.json();
+  events=new Map(bundle.events.map(e=>[e.event_id,e]));
+  observations=new Map(bundle.observations.map(o=>[o.observation_id,o]));
+  evidenceByEvent=new Map();
+  for(const item of bundle.evidence){if(!evidenceByEvent.has(item.event_id))evidenceByEvent.set(item.event_id,[]);evidenceByEvent.get(item.event_id).push(item);}
+  relationsByEvent=new Map();
+  for(const item of bundle.relationships){for(const id of [item.from_event_id,item.to_event_id]){if(!relationsByEvent.has(id))relationsByEvent.set(id,[]);relationsByEvent.get(id).push(item);}}
+  $("observationCount").textContent=bundle.observations.length.toLocaleString("sv-SE");
+  $("eventCount").textContent=bundle.events.length.toLocaleString("sv-SE");
+  $("chainCount").textContent=bundle.chains.length.toLocaleString("sv-SE");
+  $("relationCount").textContent=bundle.relationships.length.toLocaleString("sv-SE");
+  $("dataUpdated").textContent="Uppdaterad "+dateLabel(bundle.generated_at);
+  $("sourceStatus").textContent="Senaste paket: "+dateLabel(bundle.generated_at)+" · Satellitindikationer ingår inte i denna prioriterade kedja.";
+  renderChains();renderRelations();
+ }catch(error){
+  $("chains").innerHTML='<div class="empty">Händelsepaketet kunde inte läsas: '+esc(error.message||error)+'.</div>';
+  $("relations").innerHTML='<div class="empty">Relationer kunde inte läsas.</div>';
+  $("dataUpdated").textContent="Data saknas";
+ }
+}
+$("search").addEventListener("input",renderChains);
+$("confidence").addEventListener("change",renderChains);
+load();
+</script>
+</body>
+</html>
