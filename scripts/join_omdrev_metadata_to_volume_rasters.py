@@ -209,10 +209,8 @@ def main() -> None:
                 "raster": archive.name,
                 "crs": dataset.crs.to_string(),
                 "resolution_m": [float(dataset.res[0]), float(dataset.res[1])],
-                "metadata_records_overlapping_extent": sum(
-                    1 for feature in features
-                    if feature.get("attributes", {}).get("ObjectId") is not None
-                    and (code, geometry_key(feature["geometry"])) in geometry_cache
+                "metadata_records_overlapping_extent": int(
+                    sum(count[status] for status in ("intersects_valid_raster_window", "no_raster_cells"))
                 ),
                 "records_by_status": dict(count),
                 "unique_geometry_windows_evaluated": len(
