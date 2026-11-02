@@ -189,3 +189,15 @@ Källa:
 | Norrbotten GI våtmarksanalys | Medel/hög – våtmarkernas landskapsmönster | Exakt katalogpost och licens återstår | Identifiera post och kontrollera villkor |
 
 Viktigt: att en datamängd är gratis att visa eller ladda ned är inte i sig ett besked om kommersiell vidareanvändning. För varje kandidat måste vi kontrollera licens, rättighetsinnehavare, åtkomstvillkor och eventuella tredjepartsinslag separat.
+
+
+## Uppdatering 2026-11-02 – Vindbrukskollen och Åtgärder i vatten
+
+Länsstyrelsernas öppna-data-sida bekräftar att Vindbrukskollen och Åtgärder i vatten får kopieras, bearbetas och distribueras kostnadsfritt med Länsstyrelsen som källa. För Vindbrukskollen gäller detta datainnehållet, inte karttjänstens upphovsrättsskyddade bakgrundskartor. För Åtgärder i vatten ska den exakta datamängdens producent och metadata kontrolleras eftersom systemet är gemensamt med Havs- och vattenmyndigheten.
+
+Den gemensamma GIS-policyn anger CC0 som normal utgångspunkt för externt publicerade geodata, men Geodatakatalogen kräver licenskontroll per datamängd. Tidigare identifierade exempel visar både CC0 och CC BY 4.0. Life2Taiga-lagret är fortsatt gul status tills separat rättighetsbesked finns.
+
+Källor:
+- https://www.lansstyrelsen.se/varmland/om-oss/vara-tjanster/oppna-data.html
+- https://gis.lansstyrelsen.se/geodata/geodatakatalogen/
+- https://www.energimyndigheten.se/energisystem-och-analys/el--och-varmeproduktion/vindkraft/vindbrukskollen/
