@@ -104,6 +104,46 @@ sources:
       - Existing Skogskoll ingestion core and Supabase persistence are authoritative for alert workflow.
       - Do not duplicate or replace existing scan/session safety logic.
 
+  - source_id: skogsstyrelsen.samrad
+    name: "Skogsstyrelsen – Samråd point, line and area layers"
+    source_type: vector_observations
+    provider: Skogsstyrelsen
+    access_method: arcgis_rest
+    connector: samrad_archive
+    status: pilot
+    cadence: daily
+    geography: configured_pilot_area
+    format: [GeoJSON]
+    rights:
+      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
+      review_status: conditional_green
+      commercial_use: yes_if_source_layers_are_covered_by_geodata_terms
+      historical_storage: yes_if_source_layers_are_covered_by_geodata_terms
+      derivatives: yes_if_source_layers_are_covered_by_geodata_terms
+      redistribution: yes_if_source_layers_are_covered_by_geodata_terms
+      attribution: "Recommended: Skogsstyrelsen and Samråd layer name."
+      api_or_service_constraints: "Respect ArcGIS pagination, documented service behavior and reasonable request rates."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Verify layer-specific metadata for point, line and polygon sublayers before commercial publication; do not infer that a consultation record proves a planned or completed harvest."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    notes:
+      - "Three ArcGIS sublayers are collected separately: point 0, line 1 and polygon 2."
+      - "ObjectId, UUID and Beteckn are retained for case grouping and later matching."
+      - "The map previously queried these layers on demand; this pilot adds immutable daily snapshots."
+      - "Absence from a later snapshot is not interpreted as cancellation, deletion or implementation."
+
   - source_id: skogsstyrelsen.statistics
     name: "Skogsstyrelsen – statistikdatabasen"
     source_type: statistics
