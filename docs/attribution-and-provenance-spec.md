@@ -21,7 +21,7 @@ En myndighet kan vara distributör utan att äga alla rättigheter i materialet.
 
 ## 2. Föreslagna fält per källa eller produkt
 
-Fälten nedan är en målbild. Lägg inte in dem blint i befintligt YAML-schema; kontrollera först schema, validerare och befintliga källposter. Okända värden ska anges som okända, inte fyllas med antaganden.
+Fälten nedan är en målbild för den fortsatta utbyggnaden. En del av dem har införts i ett frivilligt `provenance`-block för tre pilotkällor; övriga fält ska inte läggas in blint utan kontroll av schema och befintliga konsumenter. Okända värden ska anges som okända, inte fyllas med antaganden.
 
 | Fält | Innebörd |
 |---|---|
@@ -147,9 +147,15 @@ Illustrativt exempel – inte ett fastställt produktionsschema:
 
 ### 8.1 Befintliga registerfält – nulägeskontroll
 
-Vid kontroll av `data-platform/config/sources.yml` den 2026-11-02 fanns källfält som `provider`, `rights.licence`, `rights.licence_url` och `rights.attribution`, men inga gemensamma fält för `attribution_text`, `attribution_required`, `producer` eller `distributor`. Den här specifikationen är därför en föreslagen utvidgning, inte en beskrivning av ett redan implementerat schema. Innan produktionsändring behöver vi kontrollera YAML-läsare, validering och eventuella konsumenter av `sources.yml`.
+Vid kontroll av `data-platform/config/sources.yml` den 2026-11-02 fanns källfält som `provider`, `rights.licence`, `rights.licence_url` och `rights.attribution`, men inga gemensamma fält för `attribution_text`, `attribution_required`, `producer` eller `distributor`. En valfri `provenance`-sektion har nu införts som pilot för tre källposter. Den befintliga `schema_version: 2` är oförändrad; äldre poster kan fortfarande sakna sektionen. Det är en bakåtkompatibel metadatautvidgning i registret, inte en ändring av den kanoniska datamodellen. Innan fler källor får sektionen behöver vi kontrollera eventuella konsumenter av `sources.yml`.
 
-## 9. Acceptanskriterier
+## 9. Validering och CI
+
+Ett enkelt registertest finns i `data-platform/scripts/validate_source_registry.py` och körs av `.github/workflows/validate-source-registry.yml` när källregistret, validatorn eller workflow-filen ändras. Testet kontrollerar YAML-syntax, schema_version 2, obligatoriska grundfält, unika source_id och struktur/statusvärden för valfria provenance-block. Det kontrollerar inte att en licensbedömning är juridiskt riktig eller att en källa faktiskt har lämnat ett tillstånd.
+
+`provenance` är frivilligt i nuläget. Nya poster kan införas stegvis. En status `pending_dataset_review` betyder att attributionstexten är preliminär och inte ett godkänt villkor.
+
+## 10. Acceptanskriterier
 
 - Varje publicerat lager har identifierbar producent, produkt/källa och rättighetsstatus.
 - Attribution visas när den krävs och rekommenderas där det är lämpligt.
