@@ -1,5 +1,7 @@
-# Compliance fields are a conservative, source-level screening layer. They do not constitute legal approval.
-# Resolve each flag against exact dataset/document/layer before external publication.
+# Compliance fields are a source-level screening and evidence layer; they do not constitute legal approval.
+# Apply the applicable legal hierarchy and general statutory rules even when a source-specific field is silent or unknown.
+# Silence/unknown metadata is not by itself a prohibition or a permission; identify the concrete unresolved legal fact.
+# Restrict only the affected data/use where a specific legal or contractual obstacle is established.
 # Source and rights register for the forest-specific data platform.
 # Descriptive control register only: entries do not enable connectors or grant rights.
 # Never put credentials, refresh tokens, API keys or personal OneDrive item IDs here.
@@ -7,7 +9,7 @@
 
 schema_version: 2
 registry_checked_on: "2026-11-02"
-default_rule: "No commercial redistribution until the exact dataset, licence/version and API terms have been checked."
+default_rule: "Apply binding law and the legal hierarchy first. Silence or unknown source metadata is not by itself a prohibition or permission; assess the concrete use under general law and valid applicable licences/contracts, and restrict only the affected element where a specific obstacle is established."
 
 sources:
   - source_id: skogsstyrelsen.volume.omdrev3
