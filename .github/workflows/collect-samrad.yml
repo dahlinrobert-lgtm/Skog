@@ -41,13 +41,16 @@ jobs:
       - name: Collect point, line and polygon layers
         run: python scripts/collect_samrad.py
       - name: Build and validate combined harvest event bundle
-        run: python scripts/build_harvest_event_bundle.py
+        run: |
+          python scripts/build_harvest_event_bundle.py
+          mkdir -p docs/data
+          cp data/harvest_event_bundle.json docs/data/harvest_event_bundle.json
       - name: Publish latest result, event bundle and immutable snapshot
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/samrad_latest.json data/harvest_event_bundle.json data/samrad_snapshots
+          git add data/samrad_latest.json data/harvest_event_bundle.json docs/data/harvest_event_bundle.json data/samrad_snapshots
           if git diff --cached --quiet; then
             echo "No Samråd changes to publish."
             exit 0
