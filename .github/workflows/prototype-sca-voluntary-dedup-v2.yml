@@ -1,0 +1,32 @@
+name: Prototype SCA voluntary cross-tile deduplication v2
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/prototype_sca_voluntary_dedup_v2.py"
+      - ".github/workflows/prototype-sca-voluntary-dedup-v2.yml"
+permissions:
+  contents: read
+jobs:
+  prototype:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT and geometry libraries
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3"
+      - name: Compile
+        run: python -m py_compile scripts/prototype_sca_voluntary_dedup_v2.py
+      - name: Run conservative deduplication prototype v2
+        run: python scripts/prototype_sca_voluntary_dedup_v2.py
+      - name: Validate JSON
+        run: python -m json.tool sca-voluntary-dedup-prototype-v2.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-voluntary-dedup-prototype-v2
+          path: sca-voluntary-dedup-prototype-v2.json
+          if-no-files-found: error
+          retention-days: 30
