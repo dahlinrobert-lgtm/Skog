@@ -6,6 +6,16 @@
 
 ## 1. Sammanfattning
 
+### Prioriterad ordning för händelsekedjan
+
+1. **Avverkningsanmälningar** – primär ingång: registrering, ändringar, status och historik.
+2. **Utförda avverkningar från en oberoende, icke-satellitbaserad källa** – ska kopplas till anmälan när sådan källa och dess metod har verifierats.
+3. **Samråd och myndighetsärenden** – kompletterande händelser som kan knytas till ärende-ID, fastighet eller geografi.
+4. **Satellitbaserade förändringssignaler** – lägsta prioritet; används senare som kompletterande indikation, aldrig som krav för att en kedja ska kunna skapas.
+
+**Viktig källavgränsning:** Det befintliga lagret som i repot kallas utförda avverkningar innehåller `Forebild`/`Efterbild`-fält och analysen beskriver det uttryckligen som satellitbaserad förändringsdetektion. Det är därför inte en oberoende verifiering av att en anmälan har verkställts. Lagret ska tills vidare klassas som satellitindikation och inte användas som prioriterad, verifierande källa i händelsekedjan. En framtida källa för registrerade/rapporterade utförda åtgärder måste bedömas separat.
+
+
 Skog har redan flera viktiga byggstenar: återkommande hämtning, snapshots, deltaarkiv, historik för avverkningsanmälningar, insamling av utförda avverkningar och en rumslig/tidsmässig analys mellan planerade och utförda objekt.
 
 Det som ännu saknas är ett gemensamt, källoberoende lager som binder ihop dessa observationer till **kanoniska händelser och händelsekedjor** och publicerar dem i ett enhetligt bevakningsflöde. De befintliga analyserna producerar användbara delresultat, men de är inte samma sak som en gemensam händelsemotor eller ett produktionssatt aviseringsflöde.
@@ -341,7 +351,27 @@ Koppla kanoniska händelser till användarens bevakningsområden. Lägg till ded
 - Händelseflödet kan fungera utan att användaren öppnar kartan.
 - Aviseringar är idempotenta och går att förklara i efterhand.
 
-## 12. Nästa konkreta steg
+## 12. Genomförd första implementation
 
-Nästa implementation bör vara **Leverans 1: händelsekontrakt + validerare**, därefter **Leverans 2: avverkningskedjan som vertikal pilot**. Börja inte med att ändra webbgränssnittet eller aktivera utskick. Vi ska först kunna skapa och kontrollera en korrekt händelsekedja från befintliga snapshots.
+Följande finns nu i repot:
+
+- `scripts/build_harvest_event_bundle.py` bygger ett deterministiskt händelsepaket från aktuell lyckad avverkningsanmälan och den befintliga notifikationshistoriken.
+- En kanonisk händelse och en första uppföljningskedja skapas per källpost.
+- Varje händelse har primärt källbelägg, original-ID, snapshotreferens, geometrireferens, källstatus, registreringsdatum och observationstider.
+- Händelsetexten säger uttryckligen att en registrerad anmälan inte är belägg för utförd avverkning.
+- Byggaren validerar paketet mot det gemensamma JSON-schemat innan det skrivs.
+- Gräsmyrs ordinarie workflow kör byggaren efter historik och analys och committar `data/harvest_event_bundle.json`.
+- CI testar både schemat och byggaren.
+
+Detta är första vertikala snittet, inte den färdiga flerkälliga kedjan. Det producerar ännu ingen länk mellan anmälan och en oberoende registrerad utförd åtgärd.
+
+## 13. Nästa konkreta steg
+
+1. Identifiera och verifiera en icke-satellitbaserad källa för utförd åtgärd, eller konstatera att det saknas en sådan användbar källa.
+2. Koppla in Länsstyrelsens samråds- och diariedata med ärende-ID som förstahandsnyckel och geografi/tid som kompletterande matchningsstöd.
+3. Bygg relationer och kedjor mellan oberoende källobservationer, med metod och säkerhetsklass.
+4. Lägg satellitbaserade förändringssignaler sist som valfri kompletterande evidens.
+5. Koppla det validerade händelsepaketet till bevakningsflödet och därefter aviseringskön.
+
+Ändra inte webbgränssnittet eller aktivera externa utskick innan flerkälliga samband kan förklaras och granskas.
 
