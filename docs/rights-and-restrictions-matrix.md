@@ -78,20 +78,19 @@
 
 ## 4. Obligatoriska fält i källregistret
 
-Bedöm följande separat i `data-platform/config/sources.yml` eller i dataset-/handlingsregistret:
+Varje källa i `data-platform/config/sources.yml` har nu ett separat block `compliance`. Fälten är en konservativ första screening och ska förfinas mot exakt dataset, handling, lager och avsedd användning:
 
-- `access_basis`: offentlig handling, öppna data, licens, avtal eller annan grund.
-- `secrecy_review`: not_applicable / checked / redacted / unresolved.
-- `personal_data`: none_known / incidental / systematic / sensitive_or_criminal / unresolved.
-- `gdpr_lawful_basis`: rättslig grund och dokumentationsreferens, eller not_applicable.
-- `third_party_rights`: none_identified / licensed / permission_required / unresolved.
-- `map_rights`: not_applicable / explicit_open_licence / authority_created_reviewed / third_party_or_unknown.
-- `research_data_status`: not_research_data / research_data_under_2022_818 / research_publication / unresolved.
-- `commercial_use`, `historical_storage`, `derivatives`, `customer_display`, `redistribution`: bedöms var för sig.
-- `evidence_reference`, `reviewed_on`, `next_review_due`, `review_owner`.
+- `secrecy_review`: sekretessprövning på handling-/uppgiftsnivå.
+- `personal_data_review`: kontroll av personuppgifter och risk vid länkning/kombination.
+- `gdpr_lawful_basis`: rättslig grund krävs om personuppgifter behandlas.
+- `map_and_geodata_rights`: kontroll av produkt/lager, bakgrundskartor och underliggande data.
+- `research_material_status`: kontroll om materialet är forskningsdata, publikation eller annan forskningsprodukt.
+- `third_party_rights`: kontroll av producentkedja, bilagor och inbäddat material.
+- `publication_gate`: stoppar extern publicering när relevant granskning är olöst.
+- `assessment_scope`: åtkomst, lagring, härledningar, kundvisning och vidare distribution bedöms separat.
+- `evidence_reference`, `reviewed_on`, `next_review`: spårbar dokumentation och ajourhållning.
 
-Ett enda grönt/rött licensfält får inte ersätta dessa bedömningar. En källa kan vara fri att läsa och analysera men inte fri att återpublicera.
-
+Dessa fält är inte en juridisk garanti eller ett automatiskt godkännande. Standardvärdena är avsiktligt försiktiga och ska ersättas/kompletteras med källspecifika slutsatser när underlag finns.
 ## 5. Kontrollflöde före kundpublicering
 
 1. Identifiera exakt dataset, dokument, lager eller API-fält.
