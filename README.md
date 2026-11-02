@@ -2,6 +2,9 @@
 
 Monitor forestry notifications and imagery freshness around Gräsmyr, Nordmaling municipality.
 
+## Product direction
+- [Product inspiration and roadmap](docs/product-inspiration-and-roadmap.md): lessons from Naturkartan and Skogsmonitor, current map capabilities, and prioritized next steps.
+
 ## Initial area
 Approximate centre: 63.74646 N, 19.66455 E. Default radius: 10 km. This is a search centre, not a cadastral boundary.
 
