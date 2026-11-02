@@ -1,0 +1,32 @@
+name: Map SCA voluntary polygon tile neighborhoods
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/map_sca_voluntary_polygon_neighborhood.py"
+      - ".github/workflows/map-sca-voluntary-polygon-neighborhood.yml"
+permissions:
+  contents: read
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT decoder
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3"
+      - name: Compile
+        run: python -m py_compile scripts/map_sca_voluntary_polygon_neighborhood.py
+      - name: Probe bounded polygon neighborhoods
+        run: python scripts/map_sca_voluntary_polygon_neighborhood.py
+      - name: Validate JSON
+        run: python -m json.tool sca-voluntary-polygon-neighborhood.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-voluntary-polygon-neighborhood
+          path: sca-voluntary-polygon-neighborhood.json
+          if-no-files-found: error
+          retention-days: 30
