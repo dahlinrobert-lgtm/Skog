@@ -80,6 +80,9 @@ jobs:
           fi
           search_term="${SEARCH_TERM_INPUT:-naturvårdsbränning}"
           extra_terms="${SEARCH_TERMS_INPUT:-}"
+          if [ "${GITHUB_EVENT_NAME:-}" = "schedule" ] && [ -z "$extra_terms" ]; then
+            extra_terms="vattenverksamhet"
+          fi
           python scripts/search_lansstyrelsen_diary_browser.py \
             --county "$county" \
             --search-term "$search_term" \
