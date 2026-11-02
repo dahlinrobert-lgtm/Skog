@@ -1,6 +1,6 @@
 # Öppna data och kommersiell användning – Skog
 
-**Registerdatum:** 2026-11-01  
+**Registerdatum:** 2026-11-02  
 **Syfte:** Bedöma vilka datakällor som kan användas i en kommersiell skoglig data- och analystjänst.  
 **Omfattning:** Skog-repot, Skogskoll och den gemensamma data-plattformen.
 
@@ -45,7 +45,7 @@ Status i registret är en riskklassning för projektet, inte ett bindande juridi
 | Länsstyrelsernas diarier | Gul, per handling | Offentlig handling är inte automatiskt fri att återpublicera; sekretess, GDPR och tredje mans rättigheter |
 | Naturvårdsverket – listade öppna data | Villkorad grön | Öppna data får användas fritt; kontrollera informationsansvarig och tredjepartsrättigheter |
 | Life2Taiga – naturvårdsåtgärder | Gul | Fastställ producent, projektvillkor och rätt att lagra/återpublicera geometrier |
-| SLU Torvkarta 1.0 | Gul | SLU är produktansvarig; öppen nedladdning men licens för kommersiell återanvändning måste bekräftas, särskilt p.g.a. Lantmäteriets höjddata som modellunderlag |
+| SLU Torvkarta 1.0 | Villkorad grön | SLU har skriftligen bekräftat fri användning även kommersiellt med angiven källhänvisning; kontrollera fortfarande hur underliggande Lantmäteridata påverkar återdistribution av original/härledda raster |
 | Skogsstyrelsen – Ståndortsindex SIS | Villkorad grön | Skogsstyrelsens geodata omfattas normalt av CC0; kontrollera produktbeskrivningens särskilda licens-/erkännandesektion |
 | SGU – geologiska data | Grön | CC0 sedan 9 juni 2024; bilder, illustrationer och annat webbmaterial kan ha separata villkor |
 | Sakfråga | Gul, avtalsgranskning | API-åtkomst fastställer inte automatiskt rätt att återanvända bilagor eller dokument kommersiellt |
@@ -202,3 +202,79 @@ Registret ska ses över när:
 - ett avtal förnyas eller upphör.
 
 **Viktig produktprincip:** Sälj i första hand den egna historiken, bearbetningen, analysen, bevakningen och programvarufunktionaliteten. Distribuera rådata vidare endast när rättigheterna uttryckligen tillåter det. Denna princip minskar risk men ersätter inte licenskontrollen.
+
+
+## 10. Uppdatering efter skriftliga besked och bredare källgranskning – 2026-11-02
+
+### SLU Torvkarta 1.0 – skriftligt besked mottaget
+
+Den 2 november 2026 svarade William Lidberg (SLU) på vår fråga om kommersiell användning. Beskedet är att den nuvarande Torvkartan saknar en formell licens, men får användas fritt så länge SLU:s föreskrivna källhänvisning anges:
+
+> Källa: Torvkarta, Institutionen för Skogens Ekologi och Skötsel, SLU
+
+Engelsk formulering:
+
+> Source: Peatmap, Dept. of Forest Ecology and Management, Swedish University of Agricultural Sciences.
+
+**Uppdaterad status: villkorad grön för Torvkarta 1.0.** Den skriftliga bekräftelsen ger ett betydligt bättre underlag än enbart fri nedladdning. Registrera mejlet som rättighetsunderlag. Använd den exakta källhänvisningen i kartor, rapporter och produktinformation.
+
+SLU uppger även att en ny torvkarta planeras att publiceras via Skogsstyrelsen i december 2026 under CC0. Det är ett framtida besked, inte en licens som redan gäller för nuvarande karta. När den nya produkten publiceras ska vi kontrollera den slutliga produktbeskrivningen, metadata, producentkedjan och om CC0 uttryckligen gäller för de raster som distribueras.
+
+**Kvarstående försiktighet:** Torvkartan har tagits fram med bland annat Lantmäteriets höjddata som modellunderlag. SLU:s besked gäller Torvkartan som produkt, men vi ska inte anta att det ger rätt att återpublicera Lantmäteriets ursprungliga höjddata. Håll originaldata från Lantmäteriet åtskilda från SLU:s modellresultat och bevara SLU:s mejl som bevis för produktens användningsvillkor.
+
+Källor:
+- SLU:s produktmetadata: https://www.slu.se/miljoanalys/statistik-och-miljodata/miljodatakatalogen/torvkarta/
+- SLU:s karttjänster och nedladdning: https://www.slu.se/en/about-slu/organisation/departments/forest-ecology-management/research/themes/digital-landscapes/torvkartor/here-are-the-maps/
+- Skriftligt besked från William Lidberg, SLU, mottaget 2026-11-02 (sparas i mejltråden).
+
+### Länsstyrelserna – generell princip och datasetnivå
+
+Länsstyrelsernas gemensamma GIS-policy anger CC0 som normal utgångspunkt för externt publicerade geodata, om det inte finns skäl för annat. Geodatakatalogen anger samtidigt uttryckligen att licensen ska kontrolleras i metadata för varje dataset. Det innebär att CC0 är en stark huvudregel, men inte ett generellt frikort för alla länsstyrelsedata.
+
+Exempel som nu har stöd i publicerade källor:
+
+- **Vindbrukskollen:** själva datainnehållet kan hämtas som data/export och är öppet. Metadata för de lager vi tidigare granskat anger CC0. Bakgrundskartor i karttjänsten är däremot upphovsrättsskyddade och får inte återanvändas fritt. Hämta och visa dataposter/geometrier, inte skärmbilder eller bakgrundskartografi.
+- **Åtgärder i vatten:** Länsstyrelsens öppna data-information anger att materialet får kopieras, bearbetas och distribueras kostnadsfritt med Länsstyrelsen som källa. Systemet är gemensamt med Havs- och vattenmyndigheten; dokumentera därför även den specifika datamängdens producent och metadata.
+- **Grön infrastruktur och övriga länsstyrelselager:** exempel vi granskat visar både CC0 och CC BY 4.0. Licens ska därför alltid hämtas från den exakta metadataposten.
+- **Life2Taiga:** fortsatt gul. Att tjänsten ligger på Länsstyrelsens server eller ingår i ett EU-projekt visar inte i sig vilken licens som gäller för vårt specifika FeatureServer-lager.
+
+Källor:
+- Geodatakatalogen: https://gis.lansstyrelsen.se/geodata/geodatakatalogen/
+- Gemensam intern katalogmanual/GIS-policy: https://ext-dokument.lansstyrelsen.se/Gemensamt/GDK/Manual/Lansstyrelserna_Geodatakatalog_manual_intern.pdf
+- Öppna data, exempel på Vindbrukskollen och Åtgärder i vatten: https://www.lansstyrelsen.se/varmland/om-oss/vara-tjanster/oppna-data.html
+- Vindbrukskollen och bakgrundskartornas upphovsrätt: https://www.energimyndigheten.se/energisystem-och-analys/el--och-varmeproduktion/vindkraft/vindbrukskollen/
+
+### Fler myndighets- och datakällor – verifierade villkor
+
+| Källa | Bedömning för kommersiell användning | Praktisk regel |
+|---|---|---|
+| **Lantmäteriet – uttryckligen listade öppna data** | Grön, CC0 | Kommersiell användning, bearbetning och publicering tillåts. |
+| **Lantmäteriet – Fastighetsindelning Direkt** | Gul i väntan på produktvillkor/juridisk prövning | Produkten är avgiftsfri men kräver behörighet och juridisk prövning; villkoren avser värdefulla datamängder som innehåller personuppgifter. Be om skriftligt besked om lagring, historik, härledda produkter och kundvisning. Detta är inte samma sak som de generella CC0-produkterna. |
+| **SCB – öppna data och Statistikdatabasens API** | Grön, CC0 för data som SCB tillhandahåller som öppna data | Fri kommersiell användning och spridning. Ange annan statistikansvarig myndighet när SCB:s API visar sådan källhänvisning. Följ API-gränsen: högst 10 anrop per 10 sekunder och högst 100 000 värden per tabell. Tjänsten får inte beskrivas som officiellt SCB-partnerskap. |
+| **Kolada API** | Grön | Avgiftsfri användning, inget avtal krävs och kommersiell användning är uttryckligen tillåten. Ange ”Källa: Kolada” när data används i tjänst; ange inte Kolada som källa för egna bearbetningar. Påstå inte officiellt partnerskap med RKA/Kolada. |
+| **SMHI öppna data** | Grön med attribution, CC BY 4.0 SE | Kommersiell användning, kopiering, distribution och bearbetning tillåts. Ange SMHI och om materialet ändrats. Konsekvensbaserade varningar har separata villkor och får inte ändras. Använd dokumenterade API:er och följ belastningsriktlinjer. |
+| **Trafikverket – öppna data** | Grön för produkter som faktiskt publiceras som öppna data, normalt CC0 | Trafikverket anger fri kommersiell användning och publicering för öppna data. Kontrollera alltid exakt produkt. Trafikinformations-API kräver registrering och att API-licensen accepteras; tekniska kvoter och villkor gäller separat. |
+| **Naturvårdsverket** | Villkorad grön per dataset | Öppna data får användas fritt, men producent/informationsansvarig kan vara en annan organisation. NMD2023 och VMI har exempel på CC0-metadata. Kontrollera varje dataset och tredjepartsinslag. |
+| **SGU geologiska data** | Grön, CC0 för geologiska data | Kommersiell användning, bearbetning och spridning tillåts. Webbplatsbilder, rapporter och illustrationer kan ha separata villkor. |
+| **Copernicus Sentinel** | Villkorad grön för Sentinel-data | Fri kommersiell användning, bearbetning och distribution enligt Sentinel-villkoren. Detta omfattar inte automatiskt allt innehåll i Copernicus Data Space-portalen. |
+| **Boverkets Klimatdatabas** | Gul tills skriftligt klarläggande av produktanvändning | Boverkets specialvillkor anger fri användning av generiska klimatdata med källhänvisning, men kräver att villkoren godkänns och säger att annan användning än den uttryckligen reglerade ska få skriftligt godkännande. Begär bekräftelse för kommersiell abonnemangstjänst, lagring och kundvisning innan integration. |
+| **MSB WMS och övriga geodata** | Gul, dataset för dataset | Vi har inte verifierat en gemensam återanvändningslicens för de MSB-lager vi tittat på. WMS-åtkomst/visning ska inte tolkas som rätt att lagra, bearbeta eller återpublicera. Hämta metadata och kontrollera licens per lager. |
+| **Kungjort – kommunala protokoll/API** | Gul, avtalsfråga | Stefan har erbjudit pilot och beskrivit API/data, men kostnad och villkor för historisk lagring, kommersiell användning, kundvisning, utdrag och dokumentbilagor återstår att avtala. API-åtkomst är inte i sig ett återanvändningstillstånd för alla dokument. |
+| **Sveaskog, SCA och Skogsindustrierna** | Röd tills skriftligt tillstånd/avtal | Publika kartor, WMS eller nedladdningsbara filer innebär inte automatiskt rätt till kommersiell lagring eller vidare distribution. Avtal ska uttryckligen täcka historik, bearbetning, kundvisning och export. |
+
+Källor:
+- Lantmäteriet öppna data: https://www.lantmateriet.se/sv/geodata/vara-produkter/avgiftsfria-produkter/oppna-data/
+- Lantmäteriet Fastighetsindelning Direkt: https://geotorget.lantmateriet.se/geodataprodukter/fastighetsindelning-direkt-api
+- Lantmäteriet villkor och avgifter: https://www.lantmateriet.se/sv/geodata/vara-produkter/Villkor-och-avgifter/
+- SCB öppna data: https://www.scb.se/vara-tjanster/oppna-data
+- Kolada API: https://kolada.se/om-oss/api/
+- SMHI villkor: https://www.smhi.se/data/om-smhis-data/villkor-for-anvandning
+- Trafikverket öppna data: https://bransch.trafikverket.se/tjanster/data-kartor-och-geodatatjanster/
+- Boverkets Klimatdatabas-villkor: https://www.boverket.se/contentassets/eb39a37752af4f74a61ccf92ac21cd5b/anvandarvillkor-for-oppna-data-for-boverkets-klimatdatabas.pdf
+- Skogsstyrelsens rasterkonto och åtkomst: https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/anvandarkonto/
+
+### Slutsats för Skog
+
+Principen om öppen kommersiell användning gäller alltså långt utanför Skogsstyrelsen. De tydligaste möjligheterna är Lantmäteriets listade CC0-produkter, SCB:s öppna data, Kolada, SMHI:s öppna data, Trafikverkets öppna data, SGU:s geologiska data och många dataset från Länsstyrelserna och Naturvårdsverket.
+
+Men det finns ingen generell myndighetslicens som automatiskt täcker alla produkter. Vi ska fortsätta registrera rättigheter per produkt och skilja mellan licens, teknisk åtkomst och rätt att publicera vidare. Det är särskilt viktigt för Lantmäteriets fastighetsdata, Länsstyrelsernas diarier, MSB-lager, Boverkets specialvillkor och privata skogsbolags data.
