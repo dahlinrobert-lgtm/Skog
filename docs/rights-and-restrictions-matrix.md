@@ -183,7 +183,7 @@ Dessa fält är inte en juridisk garanti eller ett automatiskt godkännande. Sta
 6. Registrera bevisunderlag, datum, status och nästa kontroll.
 7. Publicera först när samtliga relevanta kontroller har godkänt utfall.
 
-**Stoppregel:** Om sekretess, personuppgiftsgrund, kartlicens eller tredje mans rättigheter är oklara ska rådata och dokument inte publiceras externt. Även intern testning måste ha laglig grund och följa sekretess och tjänstevillkor.
+**Avgränsad stoppregel:** Om en konkret sekretessregel, brist på rättslig grund för personuppgiftsbehandling eller tillämplig licens-/tredjemansbegränsning hindrar en viss användning ska just den uppgiften, filen, lagret eller publiceringsformen stoppas. Om frågan endast är okänd ska den dokumenteras och utredas utifrån tillämplig generell lag och övrigt underlag; okänd status är inte i sig ett generellt publiceringsförbud. Separata delar som har självständigt rättsligt stöd ska inte blockeras automatiskt. Även intern testning måste ha laglig grund och följa sekretess och bindande tjänstevillkor.
 
 ## 6. Ajourhållning
 
@@ -213,3 +213,8 @@ Följande rapporter innehåller mer detaljerade bedömningar för enskilda käll
 - [Länsstyrelsernas geodatatjänster, Vindbrukskollen och Naturvårdsregistret – rättighetsgranskning 2026-11-02](source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md)
 
 **Viktig status:** Vindbrukskollens verifierade CC0-datamängd är skild från bakgrundskartorna. Länsstyrelsernas WMS-villkor ska tillämpas per datamängd enligt metadata. Naturvårdsregistrets centrala tjänstepost anger okända användningsvillkor; kommersiell publicering ska därför vänta tills exakt lagerlicens är verifierad.
+
+
+## 9. Branschpraxis för källredovisning och attribution
+
+Se [Branschpraxis – källredovisning och återanvändning av öppen data och geodata](industry-practice-open-data-attribution.md). Rapporten samlar exempel från MapAndMove, Naturkartan, OnCoord, kart-api.se och OpenStreetMap Foundation samt kompletterande vägledning från Lantmäteriet, SMHI och lärosäten. Den används som jämförelsematerial för källsidor, attribution i kartor, licensförklaringar, proveniens i exporter och tydlig åtskillnad mellan källdata och Skogs egna analyser. Branschpraxis ersätter inte den rättsliga bedömningen av varje källa och användning.
