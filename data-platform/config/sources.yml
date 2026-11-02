@@ -196,10 +196,11 @@ sources:
       third_party_rights: check_provider_chain_attachments_and_embedded_material
       publication_gate: block_external_publication_when_relevant_review_is_unresolved
       assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: record_in_source_rights_evidence
+      evidence_reference: docs/source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
+      - "Detailed preliminary assessment: docs/source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md"
       - Coverage and search behavior vary by county.
       - A zero-result response is not evidence that no relevant cases exist.
       - Separate metadata, authority-authored decisions, maps, photographs and third-party attachments.
@@ -1542,10 +1543,11 @@ sources:
       third_party_rights: check_provider_chain_attachments_and_embedded_material
       publication_gate: block_external_publication_when_relevant_review_is_unresolved
       assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: record_in_source_rights_evidence
+      evidence_reference: docs/source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
+      - "Detailed preliminary assessment: docs/source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md"
       - "Layer 2 with full machine-readable extracted protocol text is the target; AI articles are not the authoritative source."
       - "Pilot discussion covers Luleå, Umeå, Skellefteå, Örnsköldsvik and Sundsvall."
       - "Require stable document IDs, diary-number linkage, source URLs and clarity on OCR text rights."
