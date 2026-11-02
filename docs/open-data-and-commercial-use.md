@@ -18,7 +18,7 @@ Bedöm alltid den exakta datamängden och produkten – inte bara myndigheten el
 6. Tekniska API-/tjänstevillkor, inklusive autentisering, anropsbegränsningar, cache och tillgänglighet.
 7. Sekretess, personuppgifter, upphovsrätt och tredje mans rättigheter.
 
-En öppen licens ger inte automatiskt rätt att återpublicera tredjepartsinnehåll som råkar finnas i samma tjänst. Offentlig åtkomst till en handling är inte heller i sig en generell återanvändningslicens.
+En öppen licens ger inte automatiskt rätt att återpublicera tredjepartsinnehåll som råkar finnas i samma tjänst. Offentlig åtkomst till en handling är inte heller i sig en generell återanvändningslicens. Samtidigt gäller att frånvaro av ett särskilt villkor eller en uppgift i källans metadata inte i sig innebär förbud: bedömningen ska alltid börja i tillämplig överordnad rätt och därefter pröva om giltiga specialregler, licenser eller avtal faktiskt ändrar utgångspunkten. Se den överordnade tolkningsprincipen i [rättighets- och begränsningsmatrisen](rights-and-restrictions-matrix.md#0-overordnad-tolkningsprincip--rattsordningen-gar-fore-kallregistrets-luckor).
 
 ## 2. Statusnivåer
 
@@ -26,8 +26,8 @@ En öppen licens ger inte automatiskt rätt att återpublicera tredjepartsinneh�
 |---|---|---|
 | Grön | Kommersiell användning är tillåten enligt identifierad öppen licens | Följ attribution och tekniska villkor |
 | Villkorad grön | Kommersiell användning tillåten, men produkt-/datasetvillkor måste bekräftas | Spara produktmetadata och kontrollera villkor |
-| Gul | Oklart eller beroende av handling, personuppgift eller avtal | Ingen extern publicering före granskning |
-| Röd | Kräver uttryckligt avtal/vidareförädlingsrätt eller är inte öppet | Ingen kommersiell användning före skriftligt klartecken |
+| Gul | En konkret rättsfråga eller omständighet är ännu inte klarlagd | Utred den berörda delen; inte ett automatiskt totalförbud. Separera och använd delar som har självständigt rättsligt stöd |
+| Röd | Ett tillämpligt förbud, en rättighetsbrist eller ett nödvändigt tillstånd som saknas har identifierats | Stoppa den berörda användningen tills hindret är undanröjt |
 
 Status i registret är en riskklassning för projektet, inte ett bindande juridiskt besked.
 
