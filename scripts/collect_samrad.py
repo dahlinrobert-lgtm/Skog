@@ -93,7 +93,11 @@ def fetch_layer(session: requests.Session, name: str, url: str, envelope: dict[s
         added = 0
         for feature in page:
             props = feature.get("properties") or {}
-            oid = feature.get("id") or props.get("ObjectId") or props.get("OBJECTID")
+            oid = feature.get("id")
+            if oid in (None, ""):
+                oid = props.get("ObjectId")
+            if oid in (None, ""):
+                oid = props.get("OBJECTID")
             if oid in (None, ""):
                 raise RuntimeError(f"{name}: feature without stable ObjectId")
             key = str(oid)
