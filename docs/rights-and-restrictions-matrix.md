@@ -29,6 +29,18 @@ Följande är en förenklad orientering. EU-rätten har en särskild ställning 
 
 Domstolar och andra offentliga organ ska enligt regeringsformens regler om normprövning inte tillämpa föreskrifter som strider mot överordnad författning (11 kap. 14 § och 12 kap. 10 § RF).
 
+### 0.1.1 Tolkningsprinciper när regler möts eller är tysta
+
+Normhierarkin avgör vilken regel som har företräde vid normkonflikt. När regler på samma nivå överlappar, eller när en regel inte uttryckligen behandlar en viss detalj, behöver även vanliga juridiska tolkningsprinciper användas:
+
+- **Lex superior:** en regel på högre normnivå har företräde framför en motstridig regel på lägre nivå.
+- **Lex specialis:** en mer specialiserad regel kan ha företräde framför en mer generell regel inom det område som specialregeln faktiskt reglerar.
+- **Lex posterior:** en senare regel på samma normnivå kan ha företräde framför en äldre motstridig regel, beroende på lagstiftningens utformning och övergångsregler.
+- **EU-rättens företräde:** inom EU-rättens tillämpningsområde ska motstridig nationell rätt hanteras enligt principen om EU-rättens företräde.
+- **Systematisk och ändamålsenlig tolkning:** bestämmelser ska läsas i sitt sammanhang, mot lagens syfte, definitioner, undantag och relevanta förarbeten/praxis – inte isolerat eller genom att anta att tystnad betyder förbud.
+
+Dessa principer är inte en mekanisk genväg. De måste tillämpas på den konkreta normkonflikten och får inte användas för att skapa ett tillstånd som strider mot en tydlig bindande regel. Vid osäkerhet ska den faktiska frågan och den rättsliga grunden dokumenteras, inte ersättas med ett generellt antagande.
+
 ### 0.2 Avtal, licenser och metadata är inte en egen nivå i normhierarkin
 
 Avtal och licenser är inte författningar och ska inte placeras mellan lag och förordning. De kan däremot skapa bindande rättigheter och skyldigheter mellan parter eller ge en rättighetshavare tillstånd till användning.
