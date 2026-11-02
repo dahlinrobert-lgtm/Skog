@@ -6,6 +6,8 @@
 # Descriptive control register only: entries do not enable connectors or grant rights.
 # Never put credentials, refresh tokens, API keys or personal OneDrive item IDs here.
 # Rights are assessed per product/dataset, not merely per provider.
+# Optional provenance blocks are being piloted on selected sources; missing blocks are not legal decisions.
+# Validate structure and provenance fields with data-platform/scripts/validate_source_registry.py.
 
 schema_version: 2
 registry_checked_on: "2026-11-02"
