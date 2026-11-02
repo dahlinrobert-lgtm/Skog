@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-11-01T10:59:01.621152+00:00",
+  "observed_at": "2026-11-02T13:37:38.398255+00:00",
   "source": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaBrand/MapServer/0",
   "layer_name": "Ungefarligt_brandomrade",
   "expected_feature_count": 1747,
@@ -27,6 +27,6 @@
   "new_features": 0,
   "changed_features": 0,
   "removed_features": 0,
-  "baseline_created": true,
+  "baseline_created": false,
   "history_events_written": 0
 }
