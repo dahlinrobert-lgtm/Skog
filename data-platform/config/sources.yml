@@ -1027,7 +1027,7 @@ sources:
       derivatives: yes
       redistribution: yes_with_attribution
       attribution: "Ange Länsstyrelsen som källa; note the joint system with Havs- och vattenmyndigheten."
-      api_or_service_constraints: "Distinguish the public search/download interface and specific API endpoints. Confirm API-specific terms, fields and rate limits before bulk ingestion."
+      api_or_service_constraints: "Verified official ArcGIS REST read service: https://ext-geodata-acc.lansstyrelsen.se/arcgis/rest/services/atgarderivatten/lst_aiv_read/MapServer with Punkt (0), Linje (1), Polygon (2); EPSG:3006; query formats JSON, geoJSON, PBF; MaxRecordCount 2000. A separate search MapServer also exists. No bulk ingestion until service behaviour, pagination, update signals and product-specific terms are tested."
       evidence_checked_on: "2026-11-02"
       caveat: "Data are contributed by multiple actors and may include planned, ongoing, completed or status-unknown actions. Do not equate a registered action with independently verified completion."
     provenance:
