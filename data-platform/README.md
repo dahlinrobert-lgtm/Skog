@@ -26,6 +26,8 @@ The source registry now includes a first-pass commercial reuse assessment. Read 
 - `scripts/validate_event_bundle.py`: validates the event bundle schema and cross-record references; run with `python data-platform/scripts/validate_event_bundle.py`.
 - `examples/event-bundle.example.json`: synthetic example showing one registered event and a one-event chain; it is not live source data.
 - `scripts/collect_actions_in_water_sample.py`: read-only, limited sample snapshot collector for the Åtgärder i vatten ArcGIS REST service; default five features per geometry layer.
+- `scripts/collect_samrad.py`: daily pilot collector for Skogsstyrelsen Samråd point, line and polygon layers; stores immutable gzip snapshots and refuses partial publication.
+- `.github/workflows/collect-samrad.yml`: daily Samråd pilot collection and snapshot archive.
 - `.github/workflows/validate-source-registry.yml`: runs the registry validator on relevant changes.
 - `config/model-contract.yml`: initial logical record contract.
 - `../docs/open-data-and-commercial-use.md`: policy, source assessments and pre-publication checklist.
