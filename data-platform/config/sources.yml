@@ -4,7 +4,7 @@
 # Rights are assessed per product/dataset, not merely per provider.
 
 schema_version: 2
-registry_checked_on: "2026-11-01"
+registry_checked_on: "2026-11-02"
 default_rule: "No commercial redistribution until the exact dataset, licence/version and API terms have been checked."
 
 sources:
@@ -437,19 +437,19 @@ sources:
     expected_crs: EPSG:3006
     expected_resolution: "2 m x 2 m"
     rights:
-      licence: "SLU metadata states that anyone may download and use the Torvkarta; exact scope for commercial services, storage and redistribution is being confirmed"
-      licence_url: "https://www.slu.se/om-slu/organisation/institutioner/skogens-ekologi-skotsel/forskning/teman/digital-landskap/torvkartor/om-torvkartan/"
-      review_status: amber_written_confirmation_recommended
-      rights_contact: "Anneli Ågren, SLU (anneli.agren@slu.se); GIS support (gis-support@slu.se)"
-      correspondence_status: "Written clarification request sent 2026-11-01; awaiting response"
-      commercial_use: pending_rights_confirmation
-      historical_storage: pending_rights_confirmation
-      derivatives: pending_rights_confirmation
-      redistribution: pending_rights_confirmation
-      attribution: "Proposed citation: SLU Torvkarta 1.0, Anneli Ågren (2022); also acknowledge Skogsstyrelsen/Naturvårdsverket project where appropriate. Confirm exact wording with SLU."
-      api_or_service_constraints: "Skogsdatalabbet REST/WMS requires a user account. SLU publishes downloadable rasters, including large national mosaics. Obtain terms for bulk download and repeated extraction."
-      evidence_checked_on: "2026-11-01"
-      caveat: "SLU's product page says anyone may download and use the Torvkarta and gives a required source citation for publication. The precise scope for commercial subscription services, permanent historical storage, derivatives and customer redistribution remains under written clarification. Product uses GSD-Höjddata grid 2+ © Lantmäteriet as model basis; confirm any applicable restrictions."
+      licence: "No formal licence is attached to current Torvkarta 1.0; SLU confirmed in writing on 2026-11-02 that it may be used freely provided the prescribed attribution is included"
+      licence_url: "https://www.slu.se/miljoanalys/statistik-och-miljodata/miljodatakatalogen/torvkarta/"
+      review_status: conditional_green_written_permission_with_attribution
+      rights_contact: "William Lidberg, SLU; GIS support (gis-support@slu.se)"
+      correspondence_status: "Written confirmation received from William Lidberg 2026-11-02"
+      commercial_use: yes_with_attribution
+      historical_storage: yes_for_slu_torvkarta_product_subject_to_service_access_terms
+      derivatives: yes_with_attribution
+      redistribution: yes_for_slu_torvkarta_product_subject_to_underlying_rights_and_no_republication_of_lantmateriet_source_data
+      attribution: "Källa: Torvkarta, Institutionen för Skogens Ekologi och Skötsel, SLU. English: Source: Peatmap, Dept. of Forest Ecology and Management, Swedish University of Agricultural Sciences."
+      api_or_service_constraints: "Skogsdatalabbet REST/WMS requires a user account. Separate the right to use the SLU map product from account, bulk download, service quota and archive access conditions."
+      evidence_checked_on: "2026-11-02"
+      caveat: "SLU's written reply confirms free use of the current map with attribution. It does not grant rights to redistribute underlying Lantmäteriet source elevation data. A replacement map is expected in December 2026 and SLU says it will be CC0; verify the final product metadata and licence at publication."
     notes:
       - "Product contains classified peat-depth classes and continuous organic-layer thickness."
       - "Classified values: 0 water, 1 mineral soil, 2 >=30 cm, 3 >=40 cm, 4 >=50 cm."
@@ -890,3 +890,254 @@ sources:
     notes:
       - "Published 2026-01-12; covers areas west of E45, above and below the boundary for montane forest."
       - "Public description: https://www.lansstyrelsen.se/vasterbotten/om-oss/nyheter-och-press/nyheter---vasterbotten/2026-01-12-skogliga-vardetrakter-i-vasterbottens-vastra-delar-i-lansstyrelsens-karttjanst.html"
+
+  - source_id: lansstyrelsen.windbrukskollen
+    name: "Länsstyrelserna/Energimyndigheten – Vindbrukskollen data"
+    source_type: vector_observations
+    provider: Länsstyrelserna_and_Energimyndigheten
+    access_method: download_or_geodata_service
+    connector: windbrukskollen
+    status: existing
+    cadence: to_be_verified
+    geography: Sweden
+    format: [SHP, GeoPackage, XML, WMS]
+    rights:
+      licence: "CC0 for reviewed data layers where metadata states CC0; not for background map imagery"
+      licence_url: "https://gis.lansstyrelsen.se/geodata/geodatakatalogen/"
+      review_status: conditional_green_dataset_metadata_required
+      commercial_use: yes_for_cc0_data_layers
+      historical_storage: yes_for_cc0_data_layers
+      derivatives: yes_for_cc0_data_layers
+      redistribution: yes_for_cc0_data_layers
+      attribution: "Recommended: Länsstyrelserna/Energimyndigheten and exact layer name."
+      api_or_service_constraints: "Do not reuse copyrighted background maps; use downloadable feature data and respect service terms."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Wind-power project information may be supplied by operators and authorities and can have varying quality. Verify exact layer metadata and data provenance."
+    notes:
+      - "Do not publish screenshots or background cartography from the map service as if they were open data."
+
+  - source_id: lansstyrelsen.actions_in_water
+    name: "Länsstyrelserna/Havs- och vattenmyndigheten – Åtgärder i vatten"
+    source_type: vector_observations
+    provider: Länsstyrelserna_and_Havs_och_vattenmyndigheten
+    access_method: api_or_download
+    connector: to_be_implemented
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [JSON, REST, XLSX, SHP, WMS]
+    rights:
+      licence: "Free copying, processing and distribution with Länsstyrelsen as source according to published open-data terms"
+      licence_url: "https://www.lansstyrelsen.se/varmland/om-oss/vara-tjanster/oppna-data.html"
+      review_status: conditional_green_product_metadata_required
+      commercial_use: yes_with_attribution
+      historical_storage: yes_subject_to_exact_dataset_terms
+      derivatives: yes_with_attribution
+      redistribution: yes_with_attribution
+      attribution: "Ange Länsstyrelsen som källa; also retain the responsible data owner/producer where stated."
+      api_or_service_constraints: "Confirm exact API endpoint, producer, update policy and technical terms before bulk ingestion."
+      evidence_checked_on: "2026-11-02"
+      caveat: "The service is shared with Havs- och vattenmyndigheten. Verify the exact dataset metadata and status semantics."
+    notes:
+      - "Preserve whether an action is planned, ongoing, completed or has unknown status."
+
+  - source_id: scb.open_data
+    name: "SCB – öppna data och Statistikdatabasens API"
+    source_type: statistics_and_geodata
+    provider: SCB_and_other_statistics_responsible_authorities
+    access_method: api
+    connector: scb_pxweb
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [JSON, CSV]
+    rights:
+      licence: "CC0 for data SCB makes available as open data"
+      licence_url: "https://www.scb.se/vara-tjanster/oppna-data"
+      review_status: green_for_scb_open_data
+      commercial_use: yes
+      historical_storage: yes
+      derivatives: yes
+      redistribution: yes
+      attribution: "Not required for SCB CC0 data; cite another statistics authority where the SCB API identifies it as source."
+      api_or_service_constraints: "Maximum 10 requests per 10 seconds per IP and 100,000 values per table; do not imply official SCB partnership."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Only SCB open data are covered. Other statistics delivered through SCB may have another authority as source and must retain that attribution."
+    notes:
+      - "SCB data may be corrected over time; retain retrieval date and version/snapshot."
+
+  - source_id: kolada.api
+    name: "Kolada – API för nyckeltal"
+    source_type: municipal_statistics
+    provider: RKA_Kolada
+    access_method: api
+    connector: kolada_api
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [JSON]
+    rights:
+      licence: "Published Kolada API terms; no separate agreement required"
+      licence_url: "https://kolada.se/om-oss/api/"
+      review_status: green_commercial_use_explicit
+      commercial_use: yes
+      historical_storage: yes_subject_to_service_and_source_updates
+      derivatives: yes
+      redistribution: yes_with_attribution_when_using_unmodified_data
+      attribution: "Källa: Kolada for data used in a service; do not attribute own processed data to Kolada."
+      api_or_service_constraints: "Do not claim official RKA/Kolada partnership. Data may be revised or removed without separate notice."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Some underlying key indicators may originate from other authorities; retain source metadata for each indicator."
+    notes:
+      - "Store indicator ID, definition, unit, source and retrieval date."
+
+  - source_id: trafikverket.open_data
+    name: "Trafikverket – öppna data"
+    source_type: transport_and_infrastructure_data
+    provider: Trafikverket
+    access_method: api_or_download
+    connector: to_be_implemented
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [API, JSON, geodata_formats]
+    rights:
+      licence: "CC0 generally for Trafikverket open data; verify the exact product"
+      licence_url: "https://bransch.trafikverket.se/tjanster/data-kartor-och-geodatatjanster/"
+      review_status: conditional_green_product_specific
+      commercial_use: yes_for_open_data_products
+      historical_storage: yes_for_open_data_products
+      derivatives: yes_for_open_data_products
+      redistribution: yes_for_open_data_products
+      attribution: "Not required under CC0 unless product metadata specifies otherwise; recommended to cite Trafikverket."
+      api_or_service_constraints: "Traffic-information API requires registration and acceptance of its API licence; respect quotas and documented request limits."
+      evidence_checked_on: "2026-11-02"
+      caveat: "General CC0 policy applies to open data products, not automatically to all infrastructure data, map products or third-party content."
+    notes:
+      - "Register each product and endpoint separately."
+
+  - source_id: boverket.climate_database
+    name: "Boverket – Klimatdatabasen öppna data"
+    source_type: building_climate_data
+    provider: Boverket
+    access_method: api
+    connector: to_be_implemented
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [JSON, XML]
+    rights:
+      licence: "Boverket-specific open-data licence based on Swedish API licence"
+      licence_url: "https://www.boverket.se/contentassets/eb39a37752af4f74a61ccf92ac21cd5b/anvandarvillkor-for-oppna-data-for-boverkets-klimatdatabas.pdf"
+      review_status: amber_written_clarification_required
+      commercial_use: pending_written_confirmation_for_customer_service
+      historical_storage: pending_written_confirmation
+      derivatives: pending_written_confirmation
+      redistribution: pending_written_confirmation
+      attribution: "Boverket must be named as source."
+      api_or_service_constraints: "Terms must be accepted; other use beyond the expressly permitted scope requires written approval."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Do not assume a general CC0 licence. Ask Boverket to confirm commercial subscription-service use, storage, derived values and customer display."
+    notes:
+      - "Separate the API data from Boverket reports, images and other web content."
+
+  - source_id: msb.geodata
+    name: "MSB – geodata och WMS-lager"
+    source_type: geospatial_reference
+    provider: MSB
+    access_method: wms_or_download
+    connector: to_be_verified
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [WMS, dataset_specific]
+    rights:
+      licence: unknown_per_dataset
+      licence_url: "https://www.msb.se/"
+      review_status: amber_dataset_metadata_required
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "To be confirmed in exact layer metadata."
+      api_or_service_constraints: "WMS access/visualization does not establish download, archival, processing or redistribution rights."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Identify exact service and layer IDs and inspect metadata and third-party rights before commercial reuse."
+    notes:
+      - "Keep the source service endpoint and individual layer identifier in the registry."
+
+  - source_id: kungjort.municipal_documents
+    name: "Kungjort – kommunala protokoll och beslutsdokument API"
+    source_type: municipal_documents_api
+    provider: Premex_Kungjort
+    access_method: rest_api
+    connector: kungjort_api
+    status: pilot_discussion
+    cadence: daily_incremental_sync_to_be_confirmed
+    geography: Sweden_initial_five_municipalities
+    format: [JSON, extracted_text, PDF]
+    rights:
+      licence: pending_contract
+      licence_url: "https://handlingar.kungjort.se/openapi.yaml"
+      review_status: amber_commercial_terms_and_cost_pending
+      commercial_use: pending_written_agreement
+      historical_storage: pending_written_agreement
+      derivatives: pending_written_agreement
+      redistribution: pending_written_agreement
+      attribution: "To be agreed; retain document source URL and original-document reference."
+      api_or_service_constraints: "Agree pricing, API limits, historical access, daily incremental synchronization and retention before pilot."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Publicly accessible documents and API access do not automatically grant rights to reproduce all original documents or third-party attachments in a commercial service."
+    notes:
+      - "Layer 2 with full machine-readable extracted protocol text is the target; AI articles are not the authoritative source."
+      - "Pilot discussion covers Luleå, Umeå, Skellefteå, Örnsköldsvik and Sundsvall."
+      - "Require stable document IDs, diary-number linkage, source URLs and clarity on OCR text rights."
+
+  - source_id: lantmateriet.fastighetsindelning_direkt
+    name: "Lantmäteriet – Fastighetsindelning Direkt (OAPIF)"
+    source_type: cadastral_geometry
+    provider: Lantmäteriet
+    access_method: oapif
+    connector: lantmateriet
+    status: planned
+    cadence: to_be_verified
+    geography: Sweden
+    format: [JSON]
+    rights:
+      licence: "Product-specific terms for valuable datasets containing personal data; not assumed to be the general CC0 open-data licence"
+      licence_url: "https://geotorget.lantmateriet.se/geodataprodukter/fastighetsindelning-direkt-api"
+      review_status: amber_legal_review_and_terms_required
+      commercial_use: pending_product_terms
+      historical_storage: pending_product_terms
+      derivatives: pending_product_terms
+      redistribution: pending_product_terms
+      attribution: "As specified in product terms."
+      api_or_service_constraints: "No fee shown; API access requires account/permission and legal review. Product metadata refers to use terms for valuable datasets containing personal data."
+      evidence_checked_on: "2026-11-02"
+      caveat: "No fee does not mean unrestricted reuse. Obtain the actual terms and written confirmation for a commercial service before ingestion."
+    notes:
+      - "Product contains property and joint-property geometries; boundaries are not legally binding."
+
+  - source_id: skogsindustrierna.data
+    name: "Skogsindustrierna – karttjänster och geodata"
+    source_type: private_or_industry_data
+    provider: Skogsindustrierna
+    access_method: wms_or_public_map
+    connector: none
+    status: external_contact
+    cadence: to_be_verified
+    geography: Sweden
+    format: [WMS, dataset_specific]
+    rights:
+      licence: unknown
+      review_status: red_written_permission_required
+      commercial_use: only_if_explicitly_authorised
+      historical_storage: only_if_explicitly_authorised
+      derivatives: only_if_explicitly_authorised
+      redistribution: only_if_explicitly_authorised
+      attribution: "As agreed in writing."
+      api_or_service_constraints: "Public map/WMS access is not a commercial reuse licence."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Request written terms from the service operator/data owner covering snapshots, analysis, customer display and redistribution."
+    notes:
+      - "Support contact identified in prior investigation: servicedesk@support.triona.se."
