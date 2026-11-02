@@ -27,6 +27,8 @@ The source registry now includes a first-pass commercial reuse assessment. Read 
 - `examples/event-bundle.example.json`: synthetic example showing one registered event and a one-event chain; it is not live source data.
 - `scripts/collect_actions_in_water_sample.py`: read-only, limited sample snapshot collector for the Åtgärder i vatten ArcGIS REST service; default five features per geometry layer.
 - `scripts/collect_samrad.py`: daily pilot collector for Skogsstyrelsen Samråd point, line and polygon layers; stores immutable gzip snapshots and refuses partial publication.
+- `../scripts/build_harvest_event_bundle.py`: combines planned-harvest and Samråd observations into canonical events, evidence links, candidate relationships and per-notification event chains. Satellite-derived completed-harvest polygons are deliberately excluded.
+- `../data/harvest_event_bundle.json`: latest schema-validated combined event bundle.
 - `.github/workflows/collect-samrad.yml`: daily Samråd pilot collection and snapshot archive.
 - `.github/workflows/validate-source-registry.yml`: runs the registry validator on relevant changes.
 - `config/model-contract.yml`: initial logical record contract.
