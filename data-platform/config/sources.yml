@@ -216,16 +216,16 @@ sources:
     geography: Sweden
     format: [to_be_verified]
     rights:
-      licence: unknown_per_dataset
-      review_status: amber_pending_product_check
-      commercial_use: unknown
-      historical_storage: unknown
-      derivatives: unknown
-      redistribution: unknown
-      attribution: "To be confirmed per dataset."
-      api_or_service_constraints: "Identify the authoritative service and inspect dataset metadata and service terms."
-      evidence_checked_on: "2026-11-01"
-      caveat: "Do not assume one licence covers all Naturvårdsverket datasets, map services and attached documents."
+      licence: "Unknown at central Naturvårdsregistret service level; confirm exact downloadable layer metadata and the open-data description before reuse"
+      review_status: amber_service_terms_unknown_layer_review_required
+      commercial_use: conditional_on_exact_layer_licence
+      historical_storage: conditional_on_exact_layer_licence
+      derivatives: conditional_on_exact_layer_licence
+      redistribution: conditional_on_exact_layer_licence
+      attribution: "As specified in the exact layer metadata; recommend Naturvårdsverket and source layer/version."
+      api_or_service_constraints: "WMS, WFS and REST/GeoJSON are available, but the central Planeringskatalogen service metadata states 'Villkor okända'. Technical availability is not a reuse licence."
+      evidence_checked_on: "2026-11-02"
+      caveat: "Do not assign CC0 to the entire register based on a separate layer record or the general open-data policy. Review each protected-type dataset and its information owner."
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
@@ -235,11 +235,13 @@ sources:
       third_party_rights: check_provider_chain_attachments_and_embedded_material
       publication_gate: block_external_publication_when_relevant_review_is_unresolved
       assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: record_in_source_rights_evidence
+      evidence_reference: docs/source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
-      - Confirm service, licence, update frequency and stable identifiers before implementation.
+      - "Detailed preliminary assessment: docs/source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md"
+      - "National service updates nightly; Skogsstyrelsen biotope protection decisions are transferred twice weekly. Verify exact layer coverage and decision status."
+      - "Service metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=50FE77C1-43A0-445A-B56C-6B729E21DC67_C"
 
   - source_id: lantmateriet.open_data
     name: "Lantmäteriet – uttryckligen publicerade öppna geodata"
@@ -973,10 +975,11 @@ sources:
       third_party_rights: check_provider_chain_attachments_and_embedded_material
       publication_gate: block_external_publication_when_relevant_review_is_unresolved
       assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: record_in_source_rights_evidence
+      evidence_reference: docs/source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
+      - "Detailed preliminary assessment: docs/source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md"
       - "Metadata revised 2026-10-29; WMS contains projects and turbines, ATOM offers Shape and GeoPackage."
       - "Energy Agency says background maps have separate copyright restrictions and may only be used in permitting without permission."
       - "Metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=c816bd1e-bc6c-487f-a962-770f05f677b6_C"
@@ -1321,10 +1324,11 @@ sources:
       third_party_rights: check_provider_chain_attachments_and_embedded_material
       publication_gate: block_external_publication_when_relevant_review_is_unresolved
       assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: record_in_source_rights_evidence
+      evidence_reference: docs/source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
+      - "Detailed preliminary assessment: docs/source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md"
       - "Do not publish screenshots or background cartography from the map service as if they were open data."
 
   - source_id: scb.open_data
