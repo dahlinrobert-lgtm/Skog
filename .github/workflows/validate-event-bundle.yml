@@ -6,7 +6,9 @@ on:
       - "data-platform/schemas/event-bundle.schema.json"
       - "data-platform/scripts/validate_event_bundle.py"
       - "data-platform/examples/event-bundle.example.json"
+      - "scripts/build_harvest_event_bundle.py"
       - "tests/test_event_bundle.py"
+      - "tests/test_harvest_event_bundle.py"
       - "requirements.txt"
       - ".github/workflows/validate-event-bundle.yml"
   pull_request:
@@ -14,7 +16,9 @@ on:
       - "data-platform/schemas/event-bundle.schema.json"
       - "data-platform/scripts/validate_event_bundle.py"
       - "data-platform/examples/event-bundle.example.json"
+      - "scripts/build_harvest_event_bundle.py"
       - "tests/test_event_bundle.py"
+      - "tests/test_harvest_event_bundle.py"
       - "requirements.txt"
       - ".github/workflows/validate-event-bundle.yml"
   workflow_dispatch:
@@ -32,4 +36,6 @@ jobs:
       - name: Validate example event bundle
         run: python data-platform/scripts/validate_event_bundle.py
       - name: Run event bundle tests
-        run: python -m unittest discover -s tests -p 'test_event_bundle.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_event_bundle.py' -v
+          python -m unittest discover -s tests -p 'test_harvest_event_bundle.py' -v
