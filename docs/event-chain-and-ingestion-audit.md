@@ -13,7 +13,9 @@
 3. **Samråd och myndighetsärenden** – kompletterande händelser som kan knytas till ärende-ID, fastighet eller geografi. Skogsstyrelsens tre Samråd-geometrier finns redan som karttjänst och får nu en separat historisk pilotinsamling.
 4. **Satellitbaserade förändringssignaler** – lägsta prioritet; används senare som kompletterande indikation, aldrig som krav för att en kedja ska kunna skapas.
 
-**Viktig källavgränsning:** Det befintliga lagret som i repot kallas utförda avverkningar innehåller `Forebild`/`Efterbild`-fält och analysen beskriver det uttryckligen som satellitbaserad förändringsdetektion. Det är därför inte en oberoende verifiering av att en anmälan har verkställts. Lagret ska tills vidare klassas som satellitindikation och inte användas som prioriterad, verifierande källa i händelsekedjan. En framtida källa för registrerade/rapporterade utförda åtgärder måste bedömas separat.
+**Viktig källavgränsning:** Det befintliga lagret som i repot kallas utförda avverkningar är inte en oberoende rapport om verkställighet. Skogsstyrelsens produktbeskrivning daterad 2026-01-13 säger att ytorna identifieras genom skillnadsanalys i satellitbilder, att kopplingen till avverkningsanmälan har varit automatisk sedan 2022 och att produkten ska ses som vägledande på grund av osäkerhet i detektionerna. Den uppdateras inte heller vintertid och omfattar inte oanmälda avverkningar eller ytor under 0,5 ha. Därför klassas lagret som satellitindikation, inte som en oberoende verifierande källa eller bevis för att en anmälan har verkställts. En separat icke-satellitbaserad källa för utförd åtgärd måste bedömas för sig.
+
+Källa: [Skogsstyrelsens produktbeskrivning – Utförda avverkningar, 2026-01-13](https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/utforda-avverkningar---produktbeskrivning.pdf).
 
 
 Skog har redan flera viktiga byggstenar: återkommande hämtning, snapshots, deltaarkiv, historik för avverkningsanmälningar, insamling av utförda avverkningar och en rumslig/tidsmässig analys mellan planerade och utförda objekt.
