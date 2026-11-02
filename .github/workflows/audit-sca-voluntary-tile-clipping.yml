@@ -1,0 +1,32 @@
+name: Audit SCA voluntary tile clipping and duplicate geometries
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/audit_sca_voluntary_tile_clipping.py"
+      - ".github/workflows/audit-sca-voluntary-tile-clipping.yml"
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT and geometry libraries
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3"
+      - name: Compile
+        run: python -m py_compile scripts/audit_sca_voluntary_tile_clipping.py
+      - name: Audit tile clipping and geometry duplicates
+        run: python scripts/audit_sca_voluntary_tile_clipping.py
+      - name: Validate JSON
+        run: python -m json.tool sca-voluntary-tile-clipping-audit.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-voluntary-tile-clipping-audit
+          path: sca-voluntary-tile-clipping-audit.json
+          if-no-files-found: error
+          retention-days: 30
