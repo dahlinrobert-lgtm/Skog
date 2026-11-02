@@ -88,12 +88,20 @@ def validate_bundle(bundle: Any, schema: dict[str, Any]) -> list[str]:
 
     # A failed or partial source run must never be used as evidence of source absence.
     run_by_id = {row["run_id"]: row for row in runs}
+    for run in runs:
+        if run["records_valid"] + run["records_rejected"] > run["records_seen"]:
+            errors.append(f"run {run['run_id']}: valid + rejected records exceed records_seen")
     for row in observations:
         run = run_by_id.get(row["run_id"])
-        if run and run["status"] != "success" and row["quality_status"] == "valid":
+        if run and run["source_id"] != row["source_id"]:
+            errors.append(
+                f"observation {row['observation_id']}: source_id does not match run "
+                f"{run['run_id']!r}"
+            )
+        if run and run["status"] == "failed" and row["quality_status"] == "valid":
             errors.append(
                 f"observation {row['observation_id']}: valid observation references "
-                f"{run['status']} run {run['run_id']!r}"
+                f"failed run {run['run_id']!r}"
             )
 
     return errors
