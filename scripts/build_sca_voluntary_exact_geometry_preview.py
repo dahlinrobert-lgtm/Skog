@@ -103,15 +103,15 @@ def main():
    if len(members)>1: duplicate_members+=len(members)-1
    geom=mapping(canonical_feature["geom"])
    props={k:v for k,v in canonical_feature["properties"].items()}
-   props.update({"preview_id":"sca-preview-"+hashlib.sha1("|".join(keys).encode()).hexdigest()[:12],
+   props.update({"site":site,"source_layer":canonical_feature["layer"],"preview_id":"sca-preview-"+hashlib.sha1("|".join(keys).encode()).hexdigest()[:12],
      "source_feature_count":len(members),"source_feature_keys":keys,
      "duplicate_resolution":"exact_geometry_candidate" if len(members)>1 else "single_source_feature",
      "source_tiles":[m["tile"] for m in members]})
    canonical.append({"type":"Feature","geometry":geom,"properties":props})
    for m in members:
-    rec={"feature_key":m["key"],"site":site,"tile":m["tile"],"layer":m["layer"],
+    rec={"feature_key":m["key"],"site":site,"zoom":Z,"tile":m["tile"],"layer":m["layer"],
       "feature_index":m["index"],"mvt_id":m["mvt_id"],"properties":m["properties"],
-      "area_m2_3857":m["area"],"geometry_sha256":m["geometry_sha256"],
+      "area_m2_3857":m["area"],"geometry_sha256":m["geometry_sha256"],"geometry_epsg3857":mapping(m["geom"]),
       "canonical_preview_id":props["preview_id"],
       "dedup_status":"duplicate_member" if len(members)>1 else "retained_separate"}
     all_manifest.append(rec)
