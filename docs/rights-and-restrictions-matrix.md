@@ -6,6 +6,76 @@
 
 > Operativt granskningsstöd, inte juridiskt utlåtande. Bedöm alltid exakt handling, datamängd, produkt, version och användning. Rätten att få ut en handling, rätten att behandla innehållet och rätten att publicera/sälja det vidare är tre olika frågor.
 
+
+## 0. Överordnad tolkningsprincip – rättsordningen går före källregistrets luckor
+
+Denna princip gäller för hela Skog, alla källor och alla senare rättighetsbedömningar.
+
+**Frånvaro av en särskild uppgift, licenstext eller uttrycklig beskrivning i en källpost innebär inte i sig att användningen är förbjuden.** Källregistret är ett hjälpmedel för att dokumentera vad som har kontrollerats; det är inte en uttömmande förteckning över alla rättigheter och skyldigheter som följer av lag.
+
+Om en specifik källa eller situation inte uttryckligen behandlas ska bedömningen göras utifrån den generella rättsordningen, tillämpliga rättsprinciper och relevanta rättskällor. En okänd eller tom registeruppgift är en kunskapslucka – inte automatiskt ett förbud, men inte heller ett automatiskt tillstånd.
+
+### 0.1 Normhierarki och företräde
+
+Följande är en förenklad orientering. EU-rätten har en särskild ställning och kan inte utan vidare placeras som ett vanligt steg i den svenska normtrappan.
+
+1. **EU-rätt:** EU:s primärrätt och bindande sekundärrätt gäller inom EU:s befogenhetsområden. EU-rättens företräde innebär att en motstridig nationell bestämmelse i ett område som omfattas av EU-rätten kan behöva lämnas utan avseende. Bedömningen måste göras med hänsyn till EU-rättens tillämpningsområde och Sveriges konstitutionella regler om överlåtelse av beslutanderätt.
+2. **Sveriges grundlagar:** regeringsformen, tryckfrihetsförordningen, yttrandefrihetsgrundlagen och successionsordningen. Vanliga lagar och lägre föreskrifter får inte strida mot grundlag.
+3. **Riksdagsordningen:** har en särskild ställning mellan grundlag och vanlig lag.
+4. **Lagar:** beslutade av riksdagen.
+5. **Förordningar:** beslutade av regeringen med stöd av normgivningsmakten.
+6. **Myndighetsföreskrifter och kommunala/regionala föreskrifter:** bindande endast inom respektive organs behörighet och bemyndigande, och får inte strida mot överordnade regler.
+7. **Allmänna råd, vägledningar, handböcker, webbtexter och interna rutiner:** normalt inte bindande föreskrifter. De kan vara vägledande för tolkning och myndighetspraxis men kan inte ändra lag eller skapa ett förbud utan rättsligt stöd.
+
+Domstolar och andra offentliga organ ska enligt regeringsformens regler om normprövning inte tillämpa föreskrifter som strider mot överordnad författning (11 kap. 14 § och 12 kap. 10 § RF).
+
+### 0.2 Avtal, licenser och metadata är inte en egen nivå i normhierarkin
+
+Avtal och licenser är inte författningar och ska inte placeras mellan lag och förordning. De kan däremot skapa bindande rättigheter och skyldigheter mellan parter eller ge en rättighetshavare tillstånd till användning.
+
+- Ett avtal, en API-term eller en licens kan precisera hur en tjänst får användas, men kan inte sätta tvingande lag eller grundlag ur spel.
+- En metadatauppgift eller webbsida är bevisning om villkor och rättighetsanspråk, inte automatiskt en bindande norm för alla användare.
+- Ett avtalsvillkor binder i första hand de parter som omfattas av avtalet och inom ramen för tillämplig rätt. Kontrollera om Skog faktiskt har accepterat villkoren och om leverantören har rätt att upplåta de aktuella rättigheterna.
+- En öppen licens kan ge ett uttryckligt tillstånd som annars hade behövt inhämtas från rättighetshavaren. Den kan inte ge rätt till material som licensgivaren inte kontrollerar.
+
+### 0.3 Hur okända eller ej omnämnda förhållanden ska bedömas
+
+Använd följande ordning:
+
+1. Identifiera den faktiska användningen: åtkomst, insamling, lagring, historik, bearbetning, kombination, kundvisning, export eller vidare distribution.
+2. Identifiera tillämpliga generella regler, inklusive eventuella rättigheter, undantag och begränsningar.
+3. Kontrollera om en särskild författning, ett giltigt avtal eller en licens faktiskt ändrar eller preciserar utgångspunkten.
+4. Kontrollera om den som åberopar en begränsning har rättsligt stöd för den och om begränsningen omfattar just Skogs användning.
+5. Om en källa inte nämner en viss användning: dra inte slutsatsen att den är förbjuden enbart av tystnaden. Bedöm den mot den generella lagen.
+6. Om avgörande fakta saknas – exempelvis vem som äger ett kartlager, vilka villkor som accepterats eller om en personuppgift förekommer – dokumentera just den osäkerheten och avgränsa den berörda användningen. Stoppa inte automatiskt andra, separerbara delar av datat eller produkten.
+7. Välj den minst ingripande åtgärd som hanterar den konkreta rättsliga risken: exempelvis visa metadata men inte bilagan, använd geometri men inte bakgrundskartan, aggregera personuppgifter eller länka till originalet.
+
+### 0.4 Okänt är inte samma sak som förbjudet – och inte samma sak som godkänt
+
+| Registerläge | Betydelse | Rätt arbetssätt |
+|---|---|---|
+| Inte omnämnt i källans villkor | Villkoren är tysta om just användningen | Pröva mot generell lag och avtalets faktiska omfattning; anta inte automatiskt förbud |
+| Okänt / inte verifierat | Underlaget räcker inte för slutsats | Identifiera vilken konkret omständighet som saknas; begränsa endast den berörda delen om möjligt |
+| Uttryckligt förbud | Giltigt och tillämpligt förbud har identifierats | Följ förbudet, om det inte strider mot överordnad rätt eller saknar tillämplighet |
+| Uttryckligt tillstånd/licens | Rättighetshavaren har gett tillstånd inom angivet omfång | Använd inom licensens räckvidd och följ kvarvarande lagkrav |
+| Lagstadgad rätt eller skyldighet | Rätten/skyldigheten följer direkt av tillämplig författning | Tillämpa lagen även om källans webbsida eller register inte nämner den |
+
+### 0.5 Praktisk konsekvens för statusfärgerna
+
+- **Gul betyder utredningsbehov, inte automatiskt förbud.** Den ska ange vilken konkret fråga som är olöst.
+- En gul status ska inte blockera en annan användning som kan skiljas från den olösta delen och som har stöd i generell lag eller separat licens.
+- **Röd** ska reserveras för en identifierad rättslig eller avtalsmässig spärr, eller ett nödvändigt tillstånd som faktiskt saknas.
+- **Grön** betyder att den granskade användningen har tillräckligt stöd; den är inte ett generellt godkännande för alla framtida användningar.
+- Ett publiceringsstopp ska vara avgränsat till berörd uppgift, lager, fil, användningsform eller kundfunktion. Använd inte ett generellt stopp när risken kan isoleras.
+
+### 0.6 Rättskällor och tolkningsstöd
+
+- [Regeringsformen (1974:152)](https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/regeringsform-1974152_sfs-1974-152/) – särskilt 8 kap. om normgivning samt 11 kap. 14 § och 12 kap. 10 § om normprövning.
+- [Boverket – Regelhierarki](https://www.boverket.se/sv/lag--ratt/boverkets-forfattningar/processen-for-boverkets-regelskrivning/) – grundlag, lag, förordning och myndighetsföreskrifter.
+- [Regeringen – Grundlagarna](https://www.regeringen.se/sa-styrs-sverige/grundlagar-och-demokratiskt-deltagande/grundlagarna/) – grundlagarnas ställning och EU.
+- [EUR-Lex – EU:s normhierarki](https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=LEGISSUM%3Anorms_hierarchy) – primärrätt och sekundärrätt.
+- [SOU 2023:75 – normhierarki och normprövning](https://www.riksdagen.se/sv/dokument-och-lagar/dokument/statens-offentliga-utredningar/starkt-konstitutionell-beredskap_hbb375/html/).
+
 ## 1. Översiktlig matris
 
 | Datatyp | Rättslig utgångspunkt | Kommersiell användning |
