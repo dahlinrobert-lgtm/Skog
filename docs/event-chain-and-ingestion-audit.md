@@ -383,6 +383,34 @@ Insamlingen publicerar först när alla tre sublager har hämtats utan fel. Frå
 
 Detta skapar den andra viktiga källfamiljen för händelsekedjor. Nästa implementation ska lägga till Samråd-poster som egna kanoniska händelser och länka dem till avverkningsanmälningar. Matchning ska i första hand använda explicita ärende-/korsreferenser; geometri, kommun och datum ska skapa kandidater med tydlig osäkerhet, inte automatiska bevis.
 
+### Första verifierade Samråd-insamlingen och händelsekopplingen
+
+Den första lyckade insamlingen kördes 2026-11-02:
+
+| Sublager | Hämtade i frågerutan | Efter exakt 10 km-filter |
+|---|---:|---:|
+| Punkt | 0 | 0 |
+| Linje | 21 | 12 |
+| Polygon | 14 | 12 |
+| **Totalt** | **35** | **24** |
+
+Körningen sparade en komprimerad snapshot på cirka 402 kB. Samtliga tre sublager hämtades och validerades; den tomma punktmängden är ett giltigt källresultat, inte ett insamlingsfel.
+
+Den kombinerade händelseexporten byggdes och validerades i samma workflow:
+- 2 källkörningar: avverkningsanmälningar och Samråd.
+- 188 källobservationer.
+- 188 kanoniska händelser: 164 avverkningsanmälningar och 24 Samråd-händelser.
+- 164 uppföljningskedjor för avverkningsanmälningar.
+- 11 kandidatrelationer mellan Samråd och avverkningsanmälningar: 4 med klassen `supported` och 7 `indicative`.
+- 3 kedjor innehåller minst en Samråd-händelse med analytiskt stöd.
+
+**Tolkning:** De fyra `supported`-relationerna bygger på geometriöverlappning, kommun och tidsmässig rimlighet. De är fortfarande märkta `needs_review`; de bevisar inte att samrådet avser just den aktuella avverkningsanmälan. De sju indikativa relationerna ligger kvar som kandidater utanför kedjans starkare koppling. Ingen satellitbaserad förändringssignal har använts.
+
+Länkar:
+- [Senaste Samråd-data](../data/samrad_latest.json)
+- [Kombinerat händelsepaket](../data/harvest_event_bundle.json)
+- [Dagligt insamlingsflöde](../.github/workflows/collect-samrad.yml)
+
 ## 14. Nästa konkreta steg
 
 1. Kör och verifiera Samråd-insamlingen för Gräsmyr; kontrollera antal per sublager, pagination och snapshotstorlek.
