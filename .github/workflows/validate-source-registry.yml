@@ -1,0 +1,35 @@
+name: Validate source registry
+
+on:
+  push:
+    paths:
+      - "data-platform/config/sources.yml"
+      - "data-platform/scripts/validate_source_registry.py"
+      - ".github/workflows/validate-source-registry.yml"
+  pull_request:
+    paths:
+      - "data-platform/config/sources.yml"
+      - "data-platform/scripts/validate_source_registry.py"
+      - ".github/workflows/validate-source-registry.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install YAML parser
+        run: python -m pip install "PyYAML==6.0.2"
+
+      - name: Validate source registry
+        run: python data-platform/scripts/validate_source_registry.py
