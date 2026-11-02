@@ -691,14 +691,14 @@ sources:
     rights:
       licence: "Published free reuse terms: copy, process and distribute; source attribution required"
       licence_url: "https://www.lansstyrelsen.se/stockholm/om-oss/vara-tjanster/oppna-data.html"
-      review_status: conditional_green_official_reuse_terms
+      review_status: conditional_green_official_reuse_terms_reconfirmed
       commercial_use: yes_subject_to_published_open_data_terms
       historical_storage: yes_subject_to_source_terms
       derivatives: yes
       redistribution: yes_with_attribution
       attribution: "Ange Länsstyrelsen som källa; note the joint system with Havs- och vattenmyndigheten."
       api_or_service_constraints: "Distinguish the public search/download interface and specific API endpoints. Confirm API-specific terms, fields and rate limits before bulk ingestion."
-      evidence_checked_on: "2026-11-01"
+      evidence_checked_on: "2026-11-02"
       caveat: "Data are contributed by multiple actors and may include planned, ongoing, completed or status-unknown actions. Do not equate a registered action with independently verified completion."
     notes:
       - "National database for physical measures in rivers, lakes and coastal waters, including fish passage, biotope restoration and removal of migration barriers."
@@ -915,31 +915,6 @@ sources:
       caveat: "Wind-power project information may be supplied by operators and authorities and can have varying quality. Verify exact layer metadata and data provenance."
     notes:
       - "Do not publish screenshots or background cartography from the map service as if they were open data."
-
-  - source_id: lansstyrelsen.actions_in_water
-    name: "Länsstyrelserna/Havs- och vattenmyndigheten – Åtgärder i vatten"
-    source_type: vector_observations
-    provider: Länsstyrelserna_and_Havs_och_vattenmyndigheten
-    access_method: api_or_download
-    connector: to_be_implemented
-    status: planned
-    cadence: to_be_verified
-    geography: Sweden
-    format: [JSON, REST, XLSX, SHP, WMS]
-    rights:
-      licence: "Free copying, processing and distribution with Länsstyrelsen as source according to published open-data terms"
-      licence_url: "https://www.lansstyrelsen.se/varmland/om-oss/vara-tjanster/oppna-data.html"
-      review_status: conditional_green_product_metadata_required
-      commercial_use: yes_with_attribution
-      historical_storage: yes_subject_to_exact_dataset_terms
-      derivatives: yes_with_attribution
-      redistribution: yes_with_attribution
-      attribution: "Ange Länsstyrelsen som källa; also retain the responsible data owner/producer where stated."
-      api_or_service_constraints: "Confirm exact API endpoint, producer, update policy and technical terms before bulk ingestion."
-      evidence_checked_on: "2026-11-02"
-      caveat: "The service is shared with Havs- och vattenmyndigheten. Verify the exact dataset metadata and status semantics."
-    notes:
-      - "Preserve whether an action is planned, ongoing, completed or has unknown status."
 
   - source_id: scb.open_data
     name: "SCB – öppna data och Statistikdatabasens API"
