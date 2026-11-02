@@ -1,3 +1,5 @@
+# Compliance fields are a conservative, source-level screening layer. They do not constitute legal approval.
+# Resolve each flag against exact dataset/document/layer before external publication.
 # Source and rights register for the forest-specific data platform.
 # Descriptive control register only: entries do not enable connectors or grant rights.
 # Never put credentials, refresh tokens, API keys or personal OneDrive item IDs here.
@@ -32,6 +34,18 @@ sources:
       api_or_service_constraints: "Download and service availability are separate from the licence; confirm the specific product's delivery terms."
       evidence_checked_on: "2026-11-01"
       caveat: "Confirm the exact Omdrev 3 asset/product metadata and any product-specific conditions before commercial publication."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - Original archives are retained unchanged.
       - Zero is a valid value; NoData is tracked separately.
@@ -60,6 +74,18 @@ sources:
       api_or_service_constraints: "Respect documented service behavior, pagination and reasonable request rates; technical access is not an uptime guarantee."
       evidence_checked_on: "2026-11-01"
       caveat: "Verify the exact ArcGIS layer metadata and any layer-specific notices. Do not treat notifications as proof that felling occurred."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - Existing Skogskoll ingestion core and Supabase persistence are authoritative for alert workflow.
       - Do not duplicate or replace existing scan/session safety logic.
@@ -86,6 +112,18 @@ sources:
       api_or_service_constraints: "API may be used without special permission according to published terms; re-check query/API documentation."
       evidence_checked_on: "2026-11-01"
       caveat: "Reports, analyses and documents are CC BY, while photographs and illustrations are not covered by the free statistics-data permission. Keep these asset types separate."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Do not apply the statistics database licence to reports, images or other site content."
 
@@ -110,6 +148,18 @@ sources:
       api_or_service_constraints: "Review API terms, rate limits, retention and downstream-use provisions."
       evidence_checked_on: "2026-11-01"
       caveat: "Access to decision metadata through a service does not itself establish rights to commercially reuse all indexed documents or third-party attachments."
+    compliance:
+      secrecy_review: case_by_case_document_and_attachment
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - Search endpoint is title-oriented and keyword results are discovery candidates.
       - Meeting-list q filtering is not decision-text search.
@@ -137,6 +187,18 @@ sources:
       api_or_service_constraints: "Public access to a record is not a blanket reuse licence. Check secrecy, personal data, copyright and third-party rights per document."
       evidence_checked_on: "2026-11-01"
       caveat: "Apply public-access and reuse analysis to each record/document. Do not infer that all material in a public diary is unrestricted open data."
+    compliance:
+      secrecy_review: case_by_case_document_and_attachment
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - Coverage and search behavior vary by county.
       - A zero-result response is not evidence that no relevant cases exist.
@@ -163,6 +225,18 @@ sources:
       api_or_service_constraints: "Identify the authoritative service and inspect dataset metadata and service terms."
       evidence_checked_on: "2026-11-01"
       caveat: "Do not assume one licence covers all Naturvårdsverket datasets, map services and attached documents."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - Confirm service, licence, update frequency and stable identifiers before implementation.
 
@@ -188,6 +262,18 @@ sources:
       api_or_service_constraints: "Use only products explicitly listed as open data; check product metadata and service conditions."
       evidence_checked_on: "2026-11-01"
       caveat: "This entry does not include all Lantmäteriet products or all property/land-register information."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Register each product separately before ingestion."
 
@@ -213,6 +299,18 @@ sources:
       api_or_service_constraints: "Confirm commercial further-processing/reseller agreement where data is incorporated into products sold to customers."
       evidence_checked_on: "2026-11-01"
       caveat: "Do not use paid property data in a customer-facing product until written rights and scope are confirmed."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Keep distinct from the CC0 open-data product catalogue."
 
@@ -238,6 +336,18 @@ sources:
       api_or_service_constraints: "Consumer must accept NGP terms; NGP consumer use is restricted for users outside EU/EEA. Check personal-data flags."
       evidence_checked_on: "2026-11-01"
       caveat: "Producer and dataset-specific metadata still need to be captured. Some datasets may contain personal data."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Record the producer as well as NGP as delivery platform."
 
@@ -263,6 +373,18 @@ sources:
       api_or_service_constraints: "Use documented APIs/catalogue services only; avoid unnecessary repeated or bulk requests; respect cache guidance and service limits."
       evidence_checked_on: "2026-11-01"
       caveat: "Consequence-based warnings/messages have separate terms: commercial use is allowed, but content must not be changed and source must be stated. Register separately if used."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Capture product-specific metadata, time coverage, units and version."
       - "Do not treat a successful API response as a service-level availability guarantee."
@@ -289,6 +411,18 @@ sources:
       api_or_service_constraints: "Respect Data Space account, fair-use, quotas, download and API terms. These are separate from the Sentinel data reuse rights."
       evidence_checked_on: "2026-11-01"
       caveat: "This entry covers Sentinel data, not all portal content. Other Data Space portal materials are subject to separate copyright terms and may be non-commercial only."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Keep source scene IDs, acquisition time, publication time, processing baseline and checksums."
 
@@ -314,6 +448,18 @@ sources:
       api_or_service_constraints: "Check product metadata and service conditions; website photos, illustrations and other non-product material are not included."
       evidence_checked_on: "2026-11-01"
       caveat: "CC0 applies to SGU geological data. Reports, images, illustrations and other website material may have separate terms."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Prioritise soil, bedrock, groundwater and mineral-resource products relevant to forest analysis."
 
@@ -338,6 +484,18 @@ sources:
       api_or_service_constraints: "Obtain written terms covering access, retention, derived products, customer display and onward distribution."
       evidence_checked_on: "2026-11-01"
       caveat: "A public-facing map or downloadable file is not by itself permission for commercial reuse."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: written_rights_confirmation_required
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Treat as a commercial data-provider relationship, not a public open-data source."
 
@@ -364,6 +522,18 @@ sources:
       api_or_service_constraints: "Respect ArcGIS service limits and bounded query patterns."
       evidence_checked_on: "2026-11-01"
       caveat: "Confirm layer metadata and whether any source attributes originate from third parties. Burn polygons are source observations, not a verified complete fire register."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Layer: GeodataportalVisaBrand/MapServer/0."
       - "Archive current source records and changes; retain the distinction between burn year, burn date and retrieval date."
@@ -390,6 +560,18 @@ sources:
       api_or_service_constraints: "Respect ArcGIS service limits and bounded query patterns."
       evidence_checked_on: "2026-11-01"
       caveat: "Confirm exact layer metadata and product description. A signed rewetting agreement polygon is not proof that physical ditch blocking has been completed."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Layer: GeodataportalVisaAtervatningavtal/MapServer/0."
       - "The source product description and actual returned geographic coverage must both be retained."
@@ -416,6 +598,18 @@ sources:
       evidence_checked_on: "2026-11-01"
       caveat: "Do not infer reuse rights from public accessibility or from the fact that the service is hosted by a county administrative board. Public project information confirms Life2Taiga is a multi-partner EU LIFE project coordinated by Länsstyrelsen Västmanland, but no dataset-specific reuse licence for the external FeatureServer layer was verified."
 
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: research_origin_possible_verify_product_class_and_rights
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Layer currently used: Hosted/Life2Taiga_v3_Extern/FeatureServer/13."
       - "Keep source events distinct from diary-derived events; do not assume geometries prove completed actions."
@@ -450,6 +644,18 @@ sources:
       api_or_service_constraints: "Skogsdatalabbet REST/WMS requires a user account. Separate the right to use the SLU map product from account, bulk download, service quota and archive access conditions."
       evidence_checked_on: "2026-11-02"
       caveat: "SLU's written reply confirms free use of the current map with attribution. It does not grant rights to redistribute underlying Lantmäteriet source elevation data. A replacement map is expected in December 2026 and SLU says it will be CC0; verify the final product metadata and licence at publication."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: research_origin_possible_verify_product_class_and_rights
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Product contains classified peat-depth classes and continuous organic-layer thickness."
       - "Classified values: 0 water, 1 mineral soil, 2 >=30 cm, 3 >=40 cm, 4 >=50 cm."
@@ -486,6 +692,18 @@ sources:
       api_or_service_constraints: "REST/WMS service requires an account. Download catalogue lists separate gran and tall products. Confirm current service limits and available historical versions."
       evidence_checked_on: "2026-11-01"
       caveat: "The product description was updated 2026-10-02 and includes a dedicated licence/acknowledgement section; verify its exact wording against the PDF before final commercial approval."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: research_origin_possible_verify_product_class_and_rights
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "SIS means site index estimated from site properties; it is distinct from stand-based SIH."
       - "Separate products exist for spruce and pine."
@@ -514,6 +732,18 @@ sources:
       api_or_service_constraints: "Obtain written terms covering access, retention, derived products, customer display and onward distribution."
       evidence_checked_on: "2026-11-01"
       caveat: "Do not scrape, archive or republish private operational data based solely on public accessibility."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: written_rights_confirmation_required
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Treat as a commercial data-provider relationship, not a public open-data source."
 
@@ -540,6 +770,18 @@ sources:
       api_or_service_constraints: "Capture product version, area coverage and relevant product description; NMD2023 production/coverage is being completed in stages."
       evidence_checked_on: "2026-11-01"
       caveat: "The NMD programme is collaborative. Confirm the specific subproduct and version document before ingesting; do not assume all ancillary material shares the data licence."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Potential base layer for land-cover, forest-type and habitat-context analyses."
       - "Product page: https://www.naturvardsverket.se/verktyg-och-tjanster/kartor-och-karttjanster/nationella-marktackedata"
@@ -566,6 +808,18 @@ sources:
       api_or_service_constraints: "Coverage and vector conversion are staged; capture county, source vintage and completeness."
       evidence_checked_on: "2026-11-01"
       caveat: "Inventory largely reflects 1981–2005 field/air-photo interpretation; do not present as current complete wetland status without qualification."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Useful for wetland context and potential restoration screening."
       - "Download: https://geodata.naturvardsverket.se/nedladdning/VMI/"
@@ -593,6 +847,18 @@ sources:
       api_or_service_constraints: "Capture mapping scale/type and positional accuracy; coverage and quality vary spatially."
       evidence_checked_on: "2026-11-01"
       caveat: "The product is mapped at varying scales and methods; do not assume uniform positional accuracy."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Product description identifies use in groundwater, contamination, stability, erosion, buildability and nature-value analyses."
       - "Open data product page: https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologiska-data/"
@@ -620,6 +886,18 @@ sources:
       api_or_service_constraints: "Model is an overview/interpolation of known observations; retain resolution and uncertainty information."
       evidence_checked_on: "2026-11-01"
       caveat: "Overview model; not a substitute for site-specific geotechnical investigation."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Potential hydrology and soil-depth context layer."
       - "Product page: https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologiska-data/jorddjupsdata/"
@@ -647,6 +925,18 @@ sources:
       api_or_service_constraints: "Preserve water-management cycle and dataset version."
       evidence_checked_on: "2026-11-01"
       caveat: "Boundaries are delineated for water-management purposes and do not represent all groundwater-bearing formations."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Potential context for wetland, hydrology and land-use analysis."
 
@@ -673,6 +963,18 @@ sources:
       api_or_service_constraints: "Separate source data from background maps and other copyrighted map material. Metadata links to WMS and ATOM download."
       evidence_checked_on: "2026-11-01"
       caveat: "Data are continuously updated by users and project developers. Länsstyrelserna disclaim responsibility for correctness of submitted information; verify before decisions. CC0 finding applies to the named land-based dataset, not automatically all layers or map backgrounds."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Metadata revised 2026-10-29; WMS contains projects and turbines, ATOM offers Shape and GeoPackage."
       - "Energy Agency says background maps have separate copyright restrictions and may only be used in permitting without permission."
@@ -700,6 +1002,18 @@ sources:
       api_or_service_constraints: "Distinguish the public search/download interface and specific API endpoints. Confirm API-specific terms, fields and rate limits before bulk ingestion."
       evidence_checked_on: "2026-11-02"
       caveat: "Data are contributed by multiple actors and may include planned, ongoing, completed or status-unknown actions. Do not equate a registered action with independently verified completion."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "National database for physical measures in rivers, lakes and coastal waters, including fish passage, biotope restoration and removal of migration barriers."
       - "Public search requires no login; editing/registration is permission-controlled."
@@ -727,6 +1041,18 @@ sources:
       api_or_service_constraints: "Only externally published layer is available; internal EBH-stödet is restricted to Länsstyrelserna. External layer excludes some records and suppresses property designations."
       evidence_checked_on: "2026-11-01"
       caveat: "Not a complete inventory of contaminated land. Each county is responsible for its information. Coordinates may be approximate and the external map is a reduced extract."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Do not describe an object as confirmed contamination unless the status and underlying investigation support that statement."
       - "Metadata: https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/1f7fca9c-4a72-4d72-b2fd-f4fb9c4e44c9"
@@ -754,6 +1080,18 @@ sources:
       api_or_service_constraints: "Regional dataset; do not generalise licence or geographic coverage to other counties' green-infrastructure layers."
       evidence_checked_on: "2026-11-01"
       caveat: "This is a specific regional dataset, not a national uniform layer."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=b58be26d-ab66-4dd3-9894-fe2b8eb9fdf1_C"
 
@@ -779,6 +1117,18 @@ sources:
       api_or_service_constraints: "Regional layer; preserve licence attribution and source date."
       evidence_checked_on: "2026-11-01"
       caveat: "Value tracts are planning information, not a formal protection designation. Do not generalise this licence to other regional green-infrastructure datasets."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Useful forest landscape-context layer for biodiversity analysis."
       - "Metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=5e0d327e-d888-4946-bf5a-30e87036679b_C"
@@ -805,6 +1155,18 @@ sources:
       api_or_service_constraints: "Confirm the rights for the exact hosted FeatureServer layer, not only the public project map. Ask about bulk access, snapshots, derived geometries, customer display and redistribution."
       evidence_checked_on: "2026-11-01"
       caveat: "Project website confirms that the public map shows planned and completed prescribed burns, but does not state a reuse licence for the external FeatureServer layer."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: research_origin_possible_verify_product_class_and_rights
+      third_party_rights: written_rights_confirmation_required
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Project coordination: Länsstyrelsen Västmanland."
       - "Published project contact: life2taiga@lansstyrelsen.se; telephone switchboard 010-224 90 00."
@@ -833,6 +1195,18 @@ sources:
       api_or_service_constraints: "Service metadata explicitly directs users to the metadata records for included layers for access restrictions. The service is a WMS/REST map service and is not itself proof of downloadable/reusable vector rights."
       evidence_checked_on: "2026-11-01"
       caveat: "Public page describes mainly forest areas plus valuable wetlands, watercourses, mountain and marine environments; coverage is not complete and is based on inventories over time."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Catalogue service record UUID: 32f86036-487e-4362-883b-8bd1ba8d9c3d."
       - "Metadata lists Länsstyrelsen Västerbotten / Miljöanalysenheten as responsible contact."
@@ -860,6 +1234,18 @@ sources:
       api_or_service_constraints: "Search the exact records 'GI Andelsanalys alla våtmarker' and 'GI andelsanalys värdefulla våtmarker'; do not infer rights from the general green-infrastructure initiative."
       evidence_checked_on: "2026-11-01"
       caveat: "Norrbotten's public green-infrastructure page describes the analysis method and its use as landscape-level planning context; this does not establish a licence."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Analysis is based on known wetland value cores, including the wetland inventory and rich-fen inventory, followed by density analysis and manual adjustment."
       - "Potentially useful forest-landscape context; not a formal protection designation."
@@ -887,6 +1273,18 @@ sources:
       api_or_service_constraints: "Find separate metadata for the western and previously published eastern datasets; do not assume the existing CC BY 4.0 licence for the earlier barrskog value-tract dataset covers this newer western layer."
       evidence_checked_on: "2026-11-01"
       caveat: "Landscape planning knowledge base, not a formal protection designation; not every location within a value tract has high nature value."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Published 2026-01-12; covers areas west of E45, above and below the boundary for montane forest."
       - "Public description: https://www.lansstyrelsen.se/vasterbotten/om-oss/nyheter-och-press/nyheter---vasterbotten/2026-01-12-skogliga-vardetrakter-i-vasterbottens-vastra-delar-i-lansstyrelsens-karttjanst.html"
@@ -913,6 +1311,18 @@ sources:
       api_or_service_constraints: "Do not reuse copyrighted background maps; use downloadable feature data and respect service terms."
       evidence_checked_on: "2026-11-02"
       caveat: "Wind-power project information may be supplied by operators and authorities and can have varying quality. Verify exact layer metadata and data provenance."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Do not publish screenshots or background cartography from the map service as if they were open data."
 
@@ -938,6 +1348,18 @@ sources:
       api_or_service_constraints: "Maximum 10 requests per 10 seconds per IP and 100,000 values per table; do not imply official SCB partnership."
       evidence_checked_on: "2026-11-02"
       caveat: "Only SCB open data are covered. Other statistics delivered through SCB may have another authority as source and must retain that attribution."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "SCB data may be corrected over time; retain retrieval date and version/snapshot."
 
@@ -963,6 +1385,18 @@ sources:
       api_or_service_constraints: "Do not claim official RKA/Kolada partnership. Data may be revised or removed without separate notice."
       evidence_checked_on: "2026-11-02"
       caveat: "Some underlying key indicators may originate from other authorities; retain source metadata for each indicator."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Store indicator ID, definition, unit, source and retrieval date."
 
@@ -988,6 +1422,18 @@ sources:
       api_or_service_constraints: "Traffic-information API requires registration and acceptance of its API licence; respect quotas and documented request limits."
       evidence_checked_on: "2026-11-02"
       caveat: "General CC0 policy applies to open data products, not automatically to all infrastructure data, map products or third-party content."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Register each product and endpoint separately."
 
@@ -1013,6 +1459,18 @@ sources:
       api_or_service_constraints: "Terms must be accepted; other use beyond the expressly permitted scope requires written approval."
       evidence_checked_on: "2026-11-02"
       caveat: "Do not assume a general CC0 licence. Ask Boverket to confirm commercial subscription-service use, storage, derived values and customer display."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Separate the API data from Boverket reports, images and other web content."
 
@@ -1038,6 +1496,18 @@ sources:
       api_or_service_constraints: "WMS access/visualization does not establish download, archival, processing or redistribution rights."
       evidence_checked_on: "2026-11-02"
       caveat: "Identify exact service and layer IDs and inspect metadata and third-party rights before commercial reuse."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Keep the source service endpoint and individual layer identifier in the registry."
 
@@ -1063,6 +1533,18 @@ sources:
       api_or_service_constraints: "Agree pricing, API limits, historical access, daily incremental synchronization and retention before pilot."
       evidence_checked_on: "2026-11-02"
       caveat: "Publicly accessible documents and API access do not automatically grant rights to reproduce all original documents or third-party attachments in a commercial service."
+    compliance:
+      secrecy_review: case_by_case_document_and_attachment
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: research_origin_possible_verify_product_class_and_rights
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Layer 2 with full machine-readable extracted protocol text is the target; AI articles are not the authoritative source."
       - "Pilot discussion covers Luleå, Umeå, Skellefteå, Örnsköldsvik and Sundsvall."
@@ -1090,6 +1572,18 @@ sources:
       api_or_service_constraints: "No fee shown; API access requires account/permission and legal review. Product metadata refers to use terms for valuable datasets containing personal data."
       evidence_checked_on: "2026-11-02"
       caveat: "No fee does not mean unrestricted reuse. Obtain the actual terms and written confirmation for a commercial service before ingestion."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Product contains property and joint-property geometries; boundaries are not legally binding."
 
@@ -1114,5 +1608,17 @@ sources:
       api_or_service_constraints: "Public map/WMS access is not a commercial reuse licence."
       evidence_checked_on: "2026-11-02"
       caveat: "Request written terms from the service operator/data owner covering snapshots, analysis, customer display and redistribution."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: written_rights_confirmation_required
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_in_source_rights_evidence
+      reviewed_on: "2026-11-02"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Support contact identified in prior investigation: servicedesk@support.triona.se."
