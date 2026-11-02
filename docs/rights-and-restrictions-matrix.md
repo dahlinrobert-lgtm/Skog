@@ -122,3 +122,12 @@ Dessa fält är inte en juridisk garanti eller ett automatiskt godkännande. Sta
 - [Swedish National Data Service – public access and secrecy in research](https://snd.se/en/research-data-support/introduction-legal-aspects-research/public-access-and-secrecy)
 
 **Förvaltningsnotering 2026-11-02:** Första versionen av kontrollmatrisen. Komplettera med källspecifika beslut, licenser och skriftliga besked.
+
+## 8. Källspecifika fördjupningar
+
+Följande rapporter innehåller mer detaljerade bedömningar för enskilda källor. De kompletterar matrisen och ska läsas tillsammans med respektive källpost i `data-platform/config/sources.yml`.
+
+- [Länsstyrelsernas diarier och Kungjort/Premex – rättighetsgranskning 2026-11-02](source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md)
+- [Länsstyrelsernas geodatatjänster, Vindbrukskollen och Naturvårdsregistret – rättighetsgranskning 2026-11-02](source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md)
+
+**Viktig status:** Vindbrukskollens verifierade CC0-datamängd är skild från bakgrundskartorna. Länsstyrelsernas WMS-villkor ska tillämpas per datamängd enligt metadata. Naturvårdsregistrets centrala tjänstepost anger okända användningsvillkor; kommersiell publicering ska därför vänta tills exakt lagerlicens är verifierad.
