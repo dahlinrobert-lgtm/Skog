@@ -98,7 +98,7 @@ def main() -> None:
             continue
 
         status = provenance.get("attribution_status")
-        if status not in ALLOWED_ATTRIBUTION_STATUS:
+        if not isinstance(status, str) or status not in ALLOWED_ATTRIBUTION_STATUS:
             errors.append(
                 f"{source_id}: unsupported attribution_status {status!r}"
             )
