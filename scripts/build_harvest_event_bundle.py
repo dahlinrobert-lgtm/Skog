@@ -178,6 +178,8 @@ def build_bundle(latest: dict[str, Any], history: dict[str, Any] | None = None) 
 
     if not observations:
         raise ValueError("No valid source records found; refusing to publish an empty event bundle.")
+    source_run["records_valid"] = len(observations)
+    source_run["records_rejected"] = len(features) - len(observations)
 
     return {
         "schema_version": 1,
