@@ -4,7 +4,7 @@ Forest-specific data integration foundation. The architecture and initial contra
 
 ## Current stage
 
-This folder contains the initial source registry and logical data contract. It does not yet run connectors, schedule jobs, or publish datasets.
+This folder contains the source registry, initial logical contracts and a first machine-validated event-bundle contract. The event bundle is a synthetic contract example, not yet a production event pipeline. This folder does not itself run connectors, schedule jobs, or publish customer datasets.
 
 The source registry now includes a first-pass commercial reuse assessment. Read [the open-data and commercial-use register](../docs/open-data-and-commercial-use.md) before adding a source or publishing data to customers. Registry status is a project risk classification, not a legal opinion or a substitute for product-specific terms.
 
@@ -22,6 +22,9 @@ The source registry now includes a first-pass commercial reuse assessment. Read 
 
 - `config/sources.yml`: source and rights registry (no credentials); three pilot records include an optional `provenance` block.
 - `scripts/validate_source_registry.py`: validates registry structure, unique source IDs and optional provenance metadata.
+- `schemas/event-bundle.schema.json`: JSON Schema contract for source runs, immutable observations, canonical events, evidence, relationships and event chains.
+- `scripts/validate_event_bundle.py`: validates the event bundle schema and cross-record references; run with `python data-platform/scripts/validate_event_bundle.py`.
+- `examples/event-bundle.example.json`: synthetic example showing one registered event and a one-event chain; it is not live source data.
 - `scripts/collect_actions_in_water_sample.py`: read-only, limited sample snapshot collector for the Åtgärder i vatten ArcGIS REST service; default five features per geometry layer.
 - `.github/workflows/validate-source-registry.yml`: runs the registry validator on relevant changes.
 - `config/model-contract.yml`: initial logical record contract.
