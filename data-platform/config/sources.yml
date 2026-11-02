@@ -36,6 +36,16 @@ sources:
       api_or_service_constraints: "Download and service availability are separate from the licence; confirm the specific product's delivery terms."
       evidence_checked_on: "2026-11-01"
       caveat: "Confirm the exact Omdrev 3 asset/product metadata and any product-specific conditions before commercial publication."
+    provenance:
+      producer_name: "Skogsstyrelsen"
+      distributor_name: "Skogsstyrelsen – geodatatjänst/nedladdning"
+      dataset_identity: "Skogliga grunddata – volym, omdrev 3; verify exact asset/version"
+      attribution_status: recommended
+      attribution_text: "Källa: Skogsstyrelsen – Skogliga grunddata, volym omdrev 3."
+      attribution_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
+      attribution_scope: "Recommended source credit; CC0 does not require attribution if the exact asset is covered by CC0."
+      evidence_reference: "rights.licence_url and exact product metadata; asset-level confirmation remains required"
+      reviewed_on: "2026-11-02"
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
@@ -228,6 +238,16 @@ sources:
       api_or_service_constraints: "WMS, WFS and REST/GeoJSON are available, but the central Planeringskatalogen service metadata states 'Villkor okända'. Technical availability is not a reuse licence."
       evidence_checked_on: "2026-11-02"
       caveat: "Do not assign CC0 to the entire register based on a separate layer record or the general open-data policy. Review each protected-type dataset and its information owner."
+    provenance:
+      producer_name: "Naturvårdsverket (exact information owner must be confirmed per protected-area layer)"
+      distributor_name: "Naturvårdsverket / central Naturvårdsregister service (verify exact endpoint)"
+      dataset_identity: "Protected areas – exact layer and underlying product not yet verified"
+      attribution_status: pending_dataset_review
+      attribution_text: "Preliminary only: Naturvårdsverket – exact layer name and version to be confirmed before publication."
+      attribution_url: "https://www.naturvardsverket.se/"
+      attribution_scope: "Do not treat this preliminary text as an approved licence attribution; determine exact layer terms first."
+      evidence_reference: "docs/source-rights-reviews/2026-11-02-geodata-lansstyrelsen-vindbrukskollen-naturvardsverket.md"
+      reviewed_on: "2026-11-02"
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
@@ -1008,6 +1028,16 @@ sources:
       api_or_service_constraints: "Distinguish the public search/download interface and specific API endpoints. Confirm API-specific terms, fields and rate limits before bulk ingestion."
       evidence_checked_on: "2026-11-02"
       caveat: "Data are contributed by multiple actors and may include planned, ongoing, completed or status-unknown actions. Do not equate a registered action with independently verified completion."
+    provenance:
+      producer_name: "Länsstyrelserna och Havs- och vattenmyndigheten; registrerade uppgifter kan komma från flera åtgärdsansvariga aktörer"
+      distributor_name: "Länsstyrelserna – gemensam tjänst med Havs- och vattenmyndigheten"
+      dataset_identity: "Åtgärder i vatten – nationell databas; kontrollera exakt endpoint och fältuppsättning"
+      attribution_status: required
+      attribution_text: "Källa: Länsstyrelserna och Havs- och vattenmyndigheten – Åtgärder i vatten."
+      attribution_url: "https://www.lansstyrelsen.se/stockholm/om-oss/vara-tjanster/oppna-data.html"
+      attribution_scope: "Enligt publicerade återanvändningsvillkor; verifiera API-specifika villkor och registrerande aktör för varje datamängd."
+      evidence_reference: "rights.licence_url; https://www.atgarderivatten.se/; https://atgarderivatten.lansstyrelsen.se/Atgarder/Hitta"
+      reviewed_on: "2026-11-02"
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
