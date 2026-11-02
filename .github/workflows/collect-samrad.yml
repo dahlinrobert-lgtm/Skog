@@ -5,7 +5,11 @@ on:
     branches: [main]
     paths:
       - "scripts/collect_samrad.py"
+      - "scripts/build_harvest_event_bundle.py"
       - "tests/test_collect_samrad.py"
+      - "tests/test_harvest_event_bundle.py"
+      - "data-platform/schemas/event-bundle.schema.json"
+      - "data-platform/scripts/validate_event_bundle.py"
       - "config/area.json"
       - "requirements.txt"
       - ".github/workflows/collect-samrad.yml"
