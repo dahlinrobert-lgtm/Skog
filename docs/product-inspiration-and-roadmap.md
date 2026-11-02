@@ -4,13 +4,25 @@
 **Status:** Rekommenderad produktinriktning och prioriterad backlog  
 **Omfattning:** Inspiration och funktionsanalys – inte kopiering av gränssnitt, texter eller proprietära data.
 
-## 1. Slutsats
+## 1. Produktpositionering – flödet är produkten, kartan är stödet
 
-Det finns tydliga delar att inspireras av, men Skog bör inte bli en kopia av någon av tjänsterna.
+**Skog ska primärt vara en bevaknings- och underrättelsetjänst för skogsägare, inte en karttjänst.** Kundlöftet är att användaren ska kunna följa vad som händer i och omkring sin skog och få relevanta aviseringar utan att själv behöva bevaka myndighetsregister, karttjänster och satellitdata.
 
-- **Naturkartan:** förebild för begriplig källredovisning, attribution och hur bearbetade data beskrivs.
-- **Skogsmonitor:** förebild för att kombinera flera källor till en begriplig temakarta och för att redovisa metod, validering och osäkerhet.
-- **Skog:** bör särskilja sig genom tidsdimensionen: snapshots, förändringar, historik, källspårbarhet och bevakning.
+Det primära användarflödet är:
+1. Användaren anger eller väljer fastighet/bevakningsområde och vilka händelser som är viktiga.
+2. Skog hämtar och följer relevanta källor kontinuerligt.
+3. Skog upptäcker nya, ändrade och potentiellt försvunna uppgifter.
+4. Skog verifierar, matchar och berikar händelsen med andra källor.
+5. Skog presenterar en begriplig händelse i ett samlat aktivitetsflöde.
+6. Användaren får en avisering när händelsen passerar definierade relevans- och kvalitetsregler.
+7. Kartan öppnas vid behov för geografisk kontext, inte som huvudsaklig destination.
+
+**Unik konkurrensfördel (USP):** kontinuerlig datainsamling + historik + korsmatchning mellan källor + relevansbedömning + aviseringar. En karta kan många bygga; ett tillförlitligt och historiskt bevakningsflöde kräver en betydligt starkare data- och händelseinfrastruktur.
+
+Referenserna ska därför användas selektivt:
+- **Naturkartan:** förebild för begriplig källredovisning och attribution.
+- **Skogsmonitor:** förebild för analys, datakombination och transparent osäkerhet – inte för att göra kartan till huvudprodukten.
+- **Skog:** ska särskilja sig genom bevakningsflödet, historiken och aviseringarna.
 
 En relevant kompletterande marknadsreferens är Skogsradar, som samlar skogliga lager, fastighetsfunktioner, skogsbruksplan, historiska flygbilder och larm. Den visar att användare kan uppskatta ett sammanhållet arbetsflöde från karta till planering och bevakning. Vi bör dock prioritera Skogs egna styrkor i datainsamling och historik före att bygga en fullständig skogsbruksplan.
 
@@ -62,61 +74,63 @@ En genomgång av `docs/karta.html`, `docs/bevakning.html` och `docs/index.html` 
 
 Det betyder att vi inte behöver börja om med kartan. Nästa steg är att förbättra informationsarkitekturen, lagerhanteringen och hur data förklaras.
 
-## 4. Prioriterad utvecklingsplan
+## 4. Prioriterad utvecklingsplan – styr efter kundvärde i bevakningsflödet
 
-### P0 – Gör befintliga lager begripliga och jämförbara
+### P0 – Tillförlitlig händelsemotor och relevanta aviseringar
 
-1. **Enhetlig lagerkatalog**
-   - Gruppera lager: Avverkning, Naturvårdande åtgärder, Naturvärden, Skogliga grunddata, Skador och risker, Infrastruktur och bakgrund.
-   - Varje lager ska ha kort beskrivning, källa, uppdateringsdatum och status.
-   - Visa om lagret är nationellt, regionalt eller bara ett testområde.
-2. **Lagerinformation och datakvalitet**
-   - Skilj mellan källa, observation och Skogs analys.
-   - Visa status: officiellt register, fjärranalys, modell, manuell inventering eller Skog-beräkning.
-   - Visa kända luckor och osäkerheter.
-3. **Attribution**
-   - Visa attribution i kartan och i lagerpanelen.
-   - Koppla informationen till befintligt `sources.yml` och proveniensmanifest.
-4. **Tidsstämpel**
-   - Visa både källans uppdateringsdatum och när Skog senast hämtade data.
+1. **Händelsemodell**
+   - Normalisera händelser från olika källor till gemensamma typer, statusar, tidsstämplar och geografiska objekt.
+   - Behåll käll-ID, källstatus, första/senaste observation och snapshotreferenser.
+   - Skilj mellan nyupptäckt, ändrad, inte längre returnerad och verifierat borttagen.
+2. **Matchning mot bevakningsområden**
+   - Koppla händelser till användarens fastigheter, polygoner och bevakningsradier.
+   - Redovisa varför en händelse matchade: överlappning, avstånd, fastighetskoppling eller annan regel.
+   - Visa osäker matchning som osäker; påstå inte fastighetsträff utan verifierad fastighetsgeometri.
+3. **Kvalitet och deduplicering**
+   - Slå ihop dubbletter från samma händelse/källa utan att förlora källreferenser.
+   - Korsmatcha oberoende källor när det stärker eller motsäger en händelse.
+   - Bevara originaluppgifter och skilj dem från Skogs slutsats.
+4. **Aktivitetsflöde som primär startsida**
+   - Sortera på relevant händelsetid, inte enbart hämtningstid.
+   - Visa vad som hänt, var, när, varför användaren får informationen och hur säker uppgiften är.
+   - Ge en kort sammanfattning och tydliga nästa steg/länkar till källunderlag.
+5. **Aviseringsmotor**
+   - Stöd e-post och push som kanaler.
+   - Styr aviseringar på händelsetyp, område, allvar/relevans och kvalitetsnivå.
+   - Undvik spam: gruppera relaterade händelser, deduplicera och ge användaren kontroll över frekvens.
+   - Logga leverans, återförsök och varför en avisering skickades eller undertrycktes.
+6. **Datakällornas driftsäkerhet**
+   - Visa senast lyckad hämtning, täckning, fel och eftersläpning.
+   - Skilj på att ingen ny händelse hittades och att källan inte kunde kontrolleras.
 
-### P1 – Gör tidsdimensionen till Skogs tydligaste styrka
+### P1 – Gör historik och förändring användbar i flödet
 
-1. **Tidsreglage / jämför snapshots**
-   - Välj två datum och se vad som tillkommit, förändrats eller försvunnit.
-   - Skilj på nyupptäckt, ändrad källa, sannolikt borttagen och verifierat borttagen.
-2. **Förändringslager**
-   - Nya avverkningsanmälningar.
-   - Nya eller ändrade naturvårdsåtgärder.
-   - Registrerade utförda avverkningar.
-   - Nya brand- och skadedetektioner.
-3. **Objektets historik**
-   - Visa första och senaste observation, tidigare status, geometriändringar och källans ändringsdatum.
+1. **Objektets historik**
+   - Visa första/senaste observation, statusförändringar, geometriändringar och källans datum.
    - Bevara ursprungliga käll-ID:n och snapshots.
-4. **Källornas aktualitet**
-   - Visa uppdateringsfrekvens, senast lyckad hämtning och eventuella avbrott.
+2. **Tidslinje och jämförelse**
+   - Visa vad som tillkommit, ändrats eller försvunnit mellan två snapshots.
+   - Skilj på nyupptäckt, ändrad källa, sannolikt borttagen och verifierat borttagen.
+3. **Korsmatchade händelsekedjor**
+   - Exempel: avverkningsanmälan → samråd/dispens → satellitförändring → registrerad utförd avverkning.
+   - Visa länkar mellan händelser utan att göra korrelation till bevis för orsak eller genomförande.
+4. **Sparade bevakningar**
+   - Låt användaren följa fastigheter, polygoner och radier med egna händelsefilter.
 
-### P2 – Analys som går utöver en vanlig lagerkarta
+### P2 – Analys som gör bevakningen mer värdefull
 
-1. **Skogliga värde- och riskindikatorer**
-   - Kombinera trädhöjd, volym, markfukt, trädslag, diken, naturvärden och historiska störningar.
-   - Håll varje delindikator synlig och förklarad; undvik en ogenomskinlig totalpoäng.
-2. **Landskapskontext**
-   - Visa kluster, konnektivitet, fragmentering och avstånd mellan värdefulla skogsområden.
-   - Skilj mellan registrerade naturvärden och modellbaserad potential.
-3. **Före/efter**
-   - Jämför satellitbilder, ortofoton och källgeometrier före och efter en registrerad åtgärd.
-   - Visa bilddatum och källa; en förändringssignal är inte automatiskt bevis på avverkning.
-4. **Rapport och export**
-   - Skapa rapport för ett område eller en fastighet med karta, tidslinje, källor, metod och osäkerhet.
-   - Exportera GeoJSON/CSV med manifest och proveniens.
+1. **Skogliga värde- och riskindikatorer** – använd flera delindikatorer och visa metod/osäkerhet; undvik ogenomskinlig totalpoäng.
+2. **Landskapskontext** – konnektivitet, fragmentering och avstånd mellan värdefulla områden.
+3. **Före/efter** – jämför satellitbilder, ortofoton och källgeometrier; förändringssignal är inte automatiskt bevis på avverkning.
+4. **Rapport och export** – sammanställ händelser, källor, metod och osäkerhet för ett område eller en fastighet.
 
-### P3 – Bevakning och användarflöden
+### P3 – Kartan som stödjande arbetsyta
 
-1. Spara fastigheter, polygoner och radiebevakningar.
-2. Skicka larm när relevanta källor förändras.
-3. Samla händelser i en tidslinje med länkar till källobjekt.
-4. Lägg senare till anteckningar och egna områden – utan att blanda ihop användarens uppgifter med myndighetsdata.
+1. Behåll kartan för geografisk kontext och snabb lokalisering av en händelse.
+2. Gruppera befintliga lager och gör källinformation lätt att hitta.
+3. Låt kartan följa vald händelse och aktuellt bevakningsfilter.
+4. Lägg till avancerad lagerkatalog, tidsreglage och analysverktyg först när de förbättrar ett konkret bevakningsflöde.
+5. Prioritera inte kartfunktioner som inte förbättrar upptäckt, förståelse eller uppföljning av en händelse.
 
 ## 5. Föreslagen informationsmodell för varje kartlager
 
@@ -158,16 +172,18 @@ Minimikrav i lagerpanelen:
 
 ## 8. Rekommenderat nästa genomförande
 
-Börja med **P0.1: en enhetlig lagerkatalog för den befintliga kartan**.
+Börja inte med en större kartombyggnad. Börja med **P0.1: händelse- och aviseringarnas kvalitet i det befintliga bevakningsflödet**.
 
-Det är en begränsad förbättring som kan genomföras utan att ändra datainsamlingens kärna. Den ger samtidigt grunden för källpanel, attribution, datakvalitet och senare tidsjämförelser.
+Första genomförandet bör kartlägga varje händelsetyp från källa till användare: upptäckt → normalisering → matchning mot område → deduplicering/kvalitetskontroll → aktivitetsflöde → avisering. Identifiera vilka steg som redan finns och vilka som saknas. Därefter väljer vi en konkret händelsetyp och gör hela kedjan robust innan vi breddar.
 
 Acceptanskriterier:
-- Befintliga lager grupperas i tydliga kategorier.
-- Varje lager har namn, beskrivning, källa, uppdateringsstatus och geografisk täckning.
-- Befintliga kontroller och kartfunktioner fortsätter fungera.
-- Testlager märks tydligt som test.
-- Ingen källa får en mer långtgående licensstatus än vad källregistret stödjer.
+- Varje flödeshändelse kan spåras till ett källobjekt och en snapshot.
+- Det går att förklara varför den matchade en bevakning.
+- Ny, ändrad och saknad uppgift hålls isär.
+- Dubbletter undertrycks utan att källspårbarhet går förlorad.
+- Avisering skickas endast när en definierad relevansregel uppfylls.
+- Misslyckad källhämtning visas som ett kontrollfel, inte som att inget har hänt.
+- Kartan öppnas som geografisk förklaring till händelsen och är inte ett krav för att förstå flödet.
 
 ## 9. Referenser
 
