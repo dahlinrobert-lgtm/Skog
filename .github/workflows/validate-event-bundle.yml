@@ -1,0 +1,35 @@
+name: Validate event bundle contract
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data-platform/schemas/event-bundle.schema.json"
+      - "data-platform/scripts/validate_event_bundle.py"
+      - "data-platform/examples/event-bundle.example.json"
+      - "tests/test_event_bundle.py"
+      - "requirements.txt"
+      - ".github/workflows/validate-event-bundle.yml"
+  pull_request:
+    paths:
+      - "data-platform/schemas/event-bundle.schema.json"
+      - "data-platform/scripts/validate_event_bundle.py"
+      - "data-platform/examples/event-bundle.example.json"
+      - "tests/test_event_bundle.py"
+      - "requirements.txt"
+      - ".github/workflows/validate-event-bundle.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements.txt
+      - name: Validate example event bundle
+        run: python data-platform/scripts/validate_event_bundle.py
+      - name: Run event bundle tests
+        run: python -m unittest discover -s tests -p 'test_event_bundle.py' -v
