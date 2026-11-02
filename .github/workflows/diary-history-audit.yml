@@ -25,6 +25,13 @@ on:
       - "data/lansstyrelsen-diary/**"
       - ".github/workflows/lansstyrelsen-diary-search.yml"
       - ".github/workflows/diary-history-audit.yml"
+  workflow_run:
+    workflows:
+      - "Search Länsstyrelsen public diary"
+    types:
+      - completed
+    branches:
+      - main
 
 permissions:
   contents: read
