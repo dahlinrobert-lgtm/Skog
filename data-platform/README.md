@@ -20,6 +20,8 @@ The source registry now includes a first-pass commercial reuse assessment. Read 
 
 ## Files
 
-- `config/sources.yml`: source and rights registry (no credentials).
+- `config/sources.yml`: source and rights registry (no credentials); three pilot records include an optional `provenance` block.
+- `scripts/validate_source_registry.py`: validates registry structure, unique source IDs and optional provenance metadata.
+- `.github/workflows/validate-source-registry.yml`: runs the registry validator on relevant changes.
 - `config/model-contract.yml`: initial logical record contract.
 - `../docs/open-data-and-commercial-use.md`: policy, source assessments and pre-publication checklist.
