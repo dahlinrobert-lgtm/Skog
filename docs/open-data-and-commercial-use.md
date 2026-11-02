@@ -278,3 +278,10 @@ Källor:
 Principen om öppen kommersiell användning gäller alltså långt utanför Skogsstyrelsen. De tydligaste möjligheterna är Lantmäteriets listade CC0-produkter, SCB:s öppna data, Kolada, SMHI:s öppna data, Trafikverkets öppna data, SGU:s geologiska data och många dataset från Länsstyrelserna och Naturvårdsverket.
 
 Men det finns ingen generell myndighetslicens som automatiskt täcker alla produkter. Vi ska fortsätta registrera rättigheter per produkt och skilja mellan licens, teknisk åtkomst och rätt att publicera vidare. Det är särskilt viktigt för Lantmäteriets fastighetsdata, Länsstyrelsernas diarier, MSB-lager, Boverkets specialvillkor och privata skogsbolags data.
+
+
+## 11. Rättighets- och begränsningsmatris
+
+Den övergripande källtabellen kompletteras av [Rättighets- och begränsningsmatrisen](rights-and-restrictions-matrix.md). Där bedöms sekretess, personuppgifter, kartor/geodata, forskningsmaterial och tredje mans rättigheter separat. Matrisen skiljer mellan åtkomst, intern lagring/bearbetning, kundvisning och vidare distribution.
+
+**Förvaltningsregel:** Kontrollera matrisen när en ny datakälla eller datatyp införs, när licens/API-villkor ändras och när användningen går från intern analys till kundvisning eller vidare distribution. Källspecifika utfall ska även föras in i `data-platform/config/sources.yml`. Oklar sekretess, personuppgiftsgrund eller tredje mans rättigheter innebär stopp för extern publicering.
