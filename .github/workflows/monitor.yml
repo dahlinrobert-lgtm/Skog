@@ -34,12 +34,15 @@ jobs:
       - name: Analyze planned and completed changes
         run: python scripts/analyze_changes.py
       - name: Build canonical planned-harvest event bundle
-        run: python scripts/build_harvest_event_bundle.py
+        run: |
+          python scripts/build_harvest_event_bundle.py
+          mkdir -p docs/data
+          cp data/harvest_event_bundle.json docs/data/harvest_event_bundle.json
       - name: Commit dated snapshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/latest.json data/latest_web.json data/scene_index.json data/completed_latest.json data/change_analysis.json data/notification_history.json data/notification_history_events.jsonl data/harvest_event_bundle.json data/snapshots
+          git add data/latest.json data/latest_web.json data/scene_index.json data/completed_latest.json data/change_analysis.json data/notification_history.json data/notification_history_events.jsonl data/harvest_event_bundle.json docs/data/harvest_event_bundle.json data/snapshots
           if ! git diff --cached --quiet; then
             git commit -m "Update Gräsmyr monitoring snapshot"
             git fetch origin main
