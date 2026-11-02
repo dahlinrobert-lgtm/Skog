@@ -102,3 +102,49 @@ Piloten är godkänd när:
 - Tredjepartsinventering av datakällor (teknisk ledtråd om Swagger/CC0, inte licensbevis): https://mapandmove.se/en/datakallor
 
 **Beslutsregel:** Ingen produktionshämtning eller licensändring görs på grundval av tredjepartsinventeringen ensam. Nästa tekniska steg är att lokalisera och verifiera den officiella OpenAPI-beskrivningen från den publika tjänsten.
+
+
+## 9. Verifierad officiell ArcGIS REST-tjänst (2026-11-02)
+
+Länsstyrelsens officiella REST-katalog har mappen `atgarderivatten` med två relevanta MapServer-tjänster:
+
+- `lst_aiv_read/MapServer`: lästjänst med lagren Punkt (0), Linje (1) och Polygon (2).
+- `lst_aiv_search/MapServer`: söktjänst med vPunkt (0), vLinje (1) och vPolygon (2).
+
+Den verifierade lästjänsten:
+- URL: `https://ext-geodata-acc.lansstyrelsen.se/arcgis/rest/services/atgarderivatten/lst_aiv_read/MapServer`
+- Spatial reference: EPSG:3006 (SWEREF 99 TM).
+- Query formats: JSON, GeoJSON och PBF.
+- Layer metadata visar stöd för pagination och query; MaxRecordCount är 2 000.
+- Samtliga tre geometrier delar centrala identifieringsfält: `ProjektId`, `AtgardsInsatsId`, `FaktiskAtgardId`, namn, `Guid`, `LanIds`, `KommunIds`, `Haro` och `Varo`. Datumfältet `FaktiskAtgardFardigstalld` finns också.
+- Lagren saknar attachments enligt lagerinformationen.
+
+Detta är ett konkret REST-gränssnitt och ersätter behovet av att förlita sig på en obekräftad Swagger-URL för själva geometrierna. Den tidigare tredjepartsuppgiften om ett Swagger-API och CC0 är fortfarande separat evidens; den bevisar inte att just denna ArcGIS-tjänst har CC0. Källregistret behåller därför Länsstyrelsens publicerade återanvändningsvillkor med källangivelse som grund.
+
+### Litet testuttag
+
+Ett read-only testskript finns i `data-platform/scripts/collect_actions_in_water_sample.py`.
+
+- Standardkörningen hämtar högst fem objekt per geometrityp.
+- Skriptet sparar ArcGIS JSON i EPSG:3006 och en separat GeoJSON-export i EPSG:4326.
+- Manifestet innehåller hämtningstid, endpoint, antal poster i källagret, antal provposter, SHA-256, attribution och uttryckliga begränsningar.
+- Skriptet begränsar provstorleken till 100 per lager och har inget läge för fullständig bulkinsamling.
+- Ingen autentisering, skrivning eller ändring av källdata används.
+
+Kör lokalt från repositoryts rot:
+
+```bash
+python data-platform/scripts/collect_actions_in_water_sample.py
+```
+
+Ange exempelvis `--limit 10` för ett något större prov. Standardutdata hamnar under `data/snapshots/actions-in-water/<UTC-tid>/`.
+
+### Kvar innan pilotens tekniska godkännande
+
+1. Köra provhämtningen och kontrollera att alla tre lager returnerar data.
+2. Kontrollera fältvärden, stabiliteten i ID/GUID och relationerna mellan projekt, åtgärdsinsats och faktisk åtgärd.
+3. Jämföra ArcGIS JSON och GeoJSON för att verifiera geometri och koordinattransformation.
+4. Kontrollera om tjänsten exponerar ändringsdatum eller andra signaler som kan användas för historik.
+5. Köra ett andra prov och verifiera reproducerbar manifest- och snapshotstruktur.
+
+Ingen schemalagd eller nationell insamling har aktiverats.
