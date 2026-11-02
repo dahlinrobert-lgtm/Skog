@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-02T16:24:05.308492Z",
+  "checked_at": "2026-11-02T16:40:08.659975Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -32769,112 +32769,7 @@
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [
-    {
-      "id": "S1C_IW_GRDH_1SDV_20261031T160522_20261031T160547_010131_014387_98DD_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-31T16:05:22.911498Z",
-      "published_at": "2026-10-31T15:44:51.491276Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        18.707092,
-        63.33252,
-        24.831329,
-        65.288239
-      ]
-    },
-    {
-      "id": "S1D_IW_GRDH_1SDV_20261030T161341_20261030T161406_005247_009F80_EB00_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-30T16:13:41.248536Z",
-      "published_at": "2026-10-30T16:23:00.973808Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        16.968512,
-        62.837952,
-        22.947136,
-        64.787468
-      ]
-    },
-    {
-      "id": "S1D_IW_GRDH_1SDV_20261030T045710_20261030T045735_005240_009F45_2C99_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-30T04:57:10.372854Z",
-      "published_at": "2026-10-30T05:00:07.847658Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        19.20253,
-        61.885983,
-        24.99419,
-        63.828476
-      ]
-    },
-    {
-      "id": "S1D_IW_GRDH_1SDV_20261030T045645_20261030T045710_005240_009F45_4259_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-30T04:56:45.373438Z",
-      "published_at": "2026-10-30T05:05:33.643455Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        19.719505,
-        63.36311,
-        25.835566,
-        65.315521
-      ]
-    },
-    {
-      "id": "S1C_IW_GRDH_1SDV_20261029T162139_20261029T162204_010102_0142A9_D731_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-29T16:21:39.188055Z",
-      "published_at": "2026-10-29T17:13:32.583096Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        14.982899,
-        62.666828,
-        20.963539,
-        64.61721
-      ]
-    },
-    {
-      "id": "S1C_IW_GRDH_1SDV_20261029T050507_20261029T050532_010095_014269_78C4_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-29T05:05:07.437207Z",
-      "published_at": "2026-10-29T05:09:09.682124Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        17.219265,
-        62.105785,
-        23.072985,
-        64.051514
-      ]
-    },
-    {
-      "id": "S1D_IW_GRDH_1SDV_20261028T051334_20261028T051359_005211_009E4B_3B08_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-28T05:13:34.902730Z",
-      "published_at": "2026-10-28T05:41:36.096405Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        15.156426,
-        62.064854,
-        20.965303,
-        64.007561
-      ]
-    },
-    {
-      "id": "S1D_IW_GRDH_1SDV_20261028T051309_20261028T051334_005211_009E4B_C344_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-10-28T05:13:09.903739Z",
-      "published_at": "2026-10-28T05:41:48.304043Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        15.672139,
-        63.542175,
-        21.808031,
-        65.494881
-      ]
-    }
-  ],
+  "new_scenes_since_previous_run": [],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
