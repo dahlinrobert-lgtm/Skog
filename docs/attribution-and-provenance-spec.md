@@ -141,7 +141,7 @@ Illustrativt exempel – inte ett fastställt produktionsschema:
    - `skogsstyrelsen.volume.omdrev3`: CC0 som utgångspunkt för Skogsstyrelsens egna geodata, med kontroll av exakt produkt.
    - `lansstyrelsen.actions_in_water`: publicerade villkor anger kopiering, bearbetning och distribution med källangivelse; kontrollera även API-specifika villkor.
    - `naturvardsverket.protected_areas`: central tjänst anger okända villkor; använd som test av hur okänd status och begränsad publicering representeras utan att felaktigt markera alla användningar som förbjudna.
-4. **Manifest:** generera ett manifest för ett internt testuttag och kontrollera att attribution följer med.
+4. **Manifest:** generera ett manifest för ett internt testuttag och kontrollera att attribution följer med. Förberedande verifiering och acceptanskriterier för Åtgärder i vatten finns i [pilotgranskningen](source-rights-reviews/2026-11-02-actions-in-water-pilot.md).
 5. **UI:** bygg källpanel och kartattribution när datamodellen är verifierad.
 6. **Export:** lägg till manifest i CSV/GeoJSON/GeoPackage/PDF efter formatens förutsättningar.
 
