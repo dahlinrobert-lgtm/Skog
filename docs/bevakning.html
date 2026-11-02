@@ -254,7 +254,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
       <div>
         <p class="eyebrow">Kommunöversikt</p>
         <h2 id="overview-title">Skogsaktiviteter under <span id="currentYear">2026</span></h2>
-        <p class="section-intro">En anmälan betyder inte att avverkningen har genomförts. Utförda ytor redovisas separat utifrån Skogsstyrelsens registreringar.</p>
+        <p class="section-intro">En anmälan betyder inte att avverkningen har genomförts. Fjärranalysbaserade förändringsytor redovisas separat som indikationer, inte som oberoende verifiering.</p>
       </div>
       <span class="year-chip" id="periodChip">År till datum</span>
     </div>
@@ -264,8 +264,8 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
         <strong id="plannedCount">–</strong><span class="stat-note" id="plannedNote">Inkomna anmälningar i vald period</span>
       </article>
       <article class="stat">
-        <div class="stat-top"><span class="stat-label">Registrerade utförda ytor</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m4.5 7.3 7.5 4 7.5-4M12 21V11.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
-        <strong id="doneCount">–</strong><span class="stat-note" id="doneNote">Registrerade objekt i vald period</span>
+        <div class="stat-top"><span class="stat-label">Satellitindikationer</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m4.5 7.3 7.5 4 7.5-4M12 21V11.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
+        <strong id="doneCount">–</strong><span class="stat-note" id="doneNote">Fjärranalysbaserade objekt i vald period</span>
       </article>
       <article class="stat">
         <div class="stat-top"><span class="stat-label">Sammanlagd registrerad areal</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8M8 13h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="m15 16 2 2 3-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
@@ -316,12 +316,12 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
         <div class="preview-empty">Välj en aktivitet i flödet för att se dess geografiska läge och ärendeuppgifter här.</div>
       </aside>
     </div>
-    <div class="map-legend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Utförd avverkning</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
+    <div class="map-legend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Satellitindikation</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
   </section>
 
   <footer class="footer">
     <strong>Datakälla: Skogsstyrelsens öppna geodatatjänster.</strong>
-    <span>Resultaten beror på vad källagren publicerar och kommunattributet i respektive objekt. Utförda ytor är fjärranalysbaserade registreringar, inte en garanti för fältverifiering.</span>
+    <span>Resultaten beror på vad källagren publicerar och kommunattributet i respektive objekt. Fjärranalysbaserade ytor är indikationer och inte oberoende verifiering av att en anmälan har genomförts.</span>
   </footer>
 </main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -332,7 +332,7 @@ const ROOT="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataporta
 const CURRENT_YEAR=new Date().getFullYear();
 const sources=[
  {kind:"planned",label:"Planerad avverkning",url:ROOT+"GeodataportalVisaAvverkningsanmalan/MapServer/0/query",dateField:"Inkomdatum",areaField:"AnmaldHa",fields:"OBJECTID,Inkomdatum,Arendear,Kommun,Avverktyp,AnmaldHa,ArendeStatus,Beteckn,Lan,Kommunnr"},
- {kind:"done",label:"Utförd avverkning",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"}
+ {kind:"done",label:"Satellitindikation",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"}
 ];
 let all=[];
 let sourceWarnings=[];
@@ -544,7 +544,7 @@ function render(){
 }
 async function load(){
  const status=document.getElementById("status"),dot=document.getElementById("statusDot"),feed=document.getElementById("feed");
- status.textContent="Hämtar kommunens avverkningsanmälningar och utförda ytor …";
+ status.textContent="Hämtar avverkningsanmälningar och satellitindikationer …";
  dot.className="dot";
  feed.innerHTML='<div class="empty">Hämtar aktiviteter …</div>';
  document.getElementById("reload").disabled=true;
