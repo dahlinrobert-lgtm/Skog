@@ -410,6 +410,10 @@ Länkar:
 - [Senaste Samråd-data](../data/samrad_latest.json)
 - [Kombinerat händelsepaket](../data/harvest_event_bundle.json)
 - [Dagligt insamlingsflöde](../.github/workflows/collect-samrad.yml)
+- [Händelsekedjor i webbgränssnittet](händelsekedjor.html)
+- [Publicerat händelsepaket för GitHub Pages](../docs/data/harvest_event_bundle.json)
+
+Händelsekedjesidan visar kedjorna och samtliga kandidatrelationer separat. Därmed kan indikativa länkar granskas utan att de blandas ihop med starkare samband. Bevaksningssidans huvudtext är också ändrad så att flödet och uppföljningen framhävs, medan kartan beskrivs som geografiskt stöd.
 
 ## 14. Nästa konkreta steg
 
