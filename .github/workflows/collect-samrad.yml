@@ -30,16 +30,20 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
-      - name: Test Samråd collector
-        run: python -m unittest discover -s tests -p 'test_collect_samrad.py' -v
+      - name: Test Samråd collector and event-chain integration
+        run: |
+          python -m unittest discover -s tests -p 'test_collect_samrad.py' -v
+          python -m unittest discover -s tests -p 'test_harvest_event_bundle.py' -v
       - name: Collect point, line and polygon layers
         run: python scripts/collect_samrad.py
-      - name: Publish latest result and immutable snapshot
+      - name: Build and validate combined harvest event bundle
+        run: python scripts/build_harvest_event_bundle.py
+      - name: Publish latest result, event bundle and immutable snapshot
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/samrad_latest.json data/samrad_snapshots
+          git add data/samrad_latest.json data/harvest_event_bundle.json data/samrad_snapshots
           if git diff --cached --quiet; then
             echo "No Samråd changes to publish."
             exit 0
