@@ -10,7 +10,7 @@
 
 1. **Avverkningsanmälningar** – primär ingång: registrering, ändringar, status och historik.
 2. **Utförda avverkningar från en oberoende, icke-satellitbaserad källa** – ska kopplas till anmälan när sådan källa och dess metod har verifierats.
-3. **Samråd och myndighetsärenden** – kompletterande händelser som kan knytas till ärende-ID, fastighet eller geografi.
+3. **Samråd och myndighetsärenden** – kompletterande händelser som kan knytas till ärende-ID, fastighet eller geografi. Skogsstyrelsens tre Samråd-geometrier finns redan som karttjänst och får nu en separat historisk pilotinsamling.
 4. **Satellitbaserade förändringssignaler** – lägsta prioritet; används senare som kompletterande indikation, aldrig som krav för att en kedja ska kunna skapas.
 
 **Viktig källavgränsning:** Det befintliga lagret som i repot kallas utförda avverkningar innehåller `Forebild`/`Efterbild`-fält och analysen beskriver det uttryckligen som satellitbaserad förändringsdetektion. Det är därför inte en oberoende verifiering av att en anmälan har verkställts. Lagret ska tills vidare klassas som satellitindikation och inte användas som prioriterad, verifierande källa i händelsekedjan. En framtida källa för registrerade/rapporterade utförda åtgärder måste bedömas separat.
@@ -365,13 +365,32 @@ Följande finns nu i repot:
 
 Detta är första vertikala snittet, inte den färdiga flerkälliga kedjan. Det producerar ännu ingen länk mellan anmälan och en oberoende registrerad utförd åtgärd.
 
-## 13. Nästa konkreta steg
+## 13. Samråd som nästa insamlingskälla
 
-1. Identifiera och verifiera en icke-satellitbaserad källa för utförd åtgärd, eller konstatera att det saknas en sådan användbar källa.
-2. Koppla in Länsstyrelsens samråds- och diariedata med ärende-ID som förstahandsnyckel och geografi/tid som kompletterande matchningsstöd.
-3. Bygg relationer och kedjor mellan oberoende källobservationer, med metod och säkerhetsklass.
-4. Lägg satellitbaserade förändringssignaler sist som valfri kompletterande evidens.
-5. Koppla det validerade händelsepaketet till bevakningsflödet och därefter aviseringskön.
+Skogsstyrelsens Samrådslager används redan av kartan via tre ArcGIS REST-sublager:
+- punkt: `MapServer/0`
+- linje: `MapServer/1`
+- polygon: `MapServer/2`
+
+Kartan hämtade tidigare dessa lager vid behov. Nu finns även:
+- `scripts/collect_samrad.py` – hämtar samtliga tre lager, paginerar med ObjectId-ordning, filtrerar till pilotområdets radie i EPSG:3006 och bevarar UUID, Beteckn och övriga källattribut.
+- `data/samrad_latest.json` – senaste lyckade resultat.
+- `data/samrad_snapshots/samrad_*.json.gz` – oföränderliga komprimerade snapshots.
+- `.github/workflows/collect-samrad.yml` – daglig insamling samt manuell körning.
+- `tests/test_collect_samrad.py` – tester för paginering, ID-deduplicering och geografisk avgränsning.
+
+Insamlingen publicerar först när alla tre sublager har hämtats utan fel. Frånvaro i senare snapshots tolkas inte som avregistrering eller genomförd åtgärd.
+
+Detta skapar den andra viktiga källfamiljen för händelsekedjor. Nästa implementation ska lägga till Samråd-poster som egna kanoniska händelser och länka dem till avverkningsanmälningar. Matchning ska i första hand använda explicita ärende-/korsreferenser; geometri, kommun och datum ska skapa kandidater med tydlig osäkerhet, inte automatiska bevis.
+
+## 14. Nästa konkreta steg
+
+1. Kör och verifiera Samråd-insamlingen för Gräsmyr; kontrollera antal per sublager, pagination och snapshotstorlek.
+2. Normalisera Samråd-poster till händelser i samma event bundle.
+3. Matcha Samråd mot avverkningsanmälningar med separata nivåer för explicit ID-match och rumslig/tidsmässig kandidat.
+4. Identifiera en oberoende, icke-satellitbaserad källa för utförd avverkning, eller dokumentera att sådan källa saknas.
+5. Lägg satellitbaserade förändringssignaler sist som valfri kompletterande evidens.
+6. Koppla det validerade händelsepaketet till bevakningsflödet och därefter aviseringskön.
 
 Ändra inte webbgränssnittet eller aktivera externa utskick innan flerkälliga samband kan förklaras och granskas.
 
