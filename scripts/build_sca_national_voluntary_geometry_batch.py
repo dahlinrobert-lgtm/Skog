@@ -21,8 +21,11 @@ Z = 12
 def tile_to_3857(geom, tx, ty, extent):
     span = (2 * WORLD) / (2 ** Z)
     def convert(x, y, z=None):
+        # mapbox_vector_tile.decode defaults y_coord_down=False and returns
+        # tile-local coordinates with origin at bottom-left (Y increases up).
+        # XYZ tile rows increase down, so global northing uses (1 - y/extent).
         xx = -WORLD + (tx + x / extent) * span
-        yy = WORLD - (ty + y / extent) * span
+        yy = WORLD - (ty + 1.0 - y / extent) * span
         if z is None:
             return xx, yy
         return xx, yy, z
