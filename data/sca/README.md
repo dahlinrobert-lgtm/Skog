@@ -12,6 +12,19 @@
 - Batch-local exact geometry repetitions: 285 extra representations in 285 groups (not yet a global cross-batch identity count)
 - All source MVT tile records are retained with source tile, source layer, source feature index, source tile hash and URL in batch manifests.
 
+## Cross-tile topology audit
+
+- Audit run: [41724100628](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/41724100628)
+- Input: all 25 geometry batches; 34,932 source records across 2,915 source tiles.
+- Globally unique exact geometry hashes: 34,604.
+- Exact geometry repetition: 328 extra records across 328 duplicate hash groups.
+- Candidate pairs flagged: 10,325 (328 exact duplicates; 157 near-duplicate candidates; 1,002 contained/nested; 6,908 partial overlaps; 1,930 nearby boundaries).
+- No source observations were merged, deleted, or dissolved.
+
+The 328 exact duplicate pairs are strong duplicate candidates, not confirmed duplicate objects. Five pairs have different resolved classes; 104 have different or missing motive values. Attribute disagreements must remain visible during reconciliation. Near-duplicate candidates require review of source provenance and attributes. Partial overlaps and nearby boundaries are deliberately broad review categories and must not be treated as object counts.
+
+The audit is a candidate generator, not a national unique-object census. Its search covers exact geometry hashes globally and spatial relationships between distinct tiles no farther than one tile in either XYZ direction. The underlying z12 plan is still based on positive z9 seeds plus a one-tile neighbor ring, so completeness of national source coverage remains unproven.
+
 ## Classification snapshot
 
 | SCA resolved class | Source records |
