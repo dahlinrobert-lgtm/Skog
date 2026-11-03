@@ -1,5 +1,9 @@
 name: Build SCA national voluntary geometry batch
 on:
+  push:
+    paths:
+      - "scripts/build_sca_national_voluntary_geometry_batch.py"
+      - ".github/workflows/build-sca-national-voluntary-geometry-batch.yml"
   workflow_dispatch:
     inputs:
       source_run_id:
