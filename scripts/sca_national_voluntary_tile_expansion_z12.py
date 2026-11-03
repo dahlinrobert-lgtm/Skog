@@ -45,11 +45,18 @@ def load_positive_seeds():
     rows = census.get("tile_results", [])
     if not isinstance(rows, list) or not rows:
         raise SystemExit(f"Census JSON has no tile_results: {source}")
-    seeds = sorted({
-        (int(row["x"]), int(row["y"]))
-        for row in rows
+    positive_rows = [
+        row for row in rows
         if row.get("voluntary", {}).get("state") == "valid_mvt_with_features"
-    })
+    ]
+    # Process the densest point/cluster tiles first. This is still the full
+    # positive seed set; ordering only makes early batches a useful validation
+    # sample instead of starting at the western edge of the census bbox.
+    positive_rows.sort(key=lambda row: (
+        -sum(int(layer.get("feature_count", 0)) for layer in row.get("voluntary", {}).get("layers", [])),
+        int(row["x"]), int(row["y"])
+    ))
+    seeds = [(int(row["x"]), int(row["y"])) for row in positive_rows]
     if not seeds:
         raise SystemExit("No voluntary-positive z9 seeds found in census artifact")
     return seeds, census.get("summary", {})
