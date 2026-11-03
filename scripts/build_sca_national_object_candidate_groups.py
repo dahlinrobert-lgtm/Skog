@@ -15,7 +15,7 @@ OUT = Path("output")
 HIGH_CONFIDENCE = {"exact_geometry_duplicate", "near_duplicate_candidate"}
 
 def stable_id(keys):
-    payload = "\\n".join(sorted(keys)).encode("utf-8")
+    payload = "\n".join(sorted(keys)).encode("utf-8")
     return "sca-cand-" + hashlib.sha256(payload).hexdigest()[:16]
 
 def main():
@@ -111,7 +111,7 @@ def main():
         ]
     }
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "sca-national-object-candidate-summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2)+"\\n", encoding="utf-8")
+    (OUT / "sca-national-object-candidate-summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     for name, rows in [("sca-national-object-candidate-groups.csv", group_rows), ("sca-national-object-candidate-members.csv", member_rows)]:
         fields = list(rows[0]) if rows else ["candidate_group_id"]
         with (OUT/name).open("w", newline="", encoding="utf-8-sig") as f:
