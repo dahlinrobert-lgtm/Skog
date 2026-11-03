@@ -26,9 +26,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: input
       - name: Run candidate grouping regression tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           python -m pip install pytest
-          pytest -q tests/test_sca_candidate_group_summary.py
+          python -m pytest -q tests/test_sca_candidate_group_summary.py
       - name: Build conservative candidate groups
         run: |
           python -m py_compile scripts/build_sca_national_object_candidate_groups.py
