@@ -9,7 +9,7 @@
 - Source feature records: 34,932
 - Geometry types: 33,947 Polygon; 985 MultiPolygon
 - Geometry parse/validity failures: 0
-- Exact geometry repetitions across source records: 285 extra representations in 285 groups
+- Batch-local exact geometry repetitions: 285 extra representations in 285 groups (not yet a global cross-batch identity count)
 - All source MVT tile records are retained with source tile, source layer, source feature index, source tile hash and URL in batch manifests.
 
 ## Classification snapshot
@@ -42,7 +42,7 @@
 ## Interpretation and limitations
 
 - 34,932 are source tile feature records, not unique voluntary set-aside objects.
-- 285 exact geometry duplicate representations have been detected. Do not discard source records; preserve provenance.
+- The 285 exact-geometry repetitions are summed from per-batch checks; cross-batch duplicates still require a global comparison. Do not discard source records; preserve provenance.
 - Different clipped/generalized geometries for the same object will not be found by exact geometry hashing.
 - Geometry reconstruction and object identity across tile edges are still pending.
 - The z12 coverage plan is expanded from 183 z9 positive seed tiles and a one-tile neighbor ring. It does not prove complete national SCA coverage.
