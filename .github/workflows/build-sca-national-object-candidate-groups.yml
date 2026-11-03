@@ -33,11 +33,31 @@ jobs:
         run: |
           python -m py_compile scripts/build_sca_national_object_candidate_groups.py
           python scripts/build_sca_national_object_candidate_groups.py
-      - name: Validate outputs
+      - name: Validate outputs and count invariants
         run: |
           python -m json.tool output/sca-national-object-candidate-summary.json > /dev/null
-          test -s output/sca-national-object-candidate-groups.csv
-          test -s output/sca-national-object-candidate-members.csv
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+
+          summary = json.loads(Path("output/sca-national-object-candidate-summary.json").read_text())
+          groups = list(csv.DictReader(open("output/sca-national-object-candidate-groups.csv", encoding="utf-8-sig")))
+          members = list(csv.DictReader(open("output/sca-national-object-candidate-members.csv", encoding="utf-8-sig")))
+          assert len(groups) == summary["candidate_groups"]
+          assert len(members) == summary["source_observations_in_groups"]
+          assert sum(int(row["source_observation_count"]) for row in groups) == len(members)
+          assert summary["source_records_not_grouped_total"] + len(members) == summary["source_feature_records_total"]
+          assert summary["unique_source_observations_in_topology_edges"] <= summary["source_feature_records_total"]
+          assert all(row["review_status"] == "candidate_only_not_merged" for row in groups)
+          assert all(row["review_status"] == "retain_source_observation" for row in members)
+          print(json.dumps({
+              "candidate_groups": len(groups),
+              "group_members": len(members),
+              "source_records_total": summary["source_feature_records_total"],
+              "groups_with_missing_motive": summary["groups_with_missing_motive"],
+              "groups_with_motive_conflict": summary["groups_with_motive_conflict"],
+          }, indent=2))
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: sca-national-object-candidate-groups
