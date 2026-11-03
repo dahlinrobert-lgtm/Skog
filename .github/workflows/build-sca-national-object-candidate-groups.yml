@@ -25,6 +25,10 @@ jobs:
           run-id: ${{ inputs.topology_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: input
+      - name: Run candidate grouping regression tests
+        run: |
+          python -m pip install pytest
+          pytest -q tests/test_sca_candidate_group_summary.py
       - name: Build conservative candidate groups
         run: |
           python -m py_compile scripts/build_sca_national_object_candidate_groups.py
