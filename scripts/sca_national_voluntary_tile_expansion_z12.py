@@ -1,39 +1,36 @@
 #!/usr/bin/env python3
-"""Expand independent z9 voluntary-positive seeds to z12 polygon tiles.
+"""Harvest deterministic, globally deduplicated SCA voluntary z12 XYZ tiles.
 
-The input seed set is reconstructed deterministically from the full z9 bbox
-rather than copied from an artifact. Only z9 tiles are selected as parents
-where the voluntary layer returned MVT features. Every descendant z12 tile is
-requested, plus a configurable neighbor ring. This is a first national
-geometry-harvest tranche; results remain tile records with provenance.
+The national target set is the union of all z12 descendants of every
+voluntary-positive z9 census tile plus a configurable neighbor ring. The
+global union is partitioned into non-overlapping batches, so no z12 tile is
+requested by more than one batch. Raw MVT geometries and tile provenance are
+preserved; no feature deduplication or area aggregation is performed.
 """
 from __future__ import annotations
-import hashlib, json, math, os, time
+
+import hashlib
+import json
+import os
+import threading
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-import requests
+
 import mapbox_vector_tile
+import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 Z0, Z = 9, 12
-BBOX = {"west": 10.5, "south": 55.0, "east": 24.5, "north": 69.5}
 URL = "https://olga.scaskog.com/map/omraden/{z}/{x}/{y}.pbf"
 WORKERS = 3
 TIMEOUT = (20, 60)
 OUT = Path("sca-national-voluntary-tile-expansion-z12.json")
-
-
-def xyz(lon, lat, z):
-    n = 2 ** z
-    lat = max(-85.05112878, min(85.05112878, lat))
-    return int((lon + 180) / 360 * n), int((1 - math.asinh(math.tan(math.radians(lat))) / math.pi) / 2 * n)
+SESSION_LOCAL = threading.local()
 
 
 def load_positive_seeds():
-    # Artifact ZIP contains the canonical census filename; discover the JSON
-    # rather than relying on a stale/incorrect filename alias.
     candidates = sorted(Path("seed").glob("*.json"))
     if len(candidates) != 1:
         raise SystemExit(
@@ -49,128 +46,183 @@ def load_positive_seeds():
         row for row in rows
         if row.get("voluntary", {}).get("state") == "valid_mvt_with_features"
     ]
-    # Process the densest point/cluster tiles first. This is still the full
-    # positive seed set; ordering only makes early batches a useful validation
-    # sample instead of starting at the western edge of the census bbox.
     positive_rows.sort(key=lambda row: (
-        -sum(int(layer.get("feature_count", 0)) for layer in row.get("voluntary", {}).get("layers", [])),
+        -sum(int(layer.get("feature_count", 0))
+             for layer in row.get("voluntary", {}).get("layers", [])),
         int(row["x"]), int(row["y"])
     ))
     seeds = [(int(row["x"]), int(row["y"])) for row in positive_rows]
     if not seeds:
         raise SystemExit("No voluntary-positive z9 seeds found in census artifact")
-    return seeds, census.get("summary", {})
+    return seeds, census.get("summary", {}), source.name
 
 
-def make_session():
-    retry = Retry(total=4, connect=4, read=3, status=3, backoff_factor=1,
-                  status_forcelist=[429, 500, 502, 503, 504],
-                  allowed_methods=["GET"], respect_retry_after_header=True)
-    s = requests.Session()
-    s.headers.update({"User-Agent": "Skog-SCA-national-voluntary-z12/1.0",
-                      "Accept": "application/vnd.mapbox-vector-tile, application/x-protobuf, */*"})
-    s.mount("https://", HTTPAdapter(max_retries=retry, pool_connections=3, pool_maxsize=3))
-    return s
+def build_global_tile_plan(seeds, radius):
+    """Return sorted unique z12 tiles and their parent z9 seed provenance."""
+    descendants = 2 ** (Z - Z0)
+    owners = {}
+    for sx, sy in seeds:
+        for dx in range(descendants):
+            for dy in range(descendants):
+                x, y = sx * descendants + dx, sy * descendants + dy
+                for ox in range(-radius, radius + 1):
+                    for oy in range(-radius, radius + 1):
+                        xx, yy = x + ox, y + oy
+                        if 0 <= xx < 2 ** Z and 0 <= yy < 2 ** Z:
+                            owners.setdefault((xx, yy), set()).add((sx, sy))
+    return owners
 
 
-def decode_tile(x, y):
+def get_session():
+    session = getattr(SESSION_LOCAL, "session", None)
+    if session is None:
+        retry = Retry(
+            total=4, connect=4, read=3, status=3, backoff_factor=1,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=["GET"], respect_retry_after_header=True
+        )
+        session = requests.Session()
+        session.headers.update({
+            "User-Agent": "Skog-SCA-national-voluntary-z12/2.0",
+            "Accept": "application/vnd.mapbox-vector-tile, application/x-protobuf, */*"
+        })
+        session.mount("https://", HTTPAdapter(
+            max_retries=retry, pool_connections=4, pool_maxsize=4
+        ))
+        SESSION_LOCAL.session = session
+    return session
+
+
+def decode_tile(x, y, parents):
     url = URL.format(z=Z, x=x, y=y)
     try:
-        r = make_session().get(url, timeout=TIMEOUT)
-        raw = r.content
-        base = {"http_status": r.status_code, "bytes": len(raw),
-                "sha256": hashlib.sha256(raw).hexdigest() if raw else None,
-                "url": url}
-        if r.status_code == 404:
+        response = get_session().get(url, timeout=TIMEOUT)
+        raw = response.content
+        base = {
+            "http_status": response.status_code,
+            "bytes": len(raw),
+            "sha256": hashlib.sha256(raw).hexdigest() if raw else None,
+            "url": url,
+            "covering_z9_seeds": [
+                {"z": Z0, "x": sx, "y": sy}
+                for sx, sy in sorted(parents)
+            ],
+        }
+        if response.status_code == 404:
             return {**base, "state": "not_found_404", "layers": []}
-        if r.status_code != 200:
+        if response.status_code != 200:
             return {**base, "state": "http_error", "layers": []}
         try:
             decoded = mapbox_vector_tile.decode(raw)
             layers = []
             for name, obj in decoded.items():
                 feats = obj.get("features", [])
-                # Preserve source geometry and MVT properties in tile-local coordinates.
                 layers.append({
                     "name": name,
                     "extent": obj.get("extent"),
                     "feature_count": len(feats),
                     "features": [{
-                        "id": f.get("id"),
-                        "type": (f.get("geometry") or {}).get("type"),
-                        "geometry": f.get("geometry"),
-                        "properties": f.get("properties") or {},
-                    } for f in feats],
+                        "id": feature.get("id"),
+                        "type": (feature.get("geometry") or {}).get("type"),
+                        "geometry": feature.get("geometry"),
+                        "properties": feature.get("properties") or {},
+                    } for feature in feats],
                 })
-            n = sum(x["feature_count"] for x in layers)
-            return {**base, "state": "valid_mvt_with_features" if n else "valid_mvt_empty",
-                    "layers": layers}
-        except Exception as e:
-            return {**base, "state": "decode_error", "error": str(e)[:240], "layers": []}
-    except Exception as e:
-        return {"state": "request_error", "error": str(e)[:240], "url": url, "layers": []}
+            count = sum(layer["feature_count"] for layer in layers)
+            return {
+                **base,
+                "state": "valid_mvt_with_features" if count else "valid_mvt_empty",
+                "layers": layers,
+            }
+        except Exception as exc:
+            return {**base, "state": "decode_error",
+                    "error": str(exc)[:240], "layers": []}
+    except Exception as exc:
+        return {"state": "request_error", "error": str(exc)[:240],
+                "url": url, "covering_z9_seeds": [
+                    {"z": Z0, "x": sx, "y": sy}
+                    for sx, sy in sorted(parents)
+                ], "layers": []}
 
 
 def main():
-    seeds, seed_summary = load_positive_seeds()
     batch = max(0, int(os.getenv("BATCH", "0")))
-    batch_size = max(1, min(20, int(os.getenv("BATCH_SIZE", "4"))))
+    batch_size = max(1, min(1000, int(os.getenv("BATCH_SIZE", "500"))))
     radius = max(0, min(2, int(os.getenv("RADIUS", "1"))))
+    seeds, seed_summary, census_file = load_positive_seeds()
+    owners = build_global_tile_plan(seeds, radius)
+    all_tiles = sorted(owners)
+    total_batches = (len(all_tiles) + batch_size - 1) // batch_size
     start = batch * batch_size
-    selected = seeds[start:start + batch_size]
+    selected = all_tiles[start:start + batch_size]
     if not selected:
-        raise SystemExit(f"Batch {batch} has no seeds; total seeds={len(seeds)}")
-    n0 = 2 ** (Z - Z0)
-    targets = set()
-    for sx, sy in selected:
-        for dx in range(n0):
-            for dy in range(n0):
-                x, y = sx*n0 + dx, sy*n0 + dy
-                for nx in range(-radius, radius+1):
-                    for ny in range(-radius, radius+1):
-                        xx, yy = x+nx, y+ny
-                        if 0 <= xx < 2**Z and 0 <= yy < 2**Z:
-                            targets.add((xx, yy))
-    targets = sorted(targets)
+        raise SystemExit(
+            f"Batch {batch} has no tiles; unique targets={len(all_tiles)}, "
+            f"batch_size={batch_size}, total_batches={total_batches}"
+        )
+    targets = [(x, y, owners[(x, y)]) for x, y in selected]
     rows = []
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        futures = {pool.submit(decode_tile, x, y):(x,y) for x,y in targets}
-        for i, future in enumerate(as_completed(futures), 1):
-            x, y = futures[future]
-            r = future.result()
-            rows.append({"z": Z, "x": x, "y": y, **r})
-            if i % 25 == 0 or i == len(futures):
-                rows.sort(key=lambda q:(q["x"], q["y"]))
+        futures = {
+            pool.submit(decode_tile, x, y, parents): (x, y, parents)
+            for x, y, parents in targets
+        }
+        for index, future in enumerate(as_completed(futures), 1):
+            x, y, parents = futures[future]
+            result = future.result()
+            rows.append({"z": Z, "x": x, "y": y, **result})
+            if index % 25 == 0 or index == len(futures):
+                rows.sort(key=lambda item: (item["x"], item["y"]))
                 payload = {
-                    "purpose": "First tranche of national z12 voluntary polygon detail, expanded from z9 independent voluntary-positive seeds.",
+                    "purpose": "National SCA voluntary-set-aside z12 MVT harvest, partitioned into globally unique tile batches.",
                     "source": URL,
                     "zoom": Z,
                     "batch": batch,
                     "batch_size": batch_size,
-                    "radius": radius,
+                    "batch_count": total_batches,
+                    "batch_tile_start_index": start,
+                    "batch_tile_end_index_exclusive": start + len(selected),
+                    "neighbor_radius": radius,
+                    "census_artifact_file": census_file,
                     "z9_positive_seed_count": len(seeds),
                     "seed_census_summary": seed_summary,
-                    "selected_z9_seeds": [{"z":Z0,"x":x,"y":y} for x,y in selected],
-                    "target_z12_tiles": len(targets),
-                    "completed_z12_tiles": len(rows),
+                    "global_unique_z12_target_tiles": len(all_tiles),
+                    "selected_z12_tiles": len(selected),
                     "tile_results": rows,
                     "interpretation": [
-                        "Tile counts and feature records are not counts of unique voluntary areas.",
-                        "Features retain source tile provenance; MVT geometry remains in tile-local coordinates.",
-                        "A 404 is not proof that the geographic area lacks an avsättning.",
-                        "Neighbor ring is used to reduce omission at tile edges; it does not establish complete parcel topology.",
-                        "This is a batch of detailed source tiles, not yet a national inventory.",
-                        "No deduplication, union, or area totals are asserted."
+                        "The global z12 tile plan is a union across all positive z9 seeds; a z12 tile appears in exactly one batch.",
+                        "Each tile records every z9 seed whose descendant neighborhood includes that tile.",
+                        "Tile feature records are not counts of unique voluntary set-asides.",
+                        "Raw MVT geometry is retained in decoder tile-local coordinates with source tile and hash provenance.",
+                        "HTTP 404 is not proof that the geographic area lacks a set-aside.",
+                        "No deduplication, dissolve, or area totals are asserted."
                     ]
                 }
-                OUT.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":"))+"\n", encoding="utf-8")
-                print(json.dumps({"completed":i,"total":len(targets),
-                                  "states":dict(Counter(q["state"] for q in rows))}, ensure_ascii=False), flush=True)
-    rows.sort(key=lambda q:(q["x"],q["y"]))
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    print(json.dumps({"batch":batch,"positive_seed_count":len(seeds),"selected_seeds":len(selected),"target_tiles":len(targets),
-                      "states":dict(Counter(q["state"] for q in rows)),
-                      "feature_records":sum(sum(l["feature_count"] for l in q.get("layers",[])) for q in rows)}, ensure_ascii=False, indent=2))
+                OUT.write_text(
+                    json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n",
+                    encoding="utf-8"
+                )
+                print(json.dumps({
+                    "batch": batch, "completed": index, "total": len(selected),
+                    "state_counts": dict(Counter(row["state"] for row in rows)),
+                }, ensure_ascii=False), flush=True)
+    rows.sort(key=lambda item: (item["x"], item["y"]))
+    OUT.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8"
+    )
+    print(json.dumps({
+        "batch": batch,
+        "batch_count": total_batches,
+        "positive_z9_seeds": len(seeds),
+        "global_unique_z12_target_tiles": len(all_tiles),
+        "selected_z12_tiles": len(selected),
+        "state_counts": dict(Counter(row["state"] for row in rows)),
+        "feature_records": sum(
+            sum(layer["feature_count"] for layer in row.get("layers", []))
+            for row in rows
+        ),
+    }, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
