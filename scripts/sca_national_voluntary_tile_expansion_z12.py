@@ -17,10 +17,6 @@ from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-import mapbox_vector_tile
-import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 Z0, Z = 9, 12
 URL = "https://olga.scaskog.com/map/omraden/{z}/{x}/{y}.pbf"
@@ -74,6 +70,9 @@ def build_global_tile_plan(seeds, radius):
 
 
 def get_session():
+    import requests
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
     session = getattr(SESSION_LOCAL, "session", None)
     if session is None:
         retry = Retry(
@@ -94,6 +93,7 @@ def get_session():
 
 
 def decode_tile(x, y, parents):
+    import mapbox_vector_tile
     url = URL.format(z=Z, x=x, y=y)
     try:
         response = get_session().get(url, timeout=TIMEOUT)
