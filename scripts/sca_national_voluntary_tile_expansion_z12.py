@@ -32,11 +32,19 @@ def xyz(lon, lat, z):
 
 
 def load_positive_seeds():
-    source = Path("seed/sca-independent-national-layer-census-z9.json")
-    if not source.exists():
-        raise SystemExit("Missing verified independent z9 census artifact")
+    # Artifact ZIP contains the canonical census filename; discover the JSON
+    # rather than relying on a stale/incorrect filename alias.
+    candidates = sorted(Path("seed").glob("*.json"))
+    if len(candidates) != 1:
+        raise SystemExit(
+            f"Expected exactly one census JSON in seed/, found {len(candidates)}: "
+            + ", ".join(str(p) for p in candidates)
+        )
+    source = candidates[0]
     census = json.loads(source.read_text(encoding="utf-8"))
     rows = census.get("tile_results", [])
+    if not isinstance(rows, list) or not rows:
+        raise SystemExit(f"Census JSON has no tile_results: {source}")
     seeds = sorted({
         (int(row["x"]), int(row["y"]))
         for row in rows
