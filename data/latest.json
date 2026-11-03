@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-02T22:54:52.479016Z",
+  "checked_at": "2026-11-03T06:26:06.341458Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27446,7 +27446,7 @@
       },
       {
         "type": "Feature",
-        "id": 6566729,
+        "id": 6568673,
         "geometry": {
           "type": "Polygon",
           "coordinates": [
@@ -27523,7 +27523,7 @@
           ]
         },
         "properties": {
-          "OBJECTID": 6566729,
+          "OBJECTID": 6568673,
           "Lannr": "24",
           "Lan": "VÄSTERBOTTENS LÄN",
           "Kommunnr": "2401",
@@ -27547,13 +27547,239 @@
     "count": 164,
     "note": "Features intersect a 10 km point-distance query around the configured centre; this is not a cadastral or village boundary. A notification does not prove felling occurred."
   },
-  "new_cutting_notification_ids_since_previous_run": [],
-  "recent_new_cutting_notification_ids_since_previous_run": [],
+  "new_cutting_notification_ids_since_previous_run": [
+    {
+      "type": "Feature",
+      "id": 6568673,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              19.631609574959068,
+              63.67414973134517
+            ],
+            [
+              19.632392537286197,
+              63.67459211809609
+            ],
+            [
+              19.632685500204573,
+              63.674708139373266
+            ],
+            [
+              19.6323756092603,
+              63.67485499591601
+            ],
+            [
+              19.632612659359822,
+              63.674995633938174
+            ],
+            [
+              19.632278301232915,
+              63.67509766139885
+            ],
+            [
+              19.632405987061787,
+              63.675277355025315
+            ],
+            [
+              19.63299164728482,
+              63.67544688250899
+            ],
+            [
+              19.633269153251955,
+              63.67546834388436
+            ],
+            [
+              19.633410522514644,
+              63.67554743031872
+            ],
+            [
+              19.63197237982584,
+              63.676072856714434
+            ],
+            [
+              19.63129352397532,
+              63.675882194330946
+            ],
+            [
+              19.631721343799573,
+              63.67546159894103
+            ],
+            [
+              19.63182827920696,
+              63.675173005720524
+            ],
+            [
+              19.631695810009532,
+              63.67478186860076
+            ],
+            [
+              19.631025555627307,
+              63.674400481021685
+            ],
+            [
+              19.631609574959068,
+              63.67414973134517
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "OBJECTID": 6568673,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2401",
+        "Kommun": "NORDMALING",
+        "ArendeAr": 2026,
+        "Beteckn": "A 38871-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1789997712000,
+        "AnmaldHa": 1,
+        "SkogsodlHa": 2200,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      }
+    }
+  ],
+  "recent_new_cutting_notification_ids_since_previous_run": [
+    {
+      "type": "Feature",
+      "id": 6568673,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              19.631609574959068,
+              63.67414973134517
+            ],
+            [
+              19.632392537286197,
+              63.67459211809609
+            ],
+            [
+              19.632685500204573,
+              63.674708139373266
+            ],
+            [
+              19.6323756092603,
+              63.67485499591601
+            ],
+            [
+              19.632612659359822,
+              63.674995633938174
+            ],
+            [
+              19.632278301232915,
+              63.67509766139885
+            ],
+            [
+              19.632405987061787,
+              63.675277355025315
+            ],
+            [
+              19.63299164728482,
+              63.67544688250899
+            ],
+            [
+              19.633269153251955,
+              63.67546834388436
+            ],
+            [
+              19.633410522514644,
+              63.67554743031872
+            ],
+            [
+              19.63197237982584,
+              63.676072856714434
+            ],
+            [
+              19.63129352397532,
+              63.675882194330946
+            ],
+            [
+              19.631721343799573,
+              63.67546159894103
+            ],
+            [
+              19.63182827920696,
+              63.675173005720524
+            ],
+            [
+              19.631695810009532,
+              63.67478186860076
+            ],
+            [
+              19.631025555627307,
+              63.674400481021685
+            ],
+            [
+              19.631609574959068,
+              63.67414973134517
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "OBJECTID": 6568673,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2401",
+        "Kommun": "NORDMALING",
+        "ArendeAr": 2026,
+        "Beteckn": "A 38871-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1789997712000,
+        "AnmaldHa": 1,
+        "SkogsodlHa": 2200,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      }
+    }
+  ],
   "sentinel1": {
     "status": "ok",
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
     "collection": "sentinel-1-grd",
     "items": [
+      {
+        "id": "S1C_IW_GRDH_1SDV_20261103T051321_20261103T051346_010168_0144B8_9846_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-03T05:13:21.719254Z",
+        "published_at": "2026-11-03T05:00:48.911223Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          15.150576,
+          62.06218,
+          20.991835,
+          64.008095
+        ]
+      },
+      {
+        "id": "S1C_IW_GRDH_1SDV_20261103T051256_20261103T051321_010168_0144B8_CB6E_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-03T05:12:56.720286Z",
+        "published_at": "2026-11-03T05:00:43.755627Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          15.666227,
+          63.539402,
+          21.835978,
+          65.495399
+        ]
+      },
       {
         "id": "S1C_IW_GRDH_1SDV_20261031T160522_20261031T160547_010131_014387_98DD_COG",
         "collection": "sentinel-1-grd",
@@ -30126,32 +30352,6 @@
           62.320263,
           25.199461,
           64.267776
-        ]
-      },
-      {
-        "id": "S1D_IW_GRDH_1SDV_20260608T045705_20260608T045730_003140_005737_4AE7_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-08T04:57:05.232062Z",
-        "published_at": "2026-06-08T03:57:39.551950Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          19.202244,
-          61.886112,
-          24.993103,
-          63.828529
-        ]
-      },
-      {
-        "id": "S1D_IW_GRDH_1SDV_20260608T045640_20260608T045705_003140_005737_3709_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-08T04:56:40.232917Z",
-        "published_at": "2026-06-08T03:57:39.033955Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          19.719183,
-          63.363247,
-          25.834406,
-          65.315582
         ]
       }
     ],
@@ -32769,7 +32969,34 @@
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [],
+  "new_scenes_since_previous_run": [
+    {
+      "id": "S1C_IW_GRDH_1SDV_20261103T051321_20261103T051346_010168_0144B8_9846_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-11-03T05:13:21.719254Z",
+      "published_at": "2026-11-03T05:00:48.911223Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        15.150576,
+        62.06218,
+        20.991835,
+        64.008095
+      ]
+    },
+    {
+      "id": "S1C_IW_GRDH_1SDV_20261103T051256_20261103T051321_010168_0144B8_CB6E_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-11-03T05:12:56.720286Z",
+      "published_at": "2026-11-03T05:00:43.755627Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        15.666227,
+        63.539402,
+        21.835978,
+        65.495399
+      ]
+    }
+  ],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
