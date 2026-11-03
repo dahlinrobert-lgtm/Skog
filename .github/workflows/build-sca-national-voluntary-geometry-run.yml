@@ -1,10 +1,15 @@
 name: Build SCA national voluntary geometry run
 on:
+  push:
+    paths:
+      - "scripts/build_sca_national_voluntary_geometry_batch.py"
+      - ".github/workflows/build-sca-national-voluntary-geometry-run.yml"
   workflow_dispatch:
     inputs:
       source_run_id:
         description: "Run ID from the completed national z12 tile expansion"
         required: true
+        default: "41704577034"
       batch_count:
         description: "Number of tile batches in the source run"
         required: true
@@ -21,7 +26,7 @@ jobs:
       - name: Create geometry batch matrix
         id: set-matrix
         env:
-          BATCH_COUNT: ${{ inputs.batch_count }}
+          BATCH_COUNT: ${{ github.event.inputs.batch_count || '25' }}
         run: |
           python - <<'PY'
           import json, os
@@ -50,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: sca-national-voluntary-tile-expansion-z12-batch-${{ matrix.batch }}
-          run-id: ${{ inputs.source_run_id }}
+          run-id: ${{ github.event.inputs.source_run_id || '41704577034' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: input
       - name: Compile and build projected geometries
