@@ -31,12 +31,20 @@ def xyz(lon, lat, z):
     return int((lon + 180) / 360 * n), int((1 - math.asinh(math.tan(math.radians(lat))) / math.pi) / 2 * n)
 
 
-def bbox_tiles():
-    x0, y1 = xyz(BBOX["west"], BBOX["south"], Z0)
-    x1, y0 = xyz(BBOX["east"], BBOX["north"], Z0)
-    n = 2 ** Z0
-    return [(x, y) for x in range(max(0, x0), min(n-1, x1)+1)
-                   for y in range(max(0, y0), min(n-1, y1)+1)]
+def load_positive_seeds():
+    source = Path("seed/sca-independent-national-layer-census-z9.json")
+    if not source.exists():
+        raise SystemExit("Missing verified independent z9 census artifact")
+    census = json.loads(source.read_text(encoding="utf-8"))
+    rows = census.get("tile_results", [])
+    seeds = sorted({
+        (int(row["x"]), int(row["y"]))
+        for row in rows
+        if row.get("voluntary", {}).get("state") == "valid_mvt_with_features"
+    })
+    if not seeds:
+        raise SystemExit("No voluntary-positive z9 seeds found in census artifact")
+    return seeds, census.get("summary", {})
 
 
 def make_session():
@@ -89,7 +97,7 @@ def decode_tile(x, y):
 
 
 def main():
-    seeds = bbox_tiles()
+    seeds, seed_summary = load_positive_seeds()
     batch = max(0, int(os.getenv("BATCH", "0")))
     batch_size = max(1, min(20, int(os.getenv("BATCH_SIZE", "4"))))
     radius = max(0, min(2, int(os.getenv("RADIUS", "1"))))
@@ -125,7 +133,8 @@ def main():
                     "batch": batch,
                     "batch_size": batch_size,
                     "radius": radius,
-                    "z9_seed_grid_total": len(seeds),
+                    "z9_positive_seed_count": len(seeds),
+                    "seed_census_summary": seed_summary,
                     "selected_z9_seeds": [{"z":Z0,"x":x,"y":y} for x,y in selected],
                     "target_z12_tiles": len(targets),
                     "completed_z12_tiles": len(rows),
@@ -144,7 +153,7 @@ def main():
                                   "states":dict(Counter(q["state"] for q in rows))}, ensure_ascii=False), flush=True)
     rows.sort(key=lambda q:(q["x"],q["y"]))
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    print(json.dumps({"batch":batch,"selected_seeds":len(selected),"target_tiles":len(targets),
+    print(json.dumps({"batch":batch,"positive_seed_count":len(seeds),"selected_seeds":len(selected),"target_tiles":len(targets),
                       "states":dict(Counter(q["state"] for q in rows)),
                       "feature_records":sum(sum(l["feature_count"] for l in q.get("layers",[])) for q in rows)}, ensure_ascii=False, indent=2))
 
