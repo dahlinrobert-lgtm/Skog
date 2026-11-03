@@ -25,6 +25,18 @@ The 328 exact duplicate pairs are strong duplicate candidates, not confirmed dup
 
 The audit is a candidate generator, not a national unique-object census. Its search covers exact geometry hashes globally and spatial relationships between distinct tiles no farther than one tile in either XYZ direction. The underlying z12 plan is still based on positive z9 seeds plus a one-tile neighbor ring, so completeness of national source coverage remains unproven.
 
+## Candidate grouping run #1
+
+- Run: [41725375000](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/41725375000)
+- Result: 475 candidate groups containing 954 source observations.
+- Group sizes: 473 groups of 2 observations and 2 groups of 4 observations.
+- Grouped high-confidence edges: 485 (328 exact geometry; 157 near duplicates).
+- Class conflicts: 0 groups.
+- Motive variation or missing motive: 142 groups.
+- All 34,932 source records remain in the source geometry batches; only 954 currently participate in these high-confidence candidate groups.
+
+Caution: these groups are connected components of exact/near-duplicate edges and are not confirmed source object IDs. The builder's first output summary counted only observations present in at least one topology edge when computing the previous `unassigned_candidate_edge_observations` field. That field did not represent all source records. The builder has been corrected to report edge-universe observations, source records with no candidate edge, and total source records not grouped separately; rerun it to produce the corrected summary.
+
 ## Classification snapshot
 
 | SCA resolved class | Source records |
