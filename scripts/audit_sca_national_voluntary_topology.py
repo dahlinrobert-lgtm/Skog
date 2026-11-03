@@ -12,6 +12,7 @@ from pathlib import Path
 
 from pyproj import Transformer
 from shapely.geometry import shape
+from shapely.ops import transform
 from shapely.strtree import STRtree
 
 INPUT = Path("input")
@@ -64,8 +65,8 @@ def pair_metrics(a, b):
     ratio = min(aa, ab) / max(aa, ab) if max(aa, ab) > 0 else 0.0
     distance = ga.distance(gb)
     # Use EPSG:3006 for area and distance diagnostics, not Web Mercator.
-    ga_m = __import__("shapely").ops.transform(TO_3006, ga)
-    gb_m = __import__("shapely").ops.transform(TO_3006, gb)
+    ga_m = transform(TO_3006, ga)
+    gb_m = transform(TO_3006, gb)
     inter_m = ga_m.intersection(gb_m)
     ia_m = inter_m.area
     aa_m, ab_m = ga_m.area, gb_m.area
