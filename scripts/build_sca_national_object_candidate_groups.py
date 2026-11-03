@@ -24,6 +24,9 @@ def main():
         raise SystemExit(f"Expected one topology review JSON, found {len(files)}")
     data = json.loads(files[0].read_text(encoding="utf-8"))
     edges = data.get("candidate_pairs", [])
+    source_record_count = int((data.get("summary") or {}).get("source_feature_records", 0))
+    if source_record_count < 0:
+        raise SystemExit("Invalid negative source_feature_records count in topology summary")
     parent, members = {}, {}
     def find(x):
         parent.setdefault(x, x)
