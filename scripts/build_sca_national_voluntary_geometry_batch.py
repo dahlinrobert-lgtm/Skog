@@ -94,8 +94,23 @@ def main():
                     invalid += 1
                     manifest.append({"source_tile":[tile.get("z"),tile.get("x"),tile.get("y")],
                                      "source_feature_id":feature.get("id"),"error":str(exc)[:240]})
-    hashes = Counter(x["geometry_sha256_epsg3857"] for x in manifest if "geometry_sha256_epsg3857" in x)
-    duplicate_groups = {h:n for h,n in hashes.items() if n > 1}
+    hash_members = {}
+    for item in manifest:
+        h = item.get("geometry_sha256_epsg3857")
+        if h:
+            hash_members.setdefault(h, []).append(item)
+    duplicate_groups = {h: members for h, members in hash_members.items() if len(members) > 1}
+    duplicate_review = [
+        {
+            "geometry_sha256_epsg3857": h,
+            "representation_count": len(members),
+            "source_keys": [m.get("source_key") for m in members],
+            "source_tiles": [m.get("source_tile") for m in members],
+            "geometry_type": members[0].get("geometry_type"),
+            "area_m2_web_mercator": members[0].get("area_m2_web_mercator"),
+        }
+        for h, members in duplicate_groups.items()
+    ]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     fc = {"type":"FeatureCollection","name":"SCA voluntary set-asides z12 batch",
           "crs":{"type":"name","properties":{"name":"EPSG:3857"}},"features":records}
@@ -116,8 +131,9 @@ def main():
         "motives":dict(motives),
         "invalid_or_failed_geometries":invalid,
         "exact_geometry_duplicate_groups":len(duplicate_groups),
-        "exact_duplicate_feature_records":sum(n-1 for n in duplicate_groups.values()),
-        "unique_exact_geometry_hashes":len(hashes),
+        "exact_duplicate_feature_records":sum(len(members)-1 for members in duplicate_groups.values()),
+        "unique_exact_geometry_hashes":len(hash_members),
+        "exact_duplicate_review":duplicate_review,
         "coordinate_system":"EPSG:3857, reconstructed from XYZ z12 tile coordinates and MVT extent",
         "limitations":[
             "Every source tile feature is retained; feature records are not unique SCA areas.",
