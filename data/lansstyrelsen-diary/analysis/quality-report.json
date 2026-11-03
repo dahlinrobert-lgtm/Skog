@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "classification_version": "1.0.0",
+  "source_updated_at": "2026-11-03T12:59:56.572805+00:00",
+  "case_count": 100,
+  "handling_count": 753,
+  "county_case_counts": {
+    "Länsstyrelsen i Blekinge län": 50,
+    "Länsstyrelsen i Dalarnas län": 22,
+    "Länsstyrelsen i Gotlands län": 2,
+    "Länsstyrelsen i Gävleborgs län": 4,
+    "Länsstyrelsen i Hallands län": 4,
+    "Länsstyrelsen i Jämtlands län": 3,
+    "Länsstyrelsen i Jönköpings län": 8,
+    "Länsstyrelsen i Kalmar län": 6,
+    "Länsstyrelsen i Kronobergs län": 1
+  },
+  "missing_case_fields": {
+    "decision_date": 47,
+    "municipality": 54,
+    "registered_date": 1,
+    "status": 1
+  },
+  "missing_handling_fields": {},
+  "handling_class_counts": {
+    "administrative": 48,
+    "procurement": 22,
+    "aftercare": 3,
+    "permit": 23,
+    "notification": 75,
+    "opinion": 108,
+    "contract": 13,
+    "other": 477,
+    "award": 5,
+    "follow_up": 5,
+    "burn_execution": 1
+  },
+  "duplicate_case_keys": [],
+  "duplicate_handling_keys": [],
+  "invalid_dates": [],
+  "notes": [
+    "Missing optional fields are data-quality observations, not automatically parser failures.",
+    "Execution priority is a lead for human review; metadata alone does not establish that a burn occurred.",
+    "A bare Bränningsprotokoll attachment title is not treated as proof of execution."
+  ]
+}
