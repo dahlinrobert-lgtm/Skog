@@ -41,13 +41,14 @@ jobs:
           ns = runpy.run_path("scripts/sca_national_voluntary_tile_expansion_z12.py")
           seeds, _, _ = ns["load_positive_seeds"]()
           owners = ns["build_global_tile_plan"](seeds, max(0, min(2, int(os.environ["RADIUS"]))))
-          count = (len(owners) + int(os.environ["BATCH_SIZE"]) - 1) // int(os.environ["BATCH_SIZE"])
+          batch_size = max(1, min(1000, int(os.environ["BATCH_SIZE"])))
+          count = (len(owners) + batch_size - 1) // batch_size
           matrix = json.dumps(list(range(count)))
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"matrix={matrix}\n")
               f.write(f"batch_count={count}\n")
           print(json.dumps({"positive_seeds": len(seeds), "unique_z12_tiles": len(owners),
-                            "batch_size": int(os.environ["BATCH_SIZE"]), "batch_count": count}))
+                            "batch_size": batch_size, "batch_count": count}))
           PY
   harvest:
     needs: plan
