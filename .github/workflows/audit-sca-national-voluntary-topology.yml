@@ -1,0 +1,44 @@
+name: Audit SCA national voluntary cross-tile topology
+on:
+  workflow_dispatch:
+    inputs:
+      geometry_run_id:
+        description: "Successful geometry build run ID"
+        required: true
+        default: "41714471371"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install topology dependencies
+        run: python -m pip install "shapely>=2,<3" "pyproj>=3.6,<4"
+      - name: Download all national geometry batch artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sca-voluntary-geometry-batch-*
+          run-id: ${{ inputs.geometry_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Compile and run national topology review
+        run: |
+          python -m py_compile scripts/audit_sca_national_voluntary_topology.py
+          python scripts/audit_sca_national_voluntary_topology.py
+      - name: Validate topology outputs
+        run: |
+          python -m json.tool output/sca-national-topology-review.json > /dev/null
+          test -s output/sca-national-topology-candidates.csv
+      - name: Upload national topology review
+        uses: actions/upload-artifact@v4
+        with:
+          name: sca-national-voluntary-topology-review
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
