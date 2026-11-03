@@ -39,6 +39,8 @@ jobs:
         run: python scripts/collect_omdrev_flight_metadata.py
       - name: Overlay all Omdrev coverage cells with scan metadata polygons
         run: python scripts/overlay_omdrev_coverage_with_scan_metadata.py
+      - name: Build round-aware metadata inventory and coverage summary
+        run: python scripts/summarise_omdrev_scan_metadata_by_round.py
       - name: Upload coverage and scan-metadata overlay
         uses: actions/upload-artifact@v4
         with:
@@ -48,6 +50,9 @@ jobs:
             raster-three-omdrev/cross_round_pilot/volume_spatial_coverage_summary.json
             raster-three-omdrev/cross_round_pilot/volume_coverage_scan_metadata_overlay.csv
             raster-three-omdrev/cross_round_pilot/volume_coverage_scan_metadata_overlay_summary.json
+            raster-three-omdrev/cross_round_pilot/scan_metadata_inventory_by_round_tile.csv
+            raster-three-omdrev/cross_round_pilot/scan_metadata_cell_coverage_by_round_tile.csv
+            raster-three-omdrev/cross_round_pilot/scan_metadata_round_aware_summary.json
             raster-three-omdrev/flight_metadata/laser_scan_index_tiles.csv
             raster-three-omdrev/flight_metadata/laser_scan_index_tiles_esrijson.json
             raster-three-omdrev/flight_metadata/laser_scan_metadata_summary.json
