@@ -97,7 +97,7 @@ def main():
         "high_confidence_edges_grouped": sum(category_counts[c] for c in HIGH_CONFIDENCE),
         "candidate_groups": len(group_rows),
         "source_observations_in_groups": len(member_rows),
-        "unassigned_candidate_edge_observations": len(observations) - len(member_rows),
+        "observations_in_topology_edges": len(observations),\n        "source_feature_records_total": source_record_count,\n        "observations_not_in_candidate_groups_but_seen_in_edges": len(observations) - len(member_rows),\n        "source_records_without_any_candidate_edge": source_record_count - len(observations),\n        "source_records_not_grouped_total": source_record_count - len(member_rows),
         "group_observation_count_distribution": dict(sorted(Counter(str(g["source_observation_count"]) for g in group_rows).items())),
         "groups_with_class_conflict": sum(g["class_conflict"] for g in group_rows),
         "groups_with_motive_conflict_or_missing_variation": sum(g["motive_conflict_or_missing_variation"] for g in group_rows),
