@@ -1,0 +1,42 @@
+name: Build SCA national object candidate groups
+on:
+  workflow_dispatch:
+    inputs:
+      topology_run_id:
+        description: "Successful national topology audit run ID"
+        required: true
+        default: "41724100628"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download topology review artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-national-voluntary-topology-review
+          run-id: ${{ inputs.topology_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Build conservative candidate groups
+        run: |
+          python -m py_compile scripts/build_sca_national_object_candidate_groups.py
+          python scripts/build_sca_national_object_candidate_groups.py
+      - name: Validate outputs
+        run: |
+          python -m json.tool output/sca-national-object-candidate-summary.json > /dev/null
+          test -s output/sca-national-object-candidate-groups.csv
+          test -s output/sca-national-object-candidate-members.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-national-object-candidate-groups
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
