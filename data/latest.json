@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-03T15:44:15.749522Z",
+  "checked_at": "2026-11-03T16:04:42.452729Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -32769,86 +32769,7 @@
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [
-    {
-      "id": "S2C_MSIL2A_20261103T101201_N0513_R022_T34VDR_20261103T140511",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-03T10:12:01.024000Z",
-      "published_at": "2026-11-03T14:58:01.000000Z",
-      "cloud_cover_percent": 97.42,
-      "bbox": [
-        18.956140047870075,
-        63.02793322568484,
-        21.199734465434084,
-        64.02701663648664
-      ]
-    },
-    {
-      "id": "S2A_MSIL2A_20261101T103111_N0513_R108_T34VDR_20261101T151614",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-01T10:31:11.024000Z",
-      "published_at": "2026-11-01T16:04:02.000000Z",
-      "cloud_cover_percent": 100.0,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        20.465873437573947,
-        64.02235225837869
-      ]
-    },
-    {
-      "id": "S2B_MSIL2A_20261101T102159_N0513_R065_T34VDR_20261101T232323",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-01T10:21:59.024000Z",
-      "published_at": "2026-11-02T00:02:22.000000Z",
-      "cloud_cover_percent": 99.98,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        21.199734465434084,
-        64.02701663648664
-      ]
-    },
-    {
-      "id": "S2C_MSIL2A_20261030T103141_N0513_R108_T34VDR_20261030T134007",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-10-30T10:31:41.025000Z",
-      "published_at": "2026-10-30T14:36:26.000000Z",
-      "cloud_cover_percent": 0.21,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        20.47101681848002,
-        64.02238494940927
-      ]
-    },
-    {
-      "id": "S2A_MSIL2A_20261029T102051_N0513_R065_T34VDR_20261029T150008",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-10-29T10:20:51.024000Z",
-      "published_at": "2026-10-29T15:45:46.000000Z",
-      "cloud_cover_percent": 19.62,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        21.199734465434084,
-        64.02701663648664
-      ]
-    },
-    {
-      "id": "S2B_MSIL2A_20261029T101129_N0513_R022_T34VDR_20261029T153419",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-10-29T10:11:29.024000Z",
-      "published_at": "2026-10-29T16:09:44.000000Z",
-      "cloud_cover_percent": 18.57,
-      "bbox": [
-        18.95680806197714,
-        63.02793322568484,
-        21.199734465434084,
-        64.02701663648664
-      ]
-    }
-  ],
+  "new_scenes_since_previous_run": [],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
