@@ -1,36 +1,26 @@
 name: SCA national voluntary tile expansion z12
-
 on:
   workflow_dispatch:
     inputs:
-      batch:
-        description: "Batch number (0-based) from the deterministic z9 seed grid"
-        required: true
-        default: "0"
       batch_size:
-        description: "Number of z9 seed tiles in this batch"
+        description: "Unique z12 tiles per batch; global plan currently has about 25 batches at 500"
         required: true
-        default: "4"
+        default: "500"
       radius:
-        description: "Neighbor tile radius around each expanded z12 tile"
+        description: "Neighbor tile radius around each z12 descendant"
         required: true
         default: "1"
-
 permissions:
   contents: read
   actions: read
-
 jobs:
-  expand:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      batch_count: ${{ steps.set-matrix.outputs.batch_count }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Install MVT and geometry dependencies
-        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3"
       - name: Download verified national z9 seed census
         uses: actions/download-artifact@v4
         with:
@@ -38,20 +28,63 @@ jobs:
           run-id: 41536993571
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: seed
-      - name: Compile
-        run: python -m py_compile scripts/sca_national_voluntary_tile_expansion_z12.py
-      - name: Harvest voluntary polygon tiles
+      - name: Calculate global unique z12 tile batch matrix
+        id: set-matrix
         env:
-          BATCH: ${{ inputs.batch }}
           BATCH_SIZE: ${{ inputs.batch_size }}
           RADIUS: ${{ inputs.radius }}
-        run: python scripts/sca_national_voluntary_tile_expansion_z12.py
-      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          import runpy
+          ns = runpy.run_path("scripts/sca_national_voluntary_tile_expansion_z12.py")
+          seeds, _, _ = ns["load_positive_seeds"]()
+          owners = ns["build_global_tile_plan"](seeds, max(0, min(2, int(os.environ["RADIUS"]))))
+          count = (len(owners) + int(os.environ["BATCH_SIZE"]) - 1) // int(os.environ["BATCH_SIZE"])
+          matrix = json.dumps(list(range(count)))
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write(f"matrix={matrix}\n")
+              f.write(f"batch_count={count}\n")
+          print(json.dumps({"positive_seeds": len(seeds), "unique_z12_tiles": len(owners),
+                            "batch_size": int(os.environ["BATCH_SIZE"]), "batch_count": count}))
+          PY
+  harvest:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        batch: ${{ fromJson(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT decoder
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3"
+      - name: Download verified national z9 seed census
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-independent-national-layer-census-z9
+          run-id: 41536993571
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: seed
+      - name: Compile and harvest unique z12 tile batch
+        env:
+          BATCH: ${{ matrix.batch }}
+          BATCH_SIZE: ${{ inputs.batch_size }}
+          RADIUS: ${{ inputs.radius }}
+        run: |
+          python -m py_compile scripts/sca_national_voluntary_tile_expansion_z12.py
+          python scripts/sca_national_voluntary_tile_expansion_z12.py
+      - name: Validate batch JSON
         run: python -m json.tool sca-national-voluntary-tile-expansion-z12.json > /dev/null
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: sca-national-voluntary-tile-expansion-z12-batch-${{ inputs.batch }}
+          name: sca-national-voluntary-tile-expansion-z12-batch-${{ matrix.batch }}
           path: sca-national-voluntary-tile-expansion-z12.json
-          if-no-files-found: warn
+          if-no-files-found: error
           retention-days: 90
