@@ -1,0 +1,29 @@
+name: Probe Kungjort pilot API
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Probe pilot API
+        env:
+          KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
+        run: |
+          python3 scripts/probe_kungjort_api.py
+
+      - name: Upload API inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-api-probe
+          path: kungjort-api-probe.json
+          if-no-files-found: error
+          retention-days: 30
