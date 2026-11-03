@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source_id": "skogsstyrelsen.samrad",
-  "checked_at": "2026-11-02T22:11:21.408684Z",
+  "checked_at": "2026-11-03T14:29:18.826437Z",
   "status": "success",
   "scope_hash": "9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a",
   "scope": {
@@ -40,7 +40,7 @@
       "url": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/1/query",
       "status": "success",
       "pages": 1,
-      "records_fetched": 21,
+      "records_fetched": 20,
       "request_urls": [
         "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/1/query?where=1%3D1&geometry=%7B%22xmin%22%3A19.451316291506206%2C%22ymin%22%3A63.65147176044871%2C%22xmax%22%3A19.87778370849379%2C%22ymax%22%3A63.84144823955129%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=ObjectId%2CLannr%2CLan%2CKommunnr%2CKommun%2CArendeAr%2CBeteckn%2CStatus%2CInkomdatum%2CAnmaldHa%2CSkogsTyp%2CSamradsatgard%2CUUID&returnGeometry=true&returnTrueCurves=false&outSR=4326&f=geojson&resultRecordCount=300&resultOffset=0&orderByFields=ObjectId"
       ],
@@ -419,140 +419,6 @@
             "SkogsTyp": "Normal skog",
             "Samradsatgard": "Basväg",
             "UUID": "{7CCC60E8-3AB3-4748-BB13-BD63B34A40B7}"
-          }
-        },
-        {
-          "type": "Feature",
-          "id": 49488,
-          "geometry": {
-            "type": "MultiLineString",
-            "coordinates": [
-              [
-                [
-                  19.723140688497388,
-                  63.71345616799986
-                ],
-                [
-                  19.723117111151723,
-                  63.71319848433034
-                ],
-                [
-                  19.72307414312321,
-                  63.71305780676629
-                ]
-              ],
-              [
-                [
-                  19.724192528413738,
-                  63.71312439348393
-                ],
-                [
-                  19.723675091007856,
-                  63.713050924676075
-                ],
-                [
-                  19.72295745539817,
-                  63.71305732321362
-                ],
-                [
-                  19.722470827081136,
-                  63.71305172430898
-                ],
-                [
-                  19.721794050992596,
-                  63.71306963492893
-                ]
-              ],
-              [
-                [
-                  19.72540930220749,
-                  63.71255894779992
-                ],
-                [
-                  19.725326262598635,
-                  63.71275979265418
-                ],
-                [
-                  19.72500644054545,
-                  63.713054571875
-                ],
-                [
-                  19.724631455385733,
-                  63.71313578078896
-                ],
-                [
-                  19.724251847536806,
-                  63.71313107768
-                ]
-              ],
-              [
-                [
-                  19.723687287597453,
-                  63.71242596135865
-                ],
-                [
-                  19.72373595509288,
-                  63.71241805833501
-                ],
-                [
-                  19.723617544992702,
-                  63.712531671973395
-                ],
-                [
-                  19.723623225692315,
-                  63.71268220771573
-                ],
-                [
-                  19.723532313716667,
-                  63.712836006762
-                ],
-                [
-                  19.72345215647163,
-                  63.71293765284352
-                ],
-                [
-                  19.723280065997585,
-                  63.71301219250243
-                ]
-              ],
-              [
-                [
-                  19.72498282712695,
-                  63.71221549230924
-                ],
-                [
-                  19.72373595509288,
-                  63.71241805833501
-                ],
-                [
-                  19.723743033988914,
-                  63.71241126987606
-                ],
-                [
-                  19.72378503924993,
-                  63.71225485077172
-                ],
-                [
-                  19.723897300445195,
-                  63.71199702064432
-                ]
-              ]
-            ]
-          },
-          "properties": {
-            "ObjectId": 49488,
-            "Lannr": "24",
-            "Lan": "VÄSTERBOTTENS LÄN",
-            "Kommunnr": "2401",
-            "Kommun": "NORDMALING",
-            "ArendeAr": 2021,
-            "Beteckn": "S 8667-2021",
-            "Status": "Ärendet handlagt",
-            "Inkomdatum": 1635897600000,
-            "AnmaldHa": 0,
-            "SkogsTyp": "Normal skog",
-            "Samradsatgard": "Dikesrensning",
-            "UUID": "{BDA37C8B-F2B5-455E-B41A-F2110E481631}"
           }
         },
         {
@@ -1210,7 +1076,7 @@
           }
         }
       ],
-      "records_in_scope": 12
+      "records_in_scope": 11
     },
     "areas": {
       "layer": "areas",
@@ -109293,8 +109159,8 @@
       "pages": 0
     },
     "lines": {
-      "records_fetched_in_envelope": 21,
-      "records_in_scope": 12,
+      "records_fetched_in_envelope": 20,
+      "records_in_scope": 11,
       "pages": 1
     },
     "areas": {
