@@ -1,0 +1,49 @@
+name: SCA national voluntary tile expansion z12
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: "Batch number (0-based) from the deterministic z9 seed grid"
+        required: true
+        default: "0"
+      batch_size:
+        description: "Number of z9 seed tiles in this batch"
+        required: true
+        default: "4"
+      radius:
+        description: "Neighbor tile radius around each expanded z12 tile"
+        required: true
+        default: "1"
+
+permissions:
+  contents: read
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT and geometry dependencies
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3"
+      - name: Compile
+        run: python -m py_compile scripts/sca_national_voluntary_tile_expansion_z12.py
+      - name: Harvest voluntary polygon tiles
+        env:
+          BATCH: ${{ inputs.batch }}
+          BATCH_SIZE: ${{ inputs.batch_size }}
+          RADIUS: ${{ inputs.radius }}
+        run: python scripts/sca_national_voluntary_tile_expansion_z12.py
+      - name: Validate output
+        run: python -m json.tool sca-national-voluntary-tile-expansion-z12.json > /dev/null
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sca-national-voluntary-tile-expansion-z12-batch-${{ inputs.batch }}
+          path: sca-national-voluntary-tile-expansion-z12.json
+          if-no-files-found: warn
+          retention-days: 90
