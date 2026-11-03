@@ -37,8 +37,10 @@ def main():
     with OVERLAY.open(newline="", encoding="utf-8-sig") as f:
         for row in csv.DictReader(f):
             oid = str(row.get("metadata_object_id") or "")
+            tile = str(row.get("raster_tile_code") or "")
             if oid:
-                features[oid] = row
+                # One source object may intersect more than one raster tile extent.
+                features[(oid, tile)] = row
             if row.get("raster_survey_round") == "3":
                 key = (row["raster_tile_code"], row["grid_row"], row["grid_col"])
                 meta_round = str(row.get("metadata_survey_round") or "unknown")
@@ -46,9 +48,8 @@ def main():
                 cells[(meta_round, *key)][oid] = row
 
     inventory = defaultdict(list)
-    for oid, row in features.items():
-        key = (str(row.get("metadata_survey_round") or "unknown"),
-               str(row.get("raster_tile_code") or ""))
+    for (oid, tile), row in features.items():
+        key = (str(row.get("metadata_survey_round") or "unknown"), tile)
         inventory[key].append((oid, row))
 
     metadata_rows = []
