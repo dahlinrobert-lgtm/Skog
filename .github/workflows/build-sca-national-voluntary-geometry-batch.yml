@@ -1,0 +1,48 @@
+name: Build SCA national voluntary geometry batch
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "Successful raw z12 expansion run ID"
+        required: true
+        default: "41675837776"
+      batch:
+        description: "Batch number for output naming"
+        required: true
+        default: "0"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install geometry dependencies
+        run: python -m pip install "shapely>=2,<3"
+      - name: Download raw tile batch
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-national-voluntary-tile-expansion-z12-batch-${{ inputs.batch }}
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Compile and build projected geometries
+        run: |
+          python -m py_compile scripts/build_sca_national_voluntary_geometry_batch.py
+          python scripts/build_sca_national_voluntary_geometry_batch.py
+      - name: Validate outputs
+        run: |
+          python -m json.tool output/sca-voluntary-batch-summary.json > /dev/null
+          python -m json.tool output/sca-voluntary-batch-manifest.json > /dev/null
+      - name: Upload geometry batch
+        uses: actions/upload-artifact@v4
+        with:
+          name: sca-voluntary-geometry-batch-${{ inputs.batch }}
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
