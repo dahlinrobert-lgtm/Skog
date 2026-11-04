@@ -1,0 +1,64 @@
+name: Probe SCA fragment candidates across MVT zooms
+on:
+  workflow_dispatch:
+    inputs:
+      trace_run_id:
+        description: "Successful source trace run containing the 60-pair sample"
+        required: true
+        default: "41869116663"
+      max_tiles:
+        description: "Maximum unique MVT tile requests (safety cap)"
+        required: true
+        default: "900"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT and spatial dependencies
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3" "pyproj>=3.6,<4" pytest
+      - name: Download traced source sample
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-overlap-source-trace-sample
+          run-id: ${{ inputs.trace_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Run multiscale probe regression tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m pytest -q tests/test_probe_sca_fragment_multiscale_matches.py
+      - name: Build bounded cross-zoom comparison
+        env:
+          MAX_TILES: ${{ inputs.max_tiles }}
+          MAX_WORKERS: "4"
+        run: |
+          python -m py_compile scripts/probe_sca_fragment_multiscale_matches.py
+          python scripts/probe_sca_fragment_multiscale_matches.py
+      - name: Validate multiscale output
+        run: |
+          python -m json.tool output/sca-fragment-multiscale-summary.json > /dev/null
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          s=json.loads(Path("output/sca-fragment-multiscale-summary.json").read_text())
+          rows=list(csv.DictReader(open("output/sca-fragment-multiscale-pair-matches.csv",encoding="utf-8-sig")))
+          assert s["input_same_class_fragment_pairs"]==20
+          assert len(rows)==80
+          assert s["identity_resolved_relations"]==0
+          assert all(r["identity_resolved"]=="False" for r in rows)
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-fragment-multiscale-diagnostics
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
