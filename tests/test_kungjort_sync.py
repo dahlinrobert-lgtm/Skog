@@ -52,7 +52,7 @@ class KungjortSyncTests(unittest.TestCase):
             sync.bootstrap(api, saved, 1)
             saved = json.loads(self.state_path.read_text())
             self.assertTrue(saved["bootstrap_complete"])
-            files = list((self.root / "bootstrap").glob("*.jsonl.gz"))
+            files = sorted((self.root / "bootstrap").glob("*.jsonl.gz"))
             self.assertEqual(len(files), 2)
             rows = []
             for file in files:
