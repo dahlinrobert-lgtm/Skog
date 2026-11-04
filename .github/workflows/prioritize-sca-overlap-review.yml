@@ -1,0 +1,59 @@
+name: Prioritize SCA overlap review relations
+on:
+  workflow_dispatch:
+    inputs:
+      topology_run_id:
+        description: "Successful national topology audit run ID"
+        required: true
+        default: "41724100628"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prioritize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download topology review artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-national-voluntary-topology-review
+          run-id: ${{ inputs.topology_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Run prioritization regression tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_sca_overlap_review_prioritization.py
+      - name: Build prioritized review extract
+        run: |
+          python -m py_compile scripts/prioritize_sca_overlap_review.py
+          python scripts/prioritize_sca_overlap_review.py
+      - name: Validate review output
+        run: |
+          python -m json.tool output/sca-national-overlap-priority-summary.json > /dev/null
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          s = json.loads(Path("output/sca-national-overlap-priority-summary.json").read_text())
+          rows = list(csv.DictReader(open("output/sca-national-overlap-priority-review.csv", encoding="utf-8-sig")))
+          assert len(rows) == s["overlap_review_relations_total"]
+          assert len(rows) == 7910
+          assert sum(s["review_bucket_counts"].values()) == len(rows)
+          assert s["identity_resolved_relations"] == 0
+          assert all(r["identity_resolved"] == "False" for r in rows)
+          assert all(int(r["tile_chebyshev_distance"]) <= 1 for r in rows)
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-national-overlap-priority-review
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
