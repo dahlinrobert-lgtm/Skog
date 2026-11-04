@@ -65,30 +65,13 @@ jobs:
           fi
           echo "mode=$mode" >> "$GITHUB_OUTPUT"
           echo "max_pages=$max_pages" >> "$GITHUB_OUTPUT"
-      - name: Check whether daily sync is ready
+      - name: Disable legacy public Git archive sync
         id: readiness
-        env:
-          EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
-          if [[ "$EVENT_NAME" == "pull_request" ]]; then
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "Pull request validation only; no pilot API calls are made."
-            exit 0
-          fi
-          if [[ "$EVENT_NAME" == "schedule" ]] && [[ -f data/kungjort/state.json ]]; then
-            complete=$(python -c 'import json; print(str(json.load(open("data/kungjort/state.json")).get("bootstrap_complete", False)).lower())')
-            if [[ "$complete" != "true" ]]; then
-              echo "ready=false" >> "$GITHUB_OUTPUT"
-              echo "Historical bootstrap is not complete; scheduled changes sync is skipped."
-              exit 0
-            fi
-          elif [[ "$EVENT_NAME" == "schedule" ]] && [[ ! -f data/kungjort/state.json ]]; then
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "No bootstrap state exists; scheduled changes sync is skipped."
-            exit 0
-          fi
-          echo "ready=true" >> "$GITHUB_OUTPUT"
+          echo "ready=false" >> "$GITHUB_OUTPUT"
+          echo "Legacy Git-based archive writes are paused while the archive is migrated to private Azure Blob Storage."
+          echo "Use the Migrate Kungjort archive to Azure Blob Storage workflow for the one-time migration."
       - name: Run resumable API synchronization
         if: steps.readiness.outputs.ready == 'true'
         env:
