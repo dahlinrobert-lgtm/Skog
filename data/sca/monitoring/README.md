@@ -4,7 +4,7 @@
 
 The scheduled monitor checks the existing national z12 tile plan for changes in the SCA voluntary set-aside MVT layer. It detects new geometries, changed geometries, metadata changes and possible disappearances while retaining source observations.
 
-Workflow: [Monitor SCA voluntary geometry changes](../../.github/workflows/monitor-sca-voluntary-changes.yml)
+Workflow: [Monitor SCA voluntary geometry changes](../../../.github/workflows/monitor-sca-voluntary-changes.yml)
 
 - Schedule: Mondays at 02:17 UTC
 - Manual start: GitHub Actions workflow_dispatch
