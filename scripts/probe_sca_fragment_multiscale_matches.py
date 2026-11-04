@@ -330,6 +330,12 @@ def main():
         writer.writeheader()
         writer.writerows(tile_rows)
 
+    cross_zoom_rows, cross_zoom_counts = summarize_cross_zoom(pair_output)
+    with (OUT / "sca-fragment-cross-zoom-stability.csv").open("w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=list(cross_zoom_rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(cross_zoom_rows)
+
     summary = {
         "input_same_class_fragment_pairs": len(pairs),
         "zooms_tested": list(ZOOMS),
@@ -351,8 +357,11 @@ def main():
                 for r in pair_output
             ) for z in ZOOMS
         },
+        "cross_zoom_stability": cross_zoom_counts,
         "identity_resolved_relations": 0,
         "limitations": [
+            "Cross-zoom stability is measured at source-pair level using independently selected common candidates at z13 and z15; tile-local feature IDs and locators are not matched across zooms.",
+            "Matching non-empty motive values are supporting attribute concordance only, not proof of shared MVT feature or source-object identity.",
             "This probes a bounded 3x3 neighborhood at z13/z15 and the containing tile at z9/z11 around each source-feature representative point.",
             "MVT feature IDs are treated as tile-local metadata and are not presumed globally stable or unique.",
             "A same-class candidate that overlaps both source geometries is evidence of cross-scale cartographic concordance, not proof of common source-object identity.",
@@ -369,6 +378,35 @@ def main():
         raise SystemExit("Unexpected pair/zoom comparison count")
     if any(r["identity_resolved"] for r in pair_output):
         raise SystemExit("Identity resolution is prohibited in this diagnostic")
+
+
+def summarize_cross_zoom(pair_output):
+    """Compare pair-level support at z13/z15 without matching tile-local IDs."""
+    by_pair = defaultdict(dict)
+    for row in pair_output:
+        by_pair[str(row['relation_sample_id'])][int(row['zoom'])] = row
+    rows = []
+    for pair_id, zoom_rows in sorted(by_pair.items(), key=lambda item: int(item[0])):
+        z13, z15 = zoom_rows.get(13, {}), zoom_rows.get(15, {})
+        cov13 = float(z13.get('best_single_candidate_min_source_coverage') or 0.0)
+        cov15 = float(z15.get('best_single_candidate_min_source_coverage') or 0.0)
+        motive13, motive15 = z13.get('best_candidate_motive') or '', z15.get('best_candidate_motive') or ''
+        motive_match = bool(normalize(motive13) and normalize(motive15) and normalize(motive13) == normalize(motive15))
+        rows.append({'relation_sample_id': pair_id, 'z13_min_source_coverage': cov13, 'z15_min_source_coverage': cov15,
+            'both_zooms_ge_50pct': cov13 >= 0.5 and cov15 >= 0.5,
+            'both_zooms_ge_90pct': cov13 >= 0.9 and cov15 >= 0.9,
+            'motive_z13': motive13, 'motive_z15': motive15,
+            'motive_consistent_nonempty': motive_match, 'identity_resolved': False,
+            'interpretation': 'repeated_pair_level_support_not_cross_zoom_feature_identity'})
+    counts = {
+        'pairs_with_common_candidate_min_coverage_ge_50pct_at_both_z13_z15': sum(r['both_zooms_ge_50pct'] for r in rows),
+        'pairs_with_common_candidate_min_coverage_ge_90pct_at_both_z13_z15': sum(r['both_zooms_ge_90pct'] for r in rows),
+        'pairs_with_nonempty_matching_motive_at_both_z13_z15': sum(r['motive_consistent_nonempty'] for r in rows),
+        'pairs_with_both_ge_50pct_and_matching_motive': sum(r['both_zooms_ge_50pct'] and r['motive_consistent_nonempty'] for r in rows),
+        'identity_resolved_relations': 0}
+    return rows, counts
+
+
 
 
 if __name__ == "__main__":
