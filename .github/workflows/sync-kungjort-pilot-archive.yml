@@ -1,0 +1,119 @@
+name: Sync Kungjort pilot archive
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Synchronization mode
+        required: true
+        default: bootstrap
+        type: choice
+        options:
+          - bootstrap
+          - changes
+      max_pages:
+        description: Maximum API pages per run (100 documents per page)
+        required: true
+        default: "5"
+        type: string
+  schedule:
+    - cron: "23 4 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kungjort-pilot-archive
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test synchronization and checkpoint rules
+        run: python -m unittest tests.test_kungjort_sync
+      - name: Resolve run mode
+        id: mode
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_MAX_PAGES: ${{ inputs.max_pages }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "schedule" ]]; then
+            mode="changes"
+            max_pages="100"
+          else
+            mode="${INPUT_MODE:-bootstrap}"
+            max_pages="${INPUT_MAX_PAGES:-5}"
+          fi
+          if ! [[ "$max_pages" =~ ^[0-9]+$ ]] || (( max_pages < 1 || max_pages > 100 )); then
+            echo "max_pages must be between 1 and 100" >&2
+            exit 1
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "max_pages=$max_pages" >> "$GITHUB_OUTPUT"
+      - name: Run resumable API synchronization
+        env:
+          KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
+        run: |
+          set -euo pipefail
+          python scripts/sync_kungjort_api.py \
+            --mode "${{ steps.mode.outputs.mode }}" \
+            --max-pages "${{ steps.mode.outputs.max_pages }}"
+      - name: Validate persisted checkpoint and archive
+        run: |
+          set -euo pipefail
+          test -s data/kungjort/state.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state=json.loads(Path("data/kungjort/state.json").read_text(encoding="utf-8"))
+          assert state.get("changes_cursor"), "Missing saved changes cursor"
+          assert state.get("bootstrap_complete") in (True, False)
+          print("Bootstrap complete:", state["bootstrap_complete"])
+          print("Changes cursor saved: yes")
+          PY
+      - name: Publish append-only archive and checkpoint
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/kungjort/
+          if git diff --cached --quiet; then
+            echo "No new Kungjort records."
+            exit 0
+          fi
+          git commit -m "Archive Kungjort pilot document updates"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+              git rebase --abort || true
+            else
+              git rebase --abort || true
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
+          echo "Could not publish Kungjort archive after five attempts." >&2
+          exit 1
+      - name: Upload run diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-sync-diagnostics
+          path: data/kungjort/
+          if-no-files-found: warn
+          retention-days: 30
