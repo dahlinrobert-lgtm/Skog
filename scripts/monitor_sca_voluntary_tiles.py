@@ -218,12 +218,14 @@ def apply_result(old,new,at):
         return kept,[{"event_type":"tile_poll_error","tile":tid,"state":new["state"],
                       "error":new.get("error"),"observed_at":at}]
     if new["state"]=="not_found_404":
+        # Sparse tile delivery: 404 is unavailable, never evidence that features
+        # disappeared. Do not increment feature missing counters or delete data.
         kept=dict(old); streak=int(old.get("not_found_streak",0))+1
         kept.update({"not_found_streak":streak,"last_attempt_at":at,"last_attempt_state":"not_found_404"})
         ev=[]
         if streak==2 and old.get("features"):
             ev.append({"event_type":"tile_unavailable_candidate","tile":tid,"observed_at":at,
-                       "note":"404 observed twice; old feature data retained"})
+                       "note":"404 observed twice; old feature data retained; not a geometry removal"})
         return kept,ev
     if old.get("sha256")==new.get("sha256") and old.get("state","").startswith("valid_mvt"):
         ev=[]; pending=[]
@@ -250,6 +252,11 @@ def extend_tile_plan(state,census_path):
     """Expand, never shrink, z12 monitoring from the latest independent z9 census."""
     census=json.loads(census_path.read_text(encoding="utf-8"))
     rows=census.get("tile_results",[])
+    vol_summary=census.get("summary",{}).get("voluntary_states",{})
+    census_ok=(bool(rows) and all(k in vol_summary for k in ("valid_mvt_with_features","valid_mvt_empty"))
+               and sum(vol_summary.values())==len(rows))
+    if not census_ok:
+        raise ValueError("National z9 seed census incomplete or missing valid empty/feature states; refusing to alter tile plan")
     positive=sorted({(int(r["x"]),int(r["y"])) for r in rows
                      if r.get("voluntary",{}).get("state")=="valid_mvt_with_features"})
     targets=defaultdict(set)
