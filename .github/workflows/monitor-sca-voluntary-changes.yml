@@ -27,17 +27,21 @@ jobs:
       - name: Install MVT dependencies and test runner
         run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" pytest
       - name: Download original national z12 baseline if state does not exist
-        if: \${{ !hashFiles('data/sca/monitoring/tile-state.json.gz') }}
+        if: ${{ !hashFiles('data/sca/monitoring/tile-state.json.gz') }}
         uses: actions/download-artifact@v4
         with:
           pattern: sca-national-voluntary-tile-expansion-z12-batch-*
           run-id: 41704577034
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           path: input/baseline
       - name: Run monitor regression tests
         env:
-          PYTHONPATH: \${{ github.workspace }}
+          PYTHONPATH: ${{ github.workspace }}
         run: python -m pytest -q tests/test_monitor_sca_voluntary_tiles.py
+      - name: Refresh independent national z9 seed census
+        run: |
+          python -m py_compile scripts/sca_national_independent_layer_census_z9.py
+          python scripts/sca_national_independent_layer_census_z9.py
       - name: Poll z12 tiles and compare geometry and metadata
         env:
           MAX_WORKERS: "3"
@@ -46,6 +50,7 @@ jobs:
           python scripts/monitor_sca_voluntary_tiles.py \
             --state data/sca/monitoring/tile-state.json.gz \
             --baseline-dir input/baseline \
+            --seed-census sca-national-independent-layer-census-z9.json \
             --events output/sca-voluntary-change-events.jsonl.gz \
             --summary output/sca-voluntary-change-summary.json \
             --workers 3
@@ -56,7 +61,7 @@ jobs:
           import gzip, json
           from pathlib import Path
           s=json.loads(Path("output/sca-voluntary-change-summary.json").read_text())
-          assert s["tiles_checked"] == s["baseline_tile_count"]
+          assert s["tiles_checked"] == s["tile_plan_tile_count"]
           assert s["identity_resolved"] == 0
           with gzip.open("output/sca-voluntary-change-events.jsonl.gz", "rt", encoding="utf-8") as f:
               for line in f:
@@ -88,5 +93,6 @@ jobs:
           path: |
             output/sca-voluntary-change-summary.json
             output/sca-voluntary-change-events.jsonl.gz
+            sca-national-independent-layer-census-z9.json
           if-no-files-found: error
           retention-days: 90
