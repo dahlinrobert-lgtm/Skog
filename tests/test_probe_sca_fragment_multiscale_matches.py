@@ -80,3 +80,21 @@ def test_common_candidate_prefers_highest_minimum_coverage():
     assert best_a is two
     assert best_b is two
     assert best_common is two
+
+
+def test_summarize_cross_zoom_uses_pair_level_coverage_and_motive_not_tile_ids():
+    rows = [
+        {"relation_sample_id": "1", "zoom": 13, "best_single_candidate_min_source_coverage": 0.95, "best_candidate_motive": "1 Eget värde", "best_candidate_locator": "13/1/1/layer/0"},
+        {"relation_sample_id": "1", "zoom": 15, "best_single_candidate_min_source_coverage": 0.92, "best_candidate_motive": "1 Eget värde", "best_candidate_locator": "15/2/2/layer/0"},
+        {"relation_sample_id": "2", "zoom": 13, "best_single_candidate_min_source_coverage": 0.80, "best_candidate_motive": "1 Eget värde", "best_candidate_locator": "13/3/3/layer/0"},
+        {"relation_sample_id": "2", "zoom": 15, "best_single_candidate_min_source_coverage": 0.40, "best_candidate_motive": "2 Annat", "best_candidate_locator": "15/4/4/layer/0"},
+    ]
+    output, counts = multi.summarize_cross_zoom(rows)
+    assert len(output) == 2
+    assert output[0]["both_zooms_ge_90pct"] is True
+    assert output[0]["motive_consistent_nonempty"] is True
+    assert output[0]["identity_resolved"] is False
+    assert output[1]["both_zooms_ge_50pct"] is False
+    assert output[1]["motive_consistent_nonempty"] is False
+    assert counts["pairs_with_common_candidate_min_coverage_ge_90pct_at_both_z13_z15"] == 1
+    assert counts["identity_resolved_relations"] == 0
