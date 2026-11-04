@@ -55,7 +55,8 @@ def baseline_record(row):
             "http_status":row.get("http_status"),"bytes":row.get("bytes",0),
             "sha256":row.get("sha256"),"state":row.get("state","unknown"),
             "features":features_from_layers(row.get("layers",[])),
-            "pending_missing":[],"last_success_at":None,"not_found_streak":0}
+            "pending_missing":[],"last_success_at":None,"not_found_streak":0,
+            "covering_z9_seeds":row.get("covering_z9_seeds",[])}
 
 def build_baseline(directory):
     files=sorted(directory.rglob("*.json"))
@@ -71,7 +72,7 @@ def build_baseline(directory):
     if not tiles: raise ValueError("Baseline artifacts contain no tiles")
     return {"schema_version":1,"source":URL,"baseline_type":"existing_z12_expansion_artifacts",
             "baseline_built_at":now(),"last_checked_at":None,"tile_count":len(tiles),
-            "tiles":dict(sorted(tiles.items()))}
+            "baseline_tile_count":len(tiles),"tiles":dict(sorted(tiles.items()))}
 
 def read_state(path,baseline_dir):
     if path.exists():
@@ -241,6 +242,46 @@ def apply_result(old,new,at):
              "last_attempt_at":at,"last_attempt_state":new["state"],"not_found_streak":0}
     return updated,ev
 
+
+def extend_tile_plan(state,census_path):
+    """Expand, never shrink, z12 monitoring from the latest independent z9 census."""
+    census=json.loads(census_path.read_text(encoding="utf-8"))
+    rows=census.get("tile_results",[])
+    positive=sorted({(int(r["x"]),int(r["y"])) for r in rows
+                     if r.get("voluntary",{}).get("state")=="valid_mvt_with_features"})
+    targets=defaultdict(set)
+    for sx,sy in positive:
+        for dx in range(8):
+            for dy in range(8):
+                x0,y0=sx*8+dx,sy*8+dy
+                for ox in range(-1,2):
+                    for oy in range(-1,2):
+                        x,y=x0+ox,y0+oy
+                        if 0<=x<4096 and 0<=y<4096:
+                            targets[(x,y)].add((sx,sy))
+    added=0
+    for (x,y),seeds in targets.items():
+        tile_id=key(12,x,y)
+        if tile_id not in state["tiles"]:
+            state["tiles"][tile_id]={"z":12,"x":x,"y":y,
+                "url":URL.format(z=12,x=x,y=y),"http_status":None,"bytes":0,
+                "sha256":None,"state":"unseen","features":[],"pending_missing":[],
+                "last_success_at":None,"not_found_streak":0}
+            added+=1
+        tile=state["tiles"][tile_id]
+        existing={(int(s["x"]),int(s["y"])) for s in tile.get("covering_z9_seeds",[])}
+        existing.update(seeds)
+        tile["covering_z9_seeds"]=[{"z":9,"x":sx,"y":sy} for sx,sy in sorted(existing)]
+    state["tile_count"]=len(state["tiles"])
+    state["latest_seed_census"]={
+        "observed_at":census.get("summary",{}).get("tiles_completed"),
+        "tiles_in_bbox":census.get("summary",{}).get("tiles_in_bbox"),
+        "positive_voluntary_z9_tiles":len(positive),
+        "positive_seed_tiles":[{"z":9,"x":x,"y":y} for x,y in positive],
+        "states":census.get("summary",{}).get("voluntary_states",{})
+    }
+    return added,len(positive)
+
 def run(state,workers):
     at=now(); tiles=state["tiles"]; fetched={}; errs=0
     coords=[(k,int(v["z"]),int(v["x"]),int(v["y"])) for k,v in tiles.items()]
@@ -271,15 +312,23 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--state",type=Path,default=Path("data/sca/monitoring/tile-state.json.gz"))
     p.add_argument("--baseline-dir",type=Path)
+    p.add_argument("--seed-census",type=Path)
     p.add_argument("--events",type=Path,default=Path("output/sca-voluntary-change-events.jsonl.gz"))
     p.add_argument("--summary",type=Path,default=Path("output/sca-voluntary-change-summary.json"))
     p.add_argument("--workers",type=int,default=3)
     a=p.parse_args()
     state=read_state(a.state,a.baseline_dir); bootstrap=state.get("last_checked_at") is None
+    new_tiles_added=0; positive_seed_tiles=None
+    if a.seed_census:
+        new_tiles_added,positive_seed_tiles=extend_tile_plan(state,a.seed_census)
     if bootstrap and a.baseline_dir:
         write_baseline_archive(a.baseline_dir,Path("data/sca/monitoring/baseline/source-features.jsonl.gz"))
     state,events,summary=run(state,max(1,min(6,a.workers)))
-    summary.update({"bootstrapped_from_baseline":bootstrap,"baseline_tile_count":state["tile_count"],
+    summary.update({"bootstrapped_from_baseline":bootstrap,
+                    "baseline_tile_count":state.get("baseline_tile_count",state["tile_count"]),
+                    "tile_plan_tile_count":state["tile_count"],
+                    "new_tiles_added_from_z9":new_tiles_added,
+                    "positive_z9_seed_tiles":positive_seed_tiles,
                     "state_schema_version":state["schema_version"]})
     write_state(a.state,state); write_events(a.events,events)
     a.summary.parent.mkdir(parents=True,exist_ok=True)
