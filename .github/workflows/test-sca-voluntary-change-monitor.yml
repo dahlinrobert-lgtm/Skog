@@ -1,0 +1,29 @@
+name: Test SCA voluntary change monitor
+
+on:
+  push:
+    paths:
+      - "scripts/monitor_sca_voluntary_tiles.py"
+      - "tests/test_monitor_sca_voluntary_tiles.py"
+      - ".github/workflows/test-sca-voluntary-change-monitor.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" pytest
+      - name: Run regression tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -m py_compile scripts/monitor_sca_voluntary_tiles.py
+          python -m pytest -q tests/test_monitor_sca_voluntary_tiles.py
