@@ -53,6 +53,9 @@ jobs:
           assert s["input_same_class_fragment_pairs"]==20
           assert len(rows)==80
           assert s["identity_resolved_relations"]==0
+          assert s["cross_zoom_stability"]["identity_resolved_relations"]==0
+          stability=list(csv.DictReader(open("output/sca-fragment-cross-zoom-stability.csv",encoding="utf-8-sig")))
+          assert len(stability)==20
           assert all(r["identity_resolved"]=="False" for r in rows)
           print(json.dumps(s,ensure_ascii=False,indent=2))
           PY
