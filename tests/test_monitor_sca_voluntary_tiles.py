@@ -1,4 +1,4 @@
-from scripts.monitor_sca_voluntary_tiles import apply_result, compare_features, digest, feature_record
+from scripts.monitor_sca_voluntary_tiles import apply_result, compare_features, digest, feature_record, write_state
 
 def feat(coords, props):
     return feature_record("Frivilliga_Avsattningar", {
@@ -51,3 +51,17 @@ def test_404_and_errors_preserve_previous_features():
     failed=fetched([],"err","request_error")
     updated,events=apply_result(old,failed,"now")
     assert len(updated["features"])==1 and events[0]["event_type"]=="tile_poll_error"
+
+
+def test_persisted_state_keeps_hashes_and_metadata_without_repeating_geometry(tmp_path):
+    import gzip, json
+    a=feat([[[0,0]]],{"class":"NO"})
+    state={"schema_version":1,"tile_count":1,"tiles":{"12/10/20":old_tile([a])}}
+    path=tmp_path/"tile-state.json.gz"
+    write_state(path,state)
+    with gzip.open(path,"rt",encoding="utf-8") as handle:
+        saved=json.load(handle)
+    feature=saved["tiles"]["12/10/20"]["features"][0]
+    assert "geometry" not in feature
+    assert feature["geometry_sha256"]==a["geometry_sha256"]
+    assert feature["properties"]=={"class":"NO"}
