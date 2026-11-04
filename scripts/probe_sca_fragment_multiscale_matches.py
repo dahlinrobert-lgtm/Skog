@@ -249,10 +249,19 @@ def main():
                     continue
                 candidate = {**candidate, "sim_a": sim_a, "sim_b": sim_b}
                 candidates.append(candidate)
-            best_a = max(candidates, key=lambda c: (c["sim_a"]["source_coverage"], -c["sim_a"]["distance_m_epsg3006"]), default=None)
-            best_b = max(candidates, key=lambda c: (c["sim_b"]["source_coverage"], -c["sim_b"]["distance_m_epsg3006"]), default=None)
+            candidates_a = [c for c in candidates if c["sim_a"]["intersection_m2_epsg3006"] > 0]
+            candidates_b = [c for c in candidates if c["sim_b"]["intersection_m2_epsg3006"] > 0]
+            candidates_common = [
+                c for c in candidates
+                if c["sim_a"]["intersection_m2_epsg3006"] > 0
+                and c["sim_b"]["intersection_m2_epsg3006"] > 0
+            ]
+            best_a = max(candidates_a, key=lambda c: (c["sim_a"]["source_coverage"], -c["sim_a"]["distance_m_epsg3006"]), default=None)
+            best_b = max(candidates_b, key=lambda c: (c["sim_b"]["source_coverage"], -c["sim_b"]["distance_m_epsg3006"]), default=None)
+            # A common candidate must geometrically intersect BOTH original
+            # source fragments. Never label a one-sided match as common.
             best_common = max(
-                candidates,
+                candidates_common,
                 key=lambda c: (
                     min(c["sim_a"]["source_coverage"], c["sim_b"]["source_coverage"]),
                     c["sim_a"]["source_coverage"] + c["sim_b"]["source_coverage"],
