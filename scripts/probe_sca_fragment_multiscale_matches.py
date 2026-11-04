@@ -336,6 +336,16 @@ def main():
         writer.writeheader()
         writer.writerows(cross_zoom_rows)
 
+    dedup_pair_rows, dedup_group_rows, dedup_summary = build_source_pair_dedup(pairs)
+    with (OUT / "sca-fragment-sample-deduplicated-pairs.csv").open("w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=list(dedup_pair_rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(dedup_pair_rows)
+    with (OUT / "sca-fragment-sample-geometry-pair-groups.csv").open("w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=list(dedup_group_rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(dedup_group_rows)
+
     summary = {
         "input_same_class_fragment_pairs": len(pairs),
         "zooms_tested": list(ZOOMS),
@@ -358,6 +368,7 @@ def main():
             ) for z in ZOOMS
         },
         "cross_zoom_stability": cross_zoom_counts,
+        "sample_relation_dedup": dedup_summary,
         "identity_resolved_relations": 0,
         "limitations": [
             "Cross-zoom stability is measured at source-pair level using independently selected common candidates at z13 and z15; tile-local feature IDs and locators are not matched across zooms.",
@@ -408,6 +419,58 @@ def summarize_cross_zoom(pair_output):
 
 
 
+
+def build_source_pair_dedup(pairs):
+    """Group repeated sampled relations by unordered exact source geometry hashes.
+
+    This identifies duplicate relation rows only; it does not resolve source-object identity.
+    """
+    grouped = defaultdict(list)
+    details = {}
+    for pair_id, sides in pairs.items():
+        hashes = [
+            str(sides[side].get("mvt_decoded_geometry_sha256_epsg3857") or "")
+            for side in ("a", "b")
+        ]
+        if not all(hashes):
+            raise ValueError(f"Pair {pair_id} is missing a source geometry hash")
+        signature = "|".join(sorted(hashes))
+        group_id = hashlib.sha256(signature.encode("utf-8")).hexdigest()[:16]
+        grouped[group_id].append(str(pair_id))
+        details[str(pair_id)] = {
+            "relation_sample_id": str(pair_id),
+            "source_geometry_hash_a": hashes[0],
+            "source_geometry_hash_b": hashes[1],
+            "geometry_pair_group_id": group_id,
+            "source_key_a": sides["a"].get("source_key", ""),
+            "source_key_b": sides["b"].get("source_key", ""),
+            "identity_resolved": False,
+        }
+    pair_rows, group_rows = [], []
+    for group_id, pair_ids in sorted(grouped.items(), key=lambda item: min(map(int, item[1]))):
+        pair_ids = sorted(pair_ids, key=int)
+        repeated = len(pair_ids) > 1
+        group_rows.append({
+            "geometry_pair_group_id": group_id,
+            "relation_sample_ids": ";".join(pair_ids),
+            "relation_count": len(pair_ids),
+            "is_repeated_relation_group": repeated,
+            "identity_resolved": False,
+        })
+        for pair_id in pair_ids:
+            pair_rows.append({
+                **details[pair_id],
+                "geometry_pair_group_size": len(pair_ids),
+                "is_repeated_relation": repeated,
+            })
+    summary = {
+        "input_relation_count": len(details),
+        "unique_exact_geometry_pair_count": len(grouped),
+        "repeated_relation_group_count": sum(r["is_repeated_relation_group"] for r in group_rows),
+        "redundant_relation_rows_beyond_one_per_group": sum(max(0, r["relation_count"] - 1) for r in group_rows),
+        "identity_resolved_relations": 0,
+    }
+    return pair_rows, group_rows, summary
 
 if __name__ == "__main__":
     main()
