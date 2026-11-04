@@ -78,3 +78,8 @@ Caution: these groups are connected components of exact/near-duplicate edges and
 ## Next milestone
 
 Reconstruct candidate objects by examining adjacency and overlap across tile boundaries, while retaining each source feature as an immutable observation. Validate candidate merges using geometry, class, motive and neighboring tile provenance. Publish unique object counts only after that review.
+
+
+## Automated change monitoring
+
+The incremental weekly monitor for new/changed voluntary-set-aside geometries and metadata is documented in [monitoring/README.md](monitoring/README.md). It uses the existing 12,420-tile z12 plan, preserves raw observations and writes append-only change events. The first manual run is required to bootstrap the baseline.
