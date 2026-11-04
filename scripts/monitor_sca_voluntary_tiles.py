@@ -101,7 +101,7 @@ def write_baseline_archive(directory,path):
                                     "source_url":row.get("url"),
                                     "source_tile_sha256":row.get("sha256"),
                                     **item}
-                            gz.write((json.dumps(record,ensure_ascii=False,sort_keys=True)+"\\n").encode())
+                            gz.write((json.dumps(record,ensure_ascii=False,sort_keys=True)+"\n").encode())
     os.replace(tmp,path)
 
 def write_state(path,state):
