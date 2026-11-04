@@ -103,3 +103,17 @@ def test_unchanged_tile_hash_skips_vector_tile_decode(monkeypatch):
     result=monitor.fetch(12,10,20,sha,"valid_mvt_with_features")
     assert result["state"]=="unchanged"
     assert result["sha256"]==sha
+
+
+def test_incomplete_z9_census_cannot_expand_or_shrink_tile_plan(tmp_path):
+    import json, pytest
+    from scripts.monitor_sca_voluntary_tiles import extend_tile_plan
+    state={"tile_count":1,"tiles":{"12/800/1600":old_tile([])}}
+    census={"summary":{"tiles_in_bbox":4,"voluntary_states":{"valid_mvt_with_features":1}},
+            "tile_results":[{"x":100,"y":200,"voluntary":{"state":"valid_mvt_with_features"}}]}
+    path=tmp_path/"partial-census.json"
+    path.write_text(json.dumps(census),encoding="utf-8")
+    with pytest.raises(ValueError,match="incomplete"):
+        extend_tile_plan(state,path)
+    assert state["tile_count"]==1
+    assert list(state["tiles"])==["12/800/1600"]
