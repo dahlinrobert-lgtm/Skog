@@ -2,13 +2,14 @@
 
 ## Purpose
 
-The scheduled monitor checks the existing national z12 tile plan for changes in the SCA voluntary set-aside MVT layer. It detects new geometries, changed geometries, metadata changes and possible disappearances while retaining source observations.
+The scheduled monitor refreshes an independent national z9 census of the SCA voluntary layer, expands the z12 plan when new positive z9 tiles appear, and checks all retained z12 tiles for changes. It detects new geometries, changed geometries, metadata changes and possible disappearances while retaining source observations.
 
 Workflow: [Monitor SCA voluntary geometry changes](../../../.github/workflows/monitor-sca-voluntary-changes.yml)
 
 - Schedule: Mondays at 02:17 UTC
 - Manual start: GitHub Actions workflow_dispatch
-- Current plan: 12,420 globally unique z12 tiles
+- Initial plan: 12,420 globally unique z12 tiles; the plan can grow when new positive z9 tiles appear
+- Discovery screen: independent z9 census of the broad Sweden bounding box (ownership and voluntary layers queried independently)
 - Baseline: z12 expansion artifacts from run [41704577034](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/41704577034)
 - Tile source: `https://olga.scaskog.com/map/omraden/{z}/{x}/{y}.pbf`
 
@@ -36,7 +37,8 @@ A 404, timeout or other request failure never deletes features. No source geomet
 ## Interpretation and limitations
 
 - Geometry hashes are calculated from decoded MVT tile-local coordinates. They are stable comparison fingerprints within a tile, not global object IDs.
-- The monitor scans the current 12,420-tile z12 plan. This does not establish complete national SCA coverage beyond the original seed and neighbor-ring design.
+- The monitor retains the original z12 plan and expands it from each weekly z9 census using positive voluntary tiles plus a one-tile z12 neighbor ring. It never shrinks the plan after a temporary census failure.
+- z9 is a discovery screen, not proof of complete national SCA coverage; features not represented at z9 may still be missed until they become visible in the z9 layer.
 - A tile response hash change triggers feature-level comparison. If the payload hash is unchanged, the previous feature content is reused.
 - Candidate relationships must not be treated as confirmed object identity.
 - The monitor currently persists a compact state index, one immutable baseline archive and compressed event deltas in the Git repository as an MVP. Before substantially increasing scan frequency or adding more layers, move high-volume geometry/event archives to durable object storage or a database.
