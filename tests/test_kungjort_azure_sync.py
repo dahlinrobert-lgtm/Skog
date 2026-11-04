@@ -19,8 +19,6 @@ class AzureSyncHelperTests(unittest.TestCase):
         first = encode_jsonl_gzip(records)
         second = encode_jsonl_gzip(records)
         self.assertEqual(first, second)
-        with gzip.decompress(first) as _:
-            pass
         self.assertEqual(json.loads(gzip.decompress(first).decode().strip()), records[0])
 
     def test_initial_state_has_safe_defaults(self):
