@@ -19,7 +19,7 @@ on:
       max_pages:
         description: Maximum API pages per run (100 documents per page)
         required: true
-        default: "5"
+        default: "300"
         type: string
   schedule:
     - cron: "23 4 * * *"
@@ -35,7 +35,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -62,10 +62,10 @@ jobs:
             max_pages="100"
           else
             mode="${INPUT_MODE:-bootstrap}"
-            max_pages="${INPUT_MAX_PAGES:-5}"
+            max_pages="${INPUT_MAX_PAGES:-300}"
           fi
-          if ! [[ "$max_pages" =~ ^[0-9]+$ ]] || (( max_pages < 1 || max_pages > 100 )); then
-            echo "max_pages must be between 1 and 100" >&2
+          if ! [[ "$max_pages" =~ ^[0-9]+$ ]] || (( max_pages < 1 || max_pages > 500 )); then
+            echo "max_pages must be between 1 and 500" >&2
             exit 1
           fi
           echo "mode=$mode" >> "$GITHUB_OUTPUT"
