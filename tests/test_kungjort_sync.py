@@ -54,6 +54,7 @@ class KungjortSyncTests(unittest.TestCase):
             self.assertTrue(saved["bootstrap_complete"])
             files = sorted((self.root / "bootstrap").glob("*.jsonl.gz"))
             self.assertEqual(len(files), 2)
+            self.assertTrue(all(path.stat().st_size > 0 for path in files))
             rows = []
             for file in files:
                 with gzip.open(file, "rt", encoding="utf-8") as stream:
