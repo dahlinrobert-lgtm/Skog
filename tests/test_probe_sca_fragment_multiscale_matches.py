@@ -98,3 +98,37 @@ def test_summarize_cross_zoom_uses_pair_level_coverage_and_motive_not_tile_ids()
     assert output[1]["motive_consistent_nonempty"] is False
     assert counts["pairs_with_common_candidate_min_coverage_ge_90pct_at_both_z13_z15"] == 1
     assert counts["identity_resolved_relations"] == 0
+
+
+def test_build_source_pair_dedup_groups_exact_geometry_pairs_direction_independently():
+    pairs = {
+        "11": {
+            "a": {"mvt_decoded_geometry_sha256_epsg3857": "hash-A", "source_key": "tile-a"},
+            "b": {"mvt_decoded_geometry_sha256_epsg3857": "hash-B", "source_key": "tile-b"},
+        },
+        "12": {
+            "a": {"mvt_decoded_geometry_sha256_epsg3857": "hash-A", "source_key": "tile-a"},
+            "b": {"mvt_decoded_geometry_sha256_epsg3857": "hash-B", "source_key": "tile-c"},
+        },
+        "13": {
+            "a": {"mvt_decoded_geometry_sha256_epsg3857": "hash-B", "source_key": "tile-b"},
+            "b": {"mvt_decoded_geometry_sha256_epsg3857": "hash-A", "source_key": "tile-a"},
+        },
+    }
+    pair_rows, group_rows, summary = multi.build_source_pair_dedup(pairs)
+    assert len(pair_rows) == 3
+    assert len(group_rows) == 1
+    assert group_rows[0]["relation_sample_ids"] == "11;12;13"
+    assert summary["unique_exact_geometry_pair_count"] == 1
+    assert summary["redundant_relation_rows_beyond_one_per_group"] == 2
+    assert summary["identity_resolved_relations"] == 0
+
+
+def test_build_source_pair_dedup_keeps_nearby_but_different_hash_pairs_separate():
+    pairs = {
+        "1": {"a": {"mvt_decoded_geometry_sha256_epsg3857": "A"}, "b": {"mvt_decoded_geometry_sha256_epsg3857": "B"}},
+        "2": {"a": {"mvt_decoded_geometry_sha256_epsg3857": "A"}, "b": {"mvt_decoded_geometry_sha256_epsg3857": "C"}},
+    }
+    _, group_rows, summary = multi.build_source_pair_dedup(pairs)
+    assert len(group_rows) == 2
+    assert summary["unique_exact_geometry_pair_count"] == 2
