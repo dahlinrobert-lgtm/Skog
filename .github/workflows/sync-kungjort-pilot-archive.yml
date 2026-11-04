@@ -61,7 +61,27 @@ jobs:
           fi
           echo "mode=$mode" >> "$GITHUB_OUTPUT"
           echo "max_pages=$max_pages" >> "$GITHUB_OUTPUT"
+      - name: Check whether daily sync is ready
+        id: readiness
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "schedule" ]] && [[ -f data/kungjort/state.json ]]; then
+            complete=$(python -c 'import json; print(str(json.load(open("data/kungjort/state.json")).get("bootstrap_complete", False)).lower())')
+            if [[ "$complete" != "true" ]]; then
+              echo "ready=false" >> "$GITHUB_OUTPUT"
+              echo "Historical bootstrap is not complete; scheduled changes sync is skipped."
+              exit 0
+            fi
+          elif [[ "$EVENT_NAME" == "schedule" ]] && [[ ! -f data/kungjort/state.json ]]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "No bootstrap state exists; scheduled changes sync is skipped."
+            exit 0
+          fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
       - name: Run resumable API synchronization
+        if: steps.readiness.outputs.ready == 'true'
         env:
           KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
         run: |
@@ -70,6 +90,7 @@ jobs:
             --mode "${{ steps.mode.outputs.mode }}" \
             --max-pages "${{ steps.mode.outputs.max_pages }}"
       - name: Validate persisted checkpoint and archive
+        if: steps.readiness.outputs.ready == 'true'
         run: |
           set -euo pipefail
           test -s data/kungjort/state.json
