@@ -1,0 +1,84 @@
+name: Monitor SCA voluntary geometry changes
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * 1"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: sca-voluntary-change-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install MVT dependencies and test runner
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" pytest
+      - name: Download original national z12 baseline if state does not exist
+        if: \${{ !hashFiles('data/sca/monitoring/tile-state.json.gz') }}
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sca-national-voluntary-tile-expansion-z12-batch-*
+          run-id: 41704577034
+          github-token: \${{ secrets.GITHUB_TOKEN }}
+          path: input/baseline
+      - name: Run monitor regression tests
+        env:
+          PYTHONPATH: \${{ github.workspace }}
+        run: python -m pytest -q tests/test_monitor_sca_voluntary_tiles.py
+      - name: Poll z12 tiles and compare geometry and metadata
+        env:
+          MAX_WORKERS: "3"
+        run: |
+          python -m py_compile scripts/monitor_sca_voluntary_tiles.py
+          python scripts/monitor_sca_voluntary_tiles.py \
+            --state data/sca/monitoring/tile-state.json.gz \
+            --baseline-dir input/baseline \
+            --events output/sca-voluntary-change-events.jsonl.gz \
+            --summary output/sca-voluntary-change-summary.json \
+            --workers 3
+      - name: Validate monitor outputs
+        run: |
+          python -m json.tool output/sca-voluntary-change-summary.json > /dev/null
+          python - <<'PY'
+          import gzip, json
+          from pathlib import Path
+          s=json.loads(Path("output/sca-voluntary-change-summary.json").read_text())
+          assert s["tiles_checked"] == s["baseline_tile_count"]
+          assert s["identity_resolved"] == 0
+          with gzip.open("output/sca-voluntary-change-events.jsonl.gz", "rt", encoding="utf-8") as f:
+              for line in f:
+                  json.loads(line)
+          print(json.dumps(s, ensure_ascii=False, indent=2))
+          PY
+      - name: Persist state and append change event archive
+        run: |
+          mkdir -p data/sca/monitoring/events
+          cp output/sca-voluntary-change-events.jsonl.gz "data/sca/monitoring/events/$(date -u +%Y-%m-%d)-\${GITHUB_RUN_NUMBER}.jsonl.gz"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/sca/monitoring/tile-state.json.gz data/sca/monitoring/events/
+          if ! git diff --cached --quiet; then
+            git commit -m "Record SCA voluntary geometry monitoring snapshot"
+            git push
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-voluntary-change-monitor
+          path: |
+            output/sca-voluntary-change-summary.json
+            output/sca-voluntary-change-events.jsonl.gz
+          if-no-files-found: error
+          retention-days: 90
