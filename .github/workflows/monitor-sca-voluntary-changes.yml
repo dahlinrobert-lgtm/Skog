@@ -85,7 +85,23 @@ jobs:
           fi
           if ! git diff --cached --quiet; then
             git commit -m "Record SCA voluntary geometry monitoring snapshot"
-            git push
+            # Contents API and other workflows may update main while this scan runs.
+            # Retry by rebasing our monitoring commit; never force-push the branch.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              if git rebase origin/main; then
+                if git push origin HEAD:main; then
+                  echo "Monitoring state persisted successfully."
+                  break
+                fi
+              fi
+              git rebase --abort || true
+              if [ "$attempt" -eq 5 ]; then
+                echo "Could not persist monitoring state after five safe retries." >&2
+                exit 1
+              fi
+              sleep $((attempt * 5))
+            done
           fi
       - uses: actions/upload-artifact@v4
         with:
