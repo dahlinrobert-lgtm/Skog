@@ -168,7 +168,7 @@ RELEVANCE_FIELDS = (
 RELEVANCE_RULES = {
     "high": {
         "skog_och_skogsbruk": (
-            "skog", "skogsbruk", "skogsfastighet", "skogsfastigheter", "skogsägare",
+            "skogsbruk", "skogsfastighet", "skogsfastigheter", "skogsägare",
             "skogsagare", "skogsforvaltning", "skogsförvaltning", "skogsskötsel",
             "skogsskotsel", "skogsvård", "skogsvard", "skoglig", "avverkning",
             "avverkningsanmälan", "avverkningsanmalan", "avverkningsrätt",
