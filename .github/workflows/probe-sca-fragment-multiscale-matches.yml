@@ -56,6 +56,12 @@ jobs:
           assert s["cross_zoom_stability"]["identity_resolved_relations"]==0
           stability=list(csv.DictReader(open("output/sca-fragment-cross-zoom-stability.csv",encoding="utf-8-sig")))
           assert len(stability)==20
+          dedup=json.loads(Path("output/sca-fragment-multiscale-summary.json").read_text())["sample_relation_dedup"]
+          pair_dedup=list(csv.DictReader(open("output/sca-fragment-sample-deduplicated-pairs.csv",encoding="utf-8-sig")))
+          group_dedup=list(csv.DictReader(open("output/sca-fragment-sample-geometry-pair-groups.csv",encoding="utf-8-sig")))
+          assert len(pair_dedup)==20
+          assert len(group_dedup)==dedup["unique_exact_geometry_pair_count"]
+          assert dedup["identity_resolved_relations"]==0
           assert all(r["identity_resolved"]=="False" for r in rows)
           print(json.dumps(s,ensure_ascii=False,indent=2))
           PY
