@@ -26,3 +26,23 @@ Only GitHub OIDC is used for Azure authentication. The API key is read from `KUN
 ## Large historical bootstrap runs
 
 The manual workflow defaults to 300 pages (up to 30,000 listing rows at 100 rows/page) and allows up to 500 pages. The job timeout is 350 minutes. This is intended to complete the known pilot archive in one run where API latency and rate limits permit. The API returns a cursor and the collector persists the Azure checkpoint after every successfully archived page. If GitHub's job timeout or an API outage interrupts the run, start bootstrap again: it resumes from the last committed Azure cursor rather than restarting. Do not run changes mode before `bootstrap_complete=true`.
+
+
+## Relevance-first collection
+
+Every `/documents` listing page is indexed as compressed JSONL metadata under `metadata/kungjort/index/bootstrap-live/`. The collector classifies listing metadata before requesting document details. Full details are fetched only for `high` and `medium` matches. Low-priority documents remain searchable in the metadata index and can be reclassified later without repeating the listing export.
+
+### High priority
+
+- Forest and forestry: forest management, harvesting, thinning, clearcuts, forestry roads.
+- Nature conservation and protection: nature conservation, reserves, habitat protection, key habitats, species protection, Natura 2000, shoreline protection.
+- Land use and planning: land use, exploitation, detailed/comprehensive plans, property regulation, municipal land acquisition/sales, land allocation and leases.
+- Environment and permits: environmental permits/supervision/review, contaminated land, remediation, water operations and environmental impact assessments.
+
+### Medium priority
+
+- Energy and infrastructure: wind/solar parks, power lines, grid concessions, road and railway plans/projects and infrastructure.
+- Climate and water: climate adaptation, flooding, cloudbursts, stormwater, wetlands, peat and water management.
+- Fire and risk: wildfires, forest fires, fire risk and prevention.
+
+The classifier stores the priority, category, matched terms and rule version with each metadata row and relevant detail record. Matching is a deterministic keyword baseline, not semantic AI classification. Rules should be reviewed against a sample of the actual listing metadata before the complete historical export is launched. Unmatched documents are not deleted; only their full detail retrieval is skipped.
