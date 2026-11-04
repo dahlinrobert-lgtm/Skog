@@ -168,7 +168,7 @@ RELEVANCE_FIELDS = (
 RELEVANCE_RULES = {
     "high": {
         "skog_och_skogsbruk": (
-            "skog", "skogsbruk", "avverkning", "avverkningsanmälan", "gallring",
+            "skoglig", "skogliga", "skogsbruk", "avverkning", "avverkningsanmälan", "gallring",
             "hygges", "skogsbruksplan", "skogsvård", "skogsvard", "skogsbilväg",
             "skogsbilvag", "virkesupplag",
         ),
@@ -216,14 +216,21 @@ def _normalise(value: str) -> str:
 
 
 def classify_document(row: dict) -> dict:
-    """Classify listing metadata only; do not fetch full details for low relevance."""
+    """Classify metadata recursively; never inspect opaque IDs or URLs."""
     chunks = []
-    for key in RELEVANCE_FIELDS:
-        value = row.get(key)
+
+    def collect(value, key=""):
         if isinstance(value, str):
-            chunks.append(value)
+            if key.casefold() not in {"id", "document_id", "url", "file_url", "download_url", "cursor"}:
+                chunks.append(value)
+        elif isinstance(value, dict):
+            for child_key, child_value in value.items():
+                collect(child_value, str(child_key))
         elif isinstance(value, list):
-            chunks.extend(str(item) for item in value if isinstance(item, (str, int, float)))
+            for item in value:
+                collect(item, key)
+
+    collect(row)
     searchable = _normalise(" ".join(chunks))
     matches = []
     for priority in ("high", "medium"):
@@ -243,6 +250,7 @@ def classify_document(row: dict) -> dict:
         "matched_terms": sorted({term for item in matches for term in item["terms"]}),
         "rule_version": "2026-11-04-v1",
     }
+
 
 def document_id(row: dict):
     return row.get("id") or row.get("document_id")
@@ -389,7 +397,11 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
                     })
                 elif action in ("upsert", "insert", "update", "updated", "created"):
                     row = change.get("document") if isinstance(change.get("document"), dict) else change
-                    classification = classify_document(row)
+                    # Change events can contain only an ID. Fetch the changed
+                    # version once so keyword filtering cannot miss a relevant update.
+                    detail = fetch_detail(api, row)
+                    detail_payload = detail.get("detail") if isinstance(detail.get("detail"), dict) else {}
+                    classification = classify_document({**row, **detail_payload})
                     records.append({
                         "record_type": "document_index",
                         "document_id": str(document_id(row)) if document_id(row) is not None else None,
@@ -398,7 +410,6 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
                         "relevance": classification,
                     })
                     if classification["priority"] in ("high", "medium"):
-                        detail = fetch_detail(api, row)
                         detail["relevance"] = classification
                         records.append(detail)
                 else:
