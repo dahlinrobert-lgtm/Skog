@@ -52,3 +52,31 @@ def test_similarity_detects_identical_geometry():
     assert abs(m["source_coverage"] - 1.0) < 1e-9
     assert abs(m["candidate_coverage"] - 1.0) < 1e-9
     assert abs(m["iou"] - 1.0) < 1e-9
+
+
+
+def _candidate(locator, a_intersection, b_intersection, a_coverage, b_coverage):
+    return {
+        "locator": locator,
+        "sim_a": {"intersection_m2_epsg3006": a_intersection,
+                  "source_coverage": a_coverage, "distance_m_epsg3006": 0.0},
+        "sim_b": {"intersection_m2_epsg3006": b_intersection,
+                  "source_coverage": b_coverage, "distance_m_epsg3006": 0.0},
+    }
+
+
+def test_common_candidate_must_intersect_both_source_fragments():
+    one_sided = _candidate("one-sided", 100.0, 0.0, 1.0, 0.0)
+    best_a, best_b, best_common = multi.select_best_candidates([one_sided])
+    assert best_a is one_sided
+    assert best_b is None
+    assert best_common is None
+
+
+def test_common_candidate_prefers_highest_minimum_coverage():
+    one = _candidate("common-low", 100.0, 100.0, 0.4, 0.3)
+    two = _candidate("common-high", 100.0, 100.0, 0.8, 0.7)
+    best_a, best_b, best_common = multi.select_best_candidates([one, two])
+    assert best_a is two
+    assert best_b is two
+    assert best_common is two
