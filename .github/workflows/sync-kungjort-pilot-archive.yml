@@ -28,7 +28,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: kungjort-pilot-archive
+  group: ${{ github.event_name == 'pull_request' && format('kungjort-pr-{0}', github.event.pull_request.number) || 'kungjort-pilot-archive' }}
   cancel-in-progress: false
 
 jobs:
