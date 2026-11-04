@@ -1,0 +1,75 @@
+name: Test Azure Blob Storage OIDC
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: test-azure-blob-oidc
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Verify private containers are accessible
+        env:
+          STORAGE_ACCOUNT: stskogkolldata
+        run: |
+          set -euo pipefail
+          echo "Containers visible to the federated identity:"
+          az storage container list \
+            --account-name "$STORAGE_ACCOUNT" \
+            --auth-mode login \
+            --query "[].name" \
+            --output tsv
+
+      - name: Verify blob write and delete permissions
+        env:
+          STORAGE_ACCOUNT: stskogkolldata
+          CONTAINER: metadata
+          BLOB_NAME: .health/oidc-smoke-test-${{ github.run_id }}.txt
+        run: |
+          set -euo pipefail
+          test_file="$RUNNER_TEMP/azure-oidc-smoke-test.txt"
+          printf 'Azure OIDC smoke test: run %s\n' "$GITHUB_RUN_ID" > "$test_file"
+
+          cleanup() {
+            az storage blob delete \
+              --account-name "$STORAGE_ACCOUNT" \
+              --container-name "$CONTAINER" \
+              --name "$BLOB_NAME" \
+              --auth-mode login \
+              --only-show-errors || true
+          }
+          trap cleanup EXIT
+
+          az storage blob upload \
+            --account-name "$STORAGE_ACCOUNT" \
+            --container-name "$CONTAINER" \
+            --name "$BLOB_NAME" \
+            --file "$test_file" \
+            --auth-mode login \
+            --overwrite true \
+            --only-show-errors
+
+          echo "Blob upload succeeded."
+          az storage blob show \
+            --account-name "$STORAGE_ACCOUNT" \
+            --container-name "$CONTAINER" \
+            --name "$BLOB_NAME" \
+            --auth-mode login \
+            --query "name" \
+            --output tsv
+          echo "Blob read succeeded; cleanup will remove the test blob."
