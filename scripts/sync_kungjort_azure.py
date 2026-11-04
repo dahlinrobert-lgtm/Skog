@@ -356,7 +356,8 @@ def bootstrap(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: i
     print(json.dumps({
         "mode": "bootstrap",
         "pages_this_run": pages,
-        "details_fetched_this_run": total_details,\n        "index_rows_processed_this_run": pages * PAGE_SIZE,
+        "details_fetched_this_run": total_details,
+        "index_rows_processed_this_run": pages * PAGE_SIZE,
         "batches_uploaded_this_run": uploaded,
         "bootstrap_complete": state["bootstrap_complete"],
         "checkpoint_persisted": True,
