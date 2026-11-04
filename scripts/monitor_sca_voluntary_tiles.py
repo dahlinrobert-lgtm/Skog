@@ -79,11 +79,49 @@ def read_state(path,baseline_dir):
     if baseline_dir is None: raise FileNotFoundError(f"No state {path}; provide --baseline-dir")
     return build_baseline(baseline_dir)
 
+def write_baseline_archive(directory,path):
+    """Persist the immutable first source snapshot once; later state stores hashes/metadata only."""
+    if path.exists():
+        return
+    files=sorted(directory.rglob("*.json"))
+    if not files:
+        raise ValueError(f"No baseline batch JSON files under {directory}")
+    path.parent.mkdir(parents=True,exist_ok=True)
+    tmp=path.with_suffix(path.suffix+".tmp")
+    with tmp.open("wb") as raw:
+        with gzip.GzipFile(fileobj=raw,mode="wb",mtime=0) as gz:
+            for file in files:
+                payload=json.loads(file.read_text(encoding="utf-8"))
+                for row in payload.get("tile_results",[]):
+                    for layer in row.get("layers",[]):
+                        for feature in layer.get("features",[]):
+                            item=feature_record(layer.get("name","unknown"),feature)
+                            record={"baseline_run_id":41704577034,
+                                    "tile":key(row["z"],row["x"],row["y"]),
+                                    "source_url":row.get("url"),
+                                    "source_tile_sha256":row.get("sha256"),
+                                    **item}
+                            gz.write((json.dumps(record,ensure_ascii=False,sort_keys=True)+"\\n").encode())
+    os.replace(tmp,path)
+
 def write_state(path,state):
+    # Keep the current index compact. Full baseline geometry lives in the immutable
+    # baseline archive; new/changed geometries live in append-only event archives.
+    compact=dict(state)
+    compact_tiles={}
+    def without_geometry(feature):
+        return {k:v for k,v in feature.items() if k!="geometry"}
+    for tile_id,tile in state["tiles"].items():
+        item=dict(tile)
+        item["features"]=[without_geometry(f) for f in tile.get("features",[])]
+        item["pending_missing"]=[{**entry,"feature":without_geometry(entry["feature"])}
+                                 for entry in tile.get("pending_missing",[])]
+        compact_tiles[tile_id]=item
+    compact["tiles"]=compact_tiles
     path.parent.mkdir(parents=True,exist_ok=True); tmp=path.with_suffix(path.suffix+".tmp")
     with tmp.open("wb") as raw:
         with gzip.GzipFile(fileobj=raw,mode="wb",mtime=0) as gz:
-            gz.write(json.dumps(state,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode())
+            gz.write(json.dumps(compact,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode())
     os.replace(tmp,path)
 
 def fetch(z,x,y):
@@ -138,7 +176,7 @@ def compare_features(tile_id,old,new,at):
         if len(op[k])==len(np[k])==1:
             a,b=op[k][0],np[k][0]
             events.append({"event_type":"geometry_changed_candidate","tile":tile_id,"layer":b["layer"],
-                           "old_geometry":a["geometry"],"old_geometry_sha256":a["geometry_sha256"],
+                           "old_geometry_sha256":a["geometry_sha256"],
                            "new_geometry":b["geometry"],"new_geometry_sha256":b["geometry_sha256"],
                            "properties":b["properties"],"observed_at":at,"identity_resolved":False})
             ou.remove(a); nu.remove(b)
@@ -149,7 +187,8 @@ def compare_features(tile_id,old,new,at):
             count=int(item.get("missing_count",1))+1
             if count>=2:
                 events.append({"event_type":"geometry_removed_confirmed","tile":tile_id,"layer":f["layer"],
-                               "geometry":f["geometry"],"geometry_sha256":f["geometry_sha256"],
+                               "geometry_sha256":f["geometry_sha256"],
+                               **({"geometry":f["geometry"]} if f.get("geometry") is not None else {}),
                                "properties":f["properties"],"first_missing_at":item.get("first_missing_at"),
                                "confirmed_at":at})
             else: pending.append({**item,"missing_count":count})
@@ -157,7 +196,8 @@ def compare_features(tile_id,old,new,at):
     for f in ou:
         pending.append({"feature":f,"missing_count":1,"first_missing_at":at})
         events.append({"event_type":"geometry_missing_candidate","tile":tile_id,"layer":f["layer"],
-                       "geometry":f["geometry"],"geometry_sha256":f["geometry_sha256"],
+                       "geometry_sha256":f["geometry_sha256"],
+                       **({"geometry":f["geometry"]} if f.get("geometry") is not None else {}),
                        "properties":f["properties"],"observed_at":at,"confirmation_required":True})
     for f in nu:
         events.append({"event_type":"geometry_added","tile":tile_id,"layer":f["layer"],
@@ -187,7 +227,8 @@ def apply_result(old,new,at):
             n=int(item.get("missing_count",1))+1; f=item["feature"]
             if n>=2:
                 ev.append({"event_type":"geometry_removed_confirmed","tile":tid,"layer":f["layer"],
-                           "geometry":f["geometry"],"geometry_sha256":f["geometry_sha256"],
+                           "geometry_sha256":f["geometry_sha256"],
+                           **({"geometry":f["geometry"]} if f.get("geometry") is not None else {}),
                            "properties":f["properties"],"first_missing_at":item.get("first_missing_at"),
                            "confirmed_at":at})
             else: pending.append({**item,"missing_count":n})
@@ -235,6 +276,8 @@ def main():
     p.add_argument("--workers",type=int,default=3)
     a=p.parse_args()
     state=read_state(a.state,a.baseline_dir); bootstrap=state.get("last_checked_at") is None
+    if bootstrap and a.baseline_dir:
+        write_baseline_archive(a.baseline_dir,Path("data/sca/monitoring/baseline/source-features.jsonl.gz"))
     state,events,summary=run(state,max(1,min(6,a.workers)))
     summary.update({"bootstrapped_from_baseline":bootstrap,"baseline_tile_count":state["tile_count"],
                     "state_schema_version":state["schema_version"]})
