@@ -322,8 +322,8 @@ def main() -> int:
     parser.add_argument("--max-pages", type=int, default=5)
     parser.add_argument("--account-name", default="stskogkolldata")
     args = parser.parse_args()
-    if args.max_pages < 1 or args.max_pages > 100:
-        parser.error("--max-pages must be between 1 and 100")
+    if args.max_pages < 1 or args.max_pages > 500:
+        parser.error("--max-pages must be between 1 and 500")
     api = KungjortApi(os.environ.get("KUNGJORT_API_KEY"))
     credential = DefaultAzureCredential()
     service = BlobServiceClient(
