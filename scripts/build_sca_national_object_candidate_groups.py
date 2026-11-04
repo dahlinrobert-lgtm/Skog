@@ -43,19 +43,32 @@ def build_candidate_groups(data):
                 ra, rb = rb, ra
             parent[rb] = ra
 
-    observations = {}
+    # A source key can occur in several pair records. Select its observation
+    # metadata deterministically, independent of candidate-pair input order.
+    observation_candidates = defaultdict(list)
     for edge in edges:
         a, b = edge["source_key_a"], edge["source_key_b"]
-        observations[a] = {
+        observation_candidates[a].append({
             "source_key": a, "source_batch": edge["batch_a"], "source_tile": edge["tile_a"],
             "class": edge["class_a"], "motive": edge["motive_a"], "geometry_hash": edge["geometry_hash_a"]
-        }
-        observations[b] = {
+        })
+        observation_candidates[b].append({
             "source_key": b, "source_batch": edge["batch_b"], "source_tile": edge["tile_b"],
             "class": edge["class_b"], "motive": edge["motive_b"], "geometry_hash": edge["geometry_hash_b"]
-        }
+        })
         if edge["category"] in HIGH_CONFIDENCE:
             union(a, b)
+
+    def observation_sort_key(item):
+        return tuple("" if value is None else str(value) for value in (
+            item["source_batch"], item["source_tile"], item["class"],
+            item["motive"], item["geometry_hash"]
+        ))
+
+    observations = {
+        key: min(candidates, key=observation_sort_key)
+        for key, candidates in observation_candidates.items()
+    }
 
     if source_record_count < len(observations):
         raise ValueError(
