@@ -40,6 +40,30 @@ class AzureSyncHelperTests(unittest.TestCase):
         self.assertEqual(result["priority"], "medium")
         self.assertIn("energi_och_infrastruktur", result["categories"])
 
+    def test_swedish_synonyms_match_without_diacritics(self):
+        result = classify_document({
+            "title": "Ansökan om avverkning, röjning och skogsföryngring",
+        })
+        self.assertEqual(result["priority"], "high")
+        self.assertIn("skog_och_skogsbruk", result["categories"])
+        self.assertIn("roejning", [term.replace("ö", "oe") for term in result["matched_terms"]])
+
+    def test_environmental_and_land_use_synonyms(self):
+        nature = classify_document({"title": "Dispens från strandskydd och biotopskydd"})
+        land = classify_document({"title": "Fastighetsbildning och exploateringsavtal"})
+        self.assertEqual(nature["priority"], "high")
+        self.assertIn("naturvard_och_skydd", nature["categories"])
+        self.assertEqual(land["priority"], "high")
+        self.assertIn("mark_och_planering", land["categories"])
+
+    def test_medium_synonyms_cover_water_and_energy(self):
+        result = classify_document({
+            "title": "Regionnät, transformatorstation och våtmarksrestaurering",
+        })
+        self.assertEqual(result["priority"], "medium")
+        self.assertIn("energi_och_infrastruktur", result["categories"])
+        self.assertIn("klimat_och_vatten", result["categories"])
+
     def test_irrelevant_document_is_metadata_only(self):
         result = classify_document({
             "title": "Budgetuppföljning för skolan",
