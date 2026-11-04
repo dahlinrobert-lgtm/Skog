@@ -66,7 +66,12 @@ jobs:
       - name: Persist state and append change event archive
         run: |
           mkdir -p data/sca/monitoring/events
-          cp output/sca-voluntary-change-events.jsonl.gz "data/sca/monitoring/events/$(date -u +%Y-%m-%d)-\${GITHUB_RUN_NUMBER}.jsonl.gz"
+          EVENT_COUNT=$(python -c 'import json; print(json.load(open("output/sca-voluntary-change-summary.json"))["events"])')
+          if [ "$EVENT_COUNT" -gt 0 ]; then
+            cp output/sca-voluntary-change-events.jsonl.gz "data/sca/monitoring/events/$(date -u +%Y-%m-%d)-${GITHUB_RUN_NUMBER}.jsonl.gz"
+          else
+            echo "No change events; no empty event archive will be committed."
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/sca/monitoring/tile-state.json.gz data/sca/monitoring/events/
