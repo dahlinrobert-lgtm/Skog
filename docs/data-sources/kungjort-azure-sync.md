@@ -46,3 +46,12 @@ Every `/documents` listing page is indexed as compressed JSONL metadata under `m
 - Fire and risk: wildfires, forest fires, fire risk and prevention.
 
 The classifier stores the priority, category, matched terms and rule version with each metadata row and relevant detail record. Matching is a deterministic keyword baseline, not semantic AI classification. Rules should be reviewed against a sample of the actual listing metadata before the complete historical export is launched. Unmatched documents are not deleted; only their full detail retrieval is skipped.
+
+
+## Expanded Swedish relevance vocabulary
+
+The relevance rules now include additional forestry terms (including regeneration, clearing, soil preparation, timber handling, forest damage and bark beetle), nature protection (habitat protection, species protection, reserve formation and consultation), land/property planning (property formation, easements, land leases and development agreements), and environmental permits/supervision (quarries, peat extraction, remediation, water operations and drainage).
+
+Medium-priority vocabulary now also covers electricity grids and substations, energy storage, solar and wind installations, roads/railways, wetlands, water bodies, groundwater, flood risk and forest-fire preparedness.
+
+Matching is case- and accent-insensitive, so accented Swedish terms and their ASCII spellings are treated alike. The generic standalone term `skog` is deliberately excluded because it could match incidental mentions and inflate the high-priority set. Terms are still matched against the metadata fields only; this change does not claim to classify the full document text. Review actual samples and measured precision/recall before increasing collection volume.
