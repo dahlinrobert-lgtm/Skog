@@ -125,7 +125,7 @@ def write_state(path,state):
             gz.write(json.dumps(compact,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode())
     os.replace(tmp,path)
 
-def fetch(z,x,y):
+def fetch(z,x,y,previous_sha=None,previous_state=None):
     url=URL.format(z=z,x=x,y=y)
     try:
         r=get_session().get(url,timeout=TIMEOUT); raw=r.content
@@ -133,6 +133,9 @@ def fetch(z,x,y):
               "bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest() if raw else None}
         if r.status_code==404: return {**base,"state":"not_found_404","features":[]}
         if r.status_code!=200: return {**base,"state":"http_error","features":[],"error":f"HTTP {r.status_code}"}
+        if digest_value:=base["sha256"]:
+            if digest_value==previous_sha and str(previous_state or "").startswith("valid_mvt"):
+                return {**base,"state":"unchanged"}
         try:
             decoded=mapbox_vector_tile.decode(raw)
             layers=[{"name":n,"features":v.get("features",[])} for n,v in decoded.items()]
@@ -286,7 +289,7 @@ def run(state,workers):
     at=now(); tiles=state["tiles"]; fetched={}; errs=0
     coords=[(k,int(v["z"]),int(v["x"]),int(v["y"])) for k,v in tiles.items()]
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures={pool.submit(fetch,z,x,y):k for k,z,x,y in coords}
+        futures={pool.submit(fetch,z,x,y,tiles[k].get("sha256"),tiles[k].get("state")):k for k,z,x,y in coords}
         for i,future in enumerate(as_completed(futures),1):
             k=futures[future]; fetched[k]=future.result()
             if fetched[k]["state"] in ("request_error","http_error","decode_error"): errs+=1
@@ -298,7 +301,7 @@ def run(state,workers):
         events.extend(ev); states[fetched[k]["state"]]+=1; nfeatures+=len(fetched[k].get("features",[]))
     state["tiles"]=dict(sorted(tiles.items())); state["last_checked_at"]=at
     summary={"observed_at":at,"tiles_checked":len(tiles),"tile_states":dict(states),
-             "feature_records_returned":nfeatures,"event_counts":dict(Counter(e["event_type"] for e in events)),
+             "feature_records_decoded":nfeatures,"unchanged_tiles":states.get("unchanged",0),"event_counts":dict(Counter(e["event_type"] for e in events)),
              "events":len(events),"poll_errors":errs,"identity_resolved":0}
     return state,events,summary
 
