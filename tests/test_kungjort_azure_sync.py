@@ -2,7 +2,7 @@ import gzip
 import json
 import unittest
 
-from scripts.sync_kungjort_azure import canonical_hash, cursor_key, encode_jsonl_gzip, initial_state
+from scripts.sync_kungjort_azure import canonical_hash, classify_document, cursor_key, encode_jsonl_gzip, initial_state
 
 
 class AzureSyncHelperTests(unittest.TestCase):
@@ -21,7 +21,34 @@ class AzureSyncHelperTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertEqual(json.loads(gzip.decompress(first).decode().strip()), records[0])
 
-    def test_initial_state_has_safe_defaults(self):
+
+    def test_high_priority_topics_are_classified(self):
+        result = classify_document({
+            "title": "Avverkning och naturvärdesinventering",
+            "organ": "Samhällsbyggnadsnämnden",
+            "doc_type": "Tjänsteskrivelse",
+        })
+        self.assertEqual(result["priority"], "high")
+        self.assertIn("skog_och_skogsbruk", result["categories"])
+        self.assertIn("naturvard_och_skydd", result["categories"])
+
+    def test_medium_priority_topics_are_classified(self):
+        result = classify_document({
+            "title": "Ansökan om vindkraftspark och nätkoncession",
+            "organ": "Kommunstyrelsen",
+        })
+        self.assertEqual(result["priority"], "medium")
+        self.assertIn("energi_och_infrastruktur", result["categories"])
+
+    def test_irrelevant_document_is_metadata_only(self):
+        result = classify_document({
+            "title": "Budgetuppföljning för skolan",
+            "organ": "Barn- och utbildningsnämnden",
+            "doc_type": "Protokoll",
+        })
+        self.assertEqual(result["priority"], "low")
+        self.assertEqual(result["categories"], [])
+\n    def test_initial_state_has_safe_defaults(self):
         state = initial_state()
         self.assertFalse(state["bootstrap_complete"])
         self.assertIsNone(state["bootstrap_cursor"])
