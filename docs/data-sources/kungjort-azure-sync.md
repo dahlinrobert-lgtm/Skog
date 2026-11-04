@@ -21,3 +21,8 @@ The original `changes_cursor` captured from the first historical export page is 
 Use Actions → **Sync Kungjort archive to Azure Blob Storage**. Continue with mode `bootstrap` until the workflow reports `bootstrap_complete: true`. Daily scheduled runs then process changes.
 
 Only GitHub OIDC is used for Azure authentication. The API key is read from `KUNGJORT_API_KEY`; it is never written to Azure or the Git repository.
+
+
+## Large historical bootstrap runs
+
+The manual workflow defaults to 300 pages (up to 30,000 listing rows at 100 rows/page) and allows up to 500 pages. The job timeout is 350 minutes. This is intended to complete the known pilot archive in one run where API latency and rate limits permit. The API returns a cursor and the collector persists the Azure checkpoint after every successfully archived page. If GitHub's job timeout or an API outage interrupts the run, start bootstrap again: it resumes from the last committed Azure cursor rather than restarting. Do not run changes mode before `bootstrap_complete=true`.
