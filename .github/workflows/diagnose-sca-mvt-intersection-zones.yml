@@ -1,0 +1,58 @@
+name: Diagnose SCA MVT intersection tile zones
+on:
+  workflow_dispatch:
+    inputs:
+      trace_run_id:
+        description: "Successful source trace workflow run ID"
+        required: true
+        default: "41869116663"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install spatial dependencies and pytest
+        run: python -m pip install "shapely>=2,<3" "pyproj>=3.6,<4" pytest
+      - name: Download traced overlap sample
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-overlap-source-trace-sample
+          run-id: ${{ inputs.trace_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Run intersection zone regression tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m pytest -q tests/test_diagnose_sca_mvt_intersection_zones.py
+      - name: Build intersection zone diagnostics
+        run: |
+          python -m py_compile scripts/diagnose_sca_mvt_intersection_zones.py
+          python scripts/diagnose_sca_mvt_intersection_zones.py
+      - name: Validate intersection zone outputs
+        run: |
+          python -m json.tool output/sca-mvt-intersection-zone-summary.json > /dev/null
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          s=json.loads(Path("output/sca-mvt-intersection-zone-summary.json").read_text())
+          rows=list(csv.DictReader(open("output/sca-mvt-intersection-zone-diagnostics.csv",encoding="utf-8-sig")))
+          assert len(rows)==s["input_relations"]
+          assert len(rows)==60
+          assert s["identity_resolved_relations"]==0
+          assert all(r["identity_resolved"]=="False" for r in rows)
+          assert all(abs(float(r["intersection_share_in_tile_a"])+float(r["intersection_share_in_tile_b"])+float(r["intersection_share_outside_both_tiles"])-1)<1e-5 for r in rows if float(r["intersection_total_m2_epsg3006"])>0)
+          print(json.dumps(s,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-mvt-intersection-zone-diagnostics
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
