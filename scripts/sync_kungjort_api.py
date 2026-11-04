@@ -126,6 +126,8 @@ def bootstrap(api, state, max_pages):
         print("Historical bootstrap already complete.")
         return state
     cursor = state.get("bootstrap_cursor")
+    if cursor and not state.get("changes_cursor"):
+        raise RuntimeError("Bootstrap checkpoint exists without the original changes_cursor; refusing unsafe resume")
     records = []
     pages = 0
     while pages < max_pages:
