@@ -1,0 +1,85 @@
+name: Trace prioritized SCA overlaps to source MVT features
+on:
+  workflow_dispatch:
+    inputs:
+      priority_run_id:
+        description: "Successful prioritized overlap review run ID"
+        required: true
+        default: "41861509121"
+      geometry_run_id:
+        description: "Successful projected geometry batch run ID"
+        required: true
+        default: "41714471371"
+      source_run_id:
+        description: "Successful raw z12 tile expansion run ID"
+        required: true
+        default: "41704577034"
+      sample_limit:
+        description: "Number of relation pairs to trace (1-200)"
+        required: true
+        default: "60"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install geometry dependency and test runner
+        run: python -m pip install "shapely>=2,<3" pytest
+      - name: Download prioritized relation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-national-overlap-priority-review
+          run-id: ${{ inputs.priority_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input/priority
+      - name: Download all projected geometry batches
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sca-voluntary-geometry-batch-*
+          run-id: ${{ inputs.geometry_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input/projected
+      - name: Download all raw z12 tile batches
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sca-national-voluntary-tile-expansion-z12-batch-*
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input/raw
+      - name: Run provenance tracing tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m pytest -q tests/test_trace_sca_overlap_sources.py
+      - name: Build prioritized source trace sample
+        env:
+          SAMPLE_LIMIT: ${{ inputs.sample_limit }}
+        run: |
+          python -m py_compile scripts/trace_sca_overlap_sources.py
+          python scripts/trace_sca_overlap_sources.py
+      - name: Validate trace outputs
+        run: |
+          python -m json.tool output/sca-overlap-source-trace-summary.json > /dev/null
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          summary = json.loads(Path("output/sca-overlap-source-trace-summary.json").read_text())
+          rows = list(csv.DictReader(open("output/sca-overlap-source-trace.csv", encoding="utf-8-sig")))
+          assert summary["missing_feature_sides"] == 0
+          assert summary["identity_resolved_relations"] == 0
+          assert len(rows) == summary["sampled_relations"] * 2
+          assert all(r["geometry_provenance"] == "decoded_mvt_tile_feature_reconstructed_to_epsg3857" for r in rows)
+          print(json.dumps(summary, ensure_ascii=False, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-overlap-source-trace-sample
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
