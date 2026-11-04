@@ -1,0 +1,59 @@
+name: Analyze SCA partial and contained overlap relations
+on:
+  workflow_dispatch:
+    inputs:
+      topology_run_id:
+        description: "Successful national topology audit run ID"
+        required: true
+        default: "41724100628"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download topology review artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-national-voluntary-topology-review
+          run-id: ${{ inputs.topology_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: input
+      - name: Run overlap relation regression tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_sca_topology_review_relations.py
+      - name: Build review-only relation diagnostics
+        run: |
+          python -m py_compile scripts/analyze_sca_topology_review_relations.py
+          python scripts/analyze_sca_topology_review_relations.py
+      - name: Validate review outputs
+        run: |
+          python -m json.tool output/sca-national-overlap-review-summary.json > /dev/null
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          summary = json.loads(Path("output/sca-national-overlap-review-summary.json").read_text())
+          relations = list(csv.DictReader(open("output/sca-national-overlap-review-relations.csv", encoding="utf-8-sig")))
+          metadata = list(csv.DictReader(open("output/sca-national-source-key-metadata-audit.csv", encoding="utf-8-sig")))
+          assert len(relations) == summary["overlap_review_relations"]
+          assert len(metadata) == summary["source_keys_seen_in_candidate_pairs"]
+          assert sum(summary["overlap_relation_categories"].values()) == len(relations)
+          assert all(r["review_status"] == "relation_review_only_no_identity_resolution" for r in relations)
+          assert summary["nearby_boundary_relations_kept_separate"] == summary["all_relation_categories"].get("nearby_boundary_review", 0)
+          print(json.dumps(summary, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sca-national-overlap-review-analysis
+          path: output/
+          if-no-files-found: error
+          retention-days: 90
