@@ -93,7 +93,10 @@ def append_records(mode, records):
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     folder = ROOT / mode
     folder.mkdir(parents=True, exist_ok=True)
-    path = folder / f"{stamp}-{os.getpid()}.jsonl.gz"
+    # Include sub-second time and a monotonic suffix so repeated runs within
+    # the same process/second never overwrite an earlier immutable batch.
+    import uuid
+    path = folder / f"{stamp}-{time.time_ns()}-{uuid.uuid4().hex[:8]}.jsonl.gz"
     with gzip.open(path, "wt", encoding="utf-8") as stream:
         for record in records:
             stream.write(json.dumps(record, ensure_ascii=False, separators=(",", ":")) + "\n")
