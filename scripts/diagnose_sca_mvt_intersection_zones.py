@@ -84,11 +84,15 @@ def main():
         tb = nominal_tile_polygon(int(rb["source_tile_x"]), int(rb["source_tile_y"]))
         inter = ga.intersection(gb)
         total = area_m2(inter)
+        # Make the partition mutually exclusive. Adjacent nominal tiles may
+        # share a boundary, while diagonal/overlapping tile footprints can
+        # create area counted in both intersections. Assign overlap first to
+        # A, then to B outside A, and finally to the area outside both.
         in_a = inter.intersection(ta)
-        in_b = inter.intersection(tb)
+        in_b_only = inter.intersection(tb).difference(ta)
         outside_both = inter.difference(ta.union(tb))
         area_a = area_m2(in_a)
-        area_b = area_m2(in_b)
+        area_b = area_m2(in_b_only)
         area_out = area_m2(outside_both)
         accounted = area_a + area_b + area_out
         if total > 0 and abs(accounted - total) / total > 1e-5:
@@ -116,10 +120,10 @@ def main():
             "tile_neighborhood": "cardinal" if max(abs(dx), abs(dy)) == 1 and (dx == 0 or dy == 0) else "diagonal" if max(abs(dx), abs(dy)) == 1 else "other",
             "intersection_total_m2_epsg3006": total,
             "intersection_in_tile_a_m2_epsg3006": area_a,
-            "intersection_in_tile_b_m2_epsg3006": area_b,
+            "intersection_in_tile_b_outside_a_m2_epsg3006": area_b,
             "intersection_outside_both_tiles_m2_epsg3006": area_out,
             "intersection_share_in_tile_a": a_share,
-            "intersection_share_in_tile_b": b_share,
+            "intersection_share_in_tile_b_outside_a": b_share,
             "intersection_share_outside_both_tiles": out_share,
             "intersection_zone_class": classify_zone(a_share, b_share, out_share),
             "identity_resolved": False,
@@ -142,6 +146,7 @@ def main():
         "limitations": [
             "Intersection zones are based on decoded MVT features reconstructed into EPSG:3857 and nominal XYZ tile rectangles.",
             "Tile buffer and rendering rules may extend beyond the nominal tile; zone classification is diagnostic only.",
+            "Tile B intersection area is reported exclusive of tile A to avoid double-counting; the A-first assignment is an accounting convention, not a physical attribution.",
             "Overlap inside a tile core is not proof of same object identity; it may represent genuinely overlapping source objects.",
             "No geometry is merged, dissolved, modified or deleted.",
         ],
