@@ -238,7 +238,7 @@ def apply_result(old,new,at):
                                      "not_found_streak":0})
         return kept,ev
     ev,active,pending=compare_features(tid,old,new,at)
-    updated={**new,"features":active,"pending_missing":pending,"last_success_at":at,
+    updated={**old,**new,"features":active,"pending_missing":pending,"last_success_at":at,
              "last_attempt_at":at,"last_attempt_state":new["state"],"not_found_streak":0}
     return updated,ev
 
@@ -274,7 +274,7 @@ def extend_tile_plan(state,census_path):
         tile["covering_z9_seeds"]=[{"z":9,"x":sx,"y":sy} for sx,sy in sorted(existing)]
     state["tile_count"]=len(state["tiles"])
     state["latest_seed_census"]={
-        "observed_at":census.get("summary",{}).get("tiles_completed"),
+        "observed_at":now(),
         "tiles_in_bbox":census.get("summary",{}).get("tiles_in_bbox"),
         "positive_voluntary_z9_tiles":len(positive),
         "positive_seed_tiles":[{"z":9,"x":x,"y":y} for x,y in positive],
