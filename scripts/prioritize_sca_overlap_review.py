@@ -109,7 +109,7 @@ def build_prioritized_review(data):
             "tile_dx": dx,
             "tile_dy": dy,
             "tile_chebyshev_distance": chebyshev,
-            "tile_neighbor_direction_b_to_a": direction,
+            "tile_b_relative_to_a": direction,
             "canonical_class_pair": pair,
             "possible_fragmentation_signal": bucket == "partial_same_class_fragment_signal",
             "identity_resolved": False,
