@@ -158,6 +158,100 @@ class AzureArchive:
         return True
 
 
+
+RELEVANCE_FIELDS = (
+    "title", "rubrik", "subject", "amne", "ämne", "summary", "sammanfattning",
+    "description", "beskrivning", "organ", "doc_type", "document_type",
+    "case_title", "arende", "ärende", "keywords", "tags",
+)
+
+RELEVANCE_RULES = {
+    "high": {
+        "skog_och_skogsbruk": (
+            "skoglig", "skogliga", "skogsbruk", "avverkning", "avverkningsanmälan", "gallring",
+            "hygges", "skogsbruksplan", "skogsvård", "skogsvard", "skogsbilväg",
+            "skogsbilvag", "virkesupplag",
+        ),
+        "naturvard_och_skydd": (
+            "naturvård", "naturvard", "naturreservat", "biotopskydd",
+            "nyckelbiotop", "artskydd", "Natura 2000", "naturvärdesinventering",
+            "naturvardesinventering", "fridlysning", "strandskydd",
+        ),
+        "mark_och_planering": (
+            "markanvändning", "markanvandning", "exploatering", "detaljplan",
+            "översiktsplan", "oversiktsplan", "fastighetsreglering",
+            "markförvärv", "markforvarv", "markförsäljning", "markforsaljning",
+            "markanvisning", "markupplåtelse", "markupplatelse", "arrende",
+        ),
+        "miljo_och_tillstand": (
+            "miljötillstånd", "miljotillstand", "miljötillsyn", "miljotillsyn",
+            "miljöprövning", "miljoprovning", "förorenad mark", "fororenad mark",
+            "marksanering", "vattenverksamhet", "miljökonsekvensbeskrivning",
+            "miljokonsekvensbeskrivning", "MKB",
+        ),
+    },
+    "medium": {
+        "energi_och_infrastruktur": (
+            "vindkraft", "vindpark", "solpark", "solcellspark", "kraftledning",
+            "elledning", "nätkoncession", "natkoncession", "vägplan", "vagplan",
+            "vägprojekt", "vagprojekt", "järnväg", "jarnvag", "infrastruktur",
+        ),
+        "klimat_och_vatten": (
+            "klimat", "klimatanpassning", "översvämning", "oversvamning",
+            "skyfall", "dagvatten", "våtmark", "vatmark", "torv",
+            "vattenförvaltning", "vattenforvaltning",
+        ),
+        "brand_och_risk": (
+            "naturbrand", "skogsbrand", "brandrisk", "brandförebyggande",
+            "brandforebyggande",
+        ),
+    },
+}
+
+
+def _normalise(value: str) -> str:
+    import unicodedata
+    value = unicodedata.normalize("NFKC", value).casefold()
+    return " ".join(value.split())
+
+
+def classify_document(row: dict) -> dict:
+    """Classify metadata recursively; never inspect opaque IDs or URLs."""
+    chunks = []
+
+    def collect(value, key=""):
+        if isinstance(value, str):
+            if key.casefold() not in {"id", "document_id", "url", "file_url", "download_url", "cursor"}:
+                chunks.append(value)
+        elif isinstance(value, dict):
+            for child_key, child_value in value.items():
+                collect(child_value, str(child_key))
+        elif isinstance(value, list):
+            for item in value:
+                collect(item, key)
+
+    collect(row)
+    searchable = _normalise(" ".join(chunks))
+    matches = []
+    for priority in ("high", "medium"):
+        for category, terms in RELEVANCE_RULES[priority].items():
+            matched = [term for term in terms if _normalise(term) in searchable]
+            if matched:
+                matches.append({"priority": priority, "category": category, "terms": matched})
+    if any(item["priority"] == "high" for item in matches):
+        priority = "high"
+    elif matches:
+        priority = "medium"
+    else:
+        priority = "low"
+    return {
+        "priority": priority,
+        "categories": sorted({item["category"] for item in matches}),
+        "matched_terms": sorted({term for item in matches for term in item["terms"]}),
+        "rule_version": "2026-11-04-v1",
+    }
+
+
 def document_id(row: dict):
     return row.get("id") or row.get("document_id")
 
@@ -213,21 +307,40 @@ def bootstrap(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: i
                 raise RuntimeError("First /documents page omitted changes_cursor; refusing unsafe bootstrap")
             state["changes_cursor"] = initial_changes
 
-        source_hash = canonical_hash(rows)
+        classified = [(row, classify_document(row)) for row in rows]
+        metadata_records = [{
+            "record_type": "document_index",
+            "document_id": str(document_id(row)) if document_id(row) is not None else None,
+            "indexed_at": utc_now(),
+            "metadata": row,
+            "relevance": classification,
+        } for row, classification in classified]
+        index_hash = canonical_hash(metadata_records)
+        index_blob = f"kungjort/index/bootstrap-live/page-{cursor_key(cursor_before)}.jsonl.gz"
+        if metadata_records:
+            archive.upload_batch(STATE_CONTAINER, index_blob, encode_jsonl_gzip(metadata_records), index_hash)
+
+        relevant_rows = [(row, classification) for row, classification in classified
+                         if classification["priority"] in ("high", "medium")]
+        detail_source = [{"id": document_id(row), "relevance": classification}
+                         for row, classification in relevant_rows]
+        source_hash = canonical_hash(detail_source)
         blob_name = f"bootstrap-live/page-{cursor_key(cursor_before)}.jsonl.gz"
         already_exists = archive.exists_with_source_hash(RAW_CONTAINER, blob_name, source_hash)
-        if not already_exists:
-            records = [fetch_detail(api, row) for row in rows]
+        if relevant_rows and not already_exists:
+            records = []
+            for row, classification in relevant_rows:
+                record = fetch_detail(api, row)
+                record["relevance"] = classification
+                records.append(record)
             payload = encode_jsonl_gzip(records)
-            if records:
-                if archive.upload_batch(RAW_CONTAINER, blob_name, payload, source_hash):
-                    uploaded += 1
-                total_details += len(records)
-            else:
-                # Empty terminal page needs no data blob; checkpoint still advances.
-                total_details += 0
+            if archive.upload_batch(RAW_CONTAINER, blob_name, payload, source_hash):
+                uploaded += 1
+            total_details += len(records)
+        elif relevant_rows and already_exists:
+            print(f"Existing verified relevant detail batch reused: {blob_name}")
         else:
-            print(f"Existing verified page reused: {blob_name}")
+            print(f"No high/medium documents on page; metadata index only: {index_blob}")
 
         cursor = page.get("next_cursor")
         state["bootstrap_cursor"] = cursor
@@ -244,6 +357,7 @@ def bootstrap(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: i
         "mode": "bootstrap",
         "pages_this_run": pages,
         "details_fetched_this_run": total_details,
+        "index_rows_processed_this_run": pages * PAGE_SIZE,
         "batches_uploaded_this_run": uploaded,
         "bootstrap_complete": state["bootstrap_complete"],
         "checkpoint_persisted": True,
@@ -284,7 +398,21 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
                     })
                 elif action in ("upsert", "insert", "update", "updated", "created"):
                     row = change.get("document") if isinstance(change.get("document"), dict) else change
-                    records.append(fetch_detail(api, row))
+                    # Change events can contain only an ID. Fetch the changed
+                    # version once so keyword filtering cannot miss a relevant update.
+                    detail = fetch_detail(api, row)
+                    detail_payload = detail.get("detail") if isinstance(detail.get("detail"), dict) else {}
+                    classification = classify_document({**row, **detail_payload})
+                    records.append({
+                        "record_type": "document_index",
+                        "document_id": str(document_id(row)) if document_id(row) is not None else None,
+                        "captured_at": utc_now(),
+                        "metadata": row,
+                        "relevance": classification,
+                    })
+                    if classification["priority"] in ("high", "medium"):
+                        detail["relevance"] = classification
+                        records.append(detail)
                 else:
                     raise RuntimeError(f"Unknown change operation {action!r}; refusing to advance cursor")
             if archive.upload_batch(CHANGES_CONTAINER, blob_name, encode_jsonl_gzip(records), source_hash):
@@ -322,8 +450,8 @@ def main() -> int:
     parser.add_argument("--max-pages", type=int, default=5)
     parser.add_argument("--account-name", default="stskogkolldata")
     args = parser.parse_args()
-    if args.max_pages < 1 or args.max_pages > 100:
-        parser.error("--max-pages must be between 1 and 100")
+    if args.max_pages < 1 or args.max_pages > 500:
+        parser.error("--max-pages must be between 1 and 500")
     api = KungjortApi(os.environ.get("KUNGJORT_API_KEY"))
     credential = DefaultAzureCredential()
     service = BlobServiceClient(
