@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-04T12:58:58.321792Z",
+  "checked_at": "2026-11-04T15:32:09.225323Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27626,168 +27626,8 @@
     "count": 165,
     "note": "Features intersect a 10 km point-distance query around the configured centre; this is not a cadastral or village boundary. A notification does not prove felling occurred."
   },
-  "new_cutting_notification_ids_since_previous_run": [
-    {
-      "type": "Feature",
-      "id": 6540563,
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              19.58099774932107,
-              63.783989207228565
-            ],
-            [
-              19.582403525351136,
-              63.78467494571478
-            ],
-            [
-              19.579510513053233,
-              63.78576831390993
-            ],
-            [
-              19.578881535588472,
-              63.785758361436706
-            ],
-            [
-              19.578667071802645,
-              63.785679574817465
-            ],
-            [
-              19.578346152413616,
-              63.78544600465807
-            ],
-            [
-              19.57843135005238,
-              63.785406071217125
-            ],
-            [
-              19.5786786409734,
-              63.78540037082795
-            ],
-            [
-              19.578699760036667,
-              63.78530636459149
-            ],
-            [
-              19.579209628385694,
-              63.784930190798285
-            ],
-            [
-              19.579583380462708,
-              63.7847115262855
-            ],
-            [
-              19.58099774932107,
-              63.783989207228565
-            ]
-          ]
-        ]
-      },
-      "properties": {
-        "OBJECTID": 6540563,
-        "Lannr": "24",
-        "Lan": "VÄSTERBOTTENS LÄN",
-        "Kommunnr": "2401",
-        "Kommun": "NORDMALING",
-        "ArendeAr": 2026,
-        "Beteckn": "A 45962-2026",
-        "Avverktyp": "Föryngringsavverkning",
-        "Andamal": "Uppgift saknas",
-        "Skogstyp": "Normal skog",
-        "Inkomdatum": 1793792756000,
-        "AnmaldHa": 1.7,
-        "SkogsodlHa": 1.7,
-        "NatforHa": null,
-        "ArendeStatus": "Anmält för avverkning",
-        "AvvSasong": "Uppgift saknas",
-        "AvvHa": null,
-        "AvverkningsanmalanKlass": "NyAvverkningsanmalan"
-      }
-    }
-  ],
-  "recent_new_cutting_notification_ids_since_previous_run": [
-    {
-      "type": "Feature",
-      "id": 6540563,
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              19.58099774932107,
-              63.783989207228565
-            ],
-            [
-              19.582403525351136,
-              63.78467494571478
-            ],
-            [
-              19.579510513053233,
-              63.78576831390993
-            ],
-            [
-              19.578881535588472,
-              63.785758361436706
-            ],
-            [
-              19.578667071802645,
-              63.785679574817465
-            ],
-            [
-              19.578346152413616,
-              63.78544600465807
-            ],
-            [
-              19.57843135005238,
-              63.785406071217125
-            ],
-            [
-              19.5786786409734,
-              63.78540037082795
-            ],
-            [
-              19.578699760036667,
-              63.78530636459149
-            ],
-            [
-              19.579209628385694,
-              63.784930190798285
-            ],
-            [
-              19.579583380462708,
-              63.7847115262855
-            ],
-            [
-              19.58099774932107,
-              63.783989207228565
-            ]
-          ]
-        ]
-      },
-      "properties": {
-        "OBJECTID": 6540563,
-        "Lannr": "24",
-        "Lan": "VÄSTERBOTTENS LÄN",
-        "Kommunnr": "2401",
-        "Kommun": "NORDMALING",
-        "ArendeAr": 2026,
-        "Beteckn": "A 45962-2026",
-        "Avverktyp": "Föryngringsavverkning",
-        "Andamal": "Uppgift saknas",
-        "Skogstyp": "Normal skog",
-        "Inkomdatum": 1793792756000,
-        "AnmaldHa": 1.7,
-        "SkogsodlHa": 1.7,
-        "NatforHa": null,
-        "ArendeStatus": "Anmält för avverkning",
-        "AvvSasong": "Uppgift saknas",
-        "AvvHa": null,
-        "AvverkningsanmalanKlass": "NyAvverkningsanmalan"
-      }
-    }
-  ],
+  "new_cutting_notification_ids_since_previous_run": [],
+  "recent_new_cutting_notification_ids_since_previous_run": [],
   "sentinel1": {
     "status": "ok",
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
@@ -30404,6 +30244,19 @@
     "collection": "sentinel-2-l2a",
     "items": [
       {
+        "id": "S2B_MSIL2A_20261104T103219_N0513_R108_T34VDR_20261104T125952",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-11-04T10:32:19.024000Z",
+        "published_at": "2026-11-04T13:27:29.000000Z",
+        "cloud_cover_percent": 100.0,
+        "bbox": [
+          18.953501523280057,
+          63.02793322568484,
+          20.488731041238346,
+          64.02249753998117
+        ]
+      },
+      {
         "id": "S2C_MSIL2A_20261103T101201_N0513_R022_T34VDR_20261103T140511",
         "collection": "sentinel-2-l2a",
         "acquired_at": "2026-11-03T10:12:01.024000Z",
@@ -32989,19 +32842,6 @@
           21.199734465434084,
           64.02701663648664
         ]
-      },
-      {
-        "id": "S2A_MSIL2A_20260326T102701_N0512_R108_T34VDR_20260326T172711",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-03-26T10:27:01.024000Z",
-        "published_at": "2026-03-26T18:24:58.000000Z",
-        "cloud_cover_percent": 99.26,
-        "bbox": [
-          18.953501523280057,
-          63.02793322568484,
-          20.313678821183963,
-          64.01766579390872
-        ]
       }
     ],
     "count": 200,
@@ -33010,16 +32850,16 @@
   },
   "new_scenes_since_previous_run": [
     {
-      "id": "S1D_IW_GRDH_1SDV_20261104T050520_20261104T050545_005313_00A1CC_2CB8_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-11-04T05:05:20.397976Z",
-      "published_at": "2026-11-04T05:21:26.456028Z",
-      "cloud_cover_percent": null,
+      "id": "S2B_MSIL2A_20261104T103219_N0513_R108_T34VDR_20261104T125952",
+      "collection": "sentinel-2-l2a",
+      "acquired_at": "2026-11-04T10:32:19.024000Z",
+      "published_at": "2026-11-04T13:27:29.000000Z",
+      "cloud_cover_percent": 100.0,
       "bbox": [
-        17.227192,
-        62.107639,
-        23.05662,
-        64.051109
+        18.953501523280057,
+        63.02793322568484,
+        20.488731041238346,
+        64.02249753998117
       ]
     }
   ],
