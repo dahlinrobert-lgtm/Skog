@@ -1,4 +1,4 @@
-from scripts.monitor_sca_voluntary_tiles import apply_result, compare_features, digest, feature_record, write_state
+from scripts.monitor_sca_voluntary_tiles import apply_result, compare_features, digest, extend_tile_plan, feature_record, write_state
 
 def feat(coords, props):
     return feature_record("Frivilliga_Avsattningar", {
@@ -65,3 +65,19 @@ def test_persisted_state_keeps_hashes_and_metadata_without_repeating_geometry(tm
     assert "geometry" not in feature
     assert feature["geometry_sha256"]==a["geometry_sha256"]
     assert feature["properties"]=={"class":"NO"}
+
+
+def test_new_positive_z9_seed_expands_plan_without_removing_old_tiles(tmp_path):
+    import json
+    existing=old_tile([])
+    state={"tile_count":1,"tiles":{"12/800/1600":existing}}
+    census={"summary":{"tiles_in_bbox":966,"voluntary_states":{"valid_mvt_with_features":1}},
+            "tile_results":[{"x":100,"y":200,"voluntary":{"state":"valid_mvt_with_features"}}]}
+    path=tmp_path/"census.json"
+    path.write_text(json.dumps(census),encoding="utf-8")
+    added,positive=extend_tile_plan(state,path)
+    assert positive==1
+    assert added>0
+    assert "12/800/1600" in state["tiles"]
+    assert state["tile_count"]==len(state["tiles"])
+    assert state["latest_seed_census"]["positive_voluntary_z9_tiles"]==1
