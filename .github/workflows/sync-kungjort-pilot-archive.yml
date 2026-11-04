@@ -44,7 +44,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Test synchronization and checkpoint rules
-        run: python -m unittest tests.test_kungjort_sync
+        run: PYTHONPATH=scripts python -m unittest discover -s tests -p "test_kungjort_sync.py"
       - name: Resolve run mode
         id: mode
         env:
