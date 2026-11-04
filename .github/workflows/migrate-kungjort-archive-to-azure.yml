@@ -53,11 +53,10 @@ jobs:
           fi
           python scripts/migrate_kungjort_archive_to_azure.py "${args[@]}"
 
-      - name: Upload migration manifest
+      - name: Write non-sensitive migration summary
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: kungjort-azure-migration-manifest
-          path: data/kungjort/
-          if-no-files-found: warn
-          retention-days: 7
+        run: |
+          {
+            echo "Migration workflow finished. See the Preview or migrate archive step for batch counts and hashes."
+            echo "Raw document batches are not uploaded as GitHub Actions artifacts."
+          } >> "$GITHUB_STEP_SUMMARY"
