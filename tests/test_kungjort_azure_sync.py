@@ -48,7 +48,8 @@ class AzureSyncHelperTests(unittest.TestCase):
         })
         self.assertEqual(result["priority"], "low")
         self.assertEqual(result["categories"], [])
-\n    def test_initial_state_has_safe_defaults(self):
+
+    def test_initial_state_has_safe_defaults(self):
         state = initial_state()
         self.assertFalse(state["bootstrap_complete"])
         self.assertIsNone(state["bootstrap_cursor"])
