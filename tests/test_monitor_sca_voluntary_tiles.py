@@ -81,3 +81,25 @@ def test_new_positive_z9_seed_expands_plan_without_removing_old_tiles(tmp_path):
     assert "12/800/1600" in state["tiles"]
     assert state["tile_count"]==len(state["tiles"])
     assert state["latest_seed_census"]["positive_voluntary_z9_tiles"]==1
+
+
+def test_unchanged_tile_hash_skips_vector_tile_decode(monkeypatch):
+    import hashlib
+    import scripts.monitor_sca_voluntary_tiles as monitor
+
+    class Response:
+        status_code=200
+        content=b"same tile payload"
+
+    class Session:
+        def get(self, url, timeout):
+            return Response()
+
+    monkeypatch.setattr(monitor, "get_session", lambda: Session())
+    def unexpected_decode(raw):
+        raise AssertionError("unchanged tile should not be decoded")
+    monkeypatch.setattr(monitor.mapbox_vector_tile, "decode", unexpected_decode)
+    sha=hashlib.sha256(Response.content).hexdigest()
+    result=monitor.fetch(12,10,20,sha,"valid_mvt_with_features")
+    assert result["state"]=="unchanged"
+    assert result["sha256"]==sha
