@@ -82,21 +82,32 @@ def main():
             raise SystemExit(f"Invalid geometry for pair {pair_id}")
         ta = nominal_tile_polygon(int(ra["source_tile_x"]), int(ra["source_tile_y"]))
         tb = nominal_tile_polygon(int(rb["source_tile_x"]), int(rb["source_tile_y"]))
-        inter = ga.intersection(gb)
-        total = area_m2(inter)
-        # Make the partition mutually exclusive. Adjacent nominal tiles may
-        # share a boundary, while diagonal/overlapping tile footprints can
-        # create area counted in both intersections. Assign overlap first to
-        # A, then to B outside A, and finally to the area outside both.
-        in_a = inter.intersection(ta)
-        in_b_only = inter.intersection(tb).difference(ta)
-        outside_both = inter.difference(ta.union(tb))
-        area_a = area_m2(in_a)
-        area_b = area_m2(in_b_only)
-        area_out = area_m2(outside_both)
+        # Project the full geometries and nominal tile polygons first, then
+        # perform all overlay operations in the same equal-area CRS. Doing
+        # area measurements on separately projected fragments can introduce
+        # small non-additive differences because projection curves edges.
+        ga_m = transform(TO_3006, ga)
+        gb_m = transform(TO_3006, gb)
+        ta_m = transform(TO_3006, ta)
+        tb_m = transform(TO_3006, tb)
+        inter_m = ga_m.intersection(gb_m)
+        total = inter_m.area
+        # Make the partition mutually exclusive, with a deterministic
+        # A-first accounting convention.
+        in_a = inter_m.intersection(ta_m)
+        in_b_only = inter_m.intersection(tb_m).difference(ta_m)
+        outside_both = inter_m.difference(ta_m.union(tb_m))
+        area_a = in_a.area
+        area_b = in_b_only.area
+        area_out = outside_both.area
         accounted = area_a + area_b + area_out
-        if total > 0 and abs(accounted - total) / total > 1e-5:
-            raise SystemExit(f"Intersection zone accounting mismatch for pair {pair_id}")
+        relative_error = abs(accounted - total) / total if total > 0 else 0.0
+        if total > 0 and relative_error > 1e-8:
+            raise SystemExit(
+                f"Intersection zone accounting mismatch for pair {pair_id}: "
+                f"total={total:.12f}, accounted={accounted:.12f}, "
+                f"relative_error={relative_error:.3e}"
+            )
         a_share = area_a / total if total else 0.0
         b_share = area_b / total if total else 0.0
         out_share = area_out / total if total else 0.0
@@ -119,6 +130,7 @@ def main():
             "tile_dy_a_to_b": dy,
             "tile_neighborhood": "cardinal" if max(abs(dx), abs(dy)) == 1 and (dx == 0 or dy == 0) else "diagonal" if max(abs(dx), abs(dy)) == 1 else "other",
             "intersection_total_m2_epsg3006": total,
+            "intersection_zone_accounting_relative_error": relative_error,
             "intersection_in_tile_a_m2_epsg3006": area_a,
             "intersection_in_tile_b_outside_a_m2_epsg3006": area_b,
             "intersection_outside_both_tiles_m2_epsg3006": area_out,
