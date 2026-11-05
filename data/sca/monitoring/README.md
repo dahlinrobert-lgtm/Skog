@@ -34,7 +34,7 @@ Each feature observation is linked to its source z/x/y tile, layer, geometry SHA
 - `tile_unavailable_candidate`: a tile returned HTTP 404 twice; previous feature data is retained.
 - `tile_poll_error`: request, HTTP or decode failure; previous state is retained.
 
-A 404, timeout or other request failure never deletes features. The monitor retains last-attempt HTTP status, response hash, byte count, content type and a short response-body preview separately from the last valid tile hash. No source geometries are merged, dissolved or overwritten.
+A 404, timeout or other request failure never deletes features. The monitor retains last-attempt HTTP status, response hash, byte count and content type separately from the last valid tile hash. Identical HTTP error signatures are grouped in the run summary with one representative short response-body preview, avoiding repeated error text in every tile-state record. No source geometries are merged, dissolved or overwritten.
 
 ## Interpretation and limitations
 
