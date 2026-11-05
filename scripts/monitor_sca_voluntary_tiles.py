@@ -418,8 +418,8 @@ def main():
     summary.update({"bootstrapped_from_baseline":bootstrap,
                     "baseline_tile_count":state.get("baseline_tile_count",state["tile_count"]),
                     "tile_plan_tile_count":state["tile_count"],
-                    "new_tiles_added_from_z9":new_tiles_added,
-                    "positive_discovery_tiles":positive_seed_tiles,
+                    "new_tiles_added_from_discovery":new_tiles_added,
+                    "positive_discovery_tiles":positive_seed_tiles,\n                    "coverage_audit":state.get("latest_seed_census",{}).get("multizoom_audit",{}),\n                    "coverage_audit_states_by_zoom":state.get("latest_seed_census",{}).get("multizoom_states_by_zoom",{}),
                     "state_schema_version":state["schema_version"]})
     write_state(a.state,state); write_events(a.events,events)
     a.summary.parent.mkdir(parents=True,exist_ok=True)
