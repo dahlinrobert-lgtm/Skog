@@ -410,7 +410,8 @@ def run(state,workers):
     state["tiles"]=dict(sorted(tiles.items())); state["last_checked_at"]=at
     summary={"observed_at":at,"tiles_checked":len(tiles),"tile_states":dict(states),
              "feature_records_decoded":nfeatures,"unchanged_tiles":states.get("unchanged",0),"event_counts":dict(Counter(e["event_type"] for e in events)),
-             "events":len(events),"poll_errors":errs,"identity_resolved":0,\n             "response_diagnostics":summarize_response_diagnostics(fetched.values())}
+             "events":len(events),"poll_errors":errs,"identity_resolved":0,
+             "response_diagnostics":summarize_response_diagnostics(fetched.values())}
     return state,events,summary
 
 def write_events(path,events):
