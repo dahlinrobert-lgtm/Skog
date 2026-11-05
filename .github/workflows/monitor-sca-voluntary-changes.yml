@@ -45,10 +45,10 @@ jobs:
       - name: Audit sampled z8-z12 tile coverage
         run: |
           python -m py_compile scripts/audit_sca_tile_coverage.py
-          python scripts/audit_sca_tile_coverage.py \\
-            --census sca-national-independent-layer-census-z9.json \\
-            --out output/sca-multizoom-coverage-audit.json \\
-            --samples-per-class 8 \\
+          python scripts/audit_sca_tile_coverage.py \
+            --census sca-national-independent-layer-census-z9.json \
+            --out output/sca-multizoom-coverage-audit.json \
+            --samples-per-class 8 \
             --workers 2
       - name: Poll z12 tiles and compare geometry and metadata
         env:
@@ -59,6 +59,7 @@ jobs:
             --state data/sca/monitoring/tile-state.json.gz \
             --baseline-dir input/baseline \
             --seed-census sca-national-independent-layer-census-z9.json \
+            --coverage-audit output/sca-multizoom-coverage-audit.json \
             --events output/sca-voluntary-change-events.jsonl.gz \
             --summary output/sca-voluntary-change-summary.json \
             --workers 3
