@@ -17,6 +17,7 @@ on:
           - bootstrap
           - changes
           - reclassify
+          - quality-report
       max_pages:
         description: Maximum pages or metadata batches to process
         required: true
@@ -87,3 +88,11 @@ jobs:
           python scripts/sync_kungjort_azure.py \
             --mode "${{ steps.mode.outputs.mode }}" \
             --max-pages "${{ steps.mode.outputs.max_pages }}"
+      - name: Upload metadata-only quality review
+        if: github.event_name == 'workflow_dispatch' && steps.mode.outputs.mode == 'quality-report'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-quality-review
+          path: kungjort-quality-review.json
+          if-no-files-found: error
+          retention-days: 7
