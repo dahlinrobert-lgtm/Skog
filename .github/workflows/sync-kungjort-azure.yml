@@ -16,8 +16,9 @@ on:
         options:
           - bootstrap
           - changes
+          - reclassify
       max_pages:
-        description: Maximum API pages per run (100 documents per page)
+        description: Maximum pages or metadata batches to process
         required: true
         default: "300"
         type: string
