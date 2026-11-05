@@ -73,8 +73,8 @@ def test_new_positive_z9_seed_expands_plan_without_removing_old_tiles(tmp_path):
     state={"tile_count":1,"tiles":{"12/800/1600":existing}}
     census={"summary":{"tiles_in_bbox":2,"tiles_completed":2,"voluntary_states":{"valid_mvt_with_features":1,"valid_mvt_empty":1}},
             "tile_results":[
-                {"x":100,"y":200,"voluntary":{"state":"valid_mvt_with_features"}},
-                {"x":101,"y":200,"voluntary":{"state":"valid_mvt_empty"}}
+                {"x":100,"y":200,"voluntary":{"state":"valid_mvt_with_features"},"ownership":{"state":"valid_mvt_with_features"}},
+                {"x":101,"y":200,"voluntary":{"state":"valid_mvt_empty"},"ownership":{"state":"valid_mvt_empty"}}
             ]}
     path=tmp_path/"census.json"
     path.write_text(json.dumps(census),encoding="utf-8")
