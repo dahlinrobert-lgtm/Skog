@@ -120,3 +120,42 @@ def test_incomplete_z9_census_cannot_expand_or_shrink_tile_plan(tmp_path):
         extend_tile_plan(state,path)
     assert state["tile_count"]==1
     assert list(state["tiles"])==["12/800/1600"]
+
+
+def test_sparse_404_tiles_are_unknown_but_complete_census_can_expand(tmp_path):
+    import json
+    from scripts.monitor_sca_voluntary_tiles import extend_tile_plan
+    state={"tile_count":1,"tiles":{"12/800/1600":old_tile([])}}
+    census={
+        "summary":{"tiles_in_bbox":3,"tiles_completed":3},
+        "tile_results":[
+            {"x":100,"y":200,"voluntary":{"state":"valid_mvt_with_features"},
+             "ownership":{"state":"valid_mvt_with_features"}},
+            {"x":101,"y":200,"voluntary":{"state":"not_found_404"},
+             "ownership":{"state":"not_found_404"}},
+            {"x":102,"y":200,"voluntary":{"state":"valid_mvt_empty"},
+             "ownership":{"state":"request_error"}}
+        ]
+    }
+    path=tmp_path/"sparse-census.json"
+    path.write_text(json.dumps(census),encoding="utf-8")
+    added,positive=extend_tile_plan(state,path)
+    assert positive==1 and added>0
+    latest=state["latest_seed_census"]
+    assert latest["voluntary_unknown_tiles"]==1
+    assert latest["ownership_unknown_tiles"]==2
+    assert "12/800/1600" in state["tiles"]
+
+
+def test_census_with_pending_or_unknown_states_is_rejected(tmp_path):
+    import json, pytest
+    from scripts.monitor_sca_voluntary_tiles import extend_tile_plan
+    state={"tile_count":1,"tiles":{"12/800/1600":old_tile([])}}
+    census={"summary":{"tiles_in_bbox":1,"tiles_completed":1},
+            "tile_results":[{"x":100,"y":200,"voluntary":{"state":"pending"},
+                             "ownership":{"state":"valid_mvt_empty"}}]}
+    path=tmp_path/"pending-census.json"
+    path.write_text(json.dumps(census),encoding="utf-8")
+    with pytest.raises(ValueError,match="pending or unknown"):
+        extend_tile_plan(state,path)
+    assert state["tile_count"]==1
