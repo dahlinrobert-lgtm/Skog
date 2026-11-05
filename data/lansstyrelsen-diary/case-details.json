@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-04T13:17:07.563920+00:00",
+  "updated_at": "2026-11-05T13:29:19.092817+00:00",
   "cases": {
     "länsstyrelsen i dalarnas län::1034-2026": {
       "case_key": "länsstyrelsen i dalarnas län::1034-2026",
@@ -12451,6 +12451,3560 @@
       "content_hash": "60b76c514d1c95aaefabcfd467ae71467d0200379a6cb39a48158d28c68a28ee",
       "first_seen_at": "2026-11-04T13:17:07.563920+00:00",
       "last_seen_at": "2026-11-04T13:17:07.563920+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::4918-2026": {
+      "case_key": "länsstyrelsen i blekinge län::4918-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5629600",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "4918-2026",
+        "registered_date": "2026-09-28",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjön, Karlshamn kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlshamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "4918-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjön, Karlshamn kommun",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-1"
+        },
+        {
+          "handling_number": "4918-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-2"
+        },
+        {
+          "handling_number": "4918-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-3"
+        },
+        {
+          "handling_number": "4918-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-4"
+        },
+        {
+          "handling_number": "4918-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-5"
+        },
+        {
+          "handling_number": "4918-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-6"
+        },
+        {
+          "handling_number": "4918-2026-7",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-7"
+        },
+        {
+          "handling_number": "4918-2026-8",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-8"
+        },
+        {
+          "handling_number": "4918-2026-9",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9 a § miljöbalken",
+          "date": "2026-10-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-9"
+        },
+        {
+          "handling_number": "4918-2026-10",
+          "title": "Begäran om komplettering",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-10"
+        },
+        {
+          "handling_number": "4918-2026-11",
+          "title": "Underrättelse med möjlighet till yttrande inför beslut",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-11"
+        },
+        {
+          "handling_number": "4918-2026-12",
+          "title": "Yttrande över remiss",
+          "date": "2026-10-16",
+          "sender_recipient": "Miljöförbundet Blekinge Väst",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-12"
+        },
+        {
+          "handling_number": "4918-2026-13",
+          "title": "Återkoppling efter telefonsamtal",
+          "date": "2026-10-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-13"
+        },
+        {
+          "handling_number": "4918-2026-14",
+          "title": "Tjänsteanteckning efter telefonsamtal",
+          "date": "2026-10-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-14"
+        },
+        {
+          "handling_number": "4918-2026-15",
+          "title": "Frågor kopplade till yttrande",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-15"
+        },
+        {
+          "handling_number": "4918-2026-16",
+          "title": "Tjänsteanteckning efter telefonsamtal",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-16"
+        },
+        {
+          "handling_number": "4918-2026-17",
+          "title": "Förfrågan om ortofoto",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-17"
+        },
+        {
+          "handling_number": "4918-2026-18",
+          "title": "Svar med ortofoto",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4918-2026::4918-2026-18"
+        }
+      ],
+      "content_hash": "eda1340ab614ed9543346df7aae9b0db7291ea18d13c8074d8fe4c5d37e3b347",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::4921-2024": {
+      "case_key": "länsstyrelsen i blekinge län::4921-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4906771",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "4921-2024",
+        "registered_date": "2024-10-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Sölvesborg"
+      },
+      "handlings": [
+        {
+          "handling_number": "4921-2024-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+          "date": "2024-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-1"
+        },
+        {
+          "handling_number": "4921-2024-2",
+          "title": "Översiktkarta",
+          "date": "2024-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-2"
+        },
+        {
+          "handling_number": "4921-2024-3",
+          "title": "Översiktkarta",
+          "date": "2024-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-3"
+        },
+        {
+          "handling_number": "4921-2024-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-4"
+        },
+        {
+          "handling_number": "4921-2024-5",
+          "title": "Komplettering",
+          "date": "2024-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-5"
+        },
+        {
+          "handling_number": "4921-2024-6",
+          "title": "Remiss kommun",
+          "date": "2024-10-10",
+          "sender_recipient": "Sölvesborgs kommun",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-6"
+        },
+        {
+          "handling_number": "4921-2024-7",
+          "title": "Yttrande angående vattenverksamhet",
+          "date": "2024-10-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-7"
+        },
+        {
+          "handling_number": "4921-2024-8",
+          "title": "Begäran om komplettering",
+          "date": "2024-10-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-8"
+        },
+        {
+          "handling_number": "4921-2024-9",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2024-10-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-9"
+        },
+        {
+          "handling_number": "4921-2024-10",
+          "title": "Begäran om strandskyddsdispens",
+          "date": "2024-10-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-10"
+        },
+        {
+          "handling_number": "4921-2024-11",
+          "title": "Komplettering",
+          "date": "2024-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-11"
+        },
+        {
+          "handling_number": "4921-2024-12",
+          "title": "Komplettering med ansökan",
+          "date": "2024-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-12"
+        },
+        {
+          "handling_number": "4921-2024-13",
+          "title": "Underrättelse",
+          "date": "2024-10-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-13"
+        },
+        {
+          "handling_number": "4921-2024-14",
+          "title": "Yttrande från markägare",
+          "date": "2024-11-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-14"
+        },
+        {
+          "handling_number": "4921-2024-15",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2024-11-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-15"
+        },
+        {
+          "handling_number": "4921-2024-16",
+          "title": "Komplettering",
+          "date": "2024-11-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-16"
+        },
+        {
+          "handling_number": "4921-2024-17",
+          "title": "Information i ärende 4921-2024",
+          "date": "2025-11-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-17"
+        },
+        {
+          "handling_number": "4921-2024-18",
+          "title": "Komplettering med",
+          "date": "2025-12-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4921-2024::4921-2024-18"
+        }
+      ],
+      "content_hash": "abf9706c7269ade393a42d4568b487af5f3d60bc66d2f0ce8e976d79f26196a1",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::4927-2025": {
+      "case_key": "länsstyrelsen i blekinge län::4927-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5267754",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "4927-2025",
+        "registered_date": "2025-09-29",
+        "title": "Begäran om tillsyn av vattenverksamhet vattenuttag",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4927-2025-1",
+          "title": "Begäran om tillsyn",
+          "date": "2025-09-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4927-2025::4927-2025-1"
+        },
+        {
+          "handling_number": "4927-2025-2",
+          "title": "Re_ Vattenskyddsområde Lyckebyån_ Mölletorp",
+          "date": "2025-09-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4927-2025::4927-2025-2"
+        }
+      ],
+      "content_hash": "a104b6cf345bca1938d36dd4023a5d795f6d83613347bd1029091c4d890bbe68",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::4928-2025": {
+      "case_key": "länsstyrelsen i blekinge län::4928-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5267825",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "4928-2025",
+        "registered_date": "2025-08-28",
+        "title": "Begäran om tillsyn av vattenverksamhet vattenuttag",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4928-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet",
+          "date": "2025-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4928-2025::4928-2025-1"
+        }
+      ],
+      "content_hash": "6f16923bbb910c42e0f1dd50fd8606418f80eadcb2ec68618d07dcfa5ac27a9b",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::4930-2025": {
+      "case_key": "länsstyrelsen i blekinge län::4930-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5267866",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "4930-2025",
+        "registered_date": "2025-08-06",
+        "title": "Begäran om tillsyn av vattenverksamhet vattenuttag",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4930-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet",
+          "date": "2025-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::4930-2025::4930-2025-1"
+        }
+      ],
+      "content_hash": "341793fa6561062712d6ef900cc08907b8592d91341fd5162c76dec1bcb0ca05",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5004-2025": {
+      "case_key": "länsstyrelsen i blekinge län::5004-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5272073",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5004-2025",
+        "registered_date": "2025-09-10",
+        "title": "Tillsyn av vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ronneby"
+      },
+      "handlings": [
+        {
+          "handling_number": "5004-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet",
+          "date": "2025-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-1"
+        },
+        {
+          "handling_number": "5004-2025-2",
+          "title": "Begäran om tillsyn angående anmälningspliktig vattenverksamhet",
+          "date": "2025-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-2"
+        },
+        {
+          "handling_number": "5004-2025-3",
+          "title": "Information om fastighet",
+          "date": "2025-10-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-3"
+        },
+        {
+          "handling_number": "5004-2025-4",
+          "title": "Begäran om uppgifter",
+          "date": "2025-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-4"
+        },
+        {
+          "handling_number": "5004-2025-5",
+          "title": "Yttrande",
+          "date": "2025-11-14",
+          "sender_recipient": "Landahl advokatbyrå",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-5"
+        },
+        {
+          "handling_number": "5004-2025-6",
+          "title": "Tjänsteanteckning om dialog med kommunen",
+          "date": "2025-12-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-6"
+        },
+        {
+          "handling_number": "5004-2025-7",
+          "title": "Fråga om status i ärendet",
+          "date": "2026-02-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-7"
+        },
+        {
+          "handling_number": "5004-2025-8",
+          "title": "Meddelande om",
+          "date": "2026-04-14",
+          "sender_recipient": "Landahl advokatbyrå",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-8"
+        },
+        {
+          "handling_number": "5004-2025-9",
+          "title": "Status gällande tillsynsärende strandskydd",
+          "date": "2026-10-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-9"
+        },
+        {
+          "handling_number": "5004-2025-10",
+          "title": "Status gällande tillsynsärende strandskydd",
+          "date": "2026-10-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-10"
+        },
+        {
+          "handling_number": "5004-2025-11",
+          "title": "Kommunikation ang status i ärendet.",
+          "date": "2026-11-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-11"
+        },
+        {
+          "handling_number": "5004-2025-12",
+          "title": "Tjänsteanteckning samtal med Ronneby kommun",
+          "date": "2026-11-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5004-2025::5004-2025-12"
+        }
+      ],
+      "content_hash": "647db46a10fdcf27ed838e517348aef6949a438ca2faa6d1666a1ab0ba003028",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::504-2025": {
+      "case_key": "länsstyrelsen i blekinge län::504-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5016095",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "504-2025",
+        "registered_date": "2025-01-24",
+        "title": "Begäran om tillsyn av vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "504-2025-1",
+          "title": "Begäran om tillsyn",
+          "date": "2025-01-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::504-2025::504-2025-1"
+        },
+        {
+          "handling_number": "504-2025-2",
+          "title": "Begäran om uppgifter",
+          "date": "2025-01-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::504-2025::504-2025-2"
+        },
+        {
+          "handling_number": "504-2025-3",
+          "title": "Yttrande över",
+          "date": "2025-02-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::504-2025::504-2025-3"
+        },
+        {
+          "handling_number": "504-2025-4",
+          "title": "Tjänsteanteckning efter tillsynsbesök",
+          "date": "2025-07-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::504-2025::504-2025-4"
+        },
+        {
+          "handling_number": "504-2025-5",
+          "title": "Tillsyn av brygga (1/1)",
+          "date": "2026-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::504-2025::504-2025-5"
+        },
+        {
+          "handling_number": "504-2025-6",
+          "title": "Sv_ Tillsyn av brygga",
+          "date": "2026-10-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::504-2025::504-2025-6"
+        }
+      ],
+      "content_hash": "8d1175617ae355149a839fb7c360daeac864dcb6d4d163f05ba8341ccb2dc834",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5131-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5131-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5639645",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5131-2026",
+        "registered_date": "2026-10-01",
+        "title": "Tillsyn av vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5131-2026-1",
+          "title": "Hälleviks hamnrapport september 2026",
+          "date": "2026-10-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5131-2026::5131-2026-1"
+        },
+        {
+          "handling_number": "5131-2026-2",
+          "title": "Hällevikshamnrapport augusti",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5131-2026::5131-2026-2"
+        },
+        {
+          "handling_number": "5131-2026-3",
+          "title": "Sista journalbladet",
+          "date": "2026-11-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5131-2026::5131-2026-3"
+        }
+      ],
+      "content_hash": "92102ba03268532e381c99a861ae994b039deb780c4e4b679d12cd521ed1d2fd",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5185-2017": {
+      "case_key": "länsstyrelsen i blekinge län::5185-2017",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=2428774",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5185-2017",
+        "registered_date": "2017-12-01",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för brygga längs existerande stenpir",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [],
+      "content_hash": "37421e7d885046a92ab93bba44e194bae120562feea32986c4a811391e0202d7",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5196-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5196-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5642649",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5196-2026",
+        "registered_date": "2026-10-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hällaryds skärgård, Karlshamn Bokö, Karlshamn kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5196-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hällaryds skärgård, Karlshamn Bokö, Karlshamn kommun",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-1"
+        },
+        {
+          "handling_number": "5196-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-2"
+        },
+        {
+          "handling_number": "5196-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-3"
+        },
+        {
+          "handling_number": "5196-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-4"
+        },
+        {
+          "handling_number": "5196-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-5"
+        },
+        {
+          "handling_number": "5196-2026-6",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9 a § miljöbalken",
+          "date": "2026-10-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-6"
+        },
+        {
+          "handling_number": "5196-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-10-16",
+          "sender_recipient": "Miljöförbundet Blekinge Väst",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-7"
+        },
+        {
+          "handling_number": "5196-2026-8",
+          "title": "Yttrande över remiss",
+          "date": "2026-10-16",
+          "sender_recipient": "Sjöfartsverket",
+          "handling_key": "länsstyrelsen i blekinge län::5196-2026::5196-2026-8"
+        }
+      ],
+      "content_hash": "7fb1925b8d6deb009479ab095c28c367d42bae50c9f85f6e54e5450301fe187e",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5215-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5215-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5643360",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5215-2026",
+        "registered_date": "2026-10-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, I Östersjön i anslutning till fastighet på Tärnö, Karlshamn kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlshamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "5215-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, I Östersjön i anslutning till fastighet Tärno 1:29, Karlshamn kommun",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-1"
+        },
+        {
+          "handling_number": "5215-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-2"
+        },
+        {
+          "handling_number": "5215-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-3"
+        },
+        {
+          "handling_number": "5215-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-4"
+        },
+        {
+          "handling_number": "5215-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-5"
+        },
+        {
+          "handling_number": "5215-2026-6",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-6"
+        },
+        {
+          "handling_number": "5215-2026-7",
+          "title": "Lista berörda fastigheter och fastighetsägare (markägare)",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-7"
+        },
+        {
+          "handling_number": "5215-2026-8",
+          "title": "Lista berörda fastigheter och nyttjanderättsinnehavare",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-8"
+        },
+        {
+          "handling_number": "5215-2026-9",
+          "title": "Remiss för anmälningsärende  5215-2026 enligt 11 kap 9 a § miljöbalken",
+          "date": "2026-10-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-9"
+        },
+        {
+          "handling_number": "5215-2026-10",
+          "title": "Yttrande över remiss",
+          "date": "2026-10-14",
+          "sender_recipient": "Miljöförbundet Blekinge väst",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-10"
+        },
+        {
+          "handling_number": "5215-2026-11",
+          "title": "Yttrande över remiss",
+          "date": "2026-10-28",
+          "sender_recipient": "Sjöfartsverket",
+          "handling_key": "länsstyrelsen i blekinge län::5215-2026::5215-2026-11"
+        }
+      ],
+      "content_hash": "6837824a163b3c4339e19902729c036106f36b83b16c17ee716b1c273987a0dd",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5224-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5224-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5643965",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5224-2026",
+        "registered_date": "2026-10-08",
+        "title": "Underrättelse med möjlighet till yttrande över Ansökan enligt miljöbalken om omprövning för moderna miljövillkor alt\ntillstånd för bibehålla samt utökning av vattenverksamhet, Ronneby kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-22",
+        "sender_recipient": "Mark- och miljödomstolen, Växjö tingsrätt",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5224-2026-1",
+          "title": "Underrättelse med möjlighet till yttrande över Ansökan enligt miljöbalken om omprövning för moderna miljövillkor alt\ntillstånd för bibehålla samt utökning av vattenverksamhet, Ronneby kommun",
+          "date": "2026-10-08",
+          "sender_recipient": "Mark- och miljödomstolen, Växjö tingsrätt",
+          "handling_key": "länsstyrelsen i blekinge län::5224-2026::5224-2026-1"
+        },
+        {
+          "handling_number": "5224-2026-2",
+          "title": "Yttrande över sökandens komplettering",
+          "date": "2026-10-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5224-2026::5224-2026-2"
+        }
+      ],
+      "content_hash": "5beb00503126b18cbb4a676be9df4cdc0bda2417f0135f9a404e0c3ee0ed9d3d",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5227-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5227-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5644059",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5227-2026",
+        "registered_date": "2026-10-08",
+        "title": "Meddelande om möjlighet att lämna synpunkter på uppdraget att se över indelningen i prövningsnivåer för vattenverksamheter",
+        "status": "Avslutat",
+        "decision_date": "2026-10-16",
+        "sender_recipient": "Havs- och vattenmyndigheten",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5227-2026-1",
+          "title": "Meddelande om möjlighet att lämna synpunkter på uppdraget att se över indelningen i prövningsnivåer för vattenverksamheter",
+          "date": "2026-10-08",
+          "sender_recipient": "Havs- och vattenmyndigheten",
+          "handling_key": "länsstyrelsen i blekinge län::5227-2026::5227-2026-1"
+        },
+        {
+          "handling_number": "5227-2026-2",
+          "title": "HaV 2026-003194 Synpunkter vattenverksamhet",
+          "date": "2026-10-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5227-2026::5227-2026-2"
+        }
+      ],
+      "content_hash": "246244a358e68631d3a31400227be8ead885798c8755b40578a3e86bf9a6cf68",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5286-2025": {
+      "case_key": "länsstyrelsen i blekinge län::5286-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5286519",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5286-2025",
+        "registered_date": "2025-10-17",
+        "title": "Tillsyn av vattenverksamhet, Karlskrona kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "5286-2025-1",
+          "title": "Tjänsteanteckning om upprättat ärende",
+          "date": "2025-10-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-1"
+        },
+        {
+          "handling_number": "5286-2025-2",
+          "title": "Fråga och information från kommunen",
+          "date": "2025-10-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-2"
+        },
+        {
+          "handling_number": "5286-2025-3",
+          "title": "Begäran om uppgifter",
+          "date": "2025-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-3"
+        },
+        {
+          "handling_number": "5286-2025-4",
+          "title": "Yttrande",
+          "date": "2025-11-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-4"
+        },
+        {
+          "handling_number": "5286-2025-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-5"
+        },
+        {
+          "handling_number": "5286-2025-6",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2025-11-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-6"
+        },
+        {
+          "handling_number": "5286-2025-7",
+          "title": "Information om upprättad tjänsteanteckning",
+          "date": "2025-11-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-7"
+        },
+        {
+          "handling_number": "5286-2025-8",
+          "title": "Nämndens beslut angående Fäjö 1_56",
+          "date": "2026-02-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-8"
+        },
+        {
+          "handling_number": "5286-2025-9",
+          "title": "Tjänteanteckning samtal med Karlskrona kommun.",
+          "date": "2026-10-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5286-2025::5286-2025-9"
+        }
+      ],
+      "content_hash": "83ad0e576a134b4d25e7d6ae66aaad1e40f97e49567b77a2120f81b2a457fb4f",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5390-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5390-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5652296",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5390-2026",
+        "registered_date": "2026-10-15",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, renovering av befintliga bryggor, Ronneby kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5390-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, renovering av befintliga bryggor, Ronneby kommun",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5390-2026::5390-2026-1"
+        },
+        {
+          "handling_number": "5390-2026-2",
+          "title": "Komplettering med foton",
+          "date": "2026-10-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5390-2026::5390-2026-2"
+        },
+        {
+          "handling_number": "5390-2026-3",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9a § miljöbalken",
+          "date": "2026-10-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5390-2026::5390-2026-3"
+        },
+        {
+          "handling_number": "5390-2026-4",
+          "title": "Yttrande",
+          "date": "2026-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5390-2026::5390-2026-4"
+        },
+        {
+          "handling_number": "5390-2026-5",
+          "title": "Begäran om komplettering",
+          "date": "2026-11-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5390-2026::5390-2026-5"
+        },
+        {
+          "handling_number": "5390-2026-6",
+          "title": "Fråga gällande begäran om komplettering",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5390-2026::5390-2026-6"
+        }
+      ],
+      "content_hash": "b24ab7668a9b384b5fc0993919b6909f01ad6bf6cc865c5e29a2c8dc0ab606a6",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5394-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5394-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5652413",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5394-2026",
+        "registered_date": "2026-10-15",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orlunden, Olofström kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5394-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orlunden, Olofström kommun",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5394-2026::5394-2026-1"
+        },
+        {
+          "handling_number": "5394-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5394-2026::5394-2026-2"
+        },
+        {
+          "handling_number": "5394-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5394-2026::5394-2026-3"
+        },
+        {
+          "handling_number": "5394-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5394-2026::5394-2026-4"
+        },
+        {
+          "handling_number": "5394-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5394-2026::5394-2026-5"
+        },
+        {
+          "handling_number": "5394-2026-6",
+          "title": "Begäran om komplettering",
+          "date": "2026-10-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5394-2026::5394-2026-6"
+        }
+      ],
+      "content_hash": "7541a54114d8e46de2940ac720bdb924d973cf920fb5fa2d4d45293f5b1b421e",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5439-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5439-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5655089",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5439-2026",
+        "registered_date": "2026-10-18",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Karlskrona, Gullbernahult, Karlskrona kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Gullbernahults samfällighetsförening",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "5439-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Karlskrona, Gullbernahult, Karlskrona kommun",
+          "date": "2026-10-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5439-2026::5439-2026-1"
+        },
+        {
+          "handling_number": "5439-2026-2",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9a § miljöbalken",
+          "date": "2026-10-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5439-2026::5439-2026-2"
+        },
+        {
+          "handling_number": "5439-2026-3",
+          "title": "Ärende dnr 5439-2026",
+          "date": "2026-10-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5439-2026::5439-2026-3"
+        },
+        {
+          "handling_number": "5439-2026-4",
+          "title": "Begäran om komplettering",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5439-2026::5439-2026-4"
+        },
+        {
+          "handling_number": "5439-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-11-05",
+          "sender_recipient": "Sjöfartsverket",
+          "handling_key": "länsstyrelsen i blekinge län::5439-2026::5439-2026-5"
+        }
+      ],
+      "content_hash": "83634da96e3aae5ba565e0f9796e9f10087611307817ece80a408fb30645f2f3",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5506-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5506-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5658077",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5506-2026",
+        "registered_date": "2026-10-20",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Danmarksfjärden, Karlskrona kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "5506-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Danmarksfjärden, Karlskrona kommun",
+          "date": "2026-10-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5506-2026::5506-2026-1"
+        },
+        {
+          "handling_number": "5506-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-10-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5506-2026::5506-2026-2"
+        },
+        {
+          "handling_number": "5506-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-10-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5506-2026::5506-2026-3"
+        },
+        {
+          "handling_number": "5506-2026-4",
+          "title": "Remiss",
+          "date": "2026-10-28",
+          "sender_recipient": "Samhällsbyggnadsförvaltningen Karlskrona kommun",
+          "handling_key": "länsstyrelsen i blekinge län::5506-2026::5506-2026-4"
+        },
+        {
+          "handling_number": "5506-2026-5",
+          "title": "Begäran om komplettering",
+          "date": "2026-10-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5506-2026::5506-2026-5"
+        },
+        {
+          "handling_number": "5506-2026-6",
+          "title": "Komplettering",
+          "date": "2026-10-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5506-2026::5506-2026-6"
+        }
+      ],
+      "content_hash": "902272a34af33767b3e40ac1ae129ba2c714cc9e74b362a9e09cd04559987240",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5610-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5610-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5663469",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5610-2026",
+        "registered_date": "2026-10-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Tromtöfjärden, Ronneby kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ronneby"
+      },
+      "handlings": [
+        {
+          "handling_number": "5610-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Tromtöfjärden, Ronneby kommun",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-1"
+        },
+        {
+          "handling_number": "5610-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-2"
+        },
+        {
+          "handling_number": "5610-2026-3",
+          "title": "Översiktkarta",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-3"
+        },
+        {
+          "handling_number": "5610-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-4"
+        },
+        {
+          "handling_number": "5610-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-5"
+        },
+        {
+          "handling_number": "5610-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-6"
+        },
+        {
+          "handling_number": "5610-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-7"
+        },
+        {
+          "handling_number": "5610-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-8"
+        },
+        {
+          "handling_number": "5610-2026-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-9"
+        },
+        {
+          "handling_number": "5610-2026-10",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9a § miljöbalken",
+          "date": "2026-10-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-10"
+        },
+        {
+          "handling_number": "5610-2026-11",
+          "title": "Begäran om komplettering i ärende med dnr 5610-2026",
+          "date": "2026-10-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-11"
+        },
+        {
+          "handling_number": "5610-2026-12",
+          "title": "Yttrande - 5610-2026",
+          "date": "2026-11-03",
+          "sender_recipient": "Miljö- och byggnadsförvaltningen\nRonneby kommun",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-12"
+        },
+        {
+          "handling_number": "5610-2026-13",
+          "title": "Underrättelse med möjlighet till yttrande i ärende med dnr 5610-2026",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5610-2026::5610-2026-13"
+        }
+      ],
+      "content_hash": "b488fb45a837c159fdf505bff96a8836d27bc0c2b0f8d25233c9c18b2b961ea9",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5663-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5663-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5666220",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5663-2026",
+        "registered_date": "2026-10-27",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Köpegårda 1:70 1, Karlshamn kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Karlshamn energi vatten AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5663-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Köpegårda 1:70 1, Karlshamn kommun",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-1"
+        },
+        {
+          "handling_number": "5663-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-2"
+        },
+        {
+          "handling_number": "5663-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-3"
+        },
+        {
+          "handling_number": "5663-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-4"
+        },
+        {
+          "handling_number": "5663-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-5"
+        },
+        {
+          "handling_number": "5663-2026-6",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-6"
+        },
+        {
+          "handling_number": "5663-2026-7",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-7"
+        },
+        {
+          "handling_number": "5663-2026-8",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-8"
+        },
+        {
+          "handling_number": "5663-2026-9",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9a § miljöbalken",
+          "date": "2026-10-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-9"
+        },
+        {
+          "handling_number": "5663-2026-10",
+          "title": "Yttrande över remiss",
+          "date": "2026-11-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-10"
+        },
+        {
+          "handling_number": "5663-2026-11",
+          "title": "Sv_ _ES_ Remiss för anmälningsärende enligt 11 kap 9a § miljöbalken",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5663-2026::5663-2026-11"
+        }
+      ],
+      "content_hash": "39e4e71bff9f8300084569f5674d70d00c8c56322ce8a808c5d3aac99558586b",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5676-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5676-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5666856",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5676-2026",
+        "registered_date": "2026-10-27",
+        "title": "Förfrågan om behov av komplettering gällande ansökan om omprövning av villkor avseende vattenverksamhet vid Hovmansbygd / Ebbemåla, Mörrumsån i Karlshamns och Olofströms kommuner",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5676-2026-1",
+          "title": "Förfrågan om behov av komplettering gällande ansökan om omprövning av villkor avseende vattenverksamhet vid Hovmansbygd / Ebbemåla, Mörrumsån i Karlshamns och Olofströms kommuner",
+          "date": "2026-10-27",
+          "sender_recipient": "Mark- och miljödomstolen. Växjö tingsrätt",
+          "handling_key": "länsstyrelsen i blekinge län::5676-2026::5676-2026-1"
+        }
+      ],
+      "content_hash": "e33d40203a5aad6879eb6415f2966ee6946b222e1df31538d4d127ba5ee7ae7c",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5686-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5686-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5667311",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5686-2026",
+        "registered_date": "2026-10-27",
+        "title": "Remiss om med möjlighet till yttrande över anmälan om vattenverksamhet enligt 11 kap. 9 b miljöbalken avseende pålad plattform och flytt av ledningar, Karlskrona kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5686-2026-1",
+          "title": "Remiss om med möjlighet till yttrande över anmälan om vattenverksamhet enligt 11 kap. 9 b miljöbalken avseende pålad plattform och flytt av ledningar, Karlskrona kommun",
+          "date": "2026-10-27",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i blekinge län::5686-2026::5686-2026-1"
+        }
+      ],
+      "content_hash": "ac130d6f234254cf1732cfff30380250053e148cd32eb2c2f90375093b335604",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5702-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5702-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5668139",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5702-2026",
+        "registered_date": "2026-10-28",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggning av flottar med sälskrämmor med ankring till botten, Nyköpings kommun, Södermanlands län",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Länsstyrelsen Södermanland",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5702-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggning av flottar med sälskrämmor med ankring till botten, Nyköpings kommun, Södermanlands län",
+          "date": "2026-10-28",
+          "sender_recipient": "Länsstyrelsen Södermanland",
+          "handling_key": "länsstyrelsen i blekinge län::5702-2026::5702-2026-1"
+        }
+      ],
+      "content_hash": "e2b2cf78bca865ca0af9b4e4bdbe799c730a03fcb53b3d9453364320eb9666c5",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5729-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5729-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5669916",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5729-2026",
+        "registered_date": "2026-10-29",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Gäddfabriken, Karlshamn kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Karlshamn energi vatten AB",
+        "municipality": "Karlshamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "5729-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Gäddfabriken, Karlshamn kommun",
+          "date": "2026-10-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5729-2026::5729-2026-1"
+        },
+        {
+          "handling_number": "5729-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-10-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5729-2026::5729-2026-2"
+        },
+        {
+          "handling_number": "5729-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-10-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5729-2026::5729-2026-3"
+        },
+        {
+          "handling_number": "5729-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-10-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5729-2026::5729-2026-4"
+        }
+      ],
+      "content_hash": "45f0a6f079ad450c4eb12a3f7a5ae1ff5db97dc3f4b3c0fa64b81164c1642279",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5748-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5748-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5671151",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5748-2026",
+        "registered_date": "2026-10-30",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjön, Karlskrona kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "5748-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjön, Karlskrona kommun",
+          "date": "2026-10-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5748-2026::5748-2026-1"
+        }
+      ],
+      "content_hash": "c09794c6bb3e50f790984efa68fd0da200abfbb91f199f716185775b9644affd",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5750-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5750-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5671195",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5750-2026",
+        "registered_date": "2026-09-15",
+        "title": "Begäran om tillsyn av vattenverksamhet, Karlshamns kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5750-2026-1",
+          "title": "Meddelande om utförd vassröjning",
+          "date": "2026-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5750-2026::5750-2026-1"
+        },
+        {
+          "handling_number": "5750-2026-2",
+          "title": "Begäran om fler uppgifter",
+          "date": "2026-09-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5750-2026::5750-2026-2"
+        },
+        {
+          "handling_number": "5750-2026-3",
+          "title": "Komplettering med information",
+          "date": "2026-09-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5750-2026::5750-2026-3"
+        },
+        {
+          "handling_number": "5750-2026-4",
+          "title": "Fråga om status i ärendet",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5750-2026::5750-2026-4"
+        },
+        {
+          "handling_number": "5750-2026-5",
+          "title": "Meddelande om status i ärendet",
+          "date": "2026-10-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5750-2026::5750-2026-5"
+        }
+      ],
+      "content_hash": "f2a5057f3384d547babd2eb06b324a42cc54bb144224de56c7d393a951f2e342",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5754-2026": {
+      "case_key": "länsstyrelsen i blekinge län::5754-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5671539",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5754-2026",
+        "registered_date": "2026-10-31",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Garnanäsviken, Ronneby kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ronneby"
+      },
+      "handlings": [
+        {
+          "handling_number": "5754-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Garnanäsviken, Ronneby kommun",
+          "date": "2026-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5754-2026::5754-2026-1"
+        }
+      ],
+      "content_hash": "83228fd6939c060101ac9ed4fbf8d1e8d27b28c138e09929dd5f7a1e79de8081",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5820-2025": {
+      "case_key": "länsstyrelsen i blekinge län::5820-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5314567",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5820-2025",
+        "registered_date": "2025-09-29",
+        "title": "Tillsyn av vattenverksamhet muddring brygga",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5820-2025-1",
+          "title": "Förfrågan om åtgärder",
+          "date": "2025-09-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5820-2025::5820-2025-1"
+        },
+        {
+          "handling_number": "5820-2025-2",
+          "title": "Yttrande från annan myndighet",
+          "date": "2025-10-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5820-2025::5820-2025-2"
+        },
+        {
+          "handling_number": "5820-2025-3",
+          "title": "Komplettering av handling",
+          "date": "2025-10-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5820-2025::5820-2025-3"
+        },
+        {
+          "handling_number": "5820-2025-4",
+          "title": "Fråga om tillsyn strandskyddsfrågan",
+          "date": "2025-11-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5820-2025::5820-2025-4"
+        },
+        {
+          "handling_number": "5820-2025-5",
+          "title": "Överlämnande tillsyn strandskyddsfrågan",
+          "date": "2025-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5820-2025::5820-2025-5"
+        },
+        {
+          "handling_number": "5820-2025-6",
+          "title": "Bilder från platsbesök 20 april 2026",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5820-2025::5820-2025-6"
+        }
+      ],
+      "content_hash": "06a5beb57028e2d4a6f6806a1179e561300049f7950a84fedb849c2fbda13443",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5829-2025": {
+      "case_key": "länsstyrelsen i blekinge län::5829-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5315146",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5829-2025",
+        "registered_date": "2025-11-17",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bollösund, Karlskrona kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "5829-2025-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bollösund, Karlskrona kommun",
+          "date": "2025-11-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5829-2025::5829-2025-1"
+        },
+        {
+          "handling_number": "5829-2025-2",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9a § miljöbalken",
+          "date": "2025-11-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5829-2025::5829-2025-2"
+        },
+        {
+          "handling_number": "5829-2025-3",
+          "title": "Yttrande",
+          "date": "2025-11-20",
+          "sender_recipient": "Karlskrona kommun, Miljö- och samhällsbyggnadsnämnden",
+          "handling_key": "länsstyrelsen i blekinge län::5829-2025::5829-2025-3"
+        },
+        {
+          "handling_number": "5829-2025-4",
+          "title": "Begäran om komplettering i ärende med dnr 5829-2025",
+          "date": "2025-11-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5829-2025::5829-2025-4"
+        },
+        {
+          "handling_number": "5829-2025-5",
+          "title": "Meddelande",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5829-2025::5829-2025-5"
+        },
+        {
+          "handling_number": "5829-2025-6",
+          "title": "Komplettering",
+          "date": "2025-12-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5829-2025::5829-2025-6"
+        },
+        {
+          "handling_number": "5829-2025-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-01-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5829-2025::5829-2025-7"
+        }
+      ],
+      "content_hash": "9412dad6344a7d58fe78b50bd031505793e1c171df3ec6502e933fd28079e22e",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5837-2025": {
+      "case_key": "länsstyrelsen i blekinge län::5837-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5315622",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5837-2025",
+        "registered_date": "2025-11-18",
+        "title": "Begäran om tillsyn av vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "5837-2025-1",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5837-2025::5837-2025-1"
+        },
+        {
+          "handling_number": "5837-2025-2",
+          "title": "fråga om strandskyddsdispens strandskoning Lyckeby 2_53 (1/1)",
+          "date": "2025-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5837-2025::5837-2025-2"
+        },
+        {
+          "handling_number": "5837-2025-3",
+          "title": "Begäran om uppgifter",
+          "date": "2025-12-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5837-2025::5837-2025-3"
+        },
+        {
+          "handling_number": "5837-2025-4",
+          "title": "Begäran om uppgifter_ 5837-2025 (1/1)",
+          "date": "2025-12-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5837-2025::5837-2025-4"
+        },
+        {
+          "handling_number": "5837-2025-5",
+          "title": "Yttrande",
+          "date": "2025-12-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5837-2025::5837-2025-5"
+        },
+        {
+          "handling_number": "5837-2025-7",
+          "title": "Tjänsteanteckning telefonsamtal med Karlskrona kommun",
+          "date": "2026-10-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5837-2025::5837-2025-7"
+        },
+        {
+          "handling_number": "5837-2025-8",
+          "title": "Bilder från innan åtgärd",
+          "date": "2026-10-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5837-2025::5837-2025-8"
+        }
+      ],
+      "content_hash": "47e2f361956d9242ca3bf1838327aacf45304ec5da48dad954dd555e19c74a5a",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::5844-2025": {
+      "case_key": "länsstyrelsen i blekinge län::5844-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5315985",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "5844-2025",
+        "registered_date": "2025-11-18",
+        "title": "Tillsyn av vattenverksamhet bryggor",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlshamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "5844-2025-1",
+          "title": "Tjänsteanteckning om tillsyn vattenverksamhet",
+          "date": "2025-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-1"
+        },
+        {
+          "handling_number": "5844-2025-2",
+          "title": "fråga om strandskyddsdispens tillhörande bryggor Törneryd 5_12 (1/1)",
+          "date": "2025-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-2"
+        },
+        {
+          "handling_number": "5844-2025-3",
+          "title": "Sv_ fråga om strandskyddsdispens tillhörande bryggor Törneryd 5_12 (1/1)",
+          "date": "2025-11-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-3"
+        },
+        {
+          "handling_number": "5844-2025-4",
+          "title": "Begäran om uppgifter",
+          "date": "2025-11-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-4"
+        },
+        {
+          "handling_number": "5844-2025-5",
+          "title": "Sv_ fråga om strandskyddsdispens tillhörande bryggor Törneryd 5_12 (1/1)",
+          "date": "2025-11-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-5"
+        },
+        {
+          "handling_number": "5844-2025-6",
+          "title": "Tjänsteanteckning om brygga",
+          "date": "2025-12-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-6"
+        },
+        {
+          "handling_number": "5844-2025-7",
+          "title": "Yttrande över",
+          "date": "2025-12-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-7"
+        },
+        {
+          "handling_number": "5844-2025-8",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-8"
+        },
+        {
+          "handling_number": "5844-2025-9",
+          "title": "Fråga om övertag strandskyddstillsyn_ (1/1)",
+          "date": "2026-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-9"
+        },
+        {
+          "handling_number": "5844-2025-10",
+          "title": "Sv_ Övertag strandskyddstillsyn_",
+          "date": "2026-10-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::5844-2025::5844-2025-10"
+        }
+      ],
+      "content_hash": "ce9ba86e19c83c0548217025f7ef11f6c44933eb582d68b5c64f24d652d88762",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::6271-2025": {
+      "case_key": "länsstyrelsen i blekinge län::6271-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5338084",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "6271-2025",
+        "registered_date": "2025-12-09",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Övra gyl, Karlshamn kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlshamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "6271-2025-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Övra gyl, Karlshamn kommun",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-1"
+        },
+        {
+          "handling_number": "6271-2025-2",
+          "title": "Översiktkarta",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-2"
+        },
+        {
+          "handling_number": "6271-2025-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-3"
+        },
+        {
+          "handling_number": "6271-2025-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-4"
+        },
+        {
+          "handling_number": "6271-2025-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-5"
+        },
+        {
+          "handling_number": "6271-2025-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-6"
+        },
+        {
+          "handling_number": "6271-2025-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-7"
+        },
+        {
+          "handling_number": "6271-2025-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-8"
+        },
+        {
+          "handling_number": "6271-2025-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-9"
+        },
+        {
+          "handling_number": "6271-2025-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-10"
+        },
+        {
+          "handling_number": "6271-2025-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-11"
+        },
+        {
+          "handling_number": "6271-2025-12",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-12"
+        },
+        {
+          "handling_number": "6271-2025-13",
+          "title": "Lista berörda fastigheter och nyttjanderättsinnehavare",
+          "date": "2025-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-13"
+        },
+        {
+          "handling_number": "6271-2025-14",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9 a § miljöbalken",
+          "date": "2025-12-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-14"
+        },
+        {
+          "handling_number": "6271-2025-15",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-12-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-15"
+        },
+        {
+          "handling_number": "6271-2025-16",
+          "title": "Yttrande över remiss",
+          "date": "2026-01-14",
+          "sender_recipient": "Miljöförbundet Blekinge Väst",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-16"
+        },
+        {
+          "handling_number": "6271-2025-17",
+          "title": "Telefonmöte",
+          "date": "2026-01-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-17"
+        },
+        {
+          "handling_number": "6271-2025-18",
+          "title": "Sv_ Väg 126 Pustebacken_ dnr 6271-2025",
+          "date": "2026-02-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-18"
+        },
+        {
+          "handling_number": "6271-2025-19",
+          "title": "Fråga om anmälan i 6271-2025",
+          "date": "2026-10-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-19"
+        },
+        {
+          "handling_number": "6271-2025-20",
+          "title": "Information om kommande ändring av anmälan i 6271-2025",
+          "date": "2026-10-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-20"
+        },
+        {
+          "handling_number": "6271-2025-21",
+          "title": "Info om 3 veckors kompletteringstid",
+          "date": "2026-10-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6271-2025::6271-2025-21"
+        }
+      ],
+      "content_hash": "e220cfa9a344103bc66162a85fae3eaf52bfdee7e13a7e7142ef7dcb1d955809",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::6297-2025": {
+      "case_key": "länsstyrelsen i blekinge län::6297-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5340115",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "6297-2025",
+        "registered_date": "2025-12-11",
+        "title": "Tillsyn av vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ronneby"
+      },
+      "handlings": [
+        {
+          "handling_number": "6297-2025-1",
+          "title": "Begäran om yttrande",
+          "date": "2025-12-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6297-2025::6297-2025-1"
+        },
+        {
+          "handling_number": "6297-2025-2",
+          "title": "Yttrande",
+          "date": "2025-12-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::6297-2025::6297-2025-2"
+        }
+      ],
+      "content_hash": "f2990fe24f65bdd706894172b1f20780510a3fcd21955ae75e014b0cbb832adf",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::712-2026": {
+      "case_key": "länsstyrelsen i blekinge län::712-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5390930",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "712-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Listerby skärgård, Ronneby Havscamping, Ronneby kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "1c1659c0bf32df4bfb6d8025451c5d037908f3f771dd239b2ed3f6f08bac5143",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::738-2026": {
+      "case_key": "länsstyrelsen i blekinge län::738-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5392379",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "738-2026",
+        "registered_date": "2026-02-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, återställande av brygga, Vettekulla, Karlshamns kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-23",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlshamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "738-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, återställande av brygga, Vettekulla, Karlshamns kommun",
+          "date": "2026-02-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-1"
+        },
+        {
+          "handling_number": "738-2026-2",
+          "title": "Remiss för anmälningsärende enligt 11 kap 9 a § miljöbalken",
+          "date": "2026-02-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-2"
+        },
+        {
+          "handling_number": "738-2026-3",
+          "title": "Yttrande över remiss",
+          "date": "2026-02-11",
+          "sender_recipient": "Miljöförbundet Blekinge",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-3"
+        },
+        {
+          "handling_number": "738-2026-4",
+          "title": "Begäran om komplettering angående anmälan om vattenverksamhet",
+          "date": "2026-02-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-4"
+        },
+        {
+          "handling_number": "738-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-02-24",
+          "sender_recipient": "Sjöfartsverket",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-5"
+        },
+        {
+          "handling_number": "738-2026-6",
+          "title": "Komplettering",
+          "date": "2026-03-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-6"
+        },
+        {
+          "handling_number": "738-2026-7",
+          "title": "Re_ Begäran av komplettering ärende 738-2026",
+          "date": "2026-03-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-7"
+        },
+        {
+          "handling_number": "738-2026-8",
+          "title": "Re_ Begäran av komplettering ärende 738-2026",
+          "date": "2026-05-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-8"
+        },
+        {
+          "handling_number": "738-2026-9",
+          "title": "Telefonsamtal",
+          "date": "2026-10-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-9"
+        },
+        {
+          "handling_number": "738-2026-10",
+          "title": "Beslut om bifall",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::738-2026::738-2026-10"
+        }
+      ],
+      "content_hash": "7c1df5418f0d2b72d03a8764c981737d2126c15349835e1bbec401b1570f7203",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i blekinge län::998-2026": {
+      "case_key": "länsstyrelsen i blekinge län::998-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5407908",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Blekinge län",
+        "diary_number": "998-2026",
+        "registered_date": "2026-02-23",
+        "title": "Tillsyn av vattenverksamhet brygga, Karlskrona kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-31",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskrona"
+      },
+      "handlings": [
+        {
+          "handling_number": "998-2026-1",
+          "title": "Förfrågan om uppgifter",
+          "date": "2026-02-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-1"
+        },
+        {
+          "handling_number": "998-2026-2",
+          "title": "Sv_ Bergtorp 1_9 fråga om åtgärder",
+          "date": "2026-02-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-2"
+        },
+        {
+          "handling_number": "998-2026-3",
+          "title": "Begäran om uppgifter",
+          "date": "2026-03-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-3"
+        },
+        {
+          "handling_number": "998-2026-4",
+          "title": "Begäran om tillsyn av strandskydd, Karlskrona kommun",
+          "date": "2026-03-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-4"
+        },
+        {
+          "handling_number": "998-2026-5",
+          "title": "VB inkommen begäran om tillsyns på strandskyddet Bergtorp 1_9",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-5"
+        },
+        {
+          "handling_number": "998-2026-6",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-6"
+        },
+        {
+          "handling_number": "998-2026-7",
+          "title": "Komplettering",
+          "date": "2026-03-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-7"
+        },
+        {
+          "handling_number": "998-2026-8",
+          "title": "Yttrande mottaget_ platsbesök Bergtorp",
+          "date": "2026-04-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-8"
+        },
+        {
+          "handling_number": "998-2026-9",
+          "title": "Tjänsteanteckning platsbesök",
+          "date": "2026-04-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-9"
+        },
+        {
+          "handling_number": "998-2026-10",
+          "title": "Kommunicering tjänsteanteckning platsbesök",
+          "date": "2026-04-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-10"
+        },
+        {
+          "handling_number": "998-2026-11",
+          "title": "Re_ Uppföljning i ärende 998-2026",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-11"
+        },
+        {
+          "handling_number": "998-2026-12",
+          "title": "Sv_ Uppföljning i ärende 998-2026",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-12"
+        },
+        {
+          "handling_number": "998-2026-13",
+          "title": "Uppföljning i ärende 998-2026 vissa delar avlägsnade",
+          "date": "2026-06-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-13"
+        },
+        {
+          "handling_number": "998-2026-14",
+          "title": "Re_ Uppföljning i ärende 998-2026",
+          "date": "2026-06-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-14"
+        },
+        {
+          "handling_number": "998-2026-15",
+          "title": "Re_ Foton",
+          "date": "2026-08-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-15"
+        },
+        {
+          "handling_number": "998-2026-16",
+          "title": "Komplettering foton",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-16"
+        },
+        {
+          "handling_number": "998-2026-17",
+          "title": "Sv_ Bergtorp 102",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-17"
+        },
+        {
+          "handling_number": "998-2026-18",
+          "title": "Information om åtgärder som kräver dispens",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-18"
+        },
+        {
+          "handling_number": "998-2026-19",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-08-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-19"
+        },
+        {
+          "handling_number": "998-2026-20",
+          "title": "Information nya anläggningar",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-20"
+        },
+        {
+          "handling_number": "998-2026-21",
+          "title": "Sv_ Kopia av tjänsteanteckning platsbesök Bergtorp",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-21"
+        },
+        {
+          "handling_number": "998-2026-22",
+          "title": "Beslut om avskrivning",
+          "date": "2026-08-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-22"
+        },
+        {
+          "handling_number": "998-2026-23",
+          "title": "PÅMINNELSE att svara att ni mottagit beslut 998-2026",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i blekinge län::998-2026::998-2026-23"
+        }
+      ],
+      "content_hash": "6649789c1b18072cecef7158b17b4b6b3f18ccc83e53e648ca85ee0c4e069561",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::10710-2025": {
+      "case_key": "länsstyrelsen i dalarnas län::10710-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5334337",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "10710-2025",
+        "registered_date": "2025-12-05",
+        "title": "Begäran om tillsyn av vattenverksamhet, Borlänge kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Borlänge"
+      },
+      "handlings": [
+        {
+          "handling_number": "10710-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Borlänge kommun",
+          "date": "2025-12-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-1"
+        },
+        {
+          "handling_number": "10710-2025-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2025-12-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-2"
+        },
+        {
+          "handling_number": "10710-2025-3",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-12-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-3"
+        },
+        {
+          "handling_number": "10710-2025-4",
+          "title": "Yttrande",
+          "date": "2026-02-04",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-4"
+        },
+        {
+          "handling_number": "10710-2025-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-02-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-5"
+        },
+        {
+          "handling_number": "10710-2025-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-03-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-6"
+        },
+        {
+          "handling_number": "10710-2025-7",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-7"
+        },
+        {
+          "handling_number": "10710-2025-8",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-8"
+        },
+        {
+          "handling_number": "10710-2025-9",
+          "title": "Beslut om avskrivning",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-9"
+        },
+        {
+          "handling_number": "10710-2025-10",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-10"
+        },
+        {
+          "handling_number": "10710-2025-11",
+          "title": "Meddelande om delgivningskvitto",
+          "date": "2026-09-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10710-2025::10710-2025-11"
+        }
+      ],
+      "content_hash": "0f25994913aaf84b41f89843f0fecc4c65e7b6c32adaad973e1b30cb599d3a0c",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::10727-2025": {
+      "case_key": "länsstyrelsen i dalarnas län::10727-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5334847",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "10727-2025",
+        "registered_date": "2025-12-04",
+        "title": "Begäran om samråd inför tillståndsansökan gällande vattenverksamhet, Mjälgabron, Borlänge kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-09",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Borlänge"
+      },
+      "handlings": [
+        {
+          "handling_number": "10727-2025-1",
+          "title": "Begäran om samråd inför tillståndsansökan gällande vattenverksamhet, Mjälgabron, Borlänge kommun",
+          "date": "2025-12-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-1"
+        },
+        {
+          "handling_number": "10727-2025-2",
+          "title": "Inbjudan till samråd gällande vattenverksamhet, Mjälgabron, Borlänge kommun",
+          "date": "2026-01-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-2"
+        },
+        {
+          "handling_number": "10727-2025-3",
+          "title": "Samråd inför tillståndsansökan, presentation",
+          "date": "2026-01-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-3"
+        },
+        {
+          "handling_number": "10727-2025-4",
+          "title": "Yttrande över samrådshandlingar",
+          "date": "2026-01-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-4"
+        },
+        {
+          "handling_number": "10727-2025-5",
+          "title": "Samråd inför tillståndsansökan, samrådsredogörelse",
+          "date": "2026-02-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-5"
+        },
+        {
+          "handling_number": "10727-2025-7",
+          "title": "Meddelande om kommande komplettering till beslut om BMP",
+          "date": "2026-03-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-7"
+        },
+        {
+          "handling_number": "10727-2025-8",
+          "title": "Komplettering",
+          "date": "2026-05-20",
+          "sender_recipient": "SSAB Emea AB",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-8"
+        },
+        {
+          "handling_number": "10727-2025-9",
+          "title": "Beslut om inte betydande miljöpåverkan",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::10727-2025::10727-2025-9"
+        }
+      ],
+      "content_hash": "31ec43df525a891b8b7ced2b6071ce079b16c63739f601124c82819fc8e1e837",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::11435-2023": {
+      "case_key": "länsstyrelsen i dalarnas län::11435-2023",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4501557",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "11435-2023",
+        "registered_date": "2023-08-28",
+        "title": "Tillsyn vattenverksamhet, ny trumma pga rasad väg, väg 888, Rättviks kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Rättvik"
+      },
+      "handlings": [
+        {
+          "handling_number": "11435-2023-1",
+          "title": "Information om ny trumma pga rasad väg, väg 888, Rättviks kommun",
+          "date": "2023-08-28",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i dalarnas län::11435-2023::11435-2023-1"
+        },
+        {
+          "handling_number": "11435-2023-2",
+          "title": "Ärendekontroll WebbGIS",
+          "date": "2023-09-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::11435-2023::11435-2023-2"
+        },
+        {
+          "handling_number": "11435-2023-3",
+          "title": "Meddelande om tillsyn",
+          "date": "2023-10-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::11435-2023::11435-2023-3"
+        },
+        {
+          "handling_number": "11435-2023-4",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2024-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::11435-2023::11435-2023-4"
+        },
+        {
+          "handling_number": "11435-2023-5",
+          "title": "Beslut att avsluta utan ytterligare åtgärd",
+          "date": "2024-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::11435-2023::11435-2023-5"
+        }
+      ],
+      "content_hash": "c6431bd060c255daf1cfd090dbd423669c88c92c3362e5d76a8578fa3ceb2386",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::11459-2024": {
+      "case_key": "länsstyrelsen i dalarnas län::11459-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4866960",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "11459-2024",
+        "registered_date": "2024-08-29",
+        "title": "Underrättelse om att Mark- och miljödomstolen kommer att hålla sammanträde och syn bygdeavgiftsmedel avseende vattenverksamhet vid brygga, Leksands kommun Mål nr M 6275-24",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Nacka Tingsrätt, Mark- och miljödomstolen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "11459-2024-1",
+          "title": "Underrättelse om att Mark- och miljödomstolen kommer att hålla sammanträde och syn bygdeavgiftsmedel avseende vattenverksamhet vid brygga, Leksands kommun Mål nr M 6275-24",
+          "date": "2024-08-29",
+          "sender_recipient": "Nacka Tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i dalarnas län::11459-2024::11459-2024-1"
+        }
+      ],
+      "content_hash": "ff96c235dfa6fc80d15976210496f59f60b0a50a436fd452adb98511df8ca50c",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::13323-2024": {
+      "case_key": "länsstyrelsen i dalarnas län::13323-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4903368",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "13323-2024",
+        "registered_date": "2024-10-04",
+        "title": "Förfrågan om vattenverksamhet, Älvdalens kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Älvdalens kommun",
+        "municipality": "Älvdalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "13323-2024-1",
+          "title": "Förfrågan om vattenverksamhet, Älvdalens kommun",
+          "date": "2024-10-04",
+          "sender_recipient": "Älvdalens kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::13323-2024::13323-2024-1"
+        },
+        {
+          "handling_number": "13323-2024-3",
+          "title": "Beslut att avsluta utan ytterligare åtgärd",
+          "date": "2025-01-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::13323-2024::13323-2024-3"
+        }
+      ],
+      "content_hash": "e445b4dc9842bbbcabc4f8bfa398fecb859397933300b7d17db3f8b58baaf557",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::14576-2024": {
+      "case_key": "länsstyrelsen i dalarnas län::14576-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4931491",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "14576-2024",
+        "registered_date": "2024-10-31",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Falu kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-01",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "14576-2024-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-1"
+        },
+        {
+          "handling_number": "14576-2024-2",
+          "title": "Översiktkarta",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-2"
+        },
+        {
+          "handling_number": "14576-2024-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-3"
+        },
+        {
+          "handling_number": "14576-2024-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-4"
+        },
+        {
+          "handling_number": "14576-2024-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-5"
+        },
+        {
+          "handling_number": "14576-2024-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-6"
+        },
+        {
+          "handling_number": "14576-2024-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-7"
+        },
+        {
+          "handling_number": "14576-2024-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-8"
+        },
+        {
+          "handling_number": "14576-2024-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-9"
+        },
+        {
+          "handling_number": "14576-2024-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-10"
+        },
+        {
+          "handling_number": "14576-2024-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-11"
+        },
+        {
+          "handling_number": "14576-2024-12",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-12"
+        },
+        {
+          "handling_number": "14576-2024-13",
+          "title": "Foton/bilder från platsen",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-13"
+        },
+        {
+          "handling_number": "14576-2024-14",
+          "title": "Komplettering",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-14"
+        },
+        {
+          "handling_number": "14576-2024-17",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-17"
+        },
+        {
+          "handling_number": "14576-2024-18",
+          "title": "Yttrande över anmälan",
+          "date": "2026-05-28",
+          "sender_recipient": "Falu kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-18"
+        },
+        {
+          "handling_number": "14576-2024-19",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::14576-2024::14576-2024-19"
+        }
+      ],
+      "content_hash": "92172fe7900c2a49a7960e1af064213acdd8e7115f3d69fcd4a92d553d6009d1",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::1561-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::1561-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5404420",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "1561-2026",
+        "registered_date": "2026-02-18",
+        "title": "Tillsyn av vattenverksamhet, dammsäkerhetshöjande åtgärder för Räckardammen mål nr M 4917-25",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Karlskoga Vattenkraft AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1561-2026-1",
+          "title": "Återförvisat för ny handläggning, Tillsyn av vattenverksamhet, dammsäkerhetshöjande åtgärder för Räckardammen mål nr M 4917-25",
+          "date": "2026-02-18",
+          "sender_recipient": "Nacka Tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i dalarnas län::1561-2026::1561-2026-1"
+        }
+      ],
+      "content_hash": "e3d47f3034d6c2ef5e24e6cc919da4ec1cb6e38eb8249bf0a8daf65de7c83966",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::1596-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::1596-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5405175",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "1596-2026",
+        "registered_date": "2026-02-19",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, återskapning av naturlig fördelning av vatten, Mora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1596-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, återskapning av naturlig fördelning av vatten, Mora kommun",
+          "date": "2026-02-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1596-2026::1596-2026-1"
+        },
+        {
+          "handling_number": "1596-2026-2",
+          "title": "Begäran om yttrande över anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet_ återskapning av naturlig fördelning av vat",
+          "date": "2026-03-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1596-2026::1596-2026-2"
+        },
+        {
+          "handling_number": "1596-2026-3",
+          "title": "Yttrande över anmälan",
+          "date": "2026-03-24",
+          "sender_recipient": "Mora kommun, Orsa kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::1596-2026::1596-2026-3"
+        },
+        {
+          "handling_number": "1596-2026-4",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1596-2026::1596-2026-4"
+        },
+        {
+          "handling_number": "1596-2026-5",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1596-2026::1596-2026-5"
+        }
+      ],
+      "content_hash": "4081171816242d83838297fd4ef6681c313b0f25eda76a5f1ae55f64ed462a30",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::1622-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::1622-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5406030",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "1622-2026",
+        "registered_date": "2026-02-19",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, rivning av bro och anläggande av rörbro över Kärrsjöns utlopp vid Brovallen, Avesta kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Avesta"
+      },
+      "handlings": [
+        {
+          "handling_number": "1622-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, rivning av bro och anläggande av rörbro över Kärrsjöns utlopp vid Brovallen, Avesta kommun",
+          "date": "2026-02-19",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-1"
+        },
+        {
+          "handling_number": "1622-2026-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-02-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-2"
+        },
+        {
+          "handling_number": "1622-2026-3",
+          "title": "Yttrande över remiss",
+          "date": "2026-02-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-3"
+        },
+        {
+          "handling_number": "1622-2026-4",
+          "title": "Begäran om komplettering",
+          "date": "2026-03-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-4"
+        },
+        {
+          "handling_number": "1622-2026-5",
+          "title": "Delbeslut om att inte påbörja vattenverksamhet",
+          "date": "2026-03-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-5"
+        },
+        {
+          "handling_number": "1622-2026-6",
+          "title": "Meddelande om delgivning",
+          "date": "2026-03-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-6"
+        },
+        {
+          "handling_number": "1622-2026-7",
+          "title": "Komplettering med uppgifter",
+          "date": "2026-03-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-7"
+        },
+        {
+          "handling_number": "1622-2026-8",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-03-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-8"
+        },
+        {
+          "handling_number": "1622-2026-9",
+          "title": "Meddelande till sökande angående status i ärendet",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-9"
+        },
+        {
+          "handling_number": "1622-2026-10",
+          "title": "Meddelande till sökande gällande kulturhistorisk broinventering",
+          "date": "2026-03-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-10"
+        },
+        {
+          "handling_number": "1622-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-11"
+        },
+        {
+          "handling_number": "1622-2026-12",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1622-2026::1622-2026-12"
+        }
+      ],
+      "content_hash": "eda3175bbbcc8c1a8f54929b73b0eda3e1fa73d99d1bbf75c2eb5b524e6c7dac",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::1675-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::1675-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5407820",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "1675-2026",
+        "registered_date": "2026-02-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, vägtrumma, justering av trumma, Malung- Sälens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Malung-Sälen"
+      },
+      "handlings": [
+        {
+          "handling_number": "1675-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, vägtrumma, justering av trumma, Malung- Sälens kommun",
+          "date": "2026-02-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-1"
+        },
+        {
+          "handling_number": "1675-2026-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-02-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-2"
+        },
+        {
+          "handling_number": "1675-2026-3",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-02-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-3"
+        },
+        {
+          "handling_number": "1675-2026-4",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-02-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-4"
+        },
+        {
+          "handling_number": "1675-2026-5",
+          "title": "Begäran om uppgifter kring tidigare trumbyte m.m.",
+          "date": "2026-03-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-5"
+        },
+        {
+          "handling_number": "1675-2026-6",
+          "title": "Meddelande om att sökanden behöver mer tid för att komplettera med uppgifter",
+          "date": "2026-03-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-6"
+        },
+        {
+          "handling_number": "1675-2026-7",
+          "title": "Komplettering med uppgifter om trummans läge m.m. och att sökanden avser att dra tillbaka anmälan",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-7"
+        },
+        {
+          "handling_number": "1675-2026-8",
+          "title": "Information om att sökanden drar tillbaka anmälan",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-8"
+        },
+        {
+          "handling_number": "1675-2026-9",
+          "title": "Meddelande om att informationen skickats till kommunen och att ärendet avslutas",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1675-2026::1675-2026-9"
+        }
+      ],
+      "content_hash": "2ff18106001fb278aff34bc4399dffd56c7ea5f5b905f5919c5d4f62c57e553d",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::1769-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::1769-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5411024",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "1769-2026",
+        "registered_date": "2026-02-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hyttsjön (WA11936183), vid Strömsdal i Ludvika kommun, Ludvika kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ludvika"
+      },
+      "handlings": [
+        {
+          "handling_number": "1769-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hyttsjön (WA11936183), vid Strömsdal i Ludvika kommun, Ludvika kommun",
+          "date": "2026-02-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-1"
+        },
+        {
+          "handling_number": "1769-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-02-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-2"
+        },
+        {
+          "handling_number": "1769-2026-3",
+          "title": "Översiktkarta",
+          "date": "2026-02-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-3"
+        },
+        {
+          "handling_number": "1769-2026-4",
+          "title": "Översiktkarta",
+          "date": "2026-02-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-4"
+        },
+        {
+          "handling_number": "1769-2026-5",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-02-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-5"
+        },
+        {
+          "handling_number": "1769-2026-6",
+          "title": "Yttrande över anmälan",
+          "date": "2026-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-6"
+        },
+        {
+          "handling_number": "1769-2026-7",
+          "title": "Yttrande - klart",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-7"
+        },
+        {
+          "handling_number": "1769-2026-8",
+          "title": "Komplettering med uppgifter om kulturmiljö.",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1769-2026::1769-2026-8"
+        }
+      ],
+      "content_hash": "55f3514f4a0c0e770437e349eed9c42459718f38443d2256487085532835c2f8",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::1781-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::1781-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5411412",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "1781-2026",
+        "registered_date": "2026-02-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Insjön, Leksand kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Leksand"
+      },
+      "handlings": [
+        {
+          "handling_number": "1781-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, insjön, Leksand kommun",
+          "date": "2026-02-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-1"
+        },
+        {
+          "handling_number": "1781-2026-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-02-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-2"
+        },
+        {
+          "handling_number": "1781-2026-3",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-03-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-3"
+        },
+        {
+          "handling_number": "1781-2026-4",
+          "title": "Yttrande över remiss",
+          "date": "2026-03-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-4"
+        },
+        {
+          "handling_number": "1781-2026-5",
+          "title": "Begäran om komplettering",
+          "date": "2026-03-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-5"
+        },
+        {
+          "handling_number": "1781-2026-6",
+          "title": "Delbeslut om att inte påbörja vattenverksamhet",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-6"
+        },
+        {
+          "handling_number": "1781-2026-7",
+          "title": "Meddelande om delgivning",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-7"
+        },
+        {
+          "handling_number": "1781-2026-8",
+          "title": "Meddelande om förlängd tid för sedimentprovtagning",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1781-2026::1781-2026-8"
+        }
+      ],
+      "content_hash": "0e4d56e0029fe88aa277571aeb1ebb178001b5cd9dff8a18a4c7b5d1772a947d",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::1915-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::1915-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5416601",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "1915-2026",
+        "registered_date": "2026-03-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Venjanssjön, Mora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-27",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Mora"
+      },
+      "handlings": [
+        {
+          "handling_number": "1915-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Venjanssjön, Mora kommun",
+          "date": "2026-03-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1915-2026::1915-2026-1"
+        },
+        {
+          "handling_number": "1915-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-03-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1915-2026::1915-2026-2"
+        },
+        {
+          "handling_number": "1915-2026-3",
+          "title": "Begäran om yttrande,",
+          "date": "2026-03-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1915-2026::1915-2026-3"
+        },
+        {
+          "handling_number": "1915-2026-4",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1915-2026::1915-2026-4"
+        },
+        {
+          "handling_number": "1915-2026-5",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::1915-2026::1915-2026-5"
+        }
+      ],
+      "content_hash": "de0844955bd7045598f0cb0b8e7558762273ee57398ff7bb7f3f170919da9a66",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::2035-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::2035-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5419993",
+      "observed_at": "2026-11-05T13:29:19.092817+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "2035-2026",
+        "registered_date": "2026-03-05",
+        "title": "Tillsyn av vattenverksamhet gällande återställning av strand i Finnäsviken i Grytnäs By, Leksands kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-28",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Leksand"
+      },
+      "handlings": [
+        {
+          "handling_number": "2035-2026-1",
+          "title": "Start av ärende om tillsyn av vattenverksamhet gällande återställning av strand i Finnäsviken i Grytnäs By, Leksands kommun",
+          "date": "2026-03-05",
+          "sender_recipient": "Länsstyrelsen i Dalarnas län",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-1"
+        },
+        {
+          "handling_number": "2035-2026-2",
+          "title": "Meddelande om och fråga kring återställningen av stranden från klagande",
+          "date": "2026-03-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-2"
+        },
+        {
+          "handling_number": "2035-2026-3",
+          "title": "Meddelande om ärendet och att frågan ställts till byalaget",
+          "date": "2026-03-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-3"
+        },
+        {
+          "handling_number": "2035-2026-4",
+          "title": "Meddelande om ärendet och fråga kring återställningen",
+          "date": "2026-03-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-4"
+        },
+        {
+          "handling_number": "2035-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-03-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-5"
+        },
+        {
+          "handling_number": "2035-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-03-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-6"
+        },
+        {
+          "handling_number": "2035-2026-7",
+          "title": "Meddelande om ärendet med fråga om länsstyrelsens uppföljning",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-7"
+        },
+        {
+          "handling_number": "2035-2026-8",
+          "title": "Meddelande om Länsstyrelsens uppföljande tillsyn",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-8"
+        },
+        {
+          "handling_number": "2035-2026-9",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-9"
+        },
+        {
+          "handling_number": "2035-2026-10",
+          "title": "Meddelande om utförda åtgärder med fotografier",
+          "date": "2026-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-10"
+        },
+        {
+          "handling_number": "2035-2026-11",
+          "title": "Fotografi över stranden före och efter anlagd väg samt under återställande arbete",
+          "date": "2026-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-11"
+        },
+        {
+          "handling_number": "2035-2026-12",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-12"
+        },
+        {
+          "handling_number": "2035-2026-13",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-13"
+        },
+        {
+          "handling_number": "2035-2026-14",
+          "title": "Information om synpunkter och förtydligande",
+          "date": "2026-04-24",
+          "sender_recipient": "Grytnäs Byalag",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-14"
+        },
+        {
+          "handling_number": "2035-2026-15",
+          "title": "Meddelande om synpunkter på återställande av strand",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-15"
+        },
+        {
+          "handling_number": "2035-2026-16",
+          "title": "Meddelande om situationen",
+          "date": "2026-05-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-16"
+        },
+        {
+          "handling_number": "2035-2026-17",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-17"
+        },
+        {
+          "handling_number": "2035-2026-18",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-18"
+        },
+        {
+          "handling_number": "2035-2026-19",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-19"
+        },
+        {
+          "handling_number": "2035-2026-20",
+          "title": "Yttrande över remiss underrättelse, mail 2",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-20"
+        },
+        {
+          "handling_number": "2035-2026-21",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-21"
+        },
+        {
+          "handling_number": "2035-2026-22",
+          "title": "Beslut att avsluta utan åtgärd",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-22"
+        },
+        {
+          "handling_number": "2035-2026-23",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-23"
+        },
+        {
+          "handling_number": "2035-2026-24",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-24"
+        },
+        {
+          "handling_number": "2035-2026-25",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-25"
+        },
+        {
+          "handling_number": "2035-2026-26",
+          "title": "Meddelande om att upplagen med stenmassor fraktats bort",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2035-2026::2035-2026-26"
+        }
+      ],
+      "content_hash": "9bbd1b427522517bafa5665fd1bf4fed2ec119cc78df9a6c45239523cbde3c9d",
+      "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
       "observation_count": 1
     }
   }
