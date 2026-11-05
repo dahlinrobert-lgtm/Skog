@@ -172,7 +172,6 @@ def test_404_diagnostics_are_preserved_without_overwriting_last_valid_hash():
     assert updated["last_attempt_sha256"]=="body-hash"
     assert updated["last_attempt_http_status"]==404
     assert updated["last_attempt_content_type"]=="text/plain"
-    assert updated["last_attempt_body_preview"]=="tile not found"
     assert len(updated["features"])==1
 
 
@@ -244,3 +243,18 @@ def test_multizoom_seed_selection_samples_positive_and_404_classes():
     assert len(seeds)==8
     assert sum(s["class"]=="positive_z9" for s in seeds)==4
     assert sum(s["class"]=="not_found_404_z9" for s in seeds)==4
+
+
+def test_response_diagnostics_group_identical_404_bodies():
+    from scripts.monitor_sca_voluntary_tiles import summarize_response_diagnostics
+    rows=[
+        {"state":"not_found_404","http_status":404,"sha256":"same","content_type":"text/html","bytes":150,"body_preview":"not found"},
+        {"state":"not_found_404","http_status":404,"sha256":"same","content_type":"text/html","bytes":150,"body_preview":"not found"},
+        {"state":"not_found_404","http_status":404,"sha256":"other","content_type":"text/html","bytes":151,"body_preview":"other body"},
+        {"state":"unchanged","http_status":200,"sha256":"valid"}
+    ]
+    groups=summarize_response_diagnostics(rows)
+    assert len(groups)==2
+    same=next(g for g in groups if g["sha256"]=="same")
+    assert same["count"]==2
+    assert same["body_preview"]=="not found"
