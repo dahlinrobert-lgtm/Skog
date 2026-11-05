@@ -10,6 +10,7 @@ import argparse, hashlib, json, math
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+import threading
 import requests
 import mapbox_vector_tile
 from requests.adapters import HTTPAdapter
@@ -17,9 +18,14 @@ from urllib3.util.retry import Retry
 
 URL = "https://olga.scaskog.com/map/omraden/{z}/{x}/{y}.pbf"
 TIMEOUT = (20, 60)
+LOCAL = threading.local()
 
 
 def session():
+    """Reuse one HTTP session per worker thread for connection pooling."""
+    existing = getattr(LOCAL, "session", None)
+    if existing is not None:
+        return existing
     retry = Retry(total=3, connect=3, read=2, status=2, backoff_factor=1,
                   status_forcelist=[429, 500, 502, 503, 504],
                   allowed_methods=["GET"], respect_retry_after_header=True)
@@ -27,6 +33,7 @@ def session():
     s.headers.update({"User-Agent": "Skog-SCA-multizoom-coverage-audit/1.0",
                       "Accept": "application/vnd.mapbox-vector-tile, application/x-protobuf, */*"})
     s.mount("https://", HTTPAdapter(max_retries=retry, pool_connections=2, pool_maxsize=2))
+    LOCAL.session = s
     return s
 
 
