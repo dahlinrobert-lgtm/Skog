@@ -130,9 +130,13 @@ def fetch(z,x,y,previous_sha=None,previous_state=None):
     try:
         r=get_session().get(url,timeout=TIMEOUT); raw=r.content
         base={"z":z,"x":x,"y":y,"url":url,"http_status":r.status_code,
-              "bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest() if raw else None}
-        if r.status_code==404: return {**base,"state":"not_found_404","features":[]}
-        if r.status_code!=200: return {**base,"state":"http_error","features":[],"error":f"HTTP {r.status_code}"}
+              "bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest() if raw else None,
+              "content_type":r.headers.get("Content-Type"),"server":r.headers.get("Server")}
+        if r.status_code==404: return {**base,"state":"not_found_404","features":[],
+                                       "body_preview":raw[:240].decode("utf-8",errors="replace")}
+        if r.status_code!=200: return {**base,"state":"http_error","features":[],
+                                       "error":f"HTTP {r.status_code}",
+                                       "body_preview":raw[:240].decode("utf-8",errors="replace")}
         if digest_value:=base["sha256"]:
             if digest_value==previous_sha and str(previous_state or "").startswith("valid_mvt"):
                 return {**base,"state":"unchanged"}
@@ -214,14 +218,21 @@ def apply_result(old,new,at):
     tid=key(new["z"],new["x"],new["y"])
     if new["state"] in ("request_error","http_error","decode_error"):
         kept=dict(old); kept.update({"last_attempt_at":at,"last_attempt_state":new["state"],
-                                     "last_error":new.get("error")})
+                                     "last_error":new.get("error"),"last_attempt_http_status":new.get("http_status"),
+                                     "last_attempt_sha256":new.get("sha256"),"last_attempt_bytes":new.get("bytes"),
+                                     "last_attempt_content_type":new.get("content_type"),
+                                     "last_attempt_body_preview":new.get("body_preview")})
         return kept,[{"event_type":"tile_poll_error","tile":tid,"state":new["state"],
                       "error":new.get("error"),"observed_at":at}]
     if new["state"]=="not_found_404":
         # Sparse tile delivery: 404 is unavailable, never evidence that features
         # disappeared. Do not increment feature missing counters or delete data.
         kept=dict(old); streak=int(old.get("not_found_streak",0))+1
-        kept.update({"not_found_streak":streak,"last_attempt_at":at,"last_attempt_state":"not_found_404"})
+        kept.update({"not_found_streak":streak,"last_attempt_at":at,"last_attempt_state":"not_found_404",
+                     "last_attempt_http_status":new.get("http_status",404),
+                     "last_attempt_sha256":new.get("sha256"),"last_attempt_bytes":new.get("bytes"),
+                     "last_attempt_content_type":new.get("content_type"),
+                     "last_attempt_body_preview":new.get("body_preview")})
         ev=[]
         if streak==2 and old.get("features"):
             ev.append({"event_type":"tile_unavailable_candidate","tile":tid,"observed_at":at,
@@ -248,13 +259,8 @@ def apply_result(old,new,at):
     return updated,ev
 
 
-def extend_tile_plan(state,census_path):
-    """Expand, never shrink, z12 monitoring from a complete national z9 census.
-
-    Valid MVT responses (empty or with features) define a complete census.
-    404, HTTP errors, request errors and decode errors are tracked explicitly
-    but never interpreted as empty coverage or used to expand the tile plan.
-    """
+def extend_tile_plan(state,census_path,coverage_audit_path=None):
+    """Expand the retained z12 plan from positive z9 and sampled z10-z12 tiles."""
     census=json.loads(census_path.read_text(encoding="utf-8"))
     rows=census.get("tile_results",[])
     summary=census.get("summary",{})
@@ -275,22 +281,41 @@ def extend_tile_plan(state,census_path):
         voluntary_states[vol]+=1
         ownership_states[own]+=1
 
-    # A positive seed is safe to use only when its voluntary MVT was decoded.
-    # 404 and transport/decode errors remain unknown, not empty.
-    positive=sorted({(int(r["x"]),int(r["y"])) for r in rows
-                     if r.get("voluntary",{}).get("state")=="valid_mvt_with_features"})
+    discoveries=[]
+    for row in rows:
+        if row.get("voluntary",{}).get("state")=="valid_mvt_with_features":
+            discoveries.append({"z":9,"x":int(row["x"]),"y":int(row["y"]),"source":"z9_census"})
+    audit_summary={}
+    audit_states={}
+    if coverage_audit_path and coverage_audit_path.exists():
+        audit=json.loads(coverage_audit_path.read_text(encoding="utf-8"))
+        if audit.get("schema_version")!=1 or not audit.get("probe_results"):
+            raise ValueError("Multi-zoom coverage audit missing or invalid; refusing to alter tile plan")
+        audit_summary={k:audit.get(k) for k in ("samples_per_class_requested","unique_probe_tiles","probe_requests")}
+        audit_states=audit.get("states_by_zoom",{})
+        seen={(d["z"],d["x"],d["y"]) for d in discoveries}
+        for row in audit["probe_results"]:
+            z=int(row.get("z",0))
+            if z in (10,11,12) and row.get("state")=="valid_mvt_with_features":
+                ident=(z,int(row["x"]),int(row["y"]))
+                if ident not in seen:
+                    discoveries.append({"z":z,"x":ident[1],"y":ident[2],"source":"multizoom_audit"})
+                    seen.add(ident)
+
     targets=defaultdict(set)
-    for sx,sy in positive:
-        for dx in range(8):
-            for dy in range(8):
-                x0,y0=sx*8+dx,sy*8+dy
+    for d in discoveries:
+        z,x,y=d["z"],d["x"],d["y"]
+        factor=2**(12-z)
+        for dx in range(factor):
+            for dy in range(factor):
+                x0,y0=x*factor+dx,y*factor+dy
                 for ox in range(-1,2):
                     for oy in range(-1,2):
-                        x,y=x0+ox,y0+oy
-                        if 0<=x<4096 and 0<=y<4096:
-                            targets[(x,y)].add((sx,sy))
+                        tx,ty=x0+ox,y0+oy
+                        if 0<=tx<4096 and 0<=ty<4096:
+                            targets[(tx,ty)].add((z,x,y,d["source"]))
     added=0
-    for (x,y),seeds in targets.items():
+    for (x,y),sources in targets.items():
         tile_id=key(12,x,y)
         if tile_id not in state["tiles"]:
             state["tiles"][tile_id]={"z":12,"x":x,"y":y,
@@ -299,75 +324,63 @@ def extend_tile_plan(state,census_path):
                 "last_success_at":None,"not_found_streak":0}
             added+=1
         tile=state["tiles"][tile_id]
-        existing={(int(s["x"]),int(s["y"])) for s in tile.get("covering_z9_seeds",[])}
-        existing.update(seeds)
-        tile["covering_z9_seeds"]=[{"z":9,"x":sx,"y":sy} for sx,sy in sorted(existing)]
+        existing={(int(s["z"]),int(s["x"]),int(s["y"]),s.get("source","z9_census"))
+                   for s in tile.get("discovery_sources",[])}
+        existing.update(sources)
+        tile["discovery_sources"]=[{"z":z,"x":sx,"y":sy,"source":source}
+                                   for z,sx,sy,source in sorted(existing)]
+        if any(z==9 for z,_,_,_ in sources):
+            old={(int(s["x"]),int(s["y"])) for s in tile.get("covering_z9_seeds",[])}
+            old.update((sx,sy) for z,sx,sy,_ in sources if z==9)
+            tile["covering_z9_seeds"]=[{"z":9,"x":sx,"y":sy} for sx,sy in sorted(old)]
 
     state["tile_count"]=len(state["tiles"])
     state["latest_seed_census"]={
-        "observed_at":now(),
-        "tiles_in_bbox":expected,
-        "tiles_completed":completed,
-        "positive_voluntary_z9_tiles":len(positive),
-        "positive_seed_tiles":[{"z":9,"x":x,"y":y} for x,y in positive],
-        "voluntary_states":dict(voluntary_states),
-        "ownership_states":dict(ownership_states),
+        "observed_at":now(),"tiles_in_bbox":expected,"tiles_completed":completed,
+        "positive_voluntary_z9_tiles":sum(1 for r in rows if r.get("voluntary",{}).get("state")=="valid_mvt_with_features"),
+        "positive_discovery_tiles_by_zoom":dict(Counter(str(d["z"]) for d in discoveries)),
+        "positive_seed_tiles":[d for d in discoveries],
+        "voluntary_states":dict(voluntary_states),"ownership_states":dict(ownership_states),
         "voluntary_unknown_tiles":sum(voluntary_states[s] for s in ("not_found_404","http_error","request_error","decode_error")),
-        "ownership_unknown_tiles":sum(ownership_states[s] for s in ("not_found_404","http_error","request_error","decode_error"))
+        "ownership_unknown_tiles":sum(ownership_states[s] for s in ("not_found_404","http_error","request_error","decode_error")),
+        "multizoom_audit":audit_summary,"multizoom_states_by_zoom":audit_states
     }
-    return added,len(positive)
+    return added,len(discoveries)
 
-def run(state,workers):
-    at=now(); tiles=state["tiles"]; fetched={}; errs=0
-    coords=[(k,int(v["z"]),int(v["x"]),int(v["y"])) for k,v in tiles.items()]
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures={pool.submit(fetch,z,x,y,tiles[k].get("sha256"),tiles[k].get("state")):k for k,z,x,y in coords}
-        for i,future in enumerate(as_completed(futures),1):
-            k=futures[future]; fetched[k]=future.result()
-            if fetched[k]["state"] in ("request_error","http_error","decode_error"): errs+=1
-            if i%250==0 or i==len(futures):
-                print(json.dumps({"progress":i,"total":len(futures),"errors":errs}),flush=True)
-    events=[]; states=Counter(); nfeatures=0
-    for k in sorted(tiles):
-        tiles[k],ev=apply_result(tiles[k],fetched[k],at)
-        events.extend(ev); states[fetched[k]["state"]]+=1; nfeatures+=len(fetched[k].get("features",[]))
-    state["tiles"]=dict(sorted(tiles.items())); state["last_checked_at"]=at
-    summary={"observed_at":at,"tiles_checked":len(tiles),"tile_states":dict(states),
-             "feature_records_decoded":nfeatures,"unchanged_tiles":states.get("unchanged",0),"event_counts":dict(Counter(e["event_type"] for e in events)),
-             "events":len(events),"poll_errors":errs,"identity_resolved":0}
-    return state,events,summary
+def normalize_event(event):
+    """Wrap an event in a versioned, idempotently addressable feed envelope."""
+    item=dict(event)
+    tile=item.get("tile")
+    zxy=None
+    if tile:
+        try:
+            z,x,y=(int(v) for v in tile.split("/"))
+            zxy={"z":z,"x":x,"y":y}
+        except (ValueError,TypeError):
+            zxy=None
+    event_type=item.get("event_type","unknown")
+    categories={
+        "geometry_added":"geometry","geometry_changed_candidate":"geometry_candidate",
+        "metadata_changed":"metadata","geometry_missing_candidate":"availability_candidate",
+        "geometry_removed_confirmed":"availability_confirmed",
+        "tile_unavailable_candidate":"source_availability","tile_poll_error":"technical"
+    }
+    eligible=event_type in {"geometry_added","metadata_changed","geometry_removed_confirmed"}
+    identity={
+        "event_type":event_type,"tile":tile,"layer":item.get("layer"),
+        "geometry_sha256":item.get("geometry_sha256") or item.get("new_geometry_sha256"),
+        "observed_at":item.get("observed_at") or item.get("confirmed_at"),
+        "properties_sha256":item.get("properties_sha256") or digest(item.get("new_properties",item.get("properties",{})))
+    }
+    item.update({
+        "event_schema_version":1,
+        "event_id":hashlib.sha256(json.dumps(identity,sort_keys=True,separators=(",",":")).encode()).hexdigest(),
+        "source_system":"sca_olga_mvt",
+        "source_tile":zxy,
+        "source_url":URL.format(**zxy) if zxy else None,
+        "event_category":categories.get(event_type,"other"),
+        "notification_candidate":eligible,
+        "identity_resolved":bool(item.get("identity_resolved",False))
+    })
+    return item
 
-def write_events(path,events):
-    path.parent.mkdir(parents=True,exist_ok=True)
-    with path.open("wb") as raw:
-        with gzip.GzipFile(fileobj=raw,mode="wb",mtime=0) as gz:
-            for e in events: gz.write((json.dumps(e,ensure_ascii=False,sort_keys=True)+"\n").encode())
-
-def main():
-    p=argparse.ArgumentParser()
-    p.add_argument("--state",type=Path,default=Path("data/sca/monitoring/tile-state.json.gz"))
-    p.add_argument("--baseline-dir",type=Path)
-    p.add_argument("--seed-census",type=Path)
-    p.add_argument("--events",type=Path,default=Path("output/sca-voluntary-change-events.jsonl.gz"))
-    p.add_argument("--summary",type=Path,default=Path("output/sca-voluntary-change-summary.json"))
-    p.add_argument("--workers",type=int,default=3)
-    a=p.parse_args()
-    state=read_state(a.state,a.baseline_dir); bootstrap=state.get("last_checked_at") is None
-    new_tiles_added=0; positive_seed_tiles=None
-    if a.seed_census:
-        new_tiles_added,positive_seed_tiles=extend_tile_plan(state,a.seed_census)
-    if bootstrap and a.baseline_dir:
-        write_baseline_archive(a.baseline_dir,Path("data/sca/monitoring/baseline/source-features.jsonl.gz"))
-    state,events,summary=run(state,max(1,min(6,a.workers)))
-    summary.update({"bootstrapped_from_baseline":bootstrap,
-                    "baseline_tile_count":state.get("baseline_tile_count",state["tile_count"]),
-                    "tile_plan_tile_count":state["tile_count"],
-                    "new_tiles_added_from_z9":new_tiles_added,
-                    "positive_z9_seed_tiles":positive_seed_tiles,
-                    "state_schema_version":state["schema_version"]})
-    write_state(a.state,state); write_events(a.events,events)
-    a.summary.parent.mkdir(parents=True,exist_ok=True)
-    a.summary.write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps(summary,ensure_ascii=False,indent=2))
-
-if __name__=="__main__": main()
