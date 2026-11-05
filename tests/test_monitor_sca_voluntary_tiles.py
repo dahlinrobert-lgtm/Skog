@@ -277,3 +277,12 @@ def test_multizoom_probe_jobs_deduplicate_tiles_and_keep_all_seed_provenance():
         "positive_z9", "not_found_404_z9"
     }
     assert all(len(refs) >= 1 for _, _, _, refs in jobs)
+
+
+
+def test_multizoom_audit_reuses_http_session_within_worker_thread():
+    from scripts.audit_sca_tile_coverage import session
+
+    first = session()
+    second = session()
+    assert first is second
