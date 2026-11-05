@@ -37,7 +37,7 @@ A 404, timeout or other request failure never deletes features. No source geomet
 ## Interpretation and limitations
 
 - Geometry hashes are calculated from decoded MVT tile-local coordinates. They are stable comparison fingerprints within a tile, not global object IDs.
-- The monitor retains the original z12 plan and expands it from each weekly z9 census using positive voluntary tiles plus a one-tile z12 neighbor ring. It never shrinks the plan after a temporary census failure.
+- The monitor retains the original z12 plan and expands it from each complete z9 census using positive voluntary tiles plus a one-tile z12 neighbor ring. Only successfully decoded MVT responses (empty or with features) are classified as known; 404, request, HTTP and decode errors are counted as unknown and never treated as empty. A census with incomplete tile coverage or pending/unknown states is rejected before the plan changes.
 - z9 is a discovery screen, not proof of complete national SCA coverage; features not represented at z9 may still be missed until they become visible in the z9 layer.
 - A tile response hash change triggers feature-level comparison. If the payload hash is unchanged, the previous feature content is reused.
 - Candidate relationships must not be treated as confirmed object identity.
