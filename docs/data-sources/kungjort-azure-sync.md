@@ -55,3 +55,14 @@ The relevance rules now include additional forestry terms (including regeneratio
 Medium-priority vocabulary now also covers electricity grids and substations, energy storage, solar and wind installations, roads/railways, wetlands, water bodies, groundwater, flood risk and forest-fire preparedness.
 
 Matching is case- and accent-insensitive, so accented Swedish terms and their ASCII spellings are treated alike. The generic standalone term `skog` is deliberately excluded because it could match incidental mentions and inflate the high-priority set. Terms are still matched against the metadata fields only; this change does not claim to classify the full document text. Review actual samples and measured precision/recall before increasing collection volume.
+
+
+## Reclassify archived metadata without API calls
+
+Run the workflow in `reclassify` mode to apply the current rule version to metadata already stored in Azure. This mode makes no Kungjort API requests and does not modify or delete source batches.
+
+It reads:
+- The live listing metadata under `metadata/kungjort/index/bootstrap-live/`.
+- The four migrated historical document batches under `kungjort-raw/bootstrap/`, extracting listing metadata and using the already archived document detail only for classification.
+
+Versioned results are written under `metadata/kungjort/index/reclassified-v2/`; the summary is `metadata/kungjort/index/reclassified-v2/summary.json`. The legacy full text is not copied into the metadata index. The summary reports priority/category counts, common organs and document types, sample records, and whether all discovered source batches were processed. Re-running is idempotent for unchanged source blobs.
