@@ -42,6 +42,14 @@ jobs:
         run: |
           python -m py_compile scripts/sca_national_independent_layer_census_z9.py
           python scripts/sca_national_independent_layer_census_z9.py
+      - name: Audit sampled z8-z12 tile coverage
+        run: |
+          python -m py_compile scripts/audit_sca_tile_coverage.py
+          python scripts/audit_sca_tile_coverage.py \\
+            --census sca-national-independent-layer-census-z9.json \\
+            --out output/sca-multizoom-coverage-audit.json \\
+            --samples-per-class 8 \\
+            --workers 2
       - name: Poll z12 tiles and compare geometry and metadata
         env:
           MAX_WORKERS: "3"
@@ -57,6 +65,7 @@ jobs:
       - name: Validate monitor outputs
         run: |
           python -m json.tool output/sca-voluntary-change-summary.json > /dev/null
+          python -m json.tool output/sca-multizoom-coverage-audit.json > /dev/null
           python - <<'PY'
           import gzip, json
           from pathlib import Path
@@ -65,7 +74,11 @@ jobs:
           assert s["identity_resolved"] == 0
           with gzip.open("output/sca-voluntary-change-events.jsonl.gz", "rt", encoding="utf-8") as f:
               for line in f:
-                  json.loads(line)
+                  event=json.loads(line)
+                  required={"event_schema_version","event_id","event_type","event_category","source_system","source_tile","source_url","notification_candidate"}
+                  assert required.issubset(event), f"Missing event envelope fields: {required-set(event)}"
+                  assert event["event_schema_version"] == 1
+                  assert len(event["event_id"]) == 64
           print(json.dumps(s, ensure_ascii=False, indent=2))
           PY
       - name: Persist state and append change event archive
@@ -110,5 +123,6 @@ jobs:
             output/sca-voluntary-change-summary.json
             output/sca-voluntary-change-events.jsonl.gz
             sca-national-independent-layer-census-z9.json
+            output/sca-multizoom-coverage-audit.json
           if-no-files-found: error
           retention-days: 90
