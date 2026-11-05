@@ -419,18 +419,24 @@ def bootstrap(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: i
 
 
 def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
-    """Reclassify existing Azure metadata blobs without calling the Kungjort API."""
-    container = archive.service.get_container_client(container=STATE_CONTAINER)
-    source_prefix = "kungjort/index/bootstrap-live/"
-    target_prefix = "kungjort/index/reclassified-v2/"
-    blobs = sorted(
-        item.name for item in container.list_blobs(name_starts_with=source_prefix)
-        if item.name.endswith(".jsonl.gz")
-    )
-    if not blobs:
-        raise RuntimeError(f"No metadata index blobs found under {source_prefix}")
+    """Reclassify existing Azure index and migrated raw batches without API calls."""
+    sources = []
+    for container_name, prefix, kind in (
+        (STATE_CONTAINER, "kungjort/index/bootstrap-live/", "index"),
+        (RAW_CONTAINER, "bootstrap/", "legacy_raw"),
+    ):
+        container = archive.service.get_container_client(container=container_name)
+        names = sorted(
+            item.name for item in container.list_blobs(name_starts_with=prefix)
+            if item.name.endswith(".jsonl.gz")
+        )
+        sources.extend((container_name, name, kind) for name in names)
 
-    selected = blobs[:max_pages]
+    if not sources:
+        raise RuntimeError("No Kungjort metadata index or migrated bootstrap batches found in Azure")
+
+    selected = sources[:max_pages]
+    target_prefix = "kungjort/index/reclassified-v2/"
     totals = {"high": 0, "medium": 0, "low": 0}
     categories = {}
     organs = {}
@@ -440,8 +446,8 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
     processed_rows = 0
     uploaded_blobs = 0
 
-    for source_name in selected:
-        source_client = archive.service.get_blob_client(container=STATE_CONTAINER, blob=source_name)
+    for source_container, source_name, kind in selected:
+        source_client = archive.service.get_blob_client(container=source_container, blob=source_name)
         source_bytes = source_client.download_blob().readall()
         source_digest = sha256_bytes(source_bytes)
         records = []
@@ -449,14 +455,30 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
             if not raw_line.strip():
                 continue
             record = json.loads(raw_line)
-            metadata = record.get("metadata") if isinstance(record, dict) else None
-            if not isinstance(metadata, dict):
-                raise RuntimeError(f"Invalid metadata record in {source_name}")
+            if not isinstance(record, dict):
+                raise RuntimeError(f"Invalid record in {source_container}/{source_name}")
+
+            if kind == "index":
+                metadata = record.get("metadata")
+                if not isinstance(metadata, dict):
+                    raise RuntimeError(f"Invalid metadata record in {source_name}")
+                output = dict(record)
+            else:
+                list_record = record.get("list_record") if isinstance(record.get("list_record"), dict) else {}
+                detail = record.get("detail") if isinstance(record.get("detail"), dict) else {}
+                metadata = {**list_record, **detail}
+                output = {
+                    "record_type": "document_index",
+                    "document_id": record.get("document_id") or document_id(list_record),
+                    "indexed_at": utc_now(),
+                    "metadata": metadata,
+                    "source_archive": f"{source_container}/{source_name}",
+                }
+
             classification = classify_document(metadata)
-            revised = dict(record)
-            revised["relevance"] = classification
-            revised["reclassified_at"] = utc_now()
-            records.append(revised)
+            output["relevance"] = classification
+            output["reclassified_at"] = utc_now()
+            records.append(output)
 
             priority = classification["priority"]
             totals[priority] += 1
@@ -473,43 +495,46 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
 
             if len(examples[priority]) < 10:
                 examples[priority].append({
-                    "document_id": record.get("document_id"),
+                    "document_id": output.get("document_id"),
                     "title": metadata.get("title") or metadata.get("rubrik") or metadata.get("subject"),
                     "organ": organ,
                     "matched_terms": classification["matched_terms"],
                     "categories": classification["categories"],
+                    "source_kind": kind,
                 })
 
-        target_name = target_prefix + source_name[len(source_prefix):]
-        target_hash = canonical_hash(records)
+        if kind == "index":
+            relative = source_name[len("kungjort/index/bootstrap-live/"):]
+        else:
+            relative = "legacy-bootstrap/" + source_name[len("bootstrap/"):]
+        target_name = target_prefix + relative
         payload = encode_jsonl_gzip(records)
         if archive.upload_batch(STATE_CONTAINER, target_name, payload, source_digest):
             uploaded_blobs += 1
         processed_blobs += 1
-        print(f"Reclassified {source_name} -> {target_name}; rows={len(records)}")
+        print(f"Reclassified {source_container}/{source_name} -> {STATE_CONTAINER}/{target_name}; rows={len(records)}")
 
     summary = {
         "schema_version": 1,
         "rule_version": "2026-11-05-v2",
         "created_at": utc_now(),
-        "source_prefix": source_prefix,
         "target_prefix": target_prefix,
-        "source_blobs_total": len(blobs),
+        "source_blobs_total": len(sources),
         "source_blobs_processed": processed_blobs,
-        "source_blobs_remaining": max(0, len(blobs) - processed_blobs),
+        "source_blobs_remaining": max(0, len(sources) - processed_blobs),
         "rows_processed": processed_rows,
         "priority_counts": totals,
         "category_counts": dict(sorted(categories.items())),
         "top_organs": sorted(organs.items(), key=lambda item: (-item[1], item[0]))[:30],
         "top_document_types": sorted(document_types.items(), key=lambda item: (-item[1], item[0]))[:30],
         "examples": examples,
-        "complete": processed_blobs == len(blobs),
+        "complete": processed_blobs == len(sources),
     }
     summary_blob = archive.service.get_blob_client(
         container=STATE_CONTAINER,
         blob="kungjort/index/reclassified-v2/summary.json",
     )
-    summary_bytes = (json.dumps(summary, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")
+    summary_bytes = (json.dumps(summary, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     summary_blob.upload_blob(
         summary_bytes,
         overwrite=True,
@@ -517,7 +542,7 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
     )
     print(json.dumps({
         "mode": "reclassify",
-        "source_blobs_total": len(blobs),
+        "source_blobs_total": len(sources),
         "source_blobs_processed": processed_blobs,
         "source_blobs_remaining": summary["source_blobs_remaining"],
         "rows_processed": processed_rows,
@@ -526,6 +551,7 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
         "summary_blob": "metadata/kungjort/index/reclassified-v2/summary.json",
     }, ensure_ascii=False))
     return summary
+
 
 def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: int) -> dict:
     if not state.get("bootstrap_complete"):
