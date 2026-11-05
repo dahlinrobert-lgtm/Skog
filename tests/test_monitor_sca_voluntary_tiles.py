@@ -258,3 +258,22 @@ def test_response_diagnostics_group_identical_404_bodies():
     same=next(g for g in groups if g["sha256"]=="same")
     assert same["count"]==2
     assert same["body_preview"]=="not found"
+
+
+def test_multizoom_probe_jobs_deduplicate_tiles_and_keep_all_seed_provenance():
+    from scripts.audit_sca_tile_coverage import build_probe_jobs
+
+    seeds = [
+        {"z": 9, "x": 100, "y": 200, "class": "positive_z9"},
+        {"z": 9, "x": 101, "y": 200, "class": "not_found_404_z9"},
+    ]
+    jobs = build_probe_jobs(seeds)
+    coords = [(z, x, y) for z, x, y, _ in jobs]
+
+    assert len(coords) == len(set(coords))
+    shared = next(refs for z, x, y, refs in jobs if (z, x, y) == (8, 50, 100))
+    assert len(shared) == 2
+    assert {ref["seed_z9"]["class"] for ref in shared} == {
+        "positive_z9", "not_found_404_z9"
+    }
+    assert all(len(refs) >= 1 for _, _, _, refs in jobs)

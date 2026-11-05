@@ -114,6 +114,18 @@ def probes_for_seed(seed):
     return coords
 
 
+def build_probe_jobs(seeds):
+    """Return one request per unique tile while retaining every seed relationship."""
+    jobs = defaultdict(list)
+    for seed in seeds:
+        for z, x, y, relation in probes_for_seed(seed):
+            ref = {"seed_z9": {"x": seed["x"], "y": seed["y"], "class": seed["class"]},
+                   "relation": relation}
+            if ref not in jobs[(z, x, y)]:
+                jobs[(z, x, y)].append(ref)
+    return [(z, x, y, refs) for (z, x, y), refs in sorted(jobs.items())]
+
+
 def run(census_path, out_path, per_class=8, workers=2):
     census = json.loads(Path(census_path).read_text(encoding="utf-8"))
     summary = census.get("summary", {})
@@ -121,26 +133,23 @@ def run(census_path, out_path, per_class=8, workers=2):
     if not rows or int(summary.get("tiles_completed", 0)) != int(summary.get("tiles_in_bbox", -1)):
         raise ValueError("Cannot run multi-zoom audit from incomplete z9 census")
     seeds = choose_seeds(census, per_class)
-    jobs = {}
-    for seed in seeds:
-        for z, x, y, relation in probes_for_seed(seed):
-            jobs.setdefault((z, x, y), []).append((seed, relation))
-    tasks = []
-    for (z, x, y), refs in sorted(jobs.items()):
-        # The same probe may belong to more than one sampled seed; retain all provenance.
-        for seed, relation in refs:
-            tasks.append((z, x, y, seed, relation))
-    results = []
+    jobs = build_probe_jobs(seeds)
+
     def task(item):
-        z, x, y, seed, relation = item
-        return classify_response(session(), z, x, y, seed, relation)
+        z, x, y, refs = item
+        primary = refs[0]
+        result = classify_response(session(), z, x, y, primary["seed_z9"], primary["relation"])
+        result["seed_z9_refs"] = refs
+        return result
+
+    results = []
     with ThreadPoolExecutor(max_workers=max(1, min(4, workers))) as pool:
-        futures = [pool.submit(task, item) for item in tasks]
+        futures = [pool.submit(task, item) for item in jobs]
         for i, future in enumerate(as_completed(futures), 1):
             results.append(future.result())
             if i % 100 == 0 or i == len(futures):
                 print(json.dumps({"progress": i, "total": len(futures)}), flush=True)
-    results.sort(key=lambda r: (r["z"], r["x"], r["y"], r["seed_z9"]["x"], r["seed_z9"]["y"]))
+    results.sort(key=lambda r: (r["z"], r["x"], r["y"]))
     states_by_zoom = {}
     features_by_zoom = {}
     for z in (8, 10, 11, 12):
@@ -156,15 +165,17 @@ def run(census_path, out_path, per_class=8, workers=2):
         "sampled_z9_seeds": seeds,
         "unique_probe_tiles": len(jobs),
         "probe_requests": len(results),
+        "duplicate_probe_requests_avoided": sum(len(refs) - 1 for _, _, _, refs in jobs),
         "states_by_zoom": states_by_zoom,
         "feature_records_by_zoom": features_by_zoom,
         "positive_probe_tiles": [
-            {k: r[k] for k in ("z", "x", "y", "state", "feature_records", "seed_z9", "relation")}
+            {k: r[k] for k in ("z", "x", "y", "state", "feature_records", "seed_z9_refs")}
             for r in results if r["state"] == "valid_mvt_with_features"
         ],
         "probe_results": results,
         "interpretation": [
             "A z9 404 is not interpreted as empty coverage.",
+            "A unique probe tile is requested once even when it belongs to multiple sampled seeds.",
             "Positive z10-z12 descendants are valid discovery signals and can extend z12 monitoring.",
             "The sample is diagnostic and cannot prove national completeness.",
             "No geometries are merged, dissolved or assigned a stable global identity."
@@ -172,7 +183,9 @@ def run(census_path, out_path, per_class=8, workers=2):
     }
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     Path(out_path).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({k: payload[k] for k in ("samples_per_class_requested", "unique_probe_tiles", "probe_requests", "states_by_zoom", "feature_records_by_zoom")}, ensure_ascii=False, indent=2))
+    print(json.dumps({k: payload[k] for k in ("samples_per_class_requested", "unique_probe_tiles",
+          "probe_requests", "duplicate_probe_requests_avoided", "states_by_zoom",
+          "feature_records_by_zoom")}, ensure_ascii=False, indent=2))
     return payload
 
 
