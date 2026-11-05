@@ -466,7 +466,8 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
             else:
                 list_record = record.get("list_record") if isinstance(record.get("list_record"), dict) else {}
                 detail = record.get("detail") if isinstance(record.get("detail"), dict) else {}
-                metadata = {**list_record, **detail}
+                metadata = list_record
+                classification_source = {**list_record, **detail}
                 output = {
                     "record_type": "document_index",
                     "document_id": record.get("document_id") or document_id(list_record),
@@ -475,7 +476,7 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
                     "source_archive": f"{source_container}/{source_name}",
                 }
 
-            classification = classify_document(metadata)
+            classification = classify_document(classification_source if kind == "legacy_raw" else metadata)
             output["relevance"] = classification
             output["reclassified_at"] = utc_now()
             records.append(output)
