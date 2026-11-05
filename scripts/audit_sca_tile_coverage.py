@@ -182,7 +182,7 @@ def run(census_path, out_path, per_class=8, workers=2):
         ]
     }
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
-    Path(out_path).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    Path(out_path).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: payload[k] for k in ("samples_per_class_requested", "unique_probe_tiles",
           "probe_requests", "duplicate_probe_requests_avoided", "states_by_zoom",
           "feature_records_by_zoom")}, ensure_ascii=False, indent=2))
