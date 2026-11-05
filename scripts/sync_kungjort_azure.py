@@ -614,7 +614,9 @@ def main() -> int:
     args = parser.parse_args()
     if args.max_pages < 1 or args.max_pages > 500:
         parser.error("--max-pages must be between 1 and 500")
-    api = KungjortApi(os.environ.get("KUNGJORT_API_KEY"))
+    api = None
+    if args.mode in ("bootstrap", "changes"):
+        api = KungjortApi(os.environ.get("KUNGJORT_API_KEY"))
     credential = DefaultAzureCredential()
     service = BlobServiceClient(
         account_url=f"https://{args.account_name}.blob.core.windows.net",
