@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The scheduled monitor refreshes an independent national z9 census of the SCA voluntary layer, expands the z12 plan when new positive z9 tiles appear, and checks all retained z12 tiles for changes. It detects new geometries, changed geometries, metadata changes and possible disappearances while retaining source observations.
+The scheduled monitor refreshes an independent national z9 census, runs a stratified z8-z12 coverage diagnostic, expands the z12 plan from positive z9 and sampled z10-z12 tiles, and checks all retained z12 tiles for changes. It detects new geometries, changed geometries, metadata changes and possible disappearances while retaining source observations.
 
 Workflow: [Monitor SCA voluntary geometry changes](../../../.github/workflows/monitor-sca-voluntary-changes.yml)
 
@@ -10,6 +10,7 @@ Workflow: [Monitor SCA voluntary geometry changes](../../../.github/workflows/mo
 - Manual start: GitHub Actions workflow_dispatch
 - Initial plan: 12,420 globally unique z12 tiles; the plan can grow when new positive z9 tiles appear
 - Discovery screen: independent z9 census of the broad Sweden bounding box (ownership and voluntary layers queried independently)
+- Multi-zoom diagnostic: 8 positive and 8 404 z9 tiles sampled; z8 parent plus z10-z12 descendants checked. This is a diagnostic sample, not a national completeness claim.
 - Baseline: z12 expansion artifacts from run [41704577034](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/41704577034)
 - Tile source: `https://olga.scaskog.com/map/omraden/{z}/{x}/{y}.pbf`
 
@@ -18,7 +19,8 @@ Workflow: [Monitor SCA voluntary geometry changes](../../../.github/workflows/mo
 - `tile-state.json.gz`: compact current tile/feature index with tile response hashes, geometry hashes, full properties, last-seen status and pending disappearance counters. Geometry is not duplicated in this frequently updated index.
 - `baseline/source-features.jsonl.gz`: immutable decoded geometry and metadata snapshot from the original z12 collection. Written once during bootstrap.
 - `events/YYYY-MM-DD-RUN.jsonl.gz`: append-only event deltas. New and changed geometries include their decoded MVT geometry and metadata; removals retain source tile, geometry hash and properties.
-- Workflow artifact `sca-voluntary-change-monitor`: run summary and event delta, retained for 90 days.
+- Workflow artifact `sca-voluntary-change-monitor`: run summary, event delta, z9 census and multi-zoom coverage audit, retained for 90 days.
+- `event-schema.json`: version 1 contract for downstream Skogskoll ingestion. Every event has a deterministic `event_id`, source system/tile/URL, category and `notification_candidate` flag.
 
 Each feature observation is linked to its source z/x/y tile, layer, geometry SHA-256 and full properties. MVT feature IDs are retained only as source metadata; they are not treated as stable object IDs.
 
@@ -32,14 +34,16 @@ Each feature observation is linked to its source z/x/y tile, layer, geometry SHA
 - `tile_unavailable_candidate`: a tile returned HTTP 404 twice; previous feature data is retained.
 - `tile_poll_error`: request, HTTP or decode failure; previous state is retained.
 
-A 404, timeout or other request failure never deletes features. No source geometries are merged, dissolved or overwritten.
+A 404, timeout or other request failure never deletes features. The monitor retains last-attempt HTTP status, response hash, byte count, content type and a short response-body preview separately from the last valid tile hash. No source geometries are merged, dissolved or overwritten.
 
 ## Interpretation and limitations
 
 - Geometry hashes are calculated from decoded MVT tile-local coordinates. They are stable comparison fingerprints within a tile, not global object IDs.
-- The monitor retains the original z12 plan and expands it from each complete z9 census using positive voluntary tiles plus a one-tile z12 neighbor ring. Only successfully decoded MVT responses (empty or with features) are classified as known; 404, request, HTTP and decode errors are counted as unknown and never treated as empty. A census with incomplete tile coverage or pending/unknown states is rejected before the plan changes.
+- The monitor retains the original z12 plan and expands it from positive z9 tiles plus positive z10-z12 tiles found by the stratified multi-zoom audit, with a one-tile z12 neighbor ring. Only successfully decoded MVT responses (empty or with features) are classified as known; 404, request, HTTP and decode errors are counted as unknown and never treated as empty. A census with incomplete tile coverage or pending/unknown states is rejected before the plan changes.
+- The multi-zoom audit samples 8 positive and 8 404 z9 tiles, probes each z8 parent and all z10-z12 descendants, and records response status, response hash, content type, server and a short error-body preview. Positive descendants at z10-z12 can expand the z12 plan. The sample diagnoses zoom-dependent gaps but does not establish national completeness.
 - z9 is a discovery screen, not proof of complete national SCA coverage; features not represented at z9 may still be missed until they become visible in the z9 layer.
 - A tile response hash change triggers feature-level comparison. If the payload hash is unchanged, the previous feature content is reused.
+- Event archives use the versioned envelope in `event-schema.json`. `notification_candidate=true` is reserved for `geometry_added`, `metadata_changed` and `geometry_removed_confirmed`; ambiguous geometry changes, first-miss candidates and technical/source-availability events are not directly notification-eligible.
 - Candidate relationships must not be treated as confirmed object identity.
 - The monitor currently persists a compact state index, one immutable baseline archive and compressed event deltas in the Git repository as an MVP. Before substantially increasing scan frequency or adding more layers, move high-volume geometry/event archives to durable object storage or a database.
 
@@ -48,4 +52,5 @@ A 404, timeout or other request failure never deletes features. No source geomet
 1. Run the workflow manually once to bootstrap from the original z12 artifacts and establish the current comparison baseline.
 2. Review the first summary for tile count, poll errors and event counts.
 3. Verify a second successful weekly run before treating disappearance events as operational signals.
-4. Integrate validated change events into the Skogskoll event feed and notification pipeline only after the baseline and repeatability are validated.
+4. Review the multi-zoom audit response signatures and positive descendants; adjust sample strategy only from observed evidence.
+5. Integrate version 1 event archives into the Skogskoll event feed. Keep notification delivery disabled until a second comparable run verifies event repeatability.
