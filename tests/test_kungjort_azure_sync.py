@@ -145,6 +145,8 @@ class ChangesCursorTests(unittest.TestCase):
             def get(self, path, params=None):
                 return ({"changes": [], "next_cursor": "c0", "changes_cursor": "c0"}, None)
         class FakeArchive:
+            def exists_with_source_hash(self, container, name, source_hash): return False
+            def upload_batch(self, container, name, payload, source_hash): return True
             def save_state(self, state): pass
         state = initial_state()
         state.update({"bootstrap_complete": True, "changes_cursor": "c0"})
