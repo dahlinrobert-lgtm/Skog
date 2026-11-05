@@ -159,3 +159,62 @@ def test_census_with_pending_or_unknown_states_is_rejected(tmp_path):
     with pytest.raises(ValueError,match="pending or unknown"):
         extend_tile_plan(state,path)
     assert state["tile_count"]==1
+
+
+def test_404_diagnostics_are_preserved_without_overwriting_last_valid_hash():
+    a=feat([[[0,0]]],{"class":"NO"})
+    old=old_tile([a],"last-valid-hash")
+    new=fetched([],"body-hash","not_found_404")
+    new.update({"http_status":404,"bytes":150,"content_type":"text/plain","body_preview":"tile not found"})
+    updated,events=apply_result(old,new,"now")
+    assert updated["sha256"]=="last-valid-hash"
+    assert updated["last_attempt_sha256"]=="body-hash"
+    assert updated["last_attempt_http_status"]==404
+    assert updated["last_attempt_content_type"]=="text/plain"
+    assert updated["last_attempt_body_preview"]=="tile not found"
+    assert len(updated["features"])==1
+
+
+def test_multizoom_audit_positive_z10_expands_z12_plan(tmp_path):
+    import json
+    from scripts.monitor_sca_voluntary_tiles import extend_tile_plan
+    state={"tile_count":1,"tiles":{"12/800/1600":old_tile([])}}
+    census={"summary":{"tiles_in_bbox":1,"tiles_completed":1},
+            "tile_results":[{"x":100,"y":200,
+                "voluntary":{"state":"not_found_404"},
+                "ownership":{"state":"not_found_404"}}]}
+    audit={"schema_version":1,"samples_per_class_requested":1,"unique_probe_tiles":5,
+           "probe_requests":5,"states_by_zoom":{"10":{"valid_mvt_with_features":1}},
+           "probe_results":[{"z":10,"x":100,"y":200,"state":"valid_mvt_with_features"}]}
+    cp=tmp_path/"census.json"; ap=tmp_path/"audit.json"
+    cp.write_text(json.dumps(census),encoding="utf-8")
+    ap.write_text(json.dumps(audit),encoding="utf-8")
+    added,positive=extend_tile_plan(state,cp,ap)
+    assert positive==1
+    assert added>0
+    assert "12/400/800" in state["tiles"]
+    assert any(s["source"]=="multizoom_audit" for s in state["tiles"]["12/400/800"]["discovery_sources"])
+
+
+def test_normalize_event_adds_stable_source_and_notification_envelope():
+    from scripts.monitor_sca_voluntary_tiles import normalize_event
+    raw={"event_type":"geometry_added","tile":"12/10/20","layer":"Frivilliga_Avsattningar",
+         "geometry_sha256":"abc","properties_sha256":"def","observed_at":"2026-11-05T00:00:00+00:00"}
+    first=normalize_event(raw)
+    second=normalize_event(raw)
+    assert first["event_schema_version"]==1
+    assert first["event_id"]==second["event_id"]
+    assert first["source_system"]=="sca_olga_mvt"
+    assert first["source_tile"]=={"z":12,"x":10,"y":20}
+    assert first["source_url"].endswith("/12/10/20.pbf")
+    assert first["event_category"]=="geometry"
+    assert first["notification_candidate"] is True
+    assert first["identity_resolved"] is False
+
+
+def test_candidate_events_are_not_notification_eligible():
+    from scripts.monitor_sca_voluntary_tiles import normalize_event
+    item=normalize_event({"event_type":"geometry_changed_candidate","tile":"12/10/20",
+                          "layer":"Frivilliga_Avsattningar","observed_at":"now"})
+    assert item["event_category"]=="geometry_candidate"
+    assert item["notification_candidate"] is False
