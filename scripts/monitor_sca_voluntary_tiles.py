@@ -249,14 +249,34 @@ def apply_result(old,new,at):
 
 
 def extend_tile_plan(state,census_path):
-    """Expand, never shrink, z12 monitoring from the latest independent z9 census."""
+    """Expand, never shrink, z12 monitoring from a complete national z9 census.
+
+    Valid MVT responses (empty or with features) define a complete census.
+    404, HTTP errors, request errors and decode errors are tracked explicitly
+    but never interpreted as empty coverage or used to expand the tile plan.
+    """
     census=json.loads(census_path.read_text(encoding="utf-8"))
     rows=census.get("tile_results",[])
-    vol_summary=census.get("summary",{}).get("voluntary_states",{})
-    census_ok=(bool(rows) and all(k in vol_summary for k in ("valid_mvt_with_features","valid_mvt_empty"))
-               and sum(vol_summary.values())==len(rows))
-    if not census_ok:
-        raise ValueError("National z9 seed census incomplete or missing valid empty/feature states; refusing to alter tile plan")
+    summary=census.get("summary",{})
+    expected=int(summary.get("tiles_in_bbox") or 0)
+    completed=int(summary.get("tiles_completed") or 0)
+    if not rows or expected<=0 or completed!=expected or len(rows)!=expected:
+        raise ValueError("National z9 seed census incomplete; refusing to alter tile plan")
+
+    allowed={"valid_mvt_with_features","valid_mvt_empty","not_found_404",
+             "http_error","request_error","decode_error"}
+    voluntary_states=Counter()
+    ownership_states=Counter()
+    for row in rows:
+        vol=row.get("voluntary",{}).get("state","pending")
+        own=row.get("ownership",{}).get("state","pending")
+        if vol not in allowed or own not in allowed:
+            raise ValueError("National z9 seed census contains pending or unknown tile states; refusing to alter tile plan")
+        voluntary_states[vol]+=1
+        ownership_states[own]+=1
+
+    # A positive seed is safe to use only when its voluntary MVT was decoded.
+    # 404 and transport/decode errors remain unknown, not empty.
     positive=sorted({(int(r["x"]),int(r["y"])) for r in rows
                      if r.get("voluntary",{}).get("state")=="valid_mvt_with_features"})
     targets=defaultdict(set)
@@ -282,13 +302,18 @@ def extend_tile_plan(state,census_path):
         existing={(int(s["x"]),int(s["y"])) for s in tile.get("covering_z9_seeds",[])}
         existing.update(seeds)
         tile["covering_z9_seeds"]=[{"z":9,"x":sx,"y":sy} for sx,sy in sorted(existing)]
+
     state["tile_count"]=len(state["tiles"])
     state["latest_seed_census"]={
         "observed_at":now(),
-        "tiles_in_bbox":census.get("summary",{}).get("tiles_in_bbox"),
+        "tiles_in_bbox":expected,
+        "tiles_completed":completed,
         "positive_voluntary_z9_tiles":len(positive),
         "positive_seed_tiles":[{"z":9,"x":x,"y":y} for x,y in positive],
-        "states":census.get("summary",{}).get("voluntary_states",{})
+        "voluntary_states":dict(voluntary_states),
+        "ownership_states":dict(ownership_states),
+        "voluntary_unknown_tiles":sum(voluntary_states[s] for s in ("not_found_404","http_error","request_error","decode_error")),
+        "ownership_unknown_tiles":sum(ownership_states[s] for s in ("not_found_404","http_error","request_error","decode_error"))
     }
     return added,len(positive)
 
