@@ -218,3 +218,28 @@ def test_candidate_events_are_not_notification_eligible():
                           "layer":"Frivilliga_Avsattningar","observed_at":"now"})
     assert item["event_category"]=="geometry_candidate"
     assert item["notification_candidate"] is False
+
+
+def test_multizoom_audit_probes_parent_and_descendants():
+    from scripts.audit_sca_tile_coverage import probes_for_seed
+    probes=probes_for_seed({"x":100,"y":200,"class":"positive_z9"})
+    assert (8,50,100,"parent_z8") in probes
+    assert len([p for p in probes if p[0]==10])==4
+    assert len([p for p in probes if p[0]==11])==16
+    assert len([p for p in probes if p[0]==12])==64
+
+
+def test_multizoom_seed_selection_samples_positive_and_404_classes():
+    from scripts.audit_sca_tile_coverage import choose_seeds
+    rows=[]
+    for i in range(10):
+        rows.append({"x":100+i*3,"y":200+i*2,
+                     "voluntary":{"state":"valid_mvt_with_features",
+                                  "layers":[{"feature_count":i+1}]}})
+    for i in range(12):
+        rows.append({"x":101+i*3,"y":201+i*2,
+                     "voluntary":{"state":"not_found_404","layers":[]}})
+    seeds=choose_seeds({"tile_results":rows},4)
+    assert len(seeds)==8
+    assert sum(s["class"]=="positive_z9" for s in seeds)==4
+    assert sum(s["class"]=="not_found_404_z9" for s in seeds)==4
