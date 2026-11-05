@@ -300,7 +300,7 @@ def classify_document(row: dict) -> dict:
         "priority": priority,
         "categories": sorted({item["category"] for item in matches}),
         "matched_terms": sorted({term for item in matches for term in item["terms"]}),
-        "rule_version": "2026-11-04-v1",
+        "rule_version": "2026-11-05-v2",
     }
 
 
@@ -417,6 +417,116 @@ def bootstrap(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: i
     return state
 
 
+
+def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
+    """Reclassify existing Azure metadata blobs without calling the Kungjort API."""
+    container = archive.service.get_container_client(container=STATE_CONTAINER)
+    source_prefix = "kungjort/index/bootstrap-live/"
+    target_prefix = "kungjort/index/reclassified-v2/"
+    blobs = sorted(
+        item.name for item in container.list_blobs(name_starts_with=source_prefix)
+        if item.name.endswith(".jsonl.gz")
+    )
+    if not blobs:
+        raise RuntimeError(f"No metadata index blobs found under {source_prefix}")
+
+    selected = blobs[:max_pages]
+    totals = {"high": 0, "medium": 0, "low": 0}
+    categories = {}
+    organs = {}
+    document_types = {}
+    examples = {"high": [], "medium": [], "low": []}
+    processed_blobs = 0
+    processed_rows = 0
+    uploaded_blobs = 0
+
+    for source_name in selected:
+        source_client = archive.service.get_blob_client(container=STATE_CONTAINER, blob=source_name)
+        source_bytes = source_client.download_blob().readall()
+        source_digest = sha256_bytes(source_bytes)
+        records = []
+        for raw_line in gzip.decompress(source_bytes).splitlines():
+            if not raw_line.strip():
+                continue
+            record = json.loads(raw_line)
+            metadata = record.get("metadata") if isinstance(record, dict) else None
+            if not isinstance(metadata, dict):
+                raise RuntimeError(f"Invalid metadata record in {source_name}")
+            classification = classify_document(metadata)
+            revised = dict(record)
+            revised["relevance"] = classification
+            revised["reclassified_at"] = utc_now()
+            records.append(revised)
+
+            priority = classification["priority"]
+            totals[priority] += 1
+            processed_rows += 1
+            for category in classification["categories"]:
+                categories[category] = categories.get(category, 0) + 1
+
+            organ = metadata.get("organ") or metadata.get("organ_name") or metadata.get("committee")
+            if isinstance(organ, str) and organ.strip():
+                organs[organ.strip()] = organs.get(organ.strip(), 0) + 1
+            doc_type = metadata.get("doc_type") or metadata.get("document_type") or metadata.get("type")
+            if isinstance(doc_type, str) and doc_type.strip():
+                document_types[doc_type.strip()] = document_types.get(doc_type.strip(), 0) + 1
+
+            if len(examples[priority]) < 10:
+                examples[priority].append({
+                    "document_id": record.get("document_id"),
+                    "title": metadata.get("title") or metadata.get("rubrik") or metadata.get("subject"),
+                    "organ": organ,
+                    "matched_terms": classification["matched_terms"],
+                    "categories": classification["categories"],
+                })
+
+        target_name = target_prefix + source_name[len(source_prefix):]
+        target_hash = canonical_hash(records)
+        payload = encode_jsonl_gzip(records)
+        if archive.upload_batch(STATE_CONTAINER, target_name, payload, source_digest):
+            uploaded_blobs += 1
+        processed_blobs += 1
+        print(f"Reclassified {source_name} -> {target_name}; rows={len(records)}")
+
+    summary = {
+        "schema_version": 1,
+        "rule_version": "2026-11-05-v2",
+        "created_at": utc_now(),
+        "source_prefix": source_prefix,
+        "target_prefix": target_prefix,
+        "source_blobs_total": len(blobs),
+        "source_blobs_processed": processed_blobs,
+        "source_blobs_remaining": max(0, len(blobs) - processed_blobs),
+        "rows_processed": processed_rows,
+        "priority_counts": totals,
+        "category_counts": dict(sorted(categories.items())),
+        "top_organs": sorted(organs.items(), key=lambda item: (-item[1], item[0]))[:30],
+        "top_document_types": sorted(document_types.items(), key=lambda item: (-item[1], item[0]))[:30],
+        "examples": examples,
+        "complete": processed_blobs == len(blobs),
+    }
+    summary_blob = archive.service.get_blob_client(
+        container=STATE_CONTAINER,
+        blob="kungjort/index/reclassified-v2/summary.json",
+    )
+    summary_bytes = (json.dumps(summary, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")
+    summary_blob.upload_blob(
+        summary_bytes,
+        overwrite=True,
+        content_settings=ContentSettings(content_type="application/json"),
+    )
+    print(json.dumps({
+        "mode": "reclassify",
+        "source_blobs_total": len(blobs),
+        "source_blobs_processed": processed_blobs,
+        "source_blobs_remaining": summary["source_blobs_remaining"],
+        "rows_processed": processed_rows,
+        "priority_counts": totals,
+        "complete": summary["complete"],
+        "summary_blob": "metadata/kungjort/index/reclassified-v2/summary.json",
+    }, ensure_ascii=False))
+    return summary
+
 def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: int) -> dict:
     if not state.get("bootstrap_complete"):
         raise RuntimeError("Changes sync is blocked until historical bootstrap is complete")
@@ -498,7 +608,7 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=("bootstrap", "changes"), required=True)
+    parser.add_argument("--mode", choices=("bootstrap", "changes", "reclassify"), required=True)
     parser.add_argument("--max-pages", type=int, default=5)
     parser.add_argument("--account-name", default="stskogkolldata")
     args = parser.parse_args()
@@ -515,8 +625,10 @@ def main() -> int:
         state = archive.load_state()
         if args.mode == "bootstrap":
             bootstrap(api, archive, state, args.max_pages)
-        else:
+        elif args.mode == "changes":
             sync_changes(api, archive, state, args.max_pages)
+        else:
+            reclassify_metadata(archive, args.max_pages)
     finally:
         service.close()
         credential.close()
