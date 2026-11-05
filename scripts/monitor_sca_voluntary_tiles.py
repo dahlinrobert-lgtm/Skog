@@ -372,6 +372,27 @@ def normalize_event(event):
         "identity_resolved":bool(item.get("identity_resolved",False))})
     return item
 
+def summarize_response_diagnostics(results):
+    """Aggregate identical HTTP error signatures once instead of bloating tile state."""
+    groups={}
+    for result in results:
+        state=result.get("state")
+        if state not in ("not_found_404","http_error","request_error","decode_error"):
+            continue
+        signature=(state,result.get("http_status"),result.get("sha256"),
+                   result.get("content_type"),result.get("bytes"))
+        if signature not in groups:
+            groups[signature]={"state":state,"http_status":result.get("http_status"),
+                "sha256":result.get("sha256"),"content_type":result.get("content_type"),
+                "bytes":result.get("bytes"),"count":0}
+            if result.get("body_preview"):
+                groups[signature]["body_preview"]=result["body_preview"]
+            if result.get("error"):
+                groups[signature]["error_sample"]=result["error"]
+        groups[signature]["count"]+=1
+    return sorted(groups.values(),key=lambda x:(x.get("state",""),str(x.get("http_status")),str(x.get("sha256"))))
+
+
 def run(state,workers):
     at=now(); tiles=state["tiles"]; fetched={}; errs=0
     coords=[(k,int(v["z"]),int(v["x"]),int(v["y"])) for k,v in tiles.items()]
@@ -389,7 +410,7 @@ def run(state,workers):
     state["tiles"]=dict(sorted(tiles.items())); state["last_checked_at"]=at
     summary={"observed_at":at,"tiles_checked":len(tiles),"tile_states":dict(states),
              "feature_records_decoded":nfeatures,"unchanged_tiles":states.get("unchanged",0),"event_counts":dict(Counter(e["event_type"] for e in events)),
-             "events":len(events),"poll_errors":errs,"identity_resolved":0}
+             "events":len(events),"poll_errors":errs,"identity_resolved":0,\n             "response_diagnostics":summarize_response_diagnostics(fetched.values())}
     return state,events,summary
 
 def write_events(path,events):
