@@ -651,7 +651,16 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
                 raise RuntimeError("Non-empty /changes page omitted continuation cursor")
             break
         if next_cursor == cursor:
-            raise RuntimeError("/changes cursor did not advance")
+            # A terminal page may return changes_cursor equal to the request
+            # cursor while omitting next_cursor. The page is already archived;
+            # retain the checkpoint and finish without replaying the page.
+            if not payload.get("next_cursor"):
+                state["changes_cursor"] = cursor
+                archive.save_state(state)
+                pages += 1
+                print(f"Changes terminal page {pages}: changes={len(changes)}; cursor_retained=True")
+                break
+            raise RuntimeError("Changes cursor did not advance before a non-terminal page")
         cursor = next_cursor
         state["changes_cursor"] = cursor
         archive.save_state(state)
