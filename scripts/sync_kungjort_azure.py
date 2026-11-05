@@ -584,7 +584,7 @@ def build_quality_review(archive: AzureArchive) -> dict:
             if len(examples[priority]) < 30:
                 examples[priority].append({"document_id": record.get("document_id"), "title": metadata.get("title") or metadata.get("rubrik") or metadata.get("subject"), "organ": metadata.get("organ") or metadata.get("organ_name"), "document_type": metadata.get("doc_type") or metadata.get("document_type"), "matched_terms": relevance.get("matched_terms") or [], "categories": relevance.get("categories") or []})
     report = {"schema_version": 1, "generated_at": utc_now(), "source_batches": len(names), "rows_reviewed": rows, "priority_counts": dict(priority_counts), "category_counts": dict(category_counts.most_common()), "matched_term_counts": dict(term_counts.most_common(200)), "examples": examples, "privacy_note": "Metadata only; no full text or original files included."}
-    data = (json.dumps(report, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")
+    data = (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     target = archive.service.get_blob_client(container=STATE_CONTAINER, blob="kungjort/index/reclassified-v2/quality-review.json")
     target.upload_blob(data, overwrite=True, content_settings=ContentSettings(content_type="application/json"))
     print(json.dumps({"mode": "quality-report", "rows_reviewed": rows, "priority_counts": dict(priority_counts), "private_output": "metadata/kungjort/index/reclassified-v2/quality-review.json", "full_text_included": False}, ensure_ascii=False))
