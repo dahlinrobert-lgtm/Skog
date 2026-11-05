@@ -93,6 +93,7 @@ def test_unchanged_tile_hash_skips_vector_tile_decode(monkeypatch):
     class Response:
         status_code=200
         content=b"same tile payload"
+        headers={"Content-Type":"application/x-protobuf","Server":"test"}
 
     class Session:
         def get(self, url, timeout):
