@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dahlinrobert-lgtm/Skog/blob/main/data/sca/monitoring/event-schema.json",
+  "title": "Skog SCA monitoring event",
+  "type": "object",
+  "required": [
+    "event_schema_version",
+    "event_id",
+    "event_type",
+    "event_category",
+    "source_system",
+    "source_tile",
+    "source_url",
+    "notification_candidate"
+  ],
+  "properties": {
+    "event_schema_version": {"const": 1},
+    "event_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "event_type": {"type": "string"},
+    "event_category": {
+      "enum": [
+        "geometry",
+        "geometry_candidate",
+        "metadata",
+        "availability_candidate",
+        "availability_confirmed",
+        "source_availability",
+        "technical",
+        "other"
+      ]
+    },
+    "source_system": {"const": "sca_olga_mvt"},
+    "source_tile": {
+      "type": ["object", "null"],
+      "required": ["z", "x", "y"],
+      "properties": {
+        "z": {"type": "integer"},
+        "x": {"type": "integer"},
+        "y": {"type": "integer"}
+      }
+    },
+    "source_url": {"type": ["string", "null"]},
+    "layer": {"type": ["string", "null"]},
+    "geometry_sha256": {"type": ["string", "null"]},
+    "properties_sha256": {"type": ["string", "null"]},
+    "observed_at": {"type": ["string", "null"], "format": "date-time"},
+    "notification_candidate": {"type": "boolean"},
+    "identity_resolved": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}
