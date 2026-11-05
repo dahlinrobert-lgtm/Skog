@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-04T23:38:57.892412Z",
+  "checked_at": "2026-11-04T23:57:50.733850Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27379,73 +27379,6 @@
       },
       {
         "type": "Feature",
-        "id": 6569881,
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                19.586064532454984,
-                63.79078716694979
-              ],
-              [
-                19.586533646532096,
-                63.79187289604118
-              ],
-              [
-                19.586490723474178,
-                63.791877778019085
-              ],
-              [
-                19.58603250454158,
-                63.79204984506829
-              ],
-              [
-                19.58571462633812,
-                63.79241134535827
-              ],
-              [
-                19.585689887274885,
-                63.79166354136485
-              ],
-              [
-                19.585477696239135,
-                63.791626368357996
-              ],
-              [
-                19.585555004460293,
-                63.790880739231625
-              ],
-              [
-                19.586064532454984,
-                63.79078716694979
-              ]
-            ]
-          ]
-        },
-        "properties": {
-          "OBJECTID": 6569881,
-          "Lannr": "24",
-          "Lan": "VÄSTERBOTTENS LÄN",
-          "Kommunnr": "2401",
-          "Kommun": "NORDMALING",
-          "ArendeAr": 2026,
-          "Beteckn": "A 35923-2026",
-          "Avverktyp": "Föryngringsavverkning",
-          "Andamal": "Uppgift saknas",
-          "Skogstyp": "Normal skog",
-          "Inkomdatum": 1788220800000,
-          "AnmaldHa": 0.5,
-          "SkogsodlHa": 0.5,
-          "NatforHa": null,
-          "ArendeStatus": "Anmält för avverkning",
-          "AvvSasong": "Uppgift saknas",
-          "AvvHa": null,
-          "AvverkningsanmalanKlass": "Avverkningsamalan"
-        }
-      },
-      {
-        "type": "Feature",
         "id": 6570456,
         "geometry": {
           "type": "Polygon",
@@ -27621,12 +27554,147 @@
           "AvvHa": null,
           "AvverkningsanmalanKlass": "NyAvverkningsanmalan"
         }
+      },
+      {
+        "type": "Feature",
+        "id": 6571741,
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                19.586064532454984,
+                63.79078716694979
+              ],
+              [
+                19.586533646532096,
+                63.79187289604118
+              ],
+              [
+                19.586490723474178,
+                63.791877778019085
+              ],
+              [
+                19.58603250454158,
+                63.79204984506829
+              ],
+              [
+                19.58571462633812,
+                63.79241134535827
+              ],
+              [
+                19.585689887274885,
+                63.79166354136485
+              ],
+              [
+                19.585477696239135,
+                63.791626368357996
+              ],
+              [
+                19.585555004460293,
+                63.790880739231625
+              ],
+              [
+                19.586064532454984,
+                63.79078716694979
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "OBJECTID": 6571741,
+          "Lannr": "24",
+          "Lan": "VÄSTERBOTTENS LÄN",
+          "Kommunnr": "2401",
+          "Kommun": "NORDMALING",
+          "ArendeAr": 2026,
+          "Beteckn": "A 35923-2026",
+          "Avverktyp": "Föryngringsavverkning",
+          "Andamal": "Uppgift saknas",
+          "Skogstyp": "Normal skog",
+          "Inkomdatum": 1788220800000,
+          "AnmaldHa": 0.5,
+          "SkogsodlHa": 0.5,
+          "NatforHa": null,
+          "ArendeStatus": "Anmält för avverkning",
+          "AvvSasong": "Uppgift saknas",
+          "AvvHa": null,
+          "AvverkningsanmalanKlass": "Avverkningsamalan"
+        }
       }
     ],
     "count": 165,
     "note": "Features intersect a 10 km point-distance query around the configured centre; this is not a cadastral or village boundary. A notification does not prove felling occurred."
   },
-  "new_cutting_notification_ids_since_previous_run": [],
+  "new_cutting_notification_ids_since_previous_run": [
+    {
+      "type": "Feature",
+      "id": 6571741,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              19.586064532454984,
+              63.79078716694979
+            ],
+            [
+              19.586533646532096,
+              63.79187289604118
+            ],
+            [
+              19.586490723474178,
+              63.791877778019085
+            ],
+            [
+              19.58603250454158,
+              63.79204984506829
+            ],
+            [
+              19.58571462633812,
+              63.79241134535827
+            ],
+            [
+              19.585689887274885,
+              63.79166354136485
+            ],
+            [
+              19.585477696239135,
+              63.791626368357996
+            ],
+            [
+              19.585555004460293,
+              63.790880739231625
+            ],
+            [
+              19.586064532454984,
+              63.79078716694979
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "OBJECTID": 6571741,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2401",
+        "Kommun": "NORDMALING",
+        "ArendeAr": 2026,
+        "Beteckn": "A 35923-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1788220800000,
+        "AnmaldHa": 0.5,
+        "SkogsodlHa": 0.5,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      }
+    }
+  ],
   "recent_new_cutting_notification_ids_since_previous_run": [],
   "sentinel1": {
     "status": "ok",
