@@ -85,5 +85,36 @@ class AzureSyncHelperTests(unittest.TestCase):
         self.assertEqual(state["storage_backend"], "azure-blob")
 
 
+class BootstrapCheckpointTests(unittest.TestCase):
+    def test_bootstrap_resume_without_cursor_can_start_initial_page(self):
+        from scripts.sync_kungjort_azure import bootstrap
+        class FakeArchive:
+            def __init__(self): self.state_saves = 0; self.uploaded = []
+            def upload_batch(self, container, name, payload, source_hash):
+                self.uploaded.append(name); return True
+            def exists_with_source_hash(self, container, name, source_hash): return False
+            def save_state(self, state): self.state_saves += 1
+        class FakeApi:
+            def get(self, path, params=None):
+                return ({"documents": [], "changes_cursor": "c0", "next_cursor": None}, "req")
+        state = initial_state()
+        archive = FakeArchive()
+        result = bootstrap(FakeApi(), archive, state, 1)
+        self.assertTrue(result["bootstrap_complete"])
+        self.assertEqual(result["changes_cursor"], "c0")
+        self.assertEqual(archive.state_saves, 1)
+
+    def test_bootstrap_resume_with_cursor_requires_original_changes_cursor(self):
+        from scripts.sync_kungjort_azure import bootstrap
+        class FakeApi:
+            def get(self, path, params=None): self.called = True
+        api = FakeApi()
+        state = initial_state()
+        state["bootstrap_cursor"] = "resume-token"
+        with self.assertRaisesRegex(RuntimeError, "without the original changes_cursor"):
+            bootstrap(api, object(), state, 1)
+        self.assertFalse(getattr(api, "called", False))
+
+
 if __name__ == "__main__":
     unittest.main()
