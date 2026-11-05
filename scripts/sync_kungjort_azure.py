@@ -635,7 +635,7 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=("bootstrap", "changes", "reclassify"), required=True)
+    parser.add_argument("--mode", choices=("bootstrap", "changes", "reclassify", "quality-report"), required=True)
     parser.add_argument("--max-pages", type=int, default=5)
     parser.add_argument("--account-name", default="stskogkolldata")
     args = parser.parse_args()
@@ -656,8 +656,10 @@ def main() -> int:
             bootstrap(api, archive, state, args.max_pages)
         elif args.mode == "changes":
             sync_changes(api, archive, state, args.max_pages)
-        else:
+        elif args.mode == "reclassify":
             reclassify_metadata(archive, args.max_pages)
+        else:
+            build_quality_review(archive)
     finally:
         service.close()
         credential.close()
