@@ -93,6 +93,7 @@ def test_unchanged_tile_hash_skips_vector_tile_decode(monkeypatch):
     class Response:
         status_code=200
         content=b"same tile payload"
+        headers={"Content-Type":"application/x-protobuf","Server":"test"}
 
     class Session:
         def get(self, url, timeout):
@@ -159,3 +160,101 @@ def test_census_with_pending_or_unknown_states_is_rejected(tmp_path):
     with pytest.raises(ValueError,match="pending or unknown"):
         extend_tile_plan(state,path)
     assert state["tile_count"]==1
+
+
+def test_404_diagnostics_are_preserved_without_overwriting_last_valid_hash():
+    a=feat([[[0,0]]],{"class":"NO"})
+    old=old_tile([a],"last-valid-hash")
+    new=fetched([],"body-hash","not_found_404")
+    new.update({"http_status":404,"bytes":150,"content_type":"text/plain","body_preview":"tile not found"})
+    updated,events=apply_result(old,new,"now")
+    assert updated["sha256"]=="last-valid-hash"
+    assert updated["last_attempt_sha256"]=="body-hash"
+    assert updated["last_attempt_http_status"]==404
+    assert updated["last_attempt_content_type"]=="text/plain"
+    assert len(updated["features"])==1
+
+
+def test_multizoom_audit_positive_z10_expands_z12_plan(tmp_path):
+    import json
+    from scripts.monitor_sca_voluntary_tiles import extend_tile_plan
+    state={"tile_count":1,"tiles":{"12/800/1600":old_tile([])}}
+    census={"summary":{"tiles_in_bbox":1,"tiles_completed":1},
+            "tile_results":[{"x":100,"y":200,
+                "voluntary":{"state":"not_found_404"},
+                "ownership":{"state":"not_found_404"}}]}
+    audit={"schema_version":1,"samples_per_class_requested":1,"unique_probe_tiles":5,
+           "probe_requests":5,"states_by_zoom":{"10":{"valid_mvt_with_features":1}},
+           "probe_results":[{"z":10,"x":100,"y":200,"state":"valid_mvt_with_features"}]}
+    cp=tmp_path/"census.json"; ap=tmp_path/"audit.json"
+    cp.write_text(json.dumps(census),encoding="utf-8")
+    ap.write_text(json.dumps(audit),encoding="utf-8")
+    added,positive=extend_tile_plan(state,cp,ap)
+    assert positive==1
+    assert added>0
+    assert "12/400/800" in state["tiles"]
+    assert any(s["source"]=="multizoom_audit" for s in state["tiles"]["12/400/800"]["discovery_sources"])
+
+
+def test_normalize_event_adds_stable_source_and_notification_envelope():
+    from scripts.monitor_sca_voluntary_tiles import normalize_event
+    raw={"event_type":"geometry_added","tile":"12/10/20","layer":"Frivilliga_Avsattningar",
+         "geometry_sha256":"abc","properties_sha256":"def","observed_at":"2026-11-05T00:00:00+00:00"}
+    first=normalize_event(raw)
+    second=normalize_event(raw)
+    assert first["event_schema_version"]==1
+    assert first["event_id"]==second["event_id"]
+    assert first["source_system"]=="sca_olga_mvt"
+    assert first["source_tile"]=={"z":12,"x":10,"y":20}
+    assert first["source_url"].endswith("/12/10/20.pbf")
+    assert first["event_category"]=="geometry"
+    assert first["notification_candidate"] is True
+    assert first["identity_resolved"] is False
+
+
+def test_candidate_events_are_not_notification_eligible():
+    from scripts.monitor_sca_voluntary_tiles import normalize_event
+    item=normalize_event({"event_type":"geometry_changed_candidate","tile":"12/10/20",
+                          "layer":"Frivilliga_Avsattningar","observed_at":"now"})
+    assert item["event_category"]=="geometry_candidate"
+    assert item["notification_candidate"] is False
+
+
+def test_multizoom_audit_probes_parent_and_descendants():
+    from scripts.audit_sca_tile_coverage import probes_for_seed
+    probes=probes_for_seed({"x":100,"y":200,"class":"positive_z9"})
+    assert (8,50,100,"parent_z8") in probes
+    assert len([p for p in probes if p[0]==10])==4
+    assert len([p for p in probes if p[0]==11])==16
+    assert len([p for p in probes if p[0]==12])==64
+
+
+def test_multizoom_seed_selection_samples_positive_and_404_classes():
+    from scripts.audit_sca_tile_coverage import choose_seeds
+    rows=[]
+    for i in range(10):
+        rows.append({"x":100+i*3,"y":200+i*2,
+                     "voluntary":{"state":"valid_mvt_with_features",
+                                  "layers":[{"feature_count":i+1}]}})
+    for i in range(12):
+        rows.append({"x":101+i*3,"y":201+i*2,
+                     "voluntary":{"state":"not_found_404","layers":[]}})
+    seeds=choose_seeds({"tile_results":rows},4)
+    assert len(seeds)==8
+    assert sum(s["class"]=="positive_z9" for s in seeds)==4
+    assert sum(s["class"]=="not_found_404_z9" for s in seeds)==4
+
+
+def test_response_diagnostics_group_identical_404_bodies():
+    from scripts.monitor_sca_voluntary_tiles import summarize_response_diagnostics
+    rows=[
+        {"state":"not_found_404","http_status":404,"sha256":"same","content_type":"text/html","bytes":150,"body_preview":"not found"},
+        {"state":"not_found_404","http_status":404,"sha256":"same","content_type":"text/html","bytes":150,"body_preview":"not found"},
+        {"state":"not_found_404","http_status":404,"sha256":"other","content_type":"text/html","bytes":151,"body_preview":"other body"},
+        {"state":"unchanged","http_status":200,"sha256":"valid"}
+    ]
+    groups=summarize_response_diagnostics(rows)
+    assert len(groups)==2
+    same=next(g for g in groups if g["sha256"]=="same")
+    assert same["count"]==2
+    assert same["body_preview"]=="not found"

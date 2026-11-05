@@ -62,7 +62,10 @@ def fetch_one(sess, layer_key, x, y):
         r = sess.get(url, timeout=TIMEOUT)
         raw = r.content
         base = {"status": r.status_code, "bytes": len(raw),
-                "sha256": hashlib.sha256(raw).hexdigest() if raw else None}
+                "sha256": hashlib.sha256(raw).hexdigest() if raw else None,
+                "content_type": r.headers.get("Content-Type"),
+                "server": r.headers.get("Server"),
+                "body_preview": raw[:240].decode("utf-8", errors="replace") if r.status_code != 200 else None}
         if r.status_code == 404:
             return {**base, "state": "not_found_404", "layers": []}
         if r.status_code != 200:
