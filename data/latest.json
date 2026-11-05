@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-05T13:11:19.806087Z",
+  "checked_at": "2026-11-05T17:41:59.500809Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27634,6 +27634,19 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1C_IW_GRDH_1SDV_20261105T161329_20261105T161354_010204_0145F9_F11E_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-05T16:13:29.028639Z",
+        "published_at": "2026-11-05T16:07:50.614927Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          16.914743,
+          62.887184,
+          22.937864,
+          64.84021
+        ]
+      },
+      {
         "id": "S1C_IW_GRDH_1SDV_20261105T045657_20261105T045722_010197_0145B8_070E_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-11-05T04:56:57.267421Z",
@@ -30219,19 +30232,6 @@
           23.071728,
           64.05159
         ]
-      },
-      {
-        "id": "S1A_IW_GRDH_1SDV_20260613T045744_20260613T045809_064946_082F43_118D_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-13T04:57:44.814629Z",
-        "published_at": "2026-06-13T03:54:58.200630Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          19.254341,
-          62.066597,
-          25.067354,
-          64.008163
-        ]
       }
     ],
     "count": 200,
@@ -30243,6 +30243,19 @@
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
     "collection": "sentinel-2-l2a",
     "items": [
+      {
+        "id": "S2A_MSIL2A_20261105T101121_N0513_R022_T34VDR_20261105T145605",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-11-05T10:11:21.024000Z",
+        "published_at": "2026-11-05T15:43:53.000000Z",
+        "cloud_cover_percent": 4.67,
+        "bbox": [
+          18.955537402924104,
+          63.02793322568484,
+          21.199734465434084,
+          64.02701663648664
+        ]
+      },
       {
         "id": "S2B_MSIL2A_20261104T103219_N0513_R108_T34VDR_20261104T125952",
         "collection": "sentinel-2-l2a",
@@ -32829,19 +32842,6 @@
           20.470870087810564,
           64.02238401679764
         ]
-      },
-      {
-        "id": "S2C_MSIL2A_20260328T101021_N0512_R022_T34VDR_20260328T154313",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-03-28T10:10:21.025000Z",
-        "published_at": "2026-03-28T16:46:02.000000Z",
-        "cloud_cover_percent": 98.12,
-        "bbox": [
-          18.954467619457148,
-          63.02793322568484,
-          21.199734465434084,
-          64.02701663648664
-        ]
       }
     ],
     "count": 200,
@@ -32850,29 +32850,29 @@
   },
   "new_scenes_since_previous_run": [
     {
-      "id": "S1C_IW_GRDH_1SDV_20261105T045657_20261105T045722_010197_0145B8_070E_COG",
+      "id": "S1C_IW_GRDH_1SDV_20261105T161329_20261105T161354_010204_0145F9_F11E_COG",
       "collection": "sentinel-1-grd",
-      "acquired_at": "2026-11-05T04:56:57.267421Z",
-      "published_at": "2026-11-05T05:03:53.645455Z",
+      "acquired_at": "2026-11-05T16:13:29.028639Z",
+      "published_at": "2026-11-05T16:07:50.614927Z",
       "cloud_cover_percent": null,
       "bbox": [
-        19.201677,
-        61.886066,
-        24.993452,
-        63.828449
+        16.914743,
+        62.887184,
+        22.937864,
+        64.84021
       ]
     },
     {
-      "id": "S1C_IW_GRDH_1SDV_20261105T045632_20261105T045657_010197_0145B8_1134_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-11-05T04:56:32.267924Z",
-      "published_at": "2026-11-05T04:58:35.144714Z",
-      "cloud_cover_percent": null,
+      "id": "S2A_MSIL2A_20261105T101121_N0513_R022_T34VDR_20261105T145605",
+      "collection": "sentinel-2-l2a",
+      "acquired_at": "2026-11-05T10:11:21.024000Z",
+      "published_at": "2026-11-05T15:43:53.000000Z",
+      "cloud_cover_percent": 4.67,
       "bbox": [
-        19.718552,
-        63.363106,
-        25.834766,
-        65.315498
+        18.955537402924104,
+        63.02793322568484,
+        21.199734465434084,
+        64.02701663648664
       ]
     }
   ],
