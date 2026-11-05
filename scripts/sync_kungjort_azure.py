@@ -554,6 +554,42 @@ def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
     return summary
 
 
+def build_quality_review(archive: AzureArchive) -> dict:
+    """Create metadata-only relevance examples and persist them in private Azure."""
+    from collections import Counter
+    container = archive.service.get_container_client(container=STATE_CONTAINER)
+    names = sorted(x.name for x in container.list_blobs(name_starts_with="kungjort/index/reclassified-v2/") if x.name.endswith(".jsonl.gz"))
+    if not names:
+        raise RuntimeError("No reclassified-v2 JSONL batches found")
+    priority_counts = Counter()
+    category_counts = Counter()
+    term_counts = Counter()
+    examples = {"high": [], "medium": [], "low": []}
+    rows = 0
+    for name in names:
+        client = archive.service.get_blob_client(container=STATE_CONTAINER, blob=name)
+        for line in gzip.decompress(client.download_blob().readall()).splitlines():
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            relevance = record.get("relevance") or {}
+            priority = relevance.get("priority", "low")
+            if priority not in examples:
+                priority = "low"
+            metadata = record.get("metadata") if isinstance(record.get("metadata"), dict) else {}
+            priority_counts[priority] += 1
+            category_counts.update(relevance.get("categories") or [])
+            term_counts.update(relevance.get("matched_terms") or [])
+            rows += 1
+            if len(examples[priority]) < 30:
+                examples[priority].append({"document_id": record.get("document_id"), "title": metadata.get("title") or metadata.get("rubrik") or metadata.get("subject"), "organ": metadata.get("organ") or metadata.get("organ_name"), "document_type": metadata.get("doc_type") or metadata.get("document_type"), "matched_terms": relevance.get("matched_terms") or [], "categories": relevance.get("categories") or []})
+    report = {"schema_version": 1, "generated_at": utc_now(), "source_batches": len(names), "rows_reviewed": rows, "priority_counts": dict(priority_counts), "category_counts": dict(category_counts.most_common()), "matched_term_counts": dict(term_counts.most_common(200)), "examples": examples, "privacy_note": "Metadata only; no full text or original files included."}
+    data = (json.dumps(report, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")
+    target = archive.service.get_blob_client(container=STATE_CONTAINER, blob="kungjort/index/reclassified-v2/quality-review.json")
+    target.upload_blob(data, overwrite=True, content_settings=ContentSettings(content_type="application/json"))
+    print(json.dumps({"mode": "quality-report", "rows_reviewed": rows, "priority_counts": dict(priority_counts), "private_output": "metadata/kungjort/index/reclassified-v2/quality-review.json", "full_text_included": False}, ensure_ascii=False))
+    return report
+
 def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: int) -> dict:
     if not state.get("bootstrap_complete"):
         raise RuntimeError("Changes sync is blocked until historical bootstrap is complete")
