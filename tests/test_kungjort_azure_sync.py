@@ -73,6 +73,10 @@ class AzureSyncHelperTests(unittest.TestCase):
         self.assertEqual(result["priority"], "low")
         self.assertEqual(result["categories"], [])
 
+    def test_relevance_rule_version_is_current(self):
+        result = classify_document({"title": "Avverkning"})
+        self.assertEqual(result["rule_version"], "2026-11-05-v2")
+
     def test_initial_state_has_safe_defaults(self):
         state = initial_state()
         self.assertFalse(state["bootstrap_complete"])

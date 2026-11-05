@@ -300,7 +300,7 @@ def classify_document(row: dict) -> dict:
         "priority": priority,
         "categories": sorted({item["category"] for item in matches}),
         "matched_terms": sorted({term for item in matches for term in item["terms"]}),
-        "rule_version": "2026-11-04-v1",
+        "rule_version": "2026-11-05-v2",
     }
 
 
@@ -417,6 +417,143 @@ def bootstrap(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: i
     return state
 
 
+
+def reclassify_metadata(archive: AzureArchive, max_pages: int) -> dict:
+    """Reclassify existing Azure index and migrated raw batches without API calls."""
+    sources = []
+    for container_name, prefix, kind in (
+        (STATE_CONTAINER, "kungjort/index/bootstrap-live/", "index"),
+        (RAW_CONTAINER, "bootstrap/", "legacy_raw"),
+    ):
+        container = archive.service.get_container_client(container=container_name)
+        names = sorted(
+            item.name for item in container.list_blobs(name_starts_with=prefix)
+            if item.name.endswith(".jsonl.gz")
+        )
+        sources.extend((container_name, name, kind) for name in names)
+
+    if not sources:
+        raise RuntimeError("No Kungjort metadata index or migrated bootstrap batches found in Azure")
+
+    selected = sources[:max_pages]
+    target_prefix = "kungjort/index/reclassified-v2/"
+    totals = {"high": 0, "medium": 0, "low": 0}
+    categories = {}
+    organs = {}
+    document_types = {}
+    examples = {"high": [], "medium": [], "low": []}
+    processed_blobs = 0
+    processed_rows = 0
+    uploaded_blobs = 0
+
+    for source_container, source_name, kind in selected:
+        source_client = archive.service.get_blob_client(container=source_container, blob=source_name)
+        source_bytes = source_client.download_blob().readall()
+        source_digest = sha256_bytes(source_bytes)
+        records = []
+        for raw_line in gzip.decompress(source_bytes).splitlines():
+            if not raw_line.strip():
+                continue
+            record = json.loads(raw_line)
+            if not isinstance(record, dict):
+                raise RuntimeError(f"Invalid record in {source_container}/{source_name}")
+
+            if kind == "index":
+                metadata = record.get("metadata")
+                if not isinstance(metadata, dict):
+                    raise RuntimeError(f"Invalid metadata record in {source_name}")
+                output = dict(record)
+            else:
+                list_record = record.get("list_record") if isinstance(record.get("list_record"), dict) else {}
+                detail = record.get("detail") if isinstance(record.get("detail"), dict) else {}
+                metadata = list_record
+                classification_source = {**list_record, **detail}
+                output = {
+                    "record_type": "document_index",
+                    "document_id": record.get("document_id") or document_id(list_record),
+                    "indexed_at": utc_now(),
+                    "metadata": metadata,
+                    "source_archive": f"{source_container}/{source_name}",
+                }
+
+            classification = classify_document(classification_source if kind == "legacy_raw" else metadata)
+            output["relevance"] = classification
+            output["reclassified_at"] = utc_now()
+            records.append(output)
+
+            priority = classification["priority"]
+            totals[priority] += 1
+            processed_rows += 1
+            for category in classification["categories"]:
+                categories[category] = categories.get(category, 0) + 1
+
+            organ = metadata.get("organ") or metadata.get("organ_name") or metadata.get("committee")
+            if isinstance(organ, str) and organ.strip():
+                organs[organ.strip()] = organs.get(organ.strip(), 0) + 1
+            doc_type = metadata.get("doc_type") or metadata.get("document_type") or metadata.get("type")
+            if isinstance(doc_type, str) and doc_type.strip():
+                document_types[doc_type.strip()] = document_types.get(doc_type.strip(), 0) + 1
+
+            if len(examples[priority]) < 10:
+                examples[priority].append({
+                    "document_id": output.get("document_id"),
+                    "title": metadata.get("title") or metadata.get("rubrik") or metadata.get("subject"),
+                    "organ": organ,
+                    "matched_terms": classification["matched_terms"],
+                    "categories": classification["categories"],
+                    "source_kind": kind,
+                })
+
+        if kind == "index":
+            relative = source_name[len("kungjort/index/bootstrap-live/"):]
+        else:
+            relative = "legacy-bootstrap/" + source_name[len("bootstrap/"):]
+        target_name = target_prefix + relative
+        payload = encode_jsonl_gzip(records)
+        if archive.upload_batch(STATE_CONTAINER, target_name, payload, source_digest):
+            uploaded_blobs += 1
+        processed_blobs += 1
+        print(f"Reclassified {source_container}/{source_name} -> {STATE_CONTAINER}/{target_name}; rows={len(records)}")
+
+    summary = {
+        "schema_version": 1,
+        "rule_version": "2026-11-05-v2",
+        "created_at": utc_now(),
+        "target_prefix": target_prefix,
+        "source_blobs_total": len(sources),
+        "source_blobs_processed": processed_blobs,
+        "source_blobs_remaining": max(0, len(sources) - processed_blobs),
+        "rows_processed": processed_rows,
+        "priority_counts": totals,
+        "category_counts": dict(sorted(categories.items())),
+        "top_organs": sorted(organs.items(), key=lambda item: (-item[1], item[0]))[:30],
+        "top_document_types": sorted(document_types.items(), key=lambda item: (-item[1], item[0]))[:30],
+        "examples": examples,
+        "complete": processed_blobs == len(sources),
+    }
+    summary_blob = archive.service.get_blob_client(
+        container=STATE_CONTAINER,
+        blob="kungjort/index/reclassified-v2/summary.json",
+    )
+    summary_bytes = (json.dumps(summary, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    summary_blob.upload_blob(
+        summary_bytes,
+        overwrite=True,
+        content_settings=ContentSettings(content_type="application/json"),
+    )
+    print(json.dumps({
+        "mode": "reclassify",
+        "source_blobs_total": len(sources),
+        "source_blobs_processed": processed_blobs,
+        "source_blobs_remaining": summary["source_blobs_remaining"],
+        "rows_processed": processed_rows,
+        "priority_counts": totals,
+        "complete": summary["complete"],
+        "summary_blob": "metadata/kungjort/index/reclassified-v2/summary.json",
+    }, ensure_ascii=False))
+    return summary
+
+
 def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages: int) -> dict:
     if not state.get("bootstrap_complete"):
         raise RuntimeError("Changes sync is blocked until historical bootstrap is complete")
@@ -498,13 +635,15 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=("bootstrap", "changes"), required=True)
+    parser.add_argument("--mode", choices=("bootstrap", "changes", "reclassify"), required=True)
     parser.add_argument("--max-pages", type=int, default=5)
     parser.add_argument("--account-name", default="stskogkolldata")
     args = parser.parse_args()
     if args.max_pages < 1 or args.max_pages > 500:
         parser.error("--max-pages must be between 1 and 500")
-    api = KungjortApi(os.environ.get("KUNGJORT_API_KEY"))
+    api = None
+    if args.mode in ("bootstrap", "changes"):
+        api = KungjortApi(os.environ.get("KUNGJORT_API_KEY"))
     credential = DefaultAzureCredential()
     service = BlobServiceClient(
         account_url=f"https://{args.account_name}.blob.core.windows.net",
@@ -515,8 +654,10 @@ def main() -> int:
         state = archive.load_state()
         if args.mode == "bootstrap":
             bootstrap(api, archive, state, args.max_pages)
-        else:
+        elif args.mode == "changes":
             sync_changes(api, archive, state, args.max_pages)
+        else:
+            reclassify_metadata(archive, args.max_pages)
     finally:
         service.close()
         credential.close()
