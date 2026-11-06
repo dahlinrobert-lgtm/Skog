@@ -62,7 +62,20 @@ def build_query(term: str, offset: int = 0, size: int = 100) -> dict:
     }
 
 
-def request_json(url: str, body: dict, retries: int = 3) -> dict:
+def _retry_wait(exc: Exception, attempt: int) -> float:
+    """Bounded exponential backoff, honoring numeric Retry-After when present."""
+    delay = min(2 ** attempt, 30)
+    if isinstance(exc, urllib.error.HTTPError):
+        retry_after = exc.headers.get("Retry-After") if exc.headers else None
+        if retry_after:
+            try:
+                delay = max(delay, min(float(retry_after), 60))
+            except (TypeError, ValueError):
+                pass
+    return delay
+
+
+def request_json(url: str, body: dict, retries: int = 5) -> dict:
     data = json.dumps(body, ensure_ascii=False).encode("utf-8")
     last_error = None
     for attempt in range(retries):
@@ -85,7 +98,7 @@ def request_json(url: str, body: dict, retries: int = 3) -> dict:
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, RuntimeError) as exc:
             last_error = exc
             if attempt + 1 < retries:
-                time.sleep(2 ** attempt)
+                time.sleep(_retry_wait(exc, attempt))
     raise RuntimeError(f"Catalogue request failed after {retries} attempts: {last_error}")
 
 
@@ -125,44 +138,51 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
         total = 0
         fetched = 0
         pages = 0
-        while offset < max_records_per_term:
-            page_size = min(size, max_records_per_term - offset)
-            payload = request_json(SEARCH_URL + "?bucket=metadata", build_query(term, offset, page_size))
-            total, hits = response_hits(payload)
-            pages += 1
-            if not hits:
-                break
-            for hit in hits:
-                record_id = hit.get("_id")
-                source = hit.get("_source") or {}
-                if not record_id:
-                    continue
-                item = merged.setdefault(str(record_id), {
-                    "metadata_uuid": str(record_id),
-                    "title": hit_title(source),
-                    "source": source,
-                    "matched_terms": [],
-                })
-                if term not in item["matched_terms"]:
-                    item["matched_terms"].append(term)
-                fetched += 1
-            offset += len(hits)
-            if len(hits) < page_size or offset >= total:
-                break
-            if delay:
-                time.sleep(delay)
+        error = None
+        try:
+            while offset < max_records_per_term:
+                page_size = min(size, max_records_per_term - offset)
+                payload = request_json(SEARCH_URL + "?bucket=metadata", build_query(term, offset, page_size))
+                total, hits = response_hits(payload)
+                pages += 1
+                if not hits:
+                    break
+                for hit in hits:
+                    record_id = hit.get("_id")
+                    source = hit.get("_source") or {}
+                    if not record_id:
+                        continue
+                    item = merged.setdefault(str(record_id), {
+                        "metadata_uuid": str(record_id),
+                        "title": hit_title(source),
+                        "source": source,
+                        "matched_terms": [],
+                    })
+                    if term not in item["matched_terms"]:
+                        item["matched_terms"].append(term)
+                    fetched += 1
+                offset += len(hits)
+                if len(hits) < page_size or offset >= total:
+                    break
+                if delay:
+                    time.sleep(delay)
+        except Exception as exc:
+            error = str(exc)
         term_reports.append({
             "term": term,
             "catalogue_total": total,
             "records_examined": fetched,
             "pages": pages,
             "truncated_at_cap": total > fetched and fetched >= max_records_per_term,
+            "error": error,
+            "complete": error is None,
         })
         if delay:
             time.sleep(delay)
 
     records = sorted(merged.values(), key=lambda item: ((item.get("title") or "").casefold(), item["metadata_uuid"]))
     title_counts = Counter("title available" if item["title"] else "title missing" for item in records)
+    failed_terms = [item["term"] for item in term_reports if item["error"]]
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "catalogue": CATALOG_API,
@@ -171,11 +191,16 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
         "unique_metadata_records": len(records),
         "title_quality": dict(title_counts),
         "term_results": term_reports,
+        "completed_terms": len(term_reports) - len(failed_terms),
+        "failed_terms": failed_terms,
+        "complete": not failed_terms,
+        "status": "complete" if not failed_terms else "partial",
         "records": records,
         "interpretation": (
             "Metadata discovery only. A matching record is a candidate source, not proof of "
             "a machine-readable layer or completed physical management action. Verify links, "
-            "geometry, update frequency, license, stable identifiers and status semantics."
+            "geometry, update frequency, license, stable identifiers and status semantics. "
+            "A partial result must not be interpreted as a complete catalogue inventory."
         ),
     }
 
@@ -199,6 +224,8 @@ def main() -> int:
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     print(json.dumps(report, ensure_ascii=False))
+    # Partial inventories are intentionally saved and uploaded; their status is explicit.
+    # This allows independent metadata probes and artifact publication to continue.
     return 0
 
 

@@ -8,10 +8,10 @@ Detta är ett upptäcktsflöde för att hitta möjliga datakällor om naturvård
 
 Katalogen bygger på GeoNetwork 4. Den publika söktjänsten används via:
 
-- API: \`https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api\`
-- Endpoint: \`POST /search/records/_search?bucket=metadata\`
-- Fritextindex: \`anytext\`
-- Mallposter filtreras bort med \`isTemplate = n\`.
+- API: `https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api`
+- Endpoint: `POST /search/records/_search?bucket=metadata`
+- Fritextindex: `anytext`
+- Mallposter filtreras bort med `isTemplate = n`.
 
 Sökorden omfattar naturvårdsbränning, naturvårdande skötsel, naturvårdsåtgärder, slåtter, bete, hamling, död ved, veteranisering, skogsrestaurering, invasiva arter, ängs- och betesmark, Natura 2000-skötsel samt uttryck för genomförda/utförda åtgärder, restaureringsåtgärder, skötselåtgärder, naturvårdsinsatser, åtgärdade träd och frihuggning.
 
@@ -19,10 +19,10 @@ Sökorden omfattar naturvårdsbränning, naturvårdande skötsel, naturvårdsåt
 
 Workflow-artifacten innehåller:
 
-- \`catalogue-inventory.json\`: unika metadata-ID:n, titel, råa indexerade metadatafält och vilka sökord som gav träffen.
-- \`catalogue-report.json\`: antal träffar per sökord och övergripande kvalitetsinformation.
+- `catalogue-inventory.json`: unika metadata-ID:n, titel, råa indexerade metadatafält och vilka sökord som gav träffen.
+- `catalogue-report.json`: antal träffar per sökord och övergripande kvalitetsinformation.
 
-Sökningen begränsas till 200 poster per sökord i varje inventeringspass. Efter den första körningen utökades sökordslistan med uttryck som explicit signalerar genomförda eller utförda åtgärder. Om ett sökord har fler träffar flaggas det som avklippt och behöver följas upp med paginering eller mer precisa termer.
+Varje inventeringspass hämtar upp till 500 poster per sökord med paginering i sidor om 100. Träffar slås samman på metadata-ID, så samma katalogpost som matchar flera sökord lagras en gång med samtliga matchande termer. Sökord som har fler träffar än taket flaggas som avklippta och behöver följas upp med mer precisa termer eller separat paginering. Ett högt träffantal är inte i sig ett mått på relevans eller datatäckning.
 
 ## Urvalskriterier för att gå vidare
 
@@ -49,22 +49,21 @@ Länsstyrelsernas Geodatakatalog beskriver länsstyrelsernas egna geodata och tj
 - Geodatakatalogens API-dokumentation: https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/doc/api/index.html
 - Naturvårdsregistrets metadata: https://ext-geodatakatalog-forv.lansstyrelsen.se/PlaneringsKatalogen/GetMetaDataById?id=50FE77C1-43A0-445A-B56C-6B729E21DC67_C
 
-
 ## Prioriterad kandidat som kräver åtkomstbesked
 
 Katalogsökningen den 2026-11-01 gav en särskilt relevant träff:
 
 - Titel: **LstF Skyddsvärda träd - genomförda åtgärder**
-- Metadata-UUID: \`05d91b89-f2e9-42a8-9795-44c5edd125cf\`
+- Metadata-UUID: `05d91b89-f2e9-42a8-9795-44c5edd125cf`
 - Ansvarig: Länsstyrelsen Jönköpings län
 - Geometri: punkt (skyddsvärda träd)
 - Metadatarevision: 2026-10-19
 - Uppdateringsfrekvens enligt metadata: veckovis / årligen
 - Beskrivning: visar träd som har åtgärdats, bland annat med finansiering av Åtgärdsprogrammet för skyddsvärda träd, Trädprojektet eller nationellt stöd för hamling.
-- Tjänst: \`https://ext-geodata-lokala-visning.lansstyrelsen.se/arcgis/rest/services/LSTF/LSTF_inventerade_skyddsvarda_trad_EXT/MapServer/1\`
+- Tjänst: `https://ext-geodata-lokala-visning.lansstyrelsen.se/arcgis/rest/services/LSTF/LSTF_inventerade_skyddsvarda_trad_EXT/MapServer/1`
 - Alternativ nedladdningslänk: Atom-flöde.
 
-**Viktig begränsning:** katalogposten anger \`isOpenData=false\`, konfidentialitet K2 (måttlig skada) och andra åtkomstbegränsningar. Därför hämtar probe-flödet endast tjänstens lagermetadata och ett aggregerat antal objekt. Det hämtar inte objekt-ID:n, attributrader eller koordinater. Ingen arkiverare får byggas innan Länsstyrelsen Jönköping skriftligen bekräftat åtkomst, licens, återanvändning och om punkternas lägesinformation får lagras och publiceras.
+**Viktig begränsning:** katalogposten anger `isOpenData=false`, konfidentialitet K2 (måttlig skada) och andra åtkomstbegränsningar. Därför hämtar probe-flödet endast tjänstens lagermetadata och ett aggregerat antal objekt. Det hämtar inte objekt-ID:n, attributrader eller koordinater. Ingen arkiverare får byggas innan Länsstyrelsen Jönköping skriftligen bekräftat åtkomst, licens, återanvändning och om punkternas lägesinformation får lagras och publiceras.
 
 Metadata beskriver detta som genomförda åtgärder, vilket gör det till en stark kandidat för naturvårdshändelser – men datakällan är regional och får inte generaliseras till nationell täckning.
 
@@ -76,16 +75,28 @@ Metadata beskriver detta som genomförda åtgärder, vilket gör det till en sta
 
 Dessa ska klassas som planerings-, inventerings- eller stödunderlag, inte som genomförda åtgärder.
 
-
 ### Teknisk kontroll av tjänsten (2026-11-01)
 
 Metadata-only-proben mot ArcGIS REST-lagret lyckades:
 
 - Lagertyp: Feature Layer, punktgeometri.
-- Antal objekt enligt \`returnCountOnly\`: **5 235**.
+- Antal objekt enligt `returnCountOnly`: **5 235**.
 - Koordinatsystem: SWEREF 99 TM (EPSG:3006).
-- Fält som verkar relevanta för händelsemodellen: \`TILLKDATUM\` (datum), \`ATGARD\` (åtgärd), \`FINANSIAR\` (finansiär), \`TRAD_ID\` och \`LOKAL_ID\`.
-- Även \`NORTH\` och \`EAST\` finns som koordinatattribut.
-- ArcGIS-lagermetadata lämnade \`objectIdField\` och \`globalIdField\` tomma, trots att fältlistan innehåller \`OBJECTID\`. Vi ska därför inte anta att \`OBJECTID\`, \`TRAD_ID\` eller kombinationen \`LOKAL_ID + TRAD_ID\` är beständig identitet utan att verifiera detta med dataägaren.
+- Fält som verkar relevanta för händelsemodellen: `TILLKDATUM` (datum), `ATGARD` (åtgärd), `FINANSIAR` (finansiär), `TRAD_ID` och `LOKAL_ID`.
+- Även `NORTH` och `EAST` finns som koordinatattribut.
+- ArcGIS-lagermetadata lämnade `objectIdField` och `globalIdField` tomma, trots att fältlistan innehåller `OBJECTID`. Vi ska därför inte anta att `OBJECTID`, `TRAD_ID` eller kombinationen `LOKAL_ID + TRAD_ID` är beständig identitet utan att verifiera detta med dataägaren.
 
-Proben hämtade endast lagermetadata och ett aggregerat antal. Inga objekt-ID:n, attributrader eller koordinater hämtades. K2 och \`isOpenData=false\` gäller fortfarande. Föreslagen åtgärd är att fråga Länsstyrelsen Jönköping om villkorad åtkomst, användningsrätt, lagringsrätt, publicering av aggregerade resultat samt om identitets- och datumfälten är stabila och semantiskt definierade.
+Proben hämtade endast lagermetadata och ett aggregerat antal. Inga objekt-ID:n, attributrader eller koordinater hämtades. K2 och `isOpenData=false` gäller fortfarande. Föreslagen åtgärd är att fråga Länsstyrelsen Jönköping om villkorad åtkomst, användningsrätt, lagringsrätt, publicering av aggregerade resultat samt om identitets- och datumfälten är stabila och semantiskt definierade.
+
+
+## Tillförlitlighet vid driftstörningar
+
+Katalogens sök-API kan tillfälligt svara med exempelvis HTTP 502. Proben använder därför upp till fem försök med exponentiell väntan (2, 4, 8, 16 sekunder, med tak) och respekterar numeriskt `Retry-After` när servern skickar det.
+
+Om ett sökord fortfarande misslyckas fortsätter övriga sökord. Rapporten sparar då:
+
+- `status = partial` och `complete = false`
+- `failed_terms` med de sökord som inte kunde hämtas
+- feltext, antal lyckade sidor och antal hämtade poster per sökord
+
+En partiell inventering sparas och laddas upp som artifact tillsammans med metadata-only-proben för skyddsvärda träd. Den får aldrig tolkas som en komplett kataloginventering. Ett lyckat workflow betyder i detta fall att körningen och rapporteringen genomfördes; kontrollera alltid rapportens `status` innan resultatet används.
