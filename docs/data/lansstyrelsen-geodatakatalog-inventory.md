@@ -87,3 +87,16 @@ Metadata-only-proben mot ArcGIS REST-lagret lyckades:
 - ArcGIS-lagermetadata lämnade `objectIdField` och `globalIdField` tomma, trots att fältlistan innehåller `OBJECTID`. Vi ska därför inte anta att `OBJECTID`, `TRAD_ID` eller kombinationen `LOKAL_ID + TRAD_ID` är beständig identitet utan att verifiera detta med dataägaren.
 
 Proben hämtade endast lagermetadata och ett aggregerat antal. Inga objekt-ID:n, attributrader eller koordinater hämtades. K2 och `isOpenData=false` gäller fortfarande. Föreslagen åtgärd är att fråga Länsstyrelsen Jönköping om villkorad åtkomst, användningsrätt, lagringsrätt, publicering av aggregerade resultat samt om identitets- och datumfälten är stabila och semantiskt definierade.
+
+
+## Tillförlitlighet vid driftstörningar
+
+Katalogens sök-API kan tillfälligt svara med exempelvis HTTP 502. Proben använder därför upp till fem försök med exponentiell väntan (2, 4, 8, 16 sekunder, med tak) och respekterar numeriskt `Retry-After` när servern skickar det.
+
+Om ett sökord fortfarande misslyckas fortsätter övriga sökord. Rapporten sparar då:
+
+- `status = partial` och `complete = false`
+- `failed_terms` med de sökord som inte kunde hämtas
+- feltext, antal lyckade sidor och antal hämtade poster per sökord
+
+En partiell inventering sparas och laddas upp som artifact tillsammans med metadata-only-proben för skyddsvärda träd. Den får aldrig tolkas som en komplett kataloginventering. Ett lyckat workflow betyder i detta fall att körningen och rapporteringen genomfördes; kontrollera alltid rapportens `status` innan resultatet används.
