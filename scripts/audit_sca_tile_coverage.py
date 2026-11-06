@@ -139,7 +139,7 @@ def spread_select_across_cells(rows, count, bounds, columns=4, grid_rows=4):
 
 
 def choose_seeds(census, per_class, no_positive_404_samples=None,
-                 near_positive_404_samples=None):
+                 near_positive_404_samples=None, ownership_positive_404_samples=0):
     """Sample positive/empty tiles and separately sized 404 discovery/control strata."""
     rows = census.get("tile_results", [])
     positives = [r for r in rows if r.get("voluntary", {}).get("state") == "valid_mvt_with_features"]
@@ -160,11 +160,20 @@ def choose_seeds(census, per_class, no_positive_404_samples=None,
     near_positive = [r for r in missing if any(
         max(abs(r["x"] - p["x"]), abs(r["y"] - p["y"])) == 1 for p in positive
     )]
+    # Independent cross-layer signal: ownership tile has features while the
+    # voluntary-set-aside tile is 404. Probe these before treating 404 as a gap.
+    ownership_positive_404 = [r for r in missing
+        if r.get("ownership", {}).get("state") == "valid_mvt_with_features"]
     no_positive_count = per_class // 2 if no_positive_404_samples is None else max(0, no_positive_404_samples)
     near_count = (per_class - no_positive_count if near_positive_404_samples is None
                   else max(0, near_positive_404_samples))
     no_positive_sample = spread_select_across_cells(no_positive, no_positive_count, bounds)
     used = {(r["x"], r["y"]) for r in no_positive_sample}
+    cross_layer_candidates = [r for r in ownership_positive_404
+                              if (r["x"], r["y"]) not in used]
+    cross_layer_sample = spread_select_across_cells(
+        cross_layer_candidates, max(0, ownership_positive_404_samples), bounds)
+    used.update((r["x"], r["y"]) for r in cross_layer_sample)
     near_candidates = [r for r in near_positive if (r["x"], r["y"]) not in used]
     adjacent_sample = spread_select_across_cells(near_candidates, near_count, bounds)
     used.update((r["x"], r["y"]) for r in adjacent_sample)
@@ -184,6 +193,10 @@ def choose_seeds(census, per_class, no_positive_404_samples=None,
     for row in no_positive_sample:
         selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
                          "class": "not_found_404_z9", "sampling_stratum": "no_positive_grid_cell"})
+    for row in cross_layer_sample:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "ownership_positive_voluntary_404_z9",
+                         "sampling_stratum": "ownership_positive_voluntary_404"})
     for row in adjacent_sample:
         stratum = "near_positive" if (row["x"], row["y"]) in {
             (r["x"], r["y"]) for r in near_candidates
@@ -257,13 +270,15 @@ def run(
     workers=2,
     no_positive_404_samples=None,
     near_positive_404_samples=None,
+    ownership_positive_404_samples=0,
 ):
     census = json.loads(Path(census_path).read_text(encoding="utf-8"))
     summary = census.get("summary", {})
     rows = census.get("tile_results", [])
     if not rows or int(summary.get("tiles_completed", 0)) != int(summary.get("tiles_in_bbox", -1)):
         raise ValueError("Cannot run multi-zoom audit from incomplete z9 census")
-    seeds = choose_seeds(census, per_class, no_positive_404_samples, near_positive_404_samples)
+    seeds = choose_seeds(census, per_class, no_positive_404_samples,
+                         near_positive_404_samples, ownership_positive_404_samples)
     jobs = build_probe_jobs(seeds)
 
     def task(item):
@@ -295,6 +310,7 @@ def run(
         "samples_per_class_requested": per_class,
         "no_positive_404_samples_requested": no_positive_404_samples,
         "near_positive_404_samples_requested": near_positive_404_samples,
+        "ownership_positive_404_samples_requested": ownership_positive_404_samples,
         "sampled_classes": dict(Counter(seed["class"] for seed in seeds)),
         "sampled_z9_seed_spatial_cells": {
             f"{row}:{column}": sum(
@@ -341,10 +357,12 @@ def main():
     p.add_argument("--samples-per-class", type=int, default=8)
     p.add_argument("--no-positive-404-samples", type=int, default=None)
     p.add_argument("--near-positive-404-samples", type=int, default=None)
+    p.add_argument("--ownership-positive-404-samples", type=int, default=0)
     p.add_argument("--workers", type=int, default=2)
     a = p.parse_args()
     run(a.census, a.out, max(1, a.samples_per_class), a.workers,
-        a.no_positive_404_samples, a.near_positive_404_samples)
+        a.no_positive_404_samples, a.near_positive_404_samples,
+        a.ownership_positive_404_samples)
 
 
 if __name__ == "__main__":
