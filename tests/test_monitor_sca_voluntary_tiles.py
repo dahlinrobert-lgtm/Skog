@@ -248,6 +248,37 @@ def test_multizoom_seed_selection_samples_positive_empty_and_404_classes():
     assert sum(s["class"]=="not_found_404_z9" for s in seeds)==4
 
 
+def test_multizoom_seed_selection_uses_ownership_positive_voluntary_404_cross_layer_signal():
+    from scripts.audit_sca_tile_coverage import choose_seeds
+
+    rows = []
+    for i in range(9):
+        rows.append({
+            "x": 100 + i * 3, "y": 200 + i * 2,
+            "voluntary": {"state": "not_found_404"},
+            "ownership": {"state": "valid_mvt_with_features"},
+        })
+    for i in range(5):
+        rows.append({
+            "x": 101 + i * 3, "y": 201 + i * 2,
+            "voluntary": {"state": "not_found_404"},
+            "ownership": {"state": "not_found_404"},
+        })
+
+    seeds = choose_seeds(
+        {"tile_results": rows}, per_class=0,
+        no_positive_404_samples=0, near_positive_404_samples=0,
+        ownership_positive_404_samples=9,
+    )
+    assert len(seeds) == 9
+    assert all(s["class"] == "ownership_positive_voluntary_404_z9" for s in seeds)
+    assert all(s["sampling_stratum"] == "ownership_positive_voluntary_404" for s in seeds)
+    assert {(s["x"], s["y"]) for s in seeds} == {
+        (r["x"], r["y"]) for r in rows
+        if r["ownership"]["state"] == "valid_mvt_with_features"
+    }
+
+
 def test_spatial_state_summary_accounts_for_every_z9_tile():
     from scripts.audit_sca_tile_coverage import spatial_state_summary
     census={"tile_results":[
