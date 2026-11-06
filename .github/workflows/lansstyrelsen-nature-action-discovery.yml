@@ -37,31 +37,18 @@ jobs:
           python - <<'PY'
           import json, os
           terms = {
-            "wetlands": [
-              "våtmarksrestaurering", "återvätning", "dikespluggning",
-              "hydrologisk restaurering", "igenläggning av diken", "våtmarksanläggning",
-            ],
-            "forest_management": [
-              "naturvårdande skötsel", "frihuggning", "veteranisering",
-              "skapande av död ved", "restaurering lövskog", "skötselåtgärder skog",
-            ],
-            "watercourses": [
-              "biotopvård", "vattendragsrestaurering", "flottledsåterställning",
-              "utrivning vandringshinder", "fiskväg", "lekbotten",
-            ],
-            "meadows_pastures": [
-              "ängsrestaurering", "betesrestaurering", "naturbetesmark",
-              "slåtter", "hamling", "restaurering betesmark",
-            ],
+            "wetlands": ["våtmarksrestaurering", "återvätning", "dikespluggning", "hydrologisk restaurering", "igenläggning av diken", "våtmarksanläggning"],
+            "forest_management": ["naturvårdande skötsel", "frihuggning", "veteranisering", "skapande av död ved", "restaurering lövskog", "skötselåtgärder skog"],
+            "watercourses": ["biotopvård", "vattendragsrestaurering", "flottledsåterställning", "utrivning vandringshinder", "fiskväg", "lekbotten"],
+            "meadows_pastures": ["ängsrestaurering", "betesrestaurering", "naturbetesmark", "slåtter", "hamling", "restaurering betesmark"],
           }
           category = os.environ["CATEGORY"]
           selected = terms.get(category)
           if not selected:
               raise SystemExit(f"Unknown category: {category}")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-              f.write("primary=" + selected[0] + "\\n")
-              f.write("extra=" + ",".join(selected[1:]) + "\\n")
-              f.write("terms_json=" + json.dumps(selected, ensure_ascii=False) + "\\n")
+              print("primary=" + selected[0], file=f)
+              print("extra=" + ",".join(selected[1:]), file=f)
           print(json.dumps({"category": category, "terms": selected}, ensure_ascii=False))
           PY
       - name: Search all county diaries and validate totals and pagination
@@ -69,12 +56,7 @@ jobs:
           PRIMARY_TERM: ${{ steps.terms.outputs.primary }}
           EXTRA_TERMS: ${{ steps.terms.outputs.extra }}
           CATEGORY: ${{ inputs.category }}
-        run: |
-          python scripts/search_lansstyrelsen_diary_browser.py \\
-            --county "Alla län" \\
-            --search-term "$PRIMARY_TERM" \\
-            --extra-search-terms "$EXTRA_TERMS" \\
-            --output "diary-discovery-$CATEGORY.json"
+        run: python scripts/search_lansstyrelsen_diary_browser.py --county "Alla län" --search-term "$PRIMARY_TERM" --extra-search-terms "$EXTRA_TERMS" --output "diary-discovery-$CATEGORY.json"
       - name: Print category discovery summary
         if: always()
         env:
