@@ -51,6 +51,7 @@ jobs:
             --samples-per-class 8 \
             --no-positive-404-samples 8 \
             --near-positive-404-samples 4 \
+            --ownership-positive-404-samples 9 \
             --workers 2
       - name: Poll z12 tiles and compare geometry and metadata
         env:
