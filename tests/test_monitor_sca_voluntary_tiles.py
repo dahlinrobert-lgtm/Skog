@@ -229,20 +229,39 @@ def test_multizoom_audit_probes_parent_and_descendants():
     assert len([p for p in probes if p[0]==12])==64
 
 
-def test_multizoom_seed_selection_samples_positive_and_404_classes():
+def test_multizoom_seed_selection_samples_positive_empty_and_404_classes():
     from scripts.audit_sca_tile_coverage import choose_seeds
     rows=[]
     for i in range(10):
         rows.append({"x":100+i*3,"y":200+i*2,
                      "voluntary":{"state":"valid_mvt_with_features",
                                   "layers":[{"feature_count":i+1}]}})
-    for i in range(12):
         rows.append({"x":101+i*3,"y":201+i*2,
+                     "voluntary":{"state":"valid_mvt_empty","layers":[]}})
+    for i in range(12):
+        rows.append({"x":102+i*3,"y":202+i*2,
                      "voluntary":{"state":"not_found_404","layers":[]}})
     seeds=choose_seeds({"tile_results":rows},4)
-    assert len(seeds)==8
+    assert len(seeds)==12
     assert sum(s["class"]=="positive_z9" for s in seeds)==4
+    assert sum(s["class"]=="valid_empty_z9" for s in seeds)==4
     assert sum(s["class"]=="not_found_404_z9" for s in seeds)==4
+
+
+def test_spatial_state_summary_accounts_for_every_z9_tile():
+    from scripts.audit_sca_tile_coverage import spatial_state_summary
+    census={"tile_results":[
+        {"x":100,"y":200,"voluntary":{"state":"valid_mvt_with_features"}},
+        {"x":101,"y":200,"voluntary":{"state":"valid_mvt_empty"}},
+        {"x":110,"y":210,"voluntary":{"state":"not_found_404"}},
+        {"x":111,"y":211,"voluntary":{"state":"request_error"}},
+    ]}
+    summary=spatial_state_summary(census,columns=2,rows=2)
+    assert sum(cell["tile_count"] for cell in summary["cells"])==4
+    assert sum(cell["positive_tiles"] for cell in summary["cells"])==1
+    assert sum(cell["valid_empty_tiles"] for cell in summary["cells"])==1
+    assert sum(cell["not_found_404_tiles"] for cell in summary["cells"])==1
+    assert sum(cell["technical_or_unknown_tiles"] for cell in summary["cells"])==1
 
 
 def test_response_diagnostics_group_identical_404_bodies():
