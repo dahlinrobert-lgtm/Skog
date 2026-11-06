@@ -184,7 +184,26 @@ def main() -> None:
             selected = next((o for o in options if o["label"] == county_label), None)
             if selected is None:
                 raise RuntimeError(f"County option not found: {county_label}")
-            page.locator(COUNTY_SELECT).select_option(value=selected["value"])
+            # Selecting a county can trigger an ASP.NET AutoPostBack/full
+            # navigation. Wait for that transition before interacting with the
+            # title field; otherwise Playwright may try to fill a detached form.
+            try:
+                with page.expect_navigation(wait_until="domcontentloaded", timeout=15000):
+                    page.locator(COUNTY_SELECT).select_option(value=selected["value"])
+            except PlaywrightTimeoutError:
+                # Some portal versions use an asynchronous postback instead.
+                pass
+            page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
+            page.locator(TITLE_INPUT).wait_for(state="visible", timeout=30000)
+            page.locator(SEARCH_BUTTON).wait_for(state="visible", timeout=15000)
+            selected_after_postback = page.locator(
+                f"{COUNTY_SELECT} option:checked"
+            ).inner_text()
+            if clean(selected_after_postback) != county_label:
+                raise RuntimeError(
+                    "County selection was not retained after the portal postback: "
+                    f"expected {county_label!r}, got {clean(selected_after_postback)!r}"
+                )
             page.locator(TITLE_INPUT).fill(term)
             # The portal may submit through a full navigation or an ASP.NET
             # asynchronous postback. Do not treat a timed-out navigation wait as
