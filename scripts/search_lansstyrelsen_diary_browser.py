@@ -176,34 +176,68 @@ def main() -> None:
         try:
             response = page.goto(URL, wait_until="domcontentloaded", timeout=60000)
             result["initial_http_status"] = response.status if response else None
-            page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
-            options = [
-                {"label": clean(opt.inner_text()), "value": opt.get_attribute("value")}
-                for opt in page.locator(f"{COUNTY_SELECT} option").all()
-            ]
-            selected = next((o for o in options if o["label"] == county_label), None)
-            if selected is None:
-                raise RuntimeError(f"County option not found: {county_label}")
-            # Selecting a county can trigger an ASP.NET AutoPostBack/full
-            # navigation. Wait for that transition before interacting with the
-            # title field; otherwise Playwright may try to fill a detached form.
-            try:
-                with page.expect_navigation(wait_until="domcontentloaded", timeout=15000):
-                    page.locator(COUNTY_SELECT).select_option(value=selected["value"])
-            except PlaywrightTimeoutError:
-                # Some portal versions use an asynchronous postback instead.
-                pass
-            page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=30000)
-            page.locator(TITLE_INPUT).wait_for(state="visible", timeout=30000)
-            page.locator(SEARCH_BUTTON).wait_for(state="visible", timeout=15000)
-            selected_after_postback = page.locator(
-                f"{COUNTY_SELECT} option:checked"
-            ).inner_text()
-            if clean(selected_after_postback) != county_label:
-                raise RuntimeError(
-                    "County selection was not retained after the portal postback: "
-                    f"expected {county_label!r}, got {clean(selected_after_postback)!r}"
-                )
+            # County selection may trigger an ASP.NET AutoPostBack. The portal
+            # occasionally leaves the form unavailable for >30 seconds; retry the
+            # complete navigation/selection sequence on a fresh page state rather
+            # than failing the entire national batch on one transient response.
+            county_ready = False
+            last_county_error = None
+            for county_attempt in range(1, 4):
+                try:
+                    if county_attempt > 1:
+                        try:
+                            page.goto(URL, wait_until="domcontentloaded", timeout=60000)
+                        except PlaywrightTimeoutError:
+                            pass
+                    page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=45000)
+                    options = [
+                        {"label": clean(opt.inner_text()), "value": opt.get_attribute("value")}
+                        for opt in page.locator(f"{COUNTY_SELECT} option").all()
+                    ]
+                    selected = next((o for o in options if o["label"] == county_label), None)
+                    if selected is None:
+                        raise RuntimeError(f"County option not found: {county_label}")
+                    try:
+                        with page.expect_navigation(wait_until="domcontentloaded", timeout=15000):
+                            page.locator(COUNTY_SELECT).select_option(value=selected["value"])
+                    except PlaywrightTimeoutError:
+                        # Some portal versions use an asynchronous postback.
+                        pass
+                    page.locator(COUNTY_SELECT).wait_for(state="visible", timeout=45000)
+                    page.locator(TITLE_INPUT).wait_for(state="visible", timeout=45000)
+                    page.locator(SEARCH_BUTTON).wait_for(state="visible", timeout=20000)
+                    selected_after_postback = page.locator(
+                        f"{COUNTY_SELECT} option:checked"
+                    ).inner_text()
+                    if clean(selected_after_postback) != county_label:
+                        raise RuntimeError(
+                            "County selection was not retained after the portal postback: "
+                            f"expected {county_label!r}, got {clean(selected_after_postback)!r}"
+                        )
+                    county_ready = True
+                    break
+                except Exception as county_exc:
+                    last_county_error = county_exc
+                    if county_attempt == 3:
+                        try:
+                            page_state = {
+                                "url": page.url,
+                                "title": page.title(),
+                                "ready_state": page.evaluate("document.readyState"),
+                                "body_text_excerpt": clean(page.locator("body").inner_text(timeout=10000))[:2500],
+                                "county_select_count": page.locator(COUNTY_SELECT).count(),
+                                "county_select_visible": page.locator(COUNTY_SELECT).is_visible()
+                                    if page.locator(COUNTY_SELECT).count() else False,
+                            }
+                        except Exception as diagnostic_exc:
+                            page_state = {"capture_error": f"{type(diagnostic_exc).__name__}: {diagnostic_exc}"}
+                        raise RuntimeError(
+                            f"County form did not become ready for {county_label!r} after "
+                            f"{county_attempt} attempts; last error: {type(last_county_error).__name__}: "
+                            f"{last_county_error}; page state: {json.dumps(page_state, ensure_ascii=False)}"
+                        ) from county_exc
+            if not county_ready:
+                raise RuntimeError(f"County form did not become ready for {county_label!r}")
             page.locator(TITLE_INPUT).fill(term)
             # The portal may submit through a full navigation or an ASP.NET
             # asynchronous postback. Do not treat a timed-out navigation wait as
