@@ -362,5 +362,6 @@ def test_404_seed_selection_includes_cells_without_positive_z9_tiles():
     no_positive=[s for s in missing
                  if _grid_cell(s["x"],s["y"],bounds) not in positive_cells]
     assert len(missing)==8
-    assert len(no_positive)>=4
-    assert all(s["sampling_stratum"]=="no_positive_grid_cell" for s in no_positive)
+    reserved=[s for s in missing if s["sampling_stratum"]=="no_positive_grid_cell"]
+    assert len(reserved)>=4
+    assert all(_grid_cell(s["x"],s["y"],bounds) not in positive_cells for s in reserved)
