@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-06T15:55:27.857615Z",
+  "checked_at": "2026-11-06T17:34:54.596156Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27634,6 +27634,19 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1D_IW_GRDH_1SDV_20261106T160535_20261106T160600_005349_00A30A_04D6_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-06T16:05:35.460491Z",
+        "published_at": "2026-11-06T16:12:38.706728Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          18.739607,
+          63.302692,
+          24.841118,
+          65.256569
+        ]
+      },
+      {
         "id": "S1C_IW_GRDH_1SDV_20261105T161329_20261105T161354_010204_0145F9_F11E_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-11-05T16:13:29.028639Z",
@@ -30218,19 +30231,6 @@
           62.170815,
           23.188135,
           64.115952
-        ]
-      },
-      {
-        "id": "S1D_IW_GRDH_1SDV_20260613T050515_20260613T050540_003213_0059A7_F4B8_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-13T05:05:15.599915Z",
-        "published_at": "2026-06-13T04:11:02.182610Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          17.218435,
-          62.105927,
-          23.071728,
-          64.05159
         ]
       }
     ],
@@ -32850,16 +32850,16 @@
   },
   "new_scenes_since_previous_run": [
     {
-      "id": "S2C_MSIL2A_20261106T102221_N0513_R065_T34VDR_20261106T141009",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-06T10:22:21.025000Z",
-      "published_at": "2026-11-06T15:09:02.000000Z",
-      "cloud_cover_percent": 24.75,
+      "id": "S1D_IW_GRDH_1SDV_20261106T160535_20261106T160600_005349_00A30A_04D6_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-11-06T16:05:35.460491Z",
+      "published_at": "2026-11-06T16:12:38.706728Z",
+      "cloud_cover_percent": null,
       "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        21.199734465434084,
-        64.02701663648664
+        18.739607,
+        63.302692,
+        24.841118,
+        65.256569
       ]
     }
   ],
