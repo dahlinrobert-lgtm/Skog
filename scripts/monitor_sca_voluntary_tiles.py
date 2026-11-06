@@ -309,6 +309,9 @@ def extend_tile_plan(state,census_path,coverage_audit_path=None):
                         tx,ty=x0+ox,y0+oy
                         if 0<=tx<4096 and 0<=ty<4096:
                             targets[(tx,ty)].add((z,x,y,d["source"]))
+    target_tile_count=len(targets)
+    already_monitored=sum(1 for x,y in targets if key(12,x,y) in state["tiles"])
+    discovery_sources=Counter(d["source"] for d in discoveries)
     added=0
     for (x,y),sources in targets.items():
         tile_id=key(12,x,y)
@@ -333,7 +336,11 @@ def extend_tile_plan(state,census_path,coverage_audit_path=None):
         "observed_at":now(),"tiles_in_bbox":expected,"tiles_completed":completed,
         "positive_voluntary_z9_tiles":sum(1 for r in rows if r.get("voluntary",{}).get("state")=="valid_mvt_with_features"),
         "positive_discovery_tiles_by_zoom":dict(Counter(str(d["z"]) for d in discoveries)),
+        "positive_discovery_seed_tiles_by_source":dict(discovery_sources),
         "positive_seed_tiles":discoveries,
+        "z12_discovery_target_tiles":target_tile_count,
+        "z12_discovery_target_tiles_already_monitored":already_monitored,
+        "z12_discovery_target_tiles_added":added,
         "voluntary_states":dict(voluntary_states),"ownership_states":dict(ownership_states),
         "voluntary_unknown_tiles":sum(voluntary_states[s] for s in ("not_found_404","http_error","request_error","decode_error")),
         "ownership_unknown_tiles":sum(ownership_states[s] for s in ("not_found_404","http_error","request_error","decode_error")),
@@ -442,6 +449,10 @@ def main():
                     "tile_plan_tile_count":state["tile_count"],
                     "new_tiles_added_from_discovery":new_tiles_added,
                     "positive_discovery_tiles":positive_seed_tiles,
+                    "discovery_target_z12_tiles":state.get("latest_seed_census",{}).get("z12_discovery_target_tiles",0),
+                    "discovery_target_z12_tiles_already_monitored":state.get("latest_seed_census",{}).get("z12_discovery_target_tiles_already_monitored",0),
+                    "discovery_target_z12_tiles_added":state.get("latest_seed_census",{}).get("z12_discovery_target_tiles_added",0),
+                    "positive_discovery_seed_tiles_by_source":state.get("latest_seed_census",{}).get("positive_discovery_seed_tiles_by_source",{}),
                     "coverage_audit":state.get("latest_seed_census",{}).get("multizoom_audit",{}),
                     "coverage_audit_states_by_zoom":state.get("latest_seed_census",{}).get("multizoom_states_by_zoom",{}),
                     "state_schema_version":state["schema_version"]})
