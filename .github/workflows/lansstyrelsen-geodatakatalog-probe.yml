@@ -21,7 +21,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -32,7 +32,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_lansstyrelsen_geodatakatalog_probe.py' -v
           python -m unittest discover -s tests -p 'test_lansstyrelsen_protected_tree_probe.py' -v
       - name: Search public catalogue metadata
-        run: python scripts/probe_lansstyrelsen_geodatakatalog.py --size 100 --max-records-per-term 200
+        run: python scripts/probe_lansstyrelsen_geodatakatalog.py --size 100 --max-records-per-term 500
       - name: Probe protected-tree action layer metadata only
         run: python scripts/probe_lansstyrelsen_protected_tree_actions.py
       - name: Upload catalogue inventory
