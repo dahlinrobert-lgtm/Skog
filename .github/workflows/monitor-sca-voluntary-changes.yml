@@ -49,6 +49,8 @@ jobs:
             --census sca-national-independent-layer-census-z9.json \
             --out output/sca-multizoom-coverage-audit.json \
             --samples-per-class 8 \
+            --no-positive-404-samples 8 \
+            --near-positive-404-samples 4 \
             --workers 2
       - name: Poll z12 tiles and compare geometry and metadata
         env:
