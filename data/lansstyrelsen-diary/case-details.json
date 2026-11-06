@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-05T13:29:19.092817+00:00",
+  "updated_at": "2026-11-06T13:13:39.017760+00:00",
   "cases": {
     "länsstyrelsen i dalarnas län::1034-2026": {
       "case_key": "länsstyrelsen i dalarnas län::1034-2026",
@@ -16005,6 +16005,3902 @@
       "content_hash": "9bbd1b427522517bafa5665fd1bf4fed2ec119cc78df9a6c45239523cbde3c9d",
       "first_seen_at": "2026-11-05T13:29:19.092817+00:00",
       "last_seen_at": "2026-11-05T13:29:19.092817+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::2163-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::2163-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5424018",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "2163-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av trumma, Orsa kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "00544fdcbbd2b81f058367aab2aff27e46882cf542b65953d539168d48b70db6",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::2509-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::2509-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5435115",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "2509-2026",
+        "registered_date": "2026-03-19",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Rogsjön, Falun kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-12",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "2509-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Rogsjön, Falun kommun",
+          "date": "2026-03-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-1"
+        },
+        {
+          "handling_number": "2509-2026-2",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-03-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-2"
+        },
+        {
+          "handling_number": "2509-2026-3",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-03-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-3"
+        },
+        {
+          "handling_number": "2509-2026-4",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-04-08",
+          "sender_recipient": "Falu kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-4"
+        },
+        {
+          "handling_number": "2509-2026-5",
+          "title": "Begäran om komplettering",
+          "date": "2026-04-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-5"
+        },
+        {
+          "handling_number": "2509-2026-6",
+          "title": "Komplettering med efterfrågade uppgifter",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-6"
+        },
+        {
+          "handling_number": "2509-2026-7",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-7"
+        },
+        {
+          "handling_number": "2509-2026-8",
+          "title": "Påminnelse om begäran om yttrande",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-8"
+        },
+        {
+          "handling_number": "2509-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-9"
+        },
+        {
+          "handling_number": "2509-2026-10",
+          "title": "Meddelande om mottaget beslut",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2509-2026::2509-2026-10"
+        }
+      ],
+      "content_hash": "5f513684ac2ff7e24d3f8f25f949be1735c009454b1528c903c38ea1b0c8ac64",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::2944-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::2944-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5448128",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "2944-2026",
+        "registered_date": "2026-03-30",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orsasjön, Orsa kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-02",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Orsa"
+      },
+      "handlings": [
+        {
+          "handling_number": "2944-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orsasjön, Orsa kommun",
+          "date": "2026-03-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2944-2026::2944-2026-1"
+        },
+        {
+          "handling_number": "2944-2026-2",
+          "title": "Begäran om yttrande över anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet_ anläggande av Pir_ Orsasjön_ Vångsgärde 1_ (1/1)",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2944-2026::2944-2026-2"
+        },
+        {
+          "handling_number": "2944-2026-3",
+          "title": "Ärendekontroll 2026-05-26",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2944-2026::2944-2026-3"
+        },
+        {
+          "handling_number": "2944-2026-4",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2944-2026::2944-2026-4"
+        },
+        {
+          "handling_number": "2944-2026-5",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::2944-2026::2944-2026-5"
+        }
+      ],
+      "content_hash": "ae498f2a3ea601947bc6088f7a64fc6a226962fcb268882b75e46bd1b3bd873c",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3010-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3010-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5450318",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3010-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bodabäcken vid sjön Liljan, Falun kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "51690226e8807db34c94d758c92d7db8c240b226bb066660dd33d1469c9203f0",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3025-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3025-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5450798",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3025-2026",
+        "registered_date": "2026-04-01",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Västerbäcken, Leksand kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Leksand"
+      },
+      "handlings": [
+        {
+          "handling_number": "3025-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Västerbäcken, Leksand kommun",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-1"
+        },
+        {
+          "handling_number": "3025-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-2"
+        },
+        {
+          "handling_number": "3025-2026-3",
+          "title": "Komplettering med uppgifter",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-3"
+        },
+        {
+          "handling_number": "3025-2026-4",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-4"
+        },
+        {
+          "handling_number": "3025-2026-5",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-5"
+        },
+        {
+          "handling_number": "3025-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-6"
+        },
+        {
+          "handling_number": "3025-2026-7",
+          "title": "Internyttrande från enheten för vatten",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-7"
+        },
+        {
+          "handling_number": "3025-2026-8",
+          "title": "Internyttrande från enheten för vilt",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-8"
+        },
+        {
+          "handling_number": "3025-2026-9",
+          "title": "Internyttrande från enheten för naturskydd",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-9"
+        },
+        {
+          "handling_number": "3025-2026-10",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3025-2026::3025-2026-10"
+        }
+      ],
+      "content_hash": "69b4626a297bc2eb5fb7e5e503795442a148463c00df061eb92815adf5cd33e8",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3028-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3028-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5450848",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3028-2026",
+        "registered_date": "2026-03-31",
+        "title": "Begäran om tillsyn av vattenverksamhet, klagomål gällande vägtrumma, Falu kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-24",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3028-2026-1",
+          "title": "Tillsyn av vattenverksamhet, klagomål gällande vattentrumma, Falu kommun",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-1"
+        },
+        {
+          "handling_number": "3028-2026-2",
+          "title": "Komplettering med ytterligare uppgifter",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-2"
+        },
+        {
+          "handling_number": "3028-2026-3",
+          "title": "Meddelande om situationen på platsen",
+          "date": "2026-04-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-3"
+        },
+        {
+          "handling_number": "3028-2026-4",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-4"
+        },
+        {
+          "handling_number": "3028-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-04-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-5"
+        },
+        {
+          "handling_number": "3028-2026-6",
+          "title": "Yttrande",
+          "date": "2026-04-21",
+          "sender_recipient": "Krusbos vägsamfällighetsförening",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-6"
+        },
+        {
+          "handling_number": "3028-2026-7",
+          "title": "Meddelande om nuvarande situation",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-7"
+        },
+        {
+          "handling_number": "3028-2026-8",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-05-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-8"
+        },
+        {
+          "handling_number": "3028-2026-9",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-9"
+        },
+        {
+          "handling_number": "3028-2026-10",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-10"
+        },
+        {
+          "handling_number": "3028-2026-11",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-11"
+        },
+        {
+          "handling_number": "3028-2026-12",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-12"
+        },
+        {
+          "handling_number": "3028-2026-13",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-13"
+        },
+        {
+          "handling_number": "3028-2026-14",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-14"
+        },
+        {
+          "handling_number": "3028-2026-15",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-15"
+        },
+        {
+          "handling_number": "3028-2026-16",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-16"
+        },
+        {
+          "handling_number": "3028-2026-17",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-17"
+        },
+        {
+          "handling_number": "3028-2026-18",
+          "title": "Föreläggande om att genomföra åtgärder av vägtrumma",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3028-2026::3028-2026-18"
+        }
+      ],
+      "content_hash": "b39dffd2b55e75e674ae6c1ecee0bf45065f4be91100a88586713800976a1245",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::303-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::303-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5366271",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "303-2026",
+        "registered_date": "2026-01-15",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, uttag av vattten ur Prostdammen , Gagnef kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Gagnef"
+      },
+      "handlings": [
+        {
+          "handling_number": "303-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Prostdammen , Gagnef kommun",
+          "date": "2026-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-1"
+        },
+        {
+          "handling_number": "303-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-2"
+        },
+        {
+          "handling_number": "303-2026-3",
+          "title": "Översiktkarta",
+          "date": "2026-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-3"
+        },
+        {
+          "handling_number": "303-2026-4",
+          "title": "Översiktkarta",
+          "date": "2026-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-4"
+        },
+        {
+          "handling_number": "303-2026-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-01-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-5"
+        },
+        {
+          "handling_number": "303-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-01-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-6"
+        },
+        {
+          "handling_number": "303-2026-7",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-01-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-7"
+        },
+        {
+          "handling_number": "303-2026-8",
+          "title": "Meddelande om åtgärden",
+          "date": "2026-01-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-8"
+        },
+        {
+          "handling_number": "303-2026-9",
+          "title": "Internyttrande från enheten för kulturmiljö och samhällsplanering",
+          "date": "2026-01-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-9"
+        },
+        {
+          "handling_number": "303-2026-10",
+          "title": "Påminnelse om att återkomma om vidare hantering av anmälan",
+          "date": "2026-02-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-10"
+        },
+        {
+          "handling_number": "303-2026-11",
+          "title": "Meddelande om status i ärendet",
+          "date": "2026-02-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-11"
+        },
+        {
+          "handling_number": "303-2026-12",
+          "title": "Meddelande till sökande",
+          "date": "2026-02-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-12"
+        },
+        {
+          "handling_number": "303-2026-13",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-02-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-13"
+        },
+        {
+          "handling_number": "303-2026-14",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-02-24",
+          "sender_recipient": "Gagnefs kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-14"
+        },
+        {
+          "handling_number": "303-2026-15",
+          "title": "Delbeslut om att inte påbörja vattenverksamhet",
+          "date": "2026-03-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-15"
+        },
+        {
+          "handling_number": "303-2026-16",
+          "title": "Meddelande om delgivning",
+          "date": "2026-03-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-16"
+        },
+        {
+          "handling_number": "303-2026-17",
+          "title": "Komplettering med uppgifter om vattenuttag",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-17"
+        },
+        {
+          "handling_number": "303-2026-18",
+          "title": "Meddelande om platsbesök",
+          "date": "2026-03-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-18"
+        },
+        {
+          "handling_number": "303-2026-19",
+          "title": "Påminnelse om platsbesök",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-19"
+        },
+        {
+          "handling_number": "303-2026-20",
+          "title": "Meddelande om tid för platsbesök",
+          "date": "2026-04-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-20"
+        },
+        {
+          "handling_number": "303-2026-21",
+          "title": "Meddelande om förberedelser platsbesök",
+          "date": "2026-04-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-21"
+        },
+        {
+          "handling_number": "303-2026-22",
+          "title": "Komplettering med nya uppgifter om vattenuttag",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-22"
+        },
+        {
+          "handling_number": "303-2026-23",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-23"
+        },
+        {
+          "handling_number": "303-2026-24",
+          "title": "Meddelande till sökande angående komplettering",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-24"
+        },
+        {
+          "handling_number": "303-2026-25",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::303-2026::303-2026-25"
+        }
+      ],
+      "content_hash": "f7d6040bb0f26525cb38241ad227a59248b9c3430e3849cf6ae5bd65d450490c",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3030-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3030-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5450923",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3030-2026",
+        "registered_date": "2026-03-31",
+        "title": "Begäran om yttrande över ansökan om tillstånd enligt 11 kap. miljöbalken till vattenverksamhet för att få byta ut bro över Abäcken, Ludvika kommun, mål nr M 825-26, svar senast 2026-05-12",
+        "status": "Avslutat",
+        "decision_date": "2026-05-12",
+        "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+        "municipality": "Ludvika"
+      },
+      "handlings": [
+        {
+          "handling_number": "3030-2026-1",
+          "title": "Begäran om yttrande över ansökan om tillstånd enligt 11 kap. miljöbalken till vattenverksamhet för att få byta ut bro över Abäcken, Ludvika kommun, mål nr M 825-26, svar senast 2026-05-12",
+          "date": "2026-03-31",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i dalarnas län::3030-2026::3030-2026-1"
+        },
+        {
+          "handling_number": "3030-2026-2",
+          "title": "Yttrande M 825-26",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3030-2026::3030-2026-2"
+        },
+        {
+          "handling_number": "3030-2026-3",
+          "title": "Inlämningskvitto",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3030-2026::3030-2026-3"
+        },
+        {
+          "handling_number": "3030-2026-4",
+          "title": "Handlingar översändes för kännedom, aktbilaga 23 och 21",
+          "date": "2026-05-19",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i dalarnas län::3030-2026::3030-2026-4"
+        }
+      ],
+      "content_hash": "f23ccb58b96611b78c8936f80f54d318306d37b4a146b1c8425680897777555d",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3073-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3073-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5451741",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3073-2026",
+        "registered_date": "2026-04-01",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Våmån, Mora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Mora"
+      },
+      "handlings": [
+        {
+          "handling_number": "3073-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Våmån, Mora kommun",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-1"
+        },
+        {
+          "handling_number": "3073-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-2"
+        },
+        {
+          "handling_number": "3073-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-3"
+        },
+        {
+          "handling_number": "3073-2026-4",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-4"
+        },
+        {
+          "handling_number": "3073-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-20",
+          "sender_recipient": "Mora kommun, Orsa kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-5"
+        },
+        {
+          "handling_number": "3073-2026-6",
+          "title": "Begäran om yttrande över anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet_ grävning_ schaktning_ muddring eller sprän",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-6"
+        },
+        {
+          "handling_number": "3073-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-7"
+        },
+        {
+          "handling_number": "3073-2026-8",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3073-2026::3073-2026-8"
+        }
+      ],
+      "content_hash": "3fb64d43bce0033292b7f3f403f8111f66ecf111cbda4186666260cb19521cb0",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3088-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3088-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5452164",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3088-2026",
+        "registered_date": "2026-04-02",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattenområdet utgörs av ett mindre myrmarksområde, anslutande bäck samt en sänka som saknar namn, Hedemora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-19",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Hedemora"
+      },
+      "handlings": [
+        {
+          "handling_number": "3088-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattenområdet utgörs av ett mindre myrmarksområde, anslutande bäck samt en sänka som saknar namn, Hedemora kommun",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3088-2026::3088-2026-1"
+        },
+        {
+          "handling_number": "3088-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3088-2026::3088-2026-2"
+        },
+        {
+          "handling_number": "3088-2026-3",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3088-2026::3088-2026-3"
+        },
+        {
+          "handling_number": "3088-2026-4",
+          "title": "Yttrande över anmälan",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3088-2026::3088-2026-4"
+        },
+        {
+          "handling_number": "3088-2026-5",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3088-2026::3088-2026-5"
+        },
+        {
+          "handling_number": "3088-2026-6",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3088-2026::3088-2026-6"
+        }
+      ],
+      "content_hash": "ac9e957b1fe645c1e6cc1a2fad424202f72060beb80ee9588924c38c2078ed5b",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3149-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3149-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5454006",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3149-2026",
+        "registered_date": "2026-04-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, ny vägtrumma, dike uppströms Östra Sveten, Smedjebackens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-19",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Smedjebacken"
+      },
+      "handlings": [
+        {
+          "handling_number": "3149-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, ny vägtrumma, dike uppströms Östra Sveten, Smedjebackens kommun",
+          "date": "2026-04-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-1"
+        },
+        {
+          "handling_number": "3149-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-2"
+        },
+        {
+          "handling_number": "3149-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-3"
+        },
+        {
+          "handling_number": "3149-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-4"
+        },
+        {
+          "handling_number": "3149-2026-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-5"
+        },
+        {
+          "handling_number": "3149-2026-6",
+          "title": "Yttrande över anmälan",
+          "date": "2026-04-13",
+          "sender_recipient": "Smedjebackens kommun, Miljö- och byggavdelningen",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-6"
+        },
+        {
+          "handling_number": "3149-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-7"
+        },
+        {
+          "handling_number": "3149-2026-8",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3149-2026::3149-2026-8"
+        }
+      ],
+      "content_hash": "7c761d1e5ef16e2719e72fe8a4807d226721d00f2aa1f3892712755c6f30de73",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3227-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3227-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5457339",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3227-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalälven Avesta 2:48, Avesta kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "45b2383882886fe96124e822e3b44096cbfb39db2e95b75e71c7dd9a08f8c2f6",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3231-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3231-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5457576",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3231-2026",
+        "registered_date": "2026-04-09",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Österdalälven, Leksand kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Leksand"
+      },
+      "handlings": [
+        {
+          "handling_number": "3231-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Österdalälven, Leksand kommun",
+          "date": "2026-04-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3231-2026::3231-2026-1"
+        },
+        {
+          "handling_number": "3231-2026-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3231-2026::3231-2026-2"
+        },
+        {
+          "handling_number": "3231-2026-3",
+          "title": "Yttrande över anmälan",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3231-2026::3231-2026-3"
+        },
+        {
+          "handling_number": "3231-2026-4",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3231-2026::3231-2026-4"
+        },
+        {
+          "handling_number": "3231-2026-5",
+          "title": "Meddelande om mottaget beslut",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3231-2026::3231-2026-5"
+        }
+      ],
+      "content_hash": "be31ccee171e66779017b21623c286529cdc1e6ede4fd45dfdbfe0b092c5b1ca",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3385-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3385-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5463342",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3385-2026",
+        "registered_date": "2026-04-14",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för nedgrävning av elledning i mindre Bäck, Smedjebacken kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Smedjebacken"
+      },
+      "handlings": [
+        {
+          "handling_number": "3385-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, mindre Bäck, Smedjebacken kommun",
+          "date": "2026-04-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-1"
+        },
+        {
+          "handling_number": "3385-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-2"
+        },
+        {
+          "handling_number": "3385-2026-3",
+          "title": "Begäran om komplettering för att återfinna platsen",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-3"
+        },
+        {
+          "handling_number": "3385-2026-4",
+          "title": "Komplettering med kartor",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-4"
+        },
+        {
+          "handling_number": "3385-2026-5",
+          "title": "Yttrande över anmälan",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-5"
+        },
+        {
+          "handling_number": "3385-2026-6",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-6"
+        },
+        {
+          "handling_number": "3385-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-7"
+        },
+        {
+          "handling_number": "3385-2026-8",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3385-2026::3385-2026-8"
+        }
+      ],
+      "content_hash": "31a60c7368572f1de625bc408ef9f5439b8008e633a07e84beafae5e2496a089",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3424-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3424-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5464158",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3424-2026",
+        "registered_date": "2026-04-15",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, småbäckar i området som mynnar ut i bäck längst fjällvägen, schaktning för vattenledning,  Malung-Sälen kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-13",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Malung-Sälen"
+      },
+      "handlings": [
+        {
+          "handling_number": "3424-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, småbäckar i området som mynnar ut i bäck längst fjällvägen, Malung-Sälen kommun",
+          "date": "2026-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-1"
+        },
+        {
+          "handling_number": "3424-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-2"
+        },
+        {
+          "handling_number": "3424-2026-3",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-3"
+        },
+        {
+          "handling_number": "3424-2026-4",
+          "title": "Begäran om komplettering att yttrandet även ska avse vattenskyddsområdet",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-4"
+        },
+        {
+          "handling_number": "3424-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-5"
+        },
+        {
+          "handling_number": "3424-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-6"
+        },
+        {
+          "handling_number": "3424-2026-7",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-7"
+        },
+        {
+          "handling_number": "3424-2026-8",
+          "title": "Beslut om tillstånd till avverkning, Malung-Sälens kommun",
+          "date": "2026-06-30",
+          "sender_recipient": "Skogsstyrelsen",
+          "handling_key": "länsstyrelsen i dalarnas län::3424-2026::3424-2026-8"
+        }
+      ],
+      "content_hash": "80a95993b01182fa5f3a69ec19ff6b40559ec9e6a1ba31c42953f86f4ac4fc48",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3437-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3437-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5464447",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3437-2026",
+        "registered_date": "2026-04-15",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Jälken, rensning av dike Hedemora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-27",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Hedemora"
+      },
+      "handlings": [
+        {
+          "handling_number": "3437-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Jälken, Hedemora kommun",
+          "date": "2026-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3437-2026::3437-2026-1"
+        },
+        {
+          "handling_number": "3437-2026-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3437-2026::3437-2026-2"
+        },
+        {
+          "handling_number": "3437-2026-3",
+          "title": "Yttrande över anmälan",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3437-2026::3437-2026-3"
+        },
+        {
+          "handling_number": "3437-2026-4",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3437-2026::3437-2026-4"
+        },
+        {
+          "handling_number": "3437-2026-5",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3437-2026::3437-2026-5"
+        }
+      ],
+      "content_hash": "e0cd5ec156b068aa033f4c8666c2e53fd7f0896bfe11cfcd8ab8cb853ab82a35",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3701-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3701-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5470887",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3701-2026",
+        "registered_date": "2026-04-21",
+        "title": "Begäran om sammanställning för översyn vattenverksamheter som omfattas av producentansvar för fiskeredskap, NV-26-036808",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3701-2026-1",
+          "title": "Begäran om sammanställning för översyn vattenverksamheter som omfattas av producentansvar för fiskeredskap, NV-26-036808",
+          "date": "2026-04-21",
+          "sender_recipient": "Naturvårdsverket",
+          "handling_key": "länsstyrelsen i dalarnas län::3701-2026::3701-2026-1"
+        },
+        {
+          "handling_number": "3701-2026-2",
+          "title": "Tjänsteanteckning om utebliven åtgärd",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3701-2026::3701-2026-2"
+        }
+      ],
+      "content_hash": "4dc7466a253181d00fb47d0fa9077d3ac0691e8e560887629ebf5ecf6f645ed6",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3750-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3750-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5472147",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3750-2026",
+        "registered_date": "2026-04-22",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, nedläggning av kabel vid Vallsjön, Malung-Sälen kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Malung-Sälen"
+      },
+      "handlings": [
+        {
+          "handling_number": "3750-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, vallsjön, Malung-Sälen kommun",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-1"
+        },
+        {
+          "handling_number": "3750-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-2"
+        },
+        {
+          "handling_number": "3750-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-3"
+        },
+        {
+          "handling_number": "3750-2026-4",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-4"
+        },
+        {
+          "handling_number": "3750-2026-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-5"
+        },
+        {
+          "handling_number": "3750-2026-6",
+          "title": "Yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Miljö- och Stadsbyggnadsförvaltningen, Malung Sälens kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-6"
+        },
+        {
+          "handling_number": "3750-2026-7",
+          "title": "Komplettering med uppgifter efter fel i e-tjänst plattformen",
+          "date": "2026-04-27",
+          "sender_recipient": "Malung-Sälens kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-7"
+        },
+        {
+          "handling_number": "3750-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3750-2026::3750-2026-8"
+        }
+      ],
+      "content_hash": "b4fa6fbb9ec50d5dfab351c430567ec5ee6fa02f7b8d26bd7fea650c2960b04d",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3770-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3770-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5472612",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3770-2026",
+        "registered_date": "2026-04-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Södra barken, Smedjebacken kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-03",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3770-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Södra barken, Smedjebacken kommun",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-1"
+        },
+        {
+          "handling_number": "3770-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-2"
+        },
+        {
+          "handling_number": "3770-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-3"
+        },
+        {
+          "handling_number": "3770-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-4"
+        },
+        {
+          "handling_number": "3770-2026-5",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-5"
+        },
+        {
+          "handling_number": "3770-2026-6",
+          "title": "Fullmakt",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-6"
+        },
+        {
+          "handling_number": "3770-2026-7",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-7"
+        },
+        {
+          "handling_number": "3770-2026-8",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-8"
+        },
+        {
+          "handling_number": "3770-2026-9",
+          "title": "Komplettering med uppgifter efter fel i e-tjänstplattformen",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-9"
+        },
+        {
+          "handling_number": "3770-2026-10",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-10"
+        },
+        {
+          "handling_number": "3770-2026-11",
+          "title": "Information om vattenskyddsområde, dispens m.m.",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-11"
+        },
+        {
+          "handling_number": "3770-2026-12",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-12"
+        },
+        {
+          "handling_number": "3770-2026-13",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3770-2026::3770-2026-13"
+        }
+      ],
+      "content_hash": "191842d4f44adf545c614c9ab7600f34f771f59303b0ba9686029485f6525513",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3782-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3782-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5473145",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3782-2026",
+        "registered_date": "2026-04-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Våbäcke 38:1, Säter kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-27",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Säter"
+      },
+      "handlings": [
+        {
+          "handling_number": "3782-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Våbäcke 38:1, Säter kommun",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-1"
+        },
+        {
+          "handling_number": "3782-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-2"
+        },
+        {
+          "handling_number": "3782-2026-3",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-3"
+        },
+        {
+          "handling_number": "3782-2026-4",
+          "title": "Meddelande till sökande gällande rådighet",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-4"
+        },
+        {
+          "handling_number": "3782-2026-5",
+          "title": "Meddelande om kontakt med fastighetsägare",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-5"
+        },
+        {
+          "handling_number": "3782-2026-6",
+          "title": "Komplettering med uppgifter efter fel i e-tjänstplattformen",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-6"
+        },
+        {
+          "handling_number": "3782-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-18",
+          "sender_recipient": "Säters kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-7"
+        },
+        {
+          "handling_number": "3782-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3782-2026::3782-2026-8"
+        }
+      ],
+      "content_hash": "d1e9b23bc22d023246642738ee0c2e4a1b1336336f877aad985ce17e104cf5df",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3795-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3795-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5473895",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3795-2026",
+        "registered_date": "2026-04-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Korsnäsströmmen, Falun kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "3795-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Korsnäsströmmen, Falun kommun",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-1"
+        },
+        {
+          "handling_number": "3795-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-2"
+        },
+        {
+          "handling_number": "3795-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-3"
+        },
+        {
+          "handling_number": "3795-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-4"
+        },
+        {
+          "handling_number": "3795-2026-5",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-5"
+        },
+        {
+          "handling_number": "3795-2026-6",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-6"
+        },
+        {
+          "handling_number": "3795-2026-7",
+          "title": "Komplettering med uppgifter efter fel i e-tjänstplattformen",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-7"
+        },
+        {
+          "handling_number": "3795-2026-8",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-8"
+        },
+        {
+          "handling_number": "3795-2026-9",
+          "title": "Internyttrande från enheten för kulturmiljö",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-9"
+        },
+        {
+          "handling_number": "3795-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-10"
+        },
+        {
+          "handling_number": "3795-2026-11",
+          "title": "Meddelande till sökande om beslut",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-11"
+        },
+        {
+          "handling_number": "3795-2026-12",
+          "title": "Meddelande om ändrad bedömning gällande ingrepp i fornlämning",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-12"
+        },
+        {
+          "handling_number": "3795-2026-13",
+          "title": "Meddelande till sökande",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3795-2026::3795-2026-13"
+        }
+      ],
+      "content_hash": "68cf108eb0ac12973d3ba078556073707a49adb0a7360e4fe26366a510585a86",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3842-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3842-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5475069",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3842-2026",
+        "registered_date": "2026-04-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för utrivning av befintlig uttjänt bro och anläggande av ny bro över Låsån, Ludvika kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ludvika"
+      },
+      "handlings": [
+        {
+          "handling_number": "3842-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Låsån, Ludvika kommun",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-1"
+        },
+        {
+          "handling_number": "3842-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-2"
+        },
+        {
+          "handling_number": "3842-2026-3",
+          "title": "Komplettering med uppgifter efter fel i e-tjänst plattformen",
+          "date": "2026-04-24",
+          "sender_recipient": "Bergslagets Egendomar AB",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-3"
+        },
+        {
+          "handling_number": "3842-2026-4",
+          "title": "Begäran om yttrande över anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för utrivning av befintlig uttjänt bro och",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-4"
+        },
+        {
+          "handling_number": "3842-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-05",
+          "sender_recipient": "Ludvika kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-5"
+        },
+        {
+          "handling_number": "3842-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-6"
+        },
+        {
+          "handling_number": "3842-2026-7",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-7"
+        },
+        {
+          "handling_number": "3842-2026-8",
+          "title": "Låsån Dnr 3824-2026",
+          "date": "2026-08-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-8"
+        },
+        {
+          "handling_number": "3842-2026-9",
+          "title": "Svar_ Låsån Dnr 3824-2026",
+          "date": "2026-09-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3842-2026::3842-2026-9"
+        }
+      ],
+      "content_hash": "fb778f12ac019e31f79c9bf306afa9a0aab0f946cc03d4aa809e3186dcc10ea5",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3846-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3846-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5475340",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3846-2026",
+        "registered_date": "2026-04-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för renovering av brygga , Sjön Varpan, Falun kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "3846-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sjön Varpan, Falun kommun",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-1"
+        },
+        {
+          "handling_number": "3846-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-2"
+        },
+        {
+          "handling_number": "3846-2026-3",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-3"
+        },
+        {
+          "handling_number": "3846-2026-4",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-4"
+        },
+        {
+          "handling_number": "3846-2026-5",
+          "title": "Meddelande till sökande angående strandskydd",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-5"
+        },
+        {
+          "handling_number": "3846-2026-6",
+          "title": "Meddelande om strandskyddsdispens",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-6"
+        },
+        {
+          "handling_number": "3846-2026-7",
+          "title": "Meddelande till sökande angående strandskyddsdispens",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-7"
+        },
+        {
+          "handling_number": "3846-2026-8",
+          "title": "Meddelande om strandskyddsdispens",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-8"
+        },
+        {
+          "handling_number": "3846-2026-9",
+          "title": "Komplettering med uppgifter efter fel i e-tjänst plattformen",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-9"
+        },
+        {
+          "handling_number": "3846-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-10"
+        },
+        {
+          "handling_number": "3846-2026-11",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3846-2026::3846-2026-11"
+        }
+      ],
+      "content_hash": "b6888a8136ab22eae6f14ca00e6075ceb92262bb5f6a55619e18448bd6a94555",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3893-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3893-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5477108",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3893-2026",
+        "registered_date": "2026-04-27",
+        "title": "Förfrågan om otillåten vattenverksamhet, Ludvika kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-05",
+        "sender_recipient": "Ludvika kommun",
+        "municipality": "Ludvika"
+      },
+      "handlings": [
+        {
+          "handling_number": "3893-2026-1",
+          "title": "Förfrågan om otillåten vattenverksamhet, Ludvika kommun",
+          "date": "2026-04-27",
+          "sender_recipient": "Ludvika kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-1"
+        },
+        {
+          "handling_number": "3893-2026-2",
+          "title": "Meddelande om handläggning",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-2"
+        },
+        {
+          "handling_number": "3893-2026-3",
+          "title": "Begäran om uppgifter",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-3"
+        },
+        {
+          "handling_number": "3893-2026-4",
+          "title": "Sv_ Markavvattning på fastigheten Gonäs 1_178",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-4"
+        },
+        {
+          "handling_number": "3893-2026-5",
+          "title": "Meddelande om de uppgifter kommunen lämnat",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-5"
+        },
+        {
+          "handling_number": "3893-2026-6",
+          "title": "Meddelande om uppgifter om bortledning av ytvatten",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-6"
+        },
+        {
+          "handling_number": "3893-2026-7",
+          "title": "Meddelande om att kommunen innte bedömer att det är bortpumpning av grundvatten.",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-7"
+        },
+        {
+          "handling_number": "3893-2026-8",
+          "title": "Meddelande om att erhålla svar från Länsstyrelsen om status i ärendet.",
+          "date": "2026-10-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-8"
+        },
+        {
+          "handling_number": "3893-2026-9",
+          "title": "Meddelande om att ärendet lämnas utan åtgärd.",
+          "date": "2026-10-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3893-2026::3893-2026-9"
+        }
+      ],
+      "content_hash": "ac91d7aeef8746ee5a156735b9d4f8c928d94dab894986b3d1ca9af34d30a174",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3933-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3933-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5478298",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3933-2026",
+        "registered_date": "2026-04-28",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vanån, Vansbro kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Vansbro"
+      },
+      "handlings": [
+        {
+          "handling_number": "3933-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vanån, Vansbro kommun",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-1"
+        },
+        {
+          "handling_number": "3933-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-2"
+        },
+        {
+          "handling_number": "3933-2026-3",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-3"
+        },
+        {
+          "handling_number": "3933-2026-4",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-4"
+        },
+        {
+          "handling_number": "3933-2026-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-5"
+        },
+        {
+          "handling_number": "3933-2026-6",
+          "title": "Komplettering med fråga om vattenskyddsområde",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-6"
+        },
+        {
+          "handling_number": "3933-2026-7",
+          "title": "Yttrande",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-7"
+        },
+        {
+          "handling_number": "3933-2026-8",
+          "title": "Yttrande",
+          "date": "2026-06-09",
+          "sender_recipient": "Vansbro kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-8"
+        },
+        {
+          "handling_number": "3933-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-9"
+        },
+        {
+          "handling_number": "3933-2026-10",
+          "title": "Meddelande om delgivning",
+          "date": "2026-07-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3933-2026::3933-2026-10"
+        }
+      ],
+      "content_hash": "386f128a75de537f26fe82b6bf11fb1b62317830c1ec0ca689fccb4ebc018dc9",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::3960-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::3960-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5479107",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "3960-2026",
+        "registered_date": "2026-04-28",
+        "title": "Begäran om tillsyn av vattenverksamhet utfyllnad Hedkarlsjön, Falu kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Falu kommun",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "3960-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Falu kommun",
+          "date": "2026-04-28",
+          "sender_recipient": "Falu kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3960-2026::3960-2026-1"
+        },
+        {
+          "handling_number": "3960-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3960-2026::3960-2026-2"
+        },
+        {
+          "handling_number": "3960-2026-3",
+          "title": "Komplettering med karta och uppgifter",
+          "date": "2026-05-11",
+          "sender_recipient": "Falu kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3960-2026::3960-2026-3"
+        },
+        {
+          "handling_number": "3960-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3960-2026::3960-2026-4"
+        },
+        {
+          "handling_number": "3960-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3960-2026::3960-2026-5"
+        },
+        {
+          "handling_number": "3960-2026-6",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-08-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::3960-2026::3960-2026-6"
+        },
+        {
+          "handling_number": "3960-2026-7",
+          "title": "Förfrågan om ärendets handläggning",
+          "date": "2026-10-02",
+          "sender_recipient": "Falu kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::3960-2026::3960-2026-7"
+        }
+      ],
+      "content_hash": "dea88eb47848011699576a763a96cb04626bd8b9496517c012d61790338c00aa",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4239-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4239-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5488230",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4239-2026",
+        "registered_date": "2026-05-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, utbyte av vägtrummor, Malung-Sälen kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Malung-Sälen"
+      },
+      "handlings": [
+        {
+          "handling_number": "4239-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Namnlösa vattendrag, se bilaga, Malung-Sälen kommun",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-1"
+        },
+        {
+          "handling_number": "4239-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-2"
+        },
+        {
+          "handling_number": "4239-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-3"
+        },
+        {
+          "handling_number": "4239-2026-4",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-4"
+        },
+        {
+          "handling_number": "4239-2026-5",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-5"
+        },
+        {
+          "handling_number": "4239-2026-6",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-6"
+        },
+        {
+          "handling_number": "4239-2026-7",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-05-11",
+          "sender_recipient": "Malung-Sälens kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-7"
+        },
+        {
+          "handling_number": "4239-2026-8",
+          "title": "Internyttrande från Enheten för kulturmiljö och samhällsplanering",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-8"
+        },
+        {
+          "handling_number": "4239-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4239-2026::4239-2026-10"
+        }
+      ],
+      "content_hash": "ef570dfb0e37a88929ace085279ea812ee1095a242d8a262605ec1893649654f",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4315-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4315-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5489889",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4315-2026",
+        "registered_date": "2026-05-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Rämen, Säter kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Säter"
+      },
+      "handlings": [
+        {
+          "handling_number": "4315-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Rämen, Säter kommun",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-1"
+        },
+        {
+          "handling_number": "4315-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-2"
+        },
+        {
+          "handling_number": "4315-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-3"
+        },
+        {
+          "handling_number": "4315-2026-4",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-4"
+        },
+        {
+          "handling_number": "4315-2026-5",
+          "title": "Begäran om skriftlig återkoppling, akut åtgärd, Rämen, väg 646",
+          "date": "2026-05-22",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-5"
+        },
+        {
+          "handling_number": "4315-2026-6",
+          "title": "Meddelande till sökande angående akut åtgärd",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-6"
+        },
+        {
+          "handling_number": "4315-2026-7",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-7"
+        },
+        {
+          "handling_number": "4315-2026-8",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-8"
+        },
+        {
+          "handling_number": "4315-2026-9",
+          "title": "Meddelande om akut åtgärd",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-9"
+        },
+        {
+          "handling_number": "4315-2026-11",
+          "title": "Meddelande om återtagande av anmälan",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-11"
+        },
+        {
+          "handling_number": "4315-2026-12",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-29",
+          "sender_recipient": "Säters kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-12"
+        },
+        {
+          "handling_number": "4315-2026-13",
+          "title": "Information om att ärendet avslutas",
+          "date": "2026-06-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-13"
+        },
+        {
+          "handling_number": "4315-2026-14",
+          "title": "Beslut att avsluta utan åtgärd",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-14"
+        },
+        {
+          "handling_number": "4315-2026-15",
+          "title": "Yttrande - klart",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4315-2026::4315-2026-15"
+        }
+      ],
+      "content_hash": "4654da4db8c5002d36e4584831bdafaca2c4c8cd3d02d9f45ac729503018327d",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4429-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4429-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5494394",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4429-2026",
+        "registered_date": "2026-05-13",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vasselsjön, Den gamla kanalen till Enkullens Kraftstation, Ludvika kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ludvika"
+      },
+      "handlings": [
+        {
+          "handling_number": "4429-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vasselsjön, Den gamla kanalen till Enkullens Kraftstation, Ludvika kommun",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4429-2026::4429-2026-1"
+        },
+        {
+          "handling_number": "4429-2026-2",
+          "title": "Begäran om yttrande anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet_ grävning_ schaktning_ muddring eller sprängning",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4429-2026::4429-2026-2"
+        },
+        {
+          "handling_number": "4429-2026-3",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4429-2026::4429-2026-3"
+        },
+        {
+          "handling_number": "4429-2026-4",
+          "title": "Yttrande över fundering angående gammal kraftstation i Ludvika kommun_ kulturvärde_",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4429-2026::4429-2026-4"
+        },
+        {
+          "handling_number": "4429-2026-5",
+          "title": "Yttrande över begäran.",
+          "date": "2026-06-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4429-2026::4429-2026-5"
+        },
+        {
+          "handling_number": "4429-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4429-2026::4429-2026-6"
+        },
+        {
+          "handling_number": "4429-2026-7",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4429-2026::4429-2026-7"
+        }
+      ],
+      "content_hash": "815eecee5130257d6e4fa1cdf23412749e94c9fe33e9d5ea07e650a5dbd8fa50",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4469-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4469-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5495092",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4469-2026",
+        "registered_date": "2026-05-13",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kvarnbäcken, Avesta kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Avesta"
+      },
+      "handlings": [
+        {
+          "handling_number": "4469-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kvarnbäcken, Avesta kommun",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4469-2026::4469-2026-1"
+        },
+        {
+          "handling_number": "4469-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4469-2026::4469-2026-2"
+        },
+        {
+          "handling_number": "4469-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4469-2026::4469-2026-3"
+        },
+        {
+          "handling_number": "4469-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4469-2026::4469-2026-4"
+        },
+        {
+          "handling_number": "4469-2026-5",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-05-27",
+          "sender_recipient": "Västmanland-Dalarna miljö- och byggförvaltning",
+          "handling_key": "länsstyrelsen i dalarnas län::4469-2026::4469-2026-5"
+        },
+        {
+          "handling_number": "4469-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4469-2026::4469-2026-6"
+        },
+        {
+          "handling_number": "4469-2026-7",
+          "title": "Meddelande om delgivning",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4469-2026::4469-2026-7"
+        }
+      ],
+      "content_hash": "e2dfc6da90237863838c7ca67eb88b592020a47309e44593c9b1509394cc01cb",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4488-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4488-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5496363",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4488-2026",
+        "registered_date": "2026-05-18",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, flytt av vägtrumma, Sörskog, Falu kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-14",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "4488-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sörskog, Falun kommun",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4488-2026::4488-2026-1"
+        },
+        {
+          "handling_number": "4488-2026-2",
+          "title": "Yttrande över anmälan",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4488-2026::4488-2026-2"
+        },
+        {
+          "handling_number": "4488-2026-3",
+          "title": "Begäran om yttrande över anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet_ trumma_ omgrävning av vattendrag_ Sörskog_",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4488-2026::4488-2026-3"
+        },
+        {
+          "handling_number": "4488-2026-4",
+          "title": "Yttrande - klart",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4488-2026::4488-2026-4"
+        },
+        {
+          "handling_number": "4488-2026-5",
+          "title": "Yttrande - klart",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4488-2026::4488-2026-5"
+        },
+        {
+          "handling_number": "4488-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4488-2026::4488-2026-6"
+        },
+        {
+          "handling_number": "4488-2026-7",
+          "title": "Meddelande om delgivning",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4488-2026::4488-2026-7"
+        }
+      ],
+      "content_hash": "8e7d1736833aacd52eac67b1dbf2337e38e01d9f2c4ba88b5434747b2da174e6",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4575-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4575-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5499402",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4575-2026",
+        "registered_date": "2026-05-19",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av vägtrummor, Holmsjöbäcken, Smedjebacken kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-15",
+        "sender_recipient": "Jutbovägens Samfällighetsförening",
+        "municipality": "Smedjebacken"
+      },
+      "handlings": [
+        {
+          "handling_number": "4575-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Holmsjöbäcken, Smedjebacken kommun",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-1"
+        },
+        {
+          "handling_number": "4575-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-2"
+        },
+        {
+          "handling_number": "4575-2026-3",
+          "title": "Översiktkarta",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-3"
+        },
+        {
+          "handling_number": "4575-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-4"
+        },
+        {
+          "handling_number": "4575-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-5"
+        },
+        {
+          "handling_number": "4575-2026-6",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-6"
+        },
+        {
+          "handling_number": "4575-2026-7",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-29",
+          "sender_recipient": "Smedjebackens kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-7"
+        },
+        {
+          "handling_number": "4575-2026-8",
+          "title": "Internyttrande från Enheten för kulturmiljö och samhällsplanering",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-8"
+        },
+        {
+          "handling_number": "4575-2026-9",
+          "title": "Information om fornlämning i område för trumbyte i Holmsjöbäcken",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-9"
+        },
+        {
+          "handling_number": "4575-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-10"
+        },
+        {
+          "handling_number": "4575-2026-11",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4575-2026::4575-2026-11"
+        }
+      ],
+      "content_hash": "9dae498d47332544228fbfd52f48c58138433bcb66c258ec91407c614f9bada9",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4586-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4586-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5499753",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4586-2026",
+        "registered_date": "2026-05-20",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hoovers Damm- Bengtsarvs dammen, Falun kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-17",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "4586-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hoovers Damm- Bengtsarvs dammen, Falun kommun",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4586-2026::4586-2026-1"
+        },
+        {
+          "handling_number": "4586-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4586-2026::4586-2026-2"
+        },
+        {
+          "handling_number": "4586-2026-3",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4586-2026::4586-2026-3"
+        },
+        {
+          "handling_number": "4586-2026-4",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-06-01",
+          "sender_recipient": "Falu kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::4586-2026::4586-2026-4"
+        },
+        {
+          "handling_number": "4586-2026-5",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4586-2026::4586-2026-5"
+        },
+        {
+          "handling_number": "4586-2026-6",
+          "title": "Meddelande om delgivning",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4586-2026::4586-2026-6"
+        }
+      ],
+      "content_hash": "01582ed5e7ac0fc1a8b068628547c5a1df9540369e0a8aac3762447b7669b91c",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4635-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4635-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5501454",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4635-2026",
+        "registered_date": "2026-05-20",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av trumma, väg\n888, Rättviks kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-15",
+        "sender_recipient": "Trafikverket",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4635-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av trumma, väg\n888, Rättviks kommun",
+          "date": "2026-05-20",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i dalarnas län::4635-2026::4635-2026-1"
+        },
+        {
+          "handling_number": "4635-2026-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4635-2026::4635-2026-2"
+        },
+        {
+          "handling_number": "4635-2026-3",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4635-2026::4635-2026-3"
+        },
+        {
+          "handling_number": "4635-2026-4",
+          "title": "Meddelande om delgivning",
+          "date": "2026-07-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4635-2026::4635-2026-4"
+        }
+      ],
+      "content_hash": "7f55dc649463e4a2df58bad7a922a64f8de3b840f747527f2f6e9a14e92b8c78",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4636-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4636-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5501465",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4636-2026",
+        "registered_date": "2026-05-20",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Byte av trumma väg\n888, Rättviks kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-15",
+        "sender_recipient": "Trafikverket",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4636-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Byte av trumma väg\n888, Rättviks kommun",
+          "date": "2026-05-20",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i dalarnas län::4636-2026::4636-2026-1"
+        },
+        {
+          "handling_number": "4636-2026-2",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4636-2026::4636-2026-2"
+        },
+        {
+          "handling_number": "4636-2026-3",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4636-2026::4636-2026-3"
+        },
+        {
+          "handling_number": "4636-2026-4",
+          "title": "Meddelande om delgivning",
+          "date": "2026-07-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4636-2026::4636-2026-4"
+        }
+      ],
+      "content_hash": "efacd953296345b7f6f14357a77e1fbaa84a35fc219d8c1e7c4d7f455d4b3dfe",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4660-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4660-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5502567",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4660-2026",
+        "registered_date": "2026-05-21",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Övre Hillen, Smedjebacken kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-17",
+        "sender_recipient": "Högbergskyrkans Församling",
+        "municipality": "Smedjebacken"
+      },
+      "handlings": [
+        {
+          "handling_number": "4660-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Övre Hillen, Smedjebacken kommun",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4660-2026::4660-2026-1"
+        },
+        {
+          "handling_number": "4660-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4660-2026::4660-2026-2"
+        },
+        {
+          "handling_number": "4660-2026-3",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4660-2026::4660-2026-3"
+        },
+        {
+          "handling_number": "4660-2026-4",
+          "title": "Yttrande över underrättelse",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4660-2026::4660-2026-4"
+        },
+        {
+          "handling_number": "4660-2026-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4660-2026::4660-2026-5"
+        },
+        {
+          "handling_number": "4660-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4660-2026::4660-2026-6"
+        },
+        {
+          "handling_number": "4660-2026-7",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4660-2026::4660-2026-7"
+        }
+      ],
+      "content_hash": "17a43f0ed4c8b7e1e249734c2df18d852d2b4b13b9066ec3c684a18b3bb79ac8",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4700-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4700-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5504073",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4700-2026",
+        "registered_date": "2026-05-22",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Namnlös bäck (VISS), i kartan Österbobäcken, Falun kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-22",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "4700-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Namnlös bäck (VISS), i kartan Österbobäcken, Falun kommun",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4700-2026::4700-2026-1"
+        },
+        {
+          "handling_number": "4700-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4700-2026::4700-2026-2"
+        },
+        {
+          "handling_number": "4700-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4700-2026::4700-2026-3"
+        },
+        {
+          "handling_number": "4700-2026-4",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4700-2026::4700-2026-4"
+        },
+        {
+          "handling_number": "4700-2026-5",
+          "title": "Begäran om yttrande över anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet_ trumma_ Namnlös bäck (VISS)_ i kartan Öste",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4700-2026::4700-2026-5"
+        },
+        {
+          "handling_number": "4700-2026-6",
+          "title": "Yttrande över anmälan",
+          "date": "2026-06-04",
+          "sender_recipient": "Falu kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::4700-2026::4700-2026-6"
+        },
+        {
+          "handling_number": "4700-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4700-2026::4700-2026-7"
+        }
+      ],
+      "content_hash": "6eec7bb29a609c36ab51d79c86ff42f15c6f385c1a3f6930a6bc20a0cb61647a",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4712-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4712-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5504354",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4712-2026",
+        "registered_date": "2026-05-11",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, arbete med underhåll/ byta intagsrör, anläggande av fångdam i Görälven, Malung-Sälens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4712-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, arbete med underhåll/ byta intagsrör, anläggande av fångdam i Görälven, Malung-Sälens kommun",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4712-2026::4712-2026-1"
+        },
+        {
+          "handling_number": "4712-2026-2",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4712-2026::4712-2026-2"
+        },
+        {
+          "handling_number": "4712-2026-3",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4712-2026::4712-2026-3"
+        },
+        {
+          "handling_number": "4712-2026-4",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4712-2026::4712-2026-4"
+        }
+      ],
+      "content_hash": "cae6d8f0dd83f6174778382a11b56fa3f86e6482d246f97f1a0af8a99bc7f6c8",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4753-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4753-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5505398",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4753-2026",
+        "registered_date": "2026-05-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Öjsjön, Malung-Sälen kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Malung-Sälen"
+      },
+      "handlings": [
+        {
+          "handling_number": "4753-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Öjsjön, Malung-Sälen kommun",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4753-2026::4753-2026-1"
+        },
+        {
+          "handling_number": "4753-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4753-2026::4753-2026-2"
+        },
+        {
+          "handling_number": "4753-2026-3",
+          "title": "Begäran om komplettering med karta",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4753-2026::4753-2026-3"
+        },
+        {
+          "handling_number": "4753-2026-4",
+          "title": "Komplettering med karta",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4753-2026::4753-2026-4"
+        },
+        {
+          "handling_number": "4753-2026-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4753-2026::4753-2026-5"
+        },
+        {
+          "handling_number": "4753-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4753-2026::4753-2026-6"
+        }
+      ],
+      "content_hash": "94400454eef271ae8796113899a0153944721f4f58991da1602f940aa0257b01",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4786-2025": {
+      "case_key": "länsstyrelsen i dalarnas län::4786-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5140223",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4786-2025",
+        "registered_date": "2025-05-14",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, muddring av båthamnen i Bengtsarvet vid Ångbåtsbryggan, Mora kommun.",
+        "status": "Avslutat",
+        "decision_date": "2026-05-28",
+        "sender_recipient": "Bengtsarvets byalag",
+        "municipality": "Mora"
+      },
+      "handlings": [
+        {
+          "handling_number": "4786-2025-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-1"
+        },
+        {
+          "handling_number": "4786-2025-2",
+          "title": "Översiktkarta",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-2"
+        },
+        {
+          "handling_number": "4786-2025-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-3"
+        },
+        {
+          "handling_number": "4786-2025-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-4"
+        },
+        {
+          "handling_number": "4786-2025-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-5"
+        },
+        {
+          "handling_number": "4786-2025-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-6"
+        },
+        {
+          "handling_number": "4786-2025-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-7"
+        },
+        {
+          "handling_number": "4786-2025-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-8"
+        },
+        {
+          "handling_number": "4786-2025-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-9"
+        },
+        {
+          "handling_number": "4786-2025-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-10"
+        },
+        {
+          "handling_number": "4786-2025-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-11"
+        },
+        {
+          "handling_number": "4786-2025-12",
+          "title": "Komplettering",
+          "date": "2025-05-15",
+          "sender_recipient": "Bengtsarvets Byalag på Sollerön",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-12"
+        },
+        {
+          "handling_number": "4786-2025-13",
+          "title": "Meddelande om att mängden muddermassor kan vara fel",
+          "date": "2025-05-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-13"
+        },
+        {
+          "handling_number": "4786-2025-14",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2025-05-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-14"
+        },
+        {
+          "handling_number": "4786-2025-15",
+          "title": "Yttrande över remiss",
+          "date": "2025-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-15"
+        },
+        {
+          "handling_number": "4786-2025-16",
+          "title": "Yttrande över remiss",
+          "date": "2025-05-26",
+          "sender_recipient": "Mora kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-16"
+        },
+        {
+          "handling_number": "4786-2025-17",
+          "title": "Delbeslut om förbud att påbörja verksamheten innan beslut är taget",
+          "date": "2025-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-17"
+        },
+        {
+          "handling_number": "4786-2025-18",
+          "title": "Meddelande om delgivning",
+          "date": "2025-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-18"
+        },
+        {
+          "handling_number": "4786-2025-19",
+          "title": "Yttrande över remiss, tillägg till tidigare yttrande",
+          "date": "2025-07-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-19"
+        },
+        {
+          "handling_number": "4786-2025-21",
+          "title": "Begäran om komplettering om sedimentprovtagning m.m.",
+          "date": "2025-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-21"
+        },
+        {
+          "handling_number": "4786-2025-22",
+          "title": "Påminnelse om sedimentprovtagning",
+          "date": "2026-02-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-22"
+        },
+        {
+          "handling_number": "4786-2025-23",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-02-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-23"
+        },
+        {
+          "handling_number": "4786-2025-24",
+          "title": "Komplettering med uppgifter efter sedimentprovtagning",
+          "date": "2026-03-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-24"
+        },
+        {
+          "handling_number": "4786-2025-25",
+          "title": "Meddelande om komplettering och vad som kvarstår",
+          "date": "2026-03-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-25"
+        },
+        {
+          "handling_number": "4786-2025-26",
+          "title": "Rapport om föroreningar i båthamnssediment",
+          "date": "2026-03-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-26"
+        },
+        {
+          "handling_number": "4786-2025-27",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-03-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-27"
+        },
+        {
+          "handling_number": "4786-2025-28",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-28"
+        },
+        {
+          "handling_number": "4786-2025-29",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-29"
+        },
+        {
+          "handling_number": "4786-2025-30",
+          "title": "Meddelande om delgivning",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4786-2025::4786-2025-30"
+        }
+      ],
+      "content_hash": "417fff9df2ed53480043fe5115260a9a62a44ea5562009d07487153f3aeef85e",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4790-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4790-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5506603",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4790-2026",
+        "registered_date": "2026-05-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kvarnbäcken, Ludvika kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-15",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ludvika"
+      },
+      "handlings": [
+        {
+          "handling_number": "4790-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kvarnbäcken, Ludvika kommun",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-1"
+        },
+        {
+          "handling_number": "4790-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-2"
+        },
+        {
+          "handling_number": "4790-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-3"
+        },
+        {
+          "handling_number": "4790-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-4"
+        },
+        {
+          "handling_number": "4790-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-5"
+        },
+        {
+          "handling_number": "4790-2026-6",
+          "title": "Begäran om yttrande över anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet_ trumma_ Kvarnbäcken_ Ludvika Skog 1_2_ Lud",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-6"
+        },
+        {
+          "handling_number": "4790-2026-7",
+          "title": "Yttrande över anmälan",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-7"
+        },
+        {
+          "handling_number": "4790-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4790-2026::4790-2026-8"
+        }
+      ],
+      "content_hash": "13e2b03003baa32514a26ba6caa48a8a437c84c09f2305005837d38c7c421f54",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4869-2023": {
+      "case_key": "länsstyrelsen i dalarnas län::4869-2023",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4373915",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4869-2023",
+        "registered_date": "2023-04-05",
+        "title": "Begäran om tillsyn av vattenverksamhet",
+        "status": "Avslutat",
+        "decision_date": "2026-06-05",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4869-2023-1",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2023-04-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-1"
+        },
+        {
+          "handling_number": "4869-2023-2",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2023-04-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-2"
+        },
+        {
+          "handling_number": "4869-2023-3",
+          "title": "Fotografi",
+          "date": "2023-04-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-3"
+        },
+        {
+          "handling_number": "4869-2023-4",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2023-04-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-4"
+        },
+        {
+          "handling_number": "4869-2023-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2023-05-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-5"
+        },
+        {
+          "handling_number": "4869-2023-6",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2024-12-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-6"
+        },
+        {
+          "handling_number": "4869-2023-7",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2025-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-7"
+        },
+        {
+          "handling_number": "4869-2023-8",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-8"
+        },
+        {
+          "handling_number": "4869-2023-9",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2024-12-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-9"
+        },
+        {
+          "handling_number": "4869-2023-10",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2024-04-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-10"
+        },
+        {
+          "handling_number": "4869-2023-11",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-11"
+        },
+        {
+          "handling_number": "4869-2023-13",
+          "title": "Föreläggande om att söka ändringsvillkor",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-13"
+        },
+        {
+          "handling_number": "4869-2023-14",
+          "title": "Meddelande om mottagen handling",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-14"
+        },
+        {
+          "handling_number": "4869-2023-15",
+          "title": "Meddelande om att pegel satts upp",
+          "date": "2026-11-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4869-2023::4869-2023-15"
+        }
+      ],
+      "content_hash": "a1d40f19ef4810735fc11900bcb067551012ebd008440bb0de0e058a71961265",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4907-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4907-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5511711",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4907-2026",
+        "registered_date": "2026-05-28",
+        "title": "Anmälan enligt 11 kap 9 a § miljöbalken om vattenverksamhet, Fulan, Malung-Sälens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-28",
+        "sender_recipient": "Transtrands besparingsskog",
+        "municipality": "Malung-Sälen"
+      },
+      "handlings": [
+        {
+          "handling_number": "4907-2026-1",
+          "title": "Återförvisat för ny handläggning i mål nr M 9880-25 om anmälan enligt 11 kap 9 a § miljöbalken om vattenverksamhet, Fulan, Malung-Sälens kommun",
+          "date": "2026-05-28",
+          "sender_recipient": "Nacka Tingsrätt, mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i dalarnas län::4907-2026::4907-2026-1"
+        },
+        {
+          "handling_number": "4907-2026-2",
+          "title": "Anmälan om vattenverksamhet, muddring i utloppskanal Ejforsen, Fulan, Malung-Sälens kommun",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4907-2026::4907-2026-2"
+        },
+        {
+          "handling_number": "4907-2026-3",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4907-2026::4907-2026-3"
+        },
+        {
+          "handling_number": "4907-2026-4",
+          "title": "Remiss gällande vattenverksamhet",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4907-2026::4907-2026-4"
+        },
+        {
+          "handling_number": "4907-2026-5",
+          "title": "Yttrande",
+          "date": "2026-07-06",
+          "sender_recipient": "Malung-Sälens kommun",
+          "handling_key": "länsstyrelsen i dalarnas län::4907-2026::4907-2026-5"
+        },
+        {
+          "handling_number": "4907-2026-6",
+          "title": "Yttrande - klart",
+          "date": "2026-07-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4907-2026::4907-2026-6"
+        },
+        {
+          "handling_number": "4907-2026-7",
+          "title": "Tjänsteanteckning om fortsatt handläggning i ärende 6315-2026",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4907-2026::4907-2026-7"
+        }
+      ],
+      "content_hash": "301157854ffdfbb243a691d2ff6f62c318d1cbf2976deac9e0180fcf3dc8e7ac",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4936-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4936-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5512619",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4936-2026",
+        "registered_date": "2026-05-29",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Runn, Falu kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-25",
+        "sender_recipient": "Falu Elnät AB",
+        "municipality": "Falun"
+      },
+      "handlings": [
+        {
+          "handling_number": "4936-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Runn, Falun kommun",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-1"
+        },
+        {
+          "handling_number": "4936-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-2"
+        },
+        {
+          "handling_number": "4936-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-3"
+        },
+        {
+          "handling_number": "4936-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-4"
+        },
+        {
+          "handling_number": "4936-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-5"
+        },
+        {
+          "handling_number": "4936-2026-6",
+          "title": "Meddelande om frågor gällande Anmälningsärende vattenverksamhet Högtäkt och Digertäkt",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-6"
+        },
+        {
+          "handling_number": "4936-2026-7",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-7"
+        },
+        {
+          "handling_number": "4936-2026-8",
+          "title": "Tjänsteanteckning vid samtal Falu kommun",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-8"
+        },
+        {
+          "handling_number": "4936-2026-9",
+          "title": "Tjänsteanteckning vid samtal Kulturmiljö",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-9"
+        },
+        {
+          "handling_number": "4936-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-10"
+        },
+        {
+          "handling_number": "4936-2026-11",
+          "title": "Meddelande om delgivning",
+          "date": "2026-10-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4936-2026::4936-2026-11"
+        }
+      ],
+      "content_hash": "458e244555fa3775e400e5d094aadd88f118f275a0643d4ae4fad18bac583b31",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4953-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4953-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5513489",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4953-2026",
+        "registered_date": "2026-05-28",
+        "title": "Begäran om tillsyn av vattenverksamhet, utfyllnad i småbåtshamnen i Bengtsarvet, Mora kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Mora"
+      },
+      "handlings": [
+        {
+          "handling_number": "4953-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, utfyllnad i småbåtshamnen i Bengtsarvet, Mora kommun",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4953-2026::4953-2026-1"
+        },
+        {
+          "handling_number": "4953-2026-2",
+          "title": "Komplettering med bilagorna",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4953-2026::4953-2026-2"
+        },
+        {
+          "handling_number": "4953-2026-3",
+          "title": "Fotografi",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4953-2026::4953-2026-3"
+        },
+        {
+          "handling_number": "4953-2026-4",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4953-2026::4953-2026-4"
+        },
+        {
+          "handling_number": "4953-2026-6",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4953-2026::4953-2026-6"
+        },
+        {
+          "handling_number": "4953-2026-7",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4953-2026::4953-2026-7"
+        }
+      ],
+      "content_hash": "fee88648963817e93f2d83d1645fe4acf86509f1d3158a2870debdd7c6080bee",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::4966-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::4966-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5514037",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "4966-2026",
+        "registered_date": "2026-06-01",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bäck mellan Kutbo-Dammsjön och Visthusen, för nedläggning av fiber,  Säter kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-26",
+        "sender_recipient": "Nordion Energi Solution AB",
+        "municipality": "Säter"
+      },
+      "handlings": [
+        {
+          "handling_number": "4966-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bäck mellan Kutbo-Dammsjön och Visthusen, Säter kommun",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-1"
+        },
+        {
+          "handling_number": "4966-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-2"
+        },
+        {
+          "handling_number": "4966-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-3"
+        },
+        {
+          "handling_number": "4966-2026-4",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-4"
+        },
+        {
+          "handling_number": "4966-2026-5",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-5"
+        },
+        {
+          "handling_number": "4966-2026-6",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-6"
+        },
+        {
+          "handling_number": "4966-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-8"
+        },
+        {
+          "handling_number": "4966-2026-9",
+          "title": "Meddelande om delgivning",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::4966-2026::4966-2026-9"
+        }
+      ],
+      "content_hash": "392312d63c16f8f503646aab87237eaa316adbde0c7a6e93bce77b8bae5c9a1b",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::5012-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::5012-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5515468",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "5012-2026",
+        "registered_date": "2026-06-01",
+        "title": "Tillsyn av vattenverksamhet, uppföljning av föreläggande om åtgärder, Leksands kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-14",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5012-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5012-2026::5012-2026-1"
+        },
+        {
+          "handling_number": "5012-2026-2",
+          "title": "Komplettering med bild",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5012-2026::5012-2026-2"
+        },
+        {
+          "handling_number": "5012-2026-3",
+          "title": "Meddelande om att ärendet avslutas",
+          "date": "2026-07-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5012-2026::5012-2026-3"
+        }
+      ],
+      "content_hash": "55e5530562a5326c7b97cc8fe348a6d023b62ecb81da89434103d8a7d7169042",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::5076-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::5076-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5517062",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "5076-2026",
+        "registered_date": "2026-06-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Del av Idbäcksmyrarna och bäck som mynnar i Vanån., Vansbro kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Vansbro"
+      },
+      "handlings": [
+        {
+          "handling_number": "5076-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Del av Idbäcksmyrarna och bäck som mynnar i Vanån., Vansbro kommun",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-1"
+        },
+        {
+          "handling_number": "5076-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-2"
+        },
+        {
+          "handling_number": "5076-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-3"
+        },
+        {
+          "handling_number": "5076-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-4"
+        },
+        {
+          "handling_number": "5076-2026-5",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-5"
+        },
+        {
+          "handling_number": "5076-2026-6",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-6"
+        },
+        {
+          "handling_number": "5076-2026-7",
+          "title": "Underrättelse med möjlighet till yttrande",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-7"
+        },
+        {
+          "handling_number": "5076-2026-8",
+          "title": "Underrättelse med möjlighet till yttrande - Förtydligande pga fel datum",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-8"
+        },
+        {
+          "handling_number": "5076-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-9"
+        },
+        {
+          "handling_number": "5076-2026-10",
+          "title": "Meddelande om Delgivning",
+          "date": "2026-07-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5076-2026::5076-2026-10"
+        }
+      ],
+      "content_hash": "04458835518f50f9ef1a3472fe9073fe5e60a5fd779afd622d56042a172b7e04",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::5113-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::5113-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5517988",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "5113-2026",
+        "registered_date": "2026-06-03",
+        "title": "Överklagande av Länsstyrelsens beslut 2026-05-19, dnr  7894-2025 om vattenverksamhet för att lägga fyllnadsmassor i sjön Amungen, Falu kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-05",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5113-2026-1",
+          "title": "Överklagande av Länsstyrelsens beslut 2026-05-19, dnr  7894-2025 om vattenverksamhet för att lägga fyllnadsmassor i sjön Amungen, Falu kommun",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5113-2026::5113-2026-1"
+        },
+        {
+          "handling_number": "5113-2026-5",
+          "title": "Överklagandet och övriga handlingar i ärendet överlämnas",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5113-2026::5113-2026-5"
+        },
+        {
+          "handling_number": "5113-2026-6",
+          "title": "Komplettering med mail och bilagor",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5113-2026::5113-2026-6"
+        },
+        {
+          "handling_number": "5113-2026-7",
+          "title": "Dom från högre instans, ej ändrat beslut 2026-08-13 målnummer M 4868-26",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5113-2026::5113-2026-7"
+        }
+      ],
+      "content_hash": "cac4159009141555d8d4d7faefd3317a56d0134093e344f4b05381b2341977e0",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i dalarnas län::5141-2026": {
+      "case_key": "länsstyrelsen i dalarnas län::5141-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5518641",
+      "observed_at": "2026-11-06T13:13:39.017760+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Dalarnas län",
+        "diary_number": "5141-2026",
+        "registered_date": "2026-06-03",
+        "title": "Begäran om yttrande över ansökan om tillstånd enligt 11 kap. miljöbalken till vattenverksamhet för att få byta ut bro över Abäcken, Ludvika kommun, mål nr M 825-26, svar senast 2026-06-10",
+        "status": "Avslutat",
+        "decision_date": "2026-06-05",
+        "sender_recipient": "Nacka Tingsrätt, nacka- och miljödomstolen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5141-2026-1",
+          "title": "Begäran om yttrande över ansökan om tillstånd enligt 11 kap. miljöbalken till vattenverksamhet för att få byta ut bro över Abäcken, Ludvika kommun, mål nr M 825-26, svar senast 2026-06-10",
+          "date": "2026-06-03",
+          "sender_recipient": "Nacka Tingsrätt, nacka- och miljödomstolen",
+          "handling_key": "länsstyrelsen i dalarnas län::5141-2026::5141-2026-1"
+        },
+        {
+          "handling_number": "5141-2026-2",
+          "title": "Yttrande M 825-26",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5141-2026::5141-2026-2"
+        },
+        {
+          "handling_number": "5141-2026-3",
+          "title": "Inlämningskvitto",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i dalarnas län::5141-2026::5141-2026-3"
+        },
+        {
+          "handling_number": "5141-2026-4",
+          "title": "Dom om tillstånd till att byta ut befintlig bro över Abäcken, Ludvika kommun 2026-06-16 mål nr M 825-26",
+          "date": "2026-06-16",
+          "sender_recipient": "Nacka Tingsrätt, nacka- och miljödomstolen",
+          "handling_key": "länsstyrelsen i dalarnas län::5141-2026::5141-2026-4"
+        }
+      ],
+      "content_hash": "56d46a39b2b3a8ad969176b9fcdd49ba89261c9cc3147c4dbab3ff7fddc99c39",
+      "first_seen_at": "2026-11-06T13:13:39.017760+00:00",
+      "last_seen_at": "2026-11-06T13:13:39.017760+00:00",
       "observation_count": 1
     }
   }

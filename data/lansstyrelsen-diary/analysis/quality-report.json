@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "classification_version": "1.0.0",
-  "source_updated_at": "2026-11-05T13:29:19.092817+00:00",
-  "case_count": 200,
-  "handling_count": 1687,
+  "source_updated_at": "2026-11-06T13:13:39.017760+00:00",
+  "case_count": 250,
+  "handling_count": 2094,
   "county_case_counts": {
     "Länsstyrelsen i Blekinge län": 136,
-    "Länsstyrelsen i Dalarnas län": 36,
+    "Länsstyrelsen i Dalarnas län": 86,
     "Länsstyrelsen i Gotlands län": 2,
     "Länsstyrelsen i Gävleborgs län": 4,
     "Länsstyrelsen i Hallands län": 4,
@@ -16,23 +16,23 @@
     "Länsstyrelsen i Kronobergs län": 1
   },
   "missing_case_fields": {
-    "decision_date": 110,
-    "municipality": 91,
-    "registered_date": 2,
-    "status": 2
+    "decision_date": 115,
+    "municipality": 104,
+    "registered_date": 5,
+    "status": 5
   },
   "missing_handling_fields": {},
   "handling_class_counts": {
-    "administrative": 112,
+    "administrative": 143,
     "procurement": 22,
     "aftercare": 3,
-    "permit": 39,
-    "notification": 144,
-    "opinion": 260,
+    "permit": 47,
+    "notification": 199,
+    "opinion": 363,
     "contract": 14,
-    "other": 1112,
+    "other": 1339,
     "award": 5,
-    "follow_up": 20,
+    "follow_up": 28,
     "burn_execution": 2
   },
   "duplicate_case_keys": [],
