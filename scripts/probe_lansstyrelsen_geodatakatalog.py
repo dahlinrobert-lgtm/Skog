@@ -102,6 +102,13 @@ def request_json(url: str, body: dict, retries: int = 5) -> dict:
     raise RuntimeError(f"Catalogue request failed after {retries} attempts: {last_error}")
 
 
+def _is_gateway_failure(error: str | None) -> bool:
+    if not error:
+        return False
+    normalized = error.casefold()
+    return any(token in normalized for token in ("http error 502", "http error 503", "http error 504", "bad gateway", "service unavailable", "gateway timeout"))
+
+
 def response_hits(payload: dict) -> tuple[int, list[dict]]:
     hits_container = payload.get("hits") or {}
     total_value = hits_container.get("total", 0)
@@ -132,8 +139,24 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
         raise ValueError("max_records_per_term must be size..1000")
     merged: dict[str, dict] = {}
     term_reports = []
+    consecutive_gateway_failures = 0
+    circuit_open = False
+    skipped_terms = []
 
     for term in SEARCH_TERMS:
+        if circuit_open:
+            skipped_terms.append(term)
+            term_reports.append({
+                "term": term,
+                "catalogue_total": 0,
+                "records_examined": 0,
+                "pages": 0,
+                "truncated_at_cap": False,
+                "error": "Skipped: catalogue gateway circuit breaker opened after repeated 502/503/504 responses",
+                "complete": False,
+                "skipped": True,
+            })
+            continue
         offset = 0
         total = 0
         fetched = 0
@@ -168,6 +191,12 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
                     time.sleep(delay)
         except Exception as exc:
             error = str(exc)
+        if _is_gateway_failure(error):
+            consecutive_gateway_failures += 1
+        elif error is None:
+            consecutive_gateway_failures = 0
+        if consecutive_gateway_failures >= 2:
+            circuit_open = True
         term_reports.append({
             "term": term,
             "catalogue_total": total,
@@ -176,6 +205,7 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
             "truncated_at_cap": total > fetched and fetched >= max_records_per_term,
             "error": error,
             "complete": error is None,
+            "skipped": False,
         })
         if delay:
             time.sleep(delay)
@@ -193,6 +223,8 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
         "term_results": term_reports,
         "completed_terms": len(term_reports) - len(failed_terms),
         "failed_terms": failed_terms,
+        "skipped_terms": skipped_terms,
+        "circuit_breaker_open": circuit_open,
         "complete": not failed_terms,
         "status": "complete" if not failed_terms else "partial",
         "records": records,
