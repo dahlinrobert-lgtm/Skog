@@ -365,3 +365,38 @@ def test_404_seed_selection_includes_cells_without_positive_z9_tiles():
     reserved=[s for s in missing if s["sampling_stratum"]=="no_positive_grid_cell"]
     assert len(reserved)>=4
     assert all(_grid_cell(s["x"],s["y"],bounds) not in positive_cells for s in reserved)
+
+
+
+def test_expanded_404_sample_uses_eight_positive_free_and_four_near_positive():
+    from scripts.audit_sca_tile_coverage import choose_seeds, _grid_cell
+    rows=[]
+    # Four-by-four extent: positives occupy the upper-left quadrant.
+    for x in range(100,116):
+        for y in range(200,216):
+            state="not_found_404"
+            if x < 108 and y < 208:
+                state="valid_mvt_with_features"
+            rows.append({"x":x,"y":y,"voluntary":{"state":state,"layers":[]}})
+    seeds=choose_seeds({"tile_results":rows},8,8,4)
+    reserved=[s for s in seeds if s["sampling_stratum"]=="no_positive_grid_cell"]
+    controls=[s for s in seeds if s["sampling_stratum"]=="near_positive"]
+    assert len(reserved)==8
+    assert len(controls)==4
+    bounds=(100,115,200,215)
+    cells={_grid_cell(s["x"],s["y"],bounds) for s in reserved}
+    assert len(cells)>=4
+    assert all(s["class"]=="not_found_404_z9" for s in reserved+controls)
+
+
+def test_expanded_404_sample_fills_shortage_without_duplicate_tiles():
+    from scripts.audit_sca_tile_coverage import choose_seeds
+    rows=[]
+    for x in range(100,104):
+        for y in range(200,204):
+            state="valid_mvt_with_features" if x==100 and y==200 else "not_found_404"
+            rows.append({"x":x,"y":y,"voluntary":{"state":state,"layers":[]}})
+    seeds=choose_seeds({"tile_results":rows},1,8,4)
+    coords=[(s["x"],s["y"]) for s in seeds]
+    assert len(coords)==len(set(coords))
+    assert len([s for s in seeds if s["class"]=="not_found_404_z9"])<=12
