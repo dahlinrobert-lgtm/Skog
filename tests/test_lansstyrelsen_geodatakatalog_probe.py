@@ -1,5 +1,6 @@
 import importlib.util
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location(
     "catalogue_probe", "scripts/probe_lansstyrelsen_geodatakatalog.py"
@@ -47,6 +48,30 @@ class CatalogueProbeTests(unittest.TestCase):
         self.assertEqual(module.hit_title({"resourceTitleObject": {"default": "Ängsskötsel"}}), "Ängsskötsel")
         self.assertEqual(module.hit_title({"title": "Naturvårdsåtgärder"}), "Naturvårdsåtgärder")
         self.assertIsNone(module.hit_title({}))
+
+    def test_retry_wait_uses_retry_after_header(self):
+        error = module.urllib.error.HTTPError(
+            "https://example.test", 503, "Unavailable", {"Retry-After": "12"}, None
+        )
+        self.assertEqual(module._retry_wait(error, 1), 12)
+        self.assertEqual(module._retry_wait(RuntimeError("temporary"), 2), 4)
+
+    def test_failed_term_does_not_discard_other_results(self):
+        good_payload = {"hits": {"total": 1, "hits": [
+            {"_id": "record-1", "_source": {"title": "Utförd åtgärd"}}
+        ]}}
+        with patch.object(module, "SEARCH_TERMS", ("first term", "second term")):
+            with patch.object(module, "request_json", side_effect=[
+                RuntimeError("HTTP Error 502: Bad Gateway"), good_payload
+            ]):
+                result = module.run_probe(size=1, max_records_per_term=1, delay=0)
+        self.assertEqual(result["status"], "partial")
+        self.assertFalse(result["complete"])
+        self.assertEqual(result["failed_terms"], ["first term"])
+        self.assertEqual(result["unique_metadata_records"], 1)
+        self.assertEqual(result["term_results"][0]["pages"], 0)
+        self.assertIsNotNone(result["term_results"][0]["error"])
+        self.assertTrue(result["term_results"][1]["complete"])
 
 
 if __name__ == "__main__":
