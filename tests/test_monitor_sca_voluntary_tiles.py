@@ -340,3 +340,28 @@ def test_discovery_coverage_accounting_is_explicit_and_idempotent(tmp_path):
     assert positive_again==positive
     assert second["z12_discovery_target_tiles_already_monitored"] == second["z12_discovery_target_tiles"]
     assert second["z12_discovery_target_tiles_added"] == 0
+
+
+
+def test_404_seed_selection_includes_cells_without_positive_z9_tiles():
+    from scripts.audit_sca_tile_coverage import choose_seeds, _grid_cell
+
+    rows=[]
+    # 4x4 grid extent; positives occupy only the upper-left region.
+    for x in range(100,116):
+        for y in range(200,216):
+            state="not_found_404"
+            if x < 104 and y < 204:
+                state="valid_mvt_with_features"
+            rows.append({"x":x,"y":y,"voluntary":{"state":state,"layers":[]}})
+    seeds=choose_seeds({"tile_results":rows},8)
+    missing=[s for s in seeds if s["class"].startswith("not_found_404")]
+    bounds=(100,115,200,215)
+    positive_cells={_grid_cell(r["x"],r["y"],bounds) for r in rows
+                    if r["voluntary"]["state"]=="valid_mvt_with_features"}
+    no_positive=[s for s in missing
+                 if _grid_cell(s["x"],s["y"],bounds) not in positive_cells]
+    assert len(missing)==8
+    reserved=[s for s in missing if s["sampling_stratum"]=="no_positive_grid_cell"]
+    assert len(reserved)>=4
+    assert all(_grid_cell(s["x"],s["y"],bounds) not in positive_cells for s in reserved)

@@ -91,8 +91,17 @@ def spread_select(rows, count, feature_first=False):
     return selected
 
 
+def _grid_cell(x, y, bounds, columns=4, rows=4):
+    min_x, max_x, min_y, max_y = bounds
+    width = max(1, max_x - min_x + 1)
+    height = max(1, max_y - min_y + 1)
+    col = min(columns - 1, (int(x) - min_x) * columns // width)
+    row = min(rows - 1, (int(y) - min_y) * rows // height)
+    return row, col
+
+
 def choose_seeds(census, per_class):
-    """Sample positive, valid-empty and 404 z9 tiles as separate spatial strata."""
+    """Sample positive, valid-empty and 404 tiles, including 404-only grid cells."""
     rows = census.get("tile_results", [])
     positives = [r for r in rows if r.get("voluntary", {}).get("state") == "valid_mvt_with_features"]
     empty = [r for r in rows if r.get("voluntary", {}).get("state") == "valid_mvt_empty"]
@@ -101,23 +110,47 @@ def choose_seeds(census, per_class):
     positive = spread_select(positives, per_class, feature_first=True)
     empty_sample = spread_select(empty, per_class)
 
-    # Keep some 404 probes near known positives, then spread the remainder.
-    adjacent = [r for r in missing if any(
+    if rows:
+        bounds = (min(int(t["x"]) for t in rows), max(int(t["x"]) for t in rows),
+                  min(int(t["y"]) for t in rows), max(int(t["y"]) for t in rows))
+    else:
+        bounds = (0, 0, 0, 0)
+    positive_cells = {_grid_cell(r["x"], r["y"], bounds) for r in positives}
+
+    # Reserve half the 404 sample for grid cells with no positive z9 response.
+    # This deliberately probes areas the positive-only discovery path does not seed.
+    no_positive_cell_404 = [
+        r for r in missing if _grid_cell(r["x"], r["y"], bounds) not in positive_cells
+    ]
+    no_positive_sample = spread_select(no_positive_cell_404, per_class // 2)
+
+    used = {(r["x"], r["y"]) for r in no_positive_sample}
+    remaining_404 = [r for r in missing if (r["x"], r["y"]) not in used]
+    adjacent = [r for r in remaining_404 if any(
         max(abs(r["x"] - p["x"]), abs(r["y"] - p["y"])) == 1 for p in positive
     )]
-    adjacent = spread_select(adjacent, min(max(1, per_class // 2), per_class))
-    used = {(r["x"], r["y"]) for r in adjacent}
-    rest = [r for r in missing if (r["x"], r["y"]) not in used]
-    rest = spread_select(rest, per_class - len(adjacent))
+    adjacent_sample = spread_select(adjacent, per_class - len(no_positive_sample))
+    used.update((r["x"], r["y"]) for r in adjacent_sample)
+    rest = [r for r in remaining_404 if (r["x"], r["y"]) not in used]
+    fill = spread_select(rest, per_class - len(no_positive_sample) - len(adjacent_sample))
+    missing_sample = no_positive_sample + adjacent_sample + fill
 
     selected = []
-    for rows_for_class, label in (
-        (positive, "positive_z9"),
-        (empty_sample, "valid_empty_z9"),
-        (adjacent + rest, "not_found_404_z9"),
-    ):
-        for row in rows_for_class:
-            selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]), "class": label})
+    for row in positive:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "positive_z9", "sampling_stratum": "positive"})
+    for row in empty_sample:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "valid_empty_z9", "sampling_stratum": "valid_empty"})
+    for row in no_positive_sample:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "not_found_404_z9", "sampling_stratum": "no_positive_grid_cell"})
+    for row in adjacent_sample:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "not_found_404_z9", "sampling_stratum": "near_positive"})
+    for row in fill:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "not_found_404_z9", "sampling_stratum": "spatial_fill"})
     return selected
 
 
@@ -215,6 +248,16 @@ def run(census_path, out_path, per_class=8, workers=2):
         "z9_census_tiles_completed": summary["tiles_completed"],
         "samples_per_class_requested": per_class,
         "sampled_classes": dict(Counter(seed["class"] for seed in seeds)),
+        "sampled_z9_seed_spatial_cells": {
+            f"{row}:{column}": sum(
+                _grid_cell(seed["x"], seed["y"], (
+                    min(int(t["x"]) for t in rows), max(int(t["x"]) for t in rows),
+                    min(int(t["y"]) for t in rows), max(int(t["y"]) for t in rows)
+                )) == (row, column)
+                for seed in seeds
+            )
+            for row in range(4) for column in range(4)
+        },
         "z9_spatial_state_summary": spatial_state_summary(census),
         "sampled_z9_seeds": seeds,
         "unique_probe_tiles": len(jobs),
