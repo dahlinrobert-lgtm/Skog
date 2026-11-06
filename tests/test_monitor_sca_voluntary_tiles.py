@@ -286,3 +286,38 @@ def test_multizoom_audit_reuses_http_session_within_worker_thread():
     first = session()
     second = session()
     assert first is second
+
+
+
+def test_discovery_coverage_accounting_is_explicit_and_idempotent(tmp_path):
+    import json
+    from scripts.monitor_sca_voluntary_tiles import extend_tile_plan
+
+    state={"tile_count":0,"tiles":{}}
+    census={"summary":{"tiles_in_bbox":1,"tiles_completed":1},
+            "tile_results":[{"x":100,"y":200,
+                "voluntary":{"state":"valid_mvt_with_features"},
+                "ownership":{"state":"valid_mvt_empty"}}]}
+    audit={"schema_version":1,"samples_per_class_requested":1,"unique_probe_tiles":1,
+           "probe_requests":1,"states_by_zoom":{"10":{"valid_mvt_with_features":1}},
+           "probe_results":[{"z":10,"x":200,"y":400,"state":"valid_mvt_with_features"}]}
+    cp=tmp_path/"census.json"; ap=tmp_path/"audit.json"
+    cp.write_text(json.dumps(census),encoding="utf-8")
+    ap.write_text(json.dumps(audit),encoding="utf-8")
+
+    added,positive=extend_tile_plan(state,cp,ap)
+    first=state["latest_seed_census"]
+    assert positive==2
+    assert added==first["z12_discovery_target_tiles_added"]
+    assert first["z12_discovery_target_tiles"] > 0
+    assert first["z12_discovery_target_tiles_already_monitored"] + added == first["z12_discovery_target_tiles"]
+    assert first["positive_discovery_seed_tiles_by_source"] == {
+        "z9_census":1,"multizoom_audit":1
+    }
+
+    added_again,positive_again=extend_tile_plan(state,cp,ap)
+    second=state["latest_seed_census"]
+    assert added_again==0
+    assert positive_again==positive
+    assert second["z12_discovery_target_tiles_already_monitored"] == second["z12_discovery_target_tiles"]
+    assert second["z12_discovery_target_tiles_added"] == 0
