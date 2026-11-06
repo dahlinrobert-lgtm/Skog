@@ -535,6 +535,7 @@ def main() -> None:
                             # Keep diagnostics from the failing county/term. Without
                             # this wrapper, the batch-level error loses the page text
                             # and URL needed to troubleshoot a portal response.
+                            error_text = f"{type(query_exc).__name__}: {query_exc}"
                             query = {
                                 "search_term": term,
                                 "requested_county": county,
@@ -544,23 +545,35 @@ def main() -> None:
                                 "results": [],
                                 "pagination": {"pages_read": 0, "has_next_page": None},
                                 "table_diagnostics": [],
-                                "error": f"{type(query_exc).__name__}: {query_exc}",
+                                "error": error_text,
                             }
+                            # run_query embeds the submitted-page state in its
+                            # exception when the result grid is missing. Preserve
+                            # that evidence here: a fresh-page probe below only
+                            # describes the initial form, not the failed search.
+                            marker = "submitted-page diagnostics: "
+                            if marker in str(query_exc):
+                                try:
+                                    query["diagnostic_after_submit"] = json.loads(
+                                        str(query_exc).split(marker, 1)[1]
+                                    )
+                                except (TypeError, ValueError):
+                                    query["diagnostic_after_submit_parse_error"] = (
+                                        "Could not decode submitted-page diagnostics from exception"
+                                    )
                             try:
                                 diag_page = browser.new_page(locale="sv-SE")
                                 try:
                                     diag_page.goto(URL, wait_until="domcontentloaded", timeout=30000)
-                                    query["diagnostic_url"] = diag_page.url
-                                    query["diagnostic_http_status"] = 200
-                                    query["diagnostic_body_text_excerpt"] = clean(
-                                        diag_page.locator("body").inner_text(timeout=10000)
-                                    )[:2500]
-                                    query["diagnostic_result_grid_present"] = (
-                                        diag_page.locator(RESULT_GRID).count() > 0
-                                    )
-                                    query["diagnostic_county_select_present"] = (
-                                        diag_page.locator(COUNTY_SELECT).count() > 0
-                                    )
+                                    query["diagnostic_initial_page"] = {
+                                        "url": diag_page.url,
+                                        "http_status": 200,
+                                        "body_text_excerpt": clean(
+                                            diag_page.locator("body").inner_text(timeout=10000)
+                                        )[:2500],
+                                        "result_grid_present": diag_page.locator(RESULT_GRID).count() > 0,
+                                        "county_select_present": diag_page.locator(COUNTY_SELECT).count() > 0,
+                                    }
                                 finally:
                                     diag_page.close()
                             except Exception as diag_exc:
