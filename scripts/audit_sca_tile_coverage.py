@@ -100,8 +100,47 @@ def _grid_cell(x, y, bounds, columns=4, rows=4):
     return row, col
 
 
-def choose_seeds(census, per_class):
-    """Sample positive, valid-empty and 404 tiles, including 404-only grid cells."""
+def spread_select_across_cells(rows, count, bounds, columns=4, grid_rows=4):
+    """Choose one representative per spatial cell before filling remaining slots."""
+    if not rows or count <= 0:
+        return []
+    groups = defaultdict(list)
+    for item in rows:
+        groups[_grid_cell(item["x"], item["y"], bounds, columns, grid_rows)].append(item)
+    representatives = []
+    for cell, members in sorted(groups.items()):
+        row, col = cell
+        cx = (min(int(r["x"]) for r in members) + max(int(r["x"]) for r in members)) / 2
+        cy = (min(int(r["y"]) for r in members) + max(int(r["y"]) for r in members)) / 2
+        representative = min(members, key=lambda r: (
+            (int(r["x"]) - cx) ** 2 + (int(r["y"]) - cy) ** 2,
+            int(r["x"]), int(r["y"])
+        ))
+        representatives.append((representative, (row, col)))
+    selected = []
+    remaining = list(representatives)
+    while remaining and len(selected) < count:
+        if not selected:
+            chosen = min(remaining, key=lambda item: (item[1][0], item[1][1]))
+        else:
+            chosen = max(remaining, key=lambda item: (
+                min((item[1][0] - old[1][0]) ** 2 + (item[1][1] - old[1][1]) ** 2
+                    for old in selected),
+                -item[1][0], -item[1][1]
+            ))
+        selected.append(chosen)
+        remaining.remove(chosen)
+    result = [item[0] for item in selected]
+    if len(result) < count:
+        chosen_coords = {(r["x"], r["y"]) for r in result}
+        fill = [r for r in rows if (r["x"], r["y"]) not in chosen_coords]
+        result.extend(spread_select(fill, count - len(result)))
+    return result
+
+
+def choose_seeds(census, per_class, no_positive_404_samples=None,
+                 near_positive_404_samples=None):
+    """Sample positive/empty tiles and separately sized 404 discovery/control strata."""
     rows = census.get("tile_results", [])
     positives = [r for r in rows if r.get("voluntary", {}).get("state") == "valid_mvt_with_features"]
     empty = [r for r in rows if r.get("voluntary", {}).get("state") == "valid_mvt_empty"]
@@ -116,25 +155,25 @@ def choose_seeds(census, per_class):
     else:
         bounds = (0, 0, 0, 0)
     positive_cells = {_grid_cell(r["x"], r["y"], bounds) for r in positives}
-
-    # Reserve half the 404 sample for grid cells with no positive z9 response.
-    # This deliberately probes areas the positive-only discovery path does not seed.
-    no_positive_cell_404 = [
-        r for r in missing if _grid_cell(r["x"], r["y"], bounds) not in positive_cells
-    ]
-    no_positive_sample = spread_select(no_positive_cell_404, per_class // 2)
-
-    used = {(r["x"], r["y"]) for r in no_positive_sample}
-    remaining_404 = [r for r in missing if (r["x"], r["y"]) not in used]
-    adjacent = [r for r in remaining_404 if any(
+    no_positive = [r for r in missing
+                   if _grid_cell(r["x"], r["y"], bounds) not in positive_cells]
+    near_positive = [r for r in missing if any(
         max(abs(r["x"] - p["x"]), abs(r["y"] - p["y"])) == 1 for p in positive
     )]
-    adjacent_sample = spread_select(adjacent, per_class - len(no_positive_sample))
+    no_positive_count = per_class // 2 if no_positive_404_samples is None else max(0, no_positive_404_samples)
+    near_count = (per_class - no_positive_count if near_positive_404_samples is None
+                  else max(0, near_positive_404_samples))
+    no_positive_sample = spread_select_across_cells(no_positive, no_positive_count, bounds)
+    used = {(r["x"], r["y"]) for r in no_positive_sample}
+    near_candidates = [r for r in near_positive if (r["x"], r["y"]) not in used]
+    adjacent_sample = spread_select_across_cells(near_candidates, near_count, bounds)
     used.update((r["x"], r["y"]) for r in adjacent_sample)
-    rest = [r for r in remaining_404 if (r["x"], r["y"]) not in used]
-    fill = spread_select(rest, per_class - len(no_positive_sample) - len(adjacent_sample))
-    missing_sample = no_positive_sample + adjacent_sample + fill
-
+    remaining_404 = [r for r in missing if (r["x"], r["y"]) not in used]
+    requested = no_positive_count + near_count
+    selected_404 = no_positive_sample + adjacent_sample
+    if len(selected_404) < requested:
+        fill = spread_select_across_cells(remaining_404, requested - len(selected_404), bounds)
+        adjacent_sample.extend(fill)
     selected = []
     for row in positive:
         selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
@@ -146,11 +185,11 @@ def choose_seeds(census, per_class):
         selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
                          "class": "not_found_404_z9", "sampling_stratum": "no_positive_grid_cell"})
     for row in adjacent_sample:
+        stratum = "near_positive" if (row["x"], row["y"]) in {
+            (r["x"], r["y"]) for r in near_candidates
+        } else "spatial_fill"
         selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
-                         "class": "not_found_404_z9", "sampling_stratum": "near_positive"})
-    for row in fill:
-        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
-                         "class": "not_found_404_z9", "sampling_stratum": "spatial_fill"})
+                         "class": "not_found_404_z9", "sampling_stratum": stratum})
     return selected
 
 
@@ -211,13 +250,13 @@ def build_probe_jobs(seeds):
     return [(z, x, y, refs) for (z, x, y), refs in sorted(jobs.items())]
 
 
-def run(census_path, out_path, per_class=8, workers=2):
+def run(census_path, out_path, per_class=8, workers=2,\n        no_positive_404_samples=None, near_positive_404_samples=None):
     census = json.loads(Path(census_path).read_text(encoding="utf-8"))
     summary = census.get("summary", {})
     rows = census.get("tile_results", [])
     if not rows or int(summary.get("tiles_completed", 0)) != int(summary.get("tiles_in_bbox", -1)):
         raise ValueError("Cannot run multi-zoom audit from incomplete z9 census")
-    seeds = choose_seeds(census, per_class)
+    seeds = choose_seeds(census, per_class, no_positive_404_samples, near_positive_404_samples)
     jobs = build_probe_jobs(seeds)
 
     def task(item):
@@ -246,7 +285,7 @@ def run(census_path, out_path, per_class=8, workers=2):
         "purpose": "Stratified diagnostic sample only; not a national inventory or completeness claim.",
         "source_layer": URL,
         "z9_census_tiles_completed": summary["tiles_completed"],
-        "samples_per_class_requested": per_class,
+        "samples_per_class_requested": per_class,\n        "no_positive_404_samples_requested": no_positive_404_samples,\n        "near_positive_404_samples_requested": near_positive_404_samples,
         "sampled_classes": dict(Counter(seed["class"] for seed in seeds)),
         "sampled_z9_seed_spatial_cells": {
             f"{row}:{column}": sum(
@@ -291,9 +330,9 @@ def main():
     p.add_argument("--census", type=Path, default=Path("sca-national-independent-layer-census-z9.json"))
     p.add_argument("--out", type=Path, default=Path("output/sca-multizoom-coverage-audit.json"))
     p.add_argument("--samples-per-class", type=int, default=8)
-    p.add_argument("--workers", type=int, default=2)
+    p.add_argument("--no-positive-404-samples", type=int, default=None)\n    p.add_argument("--near-positive-404-samples", type=int, default=None)\n    p.add_argument("--workers", type=int, default=2)
     a = p.parse_args()
-    run(a.census, a.out, max(1, a.samples_per_class), a.workers)
+    run(a.census, a.out, max(1, a.samples_per_class), a.workers,\n        a.no_positive_404_samples, a.near_positive_404_samples)
 
 
 if __name__ == "__main__":
