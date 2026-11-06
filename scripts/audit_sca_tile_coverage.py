@@ -92,22 +92,67 @@ def spread_select(rows, count, feature_first=False):
 
 
 def choose_seeds(census, per_class):
+    """Sample positive, valid-empty and 404 z9 tiles as separate spatial strata."""
     rows = census.get("tile_results", [])
     positives = [r for r in rows if r.get("voluntary", {}).get("state") == "valid_mvt_with_features"]
+    empty = [r for r in rows if r.get("voluntary", {}).get("state") == "valid_mvt_empty"]
     missing = [r for r in rows if r.get("voluntary", {}).get("state") == "not_found_404"]
+
     positive = spread_select(positives, per_class, feature_first=True)
-    # Prefer 404s next to positive seeds, then fill with a spatially spread sample.
-    adjacent = [r for r in missing if any(max(abs(r["x"]-p["x"]), abs(r["y"]-p["y"])) == 1 for p in positive)]
-    adjacent = spread_select(adjacent, max(1, per_class // 2))
+    empty_sample = spread_select(empty, per_class)
+
+    # Keep some 404 probes near known positives, then spread the remainder.
+    adjacent = [r for r in missing if any(
+        max(abs(r["x"] - p["x"]), abs(r["y"] - p["y"])) == 1 for p in positive
+    )]
+    adjacent = spread_select(adjacent, min(max(1, per_class // 2), per_class))
     used = {(r["x"], r["y"]) for r in adjacent}
     rest = [r for r in missing if (r["x"], r["y"]) not in used]
     rest = spread_select(rest, per_class - len(adjacent))
+
     selected = []
-    for r in positive:
-        selected.append({"z": 9, "x": int(r["x"]), "y": int(r["y"]), "class": "positive_z9"})
-    for r in adjacent + rest:
-        selected.append({"z": 9, "x": int(r["x"]), "y": int(r["y"]), "class": "not_found_404_z9"})
+    for rows_for_class, label in (
+        (positive, "positive_z9"),
+        (empty_sample, "valid_empty_z9"),
+        (adjacent + rest, "not_found_404_z9"),
+    ):
+        for row in rows_for_class:
+            selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]), "class": label})
     return selected
+
+
+def spatial_state_summary(census, columns=4, rows=4):
+    """Summarize z9 response states in a deterministic coarse spatial grid."""
+    tiles = census.get("tile_results", [])
+    if not tiles:
+        return {"columns": columns, "rows": rows, "cells": []}
+    min_x = min(int(t["x"]) for t in tiles)
+    max_x = max(int(t["x"]) for t in tiles)
+    min_y = min(int(t["y"]) for t in tiles)
+    max_y = max(int(t["y"]) for t in tiles)
+    width = max(1, max_x - min_x + 1)
+    height = max(1, max_y - min_y + 1)
+    cells = {}
+    for tile in tiles:
+        x, y = int(tile["x"]), int(tile["y"])
+        col = min(columns - 1, (x - min_x) * columns // width)
+        row = min(rows - 1, (y - min_y) * rows // height)
+        cell = cells.setdefault((row, col), Counter())
+        cell[tile.get("voluntary", {}).get("state", "pending")] += 1
+    output = []
+    for (row, col), counts in sorted(cells.items()):
+        total = sum(counts.values())
+        output.append({
+            "row": row, "column": col, "tile_count": total,
+            "positive_tiles": counts.get("valid_mvt_with_features", 0),
+            "valid_empty_tiles": counts.get("valid_mvt_empty", 0),
+            "not_found_404_tiles": counts.get("not_found_404", 0),
+            "technical_or_unknown_tiles": sum(
+                count for state, count in counts.items()
+                if state not in {"valid_mvt_with_features", "valid_mvt_empty", "not_found_404"}
+            ),
+        })
+    return {"columns": columns, "rows": rows, "cells": output}
 
 
 def probes_for_seed(seed):
@@ -169,6 +214,8 @@ def run(census_path, out_path, per_class=8, workers=2):
         "source_layer": URL,
         "z9_census_tiles_completed": summary["tiles_completed"],
         "samples_per_class_requested": per_class,
+        "sampled_classes": dict(Counter(seed["class"] for seed in seeds)),
+        "z9_spatial_state_summary": spatial_state_summary(census),
         "sampled_z9_seeds": seeds,
         "unique_probe_tiles": len(jobs),
         "probe_requests": len(results),
