@@ -250,7 +250,14 @@ def build_probe_jobs(seeds):
     return [(z, x, y, refs) for (z, x, y), refs in sorted(jobs.items())]
 
 
-def run(census_path, out_path, per_class=8, workers=2,\n        no_positive_404_samples=None, near_positive_404_samples=None):
+def run(
+    census_path,
+    out_path,
+    per_class=8,
+    workers=2,
+    no_positive_404_samples=None,
+    near_positive_404_samples=None,
+):
     census = json.loads(Path(census_path).read_text(encoding="utf-8"))
     summary = census.get("summary", {})
     rows = census.get("tile_results", [])
@@ -285,7 +292,9 @@ def run(census_path, out_path, per_class=8, workers=2,\n        no_positive_404_
         "purpose": "Stratified diagnostic sample only; not a national inventory or completeness claim.",
         "source_layer": URL,
         "z9_census_tiles_completed": summary["tiles_completed"],
-        "samples_per_class_requested": per_class,\n        "no_positive_404_samples_requested": no_positive_404_samples,\n        "near_positive_404_samples_requested": near_positive_404_samples,
+        "samples_per_class_requested": per_class,
+        "no_positive_404_samples_requested": no_positive_404_samples,
+        "near_positive_404_samples_requested": near_positive_404_samples,
         "sampled_classes": dict(Counter(seed["class"] for seed in seeds)),
         "sampled_z9_seed_spatial_cells": {
             f"{row}:{column}": sum(
@@ -330,9 +339,12 @@ def main():
     p.add_argument("--census", type=Path, default=Path("sca-national-independent-layer-census-z9.json"))
     p.add_argument("--out", type=Path, default=Path("output/sca-multizoom-coverage-audit.json"))
     p.add_argument("--samples-per-class", type=int, default=8)
-    p.add_argument("--no-positive-404-samples", type=int, default=None)\n    p.add_argument("--near-positive-404-samples", type=int, default=None)\n    p.add_argument("--workers", type=int, default=2)
+    p.add_argument("--no-positive-404-samples", type=int, default=None)
+    p.add_argument("--near-positive-404-samples", type=int, default=None)
+    p.add_argument("--workers", type=int, default=2)
     a = p.parse_args()
-    run(a.census, a.out, max(1, a.samples_per_class), a.workers,\n        a.no_positive_404_samples, a.near_positive_404_samples)
+    run(a.census, a.out, max(1, a.samples_per_class), a.workers,
+        a.no_positive_404_samples, a.near_positive_404_samples)
 
 
 if __name__ == "__main__":
