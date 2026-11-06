@@ -1,0 +1,93 @@
+name: Discover nature-conservation actions in Länsstyrelsen diaries
+
+on:
+  workflow_dispatch:
+    inputs:
+      category:
+        description: National diary search category
+        required: true
+        type: choice
+        options:
+          - wetlands
+          - forest_management
+          - watercourses
+          - meadows_pastures
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Resolve category search phrases
+        id: terms
+        env:
+          CATEGORY: ${{ inputs.category }}
+        run: |
+          python - <<'PY'
+          import json, os
+          terms = {
+            "wetlands": ["våtmarksrestaurering", "återvätning", "dikespluggning", "hydrologisk restaurering", "igenläggning av diken", "våtmarksanläggning"],
+            "forest_management": ["naturvårdande skötsel", "frihuggning", "veteranisering", "skapande av död ved", "restaurering lövskog", "skötselåtgärder skog"],
+            "watercourses": ["biotopvård", "vattendragsrestaurering", "flottledsåterställning", "utrivning vandringshinder", "fiskväg", "lekbotten"],
+            "meadows_pastures": ["ängsrestaurering", "betesrestaurering", "naturbetesmark", "slåtter", "hamling", "restaurering betesmark"],
+          }
+          category = os.environ["CATEGORY"]
+          selected = terms.get(category)
+          if not selected:
+              raise SystemExit(f"Unknown category: {category}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              print("primary=" + selected[0], file=f)
+              print("extra=" + ",".join(selected[1:]), file=f)
+          print(json.dumps({"category": category, "terms": selected}, ensure_ascii=False))
+          PY
+      - name: Search all county diaries and validate totals and pagination
+        env:
+          PRIMARY_TERM: ${{ steps.terms.outputs.primary }}
+          EXTRA_TERMS: ${{ steps.terms.outputs.extra }}
+          CATEGORY: ${{ inputs.category }}
+        run: python scripts/search_lansstyrelsen_diary_browser.py --county "Alla län" --search-term "$PRIMARY_TERM" --extra-search-terms "$EXTRA_TERMS" --output "diary-discovery-$CATEGORY.json"
+      - name: Print category discovery summary
+        if: always()
+        env:
+          CATEGORY: ${{ inputs.category }}
+        run: |
+          python - "$CATEGORY" <<'PY'
+          import json, sys
+          from pathlib import Path
+          category = sys.argv[1]
+          p = Path(f"diary-discovery-{category}.json")
+          if not p.exists():
+              print("No result file was produced.")
+              raise SystemExit(0)
+          d = json.loads(p.read_text(encoding="utf-8"))
+          print(json.dumps({
+              "category": category,
+              "request_ok": d.get("request_ok"),
+              "counties_searched": len(d.get("counties", [])),
+              "query_count": len(d.get("queries", [])),
+              "result_count": d.get("result_count"),
+              "reported_total_results": d.get("reported_total_results"),
+              "total_reconciled": d.get("total_reconciled"),
+              "per_query_counts": d.get("per_query_counts"),
+              "error": d.get("error"),
+          }, ensure_ascii=False, indent=2))
+          PY
+      - name: Upload national discovery results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-nature-action-discovery-${{ inputs.category }}
+          path: diary-discovery-${{ inputs.category }}.json
+          if-no-files-found: warn
+          retention-days: 30
