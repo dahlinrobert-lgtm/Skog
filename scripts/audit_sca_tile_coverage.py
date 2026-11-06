@@ -250,7 +250,14 @@ def build_probe_jobs(seeds):
     return [(z, x, y, refs) for (z, x, y), refs in sorted(jobs.items())]
 
 
-def run(census_path, out_path, per_class=8, workers=2,\n        no_positive_404_samples=None, near_positive_404_samples=None):
+def run(
+    census_path,
+    out_path,
+    per_class=8,
+    workers=2,
+    no_positive_404_samples=None,
+    near_positive_404_samples=None,
+):
     census = json.loads(Path(census_path).read_text(encoding="utf-8"))
     summary = census.get("summary", {})
     rows = census.get("tile_results", [])
