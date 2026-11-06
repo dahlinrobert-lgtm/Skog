@@ -136,14 +136,21 @@ def choose_seeds(census, per_class):
     missing_sample = no_positive_sample + adjacent_sample + fill
 
     selected = []
-    for rows_for_class, label in (
-        (positive, "positive_z9"),
-        (empty_sample, "valid_empty_z9"),
-        (no_positive_sample, "not_found_404_z9_no_positive_cell"),
-        (adjacent_sample + fill, "not_found_404_z9"),
-    ):
-        for row in rows_for_class:
-            selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]), "class": label})
+    for row in positive:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "positive_z9", "sampling_stratum": "positive"})
+    for row in empty_sample:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "valid_empty_z9", "sampling_stratum": "valid_empty"})
+    for row in no_positive_sample:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "not_found_404_z9", "sampling_stratum": "no_positive_grid_cell"})
+    for row in adjacent_sample:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "not_found_404_z9", "sampling_stratum": "near_positive"})
+    for row in fill:
+        selected.append({"z": 9, "x": int(row["x"]), "y": int(row["y"]),
+                         "class": "not_found_404_z9", "sampling_stratum": "spatial_fill"})
     return selected
 
 
