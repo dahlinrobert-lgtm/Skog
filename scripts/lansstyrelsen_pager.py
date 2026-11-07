@@ -14,26 +14,20 @@ def select_next_pager_action(
     the postback argument for numeric links and the label only to distinguish
     the sliding-window ellipsis.
     """
-    numeric = []
+    forward = []
     for item in candidates:
         match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
-        if not match or item.get("label", "").strip() in {"...", "…"}:
+        if not match:
             continue
         target_index = int(match.group(1))
+        # Trust the zero-based WebForms target, not the visible label. An
+        # ellipsis can represent the next page (for example Page$6 on page 5).
+        # A backward ellipsis (for example Page$1) must never restart paging.
         if target_index > current_page_index:
-            numeric.append((target_index, item))
+            forward.append((target_index, item))
 
-    if numeric:
-        return min(numeric, key=lambda pair: pair[0])[1]
-
-    # The portal's ellipsis uses Page$1 to advance the visible pager window.
-    # It is only considered when no ordinary forward page link is available.
-    for item in candidates:
-        if (
-            item["argument"].casefold() == "page$1"
-            and item.get("label", "").strip() in {"...", "…"}
-        ):
-            return item
+    if forward:
+        return min(forward, key=lambda pair: pair[0])[1]
 
     # Prefer a genuine Next action. Do not jump to Last: doing so can silently
     # skip result pages and make a national collection appear incomplete.
