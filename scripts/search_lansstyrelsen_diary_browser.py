@@ -489,15 +489,11 @@ def main() -> None:
                     next_item = select_next_pager_action(candidates, current_page_index)
 
                     if next_item is None:
+                        # Only a genuine Next action is safe as a fallback.
+                        # Page$Last skips unseen result pages, while a backward
+                        # ellipsis can restart an earlier pager window.
                         for item in candidates:
-                            if item["argument"].casefold() == "page$1" and item["label"] in {"...", "…"}:
-                                next_item = item
-                                break
-
-                    if next_item is None:
-                        # A GridView may expose a direct Next or Last control.
-                        for item in candidates:
-                            if item["argument"].casefold() in {"next", "page$next", "last", "page$last"}:
+                            if item["argument"].casefold() in {"next", "page$next"}:
                                 next_item = item
                                 break
 
