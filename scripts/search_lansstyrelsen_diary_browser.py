@@ -48,17 +48,33 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
     rows = grid.locator("tr")
     headers = [clean(x) for x in rows.nth(0).locator("th, td").all_inner_texts()] if rows.count() else []
     records = []
+    visible_data_rows = 0
+    nonempty_data_rows = 0
+    invalid_diary_number_rows = []
+    duplicate_diary_numbers = []
+    raw_diary_numbers = []
     for row_index in range(1, rows.count()):
         row = rows.nth(row_index)
         if not row.is_visible():
             continue
+        visible_data_rows += 1
         values = [clean(x) for x in row.locator("th, td").all_inner_texts()]
         if not values or not any(values):
             continue
+        nonempty_data_rows += 1
         diary_number = values[0]
         if not re.fullmatch(r"\d{1,6}-\d{4}", diary_number):
+            if len(invalid_diary_number_rows) < 25:
+                invalid_diary_number_rows.append({
+                    "row_index": row_index,
+                    "first_cell": diary_number[:160],
+                    "cell_count": len(values),
+                })
             continue
+        raw_diary_numbers.append(diary_number)
         if diary_number in seen:
+            if len(duplicate_diary_numbers) < 25:
+                duplicate_diary_numbers.append(diary_number)
             continue
         seen.add(diary_number)
         record = {
@@ -82,7 +98,14 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
         "page_number": page_number,
         "headers": headers,
         "row_count_including_header": rows.count(),
-        "result_rows_extracted": len(records),
+        "visible_data_rows": visible_data_rows,
+        "nonempty_data_rows": nonempty_data_rows,
+        "raw_matching_diary_number_rows": len(raw_diary_numbers),
+        "unique_result_rows_extracted": len(records),
+        "duplicate_diary_number_count": len(duplicate_diary_numbers),
+        "duplicate_diary_number_samples": duplicate_diary_numbers,
+        "invalid_diary_number_row_count": len(invalid_diary_number_rows),
+        "invalid_diary_number_row_samples": invalid_diary_number_rows,
     }
     return records, diag
 
@@ -450,6 +473,9 @@ def main() -> None:
                             raise RuntimeError(
                                 "Portal pager exposes no continuation although source total is larger: "
                                 f"iteration={iteration}, extracted={len(seen)}, reported={reported_now}, "
+                                f"current_page_index={current_page_index}, "
+                                f"visible_diary_numbers={list(visible_ids)!r}, "
+                                f"last_table_diagnostics={result['table_diagnostics'][-1] if result['table_diagnostics'] else None!r}, "
                                 f"pager_text={pager_text!r}, candidates="
                                 f"{[(x['label'], x['argument']) for x in candidates]!r}"
                             )
