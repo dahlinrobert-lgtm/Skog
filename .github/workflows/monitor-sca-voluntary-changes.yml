@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install MVT dependencies and test runner
-        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" pytest
+        run: python -m pip install "requests>=2.31,<3" "mapbox-vector-tile>=2,<3" "shapely>=2,<3" pytest
       - name: Download original national z12 baseline if state does not exist
         if: ${{ !hashFiles('data/sca/monitoring/tile-state.json.gz') }}
         uses: actions/download-artifact@v4
@@ -53,6 +53,13 @@ jobs:
             --near-positive-404-samples 4 \
             --ownership-positive-404-samples 9 \
             --workers 2
+      - name: Audit z8 parent geometry overlap with z9 404 children
+        run: |
+          python -m py_compile scripts/audit_sca_parent_child_geometry_overlap.py
+          python -m pytest -q tests/test_sca_parent_child_geometry_overlap.py
+          python scripts/audit_sca_parent_child_geometry_overlap.py \
+            --audit output/sca-multizoom-coverage-audit.json \
+            --out output/sca-parent-child-geometry-overlap.json
       - name: Poll z12 tiles and compare geometry and metadata
         env:
           MAX_WORKERS: "3"
@@ -70,6 +77,7 @@ jobs:
         run: |
           python -m json.tool output/sca-voluntary-change-summary.json > /dev/null
           python -m json.tool output/sca-multizoom-coverage-audit.json > /dev/null
+          python -m json.tool output/sca-parent-child-geometry-overlap.json > /dev/null
           python - <<'PY'
           import gzip, json
           from pathlib import Path
@@ -128,5 +136,6 @@ jobs:
             output/sca-voluntary-change-events.jsonl.gz
             sca-national-independent-layer-census-z9.json
             output/sca-multizoom-coverage-audit.json
+            output/sca-parent-child-geometry-overlap.json
           if-no-files-found: error
           retention-days: 90
