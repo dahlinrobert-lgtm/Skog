@@ -216,7 +216,7 @@ def main() -> None:
         result = {
             "search_term": term, "requested_county": county_label, "request_ok": False,
             "result_count": 0, "reported_total_results": None, "results": [],
-            "pagination": {"pages_read": 0, "has_next_page": None},
+            "pagination": {"pages_read": 0, "has_next_page": None, "transitions": []},
             "table_diagnostics": [], "error": None,
         }
         page = browser.new_page(locale="sv-SE")
@@ -502,6 +502,7 @@ def main() -> None:
                                 f"current_page_index={current_page_index}, "
                                 f"visible_diary_numbers={list(visible_ids)!r}, "
                                 f"table_diagnostics_by_page={result['table_diagnostics']!r}, "
+                                f"page_transitions={result['pagination']['transitions']!r}, "
                                 f"pager_text={pager_text!r}, candidates="
                                 f"{[(x['label'], x['argument']) for x in candidates]!r}"
                             )
@@ -512,6 +513,16 @@ def main() -> None:
                     argument = next_item["argument"]
                     before_signature = visible_ids
                     before_count = len(seen)
+                    transition = {
+                        "iteration": iteration,
+                        "current_page_index_before": current_page_index,
+                        "pager_target": target,
+                        "pager_argument": argument,
+                        "pager_label": next_item.get("label"),
+                        "before_first_ids": list(before_signature[:8]),
+                        "before_last_ids": list(before_signature[-8:]),
+                        "unique_records_before": before_count,
+                    }
                     action_signature = (before_signature, target, argument)
                     if action_signature in visited_pager_actions:
                         raise RuntimeError(
@@ -584,6 +595,11 @@ def main() -> None:
                         for row in page.locator(f"{RESULT_GRID} tr").all()
                         for match in re.findall(r"\\b\\d{1,6}-\\d{4}\\b", clean(row.inner_text()))
                     )
+                    transition["after_first_ids"] = list(page_after[:8])
+                    transition["after_last_ids"] = list(page_after[-8:])
+                    transition["after_visible_row_ids"] = len(page_after)
+                    transition["changed_signature"] = page_after != before_signature
+                    result["pagination"]["transitions"].append(transition)
                     current_page_index += 1
                     result["pagination"]["last_page_signature"] = list(page_after[:5])
                 else:
