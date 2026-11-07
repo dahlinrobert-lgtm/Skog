@@ -593,7 +593,7 @@ def main() -> None:
                     page_after = tuple(
                         match
                         for row in page.locator(f"{RESULT_GRID} tr").all()
-                        for match in re.findall(r"\\b\\d{1,6}-\\d{4}\\b", clean(row.inner_text()))
+                        for match in re.findall(r"\b\d{1,6}-\d{4}\b", clean(row.inner_text()))
                     )
                     transition["after_first_ids"] = list(page_after[:8])
                     transition["after_last_ids"] = list(page_after[-8:])
