@@ -56,9 +56,9 @@ def advance_page_index(current_page_index: int, label: str, argument: str) -> in
     if match:
         target_index = int(match.group(1))
         if normalized_label in {"...", "…"}:
-            # The portal's ellipsis shifts its pager window and fetches the next
-            # result page, even when its Page$N argument points behind our index.
-            return current_page_index + 1
+            # Only a forward Page$N ellipsis advances. A lower/equal argument
+            # represents a backward pager window and must not change our index.
+            return target_index if target_index > current_page_index else current_page_index
         if target_index > current_page_index:
             return target_index
         return current_page_index
