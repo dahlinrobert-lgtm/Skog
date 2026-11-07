@@ -47,11 +47,14 @@ def advance_page_index(current_page_index: int, label: str, argument: str) -> in
     """
     normalized_label = (label or "").strip()
     normalized_argument = (argument or "").casefold()
-    if normalized_label in {"...", "…"}:
-        return current_page_index
     match = re.fullmatch(r"page\$(\d+)", normalized_argument, re.I)
     if match:
-        return int(match.group(1))
+        target_index = int(match.group(1))
+        # A forward ellipsis can target the next result page. A backward
+        # ellipsis is a pager-window control and must not rewind the index.
+        return target_index if target_index > current_page_index else current_page_index
+    if normalized_label in {"...", "…"}:
+        return current_page_index
     if normalized_argument in {"next", "page$next"}:
         return current_page_index + 1
     return current_page_index
