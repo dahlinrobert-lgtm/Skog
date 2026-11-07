@@ -533,10 +533,28 @@ def main() -> None:
                     }
                     action_signature = (before_signature, target, argument)
                     if action_signature in visited_pager_actions:
+                        previous_transition = next(
+                            (
+                                item for item in reversed(result["pagination"]["transitions"])
+                                if item.get("pager_target") == target
+                                and item.get("pager_argument") == argument
+                                and item.get("before_first_ids") == list(before_signature[:8])
+                                and item.get("before_last_ids") == list(before_signature[-8:])
+                            ),
+                            None,
+                        )
+                        repeated_pager_text = clean(pager.inner_text()) if pager.count() else ""
                         raise RuntimeError(
                             "Pager action repeated without reaching a reconciled terminal state: "
-                            f"iteration={iteration}, argument={argument!r}, "
-                            f"extracted={before_count}, reported={result['reported_total_results']}"
+                            f"iteration={iteration}, argument={argument!r}, target={target!r}, "
+                            f"label={next_item.get('label')!r}, extracted={before_count}, "
+                            f"reported={result['reported_total_results']}, "
+                            f"current_page_index={current_page_index}, "
+                            f"visible_ids={list(before_signature[:12])!r}, "
+                            f"pager_text={repeated_pager_text!r}, "
+                            f"pager_candidates={[(x.get('label'), x.get('argument')) for x in candidates]!r}, "
+                            f"previous_transition={previous_transition!r}, "
+                            f"recent_transitions={result['pagination']['transitions'][-8:]!r}"
                         )
                     visited_pager_actions.add(action_signature)
                     response_seen = False
