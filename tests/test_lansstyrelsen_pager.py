@@ -39,11 +39,17 @@ class LansstyrelsenPagerTests(unittest.TestCase):
             candidates[1],
         )
 
-    def test_ellipsis_advances_window_when_no_numeric_page_is_available(self):
-        candidates = [action("...", "Page$1")]
+    def test_forward_ellipsis_page_argument_is_used_as_next_page(self):
+        candidates = [action("...", "Page$6"), action(">>", "Page$Last")]
         self.assertEqual(
-            select_next_pager_action(candidates, current_page_index=8),
+            select_next_pager_action(candidates, current_page_index=5),
             candidates[0],
+        )
+
+    def test_backward_ellipsis_is_not_used_to_restart_pagination(self):
+        candidates = [action("...", "Page$1"), action(">>", "Page$Last")]
+        self.assertIsNone(
+            select_next_pager_action(candidates, current_page_index=5)
         )
 
     def test_ellipsis_window_shift_does_not_advance_result_page_index(self):
