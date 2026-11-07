@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-11-06T22:23:44.870004+00:00",
+  "observed_at": "2026-11-07T09:00:59.417230+00:00",
   "diary": "Alla län",
   "counties": [
     "Länsstyrelsen i Blekinge län",
@@ -51,7 +51,7 @@
       "query_count": 2,
       "successful_queries": 2,
       "failed_queries": 0,
-      "unique_records": 144
+      "unique_records": 141
     },
     {
       "county": "Länsstyrelsen i Hallands län",
@@ -72,7 +72,7 @@
       "query_count": 2,
       "successful_queries": 2,
       "failed_queries": 0,
-      "unique_records": 198
+      "unique_records": 197
     },
     {
       "county": "Länsstyrelsen i Kalmar län",
@@ -100,14 +100,14 @@
       "query_count": 2,
       "successful_queries": 2,
       "failed_queries": 0,
-      "unique_records": 259
+      "unique_records": 258
     },
     {
       "county": "Länsstyrelsen i Stockholms län",
       "query_count": 2,
       "successful_queries": 2,
       "failed_queries": 0,
-      "unique_records": 293
+      "unique_records": 292
     },
     {
       "county": "Länsstyrelsen i Södermanlands län",
@@ -121,7 +121,7 @@
       "query_count": 2,
       "successful_queries": 2,
       "failed_queries": 0,
-      "unique_records": 93
+      "unique_records": 92
     },
     {
       "county": "Länsstyrelsen i Värmlands län",
@@ -142,7 +142,7 @@
       "query_count": 2,
       "successful_queries": 2,
       "failed_queries": 0,
-      "unique_records": 164
+      "unique_records": 162
     },
     {
       "county": "Länsstyrelsen i Västmanlands län",
@@ -156,7 +156,7 @@
       "query_count": 2,
       "successful_queries": 2,
       "failed_queries": 0,
-      "unique_records": 560
+      "unique_records": 558
     },
     {
       "county": "Länsstyrelsen i Örebro län",
@@ -180,18 +180,18 @@
     "vattenverksamhet"
   ],
   "request_ok": true,
-  "extracted_count": 3673,
-  "reported_total_results": 3673,
+  "extracted_count": 3662,
+  "reported_total_results": 3662,
   "total_reconciled": true,
   "pagination": {
     "pages_read": 98,
     "has_next_page": false
   },
-  "state_record_count_before": 3718,
+  "state_record_count_before": 3785,
   "state_record_count_after": 3785,
-  "first_seen_events": 67,
-  "changed_events": 87,
-  "observation_events": 3519,
+  "first_seen_events": 0,
+  "changed_events": 0,
+  "observation_events": 3662,
   "invalid_or_duplicate_records": 0,
   "absent_ids_interpreted_as_removed": false,
   "note": "Records absent from a search are not marked removed: they may not match the current search phrase or may be outside the source's current result window."
