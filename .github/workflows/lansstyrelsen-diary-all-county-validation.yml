@@ -16,7 +16,7 @@ on:
       - "scripts/lansstyrelsen_pager.py"
       - "scripts/test_lansstyrelsen_diary_validation.py"
       - "scripts/test_diary_county_coverage.py"
-      - "tests/test_lansstyrelsen_pager_window.py"
+      - "tests/test_lansstyrelsen_pager.py"
 
 permissions:
   contents: read
@@ -33,7 +33,7 @@ jobs:
       - name: Test diary history and source-response validation
         run: |
           python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_diary_county_coverage
-          python -m unittest discover -s tests -p 'test_lansstyrelsen_pager_window.py'
+          python -m unittest tests.test_lansstyrelsen_pager
       - name: Install browser dependencies
         run: |
           python -m pip install playwright
@@ -43,9 +43,9 @@ jobs:
           SEARCH_TERM_INPUT: ${{ inputs.search_term }}
         run: |
           search_term="${SEARCH_TERM_INPUT:-vattenverksamhet}"
-          python scripts/search_lansstyrelsen_diary_browser.py \
-            --county "Alla län" \
-            --search-term "$search_term" \
+          python scripts/search_lansstyrelsen_diary_browser.py \\
+            --county "Alla län" \\
+            --search-term "$search_term" \\
             --output diary-search-all-counties.json
       - name: Print all-county validation summary
         if: always()
