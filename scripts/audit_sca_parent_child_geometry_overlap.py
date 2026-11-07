@@ -16,8 +16,11 @@ def tile_bounds(z,x,y):
     span=2*WORLD/(2**z); xmin=-WORLD+x*span; ymax=WORLD-y*span
     return xmin,ymax-span,xmin+span,ymax
 def mvt_to_world(raw,extent,z,x,y):
-    geom=shape(raw); span=2*WORLD/(2**z); ox=-WORLD+x*span; oy=WORLD-y*span
-    return transform(lambda a,b,zc=None:(ox+a*span/extent,oy-b*span/extent),geom)
+    # mapbox_vector_tile.decode() defaults to y_coord_down=False and flips
+    # MVT's screen-oriented y axis to a Cartesian y-up coordinate system.
+    # Decoded local (0, 0) is therefore the tile's bottom-left, not top-left.
+    geom=shape(raw); span=2*WORLD/(2**z); xmin,ymin,xmax,ymax=tile_bounds(z,x,y)
+    return transform(lambda a,b,zc=None:(xmin+a*span/extent,ymin+b*span/extent),geom)
 def intersect_child(geom,bounds):
     hit=geom.intersection(box(*bounds))
     if hit.is_empty: return None
