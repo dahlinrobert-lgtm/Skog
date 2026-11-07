@@ -532,16 +532,24 @@ def main() -> None:
                         )
                     visited_pager_actions.add(action_signature)
                     response_seen = False
+                    response_diagnostics = None
                     try:
                         with page.expect_response(
                             lambda resp: "diarium.lansstyrelsen.se" in resp.url
                             and resp.request.method == "POST",
                             timeout=25000,
-                        ):
+                        ) as response_info:
                             page.evaluate("([t,a]) => __doPostBack(t,a)", [target, argument])
                         response_seen = True
+                        response = response_info.value
+                        response_diagnostics = {
+                            "url": response.url,
+                            "status": response.status,
+                            "ok": response.ok,
+                            "content_type": response.headers.get("content-type"),
+                        }
                     except PlaywrightTimeoutError:
-                        pass
+                        response_diagnostics = {"timeout": True}
 
                     # Page$Last is also the pager's terminal action. If the page
                     # already contains every source-reported result, ASP.NET may
@@ -574,6 +582,39 @@ def main() -> None:
                             timeout=20000,
                         )
                     except PlaywrightTimeoutError as exc:
+                        # Preserve evidence from the actual failed postback page.
+                        # This distinguishes a missing/failed response from a
+                        # successful HTTP response whose WebForms grid did not update.
+                        try:
+                            failed_body = clean(page.locator("body").inner_text(timeout=10000))
+                        except Exception as diagnostic_exc:
+                            failed_body = f"body_capture_error={type(diagnostic_exc).__name__}: {diagnostic_exc}"
+                        try:
+                            failed_grid = page.locator(RESULT_GRID)
+                            failed_grid_rows = [
+                                clean(row.inner_text())
+                                for row in failed_grid.locator("tr").all()[:8]
+                            ] if failed_grid.count() else []
+                        except Exception as diagnostic_exc:
+                            failed_grid_rows = [f"grid_capture_error={type(diagnostic_exc).__name__}: {diagnostic_exc}"]
+                        try:
+                            failed_pager_text = clean(
+                                page.locator(f"{RESULT_GRID} tr").last.inner_text(timeout=5000)
+                            )
+                        except Exception:
+                            failed_pager_text = None
+                        result["pagination"]["failed_transition"] = {
+                            **transition,
+                            "response_seen": response_seen,
+                            "response": response_diagnostics,
+                            "url": page.url,
+                            "title": page.title(),
+                            "ready_state": page.evaluate("document.readyState"),
+                            "body_text_excerpt": failed_body[:2500],
+                            "grid_present": page.locator(RESULT_GRID).count() > 0,
+                            "grid_rows_excerpt": failed_grid_rows,
+                            "pager_text": failed_pager_text,
+                        }
                         if argument.casefold() in {"last", "page$last"}:
                             stable_body = clean(page.locator("body").inner_text(timeout=15000))
                             stable_total = parse_total(stable_body)
@@ -587,7 +628,9 @@ def main() -> None:
                             "WebForms pager postback did not change the visible result page: "
                             f"iteration={iteration}, argument={argument!r}, response_seen={response_seen}, "
                             f"extracted_before_postback={before_count}, reported_total={parse_total(clean(page.locator('body').inner_text(timeout=15000)))}, "
-                            f"current_ids={before_signature[:4]!r}"
+                            f"current_ids={before_signature[:4]!r}, "
+                            f"response={response_diagnostics!r}, "
+                            f"page_url={page.url!r}, page_title={page.title()!r}"
                         ) from exc
 
                     page_after = tuple(
