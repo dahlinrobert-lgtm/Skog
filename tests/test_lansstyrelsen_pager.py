@@ -34,13 +34,13 @@ class LansstyrelsenPagerTests(unittest.TestCase):
         candidates = [action("...", "Page$6"), action(">>", "Page$Last")]
         self.assertEqual(select_next_pager_action(candidates, 5), candidates[0])
 
-    def test_shifted_ellipsis_is_forward_even_when_argument_is_behind_index(self):
+    def test_backward_shifted_ellipsis_is_not_selected_after_later_pages(self):
         candidates = [
             action("2", "Page$2"), action("3", "Page$3"),
             action("4", "Page$4"), action("5", "Page$5"),
             action("...", "Page$6"), action(">>", "Page$Last"),
         ]
-        self.assertEqual(select_next_pager_action(candidates, 7), candidates[4])
+        self.assertIsNone(select_next_pager_action(candidates, 7))
 
     def test_backward_ellipsis_is_not_selected_as_forward(self):
         candidates = [
@@ -58,9 +58,9 @@ class LansstyrelsenPagerTests(unittest.TestCase):
         candidates = [action("...", "Page$6"), action(">>", "Page$Last")]
         self.assertEqual(select_next_pager_action(candidates, 5), candidates[0])
 
-    def test_ellipsis_advances_logical_page_index_even_if_argument_is_behind(self):
-        self.assertEqual(advance_page_index(7, "...", "Page$6"), 8)
-        self.assertEqual(advance_page_index(6, "...", "Page$1"), 7)
+    def test_forward_ellipsis_advances_but_backward_ellipsis_does_not(self):
+        self.assertEqual(advance_page_index(5, "...", "Page$6"), 6)
+        self.assertEqual(advance_page_index(7, "...", "Page$6"), 7)
 
     def test_numeric_page_argument_sets_zero_based_result_page_index(self):
         self.assertEqual(advance_page_index(1, "4", "Page$3"), 3)
