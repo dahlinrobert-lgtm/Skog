@@ -42,3 +42,22 @@ def select_next_pager_action(
             return item
 
     return None
+
+
+def advance_page_index(current_page_index: int, label: str, argument: str) -> int:
+    """Track the result-page index without counting pager-window shifts as pages.
+
+    ASP.NET GridView numeric Page$N arguments identify zero-based result pages.
+    The ellipsis Page$1 postback advances the visible pager window and must not
+    increment the result-page index. A genuine Next action advances one page.
+    """
+    normalized_label = (label or "").strip()
+    normalized_argument = (argument or "").casefold()
+    if normalized_label in {"...", "…"}:
+        return current_page_index
+    match = re.fullmatch(r"page\$(\d+)", normalized_argument, re.I)
+    if match:
+        return int(match.group(1))
+    if normalized_argument in {"next", "page$next"}:
+        return current_page_index + 1
+    return current_page_index
