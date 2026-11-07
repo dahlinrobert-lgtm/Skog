@@ -47,6 +47,12 @@ def fetch_decode(tile):
         except Exception as e: return {**result,"state":"decode_error","error":str(e)[:200]}
     except Exception as e: return {"z":z,"x":x,"y":y,"state":"request_error","error":str(e)[:200]}
 
+def tile_fetch_args(key):
+    """Convert a unique (z, x, y) key to the fetcher input shape."""
+    z, x, y = key
+    return {"z": z, "x": x, "y": y}
+
+
 def run(input_path,out_path,workers=4):
     data=json.loads(Path(input_path).read_text(encoding="utf-8"))
     points=data.get("points",[])
@@ -56,7 +62,7 @@ def run(input_path,out_path,workers=4):
     decoded={}
     with ThreadPoolExecutor(max_workers=max(1,workers)) as pool:
         futures = {
-            pool.submit(fetch_decode, {"z": key[0], "x": key[1], "y": key[2]}): key
+            pool.submit(fetch_decode, tile_fetch_args(key)): key
             for key in unique.values()
         }
         for future in as_completed(futures):
