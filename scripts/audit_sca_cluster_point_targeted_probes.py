@@ -162,7 +162,7 @@ def run(overlap_path: Path, out_path: Path, workers: int = 4):
         ]
     }
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: out[k] for k in ("source_point_count", "unique_tiles_probed", "state_counts")}, indent=2))
     return out
 
