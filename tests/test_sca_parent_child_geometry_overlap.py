@@ -1,16 +1,19 @@
 from shapely.geometry import Point, box
 from scripts.audit_sca_parent_child_geometry_overlap import tile_bounds, mvt_to_world, intersect_child
 
-def test_parent_point_projects_inside_expected_z9_child():
+def test_decoded_y_up_point_projects_inside_expected_z9_child():
     px,py=136,70
     b=tile_bounds(9,273,140)
     x=(b[0]+b[2])/2; y=(b[1]+b[3])/2
     pb=tile_bounds(8,px,py); extent=4096
+    # mapbox_vector_tile.decode() flips MVT y-down coordinates by default.
+    # Build the decoded y-up coordinate expected by mvt_to_world().
     lx=(x-pb[0])/(pb[2]-pb[0])*extent
-    ly=(pb[3]-y)/(pb[3]-pb[1])*extent
+    ly=(y-pb[1])/(pb[3]-pb[1])*extent
     geom=mvt_to_world({"type":"Point","coordinates":[lx,ly]},extent,8,px,py)
     hit=intersect_child(geom,b)
     assert hit and hit["intersection_type"]=="Point"
+    assert abs(geom.x-x)<1e-6 and abs(geom.y-y)<1e-6
 
 def test_geometry_outside_child_core_is_not_a_hit():
     b=tile_bounds(9,273,140)
