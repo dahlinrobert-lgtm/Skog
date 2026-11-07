@@ -145,7 +145,7 @@ class ChangesCursorTests(unittest.TestCase):
             def __init__(self): self.calls = 0
             def get(self, path, params=None):
                 self.calls += 1
-                return ({"changes": [], "next_cursor": "c0", "changes_cursor": "c0"}, None)
+                return ({"changes": [{"operation": "delete", "document_id": "d1"}], "next_cursor": "c0", "changes_cursor": "c0"}, None)
         class FakeArchive:
             def __init__(self): self.saves = 0; self.uploads = 0
             def exists_with_source_hash(self, container, name, source_hash): return False
