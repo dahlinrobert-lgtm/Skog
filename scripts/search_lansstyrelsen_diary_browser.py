@@ -11,7 +11,7 @@ from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
-from lansstyrelsen_pager import select_next_pager_action
+from lansstyrelsen_pager import advance_page_index, select_next_pager_action
 
 from lansstyrelsen_diary_validation import (
     has_explicit_zero_results,
@@ -414,10 +414,18 @@ def main() -> None:
                                 })
                         continuation = select_next_pager_action(current_actions, current_page_index)
                         if continuation is None:
+                            pager_text_for_error = (
+                                clean(current_pager_row.inner_text(timeout=5000))
+                                if current_pager_row.count() else ""
+                            )
                             raise RuntimeError(
                                 f"Pagination loop detected at iteration {iteration}: "
                                 f"repeated result page with {len(visible_ids)} diary IDs "
-                                "and no valid pager continuation"
+                                "and no valid pager continuation; "
+                                f"current_page_index={current_page_index}; "
+                                f"pager_text={pager_text_for_error!r}; "
+                                f"pager_actions={[(x['label'], x['argument']) for x in current_actions]!r}; "
+                                f"recent_transitions={result['pagination']['transitions'][-5:]!r}"
                             )
                     visited_page_signatures.add(visible_ids)
 
@@ -481,15 +489,11 @@ def main() -> None:
                     next_item = select_next_pager_action(candidates, current_page_index)
 
                     if next_item is None:
+                        # Only a genuine Next action is safe as a fallback.
+                        # Page$Last skips unseen result pages, while a backward
+                        # ellipsis can restart an earlier pager window.
                         for item in candidates:
-                            if item["argument"].casefold() == "page$1" and item["label"] in {"...", "…"}:
-                                next_item = item
-                                break
-
-                    if next_item is None:
-                        # A GridView may expose a direct Next or Last control.
-                        for item in candidates:
-                            if item["argument"].casefold() in {"next", "page$next", "last", "page$last"}:
+                            if item["argument"].casefold() in {"next", "page$next"}:
                                 next_item = item
                                 break
 
@@ -525,10 +529,28 @@ def main() -> None:
                     }
                     action_signature = (before_signature, target, argument)
                     if action_signature in visited_pager_actions:
+                        previous_transition = next(
+                            (
+                                item for item in reversed(result["pagination"]["transitions"])
+                                if item.get("pager_target") == target
+                                and item.get("pager_argument") == argument
+                                and item.get("before_first_ids") == list(before_signature[:8])
+                                and item.get("before_last_ids") == list(before_signature[-8:])
+                            ),
+                            None,
+                        )
+                        repeated_pager_text = clean(pager.inner_text()) if pager.count() else ""
                         raise RuntimeError(
                             "Pager action repeated without reaching a reconciled terminal state: "
-                            f"iteration={iteration}, argument={argument!r}, "
-                            f"extracted={before_count}, reported={result['reported_total_results']}"
+                            f"iteration={iteration}, argument={argument!r}, target={target!r}, "
+                            f"label={next_item.get('label')!r}, extracted={before_count}, "
+                            f"reported={result['reported_total_results']}, "
+                            f"current_page_index={current_page_index}, "
+                            f"visible_ids={list(before_signature[:12])!r}, "
+                            f"pager_text={repeated_pager_text!r}, "
+                            f"pager_candidates={[(x.get('label'), x.get('argument')) for x in candidates]!r}, "
+                            f"previous_transition={previous_transition!r}, "
+                            f"recent_transitions={result['pagination']['transitions'][-8:]!r}"
                         )
                     visited_pager_actions.add(action_signature)
                     response_seen = False
@@ -643,7 +665,9 @@ def main() -> None:
                     transition["after_visible_row_ids"] = len(page_after)
                     transition["changed_signature"] = page_after != before_signature
                     result["pagination"]["transitions"].append(transition)
-                    current_page_index += 1
+                    current_page_index = advance_page_index(
+                        current_page_index, next_item.get("label", ""), argument
+                    )
                     result["pagination"]["last_page_signature"] = list(page_after[:5])
                 else:
                     raise RuntimeError("Safety cap reached after 500 result-page transitions")

@@ -9,36 +9,59 @@ def select_next_pager_action(
 ) -> dict | None:
     """Select the next safe forward action from an ASP.NET GridView pager.
 
-    GridView Page$N arguments are zero-based page indexes. The visible label is
-    not necessarily the same as the argument (and can be an ellipsis), so use
-    the postback argument for numeric links and the label only to distinguish
-    the sliding-window ellipsis.
+    Numeric Page$N postbacks are zero-based result-page indexes. When the
+    visible numeric window is exhausted, this portal exposes an ellipsis
+    postback whose Page$N argument can be lower than the logical page index.
+    In that position the ellipsis advances the pager window; it is distinct
+    from a numeric page link. Never use Page$Last because it can skip pages.
     """
-    numeric = []
+    forward = []
     for item in candidates:
         match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
         if not match or item.get("label", "").strip() in {"...", "…"}:
             continue
         target_index = int(match.group(1))
         if target_index > current_page_index:
-            numeric.append((target_index, item))
+            forward.append((target_index, item))
 
-    if numeric:
-        return min(numeric, key=lambda pair: pair[0])[1]
+    if forward:
+        return min(forward, key=lambda pair: pair[0])[1]
 
-    # The portal's ellipsis uses Page$1 to advance the visible pager window.
-    # It is only considered when no ordinary forward page link is available.
+    # The portal renders both forward and backward ellipses with the
+    # same visible label. Their Page$N argument is the direction signal:
+    # only an argument beyond the current logical page can advance safely.
+    # Treating every ellipsis as forward can send a late page (e.g. index 10)
+    # back to an earlier page (e.g. Page$5), creating a 5-page loop.
     for item in candidates:
+        match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
         if (
-            item["argument"].casefold() == "page$1"
+            match
             and item.get("label", "").strip() in {"...", "…"}
+            and int(match.group(1)) > current_page_index
         ):
             return item
 
-    # Prefer a genuine Next action. Do not jump to Last: doing so can silently
-    # skip result pages and make a national collection appear incomplete.
     for item in candidates:
         if item["argument"].casefold() in {"next", "page$next"}:
             return item
 
     return None
+
+
+def advance_page_index(current_page_index: int, label: str, argument: str) -> int:
+    """Advance the logical result-page index for numeric, ellipsis and Next actions."""
+    normalized_label = (label or "").strip()
+    normalized_argument = (argument or "").casefold()
+    match = re.fullmatch(r"page\$(\d+)", normalized_argument, re.I)
+    if match:
+        target_index = int(match.group(1))
+        if normalized_label in {"...", "…"}:
+            # Only a forward Page$N ellipsis advances. A lower/equal argument
+            # represents a backward pager window and must not change our index.
+            return target_index if target_index > current_page_index else current_page_index
+        if target_index > current_page_index:
+            return target_index
+        return current_page_index
+    if normalized_argument in {"next", "page$next"}:
+        return current_page_index + 1
+    return current_page_index
