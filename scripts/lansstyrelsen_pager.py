@@ -9,10 +9,11 @@ def select_next_pager_action(
 ) -> dict | None:
     """Select the next safe forward action from an ASP.NET GridView pager.
 
-    GridView Page$N arguments are zero-based page indexes. The visible label is
-    not necessarily the same as the argument (and can be an ellipsis), so use
-    the postback argument for numeric links and the label only to distinguish
-    the sliding-window ellipsis.
+    Numeric Page$N postbacks are zero-based result-page indexes. This portal
+    also uses an ellipsis with Page$1 as a forward pager-window control after
+    the numeric window is exhausted. Only consider that special control when
+    no ordinary forward numeric link exists; never use Page$Last because it
+    can skip uncollected result pages.
     """
     forward = []
     for item in candidates:
@@ -20,17 +21,22 @@ def select_next_pager_action(
         if not match:
             continue
         target_index = int(match.group(1))
-        # Trust the zero-based WebForms target, not the visible label. An
-        # ellipsis can represent the next page (for example Page$6 on page 5).
-        # A backward ellipsis (for example Page$1) must never restart paging.
         if target_index > current_page_index:
             forward.append((target_index, item))
 
     if forward:
         return min(forward, key=lambda pair: pair[0])[1]
 
-    # Prefer a genuine Next action. Do not jump to Last: doing so can silently
-    # skip result pages and make a national collection appear incomplete.
+    # Observed portal behavior: after reaching the end of the visible numeric
+    # window, the ellipsis posts Page$1 and advances to another 50-row page.
+    # It is not the same as clicking the visible page-1 numeric link.
+    for item in candidates:
+        if (
+            item["argument"].casefold() == "page$1"
+            and item.get("label", "").strip() in {"...", "…"}
+        ):
+            return item
+
     for item in candidates:
         if item["argument"].casefold() in {"next", "page$next"}:
             return item
@@ -39,21 +45,22 @@ def select_next_pager_action(
 
 
 def advance_page_index(current_page_index: int, label: str, argument: str) -> int:
-    """Track the result-page index without counting pager-window shifts as pages.
+    """Advance the logical result-page index for numeric, ellipsis and Next actions.
 
-    ASP.NET GridView numeric Page$N arguments identify zero-based result pages.
-    The ellipsis Page$1 postback advances the visible pager window and must not
-    increment the result-page index. A genuine Next action advances one page.
+    Numeric Page$N arguments identify zero-based result pages. The portal's
+    special ellipsis Page$1 is a forward window action when selected as an
+    ellipsis (not the numeric page-one link), and the observed postback changes
+    the result rows; count it as one result-page transition.
     """
     normalized_label = (label or "").strip()
     normalized_argument = (argument or "").casefold()
     match = re.fullmatch(r"page\$(\d+)", normalized_argument, re.I)
     if match:
         target_index = int(match.group(1))
-        # A forward ellipsis can target the next result page. A backward
-        # ellipsis is a pager-window control and must not rewind the index.
-        return target_index if target_index > current_page_index else current_page_index
-    if normalized_label in {"...", "…"}:
+        if target_index > current_page_index:
+            return target_index
+        if target_index == 1 and normalized_label in {"...", "…"}:
+            return current_page_index + 1
         return current_page_index
     if normalized_argument in {"next", "page$next"}:
         return current_page_index + 1
