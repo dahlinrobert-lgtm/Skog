@@ -43,7 +43,9 @@ def parse_total(text: str) -> int | None:
     return None
 
 
-def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], dict]:
+def extract_grid(
+    page, page_number: int, seen: set[str], seen_diary_numbers: set[str]
+) -> tuple[list[dict], dict]:
     grid = page.locator(RESULT_GRID)
     rows = grid.locator("tr")
     headers = [clean(x) for x in rows.nth(0).locator("th, td").all_inner_texts()] if rows.count() else []
@@ -52,7 +54,9 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
     nonempty_data_rows = 0
     invalid_diary_number_rows = []
     duplicate_diary_numbers = []
+    duplicate_case_ids = []
     raw_diary_numbers = []
+    identity_samples = []
     for row_index in range(1, rows.count()):
         row = rows.nth(row_index)
         if not row.is_visible():
@@ -71,26 +75,43 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
                     "cell_count": len(values),
                 })
             continue
+
+        links = row.locator("a")
+        link_records = [
+            {"text": clean(links.nth(i).inner_text()), "href": links.nth(i).get_attribute("href")}
+            for i in range(links.count())
+        ]
+        case_ids = []
+        for link in link_records:
+            match = re.search(r"[?&]caseID=([^&#]+)", link.get("href") or "", re.I)
+            if match:
+                case_ids.append(match.group(1))
+        case_id = case_ids[0] if case_ids else None
+        # Diary numbers are not guaranteed to be a unique row identifier in
+        # the portal result grid. Prefer the portal's caseID; only fall back
+        # to the diary number when no case link is available.
+        identity = f"case:{case_id}" if case_id else f"diary:{diary_number}"
         raw_diary_numbers.append(diary_number)
-        if diary_number in seen:
-            if len(duplicate_diary_numbers) < 25:
-                duplicate_diary_numbers.append(diary_number)
+        identity_samples.append({"diary_number": diary_number, "case_id": case_id})
+        if diary_number in seen_diary_numbers and len(duplicate_diary_numbers) < 50:
+            duplicate_diary_numbers.append(diary_number)
+        seen_diary_numbers.add(diary_number)
+        if identity in seen:
+            if case_id and len(duplicate_case_ids) < 50:
+                duplicate_case_ids.append(case_id)
             continue
-        seen.add(diary_number)
+        seen.add(identity)
         record = {
             headers[i] if i < len(headers) and headers[i] else f"column_{i+1}": value
             for i, value in enumerate(values)
         }
-        links = row.locator("a")
         record.update({
             "diary_number": diary_number,
+            "case_id": case_id,
             "status": record.get("Status"),
             "date": record.get("In/Upp-datum"),
             "title": record.get("Ärenderubrik"),
-            "links": [
-                {"text": clean(links.nth(i).inner_text()), "href": links.nth(i).get_attribute("href")}
-                for i in range(links.count())
-            ],
+            "links": link_records,
             "page_number": page_number,
         })
         records.append(record)
@@ -103,8 +124,11 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
         "raw_matching_diary_number_rows": len(raw_diary_numbers),
         "unique_result_rows_extracted": len(records),
         "diary_number_samples": raw_diary_numbers[:60],
+        "identity_samples": identity_samples[:60],
         "duplicate_diary_number_count": len(duplicate_diary_numbers),
         "duplicate_diary_number_samples": duplicate_diary_numbers,
+        "duplicate_case_id_count": len(duplicate_case_ids),
+        "duplicate_case_id_samples": duplicate_case_ids,
         "invalid_diary_number_row_count": len(invalid_diary_number_rows),
         "invalid_diary_number_row_samples": invalid_diary_number_rows,
     }
@@ -343,6 +367,7 @@ def main() -> None:
                 result["request_ok"] = True
                 visited_page_signatures: set[tuple[str, ...]] = set()
                 visited_pager_actions: set[tuple[tuple[str, ...], str, str]] = set()
+                seen_diary_numbers: set[str] = set()
                 current_page_index = 0
                 for iteration in range(1, 501):
                     page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
@@ -413,7 +438,7 @@ def main() -> None:
                         result["pagination"]["terminal_same_page_confirmed"] = True
                         break
 
-                    rows, diag = extract_grid(page, iteration, seen)
+                    rows, diag = extract_grid(page, iteration, seen, seen_diary_numbers)
                     result["results"].extend(rows)
                     result["table_diagnostics"].append(diag)
                     result["pagination"]["pages_read"] = iteration
