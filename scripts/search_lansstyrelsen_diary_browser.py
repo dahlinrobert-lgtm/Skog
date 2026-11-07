@@ -11,7 +11,7 @@ from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
-from lansstyrelsen_pager import select_next_pager_action
+from lansstyrelsen_pager import advance_page_index, select_next_pager_action
 
 from lansstyrelsen_diary_validation import (
     has_explicit_zero_results,
@@ -414,10 +414,18 @@ def main() -> None:
                                 })
                         continuation = select_next_pager_action(current_actions, current_page_index)
                         if continuation is None:
+                            pager_text_for_error = (
+                                clean(current_pager_row.inner_text(timeout=5000))
+                                if current_pager_row.count() else ""
+                            )
                             raise RuntimeError(
                                 f"Pagination loop detected at iteration {iteration}: "
                                 f"repeated result page with {len(visible_ids)} diary IDs "
-                                "and no valid pager continuation"
+                                "and no valid pager continuation; "
+                                f"current_page_index={current_page_index}; "
+                                f"pager_text={pager_text_for_error!r}; "
+                                f"pager_actions={[(x['label'], x['argument']) for x in current_actions]!r}; "
+                                f"recent_transitions={result['pagination']['transitions'][-5:]!r}"
                             )
                     visited_page_signatures.add(visible_ids)
 
@@ -643,7 +651,9 @@ def main() -> None:
                     transition["after_visible_row_ids"] = len(page_after)
                     transition["changed_signature"] = page_after != before_signature
                     result["pagination"]["transitions"].append(transition)
-                    current_page_index += 1
+                    current_page_index = advance_page_index(
+                        current_page_index, next_item.get("label", ""), argument
+                    )
                     result["pagination"]["last_page_signature"] = list(page_after[:5])
                 else:
                     raise RuntimeError("Safety cap reached after 500 result-page transitions")
