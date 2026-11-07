@@ -43,10 +43,7 @@ jobs:
           SEARCH_TERM_INPUT: ${{ inputs.search_term }}
         run: |
           search_term="${SEARCH_TERM_INPUT:-vattenverksamhet}"
-          python scripts/search_lansstyrelsen_diary_browser.py \\
-            --county "Alla län" \\
-            --search-term "$search_term" \\
-            --output diary-search-all-counties.json
+          python scripts/search_lansstyrelsen_diary_browser.py --county "Alla län" --search-term "$search_term" --output diary-search-all-counties.json
       - name: Print all-county validation summary
         if: always()
         run: |
