@@ -651,6 +651,16 @@ def sync_changes(api: KungjortApi, archive: AzureArchive, state: dict, max_pages
                 raise RuntimeError("Non-empty /changes page omitted continuation cursor")
             break
         if next_cursor == cursor:
+            # Kungjort may return an empty page with the request cursor repeated
+            # as next_cursor. There is no change batch to archive and no safe
+            # forward checkpoint; retain the current cursor and end this poll.
+            # Non-empty repeated-cursor pages remain fatal to avoid data loss.
+            if not changes:
+                state["changes_cursor"] = cursor
+                archive.save_state(state)
+                pages += 1
+                print(f"Changes idle page {pages}: changes=0; cursor_retained=True")
+                break
             # A terminal page may return changes_cursor equal to the request
             # cursor while omitting next_cursor. The page is already archived;
             # retain the checkpoint and finish without replaying the page.
