@@ -13,6 +13,5 @@ def test_tile_point_distance_can_be_measured_against_parent_coordinate():
 
 
 def test_unique_tile_keys_are_valid_fetch_decode_inputs():
-    tile_key = (9, 278, 143)
-    tile_arg = {"z": tile_key[0], "x": tile_key[1], "y": tile_key[2]}
-    assert tile_arg == {"z": 9, "x": 278, "y": 143}
+    from scripts.audit_sca_neighbour_point_correspondence import tile_fetch_args
+    assert tile_fetch_args((9, 278, 143)) == {"z": 9, "x": 278, "y": 143}
