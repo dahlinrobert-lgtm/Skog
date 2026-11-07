@@ -60,6 +60,14 @@ jobs:
           python scripts/audit_sca_parent_child_geometry_overlap.py \
             --audit output/sca-multizoom-coverage-audit.json \
             --out output/sca-parent-child-geometry-overlap.json
+      - name: Probe MVT neighbourhoods around parent point clusters
+        run: |
+          python -m py_compile scripts/audit_sca_cluster_point_targeted_probes.py
+          python -m pytest -q tests/test_sca_cluster_point_targeted_probes.py
+          python scripts/audit_sca_cluster_point_targeted_probes.py \\
+            --overlap output/sca-parent-child-geometry-overlap.json \\
+            --out output/sca-cluster-point-targeted-probes.json \\
+            --workers 4
       - name: Poll z12 tiles and compare geometry and metadata
         env:
           MAX_WORKERS: "3"
@@ -78,6 +86,7 @@ jobs:
           python -m json.tool output/sca-voluntary-change-summary.json > /dev/null
           python -m json.tool output/sca-multizoom-coverage-audit.json > /dev/null
           python -m json.tool output/sca-parent-child-geometry-overlap.json > /dev/null
+          python -m json.tool output/sca-cluster-point-targeted-probes.json > /dev/null
           python - <<'PY'
           import gzip, json
           from pathlib import Path
@@ -137,5 +146,6 @@ jobs:
             sca-national-independent-layer-census-z9.json
             output/sca-multizoom-coverage-audit.json
             output/sca-parent-child-geometry-overlap.json
+            output/sca-cluster-point-targeted-probes.json
           if-no-files-found: error
           retention-days: 90
