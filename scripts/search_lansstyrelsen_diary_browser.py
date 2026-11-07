@@ -102,6 +102,7 @@ def extract_grid(page, page_number: int, seen: set[str]) -> tuple[list[dict], di
         "nonempty_data_rows": nonempty_data_rows,
         "raw_matching_diary_number_rows": len(raw_diary_numbers),
         "unique_result_rows_extracted": len(records),
+        "diary_number_samples": raw_diary_numbers[:60],
         "duplicate_diary_number_count": len(duplicate_diary_numbers),
         "duplicate_diary_number_samples": duplicate_diary_numbers,
         "invalid_diary_number_row_count": len(invalid_diary_number_rows),
@@ -475,7 +476,7 @@ def main() -> None:
                                 f"iteration={iteration}, extracted={len(seen)}, reported={reported_now}, "
                                 f"current_page_index={current_page_index}, "
                                 f"visible_diary_numbers={list(visible_ids)!r}, "
-                                f"last_table_diagnostics={result['table_diagnostics'][-1] if result['table_diagnostics'] else None!r}, "
+                                f"table_diagnostics_by_page={result['table_diagnostics']!r}, "
                                 f"pager_text={pager_text!r}, candidates="
                                 f"{[(x['label'], x['argument']) for x in candidates]!r}"
                             )
@@ -518,10 +519,23 @@ def main() -> None:
                                 if (!grid) return false;
                                 const ids = Array.from(grid.querySelectorAll('tr'))
                                   .flatMap(row => Array.from((row.innerText || '').matchAll(/\\b\\d{1,6}-\\d{4}\\b/g), m => m[0]));
-                                return ids.length > 0 && ids.join('|') !== previous.join('|');
+                                if (!ids.length || ids.join('|') === previous.join('|')) return false;
+                                // WebForms can replace the grid before all rows settle.
+                                // Require the same result signature to remain stable
+                                // across polling intervals before extracting it.
+                                const signature = Array.from(grid.querySelectorAll('tr'))
+                                  .map(row => (row.innerText || '').replace(/\\s+/g, ' ').trim())
+                                  .join('\\n');
+                                const now = Date.now();
+                                const state = window.__diaryGridStability || {};
+                                if (state.signature !== signature) {
+                                  window.__diaryGridStability = {signature, since: now};
+                                  return false;
+                                }
+                                return now - state.since >= 1000;
                             }""",
                             arg={"selector": RESULT_GRID, "previous": list(before_signature)},
-                            timeout=12000,
+                            timeout=20000,
                         )
                     except PlaywrightTimeoutError as exc:
                         if argument.casefold() in {"last", "page$last"}:
