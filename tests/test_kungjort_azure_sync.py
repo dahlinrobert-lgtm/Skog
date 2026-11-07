@@ -139,6 +139,29 @@ class ChangesCursorTests(unittest.TestCase):
         self.assertEqual(archive.saves, 1)
         self.assertEqual(result["changes_cursor"], "c0")
 
+    def test_empty_page_with_repeated_next_cursor_is_idle_not_failure(self):
+        from scripts.sync_kungjort_azure import sync_changes
+        class FakeApi:
+            def __init__(self): self.calls = 0
+            def get(self, path, params=None):
+                self.calls += 1
+                return ({"changes": [], "next_cursor": "c0", "changes_cursor": "c0"}, None)
+        class FakeArchive:
+            def __init__(self): self.saves = 0; self.uploads = 0
+            def exists_with_source_hash(self, container, name, source_hash): return False
+            def upload_batch(self, container, name, payload, source_hash):
+                self.uploads += 1
+                return True
+            def save_state(self, state): self.saves += 1
+        api, archive = FakeApi(), FakeArchive()
+        state = initial_state()
+        state.update({"bootstrap_complete": True, "changes_cursor": "c0"})
+        result = sync_changes(api, archive, state, 1)
+        self.assertEqual(api.calls, 1)
+        self.assertEqual(archive.uploads, 0)
+        self.assertEqual(archive.saves, 1)
+        self.assertEqual(result["changes_cursor"], "c0")
+
     def test_nonterminal_repeated_cursor_still_fails(self):
         from scripts.sync_kungjort_azure import sync_changes
         class FakeApi:
