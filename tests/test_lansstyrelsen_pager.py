@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from lansstyrelsen_pager import select_next_pager_action  # noqa: E402
+from lansstyrelsen_pager import advance_page_index, select_next_pager_action  # noqa: E402
 
 
 def action(label: str, argument: str) -> dict:
@@ -45,6 +45,15 @@ class LansstyrelsenPagerTests(unittest.TestCase):
             select_next_pager_action(candidates, current_page_index=8),
             candidates[0],
         )
+
+    def test_ellipsis_window_shift_does_not_advance_result_page_index(self):
+        self.assertEqual(advance_page_index(6, "...", "Page$1"), 6)
+
+    def test_numeric_page_argument_sets_zero_based_result_page_index(self):
+        self.assertEqual(advance_page_index(1, "4", "Page$3"), 3)
+
+    def test_next_action_advances_result_page_index(self):
+        self.assertEqual(advance_page_index(4, "Nästa", "Next"), 5)
 
     def test_next_is_used_but_last_is_never_used_to_skip_pages(self):
         next_action = action("Nästa", "Next")
