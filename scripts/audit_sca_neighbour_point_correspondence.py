@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import mapbox_vector_tile, requests
 from requests.adapters import HTTPAdapter
-from shapely.geometry import shape
+from shapely.geometry import Point, shape
 from shapely.ops import transform
 from urllib3.util.retry import Retry
 
@@ -55,7 +55,10 @@ def run(input_path,out_path,workers=4):
     unique={(t["z"],t["x"],t["y"]):(t["z"],t["x"],t["y"]) for t in tiles}
     decoded={}
     with ThreadPoolExecutor(max_workers=max(1,workers)) as pool:
-        futures={pool.submit(fetch_decode,{"z":z,"x":x,"y":y}):key for key in unique.values()}
+        futures = {
+            pool.submit(fetch_decode, {"z": key[0], "x": key[1], "y": key[2]}): key
+            for key in unique.values()
+        }
         for future in as_completed(futures):
             key=futures[future]
             try: decoded[key]=future.result()
@@ -74,7 +77,7 @@ def run(input_path,out_path,workers=4):
                     if not raw: continue
                     try:
                         geom=tile_to_world(raw,extent,z,x,y)
-                        distance=float(geom.distance(__import__("shapely").geometry.Point(px,py)))
+                        distance=float(geom.distance(Point(px,py)))
                         candidates.append({"tile":{"z":z,"x":x,"y":y},"layer":layer_name,
                             "feature_index":idx,"mvt_id":feature.get("id"),
                             "properties":feature.get("properties") or {},
@@ -92,7 +95,7 @@ def run(input_path,out_path,workers=4):
             "features_within_500m":sum(c["distance_m_epsg3857"]<=500 for c in candidates),
             "features_within_2000m":sum(c["distance_m_epsg3857"]<=2000 for c in candidates)})
     summary={"schema_version":1,"purpose":"Measure spatial proximity between parent point-cluster representations and features in positive z9 neighbour tiles.",
-        "source_point_count":len(points),"positive_z9_neighbour_tiles":len(tiles),
+        "source_point_count":len(points),"positive_z9_neighbour_tiles":len(unique),
         "unique_neighbour_tiles_decoded":len(decoded),
         "tile_decode_states":{state:sum(1 for v in decoded.values() if v.get("state")==state)
                               for state in sorted({v.get("state") for v in decoded.values()})},
