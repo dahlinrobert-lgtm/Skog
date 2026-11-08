@@ -134,6 +134,24 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertEqual(mocked_fetch.call_count, 20)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_monthly_national_inventory_stops_after_two_empty_pages(self, mocked_fetch):
+        current_year = datetime.now(timezone.utc).year
+        responses = [
+            (json.dumps({"Items": [{"Name": "A", "Link": "/a/", "Date": "1 jan. 2024"}], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
+        ]
+        mocked_fetch.side_effect = responses * (12 + (current_year - 2024) * 12)
+        result = collect_national_news_inventory_monthly(start_year=2024, max_pages_per_month=3)
+        self.assertEqual(result["scope"], "national")
+        self.assertEqual(result["window"], "calendar_month")
+        self.assertTrue(result["complete"])
+        self.assertEqual(result["unique_article_count"], 1)
+        self.assertEqual(mocked_fetch.call_count, 3 * (12 + (current_year - 2024) * 12))
+        self.assertIn("fromDate=2024-01-01", mocked_fetch.call_args_list[0].args[0])
+        self.assertNotIn("counties=", mocked_fetch.call_args_list[0].args[0])
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_national_boundary_diagnostic_probes_requested_pages(self, mocked_fetch):
         mocked_fetch.side_effect = [
             (json.dumps({"Items": [{"Link": "/a/", "Date": "1 jan. 2025"}], "TotalHits": 721}), "https://www.trafikverket.se/api/news"),
