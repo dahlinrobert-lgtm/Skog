@@ -1,9 +1,12 @@
 import unittest
 
-from scripts.probe_trafikverket_news_archive import parse_archive
+from scripts.probe_trafikverket_news_archive import inspect_frontend_scripts, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
+    def test_frontend_inspector_ignores_inline_excerpt_objects(self):
+        self.assertEqual(inspect_frontend_scripts([{"inline_excerpt": "county news"}]), [])
+
     def test_extracts_count_links_and_paging(self):
         html = """
         <html><body>
