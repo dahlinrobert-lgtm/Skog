@@ -160,6 +160,8 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
             reports.append({"url": url, "status": "error", "error": str(exc)[:1000]})
 
     runtime = next((body for url, body in bodies.items() if "runtime" in url.lower()), "")
+    if not runtime:
+        runtime = next((body for body in bodies.values() if re.search(r"\\.u\\s*=|chunkName|chunkFilename", body, re.I)), "")
     # Webpack runtime syntax varies by build; capture the literal map expressions
     # instead of assuming a single minifier-specific function signature.
     name_match = re.search(r"\.u\s*=\s*[^;]{0,300}?\(\s*\{([^{}]{20,})\}\s*\[", runtime)
