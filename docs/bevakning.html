@@ -254,6 +254,59 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 <script>try{const t=localStorage.getItem("skog.theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t;else if(matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <link rel="stylesheet" href="./skog-theme.css">
 <script src="./skog-theme.js" defer></script>
+
+<style id="bevakning-dark-mode-fix">
+html[data-theme="dark"]{
+  --surface:#1b2921!important;
+  --line:#34483a!important;
+  --ink:#e4ece6!important;
+  --muted:#aebdb2!important;
+  --shadow:0 18px 48px rgba(0,0,0,.22)!important;
+}
+html[data-theme="dark"] body,
+html[data-theme="dark"] main{background:#101812!important;color:#e4ece6!important}
+html[data-theme="dark"] .overview-card,
+html[data-theme="dark"] .filter-card,
+html[data-theme="dark"] .feed-card,
+html[data-theme="dark"] .map-card,
+html[data-theme="dark"] .elkdata-card{
+  background:#1b2921!important;color:#e4ece6!important;
+  border-color:#34483a!important;box-shadow:0 18px 48px rgba(0,0,0,.22)!important;
+}
+html[data-theme="dark"] .overview-card :is(h1,h2,h3),
+html[data-theme="dark"] .filter-card :is(h1,h2,h3),
+html[data-theme="dark"] .feed-card :is(h1,h2,h3){color:#edf5ef!important}
+html[data-theme="dark"] .activity,
+html[data-theme="dark"] .preview-field{
+  background:#202f25!important;color:#e4ece6!important;border-color:#3a4d3d!important;
+}
+html[data-theme="dark"] .activity :is(h3,strong,b),
+html[data-theme="dark"] .preview-field strong{color:#edf5ef!important}
+html[data-theme="dark"] .activity :is(p,span,small),
+html[data-theme="dark"] .preview-field span{color:#b8c8bb!important}
+html[data-theme="dark"] .case-preview,
+html[data-theme="dark"] .period-comparison,
+html[data-theme="dark"] .empty,
+html[data-theme="dark"] .quick-switch,
+html[data-theme="dark"] .year-chip,
+html[data-theme="dark"] .result-count{
+  background:#243329!important;color:#dce9df!important;border-color:#405746!important;
+}
+html[data-theme="dark"] .stat,
+html[data-theme="dark"] .elkdata-stat{background:#1b2b22!important;border-color:#3b5141!important}
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .stat-note,
+html[data-theme="dark"] .section-intro,
+html[data-theme="dark"] .eyebrow,
+html[data-theme="dark"] .filter-hint,
+html[data-theme="dark"] .feed-subtitle{color:#aebdb2!important}
+html[data-theme="dark"] .control :is(input,select),
+html[data-theme="dark"] .toolbar :is(input,select){
+  background:#111c15!important;color:#e4ece6!important;border-color:#526557!important;
+}
+html[data-theme="dark"] .quick-switch button{color:#dce9df!important}
+html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#376348!important;color:#fff!important}
+</style>
 </head>
 <body>
 <header class="site-header">
