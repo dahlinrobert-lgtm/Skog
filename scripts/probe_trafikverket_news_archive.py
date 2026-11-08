@@ -180,7 +180,7 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
                     excerpts = []
                     for match in patterns.finditer(chunk_body):
                         a, b = max(0, match.start()-350), min(len(chunk_body), match.end()+700)
-                excerpt = re.sub(r"\s+", " ", body[start:end])
+                        excerpt = re.sub(r"\s+", " ", chunk_body[a:b])
                         if excerpt not in excerpts:
                             excerpts.append(excerpt)
                         if len(excerpts) >= 50:
