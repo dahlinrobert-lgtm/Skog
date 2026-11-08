@@ -872,7 +872,7 @@ def build_gis_linkage_inventory(records: list[dict]) -> dict:
             r"viltvarning|vilt[a-zåäö]*risk"
         ),
     }
-    route_pattern = r"(?:\\bE[ ]?[0-9]{1,2}\\b|\\bväg[ ]?[0-9]{1,4}\\b|\\briksväg[ ]?[0-9]{1,3}\\b|\\blänsväg[ ]?[0-9]{1,4}\\b)"
+    route_pattern = r"(?:\bE[ ]?[0-9]{1,2}\b|\bväg[ ]?[0-9]{1,4}\b|\briksväg[ ]?[0-9]{1,3}\b|\blänsväg[ ]?[0-9]{1,4}\b)"
     results = []
     totals = {key: 0 for key in rules}
     route_reference_count = 0
@@ -883,7 +883,7 @@ def build_gis_linkage_inventory(records: list[dict]) -> dict:
         for key in matches:
             totals[key] += 1
         route_refs = sorted(set(
-            re.sub(r"\\s+", "", match.group(0)).upper()
+            re.sub(r"\s+", "", match.group(0)).upper()
             for match in re.finditer(route_pattern, article_text, flags=re.IGNORECASE)
         ))
         if route_refs:
