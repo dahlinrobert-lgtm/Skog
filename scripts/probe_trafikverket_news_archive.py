@@ -131,10 +131,11 @@ def inspect_sitemaps() -> list[dict]:
 
 
 def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
-    """Fetch same-origin JS bundles and expose archive/API-related code clues."""
+    """Inspect entry bundles and fetch webpack's named lazy chunks for archive widgets."""
     reports = []
     seen = set()
     patterns = re.compile(r"county|pagination|pageSize|pageNumber|loadMore|news|nyhet|search|filter|api/|graphql|axios|fetch\(", re.I)
+    bodies: dict[str, str] = {}
     for item in script_paths:
         if not isinstance(item, str) or not item.startswith("/"):
             continue
@@ -144,18 +145,53 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
         seen.add(url)
         try:
             body, final_url = fetch(url)
+            bodies[url] = body
             matches = []
             for match in patterns.finditer(body):
-                start, end = max(0, match.start()-220), min(len(body), match.end()+320)
+                start, end = max(0, match.start()-250), min(len(body), match.end()+500)
                 excerpt = re.sub(r"\s+", " ", body[start:end])
                 if excerpt not in matches:
                     matches.append(excerpt)
-                if len(matches) >= 35:
+                if len(matches) >= 20:
                     break
             reports.append({"url": url, "final_url": final_url, "status": "ok",
                             "bytes": len(body.encode("utf-8")), "relevant_code_excerpts": matches})
         except Exception as exc:
             reports.append({"url": url, "status": "error", "error": str(exc)[:1000]})
+
+    # The runtime bundle maps chunk IDs to names and content hashes. Resolve
+    # only the two archive-related chunks identified in the main bundle.
+    runtime = next((body for url, body in bodies.items() if "runtime~main" in url), "")
+    if runtime:
+        name_match = re.search(r"c\.u=e=>\(\(\{(.*?)\}\[e\]\|\|e\)", runtime)
+        hash_match = re.search(r'\+"\."\+\{(.*?)\}\[e\]', runtime)
+        if name_match and hash_match:
+            names = {k: v for k, v in re.findall(r'(\d+):"([A-Za-z0-9_-]+)"', name_match.group(1))}
+            hashes = {k: v for k, v in re.findall(r'(\d+):"([a-f0-9]{8,})"', hash_match.group(1))}
+            for chunk_id, chunk_name in names.items():
+                if chunk_name not in {"countycontent", "filter-news", "pagelist"}:
+                    continue
+                digest = hashes.get(chunk_id)
+                if not digest:
+                    continue
+                chunk_url = f"{BASE}/Static/dist/{chunk_name}.{digest}.js"
+                try:
+                    chunk_body, final_url = fetch(chunk_url)
+                    excerpts = []
+                    for match in patterns.finditer(chunk_body):
+                        a, b = max(0, match.start()-350), min(len(chunk_body), match.end()+700)
+                        excerpt = re.sub(r"\s+", " ", chunk_body[a:b])
+                        if excerpt not in excerpts:
+                            excerpts.append(excerpt)
+                        if len(excerpts) >= 50:
+                            break
+                    reports.append({"url": chunk_url, "final_url": final_url, "status": "ok",
+                                    "chunk_id": chunk_id, "chunk_name": chunk_name,
+                                    "bytes": len(chunk_body.encode("utf-8")),
+                                    "relevant_code_excerpts": excerpts})
+                except Exception as exc:
+                    reports.append({"url": chunk_url, "status": "error", "chunk_id": chunk_id,
+                                    "chunk_name": chunk_name, "error": str(exc)[:1000]})
     return reports
 
 def main() -> None:
