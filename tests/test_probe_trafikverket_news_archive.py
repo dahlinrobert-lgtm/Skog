@@ -2,7 +2,7 @@ import json
 import unittest
 from unittest.mock import patch
 
-from scripts.probe_trafikverket_news_archive import inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, parse_archive
+from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
@@ -11,6 +11,26 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertIn("runtime_chunk_map_diagnostic", result[0])
         self.assertFalse(result[0]["runtime_chunk_map_diagnostic"]["runtime_found"])
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_full_inventory_paginates_and_deduplicates(self, mocked_fetch):
+        responses = [
+            (json.dumps({"Items": [
+                {"Name": "A", "Link": "/a/", "Date": "1 jan. 2024"},
+                {"Name": "B", "Link": "/b/", "Date": "2 jan. 2024"},
+            ], "TotalHits": 3}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [
+                {"Name": "B duplicate", "Link": "/b/", "Date": "2 jan. 2024"},
+            ], "TotalHits": 3}), "https://www.trafikverket.se/api/news"),
+        ]
+        mocked_fetch.side_effect = responses
+        result = collect_county_news_inventory(page_size=2)
+        self.assertEqual(result["reported_total_hits"], 3)
+        self.assertEqual(result["raw_items_count"], 3)
+        self.assertEqual(result["unique_article_count"], 2)
+        self.assertEqual(result["duplicate_count"], 1)
+        self.assertTrue(result["complete_against_reported_total"])
+        self.assertEqual(mocked_fetch.call_count, 2)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_news_archive_api_uses_county_and_page_parameters(self, mocked_fetch):
