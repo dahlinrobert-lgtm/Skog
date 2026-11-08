@@ -199,7 +199,7 @@ def save_layer(service_key, layer, base_url):
         )
     if not oid_field:
         raise RuntimeError(f"{name}: no OID field exposed by layer metadata")
-    page_size = min(BATCH_SIZE, int(layer.get("maxRecordCount") or BATCH_SIZE), 200)
+    page_size = 1  # Some Trafikverket layers return empty results for multi-ID objectIds queries.
     all_ids = query_object_ids(layer_url, name)
     if len(all_ids) != expected_count:
         raise RuntimeError(
@@ -264,7 +264,7 @@ def save_layer(service_key, layer, base_url):
         "id": layer_id,
         "name": name,
         "geometry_type": layer.get("geometryType"),
-        "id_query_mode": "count-plus-oid-keyset-pagination",
+        "id_query_mode": "count-plus-id-inventory-single-objectid-requests",
         "source_object_count": expected_count,
         "downloaded_source_feature_count": len(features),
         "pilot_envelope_feature_count": len(selected),
