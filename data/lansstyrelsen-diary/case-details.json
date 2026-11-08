@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-08T13:09:45.975982+00:00",
+  "updated_at": "2026-11-08T13:16:45.470622+00:00",
   "cases": {
     "länsstyrelsen i dalarnas län::1034-2026": {
       "case_key": "länsstyrelsen i dalarnas län::1034-2026",
@@ -30297,6 +30297,3763 @@
       "content_hash": "d778753c022a33e7a40c2ce3d806ba9f69a5faf43329cc23845ba154f550970c",
       "first_seen_at": "2026-11-08T13:09:45.975982+00:00",
       "last_seen_at": "2026-11-08T13:09:45.975982+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3141-2024": {
+      "case_key": "länsstyrelsen i gävleborgs län::3141-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4737986",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3141-2024",
+        "registered_date": "2024-04-12",
+        "title": "Begäran om tillsyn av vattenverksamhet, Ockelbo kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ockelbo"
+      },
+      "handlings": [
+        {
+          "handling_number": "3141-2024-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Ockelbo kommun",
+          "date": "2024-04-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-1"
+        },
+        {
+          "handling_number": "3141-2024-2",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2024-04-15",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-2"
+        },
+        {
+          "handling_number": "3141-2024-3",
+          "title": "Bresilliedamman",
+          "date": "2024-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-3"
+        },
+        {
+          "handling_number": "3141-2024-4",
+          "title": "Foton Bresiljedammen",
+          "date": "2024-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-4"
+        },
+        {
+          "handling_number": "3141-2024-5",
+          "title": "Översvämning Bresiljedammen",
+          "date": "2024-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-5"
+        },
+        {
+          "handling_number": "3141-2024-6",
+          "title": "Bresiljedammen",
+          "date": "2024-04-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-6"
+        },
+        {
+          "handling_number": "3141-2024-7",
+          "title": "Meddelande om vattennivå i Bresiljedammen",
+          "date": "2024-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-7"
+        },
+        {
+          "handling_number": "3141-2024-8",
+          "title": "vattennivå i Bresiljedammen",
+          "date": "2024-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3141-2024::3141-2024-8"
+        }
+      ],
+      "content_hash": "c9d33c3561e1af3ddec6980779893f2d9229eab8f1d53d5238243edad9718a09",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3329-2025": {
+      "case_key": "länsstyrelsen i gävleborgs län::3329-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5117403",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3329-2025",
+        "registered_date": "2025-04-22",
+        "title": "Begäran om tillsyn av vattenverksamhet Lillån, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-26",
+        "sender_recipient": "Sportfiskarna",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "3329-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet Lillån, Gävle kommun",
+          "date": "2025-04-22",
+          "sender_recipient": "Sportfiskarna",
+          "handling_key": "länsstyrelsen i gävleborgs län::3329-2025::3329-2025-1"
+        },
+        {
+          "handling_number": "3329-2025-2",
+          "title": "Begäran om uppgifter",
+          "date": "2026-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3329-2025::3329-2025-2"
+        },
+        {
+          "handling_number": "3329-2025-3",
+          "title": "Meddelande angående begärda uppgifter",
+          "date": "2026-01-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3329-2025::3329-2025-3"
+        },
+        {
+          "handling_number": "3329-2025-4",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-01-22",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::3329-2025::3329-2025-4"
+        },
+        {
+          "handling_number": "3329-2025-5",
+          "title": "Föreläggande om att ansöka om tillstånd",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3329-2025::3329-2025-5"
+        }
+      ],
+      "content_hash": "af4ff45a268558a5f4956edee24381f6de558aa1697c59d81ac888d0cd9364a9",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3371-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3371-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5475618",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3371-2026",
+        "registered_date": "",
+        "title": "Begäran om tillsyn av vattenverksamhet - vattennivå i Jädraån vid Småfäbodarna, Kungsfors, Gävle kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "bd15838d20c41766ebc262fc90163f16890487f78a68bf8d3174b9088e25e0df",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3389-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3389-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5476053",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3389-2026",
+        "registered_date": "2026-04-27",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Leån, Ljusdal kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Ljusdals kommun",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "3389-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Leån, Ljusdal kommun",
+          "date": "2026-04-27",
+          "sender_recipient": "Ljusdals kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-1"
+        },
+        {
+          "handling_number": "3389-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-27",
+          "sender_recipient": "Ljusdals kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-2"
+        },
+        {
+          "handling_number": "3389-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-27",
+          "sender_recipient": "Ljusdals kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-3"
+        },
+        {
+          "handling_number": "3389-2026-4",
+          "title": "Bilaga",
+          "date": "2026-04-27",
+          "sender_recipient": "Ljusdals kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-4"
+        },
+        {
+          "handling_number": "3389-2026-5",
+          "title": "Begäran om yttrande över anmälan",
+          "date": "2026-05-08",
+          "sender_recipient": "Samhällsservicenämnden",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-5"
+        },
+        {
+          "handling_number": "3389-2026-6",
+          "title": "Beslut om att sjötröskel m.m. får anläggas vid utloppet ur Lostersjön i Ljusdals kommun",
+          "date": "2026-06-25",
+          "sender_recipient": "Ljusdals kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-6"
+        },
+        {
+          "handling_number": "3389-2026-7",
+          "title": "Meddelande om utförd dokumentation av damm och ålhus",
+          "date": "2026-06-28",
+          "sender_recipient": "Ljusdals kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-7"
+        },
+        {
+          "handling_number": "3389-2026-8",
+          "title": "Meddelande om att utförd dokumentation är tillräcklig",
+          "date": "2026-06-29",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::3389-2026::3389-2026-8"
+        }
+      ],
+      "content_hash": "6d684d4598aa67ef74682b9549c5614a57aa805d43a22aa9a5006f6850522840",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3416-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3416-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5476872",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3416-2026",
+        "registered_date": "2026-04-27",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Se bilaga, Hudiksvalls kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-13",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Hudiksvall,Nordanstig"
+      },
+      "handlings": [
+        {
+          "handling_number": "3416-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Se bilaga, Hudiksvalls kommun",
+          "date": "2026-04-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::3416-2026::3416-2026-1"
+        },
+        {
+          "handling_number": "3416-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::3416-2026::3416-2026-2"
+        },
+        {
+          "handling_number": "3416-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::3416-2026::3416-2026-3"
+        },
+        {
+          "handling_number": "3416-2026-4",
+          "title": "Lista berörda fastigheter och fastighetsägare (markägare)",
+          "date": "2026-04-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::3416-2026::3416-2026-4"
+        },
+        {
+          "handling_number": "3416-2026-5",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::3416-2026::3416-2026-5"
+        },
+        {
+          "handling_number": "3416-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-13",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::3416-2026::3416-2026-6"
+        }
+      ],
+      "content_hash": "56e1c5383853363e7c97877e4eb154afd12d27a531606097d6ad1f758ad20ed5",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3418-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3418-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5476889",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3418-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Borrsjöån, Sandvikens kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "bac21ab44174d12b008cf10024a643c5e6d5e1353fe6e64e8192d477e8cf6c41",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3437-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3437-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5477704",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3437-2026",
+        "registered_date": "2026-04-28",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Eskösundet, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-17",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "3437-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Eskösundet, Gävle kommun",
+          "date": "2026-04-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3437-2026::3437-2026-1"
+        },
+        {
+          "handling_number": "3437-2026-2",
+          "title": "Komplettering med information om muddring",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3437-2026::3437-2026-2"
+        },
+        {
+          "handling_number": "3437-2026-3",
+          "title": "Remiss om anmälan om vattenverksamhet",
+          "date": "2026-05-26",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3437-2026::3437-2026-3"
+        },
+        {
+          "handling_number": "3437-2026-4",
+          "title": "Svar på remiss",
+          "date": "2026-06-05",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3437-2026::3437-2026-4"
+        },
+        {
+          "handling_number": "3437-2026-5",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3437-2026::3437-2026-5"
+        }
+      ],
+      "content_hash": "3249270a072f5945a0621c8da4653744922e44dca9e0d6214c996e2f31bc6af2",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3459-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3459-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5478376",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3459-2026",
+        "registered_date": "2026-04-28",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Stenbäcken, Ljusdals kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-11",
+        "sender_recipient": "Ellevio AB",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "3459-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Stenbäcken, Ljusdals kommun",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-1"
+        },
+        {
+          "handling_number": "3459-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-2"
+        },
+        {
+          "handling_number": "3459-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-3"
+        },
+        {
+          "handling_number": "3459-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-4"
+        },
+        {
+          "handling_number": "3459-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-5"
+        },
+        {
+          "handling_number": "3459-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-6"
+        },
+        {
+          "handling_number": "3459-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-7"
+        },
+        {
+          "handling_number": "3459-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-8"
+        },
+        {
+          "handling_number": "3459-2026-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-9"
+        },
+        {
+          "handling_number": "3459-2026-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-10"
+        },
+        {
+          "handling_number": "3459-2026-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-11"
+        },
+        {
+          "handling_number": "3459-2026-12",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-12"
+        },
+        {
+          "handling_number": "3459-2026-13",
+          "title": "Fullmakt",
+          "date": "2026-04-28",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-13"
+        },
+        {
+          "handling_number": "3459-2026-14",
+          "title": "Beslut om bifall",
+          "date": "2026-06-11",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3459-2026::3459-2026-14"
+        }
+      ],
+      "content_hash": "efd83cd5e3c39c532a8aa421e900988f1f141eb9d1de9afe7d416af3ba168c4f",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3464-2023": {
+      "case_key": "länsstyrelsen i gävleborgs län::3464-2023",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4396082",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3464-2023",
+        "registered_date": "2023-04-28",
+        "title": "Tillsyn av vattenverksamhet - Tensbergs kraftverk i Ljusdals kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Tensbergs Kraft AB",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "3464-2023-1",
+          "title": "Förfrågan om kontaktuppgifter samt datum för tillsyn",
+          "date": "2023-04-28",
+          "sender_recipient": "Kraftprojektering AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-1"
+        },
+        {
+          "handling_number": "3464-2023-2",
+          "title": "meddelande om fiskväg och fingaller",
+          "date": "2024-05-21",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-2"
+        },
+        {
+          "handling_number": "3464-2023-3",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn Tensberg fiskväg",
+          "date": "2024-12-04",
+          "sender_recipient": "Länsstyrelsen Gävleborg",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-3"
+        },
+        {
+          "handling_number": "3464-2023-4",
+          "title": "Tjänsteanteckning om försök till telefonsamtal",
+          "date": "2025-04-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-4"
+        },
+        {
+          "handling_number": "3464-2023-5",
+          "title": "Tjänsteanteckning om tillsyn Tensberg",
+          "date": "2025-09-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-5"
+        },
+        {
+          "handling_number": "3464-2023-6",
+          "title": "Besiktning av fiskväg - rådata",
+          "date": "2025-10-09",
+          "sender_recipient": "Länsstyrelsen Gävleborg",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-6"
+        },
+        {
+          "handling_number": "3464-2023-7",
+          "title": "Promemoria - rekommendationer om fiskväg",
+          "date": "2025-10-09",
+          "sender_recipient": "Länsstyrelsen Gävleborg",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-7"
+        },
+        {
+          "handling_number": "3464-2023-8",
+          "title": "Handlingar översändes - rekommendationer för fiskväg",
+          "date": "2025-10-10",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-8"
+        },
+        {
+          "handling_number": "3464-2023-9",
+          "title": "Meddelande om mottaget PM Tensberg kraftverk",
+          "date": "2025-10-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-9"
+        },
+        {
+          "handling_number": "3464-2023-10",
+          "title": "Förfrågan om uppdatering om arbetena vid Tensberg kraftverk",
+          "date": "2026-04-22",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-10"
+        },
+        {
+          "handling_number": "3464-2023-11",
+          "title": "Svar: Uppdatering om arbetena vid Tensberg kraftverk",
+          "date": "2026-04-22",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-11"
+        },
+        {
+          "handling_number": "3464-2023-12",
+          "title": "Uppdatering omlöp Tensbergs Kraft",
+          "date": "2026-08-09",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-12"
+        },
+        {
+          "handling_number": "3464-2023-13",
+          "title": "Uppdatering omlöp Tensbergs Kraft",
+          "date": "2026-08-25",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-13"
+        },
+        {
+          "handling_number": "3464-2023-14",
+          "title": "Uppdatering om omlöp Tensbergs Kraft",
+          "date": "2026-09-16",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-14"
+        },
+        {
+          "handling_number": "3464-2023-15",
+          "title": "Begäran om uppgifter om omlöp i Tensberg",
+          "date": "2026-10-23",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-15"
+        },
+        {
+          "handling_number": "3464-2023-17",
+          "title": "Svar: information om omlöp i Tensberg",
+          "date": "2026-10-26",
+          "sender_recipient": "Tensbergs Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::3464-2023::3464-2023-17"
+        }
+      ],
+      "content_hash": "443ec9a61ed690aec5f193aa7dc447684d950cebb42a29d73e963cce6b9973bc",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3538-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3538-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5481078",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3538-2026",
+        "registered_date": "2026-04-30",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, utrivning av vattenanläggning, Dalälven, Sandviken kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-11",
+        "sender_recipient": "Sandvikens kommun",
+        "municipality": "Sandviken"
+      },
+      "handlings": [
+        {
+          "handling_number": "3538-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalälven, Sandviken kommun",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3538-2026::3538-2026-1"
+        },
+        {
+          "handling_number": "3538-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3538-2026::3538-2026-2"
+        },
+        {
+          "handling_number": "3538-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3538-2026::3538-2026-3"
+        },
+        {
+          "handling_number": "3538-2026-4",
+          "title": "Beslut om bifall med villkor att avlägsna trasig vattenanläggning",
+          "date": "2026-05-11",
+          "sender_recipient": "Sandvikens kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3538-2026::3538-2026-4"
+        }
+      ],
+      "content_hash": "e5d2c21d2495a484c6824683d9ae084c4764cea280c6e4a920846d31667b7d3c",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3573-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3573-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5482136",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3573-2026",
+        "registered_date": "2026-04-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, utbyte av brygga, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-25",
+        "sender_recipient": "Norrsundets Motorbåtsklubb",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "3573-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, utbyte av brygga, Gävle kommun",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3573-2026::3573-2026-1"
+        },
+        {
+          "handling_number": "3573-2026-2",
+          "title": "Meddelande till sökande",
+          "date": "2026-05-11",
+          "sender_recipient": "Norrsundets Motorbåtsklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::3573-2026::3573-2026-2"
+        },
+        {
+          "handling_number": "3573-2026-3",
+          "title": "Meddelande till sökande om komplettering.",
+          "date": "2026-05-18",
+          "sender_recipient": "Norrsundets Motorbåtsklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::3573-2026::3573-2026-3"
+        },
+        {
+          "handling_number": "3573-2026-4",
+          "title": "Meddelande om mått på planerad brygga.",
+          "date": "2026-05-18",
+          "sender_recipient": "Norrsundets Motorbåtsklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::3573-2026::3573-2026-4"
+        },
+        {
+          "handling_number": "3573-2026-5",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-25",
+          "sender_recipient": "Norrsundets Motorbåtsklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::3573-2026::3573-2026-5"
+        }
+      ],
+      "content_hash": "35f5afaca452b86316c873fc85d2abfbba25694f0b314a8b65f7ec39937cf7f9",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3588-2025": {
+      "case_key": "länsstyrelsen i gävleborgs län::3588-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5125453",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3588-2025",
+        "registered_date": "2025-04-30",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+        "status": "Avslutat",
+        "decision_date": "2026-05-27",
+        "sender_recipient": "Gävle kommun",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "3588-2025-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-1"
+        },
+        {
+          "handling_number": "3588-2025-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-2"
+        },
+        {
+          "handling_number": "3588-2025-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-3"
+        },
+        {
+          "handling_number": "3588-2025-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-4"
+        },
+        {
+          "handling_number": "3588-2025-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-5"
+        },
+        {
+          "handling_number": "3588-2025-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-6"
+        },
+        {
+          "handling_number": "3588-2025-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-7"
+        },
+        {
+          "handling_number": "3588-2025-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2025-04-30",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-8"
+        },
+        {
+          "handling_number": "3588-2025-9",
+          "title": "Tjänsteanteckning vid samtal.",
+          "date": "2025-10-20",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-9"
+        },
+        {
+          "handling_number": "3588-2025-10",
+          "title": "Meddelande om att avsluta ärendet.",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-10"
+        },
+        {
+          "handling_number": "3588-2025-11",
+          "title": "Beslut att avsluta utan åtgärd.",
+          "date": "2026-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3588-2025::3588-2025-11"
+        }
+      ],
+      "content_hash": "73b9a44bd15356476c0bd833ad3a750343859cf52c049855ce94a2765ff97fab",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::37-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::37-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5357458",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "37-2026",
+        "registered_date": "2026-01-07",
+        "title": "Tillsyn av vattenverksamhet - hög vattennivå vid Bergby kraftverk, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-27",
+        "sender_recipient": "Länsstyrelsen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "37-2026-1",
+          "title": "Tjänsteanteckning vid samtal 2025-12-29",
+          "date": "2026-01-07",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-1"
+        },
+        {
+          "handling_number": "37-2026-2",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-01-07",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-2"
+        },
+        {
+          "handling_number": "37-2026-3",
+          "title": "Komplettering med bild från räddningstjänsten den 30 december 2025",
+          "date": "2026-01-07",
+          "sender_recipient": "Gästrike Räddningstjänsten",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-3"
+        },
+        {
+          "handling_number": "37-2026-4",
+          "title": "Komplettering med bild 2 från Bergby krv den 30 december 2025",
+          "date": "2026-01-07",
+          "sender_recipient": "Gästrike Räddningstjänsten",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-4"
+        },
+        {
+          "handling_number": "37-2026-5",
+          "title": "Besök vid Bergby kraftverk den 12 januari 2026",
+          "date": "2026-01-13",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-5"
+        },
+        {
+          "handling_number": "37-2026-6",
+          "title": "Beslut angående isproblem och överdämning vid Bergby kraftverk",
+          "date": "2026-08-27",
+          "sender_recipient": "Nilsson Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-6"
+        },
+        {
+          "handling_number": "37-2026-7",
+          "title": "Tjänsteanteckning vid samtal med Per Nilsson på Nilsson Kraft AB",
+          "date": "2026-09-04",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-7"
+        },
+        {
+          "handling_number": "37-2026-8",
+          "title": "Meddelande om bestridande av att Nilsson kraft skulle handlat oaktsamt",
+          "date": "2026-09-21",
+          "sender_recipient": "Nilsson Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::37-2026::37-2026-8"
+        }
+      ],
+      "content_hash": "492b7ac232008d25bf9e86b536d1e4f75830d793278d1c1cc81ef458b55d8e9e",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3769-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3769-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5488279",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3769-2026",
+        "registered_date": "2026-05-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skärgårdsviken, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "3769-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skärgårdsviken, Gävle kommun",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3769-2026::3769-2026-1"
+        },
+        {
+          "handling_number": "3769-2026-2",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3769-2026::3769-2026-2"
+        },
+        {
+          "handling_number": "3769-2026-3",
+          "title": "Meddelande till sökande",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3769-2026::3769-2026-3"
+        },
+        {
+          "handling_number": "3769-2026-4",
+          "title": "Svar på remiss",
+          "date": "2026-06-05",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3769-2026::3769-2026-4"
+        },
+        {
+          "handling_number": "3769-2026-5",
+          "title": "Komplettering med karta över planerade åtgärder.",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3769-2026::3769-2026-5"
+        },
+        {
+          "handling_number": "3769-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3769-2026::3769-2026-6"
+        }
+      ],
+      "content_hash": "4360ae31c9c164fbaccc51ebe5376afe83de687fb03a06d4b11c9a3cc057887c",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3776-2023": {
+      "case_key": "länsstyrelsen i gävleborgs län::3776-2023",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4405031",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3776-2023",
+        "registered_date": "2023-05-02",
+        "title": "Begäran om tillsyn av vattenverksamhet Gnarpsån, Nordanstigs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-10",
+        "sender_recipient": "Gnarpsåns Vattenregleringsförening",
+        "municipality": "Nordanstig"
+      },
+      "handlings": [
+        {
+          "handling_number": "3776-2023-1",
+          "title": "Begäran om tillsyn av vattenverksamhet Gnarpsån, Nordanstigs kommun",
+          "date": "2023-05-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-1"
+        },
+        {
+          "handling_number": "3776-2023-2",
+          "title": "Begäran om svar på frågor om restaurering i Gnarpsån",
+          "date": "2024-04-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-2"
+        },
+        {
+          "handling_number": "3776-2023-3",
+          "title": "Påminnelse om att svara på frågor om restaurering i Gnarpsån",
+          "date": "2025-01-23",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-3"
+        },
+        {
+          "handling_number": "3776-2023-4",
+          "title": "Information om ny handläggare hos kommunen",
+          "date": "2025-01-23",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-4"
+        },
+        {
+          "handling_number": "3776-2023-5",
+          "title": "Påminnelse om att svara på frågor om restaurering i Gnarpsån",
+          "date": "2025-01-23",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-5"
+        },
+        {
+          "handling_number": "3776-2023-6",
+          "title": "Begäran om uppgifter rörande restaurering i Andån i Nordanstigs kommun",
+          "date": "2025-11-20",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-6"
+        },
+        {
+          "handling_number": "3776-2023-7",
+          "title": "Redovisning enligt föreläggande",
+          "date": "2025-12-12",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-7"
+        },
+        {
+          "handling_number": "3776-2023-8",
+          "title": "Meddelande om fråga rörande redovisningen",
+          "date": "2025-12-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-8"
+        },
+        {
+          "handling_number": "3776-2023-9",
+          "title": "Meddelande om svara på fråga om redovisningen",
+          "date": "2025-12-15",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-9"
+        },
+        {
+          "handling_number": "3776-2023-10",
+          "title": "Besök vid Gnarpsån nedströms Grängsjösjön",
+          "date": "2026-08-07",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-10"
+        },
+        {
+          "handling_number": "3776-2023-11",
+          "title": "Beslut om att inte vidta åtgärder efter klagomål på restaurering i Gnarpsån",
+          "date": "2026-08-10",
+          "sender_recipient": "Gnarpsåns Vattenregleringsförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::3776-2023::3776-2023-11"
+        }
+      ],
+      "content_hash": "300be67936d13075df907717ca313f4ee7b3b6ed439e0b645da9351258b2f138",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3820-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3820-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5490282",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3820-2026",
+        "registered_date": "2026-05-11",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, rorån, Bollnäs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Rorvägens Samfällighetsförening",
+        "municipality": "Bollnäs"
+      },
+      "handlings": [
+        {
+          "handling_number": "3820-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, rorån, Bollnäs kommun",
+          "date": "2026-05-11",
+          "sender_recipient": "Rorvägens Samfällighetsförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-1"
+        },
+        {
+          "handling_number": "3820-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-2"
+        },
+        {
+          "handling_number": "3820-2026-3",
+          "title": "Komplettering med uppgifter",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-3"
+        },
+        {
+          "handling_number": "3820-2026-4",
+          "title": "Information om förutsättningar",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-4"
+        },
+        {
+          "handling_number": "3820-2026-5",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-5"
+        },
+        {
+          "handling_number": "3820-2026-6",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-6"
+        },
+        {
+          "handling_number": "3820-2026-7",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-7"
+        },
+        {
+          "handling_number": "3820-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::3820-2026::3820-2026-8"
+        }
+      ],
+      "content_hash": "fef9333ec249459dfa967eb7bea88632fb4570b34a4884de71171905026ed9ff",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::3904-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::3904-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5494325",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "3904-2026",
+        "registered_date": "2026-05-13",
+        "title": "Begäran om tillsyn av vattenverksamhet, Hudiksvalls kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Anonym",
+        "municipality": "Hudiksvall"
+      },
+      "handlings": [
+        {
+          "handling_number": "3904-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Hudiksvalls kommun",
+          "date": "2026-05-13",
+          "sender_recipient": "Anonym",
+          "handling_key": "länsstyrelsen i gävleborgs län::3904-2026::3904-2026-1"
+        }
+      ],
+      "content_hash": "ec569299ace8f1f407bac58a8071f697cf27146ae92c6d299fab24ff5882ccd3",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4029-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4029-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5498361",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4029-2026",
+        "registered_date": "2026-05-13",
+        "title": "Begäran om tillsyn av vattenverksamhet vid Hyns regleringsdamm i Hofors kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Hofors Fiskevårdsområdesförening",
+        "municipality": "Hofors"
+      },
+      "handlings": [
+        {
+          "handling_number": "4029-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet vid Hyns regleringsdamm i Hofors kommun",
+          "date": "2026-05-13",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-1"
+        },
+        {
+          "handling_number": "4029-2026-3",
+          "title": "Meddelande om att fångdammen grävts av och vatten släpps genom dammen",
+          "date": "2026-05-14",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-3"
+        },
+        {
+          "handling_number": "4029-2026-4",
+          "title": "Tillsyn av vattenverksamhet vid Hyns regleringsdamm den 18 maj 2026",
+          "date": "2026-05-19",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-4"
+        },
+        {
+          "handling_number": "4029-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-5"
+        },
+        {
+          "handling_number": "4029-2026-6",
+          "title": "Meddelande om utförda och planerade arbeten vid dammen Montrose",
+          "date": "2026-05-27",
+          "sender_recipient": "Hoåns Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-6"
+        },
+        {
+          "handling_number": "4029-2026-7",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn den 2 juni 2026",
+          "date": "2026-07-21",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-7"
+        },
+        {
+          "handling_number": "4029-2026-8",
+          "title": "Tjänsteanteckning vid samtal angående dammrenovering vid Hyn",
+          "date": "2026-06-16",
+          "sender_recipient": "Bergslags Hydro Consult AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-8"
+        },
+        {
+          "handling_number": "4029-2026-9",
+          "title": "Meddelande om fiskevårdsplan för Hofors",
+          "date": "2026-08-03",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-9"
+        },
+        {
+          "handling_number": "4029-2026-10",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn den 11 augusti 2026",
+          "date": "2026-08-14",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-10"
+        },
+        {
+          "handling_number": "4029-2026-11",
+          "title": "Meddelande om dammrenoveringen och öringens lek",
+          "date": "2026-09-14",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-11"
+        },
+        {
+          "handling_number": "4029-2026-12",
+          "title": "Meddelande om fråga om status på dammrenoveringen",
+          "date": "2026-09-22",
+          "sender_recipient": "Hoåns Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-12"
+        },
+        {
+          "handling_number": "4029-2026-13",
+          "title": "Meddelande om svar på fråga om status på dammrenoveringen",
+          "date": "2026-09-22",
+          "sender_recipient": "Hoåns Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-13"
+        },
+        {
+          "handling_number": "4029-2026-14",
+          "title": "Meddelande om förbiledning av vatten när fångdammen tas bort",
+          "date": "2026-09-22",
+          "sender_recipient": "Hoåns Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-14"
+        },
+        {
+          "handling_number": "4029-2026-15",
+          "title": "Meddelande om svar angående förbiledning av vatten",
+          "date": "2026-09-23",
+          "sender_recipient": "Hoåns Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-15"
+        },
+        {
+          "handling_number": "4029-2026-16",
+          "title": "Meddelande om påminnelse om svar på frågor",
+          "date": "2026-09-24",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-16"
+        },
+        {
+          "handling_number": "4029-2026-17",
+          "title": "Meddelande om svar på frågor",
+          "date": "2026-09-24",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-17"
+        },
+        {
+          "handling_number": "4029-2026-18",
+          "title": "Meddelande om borttagning av fångdamm",
+          "date": "2026-09-26",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-18"
+        },
+        {
+          "handling_number": "4029-2026-19",
+          "title": "Meddelande om bilder från arbete vid dammen",
+          "date": "2026-10-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-19"
+        },
+        {
+          "handling_number": "4029-2026-20",
+          "title": "Meddelande om lekplatser m.m. i åfåran vid Montrose",
+          "date": "2026-10-07",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-20"
+        },
+        {
+          "handling_number": "4029-2026-21",
+          "title": "Meddelande om påminnelse om att svara på frågor om fiskevårdsåtgärder m.m. vid Montrose",
+          "date": "2026-10-26",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-21"
+        },
+        {
+          "handling_number": "4029-2026-22",
+          "title": "Meddelande om svar på frågor om fiskevårdsåtgärder m.m.",
+          "date": "2026-10-27",
+          "sender_recipient": "Hofors Fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-22"
+        },
+        {
+          "handling_number": "4029-2026-23",
+          "title": "Meddelande om förslag på kompensation för skada på öring",
+          "date": "2026-11-02",
+          "sender_recipient": "Hoåns Kraft AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4029-2026::4029-2026-23"
+        }
+      ],
+      "content_hash": "35c68a2c58f5a9b509dab44eeaa2df69f4205f23a83b1faf2bba2e04c0c99d3e",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4051-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4051-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5499531",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4051-2026",
+        "registered_date": "2026-05-19",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet - Forsbacka avfallsanläggning, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-18",
+        "sender_recipient": "PreZero Recycling AB",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "4051-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet - Forsbacka avfallsanläggning, Gävle kommun",
+          "date": "2026-05-19",
+          "sender_recipient": "PreZero Recycling AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4051-2026::4051-2026-1"
+        },
+        {
+          "handling_number": "4051-2026-2",
+          "title": "Meddelande om avgift",
+          "date": "2026-05-26",
+          "sender_recipient": "PreZero Recycling AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4051-2026::4051-2026-2"
+        },
+        {
+          "handling_number": "4051-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-01",
+          "sender_recipient": "PreZero Recycling AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4051-2026::4051-2026-3"
+        },
+        {
+          "handling_number": "4051-2026-4",
+          "title": "Påminnelse om komplettering",
+          "date": "2026-08-11",
+          "sender_recipient": "PreZero Recycling AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4051-2026::4051-2026-4"
+        },
+        {
+          "handling_number": "4051-2026-5",
+          "title": "Information om pausat projekt",
+          "date": "2026-08-14",
+          "sender_recipient": "PreZero Recycling AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4051-2026::4051-2026-5"
+        },
+        {
+          "handling_number": "4051-2026-6",
+          "title": "Beslut om avskrivning",
+          "date": "2026-08-18",
+          "sender_recipient": "PreZero Recycling AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4051-2026::4051-2026-6"
+        }
+      ],
+      "content_hash": "6c5f7eb47c7a81f91e94eb75b860cd8ac7b5e8e0c376d38f01d1d2b48271ac5b",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4122-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4122-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5501567",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4122-2026",
+        "registered_date": "2026-05-21",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, skutviken, Nordanstig kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-14",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Nordanstig"
+      },
+      "handlings": [
+        {
+          "handling_number": "4122-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, skutviken, Nordanstig kommun",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-1"
+        },
+        {
+          "handling_number": "4122-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-2"
+        },
+        {
+          "handling_number": "4122-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-3"
+        },
+        {
+          "handling_number": "4122-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-4"
+        },
+        {
+          "handling_number": "4122-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-5"
+        },
+        {
+          "handling_number": "4122-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-6"
+        },
+        {
+          "handling_number": "4122-2026-7",
+          "title": "Mottagningsbekräftelse om anmälan om vattenverksamhet och information om fördröjd handläggning",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-7"
+        },
+        {
+          "handling_number": "4122-2026-8",
+          "title": "Remiss: Anmälan om vattenverksamhet_ Nordanstigs kommun",
+          "date": "2026-05-25",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-8"
+        },
+        {
+          "handling_number": "4122-2026-9",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-06-16",
+          "sender_recipient": "Norrhälsinglands miljö- och räddningsnämnd, Hudiksvalls kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-9"
+        },
+        {
+          "handling_number": "4122-2026-10",
+          "title": "Nya kontaktuppgifter och mottagningsbekräftelse_ anmälan om vattenverksamhet",
+          "date": "2026-08-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-10"
+        },
+        {
+          "handling_number": "4122-2026-11",
+          "title": "Beslut om bifall med villkor för förstärkning av vågbrytare i Skutviken, Nordanstigs kommun",
+          "date": "2026-08-14",
+          "sender_recipient": "Strömsbruk båtklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-11"
+        },
+        {
+          "handling_number": "4122-2026-12",
+          "title": "Förfrågan om yttersta delen av piren kan avlägsnas i Skutviken",
+          "date": "2026-09-21",
+          "sender_recipient": "Strömsbruk båtklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-12"
+        },
+        {
+          "handling_number": "4122-2026-13",
+          "title": "Meddelande om att yttersta delen av pir kan avlägsnas",
+          "date": "2026-09-22",
+          "sender_recipient": "Strömsbruk båtklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::4122-2026::4122-2026-13"
+        }
+      ],
+      "content_hash": "ac0db4d7f80acfa903139b1594b2108b05edd70b0edbe485f6ddbda4816638bf",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4253-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4253-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5507357",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4253-2026",
+        "registered_date": "2026-05-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Storsjön, Sandvikens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-23",
+        "sender_recipient": "SAIK Golfklubb",
+        "municipality": "Sandviken"
+      },
+      "handlings": [
+        {
+          "handling_number": "4253-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Storsjön, Sandvikens kommun",
+          "date": "2026-05-26",
+          "sender_recipient": "SAIK Golfklubb",
+          "handling_key": "länsstyrelsen i gävleborgs län::4253-2026::4253-2026-1"
+        },
+        {
+          "handling_number": "4253-2026-2",
+          "title": "Beslut om bifall",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4253-2026::4253-2026-2"
+        }
+      ],
+      "content_hash": "7b525340e17f81f47ed3397b9774c2c6c58d246a1e6ea80b230f7062569ea527",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4258-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4258-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5507840",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4258-2026",
+        "registered_date": "2026-05-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, 1. Hällbäcken, 2. Örabäcken, 3. Räkån, Ovanåkers kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-03",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ovanåker"
+      },
+      "handlings": [
+        {
+          "handling_number": "4258-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, 1. Hällbäcken, 2. Örabäcken, 3. Räkån, Ovanåkers kommun",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4258-2026::4258-2026-1"
+        },
+        {
+          "handling_number": "4258-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4258-2026::4258-2026-2"
+        },
+        {
+          "handling_number": "4258-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4258-2026::4258-2026-3"
+        },
+        {
+          "handling_number": "4258-2026-4",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4258-2026::4258-2026-4"
+        },
+        {
+          "handling_number": "4258-2026-5",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4258-2026::4258-2026-5"
+        },
+        {
+          "handling_number": "4258-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4258-2026::4258-2026-6"
+        },
+        {
+          "handling_number": "4258-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4258-2026::4258-2026-7"
+        }
+      ],
+      "content_hash": "5f15871224d185395c6e0facb373618e005864a0f6de8a84064511e5442a7b30",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4272-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4272-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5508473",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4272-2026",
+        "registered_date": "2026-05-27",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderhamns kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-11",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Söderhamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "4272-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderhamns kommun",
+          "date": "2026-05-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4272-2026::4272-2026-1"
+        },
+        {
+          "handling_number": "4272-2026-2",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4272-2026::4272-2026-2"
+        }
+      ],
+      "content_hash": "ea9ba8b1f7b5678d7f6a30c2c076da8928cac493e99dd30480067edf12bcab2e",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4298-2024": {
+      "case_key": "länsstyrelsen i gävleborgs län::4298-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4780748",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4298-2024",
+        "registered_date": "2024-05-24",
+        "title": "Begäran om tillsyn av vattenverksamhet, utrivning av damm i Nordanstigs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-26",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4298-2024-1",
+          "title": "Start av ärende",
+          "date": "2024-05-24",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-1"
+        },
+        {
+          "handling_number": "4298-2024-2",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2024-05-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-2"
+        },
+        {
+          "handling_number": "4298-2024-3",
+          "title": "Tjänsteanteckning om",
+          "date": "2024-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-3"
+        },
+        {
+          "handling_number": "4298-2024-4",
+          "title": "Meddelande om effekter i sjö som sänkts av raserad damm.",
+          "date": "2025-02-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-4"
+        },
+        {
+          "handling_number": "4298-2024-5",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2025-10-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-5"
+        },
+        {
+          "handling_number": "4298-2024-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-12-30",
+          "sender_recipient": "Holmen Skog",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-6"
+        },
+        {
+          "handling_number": "4298-2024-7",
+          "title": "Beslut om förläggande för damm",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-7"
+        },
+        {
+          "handling_number": "4298-2024-8",
+          "title": "Meddelande om vattennivå med bilder från Västra Kölsjön.",
+          "date": "2026-10-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4298-2024::4298-2024-8"
+        }
+      ],
+      "content_hash": "93bcbd2b375d28d496f12722353e02491cc90207dece5ad1b0afbd042b7f8b64",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4358-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4358-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5512789",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4358-2026",
+        "registered_date": "2026-05-31",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bro, Nordanstigs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-26",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Nordanstig"
+      },
+      "handlings": [
+        {
+          "handling_number": "4358-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bro, Nordanstigs kommun",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-1"
+        },
+        {
+          "handling_number": "4358-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-2"
+        },
+        {
+          "handling_number": "4358-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-3"
+        },
+        {
+          "handling_number": "4358-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-4"
+        },
+        {
+          "handling_number": "4358-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-5"
+        },
+        {
+          "handling_number": "4358-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-6"
+        },
+        {
+          "handling_number": "4358-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-7"
+        },
+        {
+          "handling_number": "4358-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-8"
+        },
+        {
+          "handling_number": "4358-2026-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-9"
+        },
+        {
+          "handling_number": "4358-2026-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-10"
+        },
+        {
+          "handling_number": "4358-2026-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-11"
+        },
+        {
+          "handling_number": "4358-2026-12",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-05-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-12"
+        },
+        {
+          "handling_number": "4358-2026-13",
+          "title": "Förfrågan om komplettering i ärendet.",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-13"
+        },
+        {
+          "handling_number": "4358-2026-14",
+          "title": "Meddelande om komplettering av sökanden.",
+          "date": "2026-06-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-14"
+        },
+        {
+          "handling_number": "4358-2026-15",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-15"
+        },
+        {
+          "handling_number": "4358-2026-16",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-06-23",
+          "sender_recipient": "Norrhälsinglands miljö- och räddningsnämnd, Hudiksvalls kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-16"
+        },
+        {
+          "handling_number": "4358-2026-17",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-17"
+        },
+        {
+          "handling_number": "4358-2026-18",
+          "title": "Förfrågan om ändrad arbetstid.",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-18"
+        },
+        {
+          "handling_number": "4358-2026-19",
+          "title": "Meddelande till sökande",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-19"
+        },
+        {
+          "handling_number": "4358-2026-20",
+          "title": "Meddelande till sökande",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4358-2026::4358-2026-20"
+        }
+      ],
+      "content_hash": "5c55cdae6908680ea1e62425d91fea80908650c5e8012bde57f3cd2e6cd3601b",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4424-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4424-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5516072",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4424-2026",
+        "registered_date": "2026-06-02",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike, Ljusdal kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-06",
+        "sender_recipient": "Ellevio AB",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "4424-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike, Ljusdal kommun",
+          "date": "2026-06-02",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4424-2026::4424-2026-1"
+        },
+        {
+          "handling_number": "4424-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-02",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4424-2026::4424-2026-2"
+        },
+        {
+          "handling_number": "4424-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-02",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4424-2026::4424-2026-3"
+        },
+        {
+          "handling_number": "4424-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-02",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4424-2026::4424-2026-4"
+        },
+        {
+          "handling_number": "4424-2026-5",
+          "title": "Fullmakt",
+          "date": "2026-06-02",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4424-2026::4424-2026-5"
+        },
+        {
+          "handling_number": "4424-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-06",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4424-2026::4424-2026-6"
+        }
+      ],
+      "content_hash": "96878d1a80dd04ecd6e6e1b2f74be2501be43e94c9cadd3783318169aa8c176e",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4451-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4451-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5517130",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4451-2026",
+        "registered_date": "2026-06-03",
+        "title": "Begäran om tillsyn av vattenverksamhet, Bollnäs kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Anonym",
+        "municipality": "Bollnäs"
+      },
+      "handlings": [
+        {
+          "handling_number": "4451-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Bollnäs kommun",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4451-2026::4451-2026-1"
+        },
+        {
+          "handling_number": "4451-2026-2",
+          "title": "Begäran om uppgifter",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4451-2026::4451-2026-2"
+        },
+        {
+          "handling_number": "4451-2026-4",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4451-2026::4451-2026-4"
+        },
+        {
+          "handling_number": "4451-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4451-2026::4451-2026-5"
+        },
+        {
+          "handling_number": "4451-2026-6",
+          "title": "Tjänsteanteckning vid tillsyn",
+          "date": "2026-10-14",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i gävleborgs län::4451-2026::4451-2026-6"
+        }
+      ],
+      "content_hash": "db0a5a5fc4fdb825f148fc95a5149f1c092cc25fa2ab8e1c6ef1bb4e540d8bd6",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4483-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4483-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5518517",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4483-2026",
+        "registered_date": "2026-06-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet - reparation av kaj 27 i Gävle hamn, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-15",
+        "sender_recipient": "Gävle Hamn AB",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "4483-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet - reparation av kaj 27 i Gävle hamn, Gävle kommun",
+          "date": "2026-06-03",
+          "sender_recipient": "Gävle Hamn AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4483-2026::4483-2026-1"
+        },
+        {
+          "handling_number": "4483-2026-2",
+          "title": "Meddelande om anmälan och tillstånd för vattenverksamhet",
+          "date": "2026-06-09",
+          "sender_recipient": "Gävle Hamn AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4483-2026::4483-2026-2"
+        },
+        {
+          "handling_number": "4483-2026-3",
+          "title": "Meddelande om avslut av ärende",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4483-2026::4483-2026-3"
+        }
+      ],
+      "content_hash": "47baa331e5bd5ec3d011de506050eeaba2ed6697c6e61f9d0f9c936f5ced4eaa",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4489-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4489-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5518938",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4489-2026",
+        "registered_date": "2026-06-04",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kyrkbyån, Nordanstig kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-28",
+        "sender_recipient": "Nordanstigs kommun",
+        "municipality": "Nordanstig"
+      },
+      "handlings": [
+        {
+          "handling_number": "4489-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kyrkbyån, Nordanstig kommun",
+          "date": "2026-06-04",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4489-2026::4489-2026-1"
+        },
+        {
+          "handling_number": "4489-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-23",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4489-2026::4489-2026-2"
+        },
+        {
+          "handling_number": "4489-2026-3",
+          "title": "Komplettering med förtydligande, delvis komplettering",
+          "date": "2026-06-23",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4489-2026::4489-2026-3"
+        },
+        {
+          "handling_number": "4489-2026-4",
+          "title": "Begäran om komplettering med tidsangivelse",
+          "date": "2026-07-07",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4489-2026::4489-2026-4"
+        },
+        {
+          "handling_number": "4489-2026-5",
+          "title": "Beslut att avsluta utan ytterligare åtgärd",
+          "date": "2026-10-28",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4489-2026::4489-2026-5"
+        },
+        {
+          "handling_number": "4489-2026-6",
+          "title": "Begäran om återkallelse av ärende",
+          "date": "2026-10-23",
+          "sender_recipient": "Nordanstigs kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4489-2026::4489-2026-6"
+        }
+      ],
+      "content_hash": "96c109d2150e1dde71ba4e861010d13af7d0dfec184fd7555fad2a6ae6a70b69",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4506-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4506-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5519699",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4506-2026",
+        "registered_date": "2026-06-04",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Namnlöst vattendrag, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-08",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "4506-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Namnlöst vattendrag, Gävle kommun",
+          "date": "2026-06-04",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-1"
+        },
+        {
+          "handling_number": "4506-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-04",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-2"
+        },
+        {
+          "handling_number": "4506-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-04",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-3"
+        },
+        {
+          "handling_number": "4506-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-04",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-4"
+        },
+        {
+          "handling_number": "4506-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-04",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-5"
+        },
+        {
+          "handling_number": "4506-2026-6",
+          "title": "Remiss om anmälan om vattenverksamhet",
+          "date": "2026-06-23",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-6"
+        },
+        {
+          "handling_number": "4506-2026-7",
+          "title": "Svar på remiss",
+          "date": "2026-06-26",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-7"
+        },
+        {
+          "handling_number": "4506-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4506-2026::4506-2026-8"
+        }
+      ],
+      "content_hash": "c364c9d6b09a3d9fe79104d4e58eadc3716eeb75e6b2737168edc93d25d56937",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4525-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4525-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5520418",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4525-2026",
+        "registered_date": "2026-06-05",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ej namngivna vattendrag (Se bifogad karta), Ljusdal kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-07",
+        "sender_recipient": "Ellevio AB",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "4525-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ej namngivna vattendrag (Se bifogad karta), Ljusdal kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4525-2026::4525-2026-1"
+        },
+        {
+          "handling_number": "4525-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-05",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4525-2026::4525-2026-2"
+        },
+        {
+          "handling_number": "4525-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-05",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4525-2026::4525-2026-3"
+        },
+        {
+          "handling_number": "4525-2026-4",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-05",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4525-2026::4525-2026-4"
+        },
+        {
+          "handling_number": "4525-2026-5",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-05",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4525-2026::4525-2026-5"
+        },
+        {
+          "handling_number": "4525-2026-6",
+          "title": "Fullmakt",
+          "date": "2026-06-05",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4525-2026::4525-2026-6"
+        },
+        {
+          "handling_number": "4525-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-07",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4525-2026::4525-2026-7"
+        }
+      ],
+      "content_hash": "96a864eba80b784bb34abebaa79285da0c1792b97e592d72f36a0552b6c3b9a5",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4565-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4565-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5522080",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4565-2026",
+        "registered_date": "2026-06-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjön, Hudiksvalls kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-25",
+        "sender_recipient": "Kustentreprenad",
+        "municipality": "Hudiksvall"
+      },
+      "handlings": [
+        {
+          "handling_number": "4565-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjön, Hudiksvalls kommun",
+          "date": "2026-06-08",
+          "sender_recipient": "Kustentreprenad",
+          "handling_key": "länsstyrelsen i gävleborgs län::4565-2026::4565-2026-1"
+        },
+        {
+          "handling_number": "4565-2026-2",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4565-2026::4565-2026-2"
+        },
+        {
+          "handling_number": "4565-2026-3",
+          "title": "Meddelande till sökande",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4565-2026::4565-2026-3"
+        },
+        {
+          "handling_number": "4565-2026-4",
+          "title": "Svar på remiss",
+          "date": "2026-07-27",
+          "sender_recipient": "Norrhälsinge miljökontor",
+          "handling_key": "länsstyrelsen i gävleborgs län::4565-2026::4565-2026-4"
+        },
+        {
+          "handling_number": "4565-2026-5",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4565-2026::4565-2026-5"
+        }
+      ],
+      "content_hash": "077dd071c7d6a5a9ae198af60a6d481479318f8014bb59bc11816045e175ff5e",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4637-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4637-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5525731",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4637-2026",
+        "registered_date": "2026-06-10",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Långsjön, Hudiksvalls kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Hudiksvall"
+      },
+      "handlings": [
+        {
+          "handling_number": "4637-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Långsjön, Hudiksvalls kommun",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4637-2026::4637-2026-1"
+        },
+        {
+          "handling_number": "4637-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4637-2026::4637-2026-2"
+        },
+        {
+          "handling_number": "4637-2026-3",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4637-2026::4637-2026-3"
+        },
+        {
+          "handling_number": "4637-2026-4",
+          "title": "Meddelande till sökande",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4637-2026::4637-2026-4"
+        },
+        {
+          "handling_number": "4637-2026-5",
+          "title": "Svar på remiss",
+          "date": "2026-07-24",
+          "sender_recipient": "Norrhälsinge miljökontor",
+          "handling_key": "länsstyrelsen i gävleborgs län::4637-2026::4637-2026-5"
+        },
+        {
+          "handling_number": "4637-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4637-2026::4637-2026-6"
+        }
+      ],
+      "content_hash": "cc1e8988f78c225dc814ac76abc4ffd3d0627e0078a668ee3bf8874c0ca94374",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4659-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4659-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5527066",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4659-2026",
+        "registered_date": "2026-06-10",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ljusdals kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-06",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "4659-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ljusdals kommun",
+          "date": "2026-06-10",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4659-2026::4659-2026-1"
+        },
+        {
+          "handling_number": "4659-2026-2",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4659-2026::4659-2026-2"
+        },
+        {
+          "handling_number": "4659-2026-3",
+          "title": "Yttrande över remiss",
+          "date": "2026-07-01",
+          "sender_recipient": "Ljusdals kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4659-2026::4659-2026-3"
+        },
+        {
+          "handling_number": "4659-2026-4",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4659-2026::4659-2026-4"
+        }
+      ],
+      "content_hash": "300318658d30fcc790719ab09176b7b0c979e0a00cf5b69652e1de6c76a0834c",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4691-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4691-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5528144",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4691-2026",
+        "registered_date": "2026-06-11",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kyrkbybäcken, Ljusdal",
+        "status": "Avslutat",
+        "decision_date": "2026-08-21",
+        "sender_recipient": "One Nordic PS AB",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "4691-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kyrkbybäcken, Ljusdal kommun",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4691-2026::4691-2026-1"
+        },
+        {
+          "handling_number": "4691-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4691-2026::4691-2026-2"
+        },
+        {
+          "handling_number": "4691-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4691-2026::4691-2026-3"
+        },
+        {
+          "handling_number": "4691-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4691-2026::4691-2026-4"
+        },
+        {
+          "handling_number": "4691-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4691-2026::4691-2026-5"
+        },
+        {
+          "handling_number": "4691-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4691-2026::4691-2026-6"
+        },
+        {
+          "handling_number": "4691-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-11",
+          "sender_recipient": "One Nordic PS AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::4691-2026::4691-2026-7"
+        }
+      ],
+      "content_hash": "80f1754af51547fbbccbda6f32dec24ff2cc357aa2282f25ffa77b192be1424f",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4695-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4695-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5528293",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4695-2026",
+        "registered_date": "2026-06-11",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Utlopp från Bältbosjön, Bollnäs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-29",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Bollnäs"
+      },
+      "handlings": [
+        {
+          "handling_number": "4695-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Utlopp från Bältbosjön, Bollnäs kommun",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4695-2026::4695-2026-1"
+        },
+        {
+          "handling_number": "4695-2026-2",
+          "title": "Beslut om bifall",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4695-2026::4695-2026-2"
+        }
+      ],
+      "content_hash": "ba83d13e01f5c12cd8f3d27f16f6d6dacdf16614f529eedcf707dab781f1607f",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4707-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4707-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5528727",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4707-2026",
+        "registered_date": "2026-06-12",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Voxsjön, Bollnäs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Bollnäs"
+      },
+      "handlings": [
+        {
+          "handling_number": "4707-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Voxsjön, Bollnäs kommun",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4707-2026::4707-2026-1"
+        },
+        {
+          "handling_number": "4707-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4707-2026::4707-2026-2"
+        },
+        {
+          "handling_number": "4707-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4707-2026::4707-2026-3"
+        },
+        {
+          "handling_number": "4707-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4707-2026::4707-2026-4"
+        },
+        {
+          "handling_number": "4707-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4707-2026::4707-2026-5"
+        },
+        {
+          "handling_number": "4707-2026-6",
+          "title": "Begäran om yttrande",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4707-2026::4707-2026-6"
+        },
+        {
+          "handling_number": "4707-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4707-2026::4707-2026-7"
+        }
+      ],
+      "content_hash": "42a6372a107288ecc33a236f0895880c930c5d945dfeed57823902e5e550a1fb",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4721-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4721-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5529121",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4721-2026",
+        "registered_date": "2026-06-12",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Läanbäcken, Bollnäs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-03",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Bollnäs"
+      },
+      "handlings": [
+        {
+          "handling_number": "4721-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Läanbäcken, Bollnäs kommun",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4721-2026::4721-2026-1"
+        },
+        {
+          "handling_number": "4721-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4721-2026::4721-2026-2"
+        },
+        {
+          "handling_number": "4721-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4721-2026::4721-2026-3"
+        },
+        {
+          "handling_number": "4721-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4721-2026::4721-2026-4"
+        },
+        {
+          "handling_number": "4721-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4721-2026::4721-2026-5"
+        },
+        {
+          "handling_number": "4721-2026-6",
+          "title": "Komplettering med uppgifter",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4721-2026::4721-2026-6"
+        },
+        {
+          "handling_number": "4721-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4721-2026::4721-2026-7"
+        }
+      ],
+      "content_hash": "f9ced027e2c8a8d0653b50654a6e4b5935e4305dda2e08ecd13d5273c3fa67fb",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4783-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4783-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5531535",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4783-2026",
+        "registered_date": "2026-06-15",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderalaån, Söderhamns kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-20",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Söderhamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "4783-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderalaån, Söderhamns kommun",
+          "date": "2026-06-15",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4783-2026::4783-2026-1"
+        },
+        {
+          "handling_number": "4783-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-15",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4783-2026::4783-2026-2"
+        },
+        {
+          "handling_number": "4783-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-15",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4783-2026::4783-2026-3"
+        },
+        {
+          "handling_number": "4783-2026-4",
+          "title": "Begäran om yttrande över anmälan, senast den 17 augusti 2026",
+          "date": "2026-07-09",
+          "sender_recipient": "Samhällsservicenämnden",
+          "handling_key": "länsstyrelsen i gävleborgs län::4783-2026::4783-2026-4"
+        },
+        {
+          "handling_number": "4783-2026-5",
+          "title": "Remiss av anmälan om vattenverksamhet till berörd fastighetsägare",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4783-2026::4783-2026-5"
+        },
+        {
+          "handling_number": "4783-2026-6",
+          "title": "Yttrande",
+          "date": "2026-08-10",
+          "sender_recipient": "Söderhamns kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4783-2026::4783-2026-6"
+        },
+        {
+          "handling_number": "4783-2026-7",
+          "title": "Beslut om att erosionsskydd m.m. får åtgärdas vid bro över Söderalaån i Söderhamns kommun",
+          "date": "2026-08-20",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4783-2026::4783-2026-7"
+        }
+      ],
+      "content_hash": "c3ed4490253a2ad64bef8c835a1712ea7dd47e0aafae30fc8789b751cf0edd59",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4946-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4946-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5538743",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4946-2026",
+        "registered_date": "2026-06-22",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Florsjön, Söderhamn kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-09",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4946-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Florsjön, Söderhamn kommun",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-1"
+        },
+        {
+          "handling_number": "4946-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-2"
+        },
+        {
+          "handling_number": "4946-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-3"
+        },
+        {
+          "handling_number": "4946-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-4"
+        },
+        {
+          "handling_number": "4946-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-5"
+        },
+        {
+          "handling_number": "4946-2026-6",
+          "title": "Yttranden grannfastigheter och nyttjanderättsinnehavare",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-6"
+        },
+        {
+          "handling_number": "4946-2026-7",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-06-29",
+          "sender_recipient": "Söderhamns kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-7"
+        },
+        {
+          "handling_number": "4946-2026-8",
+          "title": "remiss ang vattenverksamhet",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-8"
+        },
+        {
+          "handling_number": "4946-2026-9",
+          "title": "Remiss om vattenverksamhet i Florsjön",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-9"
+        },
+        {
+          "handling_number": "4946-2026-10",
+          "title": "Yttrande",
+          "date": "2026-07-01",
+          "sender_recipient": "Söderhamns kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-10"
+        },
+        {
+          "handling_number": "4946-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4946-2026::4946-2026-11"
+        }
+      ],
+      "content_hash": "7bf73ffdb235136c5c29e03826a43d25f8d5f412df0de629d0228f069103e7c7",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::4964-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::4964-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5539727",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "4964-2026",
+        "registered_date": "2026-06-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ej namngivet vattendrag, Söderhamn kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-26",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Söderhamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "4964-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ej namngivet vattendrag, Söderhamn kommun",
+          "date": "2026-06-23",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4964-2026::4964-2026-1"
+        },
+        {
+          "handling_number": "4964-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-23",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4964-2026::4964-2026-2"
+        },
+        {
+          "handling_number": "4964-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-23",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4964-2026::4964-2026-3"
+        },
+        {
+          "handling_number": "4964-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-23",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4964-2026::4964-2026-4"
+        },
+        {
+          "handling_number": "4964-2026-5",
+          "title": "Meddelande om arbete",
+          "date": "2026-06-26",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i gävleborgs län::4964-2026::4964-2026-5"
+        },
+        {
+          "handling_number": "4964-2026-6",
+          "title": "Beslut om bifall",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::4964-2026::4964-2026-6"
+        }
+      ],
+      "content_hash": "cb8526c91c6f6e8b09fe3e9034a45546a35801df6e284451b167211a251d6be8",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5045-2025": {
+      "case_key": "länsstyrelsen i gävleborgs län::5045-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5182612",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5045-2025",
+        "registered_date": "2025-06-17",
+        "title": "Begäran om tillsyn av vattenverksamhet, Ljusdals kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "5045-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Ljusdals kommun",
+          "date": "2025-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-1"
+        },
+        {
+          "handling_number": "5045-2025-2",
+          "title": "Komplettering med information",
+          "date": "2025-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-2"
+        },
+        {
+          "handling_number": "5045-2025-3",
+          "title": "Komplettering med karta",
+          "date": "2025-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-3"
+        },
+        {
+          "handling_number": "5045-2025-4",
+          "title": "Komplettering med film",
+          "date": "2025-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-4"
+        },
+        {
+          "handling_number": "5045-2025-5",
+          "title": "Komplettering med bilder och film",
+          "date": "2025-06-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-5"
+        },
+        {
+          "handling_number": "5045-2025-6",
+          "title": "Komplettering med film",
+          "date": "2025-06-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-6"
+        },
+        {
+          "handling_number": "5045-2025-7",
+          "title": "Förfrågan om utförda åtgärder i vatten.",
+          "date": "2025-06-27",
+          "sender_recipient": "Länsstyrelsen Gävleborgs län",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-7"
+        },
+        {
+          "handling_number": "5045-2025-8",
+          "title": "Meddelande om utförda arbeten längs Rottjärnsvägen.",
+          "date": "2025-06-27",
+          "sender_recipient": "SCA Skog AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-8"
+        },
+        {
+          "handling_number": "5045-2025-9",
+          "title": "Meddelande om utförda åtgärder från SCA.",
+          "date": "2025-06-27",
+          "sender_recipient": "SCA Skog AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-9"
+        },
+        {
+          "handling_number": "5045-2025-10",
+          "title": "Komplettering med film",
+          "date": "2025-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-10"
+        },
+        {
+          "handling_number": "5045-2025-11",
+          "title": "Meddelande om tillsynsärende.",
+          "date": "2025-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-11"
+        },
+        {
+          "handling_number": "5045-2025-12",
+          "title": "Meddelande om tillsynsärendet.",
+          "date": "2025-07-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-12"
+        },
+        {
+          "handling_number": "5045-2025-13",
+          "title": "Komplettering med fotografier",
+          "date": "2025-09-16",
+          "sender_recipient": "SCA Skog AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5045-2025::5045-2025-13"
+        }
+      ],
+      "content_hash": "b792f764b79eaf2e9c67c51ce718e43bc61520c063f7588e9f278209885e4ecc",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5170-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5170-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5548070",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5170-2026",
+        "registered_date": "2026-06-29",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Galvsjön, Ovanåker kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ovanåker"
+      },
+      "handlings": [
+        {
+          "handling_number": "5170-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Galvsjön, Ovanåker kommun",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5170-2026::5170-2026-1"
+        },
+        {
+          "handling_number": "5170-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5170-2026::5170-2026-2"
+        },
+        {
+          "handling_number": "5170-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5170-2026::5170-2026-3"
+        },
+        {
+          "handling_number": "5170-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5170-2026::5170-2026-4"
+        },
+        {
+          "handling_number": "5170-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5170-2026::5170-2026-5"
+        },
+        {
+          "handling_number": "5170-2026-6",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5170-2026::5170-2026-6"
+        },
+        {
+          "handling_number": "5170-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5170-2026::5170-2026-7"
+        }
+      ],
+      "content_hash": "e7dbb542068f9c733ec3561d211f300d74dd069dc3c5bd86617e3e4df0d98f47",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5204-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5204-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5549737",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5204-2026",
+        "registered_date": "2026-06-30",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sankmark 1, Sankmark 2, Hudiksvall kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Ellevio AB",
+        "municipality": "Hudiksvall"
+      },
+      "handlings": [
+        {
+          "handling_number": "5204-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sankmark 1, Sankmark 2, Hudiksvall kommun",
+          "date": "2026-06-30",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-1"
+        },
+        {
+          "handling_number": "5204-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-30",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-2"
+        },
+        {
+          "handling_number": "5204-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-30",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-3"
+        },
+        {
+          "handling_number": "5204-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-30",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-4"
+        },
+        {
+          "handling_number": "5204-2026-5",
+          "title": "Remiss om anmälan om vattenverksamhet",
+          "date": "2026-07-07",
+          "sender_recipient": "Hudiksvalls kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-5"
+        },
+        {
+          "handling_number": "5204-2026-6",
+          "title": "Svar på remiss",
+          "date": "2026-07-27",
+          "sender_recipient": "Norrhälsinge miljökontor",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-6"
+        },
+        {
+          "handling_number": "5204-2026-7",
+          "title": "Begäran om komplettering",
+          "date": "2026-09-25",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-7"
+        },
+        {
+          "handling_number": "5204-2026-8",
+          "title": "Komplettering med inventering",
+          "date": "2026-10-08",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5204-2026::5204-2026-8"
+        }
+      ],
+      "content_hash": "ebbe05fe044ebe40e02aece29966da85da2b9477a6ed7af1dc08fa849ba21c4c",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5237-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5237-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5551698",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5237-2026",
+        "registered_date": "2026-07-01",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Håvratjärnen, Ljusdal kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "5237-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Håvratjärnen, Ljusdal kommun",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-1"
+        },
+        {
+          "handling_number": "5237-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-2"
+        },
+        {
+          "handling_number": "5237-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-3"
+        },
+        {
+          "handling_number": "5237-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-4"
+        },
+        {
+          "handling_number": "5237-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-5"
+        },
+        {
+          "handling_number": "5237-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-6"
+        },
+        {
+          "handling_number": "5237-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-7"
+        },
+        {
+          "handling_number": "5237-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-8"
+        },
+        {
+          "handling_number": "5237-2026-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-9"
+        },
+        {
+          "handling_number": "5237-2026-10",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-10"
+        },
+        {
+          "handling_number": "5237-2026-11",
+          "title": "Begäran om komplettering",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-11"
+        },
+        {
+          "handling_number": "5237-2026-12",
+          "title": "Komplettering med uppgifter",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-12"
+        },
+        {
+          "handling_number": "5237-2026-13",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5237-2026::5237-2026-13"
+        }
+      ],
+      "content_hash": "1af5f997203af38ebe57a69db1398a86eba4df302748f4b19c0fd81613d0e13c",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5244-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5244-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5551907",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5244-2026",
+        "registered_date": "2026-07-01",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Tjärdalsmyran, Ljusdal kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-27",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ljusdal"
+      },
+      "handlings": [
+        {
+          "handling_number": "5244-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Tjärdalsmyran, Ljusdal kommun",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-1"
+        },
+        {
+          "handling_number": "5244-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-2"
+        },
+        {
+          "handling_number": "5244-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-3"
+        },
+        {
+          "handling_number": "5244-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-4"
+        },
+        {
+          "handling_number": "5244-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-5"
+        },
+        {
+          "handling_number": "5244-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-6"
+        },
+        {
+          "handling_number": "5244-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-7"
+        },
+        {
+          "handling_number": "5244-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-8"
+        },
+        {
+          "handling_number": "5244-2026-9",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-9"
+        },
+        {
+          "handling_number": "5244-2026-10",
+          "title": "Begäran om yttrande",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-10"
+        },
+        {
+          "handling_number": "5244-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5244-2026::5244-2026-11"
+        }
+      ],
+      "content_hash": "adeefd65a6ae219dfe1e2df4fad861f30492d4774a84d1bb723a13218527d905",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5283-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5283-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5553630",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5283-2026",
+        "registered_date": "2026-07-03",
+        "title": "Samråd inför tillståndsansökan för Samråd inför ansökan om tillstånd enligt miljöbalk och vattenverksamhet  i Gävle kommun",
+        "status": "Beslutat",
+        "decision_date": "2026-09-11",
+        "sender_recipient": "EcoDC AB",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "5283-2026-1",
+          "title": "Samråd inför tillståndsansökan för Samråd inför ansökan om tillstånd enligt miljöbalk och vattenverksamhet  i Gävle kommun",
+          "date": "2026-07-03",
+          "sender_recipient": "EcoDC AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5283-2026::5283-2026-1"
+        },
+        {
+          "handling_number": "5283-2026-2",
+          "title": "Meddelande om föreslagen samrådskrets",
+          "date": "2026-09-02",
+          "sender_recipient": "EcoDC AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5283-2026::5283-2026-2"
+        },
+        {
+          "handling_number": "5283-2026-3",
+          "title": "Meddelande om BMP",
+          "date": "2026-09-11",
+          "sender_recipient": "EcoDC AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5283-2026::5283-2026-3"
+        },
+        {
+          "handling_number": "5283-2026-4",
+          "title": "Protokoll från samrådsmöte.",
+          "date": "2026-09-16",
+          "sender_recipient": "EcoDC AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5283-2026::5283-2026-4"
+        },
+        {
+          "handling_number": "5283-2026-6",
+          "title": "Meddelande om synpunkter på protokoll",
+          "date": "2026-09-16",
+          "sender_recipient": "EcoDC AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5283-2026::5283-2026-6"
+        },
+        {
+          "handling_number": "5283-2026-7",
+          "title": "Information om samråd med andra prter",
+          "date": "2026-09-16",
+          "sender_recipient": "EcoDC AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5283-2026::5283-2026-7"
+        }
+      ],
+      "content_hash": "17aeed3419d255f4154d68a7c2fafeae682185ec9e99ee81eca498ed89de76eb",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5344-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5344-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5555675",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5344-2026",
+        "registered_date": "2026-07-06",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Gävlebukten, Gävle kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Gävle"
+      },
+      "handlings": [
+        {
+          "handling_number": "5344-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Gävlebukten, Gävle kommun",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-1"
+        },
+        {
+          "handling_number": "5344-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-2"
+        },
+        {
+          "handling_number": "5344-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-3"
+        },
+        {
+          "handling_number": "5344-2026-4",
+          "title": "Yttranden grannfastigheter och nyttjanderättsinnehavare",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-4"
+        },
+        {
+          "handling_number": "5344-2026-5",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-5"
+        },
+        {
+          "handling_number": "5344-2026-6",
+          "title": "Fullmakt",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-6"
+        },
+        {
+          "handling_number": "5344-2026-7",
+          "title": "Remiss anmälan om vattenverksamhet_ Gävle kommun",
+          "date": "2026-07-14",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-7"
+        },
+        {
+          "handling_number": "5344-2026-8",
+          "title": "Mottagningsbekräftelse och meddelande om förlängd handläggningstid",
+          "date": "2026-07-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-8"
+        },
+        {
+          "handling_number": "5344-2026-9",
+          "title": "Meddelande om kontaktuppgifter för anmälan",
+          "date": "2026-07-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-9"
+        },
+        {
+          "handling_number": "5344-2026-10",
+          "title": "Svar på remiss",
+          "date": "2026-08-31",
+          "sender_recipient": "Gävle kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-10"
+        },
+        {
+          "handling_number": "5344-2026-11",
+          "title": "Begäran om uppgifter om anmälan om muddring på fastighet Furuvik S_15",
+          "date": "2026-09-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-11"
+        },
+        {
+          "handling_number": "5344-2026-12",
+          "title": "Begäran om uppgifter och meddelande om försenad handläggning på fastighet Furuvik S_15",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-12"
+        },
+        {
+          "handling_number": "5344-2026-13",
+          "title": "Meddelande till sökande om komplettering gällande anmälan om muddring på fastighet Furuvik S_15",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-13"
+        },
+        {
+          "handling_number": "5344-2026-14",
+          "title": "Meddelande om ny kontaktperson",
+          "date": "2026-10-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-14"
+        },
+        {
+          "handling_number": "5344-2026-15",
+          "title": "Meddelande om samfälligheten på fastighet Furuvik S:15 om muddring",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-15"
+        },
+        {
+          "handling_number": "5344-2026-16",
+          "title": "Svar om fråga om anmälan om muddring på fastighet Furuvik S:15",
+          "date": "2026-10-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-16"
+        },
+        {
+          "handling_number": "5344-2026-17",
+          "title": "Beslut om bifall med villkor gällande muddring i en vik på Furuvik S:15 i Gävle kommun",
+          "date": "2026-10-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5344-2026::5344-2026-17"
+        }
+      ],
+      "content_hash": "d6a800afe8904e8c58b0c8a5dd604e2c27df9b967e07c53c889b5f0af5e9142e",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5375-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5375-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5557686",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5375-2026",
+        "registered_date": "2026-07-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, bro över våtmark i Höljeåns nedre del, Söderhamns kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-10",
+        "sender_recipient": "Skärså AIK",
+        "municipality": "Söderhamn"
+      },
+      "handlings": [
+        {
+          "handling_number": "5375-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, bro över våtmark i Höljeåns nedre del, Söderhamns kommun",
+          "date": "2026-07-07",
+          "sender_recipient": "Skärså AIK",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-1"
+        },
+        {
+          "handling_number": "5375-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-07",
+          "sender_recipient": "Skärså AIK",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-2"
+        },
+        {
+          "handling_number": "5375-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-07-07",
+          "sender_recipient": "Skärså AIK",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-3"
+        },
+        {
+          "handling_number": "5375-2026-4",
+          "title": "Lista berörda fastigheter och nyttjanderättsinnehavare",
+          "date": "2026-07-07",
+          "sender_recipient": "Skärså AIK",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-4"
+        },
+        {
+          "handling_number": "5375-2026-5",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-07",
+          "sender_recipient": "Skärså AIK",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-5"
+        },
+        {
+          "handling_number": "5375-2026-6",
+          "title": "Begäran om yttrande",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-6"
+        },
+        {
+          "handling_number": "5375-2026-7",
+          "title": "Svar på remiss: avstyrker",
+          "date": "2026-07-17",
+          "sender_recipient": "Söderhamns kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-7"
+        },
+        {
+          "handling_number": "5375-2026-8",
+          "title": "Meddelande om synpunkter från Söderhamns kommun.",
+          "date": "2026-08-07",
+          "sender_recipient": "Skärså AIK",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-8"
+        },
+        {
+          "handling_number": "5375-2026-9",
+          "title": "Meddelande om anmäld vattenverksamhet.",
+          "date": "2026-08-27",
+          "sender_recipient": "Söderhamns kommun",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-9"
+        },
+        {
+          "handling_number": "5375-2026-10",
+          "title": "Beslut om avslag",
+          "date": "2026-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i gävleborgs län::5375-2026::5375-2026-10"
+        }
+      ],
+      "content_hash": "09706b809000fa9927297265b488cff27005333bb4b23a912d7249d352ae32e1",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i gävleborgs län::5403-2026": {
+      "case_key": "länsstyrelsen i gävleborgs län::5403-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5558813",
+      "observed_at": "2026-11-08T13:16:45.470622+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Gävleborgs län",
+        "diary_number": "5403-2026",
+        "registered_date": "2026-07-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, LINGBO S:1>5, 28:1 mfl, Ockelbo kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-16",
+        "sender_recipient": "Ellevio AB",
+        "municipality": "Ockelbo"
+      },
+      "handlings": [
+        {
+          "handling_number": "5403-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, LINGBO S:1>5, 28:1 mfl, Ockelbo kommun",
+          "date": "2026-07-08",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-1"
+        },
+        {
+          "handling_number": "5403-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-08",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-2"
+        },
+        {
+          "handling_number": "5403-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-07-08",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-3"
+        },
+        {
+          "handling_number": "5403-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-08",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-4"
+        },
+        {
+          "handling_number": "5403-2026-5",
+          "title": "Fullmakt",
+          "date": "2026-07-08",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-5"
+        },
+        {
+          "handling_number": "5403-2026-6",
+          "title": "Förfrågan om vattenverksamhet",
+          "date": "2026-07-14",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-6"
+        },
+        {
+          "handling_number": "5403-2026-7",
+          "title": "Svar_ Förfrågan om vattenverksamhet",
+          "date": "2026-07-14",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-7"
+        },
+        {
+          "handling_number": "5403-2026-8",
+          "title": "Beslut om vattenverksamhet",
+          "date": "2026-07-16",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-8"
+        },
+        {
+          "handling_number": "5403-2026-9",
+          "title": "Beslut om att avsluta ärendena 5403-2026 och 5404-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Ellevio AB",
+          "handling_key": "länsstyrelsen i gävleborgs län::5403-2026::5403-2026-9"
+        }
+      ],
+      "content_hash": "4aa76b11998b4ef636da4ed40ea4673d74d1d7e7a95e6095667ee4c78ae2843e",
+      "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
       "observation_count": 1
     }
   }

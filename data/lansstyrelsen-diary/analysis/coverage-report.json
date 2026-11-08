@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-08T13:16:45.470622+00:00",
+  "source": "Länsstyrelsernas offentliga diarium",
+  "scope": "Current eligible national case set discovered by the collector",
+  "eligible_case_count": 3785,
+  "observed_case_count": 450,
+  "unobserved_case_count": 3335,
+  "coverage_percent": 11.89,
+  "by_county": [
+    {
+      "county": "Länsstyrelsen i Blekinge län",
+      "eligible_case_count": 139,
+      "observed_case_count": 139,
+      "unobserved_case_count": 0,
+      "coverage_percent": 100.0
+    },
+    {
+      "county": "Länsstyrelsen i Dalarnas län",
+      "eligible_case_count": 178,
+      "observed_case_count": 178,
+      "unobserved_case_count": 0,
+      "coverage_percent": 100.0
+    },
+    {
+      "county": "Länsstyrelsen i Gotlands län",
+      "eligible_case_count": 31,
+      "observed_case_count": 31,
+      "unobserved_case_count": 0,
+      "coverage_percent": 100.0
+    },
+    {
+      "county": "Länsstyrelsen i Gävleborgs län",
+      "eligible_case_count": 148,
+      "observed_case_count": 80,
+      "unobserved_case_count": 68,
+      "coverage_percent": 54.05
+    },
+    {
+      "county": "Länsstyrelsen i Hallands län",
+      "eligible_case_count": 82,
+      "observed_case_count": 4,
+      "unobserved_case_count": 78,
+      "coverage_percent": 4.88
+    },
+    {
+      "county": "Länsstyrelsen i Jämtlands län",
+      "eligible_case_count": 105,
+      "observed_case_count": 3,
+      "unobserved_case_count": 102,
+      "coverage_percent": 2.86
+    },
+    {
+      "county": "Länsstyrelsen i Jönköpings län",
+      "eligible_case_count": 198,
+      "observed_case_count": 8,
+      "unobserved_case_count": 190,
+      "coverage_percent": 4.04
+    },
+    {
+      "county": "Länsstyrelsen i Kalmar län",
+      "eligible_case_count": 205,
+      "observed_case_count": 6,
+      "unobserved_case_count": 199,
+      "coverage_percent": 2.93
+    },
+    {
+      "county": "Länsstyrelsen i Kronobergs län",
+      "eligible_case_count": 135,
+      "observed_case_count": 1,
+      "unobserved_case_count": 134,
+      "coverage_percent": 0.74
+    },
+    {
+      "county": "Länsstyrelsen i Norrbottens län",
+      "eligible_case_count": 300,
+      "observed_case_count": 0,
+      "unobserved_case_count": 300,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Skåne län",
+      "eligible_case_count": 263,
+      "observed_case_count": 0,
+      "unobserved_case_count": 263,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Stockholms län",
+      "eligible_case_count": 303,
+      "observed_case_count": 0,
+      "unobserved_case_count": 303,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Södermanlands län",
+      "eligible_case_count": 199,
+      "observed_case_count": 0,
+      "unobserved_case_count": 199,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Uppsala län",
+      "eligible_case_count": 94,
+      "observed_case_count": 0,
+      "unobserved_case_count": 94,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Värmlands län",
+      "eligible_case_count": 175,
+      "observed_case_count": 0,
+      "unobserved_case_count": 175,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Västerbottens län",
+      "eligible_case_count": 156,
+      "observed_case_count": 0,
+      "unobserved_case_count": 156,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Västernorrlands län",
+      "eligible_case_count": 165,
+      "observed_case_count": 0,
+      "unobserved_case_count": 165,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Västmanlands län",
+      "eligible_case_count": 76,
+      "observed_case_count": 0,
+      "unobserved_case_count": 76,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Västra Götalands län",
+      "eligible_case_count": 567,
+      "observed_case_count": 0,
+      "unobserved_case_count": 567,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Örebro län",
+      "eligible_case_count": 95,
+      "observed_case_count": 0,
+      "unobserved_case_count": 95,
+      "coverage_percent": 0.0
+    },
+    {
+      "county": "Länsstyrelsen i Östergötlands län",
+      "eligible_case_count": 171,
+      "observed_case_count": 0,
+      "unobserved_case_count": 171,
+      "coverage_percent": 0.0
+    }
+  ]
+}
