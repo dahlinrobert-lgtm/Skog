@@ -129,6 +129,35 @@ def inspect_sitemaps() -> list[dict]:
     return reports
 
 
+
+def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
+    """Fetch same-origin JS bundles and expose archive/API-related code clues."""
+    reports = []
+    seen = set()
+    patterns = re.compile(r"county|pagination|pageSize|pageNumber|loadMore|news|nyhet|search|filter|api/|graphql|axios|fetch\(", re.I)
+    for item in script_paths:
+        if not isinstance(item, str) or not item.startswith("/"):
+            continue
+        url = urllib.parse.urljoin(BASE, item)
+        if url in seen:
+            continue
+        seen.add(url)
+        try:
+            body, final_url = fetch(url)
+            matches = []
+            for match in patterns.finditer(body):
+                start, end = max(0, match.start()-220), min(len(body), match.end()+320)
+                excerpt = re.sub(r"\s+", " ", body[start:end])
+                if excerpt not in matches:
+                    matches.append(excerpt)
+                if len(matches) >= 35:
+                    break
+            reports.append({"url": url, "final_url": final_url, "status": "ok",
+                            "bytes": len(body.encode("utf-8")), "relevant_code_excerpts": matches})
+        except Exception as exc:
+            reports.append({"url": url, "status": "error", "error": str(exc)[:1000]})
+    return reports
+
 def main() -> None:
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
@@ -142,9 +171,11 @@ def main() -> None:
         "html_bytes": len(html.encode("utf-8")),
         "archive": archive,
         "sitemaps": inspect_sitemaps(),
+        "frontend_scripts": inspect_frontend_scripts(archive["scripts"]),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
+            "Frontend script excerpts are diagnostic clues only; no undocumented endpoint is called by this probe.",
             "A county-filtered result can include project news whose article URL is not under the Västerbotten path."
         ],
     }
