@@ -137,7 +137,9 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_monthly_national_inventory_stops_after_two_empty_pages(self, mocked_fetch):
-        current_year = datetime.now(timezone.utc).year
+        now = datetime.now(timezone.utc)
+        current_year = now.year
+        month_count = 12 * (current_year - 2024) + now.month
         responses = [
             (json.dumps({"Items": [{"Name": "A", "Link": "/a/", "Date": "1 jan. 2024"}], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
             (json.dumps({"Items": [], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
