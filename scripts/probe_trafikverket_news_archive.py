@@ -256,6 +256,41 @@ def inspect_county_content_api() -> list[dict]:
     return reports
 
 
+
+def inspect_news_archive_api() -> list[dict]:
+    """Probe the source-confirmed full news-list API with county and paging filters."""
+    reports = []
+    for county_id in (18,):
+        for page in (1, 2):
+            query = urllib.parse.urlencode({
+                "pageSize": 10, "currentPage": page, "counties": county_id,
+            })
+            url = f"{BASE}/api/news?{query}"
+            try:
+                body, final_url = fetch(url)
+                payload = json.loads(body)
+                items = payload.get("Items", []) if isinstance(payload, dict) else []
+                sample = []
+                for item in items[:5] if isinstance(items, list) else []:
+                    if isinstance(item, dict):
+                        sample.append({
+                            key: item.get(key) for key in
+                            ("Name", "Link", "Date", "Changed", "Label", "Preamble")
+                            if item.get(key) is not None
+                        })
+                reports.append({
+                    "url": url, "final_url": final_url, "status": "ok",
+                    "top_level_keys": sorted(payload.keys()) if isinstance(payload, dict) else [],
+                    "total_hits": payload.get("TotalHits") if isinstance(payload, dict) else None,
+                    "items_count": len(items) if isinstance(items, list) else None,
+                    "sample_items": sample,
+                    "response_bytes": len(body.encode("utf-8")),
+                })
+            except Exception as exc:
+                reports.append({"url": url, "status": "error", "error": str(exc)[:1000]})
+    return reports
+
+
 def main() -> None:
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
@@ -271,6 +306,7 @@ def main() -> None:
         "sitemaps": inspect_sitemaps(),
         "frontend_scripts": inspect_frontend_scripts(archive["scripts"]),
         "county_content_api_probes": inspect_county_content_api(),
+        "news_archive_api_probes": inspect_news_archive_api(),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
