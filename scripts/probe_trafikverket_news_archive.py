@@ -331,6 +331,70 @@ def inspect_news_archive_date_filters() -> list[dict]:
     return reports
 
 
+
+def collect_historical_date_windows() -> list[dict]:
+    """Fully paginate bounded pre-2025 date windows for Västerbotten."""
+    windows = [
+        ("2010_2019", "2010-01-01", "2019-12-31"),
+        ("2020_2024", "2020-01-01", "2024-12-31"),
+    ]
+    reports = []
+    for label, from_date, to_date in windows:
+        all_items = []
+        page_reports = []
+        total_hits = None
+        error = None
+        for page_number in range(1, 101):
+            query = urllib.parse.urlencode({
+                "pageSize": 10, "currentPage": page_number, "counties": 18,
+                "fromDate": from_date, "toDate": to_date,
+            })
+            url = f"{BASE}/api/news?{query}"
+            try:
+                body, final_url = fetch(url)
+                payload = json.loads(body)
+                if not isinstance(payload, dict) or not isinstance(payload.get("Items"), list):
+                    raise ValueError("Unexpected API response shape")
+                reported_total = payload.get("TotalHits")
+                if not isinstance(reported_total, int):
+                    raise ValueError("Missing TotalHits")
+                if total_hits is None:
+                    total_hits = reported_total
+                elif total_hits != reported_total:
+                    raise ValueError("TotalHits changed during date-window pagination")
+                items = payload["Items"]
+                page_reports.append({"page": page_number, "returned": len(items), "url": url})
+                all_items.extend(item for item in items if isinstance(item, dict))
+                if len(all_items) >= total_hits or not items:
+                    break
+            except Exception as exc:
+                error = f"page {page_number}: {exc}"
+                break
+        else:
+            error = "Reached 100 pages before collecting TotalHits"
+        by_link = {}
+        for item in all_items:
+            link = item.get("Link")
+            if isinstance(link, str) and link:
+                by_link.setdefault(link, item)
+        records = [{
+            "title": item.get("Name"),
+            "url": urllib.parse.urljoin(BASE, link),
+            "published_date": item.get("Date"),
+            "changed_at": item.get("Changed"),
+            "category": item.get("Label"),
+        } for link, item in by_link.items()]
+        reports.append({
+            "window": label, "from_date": from_date, "to_date": to_date,
+            "status": "error" if error else "ok", "error": error,
+            "reported_total_hits": total_hits, "pages_fetched": page_reports,
+            "raw_items_count": len(all_items), "unique_article_count": len(records),
+            "records": records,
+            "complete_against_reported_total": error is None and total_hits is not None and len(all_items) >= total_hits,
+        })
+    return reports
+
+
 def collect_county_news_inventory(page_size: int = 10, max_pages: int = 100) -> dict:
     """Inventory all pages from the source-confirmed county-filtered news API."""
     if page_size < 1 or page_size > 10 or max_pages < 1:
@@ -408,6 +472,7 @@ def main() -> None:
         "county_content_api_probes": inspect_county_content_api(),
         "news_archive_api_probes": inspect_news_archive_api(),
         "news_archive_date_filter_probes": inspect_news_archive_date_filters(),
+        "historical_date_window_inventories": collect_historical_date_windows(),
         "full_county_news_inventory": collect_county_news_inventory(),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
