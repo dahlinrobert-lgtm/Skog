@@ -20,7 +20,11 @@ LOCAL=threading.local()
 
 def tile_to_world(raw,extent,z,x,y):
     geom=shape(raw); span=2*WORLD/(2**z); ox=-WORLD+x*span; oy=WORLD-y*span
-    return transform(lambda a,b,zc=None:(ox+a*span/extent,oy-b*span/extent),geom)
+    # mapbox_vector_tile.decode defaults to y_coord_down=False and returns
+    # tile-local coordinates with origin at bottom-left (Y increases up).
+    # Convert from that local system to the XYZ tile's EPSG:3857 bounds.
+    ymin=oy-span
+    return transform(lambda a,b,zc=None:(ox+a*span/extent,ymin+b*span/extent),geom)
 
 def session():
     if getattr(LOCAL,"session",None) is None:
