@@ -134,7 +134,7 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
     """Inspect entry bundles and fetch webpack's named lazy chunks for archive widgets."""
     reports = []
     seen = set()
-    patterns = re.compile(r"county|pagination|pageSize|pageNumber|loadMore|news|nyhet|search|filter|api/|graphql|axios|fetch\\(", re.I)
+    patterns = re.compile(r"county|pagination|pageSize|pageNumber|loadMore|news|nyhet|search|filter|api/|graphql|axios|fetch\(", re.I)
     bodies: dict[str, str] = {}
     for item in script_paths:
         if not isinstance(item, str) or not item.startswith("/"):
@@ -149,7 +149,7 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
             matches = []
             for match in patterns.finditer(body):
                 start, end = max(0, match.start()-250), min(len(body), match.end()+500)
-                excerpt = re.sub(r"\\s+", " ", body[start:end])
+                excerpt = re.sub(r"\s+", " ", body[start:end])
                 if excerpt not in matches:
                     matches.append(excerpt)
                 if len(matches) >= 20:
@@ -163,11 +163,11 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
     # only the two archive-related chunks identified in the main bundle.
     runtime = next((body for url, body in bodies.items() if "runtime~main" in url), "")
     if runtime:
-        name_match = re.search(r"c\\.u=e=>\\(\\(\\{(.*?)\\}\\[e\\]\\|\\|e\\)", runtime)
-        hash_match = re.search(r'\\+"\\."\\+\\{(.*?)\\}\\[e\\]', runtime)
+        name_match = re.search(r"c\.u=e=>\(\(\{(.*?)\}\[e\]\|\|e\)", runtime)
+        hash_match = re.search(r'\+"\."\+\{(.*?)\}\[e\]', runtime)
         if name_match and hash_match:
-            names = {k: v for k, v in re.findall(r'(\\d+):"([A-Za-z0-9_-]+)"', name_match.group(1))}
-            hashes = {k: v for k, v in re.findall(r'(\\d+):"([a-f0-9]{8,})"', hash_match.group(1))}
+            names = {k: v for k, v in re.findall(r'(\d+):"([A-Za-z0-9_-]+)"', name_match.group(1))}
+            hashes = {k: v for k, v in re.findall(r'(\d+):"([a-f0-9]{8,})"', hash_match.group(1))}
             for chunk_id, chunk_name in names.items():
                 if chunk_name not in {"countycontent", "filter-news", "pagelist"}:
                     continue
@@ -180,7 +180,7 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
                     excerpts = []
                     for match in patterns.finditer(chunk_body):
                         a, b = max(0, match.start()-350), min(len(chunk_body), match.end()+700)
-                        excerpt = re.sub(r"\\s+", " ", chunk_body[a:b])
+                excerpt = re.sub(r"\s+", " ", body[start:end])
                         if excerpt not in excerpts:
                             excerpts.append(excerpt)
                         if len(excerpts) >= 50:
