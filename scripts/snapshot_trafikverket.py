@@ -68,8 +68,42 @@ def request_json(url, params=None, attempts=5, context="ArcGIS request"):
 
 
 def spatial_params(envelope):
-    geometry = {"xmin": envelope["xmin"], "ymin": envelope["ymin"], "xmax": envelope["xmax"], "ymax": envelope["ymax"], "spatialReference": {"wkid": 4326}}
-    return {"where": "1=1", "geometry": json.dumps(geometry, separators=(",", ":")), "geometryType": "esriGeometryEnvelope", "inSR": "4326", "spatialRel": "esriSpatialRelIntersects"}
+    """Build the query polygon in the layer's native SWEREF99 TM (EPSG:3006).
+
+    The source layer is published in 3006. Sending WGS84 envelopes with inSR=4326
+    produced false-positive features outside the requested tile, so project a
+    densified tile boundary to the native SR before querying.
+    """
+    try:
+        from pyproj import Transformer
+    except ImportError as exc:
+        raise RuntimeError("pyproj is required for Trafikverket EPSG:3006 spatial queries") from exc
+    transformer = Transformer.from_crs("EPSG:4326", "EPSG:3006", always_xy=True)
+    xmin, ymin, xmax, ymax = (envelope["xmin"], envelope["ymin"], envelope["xmax"], envelope["ymax"])
+    steps = 16
+    boundary = []
+    for i in range(steps + 1):
+        t = i / steps
+        boundary.append((xmin + (xmax - xmin) * t, ymin))
+    for i in range(1, steps + 1):
+        t = i / steps
+        boundary.append((xmax, ymin + (ymax - ymin) * t))
+    for i in range(1, steps + 1):
+        t = i / steps
+        boundary.append((xmax - (xmax - xmin) * t, ymax))
+    for i in range(1, steps):
+        t = i / steps
+        boundary.append((xmin, ymax - (ymax - ymin) * t))
+    ring = [list(transformer.transform(x, y)) for x, y in boundary]
+    ring.append(ring[0])
+    geometry = {"rings": [ring], "spatialReference": {"wkid": 3006, "latestWkid": 3006}}
+    return {
+        "where": "1=1",
+        "geometry": json.dumps(geometry, separators=(",", ":")),
+        "geometryType": "esriGeometryPolygon",
+        "inSR": "3006",
+        "spatialRel": "esriSpatialRelIntersects",
+    }
 
 
 def query_spatial_count(layer_url, layer_name, envelope):
