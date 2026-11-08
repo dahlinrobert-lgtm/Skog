@@ -449,8 +449,8 @@ def test_retry_transient_errors_recovers_without_touching_404():
     def fake_fetch(z, x, y, previous_sha, previous_state):
         calls.append((z, x, y))
         return {"z": z, "x": x, "y": y, "state": "unchanged" if x == 10 else "request_error"}
-    attempted, recovered = retry_transient_poll_errors(fetched, tiles, 2, fake_fetch)
-    assert attempted == 2 and recovered == 1
+    attempted, recovered, retry_404, retry_failed = retry_transient_poll_errors(fetched, tiles, 2, fake_fetch)
+    assert (attempted, recovered, retry_404, retry_failed) == (2, 1, 0, 1)
     assert sorted(calls) == [(12, 10, 20), (12, 11, 20)]
     assert fetched["12/10/20"]["state"] == "unchanged"
     assert fetched["12/11/20"]["state"] == "request_error"
@@ -486,4 +486,4 @@ def test_retry_success_counts_valid_mvt_but_not_decode_error():
 def test_retry_transient_errors_noop_when_no_errors():
     from scripts.monitor_sca_voluntary_tiles import retry_transient_poll_errors
     fetched = {"12/10/20": {"state": "not_found_404"}}
-    assert retry_transient_poll_errors(fetched, {}, 1) == (0, 0)
+    assert retry_transient_poll_errors(fetched, {}, 1) == (0, 0, 0, 0)
