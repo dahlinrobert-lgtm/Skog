@@ -96,14 +96,18 @@ def query_object_ids(layer_url, layer_name):
 
 
 
-def probe_query_modes(layer_url, layer_name, object_ids):
-    """Probe ArcGIS selection semantics without accepting partial download data."""
+def probe_query_modes(layer_url, layer_name, object_ids, oid_field):
+    """Probe ArcGIS selection semantics before strict collection; probes are not data."""
     probes = []
+    probe_id = object_ids[min(1, len(object_ids) - 1)]
+    predicate = f"{oid_field} = {probe_id}"
     cases = [
-        ("objectIds", {"objectIds": str(object_ids[2])}),
-        ("where_oid", {"where": f"ESRI_OID = {object_ids[2]}"}),
+        ("objectIds", {"objectIds": str(probe_id)}),
+        ("where_oid", {"where": predicate}),
         ("where_one", {"where": "1=1", "resultRecordCount": "1"}),
-        ("where_oid_outfields", {"where": f"ESRI_OID = {object_ids[2]}", "outFields": "*"}),
+        ("where_oid_outfields", {"where": predicate, "outFields": "*"}),
+        ("where_oid_no_geometry", {"where": predicate, "returnGeometry": "false"}),
+        ("where_oid_geometry", {"where": predicate, "returnGeometry": "true", "outSR": "4326"}),
     ]
     for label, extra in cases:
         params = {"outFields": "*", "returnGeometry": "false", "f": "json", **extra}
@@ -112,11 +116,11 @@ def probe_query_modes(layer_url, layer_name, object_ids):
                                   context=f"Diagnostic {label} probe for {layer_name}")
             rows = result.get("features", [])
             probes.append({"mode": label, "feature_count": len(rows),
-                           "returned_ids": [((x.get("attributes") or {}).get("ESRI_OID")) for x in rows[:5]],
+                           "returned_ids": [((x.get("attributes") or {}).get(oid_field)) for x in rows[:5]],
                            "error": result.get("error")})
         except Exception as exc:
             probes.append({"mode": label, "error": str(exc)})
-    print(f"DIAGNOSTIC {layer_name}: {json.dumps(probes, ensure_ascii=False)}", flush=True)
+    print(f"DIAGNOSTIC {layer_name} OID={oid_field} probe_id={probe_id}: {json.dumps(probes, ensure_ascii=False)}", flush=True)
 
 def query_features_by_ids(layer_url, object_ids, layer_name):
     """Fetch a bounded explicit ID batch; response order is deliberately ignored."""
@@ -232,10 +236,13 @@ def save_layer(service_key, layer, base_url):
 
     features = []
     seen_ids = set()
+    # Run the diagnostic probes before any strict feature retrieval, so an early
+    # problematic OID cannot prevent the diagnostic evidence from being recorded.
+    if all_ids:
+        probe_query_modes(layer_url, name, all_ids, oid_field)
+
     for start_index in range(0, len(all_ids), page_size):
         batch_ids = all_ids[start_index:start_index + page_size]
-        if start_index == 2:
-            probe_query_modes(layer_url, name, all_ids)
         payload = query_features_by_ids(layer_url, batch_ids, name)
         raw_page = payload.get("features", [])
         if payload.get("exceededTransferLimit"):
