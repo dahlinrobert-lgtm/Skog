@@ -190,6 +190,9 @@ def main() -> int:
         (cases.get("{}::{}".format(target["diary"].strip().casefold(), target["diary_number"].strip())) or {}).get("last_seen_at", ""),
         target["diary"], target["diary_number"],
     ))
+    # Keep the full eligible population for coverage metrics before limiting
+    # today's collection batch.
+    eligible_targets = list(targets)
     if args.limit:
         targets = targets[:args.limit]
 
@@ -267,7 +270,7 @@ def main() -> int:
         with args.events.open("a", encoding="utf-8") as stream:
             for event in event_lines:
                 stream.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
-    coverage = build_coverage_summary(targets, cases)
+    coverage = build_coverage_summary(eligible_targets, cases)
     report = {
         "generated_at": observed_at,
         "eligible_case_count": len(seen),
