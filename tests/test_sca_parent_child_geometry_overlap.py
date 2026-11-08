@@ -41,10 +41,19 @@ def test_decoded_y_up_top_right_maps_to_tile_northeast_corner():
 
 def test_decoded_y_up_places_northern_and_southern_z9_children_correctly():
     parent_z, parent_x, parent_y, extent = 8, 136, 70, 4096
+    # XYZ child rows increase southward: the parent's northern half is y=140,
+    # and its southern half is y=141. Decoded MVT local y increases northward.
     north_child = tile_bounds(9, 273, 140)
     south_child = tile_bounds(9, 273, 141)
-    north_point = mvt_to_world({"type": "Point", "coordinates": [extent / 2, extent * 0.75]}, extent, parent_z, parent_x, parent_y)
-    south_point = mvt_to_world({"type": "Point", "coordinates": [extent / 2, extent * 0.25]}, extent, parent_z, parent_x, parent_y)
+    north_point = mvt_to_world(
+        {"type": "Point", "coordinates": [extent / 2, extent * 0.75]},
+        extent, parent_z, parent_x, parent_y
+    )
+    south_point = mvt_to_world(
+        {"type": "Point", "coordinates": [extent / 2, extent * 0.25]},
+        extent, parent_z, parent_x, parent_y
+    )
+    assert north_point.y > south_point.y
     assert intersect_child(north_point, north_child) is not None
     assert intersect_child(north_point, south_child) is None
     assert intersect_child(south_point, south_child) is not None
