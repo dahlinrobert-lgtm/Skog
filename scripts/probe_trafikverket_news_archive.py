@@ -859,7 +859,7 @@ def build_gis_linkage_inventory(records: list[dict]) -> dict:
     """Classify news as candidates for linkage to Trafikverket geodata; never claim a spatial match."""
     import re
     rules = {
-        "road_network_nvdb": r"\b(?:E\\s?\\d{1,2}|väg\\s?\\d{1,4}|riksväg\\s?\\d{1,3}|länsväg\\s?\\d{1,4})\\b|vägnät|vägsträck|bro|tunnel|trafikplats|cirkulationsplats|vägräcke|beläggning",
+        "road_network_nvdb": r"(?:E[ ]?[0-9]{1,2}|väg[ ]?[0-9]{1,4}|riksväg[ ]?[0-9]{1,3}|länsväg[ ]?[0-9]{1,4})|vägnät|vägsträck|bro|tunnel|trafikplats|cirkulationsplats|vägräcke|beläggning",
         "rail_network_njdb": r"järnväg|järnvägs|järnvägsnät|spår|bangård|plankorsning|järnvägsövergång|station|Norrbotniabanan|Ostlänken|Västlänken|Mälarbanan",
         "traffic_information_api": r"trafikläge|trafikstörning|köbildning|köer|framkomlighet|trafikpåverkan|avstäng|omledning|olyck|vägarbete|banarbete",
         "road_traffic_data": r"trafikflöde|trafikmängd|fordonsflöde|hastighet|restid|kapacitet|trafikprognos",
@@ -874,7 +874,7 @@ def build_gis_linkage_inventory(records: list[dict]) -> dict:
         matches = [key for key, pattern in rules.items() if re.search(pattern, text, flags=re.IGNORECASE)]
         for key in matches:
             totals[key] += 1
-        route_refs = sorted(set(match.group(0).replace(' ', '').upper() for match in re.finditer(r'\\b(?:E\\s?\\d{1,2}|väg\\s?\\d{1,4}|riksväg\\s?\\d{1,3}|länsväg\\s?\\d{1,4})\\b', text, flags=re.IGNORECASE)))
+        route_refs = sorted(set(match.group(0).replace(' ', '').upper() for match in re.finditer(r'(?:E[ ]?[0-9]{1,2}|väg[ ]?[0-9]{1,4}|riksväg[ ]?[0-9]{1,3}|länsväg[ ]?[0-9]{1,4})', text, flags=re.IGNORECASE)))
         results.append({
             'title': record.get('title'), 'url': record.get('url'),
             'published_date': record.get('published_date'), 'category': record.get('category'),
