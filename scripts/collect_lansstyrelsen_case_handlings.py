@@ -154,6 +154,12 @@ def main() -> int:
     parser.add_argument("--details", type=Path, default=Path("data/lansstyrelsen-diary/case-details.json"))
     parser.add_argument("--events", type=Path, default=Path("data/lansstyrelsen-diary/handling-events.jsonl"))
     parser.add_argument("--output", type=Path, default=Path("case-handling-run.json"))
+    parser.add_argument(
+        "--coverage-output",
+        type=Path,
+        default=Path("data/lansstyrelsen-diary/analysis/coverage-report.json"),
+        help="Persistent national and county coverage report",
+    )
     parser.add_argument("--limit", type=int, default=50, help="0 means all eligible cases")
     parser.add_argument("--delay", type=float, default=0.8, help="Seconds between case requests")
     args = parser.parse_args()
@@ -285,6 +291,19 @@ def main() -> int:
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    coverage_document = {
+        "schema_version": 1,
+        "generated_at": observed_at,
+        "source": "Länsstyrelsernas offentliga diarium",
+        "scope": "Current eligible national case set discovered by the collector",
+        **coverage,
+    }
+    args.coverage_output.parent.mkdir(parents=True, exist_ok=True)
+    args.coverage_output.write_text(
+        json.dumps(coverage_document, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(json.dumps({k: report[k] for k in ("eligible_case_count", "target_count", "success_count", "failed_count", "new_handling_count", "changed_handling_count")}, ensure_ascii=False))
     # Partial success is a valid collection run: persist and analyze every
     # successful case while retaining failed cases in the run report. Only fail
