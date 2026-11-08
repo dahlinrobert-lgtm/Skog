@@ -855,6 +855,39 @@ def collect_national_news_inventory_monthly(start_year: int = 2024, max_pages_pe
         "records": records, "complete": all(report["status"] == "ok" and report["terminated_by_two_empty_pages"] for report in monthly_reports),
     }
 
+def build_gis_linkage_inventory(records: list[dict]) -> dict:
+    """Classify news as candidates for linkage to Trafikverket geodata; never claim a spatial match."""
+    import re
+    rules = {
+        "road_network_nvdb": r"\\b(?:E\\s?\\d{1,2}|väg\\s?\\d{1,4}|riksväg\\s?\\d{1,3}|länsväg\\s?\\d{1,4})\\b|vägnät|vägsträck|bro|tunnel|trafikplats|cirkulationsplats|vägräcke|beläggning",
+        "rail_network_njdb": r"järnväg|järnvägs|järnvägsnät|spår|bangård|plankorsning|järnvägsövergång|station|Norrbotniabanan|Ostlänken|Västlänken|Mälarbanan",
+        "traffic_information_api": r"trafikläge|trafikstörning|köbildning|köer|framkomlighet|trafikpåverkan|avstäng|omledning|olyck|vägarbete|banarbete",
+        "road_traffic_data": r"trafikflöde|trafikmängd|fordonsflöde|hastighet|restid|kapacitet|trafikprognos",
+        "environment_surrounding_geodata": r"buller|viltpassage|faunapassage|naturvärde|vattenverksamhet|dagvatten|grundvatten|miljökonsekvens",
+        "project_planning_candidate": r"samråd|vägplan|järnvägsplan|lokalisering|tillstånd|byggstart|byggnation|projekt|utbyggnad|nybyggnad",
+    }
+    results = []
+    totals = {key: 0 for key in rules}
+    for record in records:
+        fields = [record.get(key) or '' for key in ('title', 'preamble', 'category', 'url')]
+        text = ' '.join(str(value) for value in fields)
+        matches = [key for key, pattern in rules.items() if re.search(pattern, text, flags=re.IGNORECASE)]
+        for key in matches:
+            totals[key] += 1
+        route_refs = sorted(set(match.group(0).replace(' ', '').upper() for match in re.finditer(r'\\b(?:E\\s?\\d{1,2}|väg\\s?\\d{1,4}|riksväg\\s?\\d{1,3}|länsväg\\s?\\d{1,4})\\b', text, flags=re.IGNORECASE)))
+        results.append({
+            'title': record.get('title'), 'url': record.get('url'),
+            'published_date': record.get('published_date'), 'category': record.get('category'),
+            'candidate_gis_layers': matches, 'route_references': route_refs,
+            'linkage_status': 'thematic_candidate_only' if matches else 'unclassified',
+        })
+    return {
+        'method': 'keyword_rules_title_preamble_category_url',
+        'warning': 'Thematic candidates only. No coordinates, geometry intersection or verified feature match is inferred from news text.',
+        'candidate_counts_overlapping': totals, 'records': results,
+        'records_with_any_candidate': sum(bool(row['candidate_gis_layers']) for row in results),
+    }
+
 def main() -> None:
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
@@ -883,6 +916,7 @@ def main() -> None:
         "national_monthly_pages_after_empty": diagnose_monthly_pages_after_empty(),
         "national_news_inventory_from_2024": collect_national_news_inventory(start_year=2024),
         "national_monthly_news_inventory_from_2024": collect_national_news_inventory_monthly(start_year=2024),
+        "national_news_gis_linkage_inventory": build_gis_linkage_inventory(collect_national_news_inventory_monthly(start_year=2024)["records"]),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
