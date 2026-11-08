@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Nationell och länsvis täckning för insamling av ärende- och handlingsmetadata från Länsstyrelsernas offentliga diarium.">
+  <title>Länsstyrelsen – nationell ärendetäckning</title>
+  <style>
+    :root { color-scheme: light; --ink:#17212b; --muted:#607080; --line:#dce3e8; --surface:#fff; --bg:#f3f6f8; --accent:#176b87; --track:#e7edf1; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { max-width:1120px; margin:0 auto; padding:32px 20px 56px; }
+    header { margin-bottom:24px; }
+    h1 { margin:0 0 8px; font-size:clamp(1.7rem,4vw,2.4rem); line-height:1.15; }
+    h2 { margin:0 0 16px; font-size:1.2rem; }
+    p { color:var(--muted); margin:8px 0; }
+    .meta { font-size:.9rem; }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin:24px 0; }
+    .card,.panel { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px; }
+    .metric { font-size:clamp(1.5rem,4vw,2.2rem); font-weight:700; letter-spacing:-.03em; }
+    .label { color:var(--muted); font-size:.9rem; }
+    .progress { height:12px; border-radius:99px; background:var(--track); overflow:hidden; margin:12px 0 6px; }
+    .progress span { display:block; height:100%; background:var(--accent); width:0; }
+    .table-wrap { overflow-x:auto; }
+    table { border-collapse:collapse; width:100%; min-width:620px; }
+    th,td { padding:11px 10px; text-align:left; border-bottom:1px solid var(--line); }
+    th { color:var(--muted); font-size:.82rem; font-weight:600; }
+    td.num,th.num { text-align:right; font-variant-numeric:tabular-nums; }
+    td.county { min-width:250px; }
+    .county-progress { min-width:130px; }
+    .county-progress .progress { height:8px; margin:0; }
+    .notice { border-left:4px solid var(--accent); padding:10px 14px; background:#eaf2f5; border-radius:4px; margin-top:18px; color:#304957; }
+    .error { color:#9b2525; }
+    footer { margin-top:22px; font-size:.85rem; color:var(--muted); }
+    a { color:var(--accent); }
+    @media(max-width:760px) { .cards { grid-template-columns:repeat(2,minmax(0,1fr)); } main { padding:24px 14px 40px; } }
+    @media(max-width:420px) { .cards { grid-template-columns:1fr 1fr; gap:8px; } .card { padding:12px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Länsstyrelsen – ärendetäckning</h1>
+    <p>Nationell överblick över vilka diarieförda ärenden som har observerats i insamlingen av ärende- och handlingsmetadata.</p>
+    <p class="meta" id="updated">Hämtar senaste täckningsrapport …</p>
+  </header>
+  <section class="cards" aria-label="Nationella nyckeltal">
+    <div class="card"><div class="label">Observerade ärenden</div><div class="metric" id="observed">–</div></div>
+    <div class="card"><div class="label">Behöriga ärenden</div><div class="metric" id="eligible">–</div></div>
+    <div class="card"><div class="label">Återstår att observera</div><div class="metric" id="remaining">–</div></div>
+    <div class="card"><div class="label">Nationell täckning</div><div class="metric" id="percent">–</div></div>
+  </section>
+  <section class="panel">
+    <h2>Nationell insamling</h2>
+    <div class="progress" role="progressbar" aria-label="Nationell täckning" aria-valuemin="0" aria-valuemax="100" id="national-progress"><span id="national-bar"></span></div>
+    <p id="national-caption">–</p>
+  </section>
+  <section class="panel" style="margin-top:18px">
+    <h2>Täckning per län</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Länsstyrelse</th><th class="num">Observerade</th><th class="num">Behöriga</th><th class="num">Återstår</th><th class="num">Täckning</th><th>Förlopp</th></tr></thead>
+        <tbody id="counties"><tr><td colspan="6">Läser in …</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+  <div class="notice"><strong>Viktigt om tolkningen:</strong> Täckningen beräknas mot den aktuella mängd ärenden som diariets sökflöde gör tillgänglig för insamlaren. Det är inte ett bevis på att samtliga historiska ärenden hos Länsstyrelserna ingår. Ärenden som inte längre visas i sökresultatet ska inte automatiskt tolkas som borttagna.</div>
+  <footer>
+    Källa: Länsstyrelsernas offentliga diarium. <span id="scope"></span><br>
+    <a href="./index.html">Tillbaka till Skog-projektets webbplats</a>
+  </footer>
+</main>
+<script>
+(() => {
+  const DATA_URL = "../data/lansstyrelsen-diary/analysis/coverage-report.json";
+  const fmt = n => Number(n || 0).toLocaleString("sv-SE");
+  const pct = n => Number(n || 0).toLocaleString("sv-SE", {minimumFractionDigits:1, maximumFractionDigits:2}) + " %";
+  const el = id => document.getElementById(id);
+  fetch(DATA_URL, {cache:"no-store"})
+    .then(response => { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
+    .then(data => {
+      el("updated").textContent = "Senast uppdaterad: " + new Date(data.generated_at).toLocaleString("sv-SE");
+      el("observed").textContent = fmt(data.observed_case_count);
+      el("eligible").textContent = fmt(data.eligible_case_count);
+      el("remaining").textContent = fmt(data.unobserved_case_count);
+      el("percent").textContent = pct(data.coverage_percent);
+      const value = Math.max(0, Math.min(100, Number(data.coverage_percent || 0)));
+      el("national-bar").style.width = value + "%";
+      el("national-progress").setAttribute("aria-valuenow", String(value));
+      el("national-caption").textContent = fmt(data.observed_case_count) + " av " + fmt(data.eligible_case_count) + " ärenden observerade (" + pct(value) + ").";
+      el("scope").textContent = data.scope || "";
+      const rows = (data.by_county || []).slice().sort((a,b) => a.county.localeCompare(b.county, "sv"));
+      el("counties").replaceChildren(...rows.map(item => {
+        const tr = document.createElement("tr");
+        const cells = [
+          ["county", item.county, false],
+          ["num", fmt(item.observed_case_count), false],
+          ["num", fmt(item.eligible_case_count), false],
+          ["num", fmt(item.unobserved_case_count), false],
+          ["num", pct(item.coverage_percent), false]
+        ];
+        for (const [cls,value] of cells) { const td=document.createElement("td"); td.className=cls; td.textContent=value; tr.appendChild(td); }
+        const td=document.createElement("td"); td.className="county-progress";
+        const bar=document.createElement("div"); bar.className="progress";
+        const fill=document.createElement("span"); fill.style.width=Math.max(0,Math.min(100,Number(item.coverage_percent||0)))+"%";
+        bar.appendChild(fill); td.appendChild(bar); tr.appendChild(td);
+        return tr;
+      }));
+    })
+    .catch(error => {
+      el("updated").textContent = "Kunde inte läsa täckningsrapporten.";
+      el("updated").classList.add("error");
+      el("counties").innerHTML = '<tr><td colspan="6">Rapporten är ännu inte publicerad eller kunde inte hämtas.</td></tr>';
+      console.error(error);
+    });
+})();
+</script>
+</body>
+</html>
