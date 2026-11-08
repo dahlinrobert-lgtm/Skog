@@ -144,27 +144,53 @@ def query_features_by_ids(layer_url, object_ids, layer_name, oid_field):
         "outSR": "4326",
         "f": "json",
     }
-    try:
-        return request_json(
-            layer_url.rstrip("/") + "/query",
-            params,
-            context=f"Feature batch for {layer_name}, IDs {object_ids[0]}..{object_ids[-1]}",
-        )
-    except RuntimeError as first_error:
-        fallback = dict(params)
-        fallback["f"] = "geojson"
+    # ArcGIS can return HTTP 200 with a feature that does not match the
+    # requested OID. Validate identity before accepting any response.
+    attempts = [
+        ("where-json-outsr", params),
+        ("objectids-json-outsr", {
+            **{k: v for k, v in params.items() if k != "where"},
+            "objectIds": ",".join(str(int(value)) for value in object_ids),
+        }),
+        ("where-json-native-sr", {k: v for k, v in params.items() if k != "outSR"}),
+        ("where-geojson", {**params, "f": "geojson"}),
+        ("where-geojson-native-sr", {
+            **{k: v for k, v in params.items() if k not in {"outSR", "f"}},
+            "f": "geojson",
+        }),
+    ]
+    errors = []
+    expected = {int(value) for value in object_ids}
+    for mode, attempt_params in attempts:
         try:
-            return request_json(
+            payload = request_json(
                 layer_url.rstrip("/") + "/query",
-                fallback,
-                context=f"GeoJSON feature batch for {layer_name}, IDs {object_ids[0]}..{object_ids[-1]}",
+                attempt_params,
+                context=f"Feature batch ({mode}) for {layer_name}, "
+                        f"IDs {object_ids[0]}..{object_ids[-1]}",
             )
-        except RuntimeError as second_error:
-            raise RuntimeError(
-                f"Both JSON and GeoJSON requests failed for {layer_name}, "
-                f"IDs {object_ids[0]}..{object_ids[-1]}. "
-                f"JSON error: {first_error}. GeoJSON error: {second_error}"
-            ) from second_error
+            rows = payload.get("features", [])
+            actual = set()
+            for row in rows:
+                attrs = row.get("attributes") or row.get("properties") or {}
+                value = attrs.get(oid_field)
+                if value is None:
+                    break
+                actual.add(int(value))
+            if actual == expected and len(rows) == len(expected):
+                print(f"{layer_name}: accepted {mode} for IDs "
+                      f"{object_ids[0]}..{object_ids[-1]}", flush=True)
+                return payload
+            errors.append(
+                f"{mode}: requested={sorted(expected)}, returned={sorted(actual)}, "
+                f"feature_count={len(rows)}"
+            )
+        except RuntimeError as exc:
+            errors.append(f"{mode}: {exc}")
+    raise RuntimeError(
+        f"No ArcGIS query mode returned the exact requested IDs for {layer_name}: "
+        + " | ".join(errors)
+    )
 
 
 def feature_identity(feature, oid_field):
