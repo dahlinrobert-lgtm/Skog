@@ -620,6 +620,50 @@ def diagnose_2024_monthly_repeatability(repeats: int = 3) -> list[dict]:
         })
     return reports
 
+def diagnose_monthly_pagination_repeatability(repeats: int = 2) -> list[dict]:
+    """Repeat each page request for the November and December 2024 windows."""
+    if repeats < 2 or repeats > 3:
+        raise ValueError("repeats must be 2 or 3")
+    reports = []
+    windows = (("2024-11", "2024-11-01", "2024-12-01", 5), ("2024-12", "2024-12-01", "2024-12-31", 6))
+    for month, from_date, to_date, max_pages in windows:
+        page_reports = []
+        for page_number in range(1, max_pages + 1):
+            attempts = []
+            for attempt in range(1, repeats + 1):
+                query = urllib.parse.urlencode({
+                    "pageSize": 10, "currentPage": page_number,
+                    "fromDate": from_date, "toDate": to_date,
+                })
+                url = f"{BASE}/api/news?{query}"
+                try:
+                    body, final_url = fetch(url)
+                    payload = json.loads(body)
+                    if not isinstance(payload, dict) or not isinstance(payload.get("Items"), list):
+                        raise ValueError("Unexpected API response shape")
+                    items = [item for item in payload["Items"] if isinstance(item, dict)]
+                    attempts.append({
+                        "attempt": attempt, "reported_total_hits": payload.get("TotalHits"),
+                        "returned": len(items),
+                        "links": [item.get("Link") for item in items if item.get("Link")],
+                        "dates": [item.get("Date") for item in items if item.get("Date")],
+                        "final_url": final_url, "status": "ok",
+                    })
+                except Exception as exc:
+                    attempts.append({"attempt": attempt, "url": url, "status": "error", "error": str(exc)[:1000]})
+            link_sets = [tuple(a.get('links', [])) for a in attempts if a.get('status') == 'ok']
+            totals = [a.get('reported_total_hits') for a in attempts if a.get('status') == 'ok']
+            page_reports.append({
+                "page": page_number, "attempts": attempts,
+                "totals_stable": len(set(totals)) <= 1,
+                "links_stable": len(set(link_sets)) <= 1,
+            })
+        reports.append({
+            "month": month, "from_date": from_date, "to_date": to_date,
+            "pages": page_reports,
+        })
+    return reports
+
 def collect_national_news_inventory(start_year: int = 2024, max_pages_per_year: int = 1000) -> dict:
     """Fully paginate national news results from start_year through the current year.
 
@@ -719,6 +763,7 @@ def main() -> None:
         "national_pagination_boundary_diagnostics": diagnose_national_pagination_boundaries(),
         "national_2024_monthly_window_diagnostics": diagnose_2024_monthly_windows(),
         "national_2024_monthly_repeatability_diagnostics": diagnose_2024_monthly_repeatability(),
+        "national_monthly_pagination_repeatability": diagnose_monthly_pagination_repeatability(),
         "national_news_inventory_from_2024": collect_national_news_inventory(start_year=2024),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
