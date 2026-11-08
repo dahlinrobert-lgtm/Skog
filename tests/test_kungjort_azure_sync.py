@@ -1,8 +1,54 @@
 import gzip
 import json
 import unittest
+import io
+import urllib.error
+from email.message import Message
 
 from scripts.sync_kungjort_azure import canonical_hash, classify_document, cursor_key, encode_jsonl_gzip, initial_state
+
+
+class KungjortApiRetryTests(unittest.TestCase):
+    def test_retries_http_502_then_succeeds(self):
+        from scripts.sync_kungjort_azure import KungjortApi
+        headers = Message()
+        headers["X-Request-ID"] = "gateway-1"
+        failure = urllib.error.HTTPError(
+            "https://example.test/changes", 502, "Bad Gateway", headers, io.BytesIO(b"")
+        )
+        class Response:
+            headers = {}
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self): return b'{"changes": []}'
+        calls = []
+        def opener(req, timeout=90):
+            calls.append(req)
+            if len(calls) == 1:
+                raise failure
+            return Response()
+        sleeps = []
+        api = KungjortApi("test-key", opener=opener, sleep=sleeps.append)
+        payload, request_id = api.get("/changes")
+        self.assertEqual(payload, {"changes": []})
+        self.assertIsNone(request_id)
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(len(sleeps), 1)
+
+    def test_does_not_retry_http_400(self):
+        from scripts.sync_kungjort_azure import KungjortApi
+        headers = Message()
+        failure = urllib.error.HTTPError(
+            "https://example.test/changes", 400, "Bad Request", headers, io.BytesIO(b"bad")
+        )
+        calls = []
+        def opener(req, timeout=90):
+            calls.append(req)
+            raise failure
+        api = KungjortApi("test-key", opener=opener, sleep=lambda delay: self.fail("unexpected retry"))
+        with self.assertRaisesRegex(RuntimeError, "HTTP 400"):
+            api.get("/changes")
+        self.assertEqual(len(calls), 1)
 
 
 class AzureSyncHelperTests(unittest.TestCase):
