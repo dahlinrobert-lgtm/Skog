@@ -89,7 +89,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 .filter-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}
 .filter-title{margin:0;font-size:1.02rem;font-weight:760;letter-spacing:-.02em}
 .filter-hint{color:#849087;font-size:.78rem}
-.toolbar{display:grid;grid-template-columns:minmax(170px,.75fr) minmax(230px,1.45fr) auto;gap:10px;align-items:center}
+.toolbar{display:grid;grid-template-columns:minmax(150px,.7fr) minmax(170px,.7fr) minmax(230px,1.45fr) auto;gap:10px;align-items:center}
 .control{position:relative;min-width:0}
 .control select,.control input{width:100%;height:48px;padding:0 14px;border:1px solid #dce4db;border-radius:11px;background:#fff;color:#26372b;outline:none;transition:border-color .18s,box-shadow .18s}
 .control input{padding-left:43px}
@@ -301,7 +301,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
         <strong id="plannedCount">–</strong><span class="stat-note" id="plannedNote">Inkomna anmälningar i vald period</span>
       </article>
       <article class="stat">
-        <div class="stat-top"><span class="stat-label">Satellitindikationer</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m4.5 7.3 7.5 4 7.5-4M12 21V11.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
+        <div class="stat-top"><span class="stat-label">Bekräftade utförda avverkningar</span><span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m4.5 7.3 7.5 4 7.5-4M12 21V11.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
         <strong id="doneCount">–</strong><span class="stat-note" id="doneNote">Fjärranalysbaserade objekt i vald period</span>
       </article>
       <article class="stat">
@@ -324,6 +324,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
     </div>
     <div class="toolbar">
       <div class="control"><select id="monthFilter" aria-label="Jämförelseperiod"><option value="all">Hela året hittills</option><option value="01">Januari</option><option value="02">Februari</option><option value="03">Mars</option><option value="04">April</option><option value="05">Maj</option><option value="06">Juni</option><option value="07">Juli</option><option value="08">Augusti</option><option value="09">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">December</option></select></div>
+      <div class="control"><select id="animalFilter" aria-label="Filtrera aktivitet efter vilt eller djur"><option value="forest">Skogliga aktiviteter</option><option value="elk">Älg</option></select></div>
       <div class="control search-control">
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         <input id="search" type="search" placeholder="Sök ärende, typ eller fastighet…" aria-label="Sök aktiviteter">
@@ -357,36 +358,6 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
   </section>
 
   
-  <section class="elkdata-card" aria-labelledby="elkdata-title">
-    <div class="feed-head">
-      <div><p class="eyebrow">Regional viltdatabevakning</p><h2 id="elkdata-title">Älgavskjutning – datum och utveckling</h2>
-      <p class="elkdata-note">Följ registrerad avskjutning i den dagliga 30-områdespiloten. Datum avser när uppgiften kunde observeras i Länsstyrelsens statistikportal.</p></div>
-      <span class="result-count" id="elkdataSnapshotDate">–</span>
-    </div>
-    <div class="elkdata-stats">
-      <div class="elkdata-stat"><span>Områden i piloten</span><strong id="elkdataAreaCount">–</strong></div>
-      <div class="elkdata-stat"><span>Områden med senaste uttag</span><strong id="elkdataCoverage">–</strong></div>
-      <div class="elkdata-stat"><span>Områden med observerad avskjutning</span><strong id="elkdataFirstCount">–</strong></div>
-      <div class="elkdata-stat"><span>Ökning i senaste uttaget</span><strong id="elkdataIncreaseCount">–</strong></div>
-    </div>
-    <div class="elkdata-controls">
-      <select id="elkdataCounty" aria-label="Filtrera älgområden efter län"><option value="all">Alla län</option></select>
-      <input id="elkdataSearch" type="search" placeholder="Sök område, områdeskod eller ÄFO" aria-label="Sök älgområde">
-      <span class="elkdata-result" id="elkdataResultCount">– områden</span>
-    </div>
-    <div class="elkdata-table-wrap">
-      <table class="elkdata-table">
-        <thead><tr>
-          <th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt</th><th>Förändring</th>
-          <th>Första observerade</th><th>Senaste ökning observerad</th><th>Senaste uttag</th>
-        </tr></thead>
-        <tbody id="elkdataRows"><tr><td colspan="8" class="elkdata-empty">Hämtar regional älgdata …</td></tr></tbody>
-      </table>
-    </div>
-    <div class="elkdata-status" id="elkdataStatus" role="status" aria-live="polite">Hämtar daterade ögonblicksbilder …</div>
-    <p class="elkdata-caveat">Viktigt: Första observerade datum är inte ett säkert fälldatum. Senaste ökning är datumet för ett snapshot där den kumulativa rapporteringen ökat sedan föregående snapshot. Rapportfördröjningar och rättelser kan påverka datumen. Ett uteblivet värde betyder inte automatiskt noll avskjutning.</p>
-    <p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>. Dagliga snapshots från <a href="https://github.com/dahlinrobert-lgtm/alg-grasmyr" target="_blank" rel="noopener">alg-grasmyr</a>.</p>
-  </section>
 
   <footer class="footer">
     <strong>Datakälla: Skogsstyrelsens öppna geodatatjänster.</strong>
@@ -404,6 +375,9 @@ const sources=[
  {kind:"done",label:"Satellitindikation",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"}
 ];
 let all=[];
+let elkAreas=[];
+let elkSnapshotDate=null;
+let elkLoadError=null;
 let sourceWarnings=[];
 let activityMap=null;
 let activityLayer=null;
@@ -575,7 +549,31 @@ function selectActivity(item,zoom=true){
  if(zoom&&layer&&activityMap){const bounds=layer.getBounds();if(bounds.isValid())activityMap.fitBounds(bounds.pad(0.55),{maxZoom:14});}
 }
 function render(){
- const list=filtered();
+ const isElk=document.getElementById("animalFilter").value==="elk";
+ const list=isElk?[]:filtered();
+ document.querySelector(".quick-switch").hidden=isElk;
+ document.getElementById("monthFilter").disabled=isElk;
+ document.querySelector(".map-card").hidden=isElk;
+ document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":"Senaste händelserna";
+ document.querySelector(".feed-subtitle").textContent=isElk?"Välj Älg under Vilt/djur för att se senaste registrerade avskjutning och observerade förändringar per jaktområde.":"Det här är huvudvyn: nya och relevanta händelser i dina bevakade områden. Välj en händelse för detaljer och geografisk kontext.";
+ if(isElk){
+  const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
+  const rows=elkAreas.filter(area=>[area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query))
+   .sort((a,b)=>String(b.latest_observed_increase_date||"").localeCompare(String(a.latest_observed_increase_date||""))||String(a.area_name||"").localeCompare(String(b.area_name||""),"sv"));
+  const fmt=value=>value===null||value===undefined?"–":Number(value).toLocaleString("sv-SE",{maximumFractionDigits:1});
+  const date=value=>value?new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"short",day:"numeric",timeZone:"UTC"}).format(new Date(value+"T12:00:00Z")):"Ej observerat";
+  const rowsHtml=rows.map(area=>{
+   const delta=area.latest_delta;
+   return '<tr><td><strong>'+esc(area.area_name||"Namn saknas")+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(area.latest_total)+'</td><td class="elkdata-number '+(delta>0?"elkdata-positive":"")+'">'+(delta===null?"–":(delta>0?"+":"")+fmt(delta))+'</td><td>'+date(area.first_observed_positive_date)+'</td><td>'+date(area.latest_observed_increase_date)+'</td><td>'+date(area.latest_snapshot_date)+'</td></tr>';
+  }).join("");
+  document.getElementById("feed").innerHTML=elkLoadError
+   ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
+   : '<p class="elkdata-note">Regional avskjutningsstatistik för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Datum visar när uppgiften observerades i dagliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt</th><th>Förändring</th><th>Första observerade</th><th>Senaste ökning observerad</th><th>Senaste uttag</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="8" class="elkdata-empty">Inga områden matchar sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' områden visas av '+elkAreas.length.toLocaleString("sv-SE")+'.</div><p class="elkdata-caveat">Första observerade datum är inte ett säkert fältdatum. Senaste ökning är datumet då kumulativ rapportering ökade mellan snapshots. Rapportfördröjningar och rättelser kan påverka datumen.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
+  document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
+  document.getElementById("mapSummary").textContent="Ingen geometri i älgstatistiken";
+  renderMap([]);
+  return;
+ }
  document.getElementById("feed").innerHTML=list.length?list.map(x=>{
   const p=x.properties;
   const key=itemKey(x);
@@ -646,6 +644,10 @@ function bindControls(){
  });
  document.getElementById("monthFilter").addEventListener("change",render);
  document.getElementById("search").addEventListener("input",render);
+ document.getElementById("animalFilter").addEventListener("change",render);
+ window.addEventListener("skog:elkdata-loaded",event=>{elkAreas=event.detail.areas||[];elkSnapshotDate=event.detail.latest_snapshot_date||null;elkLoadError=null;render();});
+ window.addEventListener("skog:elkdata-error",event=>{elkLoadError=event.detail.message||"Okänt fel";render();});
+ document.getElementById("reload").addEventListener("click",()=>window.dispatchEvent(new Event("skog:elkdata-refresh")));
  document.getElementById("reload").addEventListener("click",load);
  document.getElementById("feed").addEventListener("click",event=>{
   const button=event.target.closest("[data-select]");
