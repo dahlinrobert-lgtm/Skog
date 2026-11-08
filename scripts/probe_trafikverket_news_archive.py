@@ -889,6 +889,8 @@ def build_gis_linkage_inventory(records: list[dict]) -> dict:
     }
 
 def main() -> None:
+    monthly_inventory = collect_national_news_inventory_monthly(start_year=2024)
+    gis_linkage_inventory = build_gis_linkage_inventory(monthly_inventory["records"])
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
     report = {
@@ -915,8 +917,8 @@ def main() -> None:
         "national_monthly_pagination_repeatability": diagnose_monthly_pagination_repeatability(),
         "national_monthly_pages_after_empty": diagnose_monthly_pages_after_empty(),
         "national_news_inventory_from_2024": collect_national_news_inventory(start_year=2024),
-        "national_monthly_news_inventory_from_2024": collect_national_news_inventory_monthly(start_year=2024),
-        "national_news_gis_linkage_inventory": build_gis_linkage_inventory(collect_national_news_inventory_monthly(start_year=2024)["records"]),
+        "national_monthly_news_inventory_from_2024": monthly_inventory,
+        "national_news_gis_linkage_inventory": gis_linkage_inventory,
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
