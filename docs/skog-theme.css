@@ -31,3 +31,90 @@ html[data-theme="dark"] hr{border-color:#34483a}
 .skog-theme-toggle{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:7px 11px;border:1px solid rgba(255,255,255,.35);border-radius:9px;background:#244b35;color:#fff;font:650 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer;white-space:nowrap}
 .skog-theme-toggle:hover,.skog-theme-toggle:focus-visible{background:#326044;outline:2px solid #d7ad67;outline-offset:2px}
 @media(max-width:760px){.skog-theme-toggle{align-self:flex-start;margin-top:2px}}
+
+
+/* Dark-mode surfaces for the redesigned Bevakning page and its nested cards. */
+html[data-theme="dark"]{
+  --ink:#e4ece6;
+  --paper:#101812;
+  --surface:#1b2921;
+  --line:#34483a;
+  --muted:#aebdb2;
+  --shadow:0 18px 48px rgba(0,0,0,.18);
+}
+html[data-theme="dark"] :is(.overview-card,.filter-card,.feed-card,.map-card,.elkdata-card){
+  background:#1b2921!important;
+  color:#e4ece6!important;
+  border-color:#34483a!important;
+  box-shadow:0 18px 48px rgba(0,0,0,.18)!important;
+}
+html[data-theme="dark"] :is(.overview-card,.filter-card,.feed-card,.map-card) h2,
+html[data-theme="dark"] :is(.filter-title,.case-preview h3,.title){
+  color:#e4ece6!important;
+}
+html[data-theme="dark"] :is(.eyebrow,.section-intro,.filter-hint,.feed-subtitle,.stat-label,.stat-note,.meta,.date-year,.footer,.map-legend,#coverage){
+  color:#aebdb2!important;
+}
+html[data-theme="dark"] .year-chip,
+html[data-theme="dark"] .result-count,
+html[data-theme="dark"] .quick-switch{
+  background:#243329!important;
+  color:#dce9df!important;
+  border-color:#405746!important;
+}
+html[data-theme="dark"] .stat,
+html[data-theme="dark"] .elkdata-stat{
+  background:linear-gradient(145deg,#223329,#1a2820)!important;
+  border-color:#3b5141!important;
+}
+html[data-theme="dark"] .stat strong,
+html[data-theme="dark"] .elkdata-stat strong{color:#a5d7b0!important}
+html[data-theme="dark"] .stat-icon{
+  background:#304a37!important;
+  color:#c6e0c8!important;
+}
+html[data-theme="dark"] .control :is(input,select),
+html[data-theme="dark"] :is(.toolbar input,.toolbar select){
+  background:#111c15!important;
+  color:#e4ece6!important;
+  border-color:#526557!important;
+}
+html[data-theme="dark"] .reload,
+html[data-theme="dark"] .preview-links a{
+  background:#294333!important;
+  color:#d9eadb!important;
+  border-color:#49634d!important;
+}
+html[data-theme="dark"] .activity{
+  background:#202f25!important;
+  color:#e4ece6!important;
+  border-color:#3a4d3d!important;
+}
+html[data-theme="dark"] .activity:hover,
+html[data-theme="dark"] .activity.is-selected{
+  background:#293a2e!important;
+  border-color:#709477!important;
+}
+html[data-theme="dark"] .date,
+html[data-theme="dark"] .activity-action{color:#a9d4b0!important}
+html[data-theme="dark"] .case-preview,
+html[data-theme="dark"] .empty,
+html[data-theme="dark"] .period-comparison{
+  background:#243329!important;
+  color:#c6d4ca!important;
+  border-color:#405746!important;
+}
+html[data-theme="dark"] .preview-field{
+  background:#1a2820!important;
+  border-color:#405746!important;
+}
+html[data-theme="dark"] .preview-field span{color:#aebdb2!important}
+html[data-theme="dark"] .preview-field strong{color:#e4ece6!important}
+html[data-theme="dark"] .quick-switch button{color:#c6d4ca!important}
+html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{
+  background:#376348!important;
+  color:#fff!important;
+}
+html[data-theme="dark"] .map-legend{color:#b8c7bb!important}
+html[data-theme="dark"] .footer{border-color:#34483a!important}
+html[data-theme="dark"] .elkdata-source a{color:#a9d4b0!important}
