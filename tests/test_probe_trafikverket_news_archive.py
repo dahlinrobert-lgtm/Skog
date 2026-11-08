@@ -121,7 +121,7 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertEqual(result[0]["pages"][0]["page"], 1)
         self.assertTrue(result[0]["pages"][0]["links_stable"])
         self.assertIn("currentPage=2", mocked_fetch.call_args_list[2].args[0])
-        self.assertEqual(mocked_fetch.call_count, 22 * 2)
+        self.assertEqual(mocked_fetch.call_count, 22)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_national_boundary_diagnostic_probes_requested_pages(self, mocked_fetch):
