@@ -1,8 +1,9 @@
 import json
 import unittest
 from unittest.mock import patch
+from datetime import datetime, timezone
 
-from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
+from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
@@ -50,6 +51,23 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertEqual(result["duplicate_count"], 1)
         self.assertTrue(result["complete_against_reported_total"])
         self.assertEqual(mocked_fetch.call_count, 2)
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_national_inventory_uses_all_counties_and_year_windows(self, mocked_fetch):
+        current_year = datetime.now(timezone.utc).year
+        responses = []
+        for year in range(2024, current_year + 1):
+            items = [{"Name": "National story", "Link": f"/story-{year}/", "Date": f"1 jan. {year}"}] if year == 2024 else []
+            responses.append((json.dumps({"Items": items, "TotalHits": len(items)}), "https://www.trafikverket.se/api/news"))
+        mocked_fetch.side_effect = responses
+        result = collect_national_news_inventory(start_year=2024)
+        self.assertEqual(result["scope"], "national")
+        self.assertIsNone(result["county_filter"])
+        self.assertEqual(result["unique_article_count"], 1)
+        self.assertTrue(result["complete"])
+        self.assertIn("fromDate=2024-01-01", mocked_fetch.call_args_list[0].args[0])
+        self.assertNotIn("counties=", mocked_fetch.call_args_list[0].args[0])
+        self.assertEqual(mocked_fetch.call_count, current_year - 2024 + 1)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_news_archive_api_uses_county_and_page_parameters(self, mocked_fetch):
