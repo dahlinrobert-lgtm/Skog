@@ -431,3 +431,33 @@ def test_expanded_404_sample_fills_shortage_without_duplicate_tiles():
     coords=[(s["x"],s["y"]) for s in seeds]
     assert len(coords)==len(set(coords))
     assert len([s for s in seeds if s["class"]=="not_found_404_z9"])<=12
+
+
+def test_retry_transient_errors_recovers_without_touching_404():
+    from scripts.monitor_sca_voluntary_tiles import retry_transient_poll_errors
+    tiles = {
+        "12/10/20": old_tile([]),
+        "12/11/20": {**old_tile([]), "x": 11},
+        "12/12/20": {**old_tile([]), "x": 12},
+    }
+    fetched = {
+        "12/10/20": {"state": "request_error", "error": "timeout"},
+        "12/11/20": {"state": "http_error", "error": "HTTP 503"},
+        "12/12/20": {"state": "not_found_404", "http_status": 404},
+    }
+    calls = []
+    def fake_fetch(z, x, y, previous_sha, previous_state):
+        calls.append((z, x, y))
+        return {"z": z, "x": x, "y": y, "state": "unchanged" if x == 10 else "request_error"}
+    attempted, recovered = retry_transient_poll_errors(fetched, tiles, 2, fake_fetch)
+    assert attempted == 2 and recovered == 1
+    assert sorted(calls) == [(12, 10, 20), (12, 11, 20)]
+    assert fetched["12/10/20"]["state"] == "unchanged"
+    assert fetched["12/11/20"]["state"] == "request_error"
+    assert fetched["12/12/20"]["state"] == "not_found_404"
+
+
+def test_retry_transient_errors_noop_when_no_errors():
+    from scripts.monitor_sca_voluntary_tiles import retry_transient_poll_errors
+    fetched = {"12/10/20": {"state": "not_found_404"}}
+    assert retry_transient_poll_errors(fetched, {}, 1) == (0, 0)

@@ -400,6 +400,32 @@ def summarize_response_diagnostics(results):
     return sorted(groups.values(),key=lambda x:(x.get("state",""),str(x.get("http_status")),str(x.get("sha256"))))
 
 
+def retry_transient_poll_errors(fetched, tiles, workers, retry_fetch=fetch):
+    """Retry only transient request/HTTP errors once; never reinterpret 404 as absence."""
+    retryable = ("request_error", "http_error")
+    candidates = [k for k, result in fetched.items() if result["state"] in retryable]
+    if not candidates:
+        return 0, 0
+    recovered = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {
+            pool.submit(
+                retry_fetch, int(tiles[k]["z"]), int(tiles[k]["x"]), int(tiles[k]["y"]),
+                tiles[k].get("sha256"), tiles[k].get("state")
+            ): k for k in candidates
+        }
+        for future in as_completed(futures):
+            k = futures[future]
+            try:
+                result = future.result()
+            except Exception as exc:
+                result = {**fetched[k], "error": str(exc)[:240]}
+            fetched[k] = result
+            if result["state"] not in ("request_error", "http_error", "decode_error"):
+                recovered += 1
+    return len(candidates), recovered
+
+
 def run(state,workers):
     at=now(); tiles=state["tiles"]; fetched={}; errs=0
     coords=[(k,int(v["z"]),int(v["x"]),int(v["y"])) for k,v in tiles.items()]
@@ -410,6 +436,8 @@ def run(state,workers):
             if fetched[k]["state"] in ("request_error","http_error","decode_error"): errs+=1
             if i%250==0 or i==len(futures):
                 print(json.dumps({"progress":i,"total":len(futures),"errors":errs}),flush=True)
+    retry_attempts, retry_recovered = retry_transient_poll_errors(fetched, tiles, workers)
+    errs = sum(r["state"] in ("request_error", "http_error", "decode_error") for r in fetched.values())
     events=[]; states=Counter(); nfeatures=0
     for k in sorted(tiles):
         tiles[k],ev=apply_result(tiles[k],fetched[k],at)
@@ -417,7 +445,8 @@ def run(state,workers):
     state["tiles"]=dict(sorted(tiles.items())); state["last_checked_at"]=at
     summary={"observed_at":at,"tiles_checked":len(tiles),"tile_states":dict(states),
              "feature_records_decoded":nfeatures,"unchanged_tiles":states.get("unchanged",0),"event_counts":dict(Counter(e["event_type"] for e in events)),
-             "events":len(events),"poll_errors":errs,"identity_resolved":0,
+             "events":len(events),"poll_errors":errs,"poll_retry_attempts":retry_attempts,
+             "poll_retry_recovered":retry_recovered,"identity_resolved":0,
              "response_diagnostics":summarize_response_diagnostics(fetched.values())}
     return state,events,summary
 
