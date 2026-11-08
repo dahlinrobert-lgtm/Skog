@@ -111,14 +111,17 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field):
 
 
 def feature_intersects_envelope(feature, envelope):
+    """Conservative bbox overlap check for features returned by ArcGIS intersects queries."""
     coords = list(positions((feature.get("geometry") or {}).get("coordinates", [])))
     if not coords:
         return False
     xs = [point[0] for point in coords]
     ys = [point[1] for point in coords]
+    # Permit tiny serialization/projection differences at shared tile boundaries.
+    tolerance = 1e-7
     return not (
-        max(xs) < envelope["xmin"] or min(xs) > envelope["xmax"]
-        or max(ys) < envelope["ymin"] or min(ys) > envelope["ymax"]
+        max(xs) < envelope["xmin"] - tolerance or min(xs) > envelope["xmax"] + tolerance
+        or max(ys) < envelope["ymin"] - tolerance or min(ys) > envelope["ymax"] + tolerance
     )
 
 
