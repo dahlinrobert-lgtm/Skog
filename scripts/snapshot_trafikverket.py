@@ -34,18 +34,45 @@ DATE = os.environ.get("SNAPSHOT_DATE") or datetime.now(timezone.utc).strftime("%
 BATCH_SIZE = int(os.environ.get("TRAFIKVERKET_BATCH_SIZE", "500"))
 
 
+def decode_response_body(raw, headers):
+    """Decode ArcGIS JSON regardless of a UTF BOM or common HTTP compression."""
+    encoding = (headers.get("Content-Encoding") or "").lower()
+    if encoding == "gzip" or raw.startswith(b"\\x1f\\x8b"):
+        raw = gzip.decompress(raw)
+    elif encoding == "deflate":
+        import zlib
+        raw = zlib.decompress(raw)
+    if raw.startswith((b"\\xff\\xfe", b"\\xfe\\xff")):
+        text = raw.decode("utf-16")
+    else:
+        text = raw.decode("utf-8-sig")
+    return json.loads(text)
+
+
 def request_json(url, params=None, attempts=5, context="ArcGIS request"):
     query = urllib.parse.urlencode(params or {"f": "pjson"})
     req = urllib.request.Request(
         url + ("&" if "?" in url else "?") + query,
-        headers={"User-Agent": "Skog-Trafikverket-snapshot/1.0"},
+        headers={
+            "User-Agent": "Skog-Trafikverket-snapshot/1.0",
+            "Accept": "application/json",
+            "Accept-Encoding": "identity",
+        },
     )
     last_error = None
     for attempt in range(attempts):
         try:
             with urllib.request.urlopen(req, timeout=90) as response:
-                body = response.read().decode("utf-8")
-                data = json.loads(body)
+                raw = response.read()
+                try:
+                    data = decode_response_body(raw, response.headers)
+                except (UnicodeError, json.JSONDecodeError, OSError, ValueError) as decode_error:
+                    raise RuntimeError(
+                        f"{context}: could not decode JSON response; "
+                        f"content_type={response.headers.get('Content-Type')}; "
+                        f"content_encoding={response.headers.get('Content-Encoding')}; "
+                        f"body_prefix_hex={raw[:32].hex()}; error={decode_error}"
+                    ) from decode_error
             if "error" in data:
                 raise RuntimeError(json.dumps(data["error"], ensure_ascii=False))
             return data
