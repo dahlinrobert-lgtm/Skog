@@ -859,7 +859,7 @@ def build_gis_linkage_inventory(records: list[dict]) -> dict:
     """Classify news as candidates for linkage to Trafikverket geodata; never claim a spatial match."""
     import re
     rules = {
-        "road_network_nvdb": r"\\b(?:E\\s?\\d{1,2}|väg\\s?\\d{1,4}|riksväg\\s?\\d{1,3}|länsväg\\s?\\d{1,4})\\b|vägnät|vägsträck|bro|tunnel|trafikplats|cirkulationsplats|vägräcke|beläggning",
+        "road_network_nvdb": r"\b(?:E\\s?\\d{1,2}|väg\\s?\\d{1,4}|riksväg\\s?\\d{1,3}|länsväg\\s?\\d{1,4})\\b|vägnät|vägsträck|bro|tunnel|trafikplats|cirkulationsplats|vägräcke|beläggning",
         "rail_network_njdb": r"järnväg|järnvägs|järnvägsnät|spår|bangård|plankorsning|järnvägsövergång|station|Norrbotniabanan|Ostlänken|Västlänken|Mälarbanan",
         "traffic_information_api": r"trafikläge|trafikstörning|köbildning|köer|framkomlighet|trafikpåverkan|avstäng|omledning|olyck|vägarbete|banarbete",
         "road_traffic_data": r"trafikflöde|trafikmängd|fordonsflöde|hastighet|restid|kapacitet|trafikprognos",
