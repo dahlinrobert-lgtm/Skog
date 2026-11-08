@@ -15,13 +15,16 @@ from the public Trafikverket ArcGIS REST services for the Gräsmyr pilot envelop
 ## Data model
 Each service layer is stored separately as gzip-compressed GeoJSON in WGS84
 (CRS84 longitude/latitude). The manifest records source URL, layer ID/name,
-geometry type, source object-ID count, downloaded feature count, fields,
+geometry type, pilot-envelope expected count, downloaded feature count, collection method, fields,
 compressed size and SHA-256 checksum.
 
-The collector uses ArcGIS object-ID queries followed by chunked feature
-queries. It fails the run if a layer returns fewer features than its object-ID
-list, or if the total snapshot is empty. This prevents a partial download from
-being silently treated as a valid snapshot.
+The collector queries only the Gräsmyr envelope using ArcGIS spatial envelope
+filters. Dense areas are recursively split into smaller tiles until each tile
+is below the service record limit. Every tile is independently count-checked;
+returned geometries must intersect the requested tile; OIDs are used to union
+features returned on shared tile borders. The final unique OID count must match
+the root envelope count. Any mismatch aborts the snapshot rather than silently
+accepting partial or incorrectly selected data.
 
 ## Sources and limitations
 - Miljöwebb Landskap MapServer.
