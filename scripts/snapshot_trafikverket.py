@@ -148,7 +148,21 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count)
             if rows is not None and len(rows) == count:
                 for feature in rows:
                     if not feature_intersects_envelope(feature, tile):
-                        raise RuntimeError(f"{layer_name}: returned geometry outside requested spatial tile")
+                        geometry = feature.get("geometry") or {}
+                        coords = list(positions(geometry.get("coordinates", [])))
+                        if coords:
+                            xs = [point[0] for point in coords]
+                            ys = [point[1] for point in coords]
+                            bbox = [min(xs), min(ys), max(xs), max(ys)]
+                        else:
+                            bbox = None
+                        raise RuntimeError(
+                            f"{layer_name}: returned geometry outside requested spatial tile; "
+                            f"tile=[{tile['xmin']:.9f},{tile['ymin']:.9f},"
+                            f"{tile['xmax']:.9f},{tile['ymax']:.9f}]; "
+                            f"geometry_type={geometry.get('type')}; geometry_bbox={bbox}; "
+                            f"oid_field={oid_field}; oid={props.get(oid_field)}"
+                        )
                     props = feature.get("attributes") or feature.get("properties") or {}
                     oid = int(props[oid_field])
                     canonical = json.dumps(feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
