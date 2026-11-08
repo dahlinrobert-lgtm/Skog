@@ -292,6 +292,43 @@ def inspect_news_archive_api() -> list[dict]:
 
 
 
+
+def inspect_news_archive_date_filters() -> list[dict]:
+    """Test bounded historical date windows using the frontend-discovered parameters."""
+    windows = [
+        ("before_oldest_known", "2020-01-01", "2024-11-13"),
+        ("known_oldest_day", "2024-11-14", "2024-11-14"),
+        ("recent_control", "2026-01-01", "2026-12-31"),
+    ]
+    reports = []
+    for label, from_date, to_date in windows:
+        query = urllib.parse.urlencode({
+            "pageSize": 10, "currentPage": 1, "counties": 18,
+            "fromDate": from_date, "toDate": to_date,
+        })
+        url = f"{BASE}/api/news?{query}"
+        try:
+            body, final_url = fetch(url)
+            payload = json.loads(body)
+            items = payload.get("Items", []) if isinstance(payload, dict) else []
+            reports.append({
+                "window": label, "from_date": from_date, "to_date": to_date,
+                "url": url, "final_url": final_url, "status": "ok",
+                "total_hits": payload.get("TotalHits") if isinstance(payload, dict) else None,
+                "items_count": len(items) if isinstance(items, list) else None,
+                "sample_items": [
+                    {key: item.get(key) for key in ("Name", "Link", "Date", "Changed")}
+                    for item in items[:3] if isinstance(item, dict)
+                ],
+            })
+        except Exception as exc:
+            reports.append({
+                "window": label, "from_date": from_date, "to_date": to_date,
+                "url": url, "status": "error", "error": str(exc)[:1000],
+            })
+    return reports
+
+
 def collect_county_news_inventory(page_size: int = 10, max_pages: int = 100) -> dict:
     """Inventory all pages from the source-confirmed county-filtered news API."""
     if page_size < 1 or page_size > 10 or max_pages < 1:
@@ -368,6 +405,7 @@ def main() -> None:
         "frontend_scripts": inspect_frontend_scripts(archive["scripts"]),
         "county_content_api_probes": inspect_county_content_api(),
         "news_archive_api_probes": inspect_news_archive_api(),
+        "news_archive_date_filter_probes": inspect_news_archive_date_filters(),
         "full_county_news_inventory": collect_county_news_inventory(),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
