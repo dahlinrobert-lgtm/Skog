@@ -242,7 +242,9 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count,
                                 f"geometry_types={previous_geometry.get('type')}/{current_geometry.get('type')}; "
                                 f"geometry_bboxes={geometry_bbox(previous_coords)}/{geometry_bbox(current_coords)}; "
                                 f"coordinate_counts={len(previous_coords)}/{len(current_coords)}; "
-                                f"changed_properties={changed_properties[:30]}"
+                                f"changed_properties={changed_properties[:30]}; "
+                                f"previous_properties={json.dumps(previous_props, ensure_ascii=False, sort_keys=True)[:1500]}; "
+                                f"current_properties={json.dumps(current_props, ensure_ascii=False, sort_keys=True)[:1500]}"
                             )
                     else:
                         collected[oid] = feature
