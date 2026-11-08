@@ -16,7 +16,12 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_historical_windows_paginate_to_reported_total(self, mocked_fetch):
         mocked_fetch.side_effect = [
-            (json.dumps({"Items": [{"Name": "Old", "Link": "/old/", "Date": "1 jan. 2018"}], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 0}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 0}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 0}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 0}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 0}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 0}), "https://www.trafikverket.se/api/news"),
             (json.dumps({"Items": [{"Name": "Recent", "Link": "/recent/", "Date": "14 nov. 2024"}], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
         ]
         result = collect_historical_date_windows()
@@ -24,7 +29,7 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertTrue(all(item["complete_against_reported_total"] for item in result))
         self.assertIn("fromDate=2000-01-01", result[0]["pages_fetched"][0]["url"])
         self.assertIn("toDate=2009-12-31", result[0]["pages_fetched"][0]["url"])
-        self.assertEqual(mocked_fetch.call_count, 2)
+        self.assertEqual(mocked_fetch.call_count, 7)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_full_inventory_paginates_and_deduplicates(self, mocked_fetch):
