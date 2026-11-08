@@ -17,6 +17,9 @@
 .skog-global-nav .skog-nav-links a[aria-current="page"]{color:#fff;text-decoration:underline;text-decoration-color:#d7ad67;text-decoration-thickness:2px;text-underline-offset:5px}
 @media(max-width:760px){.skog-global-nav{align-items:flex-start;flex-direction:column;gap:7px;padding:10px 14px}.skog-global-nav .skog-nav-links{width:100%;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;padding:2px 0 5px;gap:17px;scrollbar-width:thin}.skog-global-nav .skog-nav-links a{font-size:13px}}
 </style>
+<script>try{const t=localStorage.getItem("skog.theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t;else if(matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="../skog-theme.css">
+<script src="../skog-theme.js" defer></script>
 </head>
 <body>
 <nav class="skog-global-nav" aria-label="Huvudmeny"><a class="skog-nav-brand" href="../index.html">🌲 Skog</a><div class="skog-nav-links">
@@ -27,7 +30,7 @@
       <a href="../händelsekedjor.html">Händelsekedjor</a>
       <a href="../historik.html">Historik</a>
       <a href="./index.html" aria-current="page">Skogskoll</a>
-    </div></nav>
+    </div><button class="skog-theme-toggle" type="button" aria-pressed="false" aria-label="Byt till mörkt läge"><span aria-hidden="true">🌙</span><span>Mörkt läge</span></button></nav>
 <header><h1>🌲 Skogskoll</h1><p>Håll koll på avverkningsanmälningar som berör din skog.</p></header>
 <main>
 <div class="status"><span class="pill">TESTLÄGE</span> Larm och riktig datainläsning är avstängda medan datakällan och databasen verifieras. Dina inställningar sparas endast lokalt i den här webbläsaren.</div>
