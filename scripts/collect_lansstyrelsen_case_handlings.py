@@ -29,7 +29,7 @@ def goto_with_retries(page, url: str, timeout: int = 60000) -> tuple[object, int
         try:
             response = page.goto(url, wait_until="domcontentloaded", timeout=timeout)
             status = response.status if response else None
-            if response is not None and status not in RETRYABLE_HTTP_STATUSES:
+            if response is not None and status is not None and 200 <= status < 400:
                 return response, attempt
             last_error = RuntimeError(f"HTTP {status}")
             if status not in RETRYABLE_HTTP_STATUSES:
