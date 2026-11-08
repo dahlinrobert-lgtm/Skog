@@ -292,10 +292,10 @@ def inspect_news_archive_api() -> list[dict]:
 
 
 
-def collect_county_news_inventory(page_size: int = 50, max_pages: int = 100) -> dict:
+def collect_county_news_inventory(page_size: int = 10, max_pages: int = 100) -> dict:
     """Inventory all pages from the source-confirmed county-filtered news API."""
-    if page_size < 1 or page_size > 100 or max_pages < 1:
-        raise ValueError("page_size must be 1..100 and max_pages must be positive")
+    if page_size < 1 or page_size > 10 or max_pages < 1:
+        raise ValueError("page_size must be 1..10 and max_pages must be positive; the public API has only been verified with pageSize=10")
     all_items = []
     page_reports = []
     total_hits = None
@@ -304,7 +304,10 @@ def collect_county_news_inventory(page_size: int = 50, max_pages: int = 100) -> 
             "pageSize": page_size, "currentPage": page_number, "counties": 18,
         })
         url = f"{BASE}/api/news?{query}"
-        body, final_url = fetch(url)
+        try:
+            body, final_url = fetch(url)
+        except Exception as exc:
+            raise RuntimeError(f"County news API request failed on page {page_number} ({url}): {exc}") from exc
         payload = json.loads(body)
         if not isinstance(payload, dict) or not isinstance(payload.get("Items"), list):
             raise ValueError(f"Unexpected API response on page {page_number}")
