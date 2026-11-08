@@ -154,6 +154,8 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field, identity_
 def canonical_duplicate_content(feature, oid_field=None, ignore_oid=False):
     """Canonical content for duplicate checks, tolerating sub-centimetre coordinate noise."""
     def normalize_coordinates(value):
+        if isinstance(value, dict):
+            return {key: normalize_coordinates(item) for key, item in value.items()}
         if isinstance(value, list):
             return [normalize_coordinates(item) for item in value]
         if isinstance(value, tuple):
