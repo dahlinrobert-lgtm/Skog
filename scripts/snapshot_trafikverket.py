@@ -95,6 +95,29 @@ def query_object_ids(layer_url, layer_name):
     return sorted(normalized)
 
 
+
+def probe_query_modes(layer_url, layer_name, object_ids):
+    """Probe ArcGIS selection semantics without accepting partial download data."""
+    probes = []
+    cases = [
+        ("objectIds", {"objectIds": str(object_ids[2])}),
+        ("where_oid", {"where": f"ESRI_OID = {object_ids[2]}"}),
+        ("where_one", {"where": "1=1", "resultRecordCount": "1"}),
+        ("where_oid_outfields", {"where": f"ESRI_OID = {object_ids[2]}", "outFields": "*"}),
+    ]
+    for label, extra in cases:
+        params = {"outFields": "*", "returnGeometry": "false", "f": "json", **extra}
+        try:
+            result = request_json(layer_url.rstrip("/") + "/query", params,
+                                  context=f"Diagnostic {label} probe for {layer_name}")
+            rows = result.get("features", [])
+            probes.append({"mode": label, "feature_count": len(rows),
+                           "returned_ids": [((x.get("attributes") or {}).get("ESRI_OID")) for x in rows[:5]],
+                           "error": result.get("error")})
+        except Exception as exc:
+            probes.append({"mode": label, "error": str(exc)})
+    print(f"DIAGNOSTIC {layer_name}: {json.dumps(probes, ensure_ascii=False)}", flush=True)
+
 def query_features_by_ids(layer_url, object_ids, layer_name):
     """Fetch a bounded explicit ID batch; response order is deliberately ignored."""
     params = {
@@ -199,7 +222,7 @@ def save_layer(service_key, layer, base_url):
         )
     if not oid_field:
         raise RuntimeError(f"{name}: no OID field exposed by layer metadata")
-    page_size = 1  # Some Trafikverket layers return empty results for multi-ID objectIds queries.
+    page_size = 1  # Keep requests minimal while probing source-specific object retrieval.
     all_ids = query_object_ids(layer_url, name)
     if len(all_ids) != expected_count:
         raise RuntimeError(
@@ -211,6 +234,8 @@ def save_layer(service_key, layer, base_url):
     seen_ids = set()
     for start_index in range(0, len(all_ids), page_size):
         batch_ids = all_ids[start_index:start_index + page_size]
+        if start_index == 2:
+            probe_query_modes(layer_url, name, all_ids)
         payload = query_features_by_ids(layer_url, batch_ids, name)
         raw_page = payload.get("features", [])
         if payload.get("exceededTransferLimit"):
