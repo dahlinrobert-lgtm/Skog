@@ -53,12 +53,12 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
             "https://www.trafikverket.se/api/news",
         )
         result = inspect_news_archive_date_filters()
-        self.assertEqual(len(result), 3)
+        self.assertEqual(len(result), 5)
         self.assertTrue(all(item["status"] == "ok" for item in result))
         self.assertIn("fromDate=2020-01-01", result[0]["url"])
-        self.assertIn("toDate=2024-11-13", result[0]["url"])
+        self.assertIn("toDate=2024-12-31", result[0]["url"])
         self.assertIn("counties=18", result[0]["url"])
-        self.assertEqual(mocked_fetch.call_count, 3)
+        self.assertEqual(mocked_fetch.call_count, 5)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_county_content_api_uses_bounded_sizes(self, mocked_fetch):
