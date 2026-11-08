@@ -222,6 +222,40 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
                             "chunk_name": chunk_name, "error": str(exc)[:1000]})
     return reports
 
+
+def inspect_county_content_api() -> list[dict]:
+    """Probe the source-confirmed county content endpoint with bounded page sizes."""
+    reports = []
+    for page_size in (10, 25, 50):
+        query = urllib.parse.urlencode({"countyid": 18, "pageSize": page_size})
+        url = f"{BASE}/api/PageListApi/GetCurrentCountyContent?{query}"
+        try:
+            body, final_url = fetch(url)
+            payload = json.loads(body)
+            pages = payload.get("pages", []) if isinstance(payload, dict) else []
+            samples = []
+            for page in pages[:5] if isinstance(pages, list) else []:
+                if isinstance(page, dict):
+                    samples.append({
+                        key: page.get(key) for key in
+                        ("title", "name", "url", "link", "publishDate", "date")
+                        if page.get(key) is not None
+                    })
+                else:
+                    samples.append({"value_type": type(page).__name__})
+            reports.append({
+                "url": url, "final_url": final_url, "status": "ok",
+                "http_payload_type": type(payload).__name__,
+                "top_level_keys": sorted(payload.keys()) if isinstance(payload, dict) else [],
+                "pages_count": len(pages) if isinstance(pages, list) else None,
+                "sample_page_metadata": samples,
+                "response_bytes": len(body.encode("utf-8")),
+            })
+        except Exception as exc:
+            reports.append({"url": url, "status": "error", "error": str(exc)[:1000]})
+    return reports
+
+
 def main() -> None:
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
@@ -236,6 +270,7 @@ def main() -> None:
         "archive": archive,
         "sitemaps": inspect_sitemaps(),
         "frontend_scripts": inspect_frontend_scripts(archive["scripts"]),
+        "county_content_api_probes": inspect_county_content_api(),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
