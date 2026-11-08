@@ -27,8 +27,10 @@ WILDLIFE_URL = (
 )
 # Gräsmyr pilot centre (WGS84), with a 75 km x 75 km test envelope.
 CENTRE = {"longitude": 19.66455, "latitude": 63.74646}
-HALF_WIDTH_DEGREES = 37_500 / 111_000
 HALF_HEIGHT_DEGREES = 37_500 / 111_000
+# Correct longitude scale for latitude so the test window is approximately square.
+import math
+HALF_WIDTH_DEGREES = 37_500 / (111_000 * math.cos(math.radians(CENTRE["latitude"])))
 OUT = Path(os.environ.get("TRAFIKVERKET_OUTPUT", "artifacts/trafikverket-inventory.json"))
 
 def get_json(url: str, params: dict | None = None) -> dict:
