@@ -216,10 +216,30 @@ def collect_spatial_features(layer_url, layer_name, oid_field, identity_field, m
                     props = feature.get("attributes") or feature.get("properties") or {}
                     identity = str(props[identity_field])
                     oid = props.get(oid_field)
-                    canonical = json.dumps(feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                    comparison_feature = feature
+                    if identity_field != oid_field:
+                        comparison_feature = {
+                            **feature,
+                            "properties": {
+                                key: value for key, value in (
+                                    feature.get("properties") or feature.get("attributes") or {}
+                                ).items() if key != oid_field
+                            },
+                        }
+                    canonical = json.dumps(comparison_feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
                     if identity in collected:
                         previous_feature = collected[identity]
-                        previous = json.dumps(previous_feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                        previous_props_for_compare = previous_feature.get("properties") or previous_feature.get("attributes") or {}
+                        previous_comparison_feature = previous_feature
+                        if identity_field != oid_field:
+                            previous_comparison_feature = {
+                                **previous_feature,
+                                "properties": {
+                                    key: value for key, value in previous_props_for_compare.items()
+                                    if key != oid_field
+                                },
+                            }
+                        previous = json.dumps(previous_comparison_feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
                         if canonical != previous:
                             previous_props = previous_feature.get("properties") or previous_feature.get("attributes") or {}
                             current_props = feature.get("properties") or feature.get("attributes") or {}
