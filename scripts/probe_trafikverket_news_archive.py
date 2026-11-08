@@ -856,36 +856,57 @@ def collect_national_news_inventory_monthly(start_year: int = 2024, max_pages_pe
     }
 
 def build_gis_linkage_inventory(records: list[dict]) -> dict:
-    """Classify news as candidates for linkage to Trafikverket geodata; never claim a spatial match."""
+    """Screen articles only against the Trafikverket layers in our snapshot pilot."""
     import re
     rules = {
-        "road_network_nvdb": r"(?:E[ ]?[0-9]{1,2}|väg[ ]?[0-9]{1,4}|riksväg[ ]?[0-9]{1,3}|länsväg[ ]?[0-9]{1,4})|vägnät|vägsträck|bro|tunnel|trafikplats|cirkulationsplats|vägräcke|beläggning",
-        "rail_network_njdb": r"järnväg|järnvägs|järnvägsnät|spår|bangård|plankorsning|järnvägsövergång|station|Norrbotniabanan|Ostlänken|Västlänken|Mälarbanan",
-        "traffic_information_api": r"trafikläge|trafikstörning|köbildning|köer|framkomlighet|trafikpåverkan|avstäng|omledning|olyck|vägarbete|banarbete",
-        "road_traffic_data": r"trafikflöde|trafikmängd|fordonsflöde|hastighet|restid|kapacitet|trafikprognos",
-        "environment_surrounding_geodata": r"buller|viltpassage|faunapassage|naturvärde|vattenverksamhet|dagvatten|grundvatten|miljökonsekvens",
-        "project_planning_candidate": r"samråd|vägplan|järnvägsplan|lokalisering|tillstånd|byggstart|byggnation|projekt|utbyggnad|nybyggnad",
+        "miljowebb_landskap": (
+            r"viltpassage|faunapassage|faunastängsel|utterpassage|groddjur|"
+            r"artrik(?:a|t)? vägkant|invasiv(?:a| art| artss)?|"
+            r"kulturmiljö|kulturarv|vattenfauna|fiskpassage|"
+            r"naturvärde|landskapsvärde|ekologiskt samband|"
+            r"naturmiljö|biologisk mångfald"
+        ),
+        "nvdb_viltolyckor": (
+            r"viltolyck|vilt[a-zåäö]*olyck|älg(?:ar)?|vildsvin|rådjur|"
+            r"ren(?:ar)?|kronhjort|dovhjort|viltstängsel|"
+            r"viltvarning|vilt[a-zåäö]*risk"
+        ),
     }
+    route_pattern = r"(?:\bE[ ]?[0-9]{1,2}\b|\bväg[ ]?[0-9]{1,4}\b|\briksväg[ ]?[0-9]{1,3}\b|\blänsväg[ ]?[0-9]{1,4}\b)"
     results = []
     totals = {key: 0 for key in rules}
+    route_reference_count = 0
     for record in records:
         fields = [record.get(key) or '' for key in ('title', 'preamble', 'category', 'url')]
-        text = ' '.join(str(value) for value in fields)
-        matches = [key for key, pattern in rules.items() if re.search(pattern, text, flags=re.IGNORECASE)]
+        article_text = ' '.join(str(value) for value in fields)
+        matches = [key for key, pattern in rules.items() if re.search(pattern, article_text, flags=re.IGNORECASE)]
         for key in matches:
             totals[key] += 1
-        route_refs = sorted(set(match.group(0).replace(' ', '').upper() for match in re.finditer(r'(?:E[ ]?[0-9]{1,2}|väg[ ]?[0-9]{1,4}|riksväg[ ]?[0-9]{1,3}|länsväg[ ]?[0-9]{1,4})', text, flags=re.IGNORECASE)))
+        route_refs = sorted(set(
+            re.sub(r"\s+", "", match.group(0)).upper()
+            for match in re.finditer(route_pattern, article_text, flags=re.IGNORECASE)
+        ))
+        if route_refs:
+            route_reference_count += 1
         results.append({
             'title': record.get('title'), 'url': record.get('url'),
             'published_date': record.get('published_date'), 'category': record.get('category'),
             'candidate_gis_layers': matches, 'route_references': route_refs,
             'linkage_status': 'thematic_candidate_only' if matches else 'unclassified',
+            'snapshot_layer_scope': ['Miljöwebb Landskap', 'NVDB Viltolyckor'],
         })
     return {
         'method': 'keyword_rules_title_preamble_category_url',
-        'warning': 'Thematic candidates only. No coordinates, geometry intersection or verified feature match is inferred from news text.',
-        'candidate_counts_overlapping': totals, 'records': results,
+        'scope': {
+            'miljowebb_landskap': 'MWLEXGEO/MiljowebbGeo MapServer feature layers included in Trafikverket snapshots',
+            'nvdb_viltolyckor': 'Seven NVDB road-link wildlife accident-frequency layers included in Trafikverket snapshots',
+            'route_references': 'Textual route clues only; not a road-network feature match',
+        },
+        'warning': 'Thematic candidates only. No coordinates, geometry intersection, road-link ID or verified feature match is inferred from news text.',
+        'candidate_counts_overlapping': totals,
+        'records': results,
         'records_with_any_candidate': sum(bool(row['candidate_gis_layers']) for row in results),
+        'records_with_route_reference': route_reference_count,
     }
 
 def main() -> None:

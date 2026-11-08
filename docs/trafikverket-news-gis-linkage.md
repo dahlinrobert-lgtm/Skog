@@ -4,18 +4,27 @@
 
 Use the national news feed as an event-discovery layer and identify which Trafikverket geodata products may provide spatial context. A news article is not itself a GIS feature and a keyword match is not a verified spatial join.
 
-## Candidate layer families
+## Candidate layers — restricted to the snapshot pilot
 
-| News theme | Candidate Trafikverket data | Potential linkage |
+This implementation deliberately matches only the two Trafikverket services already included in
+`scripts/snapshot_trafikverket.py`:
+
+| Snapshot service | Layer family | News themes that justify a candidate |
 |---|---|---|
-| Roads, numbered roads, bridges, tunnels and road facilities | NVDB road network and relevant road features | Route number, road name, municipality, project/segment |
-| Railways, stations, track works and level crossings | NJDB railway network and relevant railway features | Railway line, station, track section, project |
-| Closures, roadworks, diversions and disruptions | Trafikverket real-time road/rail traffic information API; Datex II where relevant | Event coordinates, route reference, start/end time |
-| Traffic volume, speed and capacity | Road traffic and speed data | Road segment and measurement location |
-| Noise, wildlife passages, water and environmental impacts | Surrounding geodata and relevant infrastructure/environment products | Project area, point/line/polygon geometry |
-| Consultation, permits and planned construction | Project-specific planning material and project geometries, if openly available | Project name, route corridor, municipality and project ID |
+| `MWLEXGEO/MiljowebbGeo/MapServer` | **Miljöwebb Landskap** | Wildlife/fauna passages, species-rich road verges, invasive species, cultural environments, water fauna passages, nature values and ecological connections |
+| `NVDB_på_karta/Viltolyckor_NVDBpakarta/MapServer` | **NVDB Viltolyckor** | Wildlife collisions and species/risk references covered by the seven road-link frequency layers: ungulates total, moose, wild boar, roe deer, reindeer, red deer and fallow deer |
 
-Trafikverket groups its data into road data, road traffic data, railway data, surrounding geodata and traffic information. NVDB contains the road network and associated road features; NJDB is the railway reference network. The real-time traffic API is a separate service and requires registration and acceptance of its API licence. Lastkajen is the download channel for road and railway datasets.
+The seven NVDB layers describe aggregated accident frequency per road link, not dated individual
+collision events. A news item about an elk collision is therefore a thematic candidate, not proof
+that the collision appears as an event in the snapshot.
+
+Explicit road numbers (for example E4 or road 95) are retained as **textual route clues**. They
+are not treated as matches to an NVDB road segment because the news record does not supply a
+stable NVDB link identifier or verified geometry.
+
+Railway networks, general real-time traffic information, traffic volume/speed products and generic
+project-planning data are intentionally excluded from this inventory. They are not part of the
+snapshot layer scope requested for this analysis.
 
 ## Inventory output
 
