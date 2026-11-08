@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import patch
 from datetime import datetime, timezone
 
-from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
+from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, diagnose_national_pagination, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
@@ -68,6 +68,18 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertIn("fromDate=2024-01-01", mocked_fetch.call_args_list[0].args[0])
         self.assertNotIn("counties=", mocked_fetch.call_args_list[0].args[0])
         self.assertEqual(mocked_fetch.call_count, current_year - 2024 + 1)
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_national_pagination_diagnostic_records_page_specific_totals(self, mocked_fetch):
+        mocked_fetch.side_effect = [
+            (json.dumps({"Items": [{"Name": "A", "Link": "/a/", "Date": "1 jan. 2025"}], "TotalHits": 721}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [{"Name": "B", "Link": "/b/", "Date": "2 jan. 2025"}], "TotalHits": 120}), "https://www.trafikverket.se/api/news"),
+        ]
+        result = diagnose_national_pagination(years=(2025,), pages_to_probe=2)
+        self.assertEqual(result[0]["reported_total_hits_by_page"], [721, 120])
+        self.assertFalse(result[0]["totals_stable"])
+        self.assertEqual(result[0]["unique_links_in_probe"], 2)
+        self.assertNotIn("counties=", mocked_fetch.call_args_list[0].args[0])
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_news_archive_api_uses_county_and_page_parameters(self, mocked_fetch):
