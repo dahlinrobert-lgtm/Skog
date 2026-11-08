@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import patch
 from datetime import datetime, timezone
 
-from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, diagnose_2024_monthly_repeatability, diagnose_2024_monthly_windows, diagnose_national_pagination, diagnose_national_pagination_boundaries, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
+from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, diagnose_monthly_pagination_repeatability, diagnose_2024_monthly_repeatability, diagnose_2024_monthly_windows, diagnose_national_pagination, diagnose_national_pagination_boundaries, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
@@ -111,6 +111,17 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertTrue(result[0]["totals_stable"])
         self.assertTrue(result[0]["first_page_links_stable"])
         self.assertEqual(mocked_fetch.call_count, 4)
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_monthly_pagination_repeatability_repeats_each_page(self, mocked_fetch):
+        response = (json.dumps({"Items": [{"Link": "/same/", "Date": "21 nov. 2024"}], "TotalHits": 39}), "https://www.trafikverket.se/api/news")
+        mocked_fetch.return_value = response
+        result = diagnose_monthly_pagination_repeatability(repeats=2)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]["pages"][0]["page"], 1)
+        self.assertTrue(result[0]["pages"][0]["links_stable"])
+        self.assertIn("currentPage=2", mocked_fetch.call_args_list[2].args[0])
+        self.assertEqual(mocked_fetch.call_count, 22 * 2)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_national_boundary_diagnostic_probes_requested_pages(self, mocked_fetch):
