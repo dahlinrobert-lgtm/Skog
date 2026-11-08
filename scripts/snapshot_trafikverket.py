@@ -97,10 +97,13 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field):
     payload = request_json(layer_url.rstrip("/") + "/query", params, context=f"Spatial feature query for {layer_name}")
     if payload.get("exceededTransferLimit"):
         return None
-    rows = [normalize_feature(row) for row in payload.get("features", [])]
-    response_sr = payload.get("spatialReference") or (
-        (payload.get("features") or [{}])[0].get("geometry", {}).get("spatialReference")
-        if payload.get("features") else None
+    raw_features = payload.get("features", [])
+    rows = [normalize_feature(row) for row in raw_features]
+    response_sr = payload.get("spatialReference")
+    raw_geometry_sr = next(
+        (row.get("geometry", {}).get("spatialReference") for row in raw_features
+         if row.get("geometry", {}).get("spatialReference")),
+        None,
     )
     ids = []
     for row in rows:
@@ -111,7 +114,7 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field):
         ids.append(int(value))
     if len(ids) != len(set(ids)):
         raise RuntimeError(f"Duplicate OIDs in spatial response for {layer_name}")
-    return rows
+    return rows, response_sr, raw_geometry_sr
 
 
 def feature_intersects_envelope(feature, envelope):
@@ -129,7 +132,7 @@ def feature_intersects_envelope(feature, envelope):
     )
 
 
-def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count):
+def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count, layer_spatial_reference):
     """Fetch only the pilot area; recursively subdivide dense tiles below ArcGIS limits."""
     expected = query_spatial_count(layer_url, layer_name, ENVELOPE)
     if expected == 0:
@@ -148,9 +151,14 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count)
         if count == 0:
             return
         if count <= limit:
-            rows = query_spatial_features(layer_url, layer_name, tile, oid_field)
+            result = query_spatial_features(layer_url, layer_name, tile, oid_field)
+            if result is not None:
+                rows, response_spatial_reference, raw_geometry_spatial_reference = result
+            else:
+                rows = None
             if rows is not None and len(rows) == count:
                 for feature in rows:
+                    props = feature.get("attributes") or feature.get("properties") or {}
                     if not feature_intersects_envelope(feature, tile):
                         geometry = feature.get("geometry") or {}
                         coords = list(positions(geometry.get("coordinates", [])))
