@@ -1,0 +1,28 @@
+name: Probe Trafikverket Västerbotten news archive
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test archive parser
+        run: python -m unittest tests.test_probe_trafikverket_news_archive -v
+      - name: Inspect public archive and sitemap discovery
+        run: python scripts/probe_trafikverket_news_archive.py
+      - name: Upload discovery report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trafikverket-vasterbotten-news-archive-probe-${{ github.run_id }}
+          path: artifacts/trafikverket-news-archive-probe.json
+          if-no-files-found: error
+          retention-days: 30
