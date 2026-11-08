@@ -137,7 +137,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 @media(max-width:850px){
   .hero{gap:20px;grid-template-columns:minmax(0,1.2fr) minmax(190px,.8fr);padding:48px 0 55px}
   .toolbar{grid-template-columns:1fr 1fr}
-  .control.search-control{grid-column:3/4}
+  .control.search-control{grid-column:1/2}
   .reload{grid-column:2/3}
 }
 @media(max-width:620px){
@@ -551,6 +551,11 @@ function selectActivity(item,zoom=true){
 function render(){
  const isElk=document.getElementById("animalFilter").value==="elk";
  const list=isElk?[]:filtered();
+ document.querySelector(".quick-switch").hidden=isElk;
+ document.getElementById("monthFilter").disabled=isElk;
+ document.querySelector(".map-card").hidden=isElk;
+ document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":"Senaste händelserna";
+ document.querySelector(".feed-subtitle").textContent=isElk?"Välj Älg under Vilt/djur för att se senaste registrerade avskjutning och observerade förändringar per jaktområde.":"Det här är huvudvyn: nya och relevanta händelser i dina bevakade områden. Välj en händelse för detaljer och geografisk kontext.";
  if(isElk){
   const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
   const rows=elkAreas.filter(area=>[area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query))
