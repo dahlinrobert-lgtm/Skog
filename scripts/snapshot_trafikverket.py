@@ -126,10 +126,19 @@ def probe_query_modes(layer_url, layer_name, object_ids, oid_field):
             probes.append({"mode": label, "error": str(exc)})
     print(f"DIAGNOSTIC {layer_name} OID={oid_field}: {json.dumps(probes, ensure_ascii=False)}", flush=True)
 
-def query_features_by_ids(layer_url, object_ids, layer_name):
-    """Fetch a bounded explicit ID batch; response order is deliberately ignored."""
+def query_features_by_ids(layer_url, object_ids, layer_name, oid_field):
+    """Fetch a bounded ID batch via the layer's OID SQL predicate.
+
+    Live probes showed this service inconsistently combines objectIds and outSR:
+    some IDs disappear with objectIds=...&outSR=4326, while the equivalent
+    OID-field where predicate with outSR returns the feature.
+    """
+    if not object_ids:
+        return {"features": []}
+    values = ",".join(str(int(value)) for value in object_ids)
+    where = f"{oid_field} = {values[0]}" if len(object_ids) == 1 else f"{oid_field} IN ({values})"
     params = {
-        "objectIds": ",".join(str(value) for value in object_ids),
+        "where": where,
         "outFields": "*",
         "returnGeometry": "true",
         "outSR": "4326",
@@ -247,7 +256,7 @@ def save_layer(service_key, layer, base_url):
 
     for start_index in range(0, len(all_ids), page_size):
         batch_ids = all_ids[start_index:start_index + page_size]
-        payload = query_features_by_ids(layer_url, batch_ids, name)
+        payload = query_features_by_ids(layer_url, batch_ids, name, oid_field)
         raw_page = payload.get("features", [])
         if payload.get("exceededTransferLimit"):
             raise RuntimeError(
