@@ -558,13 +558,13 @@ function render(){
  document.querySelector(".feed-subtitle").textContent=isElk?"Välj Älg under Vilt/djur för att se senaste registrerade avskjutning och observerade förändringar per jaktområde.":"Det här är huvudvyn: nya och relevanta händelser i dina bevakade områden. Välj en händelse för detaljer och geografisk kontext.";
  if(isElk){
   const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
-  const rows=elkAreas.filter(area=>[area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query))
+  const rows=elkAreas.filter(area=>[area.display_name,area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query))
    .sort((a,b)=>String(b.latest_observed_increase_date||"").localeCompare(String(a.latest_observed_increase_date||""))||String(a.area_name||"").localeCompare(String(b.area_name||""),"sv"));
   const fmt=value=>value===null||value===undefined?"–":Number(value).toLocaleString("sv-SE",{maximumFractionDigits:1});
   const date=value=>value?new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"short",day:"numeric",timeZone:"UTC"}).format(new Date(value+"T12:00:00Z")):"Ej observerat";
   const rowsHtml=rows.map(area=>{
    const delta=area.latest_delta;
-   return '<tr><td><strong>'+esc(area.area_name||"Namn saknas")+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(area.latest_total)+'</td><td class="elkdata-number '+(delta>0?"elkdata-positive":"")+'">'+(delta===null?"–":(delta>0?"+":"")+fmt(delta))+'</td><td>'+date(area.first_observed_positive_date)+'</td><td>'+date(area.latest_observed_increase_date)+'</td><td>'+date(area.latest_snapshot_date)+'</td></tr>';
+   return '<tr><td><strong>'+esc(area.display_name||("Jaktområde "+(area.area_display_id||area.area_key||"okänt ID")) )+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(area.latest_total)+'</td><td class="elkdata-number '+(delta>0?"elkdata-positive":"")+'">'+(delta===null?"–":(delta>0?"+":"")+fmt(delta))+'</td><td>'+date(area.first_observed_positive_date)+'</td><td>'+date(area.latest_observed_increase_date)+'</td><td>'+date(area.latest_snapshot_date)+'</td></tr>';
   }).join("");
   document.getElementById("feed").innerHTML=elkLoadError
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
