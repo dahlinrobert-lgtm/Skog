@@ -17,6 +17,32 @@ from urllib.parse import urljoin
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
+RETRYABLE_HTTP_STATUSES = {429, 500, 502, 503, 504}
+MAX_PAGE_ATTEMPTS = 3
+RETRY_BACKOFF_SECONDS = 2
+
+
+def goto_with_retries(page, url: str, timeout: int = 60000) -> tuple[object, int]:
+    """Retry transient portal failures without hiding persistent per-case errors."""
+    last_error = None
+    for attempt in range(1, MAX_PAGE_ATTEMPTS + 1):
+        try:
+            response = page.goto(url, wait_until="domcontentloaded", timeout=timeout)
+            status = response.status if response else None
+            if response is not None and status is not None and 200 <= status < 400:
+                return response, attempt
+            last_error = RuntimeError(f"HTTP {status}")
+            if status not in RETRYABLE_HTTP_STATUSES:
+                raise last_error
+        except PlaywrightTimeoutError as exc:
+            last_error = exc
+        if attempt < MAX_PAGE_ATTEMPTS:
+            time.sleep(RETRY_BACKOFF_SECONDS * attempt)
+    raise RuntimeError(
+        f"Page request failed after {MAX_PAGE_ATTEMPTS} attempts: {last_error}"
+    ) from last_error
+
+
 BASE_URL = "https://diarium.lansstyrelsen.se/"
 
 
@@ -143,7 +169,8 @@ def main() -> int:
             for index, target in enumerate(targets):
                 item = {"diary_number": target["diary_number"], "url": target["url"], "ok": False}
                 try:
-                    response = page.goto(target["url"], wait_until="domcontentloaded", timeout=60000)
+                    response, attempts = goto_with_retries(page, target["url"])
+                    item["attempts"] = attempts
                     try:
                         page.locator("body").wait_for(state="visible", timeout=15000)
                     except PlaywrightTimeoutError:
@@ -220,7 +247,10 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: report[k] for k in ("eligible_case_count", "target_count", "success_count", "failed_count", "new_handling_count", "changed_handling_count")}, ensure_ascii=False))
-    return 0 if results and not failed else 1
+    # Partial success is a valid collection run: persist and analyze every
+    # successful case while retaining failed cases in the run report. Only fail
+    # the workflow when no target could be collected at all.
+    return 0 if report["success_count"] > 0 else 1
 
 
 if __name__ == "__main__":
