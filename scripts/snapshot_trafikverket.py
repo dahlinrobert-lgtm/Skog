@@ -269,7 +269,7 @@ def save_layer(service_key, layer, base_url):
         raise RuntimeError(f"{name}: no OID field exposed by layer metadata")
     layer_spatial_reference = layer.get("extent", {}).get("spatialReference") or layer.get("sourceSpatialReference")
     features, expected, accepted_tiles = collect_spatial_features(
-        layer_url, name, oid_field, layer.get("maxRecordCount", 1000)
+        layer_url, name, oid_field, layer.get("maxRecordCount", 1000), layer_spatial_reference
     )
     collection = {"type": "FeatureCollection", "name": name, "features": features}
     raw = json.dumps(collection, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
