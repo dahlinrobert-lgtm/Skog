@@ -98,6 +98,10 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field):
     if payload.get("exceededTransferLimit"):
         return None
     rows = [normalize_feature(row) for row in payload.get("features", [])]
+    response_sr = payload.get("spatialReference") or (
+        (payload.get("features") or [{}])[0].get("geometry", {}).get("spatialReference")
+        if payload.get("features") else None
+    )
     ids = []
     for row in rows:
         props = row.get("attributes") or row.get("properties") or {}
@@ -161,7 +165,10 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count)
                             f"tile=[{tile['xmin']:.9f},{tile['ymin']:.9f},"
                             f"{tile['xmax']:.9f},{tile['ymax']:.9f}]; "
                             f"geometry_type={geometry.get('type')}; geometry_bbox={bbox}; "
-                            f"oid_field={oid_field}; oid={props.get(oid_field)}"
+                            f"oid_field={oid_field}; oid={props.get(oid_field)}; "
+                            f"layer_spatial_reference={layer_spatial_reference}; "
+                            f"query_response_spatial_reference={response_spatial_reference}; "
+                            f"geometry_spatial_reference={raw_geometry_spatial_reference}"
                         )
                     props = feature.get("attributes") or feature.get("properties") or {}
                     oid = int(props[oid_field])
@@ -252,6 +259,7 @@ def save_layer(service_key, layer, base_url):
         oid_field = next((field.get("name") for field in layer.get("fields", []) if field.get("type") == "esriFieldTypeOID"), None)
     if not oid_field:
         raise RuntimeError(f"{name}: no OID field exposed by layer metadata")
+    layer_spatial_reference = layer.get("extent", {}).get("spatialReference") or layer.get("sourceSpatialReference")
     features, expected, accepted_tiles = collect_spatial_features(
         layer_url, name, oid_field, layer.get("maxRecordCount", 1000)
     )
