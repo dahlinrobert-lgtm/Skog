@@ -110,6 +110,18 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field):
     return rows
 
 
+def feature_intersects_envelope(feature, envelope):
+    coords = list(positions((feature.get("geometry") or {}).get("coordinates", [])))
+    if not coords:
+        return False
+    xs = [point[0] for point in coords]
+    ys = [point[1] for point in coords]
+    return not (
+        max(xs) < envelope["xmin"] or min(xs) > envelope["xmax"]
+        or max(ys) < envelope["ymin"] or min(ys) > envelope["ymax"]
+    )
+
+
 def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count):
     """Fetch only the pilot area; recursively subdivide dense tiles below ArcGIS limits."""
     expected = query_spatial_count(layer_url, layer_name, ENVELOPE)
@@ -132,6 +144,8 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count)
             rows = query_spatial_features(layer_url, layer_name, tile, oid_field)
             if rows is not None and len(rows) == count:
                 for feature in rows:
+                    if not feature_intersects_envelope(feature, tile):
+                        raise RuntimeError(f"{layer_name}: returned geometry outside requested spatial tile")
                     props = feature.get("attributes") or feature.get("properties") or {}
                     oid = int(props[oid_field])
                     canonical = json.dumps(feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
