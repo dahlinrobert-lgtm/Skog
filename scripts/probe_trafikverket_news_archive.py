@@ -291,6 +291,64 @@ def inspect_news_archive_api() -> list[dict]:
     return reports
 
 
+
+def collect_county_news_inventory(page_size: int = 50, max_pages: int = 100) -> dict:
+    """Inventory all pages from the source-confirmed county-filtered news API."""
+    if page_size < 1 or page_size > 100 or max_pages < 1:
+        raise ValueError("page_size must be 1..100 and max_pages must be positive")
+    all_items = []
+    page_reports = []
+    total_hits = None
+    for page_number in range(1, max_pages + 1):
+        query = urllib.parse.urlencode({
+            "pageSize": page_size, "currentPage": page_number, "counties": 18,
+        })
+        url = f"{BASE}/api/news?{query}"
+        body, final_url = fetch(url)
+        payload = json.loads(body)
+        if not isinstance(payload, dict) or not isinstance(payload.get("Items"), list):
+            raise ValueError(f"Unexpected API response on page {page_number}")
+        reported_total = payload.get("TotalHits")
+        if not isinstance(reported_total, int):
+            raise ValueError(f"Missing TotalHits on page {page_number}")
+        if total_hits is None:
+            total_hits = reported_total
+        elif total_hits != reported_total:
+            raise ValueError("TotalHits changed during pagination; inventory is not a stable snapshot")
+        items = payload["Items"]
+        page_reports.append({
+            "page": page_number, "returned": len(items),
+            "response_bytes": len(body.encode("utf-8")), "url": url,
+        })
+        all_items.extend(item for item in items if isinstance(item, dict))
+        if len(all_items) >= total_hits or not items:
+            break
+    else:
+        raise ValueError("Reached max_pages before collecting TotalHits")
+    by_link = {}
+    for item in all_items:
+        link = item.get("Link")
+        if isinstance(link, str) and link:
+            by_link.setdefault(link, item)
+    records = []
+    for link, item in by_link.items():
+        records.append({
+            "title": item.get("Name"), "url": urllib.parse.urljoin(BASE, link),
+            "published_date": item.get("Date"), "changed_at": item.get("Changed"),
+            "category": item.get("Label"), "preamble": item.get("Preamble"),
+        })
+    dates = [r["published_date"] for r in records if r["published_date"]]
+    return {
+        "county_id": 18, "page_size": page_size, "reported_total_hits": total_hits,
+        "pages_fetched": page_reports, "raw_items_count": len(all_items),
+        "unique_article_count": len(records),
+        "duplicate_count": len(all_items) - len(records),
+        "date_values": dates,
+        "records": records,
+        "complete_against_reported_total": len(all_items) >= total_hits,
+    }
+
+
 def main() -> None:
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
@@ -307,6 +365,7 @@ def main() -> None:
         "frontend_scripts": inspect_frontend_scripts(archive["scripts"]),
         "county_content_api_probes": inspect_county_content_api(),
         "news_archive_api_probes": inspect_news_archive_api(),
+        "full_county_news_inventory": collect_county_news_inventory(),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
