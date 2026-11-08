@@ -35,6 +35,8 @@ def request_json(url, params=None, attempts=5):
             time.sleep(min(2 ** attempt, 20))
 
 def query_params():
+    # ArcGIS returnIdsOnly query: keep the exact parameters used by the successful
+    # inventory count probe, but ask for IDs rather than a count.
     return {
         "where":"1=1",
         "geometry":json.dumps(ENVELOPE,separators=(",",":")),
@@ -46,7 +48,19 @@ def query_params():
         "f":"json",
     }
 
-def save_layer(service_key, layer, ids, base_url):
+def fetch_ids(layer_url):
+    """Prefer spatially filtered IDs; fall back to all IDs plus local clipping on 400."""
+    try:
+        result=request_json(layer_url.rstrip("/")+"/query",query_params())
+        return sorted(set(result.get("objectIds") or [])), "spatial-query"
+    except Exception as exc:
+        print(f"WARNING: spatial ID query failed for {layer_url}: {exc}; retrying unfiltered ID inventory",flush=True)
+        result=request_json(layer_url.rstrip("/")+"/query",{
+            "where":"1=1","returnIdsOnly":"true","returnGeometry":"false","f":"json"
+        })
+        return sorted(set(result.get("objectIds") or [])), "unfiltered-ids"
+
+def save_layer(service_key, layer, ids, base_url, id_mode):
     layer_id=layer["id"]
     name=layer.get("name",f"layer-{layer_id}")
     safe="".join(c.lower() if c.isalnum() else "-" for c in name).strip("-")
@@ -55,6 +69,7 @@ def save_layer(service_key, layer, ids, base_url):
     out=folder/f"{layer_id:02d}-{safe}.geojson.gz"
     url=f"{base_url.rstrip('/')}/{layer_id}/query"
     features=[]
+    oid_field=layer.get("objectIdField") or layer.get("objectIdFieldName")
     for start in range(0,len(ids),BATCH_SIZE):
         batch=ids[start:start+BATCH_SIZE]
         params={
@@ -68,16 +83,30 @@ def save_layer(service_key, layer, ids, base_url):
         got=payload.get("features",[])
         features.extend(got)
         if len(got)!=len(batch):
-            # Some services may omit inaccessible/deleted objects; record actual count in manifest.
-            pass
+            raise RuntimeError(f"Feature batch incomplete for layer {layer_id}: got {len(got)} of {len(batch)}")
         time.sleep(0.15)
-    collection={"type":"FeatureCollection","name":name,"crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":features}
+    # If ArcGIS rejected the spatial query, clip the fetched GeoJSON locally to the
+    # same WGS84 envelope. Points are retained when inside; lines/polygons are
+    # spatially tested using their coordinate bounds (conservative bbox filter).
+    if id_mode == "unfiltered-ids":
+        def positions(coords):
+            if isinstance(coords,(list,tuple)) and coords and isinstance(coords[0],(int,float)):
+                yield coords
+            elif isinstance(coords,(list,tuple)):
+                for child in coords: yield from positions(child)
+        def in_envelope(feature):
+            coords=list(positions(feature.get("geometry",{}).get("coordinates",[])))
+            if not coords: return False
+            xs=[p[0] for p in coords]; ys=[p[1] for p in coords]
+            return not (max(xs)<ENVELOPE["xmin"] or min(xs)>ENVELOPE["xmax"] or max(ys)<ENVELOPE["ymin"] or min(ys)>ENVELOPE["ymax"])
+        features=[f for f in features if in_envelope(f)]
+    collection={"type":"FeatureCollection","name":name,"features":features}
     raw=json.dumps(collection,ensure_ascii=False,separators=(",",":")).encode("utf-8")
     with out.open("wb") as stream:
         with gzip.GzipFile(fileobj=stream,mode="wb",mtime=0) as gz: gz.write(raw)
     return {
         "id":layer_id,"name":name,"geometry_type":layer.get("geometryType"),
-        "source_object_id_count":len(ids),"downloaded_feature_count":len(features),
+        "id_query_mode":id_mode,"source_object_id_count":len(ids),"downloaded_feature_count":len(features),
         "file":str(out),"compressed_bytes":out.stat().st_size,
         "sha256":hashlib.sha256(out.read_bytes()).hexdigest(),
         "fields":[f.get("name") for f in layer.get("fields",[])],
@@ -96,12 +125,11 @@ def main():
             detail=request_json(f"{base}/{layer['id']}",{"f":"pjson"})
             if detail.get("type")!="Feature Layer" or not detail.get("geometryType"):
                 continue
-            ids_data=request_json(f"{base}/{layer['id']}/query",query_params())
-            ids=ids_data.get("objectIds") or []
-            ids=sorted(set(ids))
-            row=save_layer(key,{**layer,**detail},ids,base)
+            merged={**layer,**detail}
+            ids,id_mode=fetch_ids(f"{base}/{layer['id']}")
+            row=save_layer(key,merged,ids,base,id_mode)
             service["layers"].append(row); total+=row["downloaded_feature_count"]
-            print(f"{key} layer {layer['id']} {layer.get('name')}: {row['downloaded_feature_count']}/{len(ids)} features")
+            print(f"{key} layer {layer['id']} {layer.get('name')}: {row['downloaded_feature_count']} downloaded (ID mode: {id_mode})",flush=True)
         snapshot["services"].append(service)
     snapshot["total_downloaded_features"]=total
     snapshot["total_feature_layers"]=sum(len(s["layers"]) for s in snapshot["services"])
