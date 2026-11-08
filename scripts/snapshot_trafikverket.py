@@ -79,44 +79,42 @@ def query_count(layer_url, layer_name):
     return count
 
 
-def query_page(layer_url, offset, page_size, layer_name, oid_field):
-    """Query JSON pages first; GeoJSON is a compatibility fallback."""
+def query_page(layer_url, last_oid, page_size, layer_name, oid_field):
+    """Fetch the next keyset page by OID, avoiding unreliable resultOffset paging."""
+    if not oid_field:
+        raise RuntimeError(
+            f"{layer_name}: no OID field exposed by layer metadata; "
+            "refusing offset pagination because the service has returned overlapping pages"
+        )
+    where = "1=1" if last_oid is None else f"{oid_field} > {int(last_oid)}"
     params = {
-        "where": "1=1",
+        "where": where,
         "outFields": "*",
         "returnGeometry": "true",
         "outSR": "4326",
-        "resultOffset": str(offset),
         "resultRecordCount": str(page_size),
+        "orderByFields": f"{oid_field} ASC",
         "f": "json",
     }
-    if oid_field:
-        params["orderByFields"] = f"{oid_field} ASC"
-    else:
-        params["orderByFields"] = "OBJECTID ASC"
-
     try:
         return request_json(
             layer_url.rstrip("/") + "/query",
             params,
-            context=f"Feature page for {layer_name}, offset {offset}",
+            context=f"Feature keyset page for {layer_name}, after OID {last_oid}",
         )
     except RuntimeError as first_error:
-        # On some MapServer layers GeoJSON is supported by the service generally
-        # but not for a specific query/pagination combination. Retry the same
-        # page as GeoJSON only after retaining the JSON error as diagnostic info.
         fallback = dict(params)
         fallback["f"] = "geojson"
         try:
             return request_json(
                 layer_url.rstrip("/") + "/query",
                 fallback,
-                context=f"GeoJSON feature page for {layer_name}, offset {offset}",
+                context=f"GeoJSON keyset page for {layer_name}, after OID {last_oid}",
             )
         except RuntimeError as second_error:
             raise RuntimeError(
-                f"Both JSON and GeoJSON page requests failed for {layer_name} "
-                f"at offset {offset}. JSON error: {first_error}. "
+                f"Both JSON and GeoJSON keyset requests failed for {layer_name} "
+                f"after OID {last_oid}. JSON error: {first_error}. "
                 f"GeoJSON error: {second_error}"
             ) from second_error
 
@@ -194,11 +192,11 @@ def save_layer(service_key, layer, base_url):
     page_size = min(BATCH_SIZE, int(layer.get("maxRecordCount") or BATCH_SIZE))
     features = []
     seen = set()
-    offset = 0
+    last_oid = None
     has_more = expected_count > 0
 
     while has_more:
-        payload = query_page(layer_url, offset, page_size, name, oid_field)
+        payload = query_page(layer_url, last_oid, page_size, name, oid_field)
         raw_page = payload.get("features", [])
         page = [normalize_feature(feature) for feature in raw_page]
         exceeded = payload.get("exceededTransferLimit")
@@ -210,25 +208,29 @@ def save_layer(service_key, layer, base_url):
         if not page:
             has_more = False
             break
+        page_oids = []
         for feature in page:
+            properties = feature.get("attributes") or feature.get("properties") or {}
+            page_oid = properties.get(oid_field)
+            if page_oid is None:
+                raise RuntimeError(f"Missing OID field {oid_field} in {name} response")
+            page_oids.append(int(page_oid))
             identity = feature_identity(feature, oid_field)
             if identity in seen:
                 raise RuntimeError(
-                    f"Duplicate feature across pages in {name} at offset {offset}; "
-                    "refusing an unreliable snapshot"
+                    f"Duplicate OID {identity} in keyset pagination for {name}; "
+                    "the service did not honour the OID filter/order"
                 )
             seen.add(identity)
             features.append(feature)
-        offset += len(page)
-        has_more = bool(exceeded)
-        if not has_more and len(features) < expected_count:
-            # If server omits exceededTransferLimit, count remains the authoritative
-            # completeness target; continue at the next offset.
-            has_more = offset < expected_count
-        if offset > expected_count:
+        if page_oids != sorted(page_oids) or (last_oid is not None and min(page_oids) <= last_oid):
+            raise RuntimeError(f"Non-monotonic OID page in {name} after {last_oid}: {page_oids[:5]}")
+        last_oid = max(page_oids)
+        has_more = bool(exceeded) or len(features) < expected_count
+        if len(features) > expected_count:
             raise RuntimeError(
                 f"Pagination exceeded source count in {name}: "
-                f"{offset} records returned for count {expected_count}"
+                f"{len(features)} records returned for count {expected_count}"
             )
         time.sleep(0.15)
 
@@ -248,7 +250,7 @@ def save_layer(service_key, layer, base_url):
         "id": layer_id,
         "name": name,
         "geometry_type": layer.get("geometryType"),
-        "id_query_mode": "count-plus-offset-pagination",
+        "id_query_mode": "count-plus-oid-keyset-pagination",
         "source_object_count": expected_count,
         "downloaded_source_feature_count": len(features),
         "pilot_envelope_feature_count": len(selected),
