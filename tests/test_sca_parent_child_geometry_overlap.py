@@ -45,12 +45,14 @@ def test_decoded_y_up_places_northern_and_southern_z9_children_correctly():
     # and its southern half is y=141. Decoded MVT local y increases northward.
     north_child = tile_bounds(9, 273, 140)
     south_child = tile_bounds(9, 273, 141)
+    # x=0.75 places points inside the eastern child (x=273), not on
+    # the shared vertical boundary between x=272 and x=273.
     north_point = mvt_to_world(
-        {"type": "Point", "coordinates": [extent / 2, extent * 0.75]},
+        {"type": "Point", "coordinates": [extent * 0.75, extent * 0.75]},
         extent, parent_z, parent_x, parent_y
     )
     south_point = mvt_to_world(
-        {"type": "Point", "coordinates": [extent / 2, extent * 0.25]},
+        {"type": "Point", "coordinates": [extent * 0.75, extent * 0.25]},
         extent, parent_z, parent_x, parent_y
     )
     assert north_point.y > south_point.y
