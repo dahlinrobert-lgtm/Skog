@@ -405,7 +405,7 @@ def retry_transient_poll_errors(fetched, tiles, workers, retry_fetch=fetch):
     retryable = ("request_error", "http_error")
     candidates = [k for k, result in fetched.items() if result["state"] in retryable]
     if not candidates:
-        return 0, 0
+        return 0, 0, 0, 0
     recovered = 0
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {
