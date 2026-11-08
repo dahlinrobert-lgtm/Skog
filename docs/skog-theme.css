@@ -1,0 +1,33 @@
+/* Shared Skog theme: loaded by every page in the public site. */
+html{color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark}
+html[data-theme="dark"] body{background:#101812!important;color:#e4ece6!important}
+html[data-theme="dark"] header:not(.skog-global-nav){background:#142d20!important;color:#edf5ef!important}
+html[data-theme="dark"] header p{color:#c5d6ca!important}
+html[data-theme="dark"] .site-header{background:linear-gradient(125deg,#0c2017 0%,#142d20 58%,#1b3827 100%)!important}
+html[data-theme="dark"] :is(main,.container,.wrap,.content){color:#e4ece6}
+html[data-theme="dark"] :is(.panel,.card,.metric,.stat,.saved-item,.history-item,.tablewrap,.relation,.summary-card,.result-card){background:#1b2921!important;color:#e4ece6!important;border-color:#34483a!important}
+html[data-theme="dark"] :is(.empty,.hint-box,.notice-box){background:#243329!important;color:#c6d4ca!important;border-color:#3a5040!important}
+html[data-theme="dark"] :is(.muted,.hint,footer,.small-note,.description){color:#aebdb2!important}
+html[data-theme="dark"] :is(p,li,td,dd,dt,label,summary){color:inherit}
+html[data-theme="dark"] :is(a:not(.skog-global-nav a)){color:#9bd0a8}
+html[data-theme="dark"] :is(input,select,textarea){background:#111c15!important;color:#e4ece6!important;border-color:#526557!important}
+html[data-theme="dark"] :is(button:not(.skog-theme-toggle),.controls button){border-color:#526557}
+html[data-theme="dark"] button.secondary{background:#304536!important;color:#e4ece6!important}
+html[data-theme="dark"] button.danger{background:#512d29!important;color:#ffd8d1!important}
+html[data-theme="dark"] :is(th,.table-header){background:#26372c!important;color:#e4ece6!important;border-color:#3b5041!important}
+html[data-theme="dark"] :is(td,tr){border-color:#34483a!important}
+html[data-theme="dark"] tbody tr:hover{background:#243329!important}
+html[data-theme="dark"] :is(.status,.pill){border-color:#70572e}
+html[data-theme="dark"] .status{background:#3c321f!important;color:#f5d79c!important}
+html[data-theme="dark"] .pill{background:#3c321f!important;color:#f5d79c!important}
+html[data-theme="dark"] .stat strong,html[data-theme="dark"] .metric strong{color:#a5d7b0!important}
+html[data-theme="dark"] .controls label{background:#26372c!important;color:#e4ece6!important}
+html[data-theme="dark"] .leaflet-control,.leaflet-control-layers-expanded{background:#1b2921!important;color:#e4ece6!important;border-color:#526557!important}
+html[data-theme="dark"] .leaflet-control a{background-color:#1b2921!important;color:#e4ece6!important;border-color:#526557!important}
+html[data-theme="dark"] .leaflet-control-attribution{background:rgba(20,32,24,.88)!important;color:#c4d2c8!important}
+html[data-theme="dark"] .leaflet-control-attribution a{color:#9bd0a8!important}
+html[data-theme="dark"] hr{border-color:#34483a}
+.skog-theme-toggle{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:7px 11px;border:1px solid rgba(255,255,255,.35);border-radius:9px;background:#244b35;color:#fff;font:650 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer;white-space:nowrap}
+.skog-theme-toggle:hover,.skog-theme-toggle:focus-visible{background:#326044;outline:2px solid #d7ad67;outline-offset:2px}
+@media(max-width:760px){.skog-theme-toggle{align-self:flex-start;margin-top:2px}}
