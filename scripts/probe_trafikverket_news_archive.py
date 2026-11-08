@@ -335,8 +335,13 @@ def inspect_news_archive_date_filters() -> list[dict]:
 def collect_historical_date_windows() -> list[dict]:
     """Fully paginate bounded pre-2025 date windows for Västerbotten."""
     windows = [
+        ("2000_2009", "2000-01-01", "2009-12-31"),
         ("2010_2019", "2010-01-01", "2019-12-31"),
-        ("2020_2024", "2020-01-01", "2024-12-31"),
+        ("2020_2020", "2020-01-01", "2020-12-31"),
+        ("2021_2021", "2021-01-01", "2021-12-31"),
+        ("2022_2022", "2022-01-01", "2022-12-31"),
+        ("2023_2023", "2023-01-01", "2023-12-31"),
+        ("2024_2024", "2024-01-01", "2024-12-31"),
     ]
     reports = []
     for label, from_date, to_date in windows:
