@@ -251,6 +251,9 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 @media(max-width:620px){.elkdata-card{padding:18px 14px;border-radius:17px}.elkdata-stats{gap:8px}.elkdata-stat{padding:12px}.elkdata-stat strong{font-size:1.45rem}.elkdata-controls{grid-template-columns:1fr}.elkdata-result{grid-column:auto}}
 </style>
 
+<script>try{const t=localStorage.getItem("skog.theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t;else if(matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="./skog-theme.css">
+<script src="./skog-theme.js" defer></script>
 </head>
 <body>
 <header class="site-header">
@@ -263,7 +266,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
       <a href="händelsekedjor.html">Händelsekedjor</a>
       <a href="historik.html">Historik</a>
       <a href="skogskoll/index.html">Skogskoll</a>
-    </div></nav>
+    </div><button class="skog-theme-toggle" type="button" aria-pressed="false" aria-label="Byt till mörkt läge"><span aria-hidden="true">🌙</span><span>Mörkt läge</span></button></nav>
   </div>
   <div class="hero">
     <div>
