@@ -507,7 +507,7 @@ def diagnose_national_pagination(years: tuple[int, ...] = (2024, 2025, 2026), pa
 def diagnose_national_pagination_boundaries(page_map: dict[int, tuple[int, ...]] | None = None) -> list[dict]:
     """Probe pages around the previously observed national pagination failure points."""
     if page_map is None:
-        page_map = {2024: (11, 12, 13), 2025: (12, 13, 14), 2026: (47, 48, 49, 50)}
+        page_map = {2024: (1, 2, 3, 9, 10, 11, 12, 13), 2025: (12, 13, 14), 2026: (47, 48, 49, 50)}
     reports = []
     for year, page_numbers in page_map.items():
         pages = []
