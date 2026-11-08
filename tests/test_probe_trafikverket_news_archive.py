@@ -1,6 +1,8 @@
+import json
 import unittest
+from unittest.mock import patch
 
-from scripts.probe_trafikverket_news_archive import inspect_frontend_scripts, parse_archive
+from scripts.probe_trafikverket_news_archive import inspect_county_content_api, inspect_frontend_scripts, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
@@ -9,6 +11,19 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertIn("runtime_chunk_map_diagnostic", result[0])
         self.assertFalse(result[0]["runtime_chunk_map_diagnostic"]["runtime_found"])
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_county_content_api_uses_bounded_sizes(self, mocked_fetch):
+        mocked_fetch.return_value = (
+            json.dumps({"pages": [{"title": "Test", "url": "/test/"}]}),
+            "https://www.trafikverket.se/api/PageListApi/GetCurrentCountyContent",
+        )
+        result = inspect_county_content_api()
+        self.assertEqual(len(result), 3)
+        self.assertEqual([item["pages_count"] for item in result], [1, 1, 1])
+        self.assertIn("countyid=18", result[0]["url"])
+        self.assertIn("pageSize=10", result[0]["url"])
+        self.assertEqual(mocked_fetch.call_count, 3)
 
     def test_extracts_count_links_and_paging(self):
         html = """
