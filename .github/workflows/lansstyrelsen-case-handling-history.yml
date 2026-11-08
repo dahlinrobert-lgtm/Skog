@@ -55,7 +55,29 @@ jobs:
             echo "No case, handling metadata or analysis changes."
           else
             git commit -m "Update Länsstyrelsen case handling history and analysis"
-            git push origin HEAD:main
+
+            # Other workflows may update main while this collection is running.
+            # Rebase our data commit onto the latest main before pushing, and
+            # retry if another workflow wins the race between fetch and push.
+            for attempt in 1 2 3; do
+              git fetch origin main
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                echo "::error::Could not rebase collection results onto main; refusing to overwrite concurrent changes."
+                exit 1
+              fi
+
+              if git push origin HEAD:main; then
+                echo "Published collection results on main."
+                exit 0
+              fi
+
+              echo "Push attempt ${attempt} rejected; refreshing main before retry."
+              sleep $((attempt * 2))
+            done
+
+            echo "::error::Could not publish after three attempts because main kept changing."
+            exit 1
           fi
       - name: Upload collection and analysis reports
         if: always()
