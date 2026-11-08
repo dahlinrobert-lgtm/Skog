@@ -34,76 +34,125 @@ DATE = os.environ.get("SNAPSHOT_DATE") or datetime.now(timezone.utc).strftime("%
 BATCH_SIZE = int(os.environ.get("TRAFIKVERKET_BATCH_SIZE", "500"))
 
 
-def request_json(url, params=None, attempts=5):
+def request_json(url, params=None, attempts=5, context="ArcGIS request"):
     query = urllib.parse.urlencode(params or {"f": "pjson"})
     req = urllib.request.Request(
         url + ("&" if "?" in url else "?") + query,
         headers={"User-Agent": "Skog-Trafikverket-snapshot/1.0"},
     )
+    last_error = None
     for attempt in range(attempts):
         try:
             with urllib.request.urlopen(req, timeout=90) as response:
-                data = json.loads(response.read().decode("utf-8"))
+                body = response.read().decode("utf-8")
+                data = json.loads(body)
             if "error" in data:
                 raise RuntimeError(json.dumps(data["error"], ensure_ascii=False))
             return data
-        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, RuntimeError):
-            if attempt == attempts - 1:
-                raise
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")
+            last_error = RuntimeError(
+                f"{context}: HTTP {exc.code}; endpoint={url}; "
+                f"parameters={json.dumps(params or {}, ensure_ascii=False, sort_keys=True)}; "
+                f"response={body[:3000]}"
+            )
+        except (urllib.error.URLError, TimeoutError, RuntimeError, json.JSONDecodeError) as exc:
+            last_error = RuntimeError(
+                f"{context}: endpoint={url}; "
+                f"parameters={json.dumps(params or {}, ensure_ascii=False, sort_keys=True)}; "
+                f"error={exc}"
+            )
+        if attempt < attempts - 1:
             time.sleep(min(2**attempt, 20))
+    raise last_error
 
 
-def query_count(layer_url):
-    """Return the unfiltered source count; this form is broadly supported by ArcGIS."""
-    result = request_json(layer_url.rstrip("/") + "/query", {
-        "where": "1=1",
-        "returnCountOnly": "true",
-        "f": "json",
-    })
+def query_count(layer_url, layer_name):
+    result = request_json(
+        layer_url.rstrip("/") + "/query",
+        {"where": "1=1", "returnCountOnly": "true", "f": "json"},
+        context=f"Count query for {layer_name}",
+    )
     count = result.get("count")
     if not isinstance(count, int):
-        raise RuntimeError(f"ArcGIS count response missing integer count: {result}")
+        raise RuntimeError(f"Count query for {layer_name}: missing integer count in {result}")
     return count
 
 
-def query_page(layer_url, offset, page_size):
-    """Fetch one ordered page with geometry; do not depend on object-ID query support."""
+def query_page(layer_url, offset, page_size, layer_name, oid_field):
+    """Query JSON pages first; GeoJSON is a compatibility fallback."""
     params = {
         "where": "1=1",
         "outFields": "*",
         "returnGeometry": "true",
         "outSR": "4326",
-        "orderByFields": "OBJECTID ASC",
         "resultOffset": str(offset),
         "resultRecordCount": str(page_size),
-        "f": "geojson",
+        "f": "json",
     }
+    if oid_field:
+        params["orderByFields"] = f"{oid_field} ASC"
+    else:
+        params["orderByFields"] = "OBJECTID ASC"
+
     try:
-        return request_json(layer_url.rstrip("/") + "/query", params)
-    except Exception as exc:
-        # Some MapServer layers reject the explicit sort field even though they
-        # support pagination. Retry without the sort; completeness is checked
-        # against the count and unique object IDs below.
-        if "OBJECTID" not in str(exc).upper() and "ORDER" not in str(exc).upper():
-            raise
-        params.pop("orderByFields", None)
-        return request_json(layer_url.rstrip("/") + "/query", params)
+        return request_json(
+            layer_url.rstrip("/") + "/query",
+            params,
+            context=f"Feature page for {layer_name}, offset {offset}",
+        )
+    except RuntimeError as first_error:
+        # On some MapServer layers GeoJSON is supported by the service generally
+        # but not for a specific query/pagination combination. Retry the same
+        # page as GeoJSON only after retaining the JSON error as diagnostic info.
+        fallback = dict(params)
+        fallback["f"] = "geojson"
+        try:
+            return request_json(
+                layer_url.rstrip("/") + "/query",
+                fallback,
+                context=f"GeoJSON feature page for {layer_name}, offset {offset}",
+            )
+        except RuntimeError as second_error:
+            raise RuntimeError(
+                f"Both JSON and GeoJSON page requests failed for {layer_name} "
+                f"at offset {offset}. JSON error: {first_error}. "
+                f"GeoJSON error: {second_error}"
+            ) from second_error
 
 
 def feature_identity(feature, oid_field):
-    properties = feature.get("properties") or {}
+    properties = feature.get("attributes") or feature.get("properties") or {}
     if oid_field and properties.get(oid_field) is not None:
         return str(properties[oid_field])
     for key, value in properties.items():
         if key.lower() in {"objectid", "object_id", "fid"} and value is not None:
             return str(value)
-    # Geometry+properties fingerprint allows reliable duplicate detection even
-    # when the service omits the OID field in layer metadata.
     canonical = json.dumps(
         {"geometry": feature.get("geometry"), "properties": properties},
         sort_keys=True, ensure_ascii=False, separators=(",", ":"),
     )
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def normalize_feature(feature):
+    """Normalize ArcGIS JSON feature records into GeoJSON feature objects."""
+    if "properties" in feature and "type" in feature:
+        return feature
+    geometry = feature.get("geometry")
+    attributes = feature.get("attributes") or {}
+    if geometry and "x" in geometry and "y" in geometry:
+        geometry = {"type": "Point", "coordinates": [geometry["x"], geometry["y"]]}
+    elif geometry and "paths" in geometry:
+        paths = geometry["paths"]
+        geometry = {"type": "LineString", "coordinates": paths[0]} if len(paths) == 1 else {
+            "type": "MultiLineString", "coordinates": paths
+        }
+    elif geometry and "rings" in geometry:
+        geometry = {"type": "Polygon", "coordinates": geometry["rings"]}
+    elif geometry and "points" in geometry:
+        geometry = {"type": "MultiPoint", "coordinates": geometry["points"]}
+    return {"type": "Feature", "geometry": geometry, "properties": attributes}
 
 
 def positions(coords):
@@ -134,47 +183,60 @@ def save_layer(service_key, layer, base_url):
     folder.mkdir(parents=True, exist_ok=True)
     out = folder / f"{layer_id:02d}-{safe}.geojson.gz"
     layer_url = f"{base_url.rstrip('/')}/{layer_id}"
-    expected_count = query_count(layer_url)
+    expected_count = query_count(layer_url, name)
     oid_field = layer.get("objectIdField") or layer.get("objectIdFieldName")
+    if not oid_field:
+        oid_field = next(
+            (field.get("name") for field in layer.get("fields", [])
+             if field.get("type") == "esriFieldTypeOID"),
+            None,
+        )
     page_size = min(BATCH_SIZE, int(layer.get("maxRecordCount") or BATCH_SIZE))
     features = []
     seen = set()
     offset = 0
+    has_more = expected_count > 0
 
-    while offset < expected_count:
-        payload = query_page(layer_url, offset, page_size)
-        page = payload.get("features", [])
-        if not page:
+    while has_more:
+        payload = query_page(layer_url, offset, page_size, name, oid_field)
+        raw_page = payload.get("features", [])
+        page = [normalize_feature(feature) for feature in raw_page]
+        exceeded = payload.get("exceededTransferLimit")
+        if not page and exceeded:
             raise RuntimeError(
-                f"Pagination ended early for layer {layer_id} ({name}): "
-                f"{len(features)} of {expected_count} source features"
+                f"ArcGIS reports exceededTransferLimit but returned no features "
+                f"for {name} at offset {offset}; refusing to advance blindly"
             )
+        if not page:
+            has_more = False
+            break
         for feature in page:
             identity = feature_identity(feature, oid_field)
             if identity in seen:
                 raise RuntimeError(
-                    f"Duplicate feature across pages in layer {layer_id} ({name}); "
+                    f"Duplicate feature across pages in {name} at offset {offset}; "
                     "refusing an unreliable snapshot"
                 )
             seen.add(identity)
             features.append(feature)
         offset += len(page)
-        if len(page) < page_size and offset < expected_count:
+        has_more = bool(exceeded)
+        if not has_more and len(features) < expected_count:
+            # If server omits exceededTransferLimit, count remains the authoritative
+            # completeness target; continue at the next offset.
+            has_more = offset < expected_count
+        if offset > expected_count:
             raise RuntimeError(
-                f"Short page for layer {layer_id} ({name}): "
-                f"{offset} of {expected_count} source features"
+                f"Pagination exceeded source count in {name}: "
+                f"{offset} records returned for count {expected_count}"
             )
         time.sleep(0.15)
 
     if len(features) != expected_count:
         raise RuntimeError(
-            f"Layer count mismatch for {layer_id} ({name}): "
-            f"downloaded {len(features)} of {expected_count}"
+            f"Layer count mismatch for {name}: downloaded {len(features)} of {expected_count}"
         )
 
-    # Preserve the source count but only persist geometries intersecting the
-    # Gräsmyr pilot envelope. Bounding-box intersection is conservative for
-    # lines/polygons and avoids clipping or modifying source geometry.
     selected = [feature for feature in features if in_envelope(feature)]
     collection = {"type": "FeatureCollection", "name": name, "features": selected}
     raw = json.dumps(collection, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
@@ -212,7 +274,7 @@ def main():
     }
     total = 0
     for key, base in SERVICES:
-        meta = request_json(base, {"f": "pjson"})
+        meta = request_json(base, {"f": "pjson"}, context=f"Service metadata for {key}")
         service = {
             "key": key,
             "url": base,
@@ -220,7 +282,11 @@ def main():
             "layers": [],
         }
         for layer in meta.get("layers", []):
-            detail = request_json(f"{base}/{layer['id']}", {"f": "pjson"})
+            detail = request_json(
+                f"{base}/{layer['id']}",
+                {"f": "pjson"},
+                context=f"Layer metadata for {key} layer {layer['id']} ({layer.get('name')})",
+            )
             if detail.get("type") != "Feature Layer" or not detail.get("geometryType"):
                 continue
             merged = {**layer, **detail}
