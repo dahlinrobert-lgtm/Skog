@@ -102,6 +102,38 @@ def build_coverage_summary(targets: list[dict], cases: dict) -> dict:
     }
 
 
+
+def prioritize_targets_by_county(targets: list[dict], cases: dict) -> list[dict]:
+    """Finish smaller incomplete counties first, then rotate oldest cases within them.
+
+    This deliberately favors completing counties with fewer eligible cases. Once a
+    county reaches 100%, it moves behind every county that still has unobserved
+    cases. The eligible population is still collected from the same national set.
+    """
+    county_keys: dict[str, set[str]] = {}
+    for target in targets:
+        county = target.get("diary", "").strip() or "Okänt län"
+        case_key = f"{county.casefold()}::{target.get('diary_number', '').strip()}"
+        county_keys.setdefault(county, set()).add(case_key)
+
+    county_priority = {}
+    for county, keys in county_keys.items():
+        remaining = sum(key not in cases for key in keys)
+        county_priority[county] = (remaining == 0, len(keys), county.casefold())
+
+    def sort_key(target: dict) -> tuple:
+        county = target.get("diary", "").strip() or "Okänt län"
+        case_key = f"{county.casefold()}::{target.get('diary_number', '').strip()}"
+        last_seen = (cases.get(case_key) or {}).get("last_seen_at", "")
+        return (
+            *county_priority[county],
+            last_seen,
+            target.get("diary_number", ""),
+        )
+
+    return sorted(targets, key=sort_key)
+
+
 def parse_case_page(target: dict, page_data: dict, observed_at: str) -> dict:
     tables = page_data.get("tables") or []
     case_fields = {}
@@ -190,12 +222,9 @@ def main() -> int:
                 "url": url,
             })
             break
-    # Rotate through the complete national case set: least recently observed first.
-    # New cases have no prior snapshot and are therefore prioritized automatically.
-    targets.sort(key=lambda target: (
-        (cases.get("{}::{}".format(target["diary"].strip().casefold(), target["diary_number"].strip())) or {}).get("last_seen_at", ""),
-        target["diary"], target["diary_number"],
-    ))
+    # Prioritize completing smaller counties, then rotate oldest cases first
+    # within each county. Completed counties move behind all incomplete counties.
+    targets = prioritize_targets_by_county(targets, cases)
     # Keep the full eligible population for coverage metrics before limiting
     # today's collection batch.
     eligible_targets = list(targets)

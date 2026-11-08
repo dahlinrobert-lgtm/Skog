@@ -3,7 +3,11 @@ from unittest.mock import patch
 
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
-from scripts.collect_lansstyrelsen_case_handlings import build_coverage_summary, goto_with_retries
+from scripts.collect_lansstyrelsen_case_handlings import (
+    build_coverage_summary,
+    goto_with_retries,
+    prioritize_targets_by_county,
+)
 
 
 class Response:
@@ -43,6 +47,35 @@ class RetryTests(unittest.TestCase):
         norrbotten = next(x for x in coverage["by_county"] if x["county"].endswith("Norrbottens län"))
         self.assertEqual(norrbotten["observed_case_count"], 1)
         self.assertEqual(norrbotten["unobserved_case_count"], 1)
+
+    def test_prioritizes_smallest_incomplete_county_and_finishes_it(self):
+        targets = (
+            [{"diary": "Large county", "diary_number": f"L-{i}"} for i in range(4)]
+            + [{"diary": "Small county", "diary_number": f"S-{i}"} for i in range(2)]
+            + [{"diary": "Completed county", "diary_number": "C-1"}]
+        )
+        cases = {
+            "completed county::C-1": {"last_seen_at": "2026-11-08T10:00:00+00:00"},
+            "large county::L-0": {"last_seen_at": "2026-11-08T10:00:00+00:00"},
+            "large county::L-1": {"last_seen_at": "2026-11-08T11:00:00+00:00"},
+        }
+        ordered = prioritize_targets_by_county(targets, cases)
+        self.assertEqual(
+            [x["diary"] for x in ordered[:2]],
+            ["Small county", "Small county"],
+        )
+        self.assertEqual(ordered[-1]["diary"], "Completed county")
+
+    def test_prioritizes_remaining_cases_by_oldest_observation_within_county(self):
+        targets = [
+            {"diary": "County A", "diary_number": "A-new"},
+            {"diary": "County A", "diary_number": "A-old"},
+        ]
+        cases = {
+            "county a::A-new": {"last_seen_at": "2026-11-08T12:00:00+00:00"},
+        }
+        ordered = prioritize_targets_by_county(targets, cases)
+        self.assertEqual(ordered[0]["diary_number"], "A-old")
 
     @patch("scripts.collect_lansstyrelsen_case_handlings.time.sleep")
     def test_retries_server_error_then_succeeds(self, sleep):
