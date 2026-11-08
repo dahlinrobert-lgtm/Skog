@@ -1,0 +1,41 @@
+name: Trafikverket environmental and wildlife inventory
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 5 * * 1"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/inventory_trafikverket.py"
+      - "docs/trafikverket-data-sources.md"
+      - ".github/workflows/trafikverket-inventory.yml"
+  pull_request:
+    paths:
+      - "scripts/inventory_trafikverket.py"
+      - "docs/trafikverket-data-sources.md"
+      - ".github/workflows/trafikverket-inventory.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax check
+        run: python -m py_compile scripts/inventory_trafikverket.py
+      - name: Inspect public ArcGIS services and Gräsmyr coverage
+        run: python scripts/inventory_trafikverket.py
+      - name: Upload inventory report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trafikverket-inventory-${{ github.run_id }}
+          path: artifacts/trafikverket-inventory.json
+          if-no-files-found: error
+          retention-days: 30
