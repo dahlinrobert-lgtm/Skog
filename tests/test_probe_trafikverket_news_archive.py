@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import patch
 from datetime import datetime, timezone
 
-from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, diagnose_monthly_pages_after_empty, diagnose_monthly_pagination_repeatability, diagnose_2024_monthly_repeatability, diagnose_2024_monthly_windows, diagnose_national_pagination, diagnose_national_pagination_boundaries, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
+from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, collect_national_news_inventory_monthly, diagnose_monthly_pages_after_empty, diagnose_monthly_pagination_repeatability, diagnose_2024_monthly_repeatability, diagnose_2024_monthly_windows, diagnose_national_pagination, diagnose_national_pagination_boundaries, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
@@ -54,7 +54,9 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_national_inventory_uses_all_counties_and_year_windows(self, mocked_fetch):
-        current_year = datetime.now(timezone.utc).year
+        now = datetime.now(timezone.utc)
+        current_year = now.year
+        month_count = 12 * (current_year - 2024) + now.month
         responses = []
         for year in range(2024, current_year + 1):
             items = [{"Name": "National story", "Link": f"/story-{year}/", "Date": f"1 jan. {year}"}] if year == 2024 else []
@@ -132,6 +134,26 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertEqual([p["page"] for p in result[0]["pages_after_and_around_end"]], [4, 5, 6, 7, 8])
         self.assertEqual([p["page"] for p in result[1]["pages_after_and_around_end"]], [5, 6, 7, 8, 9])
         self.assertEqual(mocked_fetch.call_count, 20)
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_monthly_national_inventory_stops_after_two_empty_pages(self, mocked_fetch):
+        now = datetime.now(timezone.utc)
+        current_year = now.year
+        month_count = 12 * (current_year - 2024) + now.month
+        responses = [
+            (json.dumps({"Items": [{"Name": "A", "Link": "/a/", "Date": "1 jan. 2024"}], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
+            (json.dumps({"Items": [], "TotalHits": 1}), "https://www.trafikverket.se/api/news"),
+        ]
+        mocked_fetch.side_effect = responses * month_count
+        result = collect_national_news_inventory_monthly(start_year=2024, max_pages_per_month=3)
+        self.assertEqual(result["scope"], "national")
+        self.assertEqual(result["window"], "calendar_month")
+        self.assertTrue(result["complete"])
+        self.assertEqual(result["unique_article_count"], 1)
+        self.assertEqual(mocked_fetch.call_count, 3 * month_count)
+        self.assertIn("fromDate=2024-01-01", mocked_fetch.call_args_list[0].args[0])
+        self.assertNotIn("counties=", mocked_fetch.call_args_list[0].args[0])
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_national_boundary_diagnostic_probes_requested_pages(self, mocked_fetch):

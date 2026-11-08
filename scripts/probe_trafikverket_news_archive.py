@@ -778,6 +778,83 @@ def collect_national_news_inventory(start_year: int = 2024, max_pages_per_year: 
     }
 
 
+def collect_national_news_inventory_monthly(start_year: int = 2024, max_pages_per_month: int = 100) -> dict:
+    """Collect national news in month-sized windows, stopping only after two empty pages."""
+    current_year = datetime.now(timezone.utc).year
+    if start_year < 2000 or start_year > current_year or max_pages_per_month < 2:
+        raise ValueError("Invalid start_year or max_pages_per_month; at least two pages are required")
+    import calendar
+    monthly_reports = []
+    all_items = []
+    for year in range(start_year, current_year + 1):
+        last_month = 12 if year < current_year else datetime.now(timezone.utc).month
+        for month in range(1, last_month + 1):
+            from_date = f"{year}-{month:02d}-01"
+            to_date = f"{year}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}"
+            month_items = []
+            pages = []
+            consecutive_empty_pages = 0
+            error = None
+            for page_number in range(1, max_pages_per_month + 1):
+                query = urllib.parse.urlencode({
+                    "pageSize": 10, "currentPage": page_number,
+                    "fromDate": from_date, "toDate": to_date,
+                })
+                url = f"{BASE}/api/news?{query}"
+                try:
+                    body, final_url = fetch(url)
+                    payload = json.loads(body)
+                    if not isinstance(payload, dict) or not isinstance(payload.get("Items"), list):
+                        raise ValueError("Unexpected API response shape")
+                    items = [item for item in payload["Items"] if isinstance(item, dict)]
+                    pages.append({
+                        "page": page_number, "returned": len(items),
+                        "reported_total_hits": payload.get("TotalHits"), "url": url,
+                        "final_url": final_url,
+                    })
+                    if items:
+                        month_items.extend(items)
+                        consecutive_empty_pages = 0
+                    else:
+                        consecutive_empty_pages += 1
+                        if consecutive_empty_pages >= 2:
+                            break
+                except Exception as exc:
+                    error = f"page {page_number}: {exc}"
+                    break
+            else:
+                error = f"Reached {max_pages_per_month} pages without two consecutive empty pages"
+            all_items.extend(month_items)
+            by_link = {}
+            for item in month_items:
+                link = item.get("Link")
+                if isinstance(link, str) and link:
+                    by_link.setdefault(link, item)
+            monthly_reports.append({
+                "month": f"{year}-{month:02d}", "from_date": from_date, "to_date": to_date,
+                "status": "error" if error else "ok", "error": error, "pages_fetched": pages,
+                "raw_items_count": len(month_items), "unique_article_count": len(by_link),
+                "duplicate_count": len(month_items) - len(by_link),
+                "terminated_by_two_empty_pages": error is None and consecutive_empty_pages >= 2,
+            })
+    by_link = {}
+    for item in all_items:
+        link = item.get("Link")
+        if isinstance(link, str) and link:
+            by_link.setdefault(link, item)
+    records = [{
+        "title": item.get("Name"), "url": urllib.parse.urljoin(BASE, link),
+        "published_date": item.get("Date"), "changed_at": item.get("Changed"),
+        "category": item.get("Label"), "preamble": item.get("Preamble"),
+    } for link, item in by_link.items()]
+    return {
+        "scope": "national", "start_year": start_year, "end_year": current_year,
+        "window": "calendar_month", "county_filter": None, "page_size": 10,
+        "monthly_reports": monthly_reports, "raw_items_count": len(all_items),
+        "unique_article_count": len(records), "duplicate_count": len(all_items) - len(records),
+        "records": records, "complete": all(report["status"] == "ok" and report["terminated_by_two_empty_pages"] for report in monthly_reports),
+    }
+
 def main() -> None:
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
@@ -805,6 +882,7 @@ def main() -> None:
         "national_monthly_pagination_repeatability": diagnose_monthly_pagination_repeatability(),
         "national_monthly_pages_after_empty": diagnose_monthly_pages_after_empty(),
         "national_news_inventory_from_2024": collect_national_news_inventory(start_year=2024),
+        "national_monthly_news_inventory_from_2024": collect_national_news_inventory_monthly(start_year=2024),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
