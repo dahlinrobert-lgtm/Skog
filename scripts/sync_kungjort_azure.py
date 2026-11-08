@@ -80,7 +80,9 @@ class KungjortApi:
                     payload = json.load(response)
                     return payload, response.headers.get("X-Request-ID")
             except urllib.error.HTTPError as exc:
-                if exc.code not in (429, 503) or attempt == 6:
+                # Retry transient throttling and server/gateway failures. Do not
+                # retry ordinary client errors (for example 400/401/403/404).
+                if exc.code not in (429, 500, 502, 503, 504) or attempt == 6:
                     body = exc.read().decode("utf-8", "replace")[:500]
                     raise RuntimeError(
                         f"Kungjort API HTTP {exc.code}; "
