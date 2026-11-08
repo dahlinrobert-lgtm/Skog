@@ -151,6 +151,31 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field, identity_
     return rows, response_sr, raw_geometry_sr
 
 
+def canonical_duplicate_content(feature, oid_field=None, ignore_oid=False):
+    """Canonical content for duplicate checks, tolerating sub-centimetre coordinate noise."""
+    def normalize_coordinates(value):
+        if isinstance(value, list):
+            return [normalize_coordinates(item) for item in value]
+        if isinstance(value, tuple):
+            return [normalize_coordinates(item) for item in value]
+        if isinstance(value, float):
+            return round(value, 8)
+        return value
+
+    properties = feature.get("properties") or feature.get("attributes") or {}
+    if ignore_oid and oid_field:
+        properties = {key: value for key, value in properties.items() if key != oid_field}
+    return json.dumps(
+        {
+            "geometry": normalize_coordinates(feature.get("geometry") or {}),
+            "properties": properties,
+        },
+        sort_keys=True,
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+
+
 def feature_intersects_envelope(feature, envelope):
     """Conservative bbox overlap check for features returned by ArcGIS intersects queries."""
     coords = list(positions((feature.get("geometry") or {}).get("coordinates", [])))
@@ -216,30 +241,11 @@ def collect_spatial_features(layer_url, layer_name, oid_field, identity_field, m
                     props = feature.get("attributes") or feature.get("properties") or {}
                     identity = str(props[identity_field])
                     oid = props.get(oid_field)
-                    comparison_feature = feature
-                    if identity_field != oid_field:
-                        comparison_feature = {
-                            **feature,
-                            "properties": {
-                                key: value for key, value in (
-                                    feature.get("properties") or feature.get("attributes") or {}
-                                ).items() if key != oid_field
-                            },
-                        }
-                    canonical = json.dumps(comparison_feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                    ignore_oid = identity_field != oid_field
+                    canonical = canonical_duplicate_content(feature, oid_field, ignore_oid)
                     if identity in collected:
                         previous_feature = collected[identity]
-                        previous_props_for_compare = previous_feature.get("properties") or previous_feature.get("attributes") or {}
-                        previous_comparison_feature = previous_feature
-                        if identity_field != oid_field:
-                            previous_comparison_feature = {
-                                **previous_feature,
-                                "properties": {
-                                    key: value for key, value in previous_props_for_compare.items()
-                                    if key != oid_field
-                                },
-                            }
-                        previous = json.dumps(previous_comparison_feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                        previous = canonical_duplicate_content(previous_feature, oid_field, ignore_oid)
                         if canonical != previous:
                             previous_props = previous_feature.get("properties") or previous_feature.get("attributes") or {}
                             current_props = feature.get("properties") or feature.get("attributes") or {}
