@@ -126,7 +126,7 @@ def split_envelope(e):
     ]
 
 
-def query_spatial_features(layer_url, layer_name, envelope, oid_field):
+def query_spatial_features(layer_url, layer_name, envelope, oid_field, identity_field):
     params = {**spatial_params(envelope), "outFields":"*", "returnGeometry":"true", "outSR":"4326", "f":"json"}
     payload = request_json(layer_url.rstrip("/") + "/query", params, context=f"Spatial feature query for {layer_name}")
     if payload.get("exceededTransferLimit"):
@@ -142,12 +142,12 @@ def query_spatial_features(layer_url, layer_name, envelope, oid_field):
     ids = []
     for row in rows:
         props = row.get("attributes") or row.get("properties") or {}
-        value = props.get(oid_field)
-        if value is None:
-            raise RuntimeError(f"Spatial response for {layer_name} lacks OID field {oid_field}")
-        ids.append(int(value))
+        value = props.get(identity_field)
+        if value is None or str(value).strip() == "":
+            raise RuntimeError(f"Spatial response for {layer_name} lacks identity field {identity_field}")
+        ids.append(str(value))
     if len(ids) != len(set(ids)):
-        raise RuntimeError(f"Duplicate OIDs in spatial response for {layer_name}")
+        raise RuntimeError(f"Duplicate identity values in spatial response for {layer_name}: {identity_field}")
     return rows, response_sr, raw_geometry_sr
 
 
@@ -166,7 +166,7 @@ def feature_intersects_envelope(feature, envelope):
     )
 
 
-def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count, layer_spatial_reference):
+def collect_spatial_features(layer_url, layer_name, oid_field, identity_field, max_record_count, layer_spatial_reference):
     """Fetch only the pilot area; recursively subdivide dense tiles below ArcGIS limits."""
     expected = query_spatial_count(layer_url, layer_name, ENVELOPE)
     if expected == 0:
@@ -186,7 +186,7 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count,
         if count == 0:
             return
         if count <= limit:
-            result = query_spatial_features(layer_url, layer_name, tile, oid_field)
+            result = query_spatial_features(layer_url, layer_name, tile, oid_field, identity_field)
             if result is not None:
                 rows, response_spatial_reference, raw_geometry_spatial_reference = result
             else:
@@ -214,10 +214,11 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count,
                             f"geometry_spatial_reference={raw_geometry_spatial_reference}"
                         )
                     props = feature.get("attributes") or feature.get("properties") or {}
-                    oid = int(props[oid_field])
+                    identity = str(props[identity_field])
+                    oid = props.get(oid_field)
                     canonical = json.dumps(feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
-                    if oid in collected:
-                        previous_feature = collected[oid]
+                    if identity in collected:
+                        previous_feature = collected[identity]
                         previous = json.dumps(previous_feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
                         if canonical != previous:
                             previous_props = previous_feature.get("properties") or previous_feature.get("attributes") or {}
@@ -237,8 +238,8 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count,
                                 if previous_props.get(key) != current_props.get(key)
                             )
                             raise RuntimeError(
-                                f"{layer_name}: conflicting content for OID {oid} across tiles; "
-                                f"previous_tile={collected_tiles.get(oid)}; current_tile={tile}; "
+                                f"{layer_name}: conflicting content for identity {identity_field}={identity} (OID={oid}) across tiles; "
+                                f"previous_tile={collected_tiles.get(identity)}; current_tile={tile}; "
                                 f"geometry_types={previous_geometry.get('type')}/{current_geometry.get('type')}; "
                                 f"geometry_bboxes={geometry_bbox(previous_coords)}/{geometry_bbox(current_coords)}; "
                                 f"coordinate_counts={len(previous_coords)}/{len(current_coords)}; "
@@ -247,8 +248,8 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count,
                                 f"current_properties={json.dumps(current_props, ensure_ascii=False, sort_keys=True)[:1500]}"
                             )
                     else:
-                        collected[oid] = feature
-                        collected_tiles[oid] = dict(tile)
+                        collected[identity] = feature
+                        collected_tiles[identity] = dict(tile)
                 accepted += 1
                 return
         if depth >= 12:
@@ -329,9 +330,15 @@ def save_layer(service_key, layer, base_url):
         oid_field = next((field.get("name") for field in layer.get("fields", []) if field.get("type") == "esriFieldTypeOID"), None)
     if not oid_field:
         raise RuntimeError(f"{name}: no OID field exposed by layer metadata")
+    # InvasivArtYta contains distinct polygons sharing ESRI_OID values.
+    # ObjektId is the source's per-feature identifier for this layer.
+    identity_field = "ObjektId" if name == "InvasivArtYta" else oid_field
+    available_fields = {field.get("name") for field in layer.get("fields", [])}
+    if identity_field not in available_fields:
+        raise RuntimeError(f"{name}: required identity field {identity_field} is missing from layer metadata")
     layer_spatial_reference = layer.get("extent", {}).get("spatialReference") or layer.get("sourceSpatialReference")
     features, expected, accepted_tiles = collect_spatial_features(
-        layer_url, name, oid_field, layer.get("maxRecordCount", 1000), layer_spatial_reference
+        layer_url, name, oid_field, identity_field, layer.get("maxRecordCount", 1000), layer_spatial_reference
     )
     collection = {"type": "FeatureCollection", "name": name, "features": features}
     raw = json.dumps(collection, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
@@ -340,7 +347,7 @@ def save_layer(service_key, layer, base_url):
             gz.write(raw)
     return {
         "id": layer_id, "name": name, "geometry_type": layer.get("geometryType"),
-        "collection_method": "adaptive-spatial-tiles", "oid_field": oid_field,
+        "collection_method": "adaptive-spatial-tiles", "oid_field": oid_field, "identity_field": identity_field,
         "source_object_count": None, "pilot_envelope_expected_count": expected,
         "source_object_id_count": expected, "downloaded_feature_count": len(features),
         "downloaded_source_feature_count": len(features), "pilot_envelope_feature_count": len(features),
