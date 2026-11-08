@@ -67,130 +67,91 @@ def request_json(url, params=None, attempts=5, context="ArcGIS request"):
     raise last_error
 
 
-def query_count(layer_url, layer_name):
-    result = request_json(
-        layer_url.rstrip("/") + "/query",
-        {"where": "1=1", "returnCountOnly": "true", "f": "json"},
-        context=f"Count query for {layer_name}",
-    )
+def spatial_params(envelope):
+    geometry = {"xmin": envelope["xmin"], "ymin": envelope["ymin"], "xmax": envelope["xmax"], "ymax": envelope["ymax"], "spatialReference": {"wkid": 4326}}
+    return {"where": "1=1", "geometry": json.dumps(geometry, separators=(",", ":")), "geometryType": "esriGeometryEnvelope", "inSR": "4326", "spatialRel": "esriSpatialRelIntersects"}
+
+
+def query_spatial_count(layer_url, layer_name, envelope):
+    params = {**spatial_params(envelope), "returnCountOnly": "true", "f": "json"}
+    result = request_json(layer_url.rstrip("/") + "/query", params, context=f"Spatial count for {layer_name}")
     count = result.get("count")
     if not isinstance(count, int):
-        raise RuntimeError(f"Count query for {layer_name}: missing integer count in {result}")
+        raise RuntimeError(f"Spatial count for {layer_name}: missing integer count in {result}")
     return count
 
 
-def query_object_ids(layer_url, layer_name):
-    """Ask ArcGIS for the authoritative ID set; do not depend on server sort order."""
-    result = request_json(
-        layer_url.rstrip("/") + "/query",
-        {"where": "1=1", "returnIdsOnly": "true", "returnGeometry": "false", "f": "json"},
-        context=f"Object ID inventory for {layer_name}",
-    )
-    ids = result.get("objectIds")
-    if not isinstance(ids, list):
-        raise RuntimeError(f"Object ID inventory for {layer_name}: missing objectIds in {result}")
-    normalized = [int(value) for value in ids]
-    if len(normalized) != len(set(normalized)):
-        raise RuntimeError(f"Object ID inventory for {layer_name} contains duplicate IDs")
-    return sorted(normalized)
-
-
-
-def probe_query_modes(layer_url, layer_name, object_ids, oid_field):
-    """Probe ArcGIS selection semantics for first and second OIDs and output formats."""
-    probes = []
-    probe_ids = object_ids[:2]
-    cases = []
-    for probe_id in probe_ids:
-        predicate = f"{oid_field} = {probe_id}"
-        cases.extend([
-            (f"oid_{probe_id}_objectIds_no_outsr_json", {"objectIds": str(probe_id)}),
-            (f"oid_{probe_id}_objectIds_outsr_json", {"objectIds": str(probe_id), "outSR": "4326"}),
-            (f"oid_{probe_id}_where_no_outsr_json", {"where": predicate}),
-            (f"oid_{probe_id}_where_outsr_json", {"where": predicate, "outSR": "4326"}),
-            (f"oid_{probe_id}_objectIds_no_outsr_geojson", {"objectIds": str(probe_id), "f": "geojson"}),
-            (f"oid_{probe_id}_where_no_outsr_geojson", {"where": predicate, "f": "geojson"}),
-            (f"oid_{probe_id}_where_geometry_json", {"where": predicate, "returnGeometry": "true"}),
-        ])
-    for label, extra in cases:
-        params = {"outFields": "*", "returnGeometry": "true", "f": "json", **extra}
-        try:
-            result = request_json(layer_url.rstrip("/") + "/query", params,
-                                  context=f"Diagnostic {label} probe for {layer_name}")
-            rows = result.get("features", [])
-            probes.append({"mode": label, "feature_count": len(rows),
-                           "returned_ids": [((x.get("attributes") or {}).get(oid_field)) for x in rows[:5]],
-                           "geometry_present": [bool(x.get("geometry")) for x in rows[:5]],
-                           "error": result.get("error")})
-        except Exception as exc:
-            probes.append({"mode": label, "error": str(exc)})
-    print(f"DIAGNOSTIC {layer_name} OID={oid_field}: {json.dumps(probes, ensure_ascii=False)}", flush=True)
-
-def query_features_by_ids(layer_url, object_ids, layer_name, oid_field):
-    """Fetch a bounded ID batch via the layer's OID SQL predicate.
-
-    Live probes showed this service inconsistently combines objectIds and outSR:
-    some IDs disappear with objectIds=...&outSR=4326, while the equivalent
-    OID-field where predicate with outSR returns the feature.
-    """
-    if not object_ids:
-        return {"features": []}
-    values = ",".join(str(int(value)) for value in object_ids)
-    where = f"{oid_field} = {values[0]}" if len(object_ids) == 1 else f"{oid_field} IN ({values})"
-    params = {
-        "where": where,
-        "outFields": "*",
-        "returnGeometry": "true",
-        "outSR": "4326",
-        "f": "json",
-    }
-    # ArcGIS can return HTTP 200 with a feature that does not match the
-    # requested OID. Validate identity before accepting any response.
-    attempts = [
-        ("where-json-outsr", params),
-        ("objectids-json-outsr", {
-            **{k: v for k, v in params.items() if k != "where"},
-            "objectIds": ",".join(str(int(value)) for value in object_ids),
-        }),
-        ("where-json-native-sr", {k: v for k, v in params.items() if k != "outSR"}),
-        ("where-geojson", {**params, "f": "geojson"}),
-        ("where-geojson-native-sr", {
-            **{k: v for k, v in params.items() if k not in {"outSR", "f"}},
-            "f": "geojson",
-        }),
+def split_envelope(e):
+    x = (e["xmin"] + e["xmax"]) / 2
+    y = (e["ymin"] + e["ymax"]) / 2
+    return [
+        {"xmin":e["xmin"],"ymin":e["ymin"],"xmax":x,"ymax":y},
+        {"xmin":x,"ymin":e["ymin"],"xmax":e["xmax"],"ymax":y},
+        {"xmin":e["xmin"],"ymin":y,"xmax":x,"ymax":e["ymax"]},
+        {"xmin":x,"ymin":y,"xmax":e["xmax"],"ymax":e["ymax"]},
     ]
-    errors = []
-    expected = {int(value) for value in object_ids}
-    for mode, attempt_params in attempts:
-        try:
-            payload = request_json(
-                layer_url.rstrip("/") + "/query",
-                attempt_params,
-                context=f"Feature batch ({mode}) for {layer_name}, "
-                        f"IDs {object_ids[0]}..{object_ids[-1]}",
-            )
-            rows = payload.get("features", [])
-            actual = set()
-            for row in rows:
-                attrs = row.get("attributes") or row.get("properties") or {}
-                value = attrs.get(oid_field)
-                if value is None:
-                    break
-                actual.add(int(value))
-            if actual == expected and len(rows) == len(expected):
-                print(f"{layer_name}: accepted {mode} for IDs "
-                      f"{object_ids[0]}..{object_ids[-1]}", flush=True)
-                return payload
-            errors.append(
-                f"{mode}: requested={sorted(expected)}, returned={sorted(actual)}, "
-                f"feature_count={len(rows)}"
-            )
-        except RuntimeError as exc:
-            errors.append(f"{mode}: {exc}")
-    raise RuntimeError(
-        f"No ArcGIS query mode returned the exact requested IDs for {layer_name}: "
-        + " | ".join(errors)
-    )
+
+
+def query_spatial_features(layer_url, layer_name, envelope, oid_field):
+    params = {**spatial_params(envelope), "outFields":"*", "returnGeometry":"true", "outSR":"4326", "f":"json"}
+    payload = request_json(layer_url.rstrip("/") + "/query", params, context=f"Spatial feature query for {layer_name}")
+    if payload.get("exceededTransferLimit"):
+        return None
+    rows = [normalize_feature(row) for row in payload.get("features", [])]
+    ids = []
+    for row in rows:
+        props = row.get("attributes") or row.get("properties") or {}
+        value = props.get(oid_field)
+        if value is None:
+            raise RuntimeError(f"Spatial response for {layer_name} lacks OID field {oid_field}")
+        ids.append(int(value))
+    if len(ids) != len(set(ids)):
+        raise RuntimeError(f"Duplicate OIDs in spatial response for {layer_name}")
+    return rows
+
+
+def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count):
+    """Fetch only the pilot area; recursively subdivide dense tiles below ArcGIS limits."""
+    expected = query_spatial_count(layer_url, layer_name, ENVELOPE)
+    if expected == 0:
+        return [], 0, 0
+    limit = max(1, min(int(max_record_count or 1000), 1000))
+    collected = {}
+    accepted = 0
+    visited = 0
+
+    def visit(tile, depth):
+        nonlocal accepted, visited
+        visited += 1
+        if visited > 20000:
+            raise RuntimeError(f"{layer_name}: exceeded 20000 spatial tiles")
+        count = query_spatial_count(layer_url, layer_name, tile)
+        if count == 0:
+            return
+        if count <= limit:
+            rows = query_spatial_features(layer_url, layer_name, tile, oid_field)
+            if rows is not None and len(rows) == count:
+                for feature in rows:
+                    props = feature.get("attributes") or feature.get("properties") or {}
+                    oid = int(props[oid_field])
+                    canonical = json.dumps(feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                    if oid in collected:
+                        previous = json.dumps(collected[oid], sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                        if canonical != previous:
+                            raise RuntimeError(f"{layer_name}: conflicting content for OID {oid} across tiles")
+                    else:
+                        collected[oid] = feature
+                accepted += 1
+                return
+        if depth >= 12:
+            raise RuntimeError(f"{layer_name}: unable to safely collect tile at depth {depth}, count={count}")
+        for child in split_envelope(tile):
+            visit(child, depth + 1)
+
+    visit(ENVELOPE, 0)
+    if len(collected) != expected:
+        raise RuntimeError(f"{layer_name}: spatial completeness mismatch: unique={len(collected)}, root_count={expected}")
+    return list(collected.values()), expected, accepted
 
 
 def feature_identity(feature, oid_field):
@@ -255,93 +216,27 @@ def save_layer(service_key, layer, base_url):
     folder.mkdir(parents=True, exist_ok=True)
     out = folder / f"{layer_id:02d}-{safe}.geojson.gz"
     layer_url = f"{base_url.rstrip('/')}/{layer_id}"
-    expected_count = query_count(layer_url, name)
     oid_field = layer.get("objectIdField") or layer.get("objectIdFieldName")
     if not oid_field:
-        oid_field = next(
-            (field.get("name") for field in layer.get("fields", [])
-             if field.get("type") == "esriFieldTypeOID"),
-            None,
-        )
+        oid_field = next((field.get("name") for field in layer.get("fields", []) if field.get("type") == "esriFieldTypeOID"), None)
     if not oid_field:
         raise RuntimeError(f"{name}: no OID field exposed by layer metadata")
-    page_size = 1  # Keep requests minimal while probing source-specific object retrieval.
-    all_ids = query_object_ids(layer_url, name)
-    if len(all_ids) != expected_count:
-        raise RuntimeError(
-            f"ID inventory/count mismatch for {name}: "
-            f"{len(all_ids)} IDs versus count query {expected_count}"
-        )
-
-    features = []
-    seen_ids = set()
-    # Run the diagnostic probes before any strict feature retrieval, so an early
-    # problematic OID cannot prevent the diagnostic evidence from being recorded.
-    if all_ids:
-        probe_query_modes(layer_url, name, all_ids, oid_field)
-
-    for start_index in range(0, len(all_ids), page_size):
-        batch_ids = all_ids[start_index:start_index + page_size]
-        payload = query_features_by_ids(layer_url, batch_ids, name, oid_field)
-        raw_page = payload.get("features", [])
-        if payload.get("exceededTransferLimit"):
-            raise RuntimeError(
-                f"ArcGIS exceeded transfer limit for explicit ID batch in {name} "
-                f"({len(batch_ids)} requested); refusing partial batch"
-            )
-        page = [normalize_feature(feature) for feature in raw_page]
-        returned_ids = []
-        for feature in page:
-            properties = feature.get("attributes") or feature.get("properties") or {}
-            page_oid = properties.get(oid_field)
-            if page_oid is None:
-                raise RuntimeError(f"Missing OID field {oid_field} in {name} response")
-            page_oid = int(page_oid)
-            returned_ids.append(page_oid)
-            if page_oid in seen_ids:
-                raise RuntimeError(f"Duplicate OID {page_oid} returned for {name}")
-            seen_ids.add(page_oid)
-            features.append(feature)
-        expected_batch = set(batch_ids)
-        actual_batch = set(returned_ids)
-        if actual_batch != expected_batch:
-            missing = sorted(expected_batch - actual_batch)[:10]
-            unexpected = sorted(actual_batch - expected_batch)[:10]
-            raise RuntimeError(
-                f"Explicit ID batch mismatch for {name}: requested {len(batch_ids)}, "
-                f"received {len(returned_ids)}; missing={missing}, unexpected={unexpected}"
-            )
-        print(
-            f"{name}: fetched {min(start_index + len(batch_ids), len(all_ids))}/{len(all_ids)} "
-            "source features by explicit OID batch",
-            flush=True,
-        )
-        time.sleep(0.15)
-
-    if len(features) != expected_count or seen_ids != set(all_ids):
-        raise RuntimeError(
-            f"Layer completeness mismatch for {name}: downloaded {len(features)} "
-            f"of {expected_count} source features"
-        )
-
-    selected = [feature for feature in features if in_envelope(feature)]
-    collection = {"type": "FeatureCollection", "name": name, "features": selected}
+    features, expected, accepted_tiles = collect_spatial_features(
+        layer_url, name, oid_field, layer.get("maxRecordCount", 1000)
+    )
+    collection = {"type": "FeatureCollection", "name": name, "features": features}
     raw = json.dumps(collection, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     with out.open("wb") as stream:
         with gzip.GzipFile(fileobj=stream, mode="wb", mtime=0) as gz:
             gz.write(raw)
-
     return {
-        "id": layer_id,
-        "name": name,
-        "geometry_type": layer.get("geometryType"),
-        "id_query_mode": "count-plus-id-inventory-single-objectid-requests",
-        "source_object_count": expected_count,
-        "downloaded_source_feature_count": len(features),
-        "pilot_envelope_feature_count": len(selected),
-        "file": str(out),
-        "compressed_bytes": out.stat().st_size,
-        "sha256": hashlib.sha256(out.read_bytes()).hexdigest(),
+        "id": layer_id, "name": name, "geometry_type": layer.get("geometryType"),
+        "collection_method": "adaptive-spatial-tiles", "oid_field": oid_field,
+        "source_object_count": None, "pilot_envelope_expected_count": expected,
+        "source_object_id_count": expected, "downloaded_feature_count": len(features),
+        "downloaded_source_feature_count": len(features), "pilot_envelope_feature_count": len(features),
+        "accepted_spatial_tiles": accepted_tiles, "file": str(out),
+        "compressed_bytes": out.stat().st_size, "sha256": hashlib.sha256(out.read_bytes()).hexdigest(),
         "fields": [field.get("name") for field in layer.get("fields", [])],
     }
 
@@ -390,6 +285,7 @@ def main():
         snapshot["services"].append(service)
 
     snapshot["total_pilot_envelope_features"] = total
+    snapshot["total_downloaded_features"] = total
     snapshot["total_feature_layers"] = sum(len(service["layers"]) for service in snapshot["services"])
     snapshot["manifest_sha256"] = hashlib.sha256(
         json.dumps(snapshot, sort_keys=True, ensure_ascii=False).encode()
