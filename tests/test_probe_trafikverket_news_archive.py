@@ -83,16 +83,24 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_2024_monthly_diagnostic_uses_month_date_filters(self, mocked_fetch):
-        mocked_fetch.return_value = (
+        item_response = (
             json.dumps({"Items": [{"Link": "/example/", "Date": "1 jan. 2024"}], "TotalHits": 1}),
             "https://www.trafikverket.se/api/news",
         )
+        empty_response = (
+            json.dumps({"Items": [], "TotalHits": 1}),
+            "https://www.trafikverket.se/api/news",
+        )
+        mocked_fetch.side_effect = [response for _ in range(12) for response in (item_response, empty_response)]
         result = diagnose_2024_monthly_windows()
         self.assertEqual(len(result), 12)
         self.assertEqual(result[0]["month"], "2024-01")
+        self.assertEqual(result[0]["returned_items"], 1)
         self.assertIn("fromDate=2024-01-01", mocked_fetch.call_args_list[0].args[0])
         self.assertIn("toDate=2024-02-01", mocked_fetch.call_args_list[0].args[0])
-        self.assertEqual(mocked_fetch.call_count, 12)
+        self.assertIn("fromDate=2024-02-01", mocked_fetch.call_args_list[2].args[0])
+        self.assertIn("toDate=2024-03-01", mocked_fetch.call_args_list[2].args[0])
+        self.assertEqual(mocked_fetch.call_count, 24)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_national_boundary_diagnostic_probes_requested_pages(self, mocked_fetch):
