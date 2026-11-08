@@ -195,12 +195,23 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
         try:
             chunk_body, final_url = fetch(chunk_url)
             excerpts = []
-            for match in patterns.finditer(chunk_body):
-                a, b = max(0, match.start()-350), min(len(chunk_body), match.end()+700)
+            # Capture request/data-flow clues across the complete minified bundle,
+            # rather than stopping at the first generic filter-related matches.
+            clue_pattern = re.compile(
+                r"fetch\s*\(|XMLHttpRequest|axios|\$fetch|\.get\(|\.post\(|"
+                r"URLSearchParams|application/json|content-type|api/|/api|"
+                r"FilterCounty|FilterType|pageSize|pageNumber|currentPage|"
+                r"totalItems|totalPages|loadMore|newsItems|newsList|News",
+                re.I,
+            )
+            seen_excerpts = set()
+            for match in clue_pattern.finditer(chunk_body):
+                a, b = max(0, match.start()-650), min(len(chunk_body), match.end()+1100)
                 excerpt = re.sub(r"\s+", " ", chunk_body[a:b])
-                if excerpt not in excerpts:
-                    excerpts.append(excerpt)
-                if len(excerpts) >= 50:
+                if excerpt not in seen_excerpts:
+                    seen_excerpts.add(excerpt)
+                    excerpts.append({"offset": match.start(), "clue": match.group(0), "excerpt": excerpt})
+                if len(excerpts) >= 120:
                     break
             reports.append({"url": chunk_url, "final_url": final_url, "status": "ok",
                             "chunk_id": chunk_id, "chunk_name": chunk_name,
