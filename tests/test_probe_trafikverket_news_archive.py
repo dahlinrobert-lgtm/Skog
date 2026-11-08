@@ -2,7 +2,7 @@ import json
 import unittest
 from unittest.mock import patch
 
-from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, parse_archive
+from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
@@ -45,6 +45,20 @@ class TrafikverketArchiveParserTests(unittest.TestCase):
         self.assertIn("currentPage=1", result[0]["url"])
         self.assertIn("currentPage=2", result[1]["url"])
         self.assertEqual(mocked_fetch.call_count, 2)
+
+    @patch("scripts.probe_trafikverket_news_archive.fetch")
+    def test_date_filter_probe_tests_historical_and_control_windows(self, mocked_fetch):
+        mocked_fetch.return_value = (
+            json.dumps({"Items": [{"Name": "Test", "Link": "/test/", "Date": "14 nov. 2024"}], "TotalHits": 1}),
+            "https://www.trafikverket.se/api/news",
+        )
+        result = inspect_news_archive_date_filters()
+        self.assertEqual(len(result), 3)
+        self.assertTrue(all(item["status"] == "ok" for item in result))
+        self.assertIn("fromDate=2020-01-01", result[0]["url"])
+        self.assertIn("toDate=2024-11-13", result[0]["url"])
+        self.assertIn("counties=18", result[0]["url"])
+        self.assertEqual(mocked_fetch.call_count, 3)
 
     @patch("scripts.probe_trafikverket_news_archive.fetch")
     def test_county_content_api_uses_bounded_sizes(self, mocked_fetch):
