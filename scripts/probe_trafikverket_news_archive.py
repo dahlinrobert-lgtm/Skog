@@ -1,16 +1,9 @@
 #!/usr/bin/env python3
-"""Low-impact discovery probe for Trafikverket's Västerbotten news archive.
-
-The probe inspects the public archive page, its pagination controls and public
-sitemap declarations. It does not crawl article bodies or download bulk data.
-This is an intentional first step: identify the archive's supported retrieval
-mechanism before implementing a historical collector.
-"""
+"""Low-impact discovery probe for Trafikverket's Västerbotten news archive."""
 from __future__ import annotations
 
 import json
 import re
-import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -21,7 +14,7 @@ from pathlib import Path
 BASE = "https://www.trafikverket.se"
 ARCHIVE_URL = BASE + "/om-oss/nyheter/?county=18"
 OUT = Path("artifacts/trafikverket-news-archive-probe.json")
-UA = "Skog-Trafikverket-news-archive-probe/1.0 (research; contact via repository)"
+UA = "Skog-Trafikverket-news-archive-probe/1.0"
 
 
 def fetch(url: str, timeout: int = 45) -> tuple[str, str]:
@@ -37,7 +30,7 @@ class ArchiveParser(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.links: list[dict] = []
         self.forms: list[dict] = []
-        self.scripts: list[str] = []
+        self.scripts: list[object] = []
         self._anchor: dict | None = None
         self._form: dict | None = None
         self._script = False
@@ -65,7 +58,7 @@ class ArchiveParser(HTMLParser):
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "a" and self._anchor is not None:
-            self._anchor["text"] = re.sub(r"\\s+", " ", self._anchor["text"]).strip()
+            self._anchor["text"] = re.sub(r"\s+", " ", self._anchor["text"]).strip()
             self.links.append(self._anchor)
             self._anchor = None
         elif tag == "form" and self._form is not None:
@@ -90,7 +83,7 @@ def parse_archive(html: str) -> dict:
             news_links.append({"url": href, "text": link["text"]})
         if re.search(r"page|offset|start|skip|more|next|p=|sida", link["href"], re.I):
             pagination_links.append({"url": href, "text": link["text"]})
-    count_match = re.search(r"Visar\\s+1\\s*[-–]\\s*\\d+\\s+av\\s+(\\d+)\\s+nyheter", html, re.I)
+    count_match = re.search(r"Visar\s+1\s*[-–]\s*\d+\s+av\s+(\d+)\s+nyheter", html, re.I)
     return {
         "archive_count": int(count_match.group(1)) if count_match else None,
         "news_links": news_links,
@@ -114,7 +107,7 @@ def inspect_sitemaps() -> list[dict]:
             body, final_url = fetch(url)
             item = {"url": url, "final_url": final_url, "status": "ok", "bytes": len(body)}
             if url.endswith("robots.txt"):
-                sitemap_urls = re.findall(r"(?im)^sitemap:\\s*(https?://\\S+)", body)
+                sitemap_urls = re.findall(r"(?im)^sitemap:\s*(https?://\S+)", body)
                 item["sitemap_declarations"] = sitemap_urls
                 queue.extend(sitemap_urls[:10])
             elif "<" in body[:100]:
@@ -126,7 +119,6 @@ def inspect_sitemaps() -> list[dict]:
                         loc for loc in locs
                         if "/om-oss/nyheter/" in loc and "/vasterbotten/" in loc
                     ][:500]
-                    # Follow sitemap indexes only, not every article URL.
                     if root.tag.endswith("sitemapindex"):
                         queue.extend(locs[:25])
                 except ET.ParseError:
@@ -157,7 +149,7 @@ def main() -> None:
         ],
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Archive count shown by source: {archive['archive_count']}")
     print(f"Candidate news/project links on first page: {len(archive['news_links'])}")
     print(f"Pagination-like links: {len(archive['pagination_links'])}")
