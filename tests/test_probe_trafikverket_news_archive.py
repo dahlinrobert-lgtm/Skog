@@ -5,7 +5,10 @@ from scripts.probe_trafikverket_news_archive import inspect_frontend_scripts, pa
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
     def test_frontend_inspector_ignores_inline_excerpt_objects(self):
-        self.assertEqual(inspect_frontend_scripts([{"inline_excerpt": "county news"}]), [])
+        result = inspect_frontend_scripts([{"inline_excerpt": "county news"}])
+        self.assertEqual(len(result), 1)
+        self.assertIn("runtime_chunk_map_diagnostic", result[0])
+        self.assertFalse(result[0]["runtime_chunk_map_diagnostic"]["runtime_found"])
 
     def test_extracts_count_links_and_paging(self):
         html = """
