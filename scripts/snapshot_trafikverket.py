@@ -79,28 +79,36 @@ def query_count(layer_url, layer_name):
     return count
 
 
-def query_page(layer_url, last_oid, page_size, layer_name, oid_field):
-    """Fetch the next keyset page by OID, avoiding unreliable resultOffset paging."""
-    if not oid_field:
-        raise RuntimeError(
-            f"{layer_name}: no OID field exposed by layer metadata; "
-            "refusing offset pagination because the service has returned overlapping pages"
-        )
-    where = "1=1" if last_oid is None else f"{oid_field} > {int(last_oid)}"
+def query_object_ids(layer_url, layer_name):
+    """Ask ArcGIS for the authoritative ID set; do not depend on server sort order."""
+    result = request_json(
+        layer_url.rstrip("/") + "/query",
+        {"where": "1=1", "returnIdsOnly": "true", "returnGeometry": "false", "f": "json"},
+        context=f"Object ID inventory for {layer_name}",
+    )
+    ids = result.get("objectIds")
+    if not isinstance(ids, list):
+        raise RuntimeError(f"Object ID inventory for {layer_name}: missing objectIds in {result}")
+    normalized = [int(value) for value in ids]
+    if len(normalized) != len(set(normalized)):
+        raise RuntimeError(f"Object ID inventory for {layer_name} contains duplicate IDs")
+    return sorted(normalized)
+
+
+def query_features_by_ids(layer_url, object_ids, layer_name):
+    """Fetch a bounded explicit ID batch; response order is deliberately ignored."""
     params = {
-        "where": where,
+        "objectIds": ",".join(str(value) for value in object_ids),
         "outFields": "*",
         "returnGeometry": "true",
         "outSR": "4326",
-        "resultRecordCount": str(page_size),
-        "orderByFields": f"{oid_field} ASC",
         "f": "json",
     }
     try:
         return request_json(
             layer_url.rstrip("/") + "/query",
             params,
-            context=f"Feature keyset page for {layer_name}, after OID {last_oid}",
+            context=f"Feature batch for {layer_name}, IDs {object_ids[0]}..{object_ids[-1]}",
         )
     except RuntimeError as first_error:
         fallback = dict(params)
@@ -109,13 +117,13 @@ def query_page(layer_url, last_oid, page_size, layer_name, oid_field):
             return request_json(
                 layer_url.rstrip("/") + "/query",
                 fallback,
-                context=f"GeoJSON keyset page for {layer_name}, after OID {last_oid}",
+                context=f"GeoJSON feature batch for {layer_name}, IDs {object_ids[0]}..{object_ids[-1]}",
             )
         except RuntimeError as second_error:
             raise RuntimeError(
-                f"Both JSON and GeoJSON keyset requests failed for {layer_name} "
-                f"after OID {last_oid}. JSON error: {first_error}. "
-                f"GeoJSON error: {second_error}"
+                f"Both JSON and GeoJSON requests failed for {layer_name}, "
+                f"IDs {object_ids[0]}..{object_ids[-1]}. "
+                f"JSON error: {first_error}. GeoJSON error: {second_error}"
             ) from second_error
 
 
@@ -189,54 +197,60 @@ def save_layer(service_key, layer, base_url):
              if field.get("type") == "esriFieldTypeOID"),
             None,
         )
-    page_size = min(BATCH_SIZE, int(layer.get("maxRecordCount") or BATCH_SIZE))
-    features = []
-    seen = set()
-    last_oid = None
-    has_more = expected_count > 0
+    if not oid_field:
+        raise RuntimeError(f"{name}: no OID field exposed by layer metadata")
+    page_size = min(BATCH_SIZE, int(layer.get("maxRecordCount") or BATCH_SIZE), 200)
+    all_ids = query_object_ids(layer_url, name)
+    if len(all_ids) != expected_count:
+        raise RuntimeError(
+            f"ID inventory/count mismatch for {name}: "
+            f"{len(all_ids)} IDs versus count query {expected_count}"
+        )
 
-    while has_more:
-        payload = query_page(layer_url, last_oid, page_size, name, oid_field)
+    features = []
+    seen_ids = set()
+    for start_index in range(0, len(all_ids), page_size):
+        batch_ids = all_ids[start_index:start_index + page_size]
+        payload = query_features_by_ids(layer_url, batch_ids, name)
         raw_page = payload.get("features", [])
-        page = [normalize_feature(feature) for feature in raw_page]
-        exceeded = payload.get("exceededTransferLimit")
-        if not page and exceeded:
+        if payload.get("exceededTransferLimit"):
             raise RuntimeError(
-                f"ArcGIS reports exceededTransferLimit but returned no features "
-                f"for {name} at offset {offset}; refusing to advance blindly"
+                f"ArcGIS exceeded transfer limit for explicit ID batch in {name} "
+                f"({len(batch_ids)} requested); refusing partial batch"
             )
-        if not page:
-            has_more = False
-            break
-        page_oids = []
+        page = [normalize_feature(feature) for feature in raw_page]
+        returned_ids = []
         for feature in page:
             properties = feature.get("attributes") or feature.get("properties") or {}
             page_oid = properties.get(oid_field)
             if page_oid is None:
                 raise RuntimeError(f"Missing OID field {oid_field} in {name} response")
-            page_oids.append(int(page_oid))
-            identity = feature_identity(feature, oid_field)
-            if identity in seen:
-                raise RuntimeError(
-                    f"Duplicate OID {identity} in keyset pagination for {name}; "
-                    "the service did not honour the OID filter/order"
-                )
-            seen.add(identity)
+            page_oid = int(page_oid)
+            returned_ids.append(page_oid)
+            if page_oid in seen_ids:
+                raise RuntimeError(f"Duplicate OID {page_oid} returned for {name}")
+            seen_ids.add(page_oid)
             features.append(feature)
-        if page_oids != sorted(page_oids) or (last_oid is not None and min(page_oids) <= last_oid):
-            raise RuntimeError(f"Non-monotonic OID page in {name} after {last_oid}: {page_oids[:5]}")
-        last_oid = max(page_oids)
-        has_more = bool(exceeded) or len(features) < expected_count
-        if len(features) > expected_count:
+        expected_batch = set(batch_ids)
+        actual_batch = set(returned_ids)
+        if actual_batch != expected_batch:
+            missing = sorted(expected_batch - actual_batch)[:10]
+            unexpected = sorted(actual_batch - expected_batch)[:10]
             raise RuntimeError(
-                f"Pagination exceeded source count in {name}: "
-                f"{len(features)} records returned for count {expected_count}"
+                f"Explicit ID batch mismatch for {name}: requested {len(batch_ids)}, "
+                f"received {len(returned_ids)}; missing={missing}, unexpected={unexpected}"
             )
+        print(
+            f"{name}: fetched {min(start_index + len(batch_ids), len(all_ids))}/{len(all_ids)} "
+            "source features by explicit OID batch",
+            flush=True,
+        )
         time.sleep(0.15)
 
-    if len(features) != expected_count:
+    if len(features) != expected_count or seen_ids != set(all_ids):
         raise RuntimeError(
-            f"Layer count mismatch for {name}: downloaded {len(features)} of {expected_count}"
+            f"Layer completeness mismatch for {name}: downloaded {len(features)} "
+            f"of {expected_count} source features"
         )
 
     selected = [feature for feature in features if in_envelope(feature)]
