@@ -1,4 +1,4 @@
-name: Probe Trafikverket Västerbotten news archive
+name: Probe Trafikverket national news feed from 2024
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
       - name: Upload discovery report
         uses: actions/upload-artifact@v4
         with:
-          name: trafikverket-vasterbotten-news-archive-probe-${{ github.run_id }}
+          name: trafikverket-national-news-from-2024-${{ github.run_id }}
           path: artifacts/trafikverket-news-archive-probe.json
           if-no-files-found: error
           retention-days: 30
