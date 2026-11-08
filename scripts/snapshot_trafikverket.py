@@ -78,8 +78,11 @@ def request_json(url, params=None, attempts=5, context="ArcGIS request"):
             return data
         except urllib.error.HTTPError as exc:
             body = exc.read().decode("utf-8", errors="replace")
+            location = exc.headers.get("Location") if exc.headers else None
             last_error = RuntimeError(
                 f"{context}: HTTP {exc.code}; endpoint={url}; "
+                f"location={location}; server={exc.headers.get('Server') if exc.headers else None}; "
+                f"content_type={exc.headers.get('Content-Type') if exc.headers else None}; "
                 f"parameters={json.dumps(params or {}, ensure_ascii=False, sort_keys=True)}; "
                 f"response={body[:3000]}"
             )
