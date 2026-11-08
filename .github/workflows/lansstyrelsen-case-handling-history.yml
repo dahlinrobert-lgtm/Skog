@@ -37,6 +37,8 @@ jobs:
           limit="${{ inputs.limit }}"
           if [ -z "$limit" ]; then limit="50"; fi
           python scripts/collect_lansstyrelsen_case_handlings.py --limit "$limit"
+      - name: Test collection retry behavior
+        run: python -m unittest discover -s tests -p 'test_lansstyrelsen_case_collection.py'
       - name: Analyze quality, handling classes and execution leads
         run: |
           python -m unittest discover -s tests -p 'test_lansstyrelsen_handlings_analysis.py'
