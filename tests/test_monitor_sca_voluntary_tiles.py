@@ -449,15 +449,41 @@ def test_retry_transient_errors_recovers_without_touching_404():
     def fake_fetch(z, x, y, previous_sha, previous_state):
         calls.append((z, x, y))
         return {"z": z, "x": x, "y": y, "state": "unchanged" if x == 10 else "request_error"}
-    attempted, recovered = retry_transient_poll_errors(fetched, tiles, 2, fake_fetch)
-    assert attempted == 2 and recovered == 1
+    attempted, recovered, retry_404, retry_failed = retry_transient_poll_errors(fetched, tiles, 2, fake_fetch)
+    assert (attempted, recovered, retry_404, retry_failed) == (2, 1, 0, 1)
     assert sorted(calls) == [(12, 10, 20), (12, 11, 20)]
     assert fetched["12/10/20"]["state"] == "unchanged"
     assert fetched["12/11/20"]["state"] == "request_error"
     assert fetched["12/12/20"]["state"] == "not_found_404"
 
 
+def test_retry_404_is_not_counted_as_successful_recovery():
+    from scripts.monitor_sca_voluntary_tiles import retry_transient_poll_errors
+    tiles = {"12/10/20": old_tile([])}
+    fetched = {"12/10/20": {"state": "request_error", "error": "timeout"}}
+
+    def returns_404(z, x, y, previous_sha, previous_state):
+        return {"z": z, "x": x, "y": y, "state": "not_found_404", "http_status": 404}
+
+    assert retry_transient_poll_errors(fetched, tiles, 1, returns_404) == (1, 0, 1, 0)
+
+
+def test_retry_success_counts_valid_mvt_but_not_decode_error():
+    from scripts.monitor_sca_voluntary_tiles import retry_transient_poll_errors
+    tiles = {"12/10/20": old_tile([]), "12/11/20": {**old_tile([]), "x": 11}}
+    fetched = {
+        "12/10/20": {"state": "request_error"},
+        "12/11/20": {"state": "http_error"},
+    }
+
+    def outcomes(z, x, y, previous_sha, previous_state):
+        state = "unchanged" if x == 10 else "decode_error"
+        return {"z": z, "x": x, "y": y, "state": state}
+
+    assert retry_transient_poll_errors(fetched, tiles, 1, outcomes) == (2, 1, 0, 1)
+
+
 def test_retry_transient_errors_noop_when_no_errors():
     from scripts.monitor_sca_voluntary_tiles import retry_transient_poll_errors
     fetched = {"12/10/20": {"state": "not_found_404"}}
-    assert retry_transient_poll_errors(fetched, {}, 1) == (0, 0)
+    assert retry_transient_poll_errors(fetched, {}, 1) == (0, 0, 0, 0)
