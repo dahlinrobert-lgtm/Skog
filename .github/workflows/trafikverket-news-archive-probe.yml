@@ -2,6 +2,11 @@ name: Probe Trafikverket Västerbotten news archive
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/probe_trafikverket_news_archive.py"
+      - "tests/test_probe_trafikverket_news_archive.py"
+      - ".github/workflows/trafikverket-news-archive-probe.yml"
 
 permissions:
   contents: read
