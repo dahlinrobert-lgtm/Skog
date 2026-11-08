@@ -3,10 +3,25 @@ import unittest
 from unittest.mock import patch
 from datetime import datetime, timezone
 
-from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, collect_national_news_inventory_monthly, diagnose_monthly_pages_after_empty, diagnose_monthly_pagination_repeatability, diagnose_2024_monthly_repeatability, diagnose_2024_monthly_windows, diagnose_national_pagination, diagnose_national_pagination_boundaries, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
+from scripts.probe_trafikverket_news_archive import collect_county_news_inventory, collect_historical_date_windows, collect_national_news_inventory, collect_national_news_inventory_monthly, build_gis_linkage_inventory, diagnose_monthly_pages_after_empty, diagnose_monthly_pagination_repeatability, diagnose_2024_monthly_repeatability, diagnose_2024_monthly_windows, diagnose_national_pagination, diagnose_national_pagination_boundaries, inspect_county_content_api, inspect_frontend_scripts, inspect_news_archive_api, inspect_news_archive_date_filters, parse_archive
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
+    def test_gis_linkage_inventory_identifies_road_and_rail_candidates(self):
+        records = [
+            {'title': 'Arbete på E4 och väg 95', 'preamble': 'Vägarbete med omledning', 'url': 'https://example.test/e4', 'published_date': '1 jan. 2026'},
+            {'title': 'Norrbotniabanan byggs ut', 'preamble': 'Nya järnvägsspår', 'url': 'https://example.test/rail', 'published_date': '2 jan. 2026'},
+            {'title': 'Allmän information', 'preamble': 'Ingen geografi nämns', 'url': 'https://example.test/info'},
+        ]
+        result = build_gis_linkage_inventory(records)
+        self.assertIn('road_network_nvdb', result['records'][0]['candidate_gis_layers'])
+        self.assertIn('traffic_information_api', result['records'][0]['candidate_gis_layers'])
+        self.assertIn('rail_network_njdb', result['records'][1]['candidate_gis_layers'])
+        self.assertEqual(result['records'][0]['route_references'], ['E4', 'VÄG95'])
+        self.assertEqual(result['records'][2]['linkage_status'], 'unclassified')
+        self.assertEqual(result['records_with_any_candidate'], 2)
+
+
     def test_frontend_inspector_ignores_inline_excerpt_objects(self):
         result = inspect_frontend_scripts([{"inline_excerpt": "county news"}])
         self.assertEqual(len(result), 1)
