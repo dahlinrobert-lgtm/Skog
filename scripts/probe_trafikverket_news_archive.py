@@ -504,6 +504,43 @@ def diagnose_national_pagination(years: tuple[int, ...] = (2024, 2025, 2026), pa
 
 
 
+def diagnose_national_pagination_boundaries(page_map: dict[int, tuple[int, ...]] | None = None) -> list[dict]:
+    """Probe pages around the previously observed national pagination failure points."""
+    if page_map is None:
+        page_map = {2024: (11, 12, 13), 2025: (12, 13, 14), 2026: (47, 48, 49, 50)}
+    reports = []
+    for year, page_numbers in page_map.items():
+        pages = []
+        for page_number in page_numbers:
+            query = urllib.parse.urlencode({
+                "pageSize": 10, "currentPage": page_number,
+                "fromDate": f"{year}-01-01", "toDate": f"{year}-12-31",
+            })
+            url = f"{BASE}/api/news?{query}"
+            try:
+                body, final_url = fetch(url)
+                payload = json.loads(body)
+                if not isinstance(payload, dict) or not isinstance(payload.get("Items"), list):
+                    raise ValueError("Unexpected API response shape")
+                items = [item for item in payload["Items"] if isinstance(item, dict)]
+                pages.append({
+                    "page": page_number, "reported_total_hits": payload.get("TotalHits"),
+                    "returned": len(items),
+                    "links": [item.get("Link") for item in items if item.get("Link")],
+                    "dates": [item.get("Date") for item in items if item.get("Date")],
+                    "final_url": final_url, "status": "ok",
+                })
+            except Exception as exc:
+                pages.append({"page": page_number, "url": url, "status": "error", "error": str(exc)[:1000]})
+        all_links = [link for page in pages for link in page.get('links', [])]
+        reports.append({
+            "year": year, "requested_pages": list(page_numbers), "pages": pages,
+            "reported_total_hits_by_page": [p.get("reported_total_hits") for p in pages if p.get("status") == "ok"],
+            "unique_links": len(set(all_links)), "returned_items": len(all_links),
+            "duplicate_links": len(all_links) - len(set(all_links)),
+        })
+    return reports
+
 def collect_national_news_inventory(start_year: int = 2024, max_pages_per_year: int = 1000) -> dict:
     """Fully paginate national news results from start_year through the current year.
 
@@ -600,6 +637,7 @@ def main() -> None:
         "historical_date_window_inventories": collect_historical_date_windows(),
         "full_county_news_inventory": collect_county_news_inventory(),
         "national_pagination_diagnostics": diagnose_national_pagination(),
+        "national_pagination_boundary_diagnostics": diagnose_national_pagination_boundaries(),
         "national_news_inventory_from_2024": collect_national_news_inventory(start_year=2024),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
