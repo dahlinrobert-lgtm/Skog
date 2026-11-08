@@ -134,7 +134,7 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
     """Fetch same-origin JS bundles and expose archive/API-related code clues."""
     reports = []
     seen = set()
-    patterns = re.compile(r"county|pagination|pageSize|pageNumber|loadMore|news|nyhet|search|filter|api/|graphql|axios|fetch\\(", re.I)
+    patterns = re.compile(r"county|pagination|pageSize|pageNumber|loadMore|news|nyhet|search|filter|api/|graphql|axios|fetch\(", re.I)
     for item in script_paths:
         if not isinstance(item, str) or not item.startswith("/"):
             continue
@@ -147,7 +147,7 @@ def inspect_frontend_scripts(script_paths: list[object]) -> list[dict]:
             matches = []
             for match in patterns.finditer(body):
                 start, end = max(0, match.start()-220), min(len(body), match.end()+320)
-                excerpt = re.sub(r"\\s+", " ", body[start:end])
+                excerpt = re.sub(r"\s+", " ", body[start:end])
                 if excerpt not in matches:
                     matches.append(excerpt)
                 if len(matches) >= 35:
