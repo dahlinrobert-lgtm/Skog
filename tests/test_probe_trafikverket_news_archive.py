@@ -7,19 +7,21 @@ from scripts.probe_trafikverket_news_archive import collect_county_news_inventor
 
 
 class TrafikverketArchiveParserTests(unittest.TestCase):
-    def test_gis_linkage_inventory_identifies_road_and_rail_candidates(self):
+    def test_gis_linkage_inventory_targets_snapshot_layer_families_only(self):
         records = [
-            {'title': 'Arbete på E4 och väg 95', 'preamble': 'Vägarbete med omledning', 'url': 'https://example.test/e4', 'published_date': '1 jan. 2026'},
-            {'title': 'Norrbotniabanan byggs ut', 'preamble': 'Nya järnvägsspår', 'url': 'https://example.test/rail', 'published_date': '2 jan. 2026'},
+            {'title': 'Viltolycka på E4', 'preamble': 'Älg och rådjur på väg 95', 'url': 'https://example.test/e4', 'published_date': '1 jan. 2026'},
+            {'title': 'Faunapassage byggs', 'preamble': 'Ny viltpassage och artrik vägkant', 'url': 'https://example.test/fauna', 'published_date': '2 jan. 2026'},
+            {'title': 'Norrbotniabanan byggs ut', 'preamble': 'Nya järnvägsspår', 'url': 'https://example.test/rail', 'published_date': '3 jan. 2026'},
             {'title': 'Allmän information', 'preamble': 'Ingen geografi nämns', 'url': 'https://example.test/info'},
         ]
         result = build_gis_linkage_inventory(records)
-        self.assertIn('road_network_nvdb', result['records'][0]['candidate_gis_layers'])
-        self.assertIn('traffic_information_api', result['records'][0]['candidate_gis_layers'])
-        self.assertIn('rail_network_njdb', result['records'][1]['candidate_gis_layers'])
+        self.assertIn('nvdb_viltolyckor', result['records'][0]['candidate_gis_layers'])
+        self.assertIn('miljowebb_landskap', result['records'][1]['candidate_gis_layers'])
         self.assertEqual(result['records'][0]['route_references'], ['E4', 'VÄG95'])
-        self.assertEqual(result['records'][2]['linkage_status'], 'unclassified')
+        self.assertEqual(result['records'][2]['candidate_gis_layers'], [])
+        self.assertEqual(result['records'][3]['linkage_status'], 'unclassified')
         self.assertEqual(result['records_with_any_candidate'], 2)
+        self.assertEqual(set(result['candidate_counts_overlapping']), {'miljowebb_landskap', 'nvdb_viltolyckor'})
 
 
     def test_frontend_inspector_ignores_inline_excerpt_objects(self):
