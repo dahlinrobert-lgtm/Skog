@@ -68,6 +68,40 @@ def rows_to_dict(rows: list[list[str]]) -> dict[str, str]:
     return result
 
 
+def build_coverage_summary(targets: list[dict], cases: dict) -> dict:
+    """Summarize observed case coverage against the current eligible national set."""
+    county_totals: dict[str, set[str]] = {}
+    for target in targets:
+        county = target.get("diary", "").strip() or "Okänt län"
+        case_key = f"{county.casefold()}::{target.get('diary_number', '').strip()}"
+        county_totals.setdefault(county, set()).add(case_key)
+
+    eligible_keys = set().union(*county_totals.values()) if county_totals else set()
+    observed_keys = eligible_keys.intersection(cases)
+    county_coverage = []
+    for county in sorted(county_totals):
+        eligible = county_totals[county]
+        observed = eligible.intersection(cases)
+        total = len(eligible)
+        county_coverage.append({
+            "county": county,
+            "eligible_case_count": total,
+            "observed_case_count": len(observed),
+            "unobserved_case_count": total - len(observed),
+            "coverage_percent": round(100 * len(observed) / total, 2) if total else 0.0,
+        })
+
+    total = len(eligible_keys)
+    observed = len(observed_keys)
+    return {
+        "eligible_case_count": total,
+        "observed_case_count": observed,
+        "unobserved_case_count": total - observed,
+        "coverage_percent": round(100 * observed / total, 2) if total else 0.0,
+        "by_county": county_coverage,
+    }
+
+
 def parse_case_page(target: dict, page_data: dict, observed_at: str) -> dict:
     tables = page_data.get("tables") or []
     case_fields = {}
@@ -233,9 +267,11 @@ def main() -> int:
         with args.events.open("a", encoding="utf-8") as stream:
             for event in event_lines:
                 stream.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
+    coverage = build_coverage_summary(targets, cases)
     report = {
         "generated_at": observed_at,
         "eligible_case_count": len(seen),
+        "coverage": coverage,
         "requested_limit": args.limit,
         "target_count": len(targets),
         "success_count": sum(bool(x.get("ok")) for x in results),

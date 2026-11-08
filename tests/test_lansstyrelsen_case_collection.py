@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
-from scripts.collect_lansstyrelsen_case_handlings import goto_with_retries
+from scripts.collect_lansstyrelsen_case_handlings import build_coverage_summary, goto_with_retries
 
 
 class Response:
@@ -25,6 +25,25 @@ class FakePage:
 
 
 class RetryTests(unittest.TestCase):
+    def test_coverage_summary_reports_national_and_county_progress(self):
+        targets = [
+            {"diary": "Länsstyrelsen i Norrbottens län", "diary_number": "1-2026"},
+            {"diary": "Länsstyrelsen i Norrbottens län", "diary_number": "2-2026"},
+            {"diary": "Länsstyrelsen i Västerbottens län", "diary_number": "3-2026"},
+        ]
+        cases = {
+            "länsstyrelsen i norrbottens län::1-2026": {},
+            "länsstyrelsen i västerbottens län::3-2026": {},
+        }
+        coverage = build_coverage_summary(targets, cases)
+        self.assertEqual(coverage["eligible_case_count"], 3)
+        self.assertEqual(coverage["observed_case_count"], 2)
+        self.assertEqual(coverage["unobserved_case_count"], 1)
+        self.assertEqual(coverage["coverage_percent"], 66.67)
+        norrbotten = next(x for x in coverage["by_county"] if x["county"].endswith("Norrbottens län"))
+        self.assertEqual(norrbotten["observed_case_count"], 1)
+        self.assertEqual(norrbotten["unobserved_case_count"], 1)
+
     @patch("scripts.collect_lansstyrelsen_case_handlings.time.sleep")
     def test_retries_server_error_then_succeeds(self, sleep):
         page = FakePage([500, 503, 200])
