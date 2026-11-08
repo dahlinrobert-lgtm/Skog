@@ -296,9 +296,11 @@ def inspect_news_archive_api() -> list[dict]:
 def inspect_news_archive_date_filters() -> list[dict]:
     """Test bounded historical date windows using the frontend-discovered parameters."""
     windows = [
-        ("before_oldest_known", "2020-01-01", "2024-11-13"),
-        ("known_oldest_day", "2024-11-14", "2024-11-14"),
-        ("recent_control", "2026-01-01", "2026-12-31"),
+        ("pre_oldest_wide", "2020-01-01", "2024-12-31"),
+        ("around_oldest", "2024-11-01", "2024-12-01"),
+        ("oldest_day_exact", "2024-11-14", "2024-11-15"),
+        ("year_2025_control", "2025-01-01", "2025-12-31"),
+        ("year_2026_control", "2026-01-01", "2026-12-31"),
     ]
     reports = []
     for label, from_date, to_date in windows:
