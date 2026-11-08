@@ -173,6 +173,7 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count,
         return [], 0, 0
     limit = max(1, min(int(max_record_count or 1000), 1000))
     collected = {}
+    collected_tiles = {}
     accepted = 0
     visited = 0
 
@@ -216,11 +217,36 @@ def collect_spatial_features(layer_url, layer_name, oid_field, max_record_count,
                     oid = int(props[oid_field])
                     canonical = json.dumps(feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
                     if oid in collected:
-                        previous = json.dumps(collected[oid], sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+                        previous_feature = collected[oid]
+                        previous = json.dumps(previous_feature, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
                         if canonical != previous:
-                            raise RuntimeError(f"{layer_name}: conflicting content for OID {oid} across tiles")
+                            previous_props = previous_feature.get("properties") or previous_feature.get("attributes") or {}
+                            current_props = feature.get("properties") or feature.get("attributes") or {}
+                            previous_geometry = previous_feature.get("geometry") or {}
+                            current_geometry = feature.get("geometry") or {}
+                            previous_coords = list(positions(previous_geometry.get("coordinates", [])))
+                            current_coords = list(positions(current_geometry.get("coordinates", [])))
+                            def geometry_bbox(coords):
+                                if not coords:
+                                    return None
+                                xs = [point[0] for point in coords]
+                                ys = [point[1] for point in coords]
+                                return [min(xs), min(ys), max(xs), max(ys)]
+                            changed_properties = sorted(
+                                key for key in set(previous_props) | set(current_props)
+                                if previous_props.get(key) != current_props.get(key)
+                            )
+                            raise RuntimeError(
+                                f"{layer_name}: conflicting content for OID {oid} across tiles; "
+                                f"previous_tile={collected_tiles.get(oid)}; current_tile={tile}; "
+                                f"geometry_types={previous_geometry.get('type')}/{current_geometry.get('type')}; "
+                                f"geometry_bboxes={geometry_bbox(previous_coords)}/{geometry_bbox(current_coords)}; "
+                                f"coordinate_counts={len(previous_coords)}/{len(current_coords)}; "
+                                f"changed_properties={changed_properties[:30]}"
+                            )
                     else:
                         collected[oid] = feature
+                        collected_tiles[oid] = dict(tile)
                 accepted += 1
                 return
         if depth >= 12:
