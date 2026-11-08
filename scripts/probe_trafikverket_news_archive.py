@@ -460,12 +460,89 @@ def collect_county_news_inventory(page_size: int = 10, max_pages: int = 100) -> 
     }
 
 
+
+def collect_national_news_inventory(start_year: int = 2024, max_pages_per_year: int = 1000) -> dict:
+    """Fully paginate national news results from start_year through the current year.
+
+    Omitting the counties parameter is intentional: it requests the national feed.
+    Each calendar year is fetched separately to keep pagination bounded and auditable.
+    """
+    current_year = datetime.now(timezone.utc).year
+    if start_year < 2000 or start_year > current_year or max_pages_per_year < 1:
+        raise ValueError("Invalid start_year or max_pages_per_year")
+    yearly_reports = []
+    all_items = []
+    for year in range(start_year, current_year + 1):
+        from_date, to_date = f"{year}-01-01", f"{year}-12-31"
+        total_hits = None
+        year_items = []
+        pages = []
+        error = None
+        for page_number in range(1, max_pages_per_year + 1):
+            query = urllib.parse.urlencode({
+                "pageSize": 10, "currentPage": page_number,
+                "fromDate": from_date, "toDate": to_date,
+            })
+            url = f"{BASE}/api/news?{query}"
+            try:
+                body, final_url = fetch(url)
+                payload = json.loads(body)
+                if not isinstance(payload, dict) or not isinstance(payload.get("Items"), list):
+                    raise ValueError("Unexpected API response shape")
+                reported_total = payload.get("TotalHits")
+                if not isinstance(reported_total, int):
+                    raise ValueError("Missing TotalHits")
+                if total_hits is None:
+                    total_hits = reported_total
+                elif total_hits != reported_total:
+                    raise ValueError("TotalHits changed during annual pagination")
+                items = payload["Items"]
+                pages.append({"page": page_number, "returned": len(items), "url": url})
+                year_items.extend(item for item in items if isinstance(item, dict))
+                if len(year_items) >= total_hits or not items:
+                    break
+            except Exception as exc:
+                error = f"page {page_number}: {exc}"
+                break
+        else:
+            error = f"Reached {max_pages_per_year} pages before collecting TotalHits"
+        all_items.extend(year_items)
+        yearly_reports.append({
+            "year": year, "from_date": from_date, "to_date": to_date,
+            "status": "error" if error else "ok", "error": error,
+            "reported_total_hits": total_hits, "pages_fetched": pages,
+            "raw_items_count": len(year_items),
+            "complete_against_reported_total": error is None and total_hits is not None and len(year_items) >= total_hits,
+        })
+    by_link = {}
+    for item in all_items:
+        link = item.get("Link")
+        if isinstance(link, str) and link:
+            by_link.setdefault(link, item)
+    records = [{
+        "title": item.get("Name"),
+        "url": urllib.parse.urljoin(BASE, link),
+        "published_date": item.get("Date"),
+        "changed_at": item.get("Changed"),
+        "category": item.get("Label"),
+        "preamble": item.get("Preamble"),
+    } for link, item in by_link.items()]
+    return {
+        "scope": "national", "start_year": start_year, "end_year": current_year,
+        "county_filter": None, "page_size": 10, "yearly_reports": yearly_reports,
+        "raw_items_count": len(all_items), "unique_article_count": len(records),
+        "duplicate_count": len(all_items) - len(records), "records": records,
+        "complete": all(report["complete_against_reported_total"] for report in yearly_reports),
+    }
+
+
 def main() -> None:
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
     report = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "source": "Trafikverket public news archive",
+        "scope": "Västerbotten probe plus national inventory",
         "county": "Västerbotten",
         "county_query_parameter": "county=18",
         "archive_url": ARCHIVE_URL,
@@ -479,6 +556,7 @@ def main() -> None:
         "news_archive_date_filter_probes": inspect_news_archive_date_filters(),
         "historical_date_window_inventories": collect_historical_date_windows(),
         "full_county_news_inventory": collect_county_news_inventory(),
+        "national_news_inventory_from_2024": collect_national_news_inventory(start_year=2024),
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
