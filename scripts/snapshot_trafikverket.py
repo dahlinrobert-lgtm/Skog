@@ -97,30 +97,34 @@ def query_object_ids(layer_url, layer_name):
 
 
 def probe_query_modes(layer_url, layer_name, object_ids, oid_field):
-    """Probe ArcGIS selection semantics before strict collection; probes are not data."""
+    """Probe ArcGIS selection semantics for first and second OIDs and output formats."""
     probes = []
-    probe_id = object_ids[min(1, len(object_ids) - 1)]
-    predicate = f"{oid_field} = {probe_id}"
-    cases = [
-        ("objectIds", {"objectIds": str(probe_id)}),
-        ("where_oid", {"where": predicate}),
-        ("where_one", {"where": "1=1", "resultRecordCount": "1"}),
-        ("where_oid_outfields", {"where": predicate, "outFields": "*"}),
-        ("where_oid_no_geometry", {"where": predicate, "returnGeometry": "false"}),
-        ("where_oid_geometry", {"where": predicate, "returnGeometry": "true", "outSR": "4326"}),
-    ]
+    probe_ids = object_ids[:2]
+    cases = []
+    for probe_id in probe_ids:
+        predicate = f"{oid_field} = {probe_id}"
+        cases.extend([
+            (f"oid_{probe_id}_objectIds_no_outsr_json", {"objectIds": str(probe_id)}),
+            (f"oid_{probe_id}_objectIds_outsr_json", {"objectIds": str(probe_id), "outSR": "4326"}),
+            (f"oid_{probe_id}_where_no_outsr_json", {"where": predicate}),
+            (f"oid_{probe_id}_where_outsr_json", {"where": predicate, "outSR": "4326"}),
+            (f"oid_{probe_id}_objectIds_no_outsr_geojson", {"objectIds": str(probe_id), "f": "geojson"}),
+            (f"oid_{probe_id}_where_no_outsr_geojson", {"where": predicate, "f": "geojson"}),
+            (f"oid_{probe_id}_where_geometry_json", {"where": predicate, "returnGeometry": "true"}),
+        ])
     for label, extra in cases:
-        params = {"outFields": "*", "returnGeometry": "false", "f": "json", **extra}
+        params = {"outFields": "*", "returnGeometry": "true", "f": "json", **extra}
         try:
             result = request_json(layer_url.rstrip("/") + "/query", params,
                                   context=f"Diagnostic {label} probe for {layer_name}")
             rows = result.get("features", [])
             probes.append({"mode": label, "feature_count": len(rows),
                            "returned_ids": [((x.get("attributes") or {}).get(oid_field)) for x in rows[:5]],
+                           "geometry_present": [bool(x.get("geometry")) for x in rows[:5]],
                            "error": result.get("error")})
         except Exception as exc:
             probes.append({"mode": label, "error": str(exc)})
-    print(f"DIAGNOSTIC {layer_name} OID={oid_field} probe_id={probe_id}: {json.dumps(probes, ensure_ascii=False)}", flush=True)
+    print(f"DIAGNOSTIC {layer_name} OID={oid_field}: {json.dumps(probes, ensure_ascii=False)}", flush=True)
 
 def query_features_by_ids(layer_url, object_ids, layer_name):
     """Fetch a bounded explicit ID batch; response order is deliberately ignored."""
