@@ -9,6 +9,7 @@ on:
       - "data/sca/monitoring/event-schema.json"
       - "tests/test_monitor_sca_voluntary_tiles.py"
       - ".github/workflows/test-sca-voluntary-change-monitor.yml"
+      - ".github/workflows/monitor-sca-voluntary-changes.yml"
   workflow_dispatch:
 
 permissions:

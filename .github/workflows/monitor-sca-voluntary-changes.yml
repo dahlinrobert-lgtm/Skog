@@ -38,40 +38,45 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: python -m pytest -q tests/test_monitor_sca_voluntary_tiles.py
-      - name: Bootstrap discovery cache when no monthly snapshot exists
-        if: ${{ !hashFiles('data/sca/discovery/sca-national-independent-layer-census-z9.json') || !hashFiles('data/sca/discovery/sca-multizoom-coverage-audit.json') }}
-        run: |
-          mkdir -p output data/sca/discovery
-          python scripts/sca_national_independent_layer_census_z9.py --out output/sca-national-independent-layer-census-z9.json --workers 4
-          python scripts/audit_sca_tile_coverage.py \
-            --census output/sca-national-independent-layer-census-z9.json \
-            --out output/sca-multizoom-coverage-audit.json \
-            --samples-per-class 8 --no-positive-404-samples 8 \
-            --near-positive-404-samples 4 --ownership-positive-404-samples 9 --workers 2
-          python scripts/audit_sca_parent_child_geometry_overlap.py --audit output/sca-multizoom-coverage-audit.json --out output/sca-parent-child-geometry-overlap.json
-          python scripts/audit_sca_cluster_point_targeted_probes.py --overlap output/sca-parent-child-geometry-overlap.json --out output/sca-cluster-point-targeted-probes.json --workers 4
-          python scripts/audit_sca_neighbour_point_correspondence.py --input output/sca-cluster-point-targeted-probes.json --out output/sca-neighbour-point-correspondence.json --workers 4
-          cp output/sca-national-independent-layer-census-z9.json data/sca/discovery/
-          cp output/sca-multizoom-coverage-audit.json data/sca/discovery/
-          cp output/sca-parent-child-geometry-overlap.json data/sca/discovery/
-          cp output/sca-cluster-point-targeted-probes.json data/sca/discovery/
-          cp output/sca-neighbour-point-correspondence.json data/sca/discovery/
-      - name: Validate cached monthly SCA discovery snapshot
+      - name: Require cached monthly SCA discovery snapshot
         run: |
           python - <<'PY'
           import json
           from datetime import datetime, timezone
           from pathlib import Path
-          census = json.loads(Path("data/sca/discovery/sca-national-independent-layer-census-z9.json").read_text())
-          audit = json.loads(Path("data/sca/discovery/sca-multizoom-coverage-audit.json").read_text())
+
+          census_path = Path("data/sca/discovery/sca-national-independent-layer-census-z9.json")
+          audit_path = Path("data/sca/discovery/sca-multizoom-coverage-audit.json")
+          required = [
+              census_path,
+              audit_path,
+              Path("data/sca/discovery/sca-parent-child-geometry-overlap.json"),
+              Path("data/sca/discovery/sca-cluster-point-targeted-probes.json"),
+              Path("data/sca/discovery/sca-neighbour-point-correspondence.json"),
+          ]
+          missing = [str(path) for path in required if not path.is_file()]
+          assert not missing, (
+              "Monthly SCA discovery snapshot is missing. Run "
+              "'Refresh SCA national discovery snapshot' first; weekly monitoring "
+              "must not perform national discovery. Missing: " + ", ".join(missing)
+          )
+
+          census = json.loads(census_path.read_text())
+          audit = json.loads(audit_path.read_text())
           generated = datetime.fromisoformat(census["generated_at"].replace("Z", "+00:00"))
           age_days = (datetime.now(timezone.utc) - generated).total_seconds() / 86400
           summary = census.get("summary", {})
           assert summary.get("tiles_in_bbox", 0) > 0
           assert summary.get("tiles_completed") == summary.get("tiles_in_bbox"), "Cached national census is incomplete"
-          assert age_days <= 45, f"Cached national census is stale ({age_days:.1f} days)"
+          assert age_days <= 45, f"Cached national census is stale ({age_days:.1f} days); refresh discovery before monitoring"
           assert audit.get("schema_version") == 1 and audit.get("probe_results"), "Cached multizoom audit is missing or invalid"
-          print(json.dumps({"discovery_generated_at": census["generated_at"], "discovery_age_days": round(age_days, 1), "census_tiles": summary["tiles_completed"], "audit_probe_tiles": len(audit["probe_results"])}, indent=2))
+          print(json.dumps({
+              "discovery_generated_at": census["generated_at"],
+              "discovery_age_days": round(age_days, 1),
+              "census_tiles": summary["tiles_completed"],
+              "audit_probe_tiles": len(audit["probe_results"]),
+              "discovery_mode": "reused_cached_monthly_snapshot"
+          }, indent=2))
           PY
       - name: Poll z12 tiles and compare geometry and metadata
         env:
