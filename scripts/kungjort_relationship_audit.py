@@ -112,7 +112,7 @@ def _latest_selection_blob(service: Any) -> tuple[str, str]:
     parts = name.split("/")
     if len(parts) < 5:
         raise RuntimeError("Unexpected private selection index path")
-    return parts[2], name
+    return parts[3], name
 
 
 def build_reference_audit(service: Any, max_batches: int, run_id: str) -> tuple[list[dict], dict]:
