@@ -97,24 +97,25 @@ def read_jsonl_gzip(payload: bytes) -> list[dict]:
 
 def build_report(service: BlobServiceClient, max_batches: int) -> dict:
     sections = []
-    remaining = max_batches
+    total_batches = 0
     for container, prefix, label in SOURCES:
-        if remaining <= 0:
-            break
         client = service.get_container_client(container)
-        names = sorted(blob.name for blob in client.list_blobs(name_starts_with=prefix))
-        selected = names[:remaining]
+        names = sorted(
+            blob.name for blob in client.list_blobs(name_starts_with=prefix)
+            if blob.name.endswith(".jsonl.gz")
+        )
+        selected = names[:max_batches]
         records = []
         for name in selected:
             payload = service.get_blob_client(container=container, blob=name).download_blob().readall()
             records.extend(read_jsonl_gzip(payload))
         sections.append(summarize_records(records, label))
-        remaining -= len(selected)
+        total_batches += len(selected)
 
     return {
         "schema_version": 1,
         "report_type": "kungjort_value_free_schema_inventory",
-        "batches_reviewed": max_batches - remaining,
+        "batches_reviewed": total_batches,
         "sections": sections,
         "privacy_note": (
             "Schema only: field paths, observed JSON types and counts. "
