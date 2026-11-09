@@ -8,7 +8,9 @@ on:
       - "scripts/kungjort_schema_audit.py"
       - "scripts/kungjort_document_selection.py"
       - "scripts/kungjort_selection_inventory.py"
+      - "scripts/kungjort_relationship_audit.py"
       - "tests/test_kungjort_selection_inventory.py"
+      - "tests/test_kungjort_relationship_audit.py"
       - "tests/test_kungjort_document_selection.py"
       - "tests/test_kungjort_schema_audit.py"
       - ".github/workflows/sync-kungjort-azure.yml"
@@ -26,6 +28,7 @@ on:
           - quality-report
           - schema-report
           - selection-report
+          - relationship-report
       max_pages:
         description: Maximum API pages or reclassification batches to process
         required: true
@@ -66,7 +69,7 @@ jobs:
       - name: Test Azure sync helpers
         if: github.event_name == 'pull_request'
         run: |
-          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py
+          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py scripts/kungjort_relationship_audit.py
           python -m unittest discover -s tests -p "test_kungjort_*.py"
       - name: Resolve run mode
         if: github.event_name != 'pull_request'
@@ -146,6 +149,20 @@ jobs:
         with:
           name: kungjort-planning-selection-summary
           path: selection-report-export/selection-summary.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Export private planning reference coverage audit
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'relationship-report'
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/kungjort_relationship_audit.py
+          python scripts/kungjort_relationship_audit.py --max-batches 2000
+      - name: Upload aggregate planning reference coverage summary
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'relationship-report'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-planning-reference-coverage
+          path: relationship-report-export/reference-coverage-summary.json
           if-no-files-found: error
           retention-days: 14
       - name: Export aggregate quality summary
