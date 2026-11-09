@@ -72,9 +72,6 @@ jobs:
         run: |
           python -m json.tool output/sca-voluntary-change-summary.json > /dev/null
           python -m json.tool data/sca/discovery/sca-multizoom-coverage-audit.json > /dev/null
-          python -m json.tool output/sca-parent-child-geometry-overlap.json > /dev/null
-          python -m json.tool output/sca-cluster-point-targeted-probes.json > /dev/null
-          python -m json.tool output/sca-neighbour-point-correspondence.json > /dev/null
           python - <<'PY'
           import gzip, json
           from pathlib import Path
@@ -131,10 +128,10 @@ jobs:
           path: |
             output/sca-voluntary-change-summary.json
             output/sca-voluntary-change-events.jsonl.gz
-            sca-national-independent-layer-census-z9.json
-            output/sca-multizoom-coverage-audit.json
-            output/sca-parent-child-geometry-overlap.json
-            output/sca-cluster-point-targeted-probes.json
-            output/sca-neighbour-point-correspondence.json
+            data/sca/discovery/sca-national-independent-layer-census-z9.json
+            data/sca/discovery/sca-multizoom-coverage-audit.json
+            data/sca/discovery/sca-parent-child-geometry-overlap.json
+            data/sca/discovery/sca-cluster-point-targeted-probes.json
+            data/sca/discovery/sca-neighbour-point-correspondence.json
           if-no-files-found: error
           retention-days: 90
