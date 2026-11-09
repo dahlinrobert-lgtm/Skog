@@ -7,6 +7,8 @@ on:
       - "tests/test_kungjort_azure_sync.py"
       - "scripts/kungjort_schema_audit.py"
       - "scripts/kungjort_document_selection.py"
+      - "scripts/kungjort_selection_inventory.py"
+      - "tests/test_kungjort_selection_inventory.py"
       - "tests/test_kungjort_document_selection.py"
       - "tests/test_kungjort_schema_audit.py"
       - ".github/workflows/sync-kungjort-azure.yml"
@@ -23,6 +25,7 @@ on:
           - reclassify
           - quality-report
           - schema-report
+          - selection-report
       max_pages:
         description: Maximum API pages or reclassification batches to process
         required: true
@@ -32,6 +35,11 @@ on:
         description: Maximum archive batches per source prefix for schema-report
         required: true
         default: "20"
+        type: string
+      selection_max_batches:
+        description: Maximum archive batches per source prefix for selection-report
+        required: true
+        default: "500"
         type: string
   schedule:
     - cron: "23 4 * * *"
@@ -58,7 +66,7 @@ jobs:
       - name: Test Azure sync helpers
         if: github.event_name == 'pull_request'
         run: |
-          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py scripts/kungjort_document_selection.py
+          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py
           python -m unittest discover -s tests -p "test_kungjort_*.py"
       - name: Resolve run mode
         if: github.event_name != 'pull_request'
@@ -68,6 +76,7 @@ jobs:
           INPUT_MODE: ${{ inputs.mode }}
           INPUT_MAX_PAGES: ${{ inputs.max_pages }}
           INPUT_MAX_BATCHES: ${{ inputs.max_batches }}
+          INPUT_SELECTION_MAX_BATCHES: ${{ inputs.selection_max_batches }}
         run: |
           set -euo pipefail
           if [[ "$EVENT_NAME" == "schedule" ]]; then
@@ -89,6 +98,12 @@ jobs:
             exit 1
           fi
           echo "max_batches=$max_batches" >> "$GITHUB_OUTPUT"
+          selection_max_batches="${INPUT_SELECTION_MAX_BATCHES:-500}"
+          if ! [[ "$selection_max_batches" =~ ^[0-9]+$ ]] || (( selection_max_batches < 1 || selection_max_batches > 2000 )); then
+            echo "selection_max_batches must be between 1 and 2000" >&2
+            exit 1
+          fi
+          echo "selection_max_batches=$selection_max_batches" >> "$GITHUB_OUTPUT"
       - name: Sign in to Azure with GitHub OIDC
         if: github.event_name != 'pull_request'
         uses: azure/login@v2
@@ -97,7 +112,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Run direct-to-Azure synchronization
-        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report'
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report' && steps.mode.outputs.mode != 'selection-report'
         env:
           KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
         run: |
@@ -117,6 +132,20 @@ jobs:
         with:
           name: kungjort-schema-inventory
           path: schema-report-export/schema-inventory.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Export private planning selection inventory
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'selection-report'
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py
+          python scripts/kungjort_selection_inventory.py --max-batches "${{ steps.mode.outputs.selection_max_batches }}"
+      - name: Upload aggregate planning selection summary
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'selection-report'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-planning-selection-summary
+          path: selection-report-export/selection-summary.json
           if-no-files-found: error
           retention-days: 14
       - name: Export aggregate quality summary
