@@ -198,9 +198,9 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
             "committee_resolution_status": committee_resolution.get("status", "unknown"),
             "committee_evidence": committee_resolution.get("evidence", []),
             "administration_name": (identity.get("administration") or {}).get("name"),
-            "authority_resolution_status": resolution.get("status", "unknown"),
-            "authority_resolution_method": resolution.get("method"),
-            "authority_evidence": resolution.get("evidence", []),
+            "authority_resolution_status": municipality_resolution.get("status", "unknown"),
+            "authority_resolution_method": municipality_resolution.get("method"),
+            "authority_evidence": municipality_resolution.get("evidence", []),
             "has_detail_record": bool(detail),
             "work_ids": [
                 {"raw": value, "normalized": value, "role": "detected_in_semantic_text"}
