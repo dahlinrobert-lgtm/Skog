@@ -6,6 +6,7 @@ from scripts.kungjort_relationship_audit import (
     extract_reference_values,
     normalize_reference,
     read_jsonl_gzip,
+    _latest_selection_blob,
 )
 
 
@@ -65,6 +66,7 @@ class KungjortRelationshipAuditTests(unittest.TestCase):
                     "case_id": "CASE-1",
                     "dnr": "2026/12",
                     "normalized_dnr": "2026-12",
+                    "relation": "successor",
                 }],
                 "dnr": ["2026/12", "2026/13"],
                 "decision_id": "DEC-1",
@@ -75,8 +77,18 @@ class KungjortRelationshipAuditTests(unittest.TestCase):
         self.assertEqual(values["case_id"], {"case-1"})
         self.assertEqual(values["case_dnr"], {"2026/12"})
         self.assertEqual(values["normalized_dnr"], {"2026-12"})
+        self.assertEqual(values["case_relation"], {"successor"})
         self.assertEqual(values["section_dnr"], {"2026/12", "2026/13"})
         self.assertEqual(values["decision_id"], {"dec-1"})
+
+    def test_latest_selection_blob_resolves_run_id(self):
+        service = FakeService({
+            ("metadata", "kungjort/selection/v1/20261109T100000Z/document-selection.jsonl.gz"): b"",
+            ("metadata", "kungjort/selection/v1/20261109T110000Z/document-selection.jsonl.gz"): b"",
+        })
+        run_id, name = _latest_selection_blob(service)
+        self.assertEqual(run_id, "20261109T110000Z")
+        self.assertTrue(name.endswith("document-selection.jsonl.gz"))
 
     def test_builds_priority_coverage_and_shared_reference_counts(self):
         run_id = "test-run"
