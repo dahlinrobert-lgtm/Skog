@@ -6,6 +6,7 @@ from scripts.kungjort_selection_inventory import (
     _metadata,
     build_inventory,
     encode_jsonl_gzip,
+    resolve_organizational_identity,
     read_jsonl_gzip,
 )
 
@@ -134,6 +135,24 @@ class KungjortSelectionInventoryTests(unittest.TestCase):
         from scripts.kungjort_selection_inventory import resolve_authority
         result = resolve_authority({"organ": "Länsstyrelsen"})
         self.assertEqual(result["status"], "unknown")
+
+
+    def test_organizational_identity_keeps_committee_and_administration_separate(self):
+        identity = resolve_organizational_identity({
+            "municipality": "Luleå",
+            "committee_name": "Miljö- och byggnadsnämnden",
+            "administration_name": "Stadsbyggnadsförvaltningen",
+            "organ": "Luleå kommun",
+        })
+        self.assertEqual(identity["municipality"]["name"], "Luleå")
+        self.assertEqual(identity["committee"]["name"], "Miljö- och byggnadsnämnden")
+        self.assertEqual(identity["administration"]["name"], "Stadsbyggnadsförvaltningen")
+        self.assertEqual(identity["issuing_organ"]["status"], "resolved")
+
+    def test_generic_organ_is_not_promoted_to_committee(self):
+        identity = resolve_organizational_identity({"organ": "Luleå kommun"})
+        self.assertEqual(identity["committee"]["status"], "unknown")
+        self.assertEqual(identity["administration"]["status"], "unknown")
 
 
 if __name__ == "__main__":

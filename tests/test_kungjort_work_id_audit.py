@@ -70,13 +70,13 @@ class WorkIdAuditTests(unittest.TestCase):
         self.assertEqual(read_jsonl_gzip(encode_jsonl_gzip(rows)), rows)
 
     def test_builds_private_candidate_group_and_aggregate_only_report(self):
-        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
+        selection_path = "kungjort/selection/v2/test/document-selection.jsonl.gz"
         detail_path = "bootstrap-live/batch.jsonl.gz"
         blobs = {
             ("metadata", selection_path): encode_jsonl_gzip([
-                {"document_id": "a", "municipality": "Luleå", "selection": {"priority": "P1"}},
-                {"document_id": "b", "municipality": "Luleå", "selection": {"priority": "P1"}},
-                {"document_id": "c", "municipality": "Umeå", "selection": {"priority": "P1"}},
+                {"document_id": "a", "municipality": "Luleå", "organizational_identity": {"committee": {"status": "resolved", "name": "Samma nämnd"}}, "selection": {"priority": "P1"}},
+                {"document_id": "b", "municipality": "Luleå", "organizational_identity": {"committee": {"status": "resolved", "name": "Samma nämnd"}}, "selection": {"priority": "P1"}},
+                {"document_id": "c", "municipality": "Umeå", "organizational_identity": {"committee": {"status": "resolved", "name": "Annan nämnd"}}, "selection": {"priority": "P1"}},
             ]),
             ("kungjort-raw", detail_path): encode_jsonl_gzip([
                 {"document_id": "a", "detail": {"sections": [{"rubrik": "Plan KLF2023/1308"}]}},
@@ -88,12 +88,12 @@ class WorkIdAuditTests(unittest.TestCase):
         groups = [r for r in rows if r["record_type"] == "kungjort_work_id_candidate_group"]
         self.assertEqual(len(groups), 1)
         self.assertEqual(groups[0]["document_ids"], ["a", "b"])
-        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 1)
+        self.assertEqual(report["candidate_groups_same_committee_and_work_id"], 1)
         self.assertNotIn("KLF2023/1308", str(report))
         self.assertNotIn("document_ids", report)
 
     def test_missing_municipality_never_creates_candidate_group(self):
-        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
+        selection_path = "kungjort/selection/v2/test/document-selection.jsonl.gz"
         detail_path = "bootstrap-live/batch.jsonl.gz"
         blobs = {
             ("metadata", selection_path): encode_jsonl_gzip([
@@ -108,17 +108,17 @@ class WorkIdAuditTests(unittest.TestCase):
         rows, report = build_audit(FakeService(blobs), 20, "test", "audit")
         groups = [r for r in rows if r["record_type"] == "kungjort_work_id_candidate_group"]
         self.assertEqual(groups, [])
-        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 0)
+        self.assertEqual(report["candidate_groups_same_committee_and_work_id"], 0)
 
 
 
-    def test_groups_using_resolved_authority_when_explicit_municipality_field_is_missing(self):
-        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
+    def test_municipality_only_identity_does_not_create_committee_group(self):
+        selection_path = "kungjort/selection/v2/test/document-selection.jsonl.gz"
         detail_path = "bootstrap-live/batch.jsonl.gz"
         blobs = {
             ("metadata", selection_path): encode_jsonl_gzip([
-                {"document_id": "a", "authority_resolution": {"status": "resolved", "name": "Luleå", "method": "municipal_organ", "evidence": []}},
-                {"document_id": "b", "authority_resolution": {"status": "resolved", "name": "Luleå", "method": "municipal_organ", "evidence": []}},
+                {"document_id": "a", "organizational_identity": {"committee": {"status": "resolved", "name": "Samma nämnd"}}},
+                {"document_id": "b", "organizational_identity": {"committee": {"status": "unknown", "name": None}}},
             ]),
             ("kungjort-raw", detail_path): encode_jsonl_gzip([
                 {"document_id": "a", "detail": {"sections": [{"rubrik": "KLF2023/1308"}]}},
@@ -127,15 +127,15 @@ class WorkIdAuditTests(unittest.TestCase):
         }
         rows, report = build_audit(FakeService(blobs), 20, "test", "audit")
         groups = [row for row in rows if row["record_type"] == "kungjort_work_id_candidate_group"]
-        self.assertEqual(len(groups), 1)
-        self.assertEqual(report["documents_with_resolved_authority"], 2)
+        self.assertEqual(groups, [])
+        self.assertEqual(report["candidate_groups_same_committee_and_work_id"], 0)
 
     def test_conflicting_authority_does_not_create_candidate_group(self):
-        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
+        selection_path = "kungjort/selection/v2/test/document-selection.jsonl.gz"
         detail_path = "bootstrap-live/batch.jsonl.gz"
         blobs = {
             ("metadata", selection_path): encode_jsonl_gzip([
-                {"document_id": "a", "authority_resolution": {"status": "conflict", "name": None}},
+                {"document_id": "a", "authority_resolution": {"status": "conflict", "name": None}, "organizational_identity": {"committee": {"status": "conflict", "name": None}}},
                 {"document_id": "b", "authority_resolution": {"status": "conflict", "name": None}},
             ]),
             ("kungjort-raw", detail_path): encode_jsonl_gzip([
