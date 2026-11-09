@@ -105,6 +105,8 @@ def build_inventory(service: BlobServiceClient, max_batches: int, run_id: str) -
     # current reclassification > live listing index > available detail records.
     documents: dict[str, dict] = {}
     source_batch_counts = Counter()
+    source_batches_available = Counter()
+    source_scan_truncated = {}
     source_record_counts = Counter()
     missing_id_counts = Counter()
     duplicate_records = 0
@@ -114,7 +116,10 @@ def build_inventory(service: BlobServiceClient, max_batches: int, run_id: str) -
         names = sorted(
             blob.name for blob in container.list_blobs(name_starts_with=prefix)
             if blob.name.endswith(".jsonl.gz")
-        )[:max_batches]
+        )
+        source_batches_available[kind] = len(names)
+        source_scan_truncated[kind] = len(names) > max_batches
+        names = names[:max_batches]
         source_batch_counts[kind] = len(names)
         for name in names:
             payload = service.get_blob_client(container=container_name, blob=name).download_blob().readall()
@@ -190,7 +195,9 @@ def build_inventory(service: BlobServiceClient, max_batches: int, run_id: str) -
         "schema_version": SCHEMA_VERSION,
         "report_type": "kungjort_planning_selection_inventory",
         "run_id": run_id,
+        "source_batches_available": dict(sorted(source_batches_available.items())),
         "source_batches_reviewed": dict(sorted(source_batch_counts.items())),
+        "source_scan_truncated": dict(sorted(source_scan_truncated.items())),
         "source_records_reviewed": dict(sorted(source_record_counts.items())),
         "unique_documents": len(selection_records),
         "duplicate_source_records": duplicate_records,
