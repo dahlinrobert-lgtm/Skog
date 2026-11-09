@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "analysis": "Conservative cross-tile matching candidates",
+  "source": {
+    "repository": "dahlinrobert-lgtm/Skog",
+    "workflow_run_id": 42690921145,
+    "workflow_run_number": 23,
+    "artifact_id": 13709267823,
+    "archive_file": "sca-voluntary-change-events.jsonl.gz",
+    "observed_at": "2026-11-09T20:14:09+00:00"
+  },
+  "method": {
+    "analyzer": "scripts/analyze_sca_event_cross_tile_matches.py",
+    "revision": "main after PR #294 and #295",
+    "threshold_intersection_over_smaller": 0.8,
+    "comparison": "same zoom, adjacent tiles (including diagonals), same source layer",
+    "identity_assignment": false
+  },
+  "results": {
+    "input_event_count": 591,
+    "eligible_geometry_observations": 486,
+    "skipped_event_counts": {
+      "missing_tile_or_geometry": 104,
+      "event_type_not_geometry_observation": 1
+    },
+    "candidate_pair_count": 11,
+    "candidate_pairs_by_class": {
+      "strong_geometry_and_attributes_candidate": 11
+    },
+    "candidate_pairs": [
+      {
+        "tile_a": "12/2199/1123",
+        "tile_b": "12/2200/1123",
+        "intersection_over_smaller": 0.9546166881018766,
+        "event_type_a": "geometry_changed_candidate",
+        "event_type_b": "geometry_added",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2201/1122",
+        "tile_b": "12/2202/1122",
+        "intersection_over_smaller": 0.8500556526215846,
+        "event_type_a": "geometry_changed_candidate",
+        "event_type_b": "geometry_changed_candidate",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2211/1130",
+        "tile_b": "12/2212/1130",
+        "intersection_over_smaller": 0.9997781897111605,
+        "event_type_a": "geometry_changed_candidate",
+        "event_type_b": "geometry_changed_candidate",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2216/1123",
+        "tile_b": "12/2217/1123",
+        "intersection_over_smaller": 0.9999615624839285,
+        "event_type_a": "geometry_added",
+        "event_type_b": "geometry_added",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2216/1127",
+        "tile_b": "12/2217/1127",
+        "intersection_over_smaller": 0.997892716342698,
+        "event_type_a": "geometry_changed_candidate",
+        "event_type_b": "geometry_changed_candidate",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2223/1123",
+        "tile_b": "12/2224/1123",
+        "intersection_over_smaller": 0.9996613373150052,
+        "event_type_a": "geometry_added",
+        "event_type_b": "geometry_changed_candidate",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2227/1121",
+        "tile_b": "12/2228/1121",
+        "intersection_over_smaller": 0.9367931890332013,
+        "event_type_a": "geometry_changed_candidate",
+        "event_type_b": "geometry_added",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2237/1101",
+        "tile_b": "12/2238/1101",
+        "intersection_over_smaller": 0.9891483010531904,
+        "event_type_a": "geometry_added",
+        "event_type_b": "geometry_added",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2239/1109",
+        "tile_b": "12/2240/1109",
+        "intersection_over_smaller": 1,
+        "event_type_a": "geometry_added",
+        "event_type_b": "geometry_changed_candidate",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2239/1110",
+        "tile_b": "12/2240/1110",
+        "intersection_over_smaller": 0.9993394778540045,
+        "event_type_a": "geometry_changed_candidate",
+        "event_type_b": "geometry_changed_candidate",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      },
+      {
+        "tile_a": "12/2260/1095",
+        "tile_b": "12/2261/1095",
+        "intersection_over_smaller": 0.9999041064549674,
+        "event_type_a": "geometry_changed_candidate",
+        "event_type_b": "geometry_changed_candidate",
+        "all_properties_equal": true,
+        "candidate_class": "strong_geometry_and_attributes_candidate",
+        "identity_resolved": false
+      }
+    ]
+  },
+  "interpretation": [
+    "11 candidate pairs passed the 0.80 intersection-over-smaller threshold; all had identical properties.",
+    "Candidate pairs are not confirmed SCA object identities.",
+    "Single-run event-archive analysis; not a full national object census.",
+    "The 104 geometry-missing events remain historical observations, not evidence of removal.",
+    "No source events were changed, merged, deleted, or made notification-eligible.",
+    "404 responses are not interpreted as evidence that a set-aside was removed."
+  ]
+}
