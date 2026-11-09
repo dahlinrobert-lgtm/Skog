@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-08T13:16:45.470622+00:00",
+  "updated_at": "2026-11-09T14:20:03.417549+00:00",
   "cases": {
     "länsstyrelsen i dalarnas län::1034-2026": {
       "case_key": "länsstyrelsen i dalarnas län::1034-2026",
@@ -34054,6 +34054,4227 @@
       "content_hash": "4aa76b11998b4ef636da4ed40ea4673d74d1d7e7a95e6095667ee4c78ae2843e",
       "first_seen_at": "2026-11-08T13:16:45.470622+00:00",
       "last_seen_at": "2026-11-08T13:16:45.470622+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::1065-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::1065-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5396710",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "1065-2026",
+        "registered_date": "2026-02-09",
+        "title": "Kontrollprogram 2026 för Solberga bergtäkts vattenverksamhet - Köpings kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Svevia AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1065-2026-1",
+          "title": "Kontrollprogram 2026 för Solberga bergtäkts vattenverksamhet - Köpings kommun",
+          "date": "2026-02-09",
+          "sender_recipient": "Svevia AB",
+          "handling_key": "länsstyrelsen i västmanlands län::1065-2026::1065-2026-1"
+        },
+        {
+          "handling_number": "1065-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-02-12",
+          "sender_recipient": "Svevia AB",
+          "handling_key": "länsstyrelsen i västmanlands län::1065-2026::1065-2026-2"
+        },
+        {
+          "handling_number": "1065-2026-3",
+          "title": "Komplettering med uppgifter",
+          "date": "2026-02-13",
+          "sender_recipient": "Svevia AB",
+          "handling_key": "länsstyrelsen i västmanlands län::1065-2026::1065-2026-3"
+        },
+        {
+          "handling_number": "1065-2026-4",
+          "title": "Bekräftelse av mottagen komplettering",
+          "date": "2026-02-16",
+          "sender_recipient": "Svevia AB",
+          "handling_key": "länsstyrelsen i västmanlands län::1065-2026::1065-2026-4"
+        },
+        {
+          "handling_number": "1065-2026-5",
+          "title": "Komplettering med tidigare grundvattenmätningar",
+          "date": "2026-02-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::1065-2026::1065-2026-5"
+        }
+      ],
+      "content_hash": "703c9fefe7d820e79478bb0fa4209ad656f4160ed53e5777ce6559e1b1e21396",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::1340-2025": {
+      "case_key": "länsstyrelsen i västmanlands län::1340-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5048526",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "1340-2025",
+        "registered_date": "2025-02-20",
+        "title": "Manual för uppföljning i fält av naturvårdsbränningar, version 2.0.2025",
+        "status": "Avslutat",
+        "decision_date": "2026-07-08",
+        "sender_recipient": "Länsstyrelsen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1340-2025-1",
+          "title": "Manual för uppföljning i fält av naturvårdsbränningar, version 2.0.2025",
+          "date": "2025-02-20",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::1340-2025::1340-2025-1"
+        }
+      ],
+      "content_hash": "9aff368c62e1567c88ef16b1dd61cd5c8f77828d18f2de41748d309a937afedd",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2040-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2040-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5440439",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2040-2026",
+        "registered_date": "2026-03-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för dränering av odlingslotter vid Sylta i Köpings kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-12",
+        "sender_recipient": "Köpings kommun",
+        "municipality": "Köping"
+      },
+      "handlings": [
+        {
+          "handling_number": "2040-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för dränering av odlingslotter vid Sylta i Köpings kommun",
+          "date": "2026-03-23",
+          "sender_recipient": "Köpings kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2040-2026::2040-2026-1"
+        },
+        {
+          "handling_number": "2040-2026-2",
+          "title": "Meddelande om önskemål om skyndsam handläggning",
+          "date": "2026-03-27",
+          "sender_recipient": "Köpings kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2040-2026::2040-2026-2"
+        },
+        {
+          "handling_number": "2040-2026-3",
+          "title": "Bekräftelse av inkommet ärende och begäran om kompletteringar",
+          "date": "2026-04-13",
+          "sender_recipient": "Köpings kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2040-2026::2040-2026-3"
+        },
+        {
+          "handling_number": "2040-2026-4",
+          "title": "Komplettering med bild",
+          "date": "2026-04-24",
+          "sender_recipient": "Köpings kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2040-2026::2040-2026-4"
+        },
+        {
+          "handling_number": "2040-2026-5",
+          "title": "Meddelande om dimension på dränering",
+          "date": "2026-07-13",
+          "sender_recipient": "Köpings kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2040-2026::2040-2026-5"
+        },
+        {
+          "handling_number": "2040-2026-6",
+          "title": "Meddelande om att ärendet stängs",
+          "date": "2026-08-12",
+          "sender_recipient": "Köpings kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2040-2026::2040-2026-6"
+        }
+      ],
+      "content_hash": "790ffa2473e7389351df025c66816f302f82a24bf980cf4087a41ee7b7a57745",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2099-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2099-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5443242",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2099-2026",
+        "registered_date": "2026-03-25",
+        "title": "Tillsyn av vattenverksamhet i Köpings kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Köpings kommun, Samhällsbyggnadsförvaltningen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "2099-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet Köpings kommun",
+          "date": "2026-03-25",
+          "sender_recipient": "Köpings kommun, Samhällsbyggnadsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::2099-2026::2099-2026-1"
+        },
+        {
+          "handling_number": "2099-2026-2",
+          "title": "Meddelande om plats.",
+          "date": "2026-04-14",
+          "sender_recipient": "Köpings kommun, Samhällsbyggnadsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::2099-2026::2099-2026-2"
+        },
+        {
+          "handling_number": "2099-2026-3",
+          "title": "Komplettering med bilder",
+          "date": "2026-04-27",
+          "sender_recipient": "Köpings kommun, Samhällsbyggnadsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::2099-2026::2099-2026-3"
+        }
+      ],
+      "content_hash": "51fca02da2c7dd6869ed13520330d613b243c56cd1ee7d42f2f287be5b1b7639",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2182-2025": {
+      "case_key": "länsstyrelsen i västmanlands län::2182-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5087768",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2182-2025",
+        "registered_date": "2025-03-26",
+        "title": "Tillsyn av vattenverksamhet vattenuttag och grävning i vattenområde Ståltorp i Surahammars kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Surahammars kommun",
+        "municipality": "Surahammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "2182-2025-1",
+          "title": "Anmälan om åtgärder i vatten och strandkant på Ståltorp i Surahammars kommun",
+          "date": "2025-03-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-1"
+        },
+        {
+          "handling_number": "2182-2025-2",
+          "title": "Komplettering",
+          "date": "2025-03-28",
+          "sender_recipient": "Miljökontoret, Surahammars kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-2"
+        },
+        {
+          "handling_number": "2182-2025-3",
+          "title": "Förfrågan om information",
+          "date": "2025-04-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-3"
+        },
+        {
+          "handling_number": "2182-2025-4",
+          "title": "Svar på förfrågan om information",
+          "date": "2025-04-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-4"
+        },
+        {
+          "handling_number": "2182-2025-5",
+          "title": "Begäran om komplettering",
+          "date": "2025-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-5"
+        },
+        {
+          "handling_number": "2182-2025-6",
+          "title": "Komplettering med information",
+          "date": "2025-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-6"
+        },
+        {
+          "handling_number": "2182-2025-7",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-7"
+        },
+        {
+          "handling_number": "2182-2025-8",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-08-18",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::2182-2025::2182-2025-8"
+        }
+      ],
+      "content_hash": "5e8cd88326faf7b843b463b4c3b7578229424998e15f52bcd2da8d6dca66be5f",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2234-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2234-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5449524",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2234-2026",
+        "registered_date": "2026-03-31",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, underhåll av rörbro, sagån, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-27",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Sala"
+      },
+      "handlings": [
+        {
+          "handling_number": "2234-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, sagån, Sala kommun",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-1"
+        },
+        {
+          "handling_number": "2234-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-2"
+        },
+        {
+          "handling_number": "2234-2026-3",
+          "title": "Bekräftelse av anmälan",
+          "date": "2026-04-29",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-3"
+        },
+        {
+          "handling_number": "2234-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-29",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-4"
+        },
+        {
+          "handling_number": "2234-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-05",
+          "sender_recipient": "Samhällsbyggnadskontoret, Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-5"
+        },
+        {
+          "handling_number": "2234-2026-6",
+          "title": "Begäran om komplettering",
+          "date": "2026-05-22",
+          "sender_recipient": "Loxia Group",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-6"
+        },
+        {
+          "handling_number": "2234-2026-7",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-05-26",
+          "sender_recipient": "Loxia Group",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-7"
+        },
+        {
+          "handling_number": "2234-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-8"
+        },
+        {
+          "handling_number": "2234-2026-9",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-05-27",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::2234-2026::2234-2026-9"
+        }
+      ],
+      "content_hash": "9114f1aec2ae11d71205d4f4bb1c195f489f42c25de7d78e6c1da122983196f0",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2452-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2452-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5460894",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2452-2026",
+        "registered_date": "2026-04-13",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för underhåll av trumma, Bjurforsbäcken, Norberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-10",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Norberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "2452-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bjurforsbäcken, Norberg kommun",
+          "date": "2026-04-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-1"
+        },
+        {
+          "handling_number": "2452-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-2"
+        },
+        {
+          "handling_number": "2452-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-3"
+        },
+        {
+          "handling_number": "2452-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-11",
+          "sender_recipient": "Norbergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-4"
+        },
+        {
+          "handling_number": "2452-2026-5",
+          "title": "Bekräftelse av mottagen anmälan samt begäran om komplettering",
+          "date": "2026-05-12",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-5"
+        },
+        {
+          "handling_number": "2452-2026-6",
+          "title": "Meddelande om ytterligare fråga",
+          "date": "2026-05-18",
+          "sender_recipient": "Väg & Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-6"
+        },
+        {
+          "handling_number": "2452-2026-7",
+          "title": "Meddelande om metod och material",
+          "date": "2026-05-25",
+          "sender_recipient": "Väg & Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-7"
+        },
+        {
+          "handling_number": "2452-2026-8",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2026-05-29",
+          "sender_recipient": "Väg & Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-8"
+        },
+        {
+          "handling_number": "2452-2026-9",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-15",
+          "sender_recipient": "Norbergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-9"
+        },
+        {
+          "handling_number": "2452-2026-10",
+          "title": "Beslut om förbud",
+          "date": "2026-06-10",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-10"
+        },
+        {
+          "handling_number": "2452-2026-11",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-21",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2452-2026::2452-2026-11"
+        }
+      ],
+      "content_hash": "b0fae50f21b3b030199af1c1740462f19b55e12391030b317158be92018b5e8d",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2591-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2591-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5468009",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2591-2026",
+        "registered_date": "2026-04-19",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Arboga kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Arboga"
+      },
+      "handlings": [
+        {
+          "handling_number": "2591-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Arboga kommun",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-1"
+        },
+        {
+          "handling_number": "2591-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-2"
+        },
+        {
+          "handling_number": "2591-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-3"
+        },
+        {
+          "handling_number": "2591-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-4"
+        },
+        {
+          "handling_number": "2591-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-5"
+        },
+        {
+          "handling_number": "2591-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-6"
+        },
+        {
+          "handling_number": "2591-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-7"
+        },
+        {
+          "handling_number": "2591-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-8"
+        },
+        {
+          "handling_number": "2591-2026-9",
+          "title": "Begäran om komplettering svar senast 22 maj",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-9"
+        },
+        {
+          "handling_number": "2591-2026-10",
+          "title": "Begäran om yttrande om anmälan om vattenverksamhet/strandskydd",
+          "date": "2026-05-06",
+          "sender_recipient": "Arboga kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-10"
+        },
+        {
+          "handling_number": "2591-2026-11",
+          "title": "Meddelande om att strandskyddsdispens inte söks för båtplatser",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-11"
+        },
+        {
+          "handling_number": "2591-2026-12",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-25",
+          "sender_recipient": "Arboga kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-12"
+        },
+        {
+          "handling_number": "2591-2026-13",
+          "title": "Meddelande om vilka uppgifter som krävs för att bedöma muddermassor",
+          "date": "2026-05-26",
+          "sender_recipient": "Arboga kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-13"
+        },
+        {
+          "handling_number": "2591-2026-14",
+          "title": "Meddelande till sökande om karaktärisering av sediment",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-14"
+        },
+        {
+          "handling_number": "2591-2026-15",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-15"
+        },
+        {
+          "handling_number": "2591-2026-16",
+          "title": "Beslut om avvisning på grund av avslag för dispens från strandskydd",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-16"
+        },
+        {
+          "handling_number": "2591-2026-17",
+          "title": "Bekräftelse av delgivning per telefon + fråga om beslutet",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2591-2026::2591-2026-17"
+        }
+      ],
+      "content_hash": "7b603f0c53b43a4e6667554301b061c5ddf2dc6ab1109744a5252aea17a9d6be",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2623-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2623-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5469437",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2623-2026",
+        "registered_date": "2026-04-20",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendraget ligger vid Bjurforsbäcken, Norberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-11",
+        "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+        "municipality": "Norberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "2623-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendraget ligger vid Bjurforsbäcken, Norberg kommun",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-1"
+        },
+        {
+          "handling_number": "2623-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-2"
+        },
+        {
+          "handling_number": "2623-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-3"
+        },
+        {
+          "handling_number": "2623-2026-4",
+          "title": "Bekräftelse av anmälan och begäran av komplettering",
+          "date": "2026-05-06",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-4"
+        },
+        {
+          "handling_number": "2623-2026-5",
+          "title": "Begäran om yttrande Norbergs kommun",
+          "date": "2026-05-06",
+          "sender_recipient": "Norbergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-5"
+        },
+        {
+          "handling_number": "2623-2026-6",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-07",
+          "sender_recipient": "Norbergs kommun, V-Dala Miljö och bygg",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-6"
+        },
+        {
+          "handling_number": "2623-2026-7",
+          "title": "Meddelande om att sökande återtar sin anmälan",
+          "date": "2026-05-11",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-7"
+        },
+        {
+          "handling_number": "2623-2026-8",
+          "title": "Underrättelse om avskrivning av ärende",
+          "date": "2026-05-11",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-8"
+        },
+        {
+          "handling_number": "2623-2026-9",
+          "title": "Komplettering med uppgifter om infodringsmaterial",
+          "date": "2026-05-06",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2623-2026::2623-2026-9"
+        }
+      ],
+      "content_hash": "e23607c79e1dfe7569c5dcb2caee3b28712e25e2bcb9b9e1d5d7cd5901f61888",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2679-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2679-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5472391",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2679-2026",
+        "registered_date": "2026-04-22",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, OlovJons-dammen, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-12",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "2679-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, OlovJons-dammen, Sala kommun",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-1"
+        },
+        {
+          "handling_number": "2679-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-2"
+        },
+        {
+          "handling_number": "2679-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-3"
+        },
+        {
+          "handling_number": "2679-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-15",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-4"
+        },
+        {
+          "handling_number": "2679-2026-5",
+          "title": "Bekräftelse av anmälan samt fråga",
+          "date": "2026-05-15",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-5"
+        },
+        {
+          "handling_number": "2679-2026-6",
+          "title": "Meddelande om stubbar",
+          "date": "2026-05-18",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-6"
+        },
+        {
+          "handling_number": "2679-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-12",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-7"
+        },
+        {
+          "handling_number": "2679-2026-8",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-06-24",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2679-2026::2679-2026-8"
+        }
+      ],
+      "content_hash": "088c420db7208a15d99a0de63828e216510f4fe6dd79056bf4b5a1be4cc7c1f4",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2687-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2687-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5473153",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2687-2026",
+        "registered_date": "2026-04-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hasselbäcken, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-03",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "2687-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hasselbäcken, Västerås kommun",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-1"
+        },
+        {
+          "handling_number": "2687-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-2"
+        },
+        {
+          "handling_number": "2687-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-3"
+        },
+        {
+          "handling_number": "2687-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-15",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-4"
+        },
+        {
+          "handling_number": "2687-2026-5",
+          "title": "Bekräftelse av anmälan och begäran om komplettering",
+          "date": "2026-05-21",
+          "sender_recipient": "Väg & Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-5"
+        },
+        {
+          "handling_number": "2687-2026-6",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-06-04",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-6"
+        },
+        {
+          "handling_number": "2687-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-05",
+          "sender_recipient": "Miljö- och hälsoskyddsförvaltningen, Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-7"
+        },
+        {
+          "handling_number": "2687-2026-8",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-06-09",
+          "sender_recipient": "Trafikverket Underhåll Mellersta regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-8"
+        },
+        {
+          "handling_number": "2687-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-03",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-9"
+        },
+        {
+          "handling_number": "2687-2026-10",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-07-18",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2687-2026::2687-2026-10"
+        }
+      ],
+      "content_hash": "e24d8fa21cff1b691807108480aae58b4e056004c9ba0114f9678aa9a168c540",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2691-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2691-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5473345",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2691-2026",
+        "registered_date": "2026-04-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Krokbäcken, Norberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Norberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "2691-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Krokbäcken, Norberg kommun",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-1"
+        },
+        {
+          "handling_number": "2691-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-2"
+        },
+        {
+          "handling_number": "2691-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-3"
+        },
+        {
+          "handling_number": "2691-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-22",
+          "sender_recipient": "Norbergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-4"
+        },
+        {
+          "handling_number": "2691-2026-5",
+          "title": "Bekräftelse av anmälan och begäran om kompletteringar",
+          "date": "2026-05-22",
+          "sender_recipient": "Väg & Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-5"
+        },
+        {
+          "handling_number": "2691-2026-6",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-06-05",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-6"
+        },
+        {
+          "handling_number": "2691-2026-7",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-06-09",
+          "sender_recipient": "Trafikverket Underhåll Mellersta regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-7"
+        },
+        {
+          "handling_number": "2691-2026-8",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-27",
+          "sender_recipient": "Norbergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-8"
+        },
+        {
+          "handling_number": "2691-2026-9",
+          "title": "Meddelande om bottensubstrat",
+          "date": "2026-05-25",
+          "sender_recipient": "Väg & Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-9"
+        },
+        {
+          "handling_number": "2691-2026-10",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2026-05-29",
+          "sender_recipient": "Väg & Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-10"
+        },
+        {
+          "handling_number": "2691-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-07",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-11"
+        },
+        {
+          "handling_number": "2691-2026-12",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-08-03",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2691-2026::2691-2026-12"
+        }
+      ],
+      "content_hash": "772b1569ce984fb7d23f5f2db141ab861f0ed11ab203cdde938d8146f1da5664",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2812-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2812-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5478677",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2812-2026",
+        "registered_date": "2026-04-27",
+        "title": "Begäran om yttrande över undersöknings- och avgränsningssamråd 6 kap. MB inför ansökan om tillstånd till vattenverksamhet 11 kap. MB för en gång- och cykelbro över Jumkilsån i Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-18",
+        "sender_recipient": "Ensucon",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "2812-2026-1",
+          "title": "Begäran om yttrande över undersöknings- och avgränsningssamråd 6 kap. MB inför ansökan om tillstånd till vattenverksamhet 11 kap. MB för en gång- och cykelbro över Jumkilsån i Uppsala kommun",
+          "date": "2026-04-27",
+          "sender_recipient": "Ensucon",
+          "handling_key": "länsstyrelsen i västmanlands län::2812-2026::2812-2026-1"
+        },
+        {
+          "handling_number": "2812-2026-2",
+          "title": "Anteckning vid avslut",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2812-2026::2812-2026-2"
+        }
+      ],
+      "content_hash": "567344dde55cadf7fff432cee9a1110b2699996fdf49031aadd255a5e698bbd8",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2822-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2822-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5478916",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2822-2026",
+        "registered_date": "2026-04-24",
+        "title": "Återförvisat för ny handläggning om Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet på fastigheten Olvsta i Hallstahammars kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-12",
+        "sender_recipient": "Strömsholms Golfklubb",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "2822-2026-1",
+          "title": "Dom från högre instans, ändrat beslut återförvisat - M 177-26",
+          "date": "2026-04-24",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-1"
+        },
+        {
+          "handling_number": "2822-2026-2",
+          "title": "Meddelande om samrådsmöte",
+          "date": "2026-05-04",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-2"
+        },
+        {
+          "handling_number": "2822-2026-3",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-04",
+          "sender_recipient": "Atletfiskarna",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-3"
+        },
+        {
+          "handling_number": "2822-2026-4",
+          "title": "Svar på remiss",
+          "date": "2026-05-07",
+          "sender_recipient": "Atletfiskarna",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-4"
+        },
+        {
+          "handling_number": "2822-2026-5",
+          "title": "Tjänsteanteckning efter fältbesök",
+          "date": "2026-05-08",
+          "sender_recipient": "Länsstyrelsen i Västmanlands län",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-5"
+        },
+        {
+          "handling_number": "2822-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-05-11",
+          "sender_recipient": "Länsstyrelsen i Västmanlands län",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-6"
+        },
+        {
+          "handling_number": "2822-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-12",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-7"
+        },
+        {
+          "handling_number": "2822-2026-9",
+          "title": "Delgivning av beslut",
+          "date": "2026-06-12",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-9"
+        },
+        {
+          "handling_number": "2822-2026-10",
+          "title": "Tjänsteanteckning efter fältbesök",
+          "date": "2026-06-15",
+          "sender_recipient": "Länsstyrelsen i Västmanlands län",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-10"
+        },
+        {
+          "handling_number": "2822-2026-11",
+          "title": "Meddelande om mottaget beslut",
+          "date": "2026-06-26",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-11"
+        },
+        {
+          "handling_number": "2822-2026-12",
+          "title": "Bedömning av medelvattennivå i Kolbäcksgropen",
+          "date": "2026-05-28",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-12"
+        },
+        {
+          "handling_number": "2822-2026-13",
+          "title": "Tjänsteanteckning om överklagande",
+          "date": "2026-07-02",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-13"
+        },
+        {
+          "handling_number": "2822-2026-14",
+          "title": "Tjänsteanteckning om att överklagandet avslås",
+          "date": "2026-07-20",
+          "sender_recipient": "Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-14"
+        },
+        {
+          "handling_number": "2822-2026-15",
+          "title": "Meddelande om fråga om pegel är installerad och vattenivån",
+          "date": "2026-07-21",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-15"
+        },
+        {
+          "handling_number": "2822-2026-16",
+          "title": "Meddelande om svar fråga pegel är installerad och avläst",
+          "date": "2026-07-26",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-16"
+        },
+        {
+          "handling_number": "2822-2026-17",
+          "title": "Meddelande om markerad sänkningsgräns",
+          "date": "2026-08-12",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::2822-2026::2822-2026-17"
+        }
+      ],
+      "content_hash": "b8d1b72e79681aaea437b760d5ae5c5115de86d951613358336f96d9d92770be",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2917-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2917-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5484147",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2917-2026",
+        "registered_date": "2026-05-05",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Frösvibäcken, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-23",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "2917-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Frösvibäcken, Västerås kommun",
+          "date": "2026-05-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-1"
+        },
+        {
+          "handling_number": "2917-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-2"
+        },
+        {
+          "handling_number": "2917-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-05-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-3"
+        },
+        {
+          "handling_number": "2917-2026-4",
+          "title": "Bekräftelse av anmälan och begäran om komplettering",
+          "date": "2026-05-20",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-4"
+        },
+        {
+          "handling_number": "2917-2026-5",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-20",
+          "sender_recipient": "Västerås stad",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-5"
+        },
+        {
+          "handling_number": "2917-2026-6",
+          "title": "Komplettering med uppgift om erosionsskydd",
+          "date": "2026-05-22",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-6"
+        },
+        {
+          "handling_number": "2917-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-02",
+          "sender_recipient": "Västerås stad",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-7"
+        },
+        {
+          "handling_number": "2917-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-23",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-8"
+        },
+        {
+          "handling_number": "2917-2026-9",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-06-23",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-9"
+        },
+        {
+          "handling_number": "2917-2026-10",
+          "title": "Meddelande om beslut",
+          "date": "2026-06-23",
+          "sender_recipient": "Västerås stad, Miljö- och hälsoskyddsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-10"
+        },
+        {
+          "handling_number": "2917-2026-11",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-06-24",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2917-2026::2917-2026-11"
+        }
+      ],
+      "content_hash": "b95bfb0c5364b94c0d9ad4da9f4d2f654e9a20ef0f8beb5c97ce26be523934f1",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2967-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2967-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5486141",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2967-2026",
+        "registered_date": "2026-04-19",
+        "title": "Ansökan om tillstånd/ dispens för strandskydd vid anmälan om vattenverksamhet grävning, schaktning, muddring eller sprängning, Hjälmaren, Måla, Arboga kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Arboga"
+      },
+      "handlings": [
+        {
+          "handling_number": "2967-2026-1",
+          "title": "Ansökan om tillstånd/ dispens för strandskydd vid anmälan om vattenverksamhet i Hjälmaren, Arboga kommun",
+          "date": "2026-04-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2967-2026::2967-2026-1"
+        },
+        {
+          "handling_number": "2967-2026-2",
+          "title": "Bekräftelse av ansökan och fråga",
+          "date": "2026-05-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2967-2026::2967-2026-2"
+        },
+        {
+          "handling_number": "2967-2026-3",
+          "title": "Meddelande om att strandskydd inte söks för båtplatser",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2967-2026::2967-2026-3"
+        },
+        {
+          "handling_number": "2967-2026-4",
+          "title": "Beslut om avslag",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2967-2026::2967-2026-4"
+        },
+        {
+          "handling_number": "2967-2026-5",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2967-2026::2967-2026-5"
+        }
+      ],
+      "content_hash": "1571e7f7a94fedab241126259cf3f4589e150a1cedaf2606fcb0dd25e1f33d74",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2971-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2971-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5486226",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2971-2026",
+        "registered_date": "2026-05-06",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Storsjön Norberg, Norberg kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Norberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "2971-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Storsjön Norberg, Norberg kommun",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-1"
+        },
+        {
+          "handling_number": "2971-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-2"
+        },
+        {
+          "handling_number": "2971-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-3"
+        },
+        {
+          "handling_number": "2971-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-4"
+        },
+        {
+          "handling_number": "2971-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-5"
+        },
+        {
+          "handling_number": "2971-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-6"
+        },
+        {
+          "handling_number": "2971-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-7"
+        },
+        {
+          "handling_number": "2971-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-8"
+        },
+        {
+          "handling_number": "2971-2026-9",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-29",
+          "sender_recipient": "Norbergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-9"
+        },
+        {
+          "handling_number": "2971-2026-10",
+          "title": "Bekräftelse av inkommet ärende och begäran om kompletteringar",
+          "date": "2026-05-29",
+          "sender_recipient": "Vattenfall Eldistribution AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-10"
+        },
+        {
+          "handling_number": "2971-2026-11",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-06-16",
+          "sender_recipient": "Vattenfall Eldistribution AB  c/o Vattenfall Services Nordic AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-11"
+        },
+        {
+          "handling_number": "2971-2026-12",
+          "title": "Beslut om avvisning",
+          "date": "2026-06-23",
+          "sender_recipient": "Vattenfall Eldistribution AB c/o Vattenfall Services Nordic AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-12"
+        },
+        {
+          "handling_number": "2971-2026-13",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-06-23",
+          "sender_recipient": "Vattenfall Eldistribution AB c/o Vattenfall Services Nordic AB",
+          "handling_key": "länsstyrelsen i västmanlands län::2971-2026::2971-2026-13"
+        }
+      ],
+      "content_hash": "42dd48bf90cfc32ea77abbee9685e8a90beb51a174011d17f580669367906d7c",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::2982-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::2982-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5487295",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "2982-2026",
+        "registered_date": "2026-05-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skäftbäcken, Skinnskatteberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-26",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Skinnskatteberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "2982-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skäftbäcken, Skinnskatteberg kommun",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-1"
+        },
+        {
+          "handling_number": "2982-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-2"
+        },
+        {
+          "handling_number": "2982-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-3"
+        },
+        {
+          "handling_number": "2982-2026-4",
+          "title": "Bekräftelse av anmälan och begäran om komplettering",
+          "date": "2026-05-19",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-4"
+        },
+        {
+          "handling_number": "2982-2026-5",
+          "title": "Begäran om yttrande",
+          "date": "2026-05-28",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-5"
+        },
+        {
+          "handling_number": "2982-2026-6",
+          "title": "Komplettering med svar och säkerhetsdatablad",
+          "date": "2026-05-28",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-6"
+        },
+        {
+          "handling_number": "2982-2026-7",
+          "title": "Begäran om förlängd tid för yttrande 9 juni",
+          "date": "2026-05-29",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-7"
+        },
+        {
+          "handling_number": "2982-2026-8",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2026-05-29",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-8"
+        },
+        {
+          "handling_number": "2982-2026-9",
+          "title": "Komplettering med uppgifter och film",
+          "date": "2026-06-05",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-9"
+        },
+        {
+          "handling_number": "2982-2026-10",
+          "title": "Fotografier tagna vid fältbesök",
+          "date": "2026-06-12",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-10"
+        },
+        {
+          "handling_number": "2982-2026-11",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-06-12",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-11"
+        },
+        {
+          "handling_number": "2982-2026-12",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-16",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-12"
+        },
+        {
+          "handling_number": "2982-2026-13",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-13"
+        },
+        {
+          "handling_number": "2982-2026-14",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-06-26",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-14"
+        },
+        {
+          "handling_number": "2982-2026-15",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-06-26",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-15"
+        },
+        {
+          "handling_number": "2982-2026-16",
+          "title": "Meddelande om beslut",
+          "date": "2026-06-26",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::2982-2026::2982-2026-16"
+        }
+      ],
+      "content_hash": "261dd6f9c37bb655c21fcdad0b99ae8bfe566bd1692ba5f02c46968557743708",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3001-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3001-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5488191",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3001-2026",
+        "registered_date": "2026-05-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ljuse grav, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-02",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Sala"
+      },
+      "handlings": [
+        {
+          "handling_number": "3001-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ljuse grav, Sala kommun",
+          "date": "2026-05-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3001-2026::3001-2026-1"
+        },
+        {
+          "handling_number": "3001-2026-2",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-04",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3001-2026::3001-2026-2"
+        },
+        {
+          "handling_number": "3001-2026-3",
+          "title": "Bekräftelse och begäran om kompletteringar",
+          "date": "2026-06-04",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3001-2026::3001-2026-3"
+        },
+        {
+          "handling_number": "3001-2026-4",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-09",
+          "sender_recipient": "Samhällsbyggnadskontoret, Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3001-2026::3001-2026-4"
+        },
+        {
+          "handling_number": "3001-2026-5",
+          "title": "Meddelande om avgift",
+          "date": "2026-06-29",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3001-2026::3001-2026-5"
+        },
+        {
+          "handling_number": "3001-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-02",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3001-2026::3001-2026-6"
+        },
+        {
+          "handling_number": "3001-2026-7",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-07-02",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3001-2026::3001-2026-7"
+        }
+      ],
+      "content_hash": "b027dcacbcd816e9f8e507fcdaff35ddd1eb2db5826158293a8f32ba720b5f54",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3094-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3094-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5492954",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3094-2026",
+        "registered_date": "2026-05-12",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "3094-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Västerås kommun",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3094-2026::3094-2026-1"
+        },
+        {
+          "handling_number": "3094-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3094-2026::3094-2026-2"
+        },
+        {
+          "handling_number": "3094-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3094-2026::3094-2026-3"
+        },
+        {
+          "handling_number": "3094-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-15",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3094-2026::3094-2026-4"
+        },
+        {
+          "handling_number": "3094-2026-5",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-07",
+          "sender_recipient": "Västerås stad",
+          "handling_key": "länsstyrelsen i västmanlands län::3094-2026::3094-2026-5"
+        },
+        {
+          "handling_number": "3094-2026-6",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-21",
+          "sender_recipient": "Västerås stad",
+          "handling_key": "länsstyrelsen i västmanlands län::3094-2026::3094-2026-6"
+        }
+      ],
+      "content_hash": "153c9bf70aecf78d2199918b9db39ab19382ec8b66742e6935ca6332e3c6e513",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3226-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3226-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5500153",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3226-2026",
+        "registered_date": "2026-05-20",
+        "title": "Tillsyn av vattenverksamhet i samband med styrd borrning under vattendrag, på fastigheten Skinnskattebergs backe och Ämthyttan i Skinnskattebergs kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Eltel",
+        "municipality": "Skinnskatteberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "3226-2026-1",
+          "title": "Anmälan om avvikelse styrd borrning under vattendrag, på fastigheten Skinnskattebergs backe och Ämthyttan i Skinnskattebergs kommun",
+          "date": "2026-05-20",
+          "sender_recipient": "Eltel",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-1"
+        },
+        {
+          "handling_number": "3226-2026-2",
+          "title": "Meddelande om status och problembeskrivning",
+          "date": "2026-05-20",
+          "sender_recipient": "Eltel",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-2"
+        },
+        {
+          "handling_number": "3226-2026-3",
+          "title": "Meddelande om status och kontaktuppgifter",
+          "date": "2026-05-20",
+          "sender_recipient": "Mälarenergi",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-3"
+        },
+        {
+          "handling_number": "3226-2026-4",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-05-21",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-4"
+        },
+        {
+          "handling_number": "3226-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-5"
+        },
+        {
+          "handling_number": "3226-2026-6",
+          "title": "Fotografier tagna vid fältbesök 20260521",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-6"
+        },
+        {
+          "handling_number": "3226-2026-7",
+          "title": "Meddelande om plats översilningsyta borrgropsvatten",
+          "date": "2026-05-28",
+          "sender_recipient": "Eltel",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-7"
+        },
+        {
+          "handling_number": "3226-2026-8",
+          "title": "Meddelande om provsvar",
+          "date": "2026-06-03",
+          "sender_recipient": "Eltel",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-8"
+        },
+        {
+          "handling_number": "3226-2026-9",
+          "title": "Meddelande om bedömning av provsvar",
+          "date": "2026-06-09",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-9"
+        },
+        {
+          "handling_number": "3226-2026-10",
+          "title": "Tjänsteanteckning vid samtal, ok analyssvar",
+          "date": "2026-06-09",
+          "sender_recipient": "Sveaskog",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-10"
+        },
+        {
+          "handling_number": "3226-2026-11",
+          "title": "Meddelande om att provsvaren ok och att borrhålsgropen kan tömmas",
+          "date": "2026-06-10",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-11"
+        },
+        {
+          "handling_number": "3226-2026-12",
+          "title": "Fotografier tagna vid fältbesök Ämthyttan 4:1",
+          "date": "2026-06-12",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-12"
+        },
+        {
+          "handling_number": "3226-2026-13",
+          "title": "Fotografier tagna vid fältbesök borrhålsgropen",
+          "date": "2026-06-12",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-13"
+        },
+        {
+          "handling_number": "3226-2026-14",
+          "title": "Meddelande om status i reparationsarbetet av dammfåran",
+          "date": "2026-06-15",
+          "sender_recipient": "Mälarenergi",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-14"
+        },
+        {
+          "handling_number": "3226-2026-15",
+          "title": "Meddelande om status dammfåran + fotobilaga",
+          "date": "2026-06-23",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-15"
+        },
+        {
+          "handling_number": "3226-2026-16",
+          "title": "Meddelande om borrhålsgropen",
+          "date": "2026-06-25",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3226-2026::3226-2026-16"
+        }
+      ],
+      "content_hash": "aca592d92641f8bc0e32535f197f7c8baac0f9d835f492d6b79d61e67138f61e",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3306-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3306-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5505026",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3306-2026",
+        "registered_date": "2026-05-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Västerås kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "3306-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Västerås kommun",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3306-2026::3306-2026-1"
+        },
+        {
+          "handling_number": "3306-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3306-2026::3306-2026-2"
+        },
+        {
+          "handling_number": "3306-2026-3",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-15",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3306-2026::3306-2026-3"
+        },
+        {
+          "handling_number": "3306-2026-4",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-07-09",
+          "sender_recipient": "Kultur-, idrotts- och fritidsförvaltningen, Västerås stad",
+          "handling_key": "länsstyrelsen i västmanlands län::3306-2026::3306-2026-4"
+        },
+        {
+          "handling_number": "3306-2026-5",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-07-09",
+          "sender_recipient": "Kultur-, idrotts och fritidsförvaltningen, Västerås stad",
+          "handling_key": "länsstyrelsen i västmanlands län::3306-2026::3306-2026-5"
+        }
+      ],
+      "content_hash": "0b87330ba015bfd565e65a0fc5f96862db9a6218bf24f6bb8fb8b7535770274a",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3389-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3389-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5510028",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3389-2026",
+        "registered_date": "2026-05-28",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vägdike utan namn, Skinnskatteberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Skinnskatteberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "3389-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vägdike utan namn, Skinnskatteberg kommun",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-1"
+        },
+        {
+          "handling_number": "3389-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-2"
+        },
+        {
+          "handling_number": "3389-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-3"
+        },
+        {
+          "handling_number": "3389-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-4"
+        },
+        {
+          "handling_number": "3389-2026-5",
+          "title": "Fullmakt",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-5"
+        },
+        {
+          "handling_number": "3389-2026-6",
+          "title": "Bekräftelse av anmälan",
+          "date": "2026-06-15",
+          "sender_recipient": "Vattenfall Eldistribution AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-6"
+        },
+        {
+          "handling_number": "3389-2026-7",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-15",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-7"
+        },
+        {
+          "handling_number": "3389-2026-8",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-16",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-8"
+        },
+        {
+          "handling_number": "3389-2026-9",
+          "title": "Beslut om vattenverksamhet och dispens från biotopskydd",
+          "date": "2026-09-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-9"
+        },
+        {
+          "handling_number": "3389-2026-10",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-09-07",
+          "sender_recipient": "Vattenfall Eldistribution AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-10"
+        },
+        {
+          "handling_number": "3389-2026-11",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-09-08",
+          "sender_recipient": "Vattenfall Eldistribution AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3389-2026::3389-2026-11"
+        }
+      ],
+      "content_hash": "80177697dc85427de1f0ded80e3bbd3b4d308dd93a7a85c54190c3ab9aa9c8c9",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3698-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3698-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5526597",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3698-2026",
+        "registered_date": "2026-06-10",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Långforsen, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-18",
+        "sender_recipient": "Sala kommun",
+        "municipality": "Sala"
+      },
+      "handlings": [
+        {
+          "handling_number": "3698-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Långforsen, Sala kommun",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-1"
+        },
+        {
+          "handling_number": "3698-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-2"
+        },
+        {
+          "handling_number": "3698-2026-3",
+          "title": "Meddelande om möjlighet om yttrande",
+          "date": "2026-06-30",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-3"
+        },
+        {
+          "handling_number": "3698-2026-4",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-06-30",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-4"
+        },
+        {
+          "handling_number": "3698-2026-5",
+          "title": "Tjänsteanteckning vid samtal till sökande",
+          "date": "2026-06-30",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-5"
+        },
+        {
+          "handling_number": "3698-2026-6",
+          "title": "Meddelande om mottaget delbeslut",
+          "date": "2026-07-07",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-6"
+        },
+        {
+          "handling_number": "3698-2026-7",
+          "title": "Bilaga till beslut",
+          "date": "2026-08-11",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-7"
+        },
+        {
+          "handling_number": "3698-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-18",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-8"
+        },
+        {
+          "handling_number": "3698-2026-9",
+          "title": "Tjänsteanteckning om mottaget beslut.",
+          "date": "2026-08-24",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3698-2026::3698-2026-9"
+        }
+      ],
+      "content_hash": "c6f06098553b3f41b8a0f627b80c68b9d9184b558fa521c55e1cc2ffa2c60eba",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3699-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3699-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5526626",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3699-2026",
+        "registered_date": "2026-06-10",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Grissbach kanal och Mellandammen, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-14",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Sala"
+      },
+      "handlings": [
+        {
+          "handling_number": "3699-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Grissbach kanal och Mellandammen, Sala kommun",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-1"
+        },
+        {
+          "handling_number": "3699-2026-2",
+          "title": "Bekräftelse av anmälan o begäran om komplettering",
+          "date": "2026-06-15",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-2"
+        },
+        {
+          "handling_number": "3699-2026-3",
+          "title": "Begäran om yttrande, senast 10 juli",
+          "date": "2026-06-15",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-3"
+        },
+        {
+          "handling_number": "3699-2026-4",
+          "title": "Tjänsteanteckning vid samtal om delbeslut",
+          "date": "2026-06-30",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-4"
+        },
+        {
+          "handling_number": "3699-2026-5",
+          "title": "Delbeslut om förlängd handläggningstid.",
+          "date": "2026-06-30",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-5"
+        },
+        {
+          "handling_number": "3699-2026-6",
+          "title": "Meddelande om mottaget delbeslut",
+          "date": "2026-07-07",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-6"
+        },
+        {
+          "handling_number": "3699-2026-7",
+          "title": "Bilaga 1 Karta kulturmiljö 3699-2026",
+          "date": "2026-08-14",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-7"
+        },
+        {
+          "handling_number": "3699-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-14",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-8"
+        },
+        {
+          "handling_number": "3699-2026-9",
+          "title": "Meddelande om mottaget besut.",
+          "date": "2026-08-14",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3699-2026::3699-2026-9"
+        }
+      ],
+      "content_hash": "38c9361dc60ea2092d632baa0cfc11eac82e989f6117460f54ebead71fd7e9cb",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3847-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3847-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5535588",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3847-2026",
+        "registered_date": "2026-06-17",
+        "title": "Begäran om yttrande över avgränsningssamråd för behandling och deponering av avfall samt vattenverksamhet, vid Högbytorp i Upplands-Bro kommun - svar senast 2026-08-28",
+        "status": "Avslutat",
+        "decision_date": "2026-07-31",
+        "sender_recipient": "Sweco Sverige AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3847-2026-1",
+          "title": "Begäran om yttrande över avgränsningssamråd för behandling och deponering av avfall samt vattenverksamhet, vid Högbytorp i Upplands-Bro kommun - svar senast 2026-08-28",
+          "date": "2026-06-17",
+          "sender_recipient": "Sweco Sverige AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3847-2026::3847-2026-1"
+        },
+        {
+          "handling_number": "3847-2026-2",
+          "title": "Meddelande om att Vattenmyndigheten avstår från att yttra sig",
+          "date": "2026-07-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3847-2026::3847-2026-2"
+        }
+      ],
+      "content_hash": "cfbd6e01067da794d16ea604cd7013d6625ddb2e298aed91b0e3c65e4ce9f812",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3917-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3917-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5539714",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3917-2026",
+        "registered_date": "2026-06-23",
+        "title": "Avrop 1 2026 från dynamisk inköpssystem (DIS) drönarfotografering av naturvårdsbränningar - Life2Taiga",
+        "status": "Avslutat",
+        "decision_date": "2026-07-07",
+        "sender_recipient": "Länsstyrelsen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3917-2026-1",
+          "title": "Start av ärende om avrop 1 2026 från DIS drönarfotografering av naturvårdsbränningar - Life2Taiga",
+          "date": "2026-06-23",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-1"
+        },
+        {
+          "handling_number": "3917-2026-2",
+          "title": "Avropsförfrågan från ramavtal med samtliga villkor fastställda",
+          "date": "2026-06-24",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-2"
+        },
+        {
+          "handling_number": "3917-2026-3",
+          "title": "Öppningsprotokoll",
+          "date": "2026-07-07",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-3"
+        },
+        {
+          "handling_number": "3917-2026-4",
+          "title": "Kompletterande information om anbud",
+          "date": "2026-07-07",
+          "sender_recipient": "Swescan AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-4"
+        },
+        {
+          "handling_number": "3917-2026-5",
+          "title": "Tilldelningsbeslut för avrop 1 drönarfotografering",
+          "date": "2026-07-07",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-5"
+        },
+        {
+          "handling_number": "3917-2026-6",
+          "title": "Redovisning av frågor och svar under anbudstid",
+          "date": "2026-07-08",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-6"
+        },
+        {
+          "handling_number": "3917-2026-7",
+          "title": "Anbud, ej antaget",
+          "date": "2026-07-07",
+          "sender_recipient": "Björn Olin Design Teknik AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-7"
+        },
+        {
+          "handling_number": "3917-2026-8",
+          "title": "Sekretessmarkerad",
+          "date": "2026-07-07",
+          "sender_recipient": "Sekretessmarkerad",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-8"
+        },
+        {
+          "handling_number": "3917-2026-9",
+          "title": "Anbud, ej antaget",
+          "date": "2026-07-07",
+          "sender_recipient": "Gerdes solutions AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-9"
+        },
+        {
+          "handling_number": "3917-2026-10",
+          "title": "Anbud, antaget",
+          "date": "2026-07-07",
+          "sender_recipient": "GLOBHE DRONES AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-10"
+        },
+        {
+          "handling_number": "3917-2026-11",
+          "title": "Anbud, ej antaget",
+          "date": "2026-07-07",
+          "sender_recipient": "SWECO Sverige AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-11"
+        },
+        {
+          "handling_number": "3917-2026-12",
+          "title": "Anbud, antaget",
+          "date": "2026-07-07",
+          "sender_recipient": "Swescan AB",
+          "handling_key": "länsstyrelsen i västmanlands län::3917-2026::3917-2026-12"
+        }
+      ],
+      "content_hash": "2eb440882c71d838c35a3203f0f920af06fd1ba06ce7fcbbec8fef361947d249",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3927-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3927-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5540365",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3927-2026",
+        "registered_date": "2026-06-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kolbäcksån, Surahammar kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Surahammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "3927-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kolbäcksån, Surahammar kommun",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-1"
+        },
+        {
+          "handling_number": "3927-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-2"
+        },
+        {
+          "handling_number": "3927-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-3"
+        },
+        {
+          "handling_number": "3927-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-07-08",
+          "sender_recipient": "Surahammars kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-4"
+        },
+        {
+          "handling_number": "3927-2026-5",
+          "title": "Bekräftelse av anmälan och information om strandskydd",
+          "date": "2026-07-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-5"
+        },
+        {
+          "handling_number": "3927-2026-6",
+          "title": "Yttrande över anmälan om vattenverksamhet",
+          "date": "2026-07-31",
+          "sender_recipient": "Surahammars kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-6"
+        },
+        {
+          "handling_number": "3927-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-18",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-7"
+        },
+        {
+          "handling_number": "3927-2026-8",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-08-18",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::3927-2026::3927-2026-8"
+        }
+      ],
+      "content_hash": "9d043c01094bb4c0df6e197f3ffa3aba2025f89c81e90fce11e61126fa9c0c6d",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::3985-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::3985-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5543863",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "3985-2026",
+        "registered_date": "2026-06-25",
+        "title": "Föreläggande om yttrande över handlingar gällande Omprövning för moderna miljövillkor för vattenverksamheten vid Harakers kvarns vattenkraftverk med dammar i Svanå i Västerås kommun - M 6941-25",
+        "status": "Avslutat",
+        "decision_date": "2026-09-15",
+        "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "3985-2026-1",
+          "title": "Föreläggande om yttrande över handlingar gällande Omprövning för moderna miljövillkor för vattenverksamheten vid Harakers kvarns vattenkraftverk med dammar i Svanå i Västerås kommun - M 6941-25",
+          "date": "2026-06-25",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::3985-2026::3985-2026-1"
+        },
+        {
+          "handling_number": "3985-2026-2",
+          "title": "Yttrande i mål 6941-25",
+          "date": "2026-09-15",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::3985-2026::3985-2026-2"
+        },
+        {
+          "handling_number": "3985-2026-3",
+          "title": "Beslut om omprövning för moderna miljövillkor för vattenverksamheten vid Harakers kvarns vattenkraftverk med tillhörande dammar i Svanå i Västerås kommun; nu fråga om vilandeförklaring",
+          "date": "2026-10-23",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::3985-2026::3985-2026-3"
+        }
+      ],
+      "content_hash": "353683a51ab51bf21f826588ddc735c345cce4a08f49dd056018b78b126fb5e7",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4006-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4006-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5545970",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4006-2026",
+        "registered_date": "2026-06-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Isätrabäcken, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Sala"
+      },
+      "handlings": [
+        {
+          "handling_number": "4006-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Isätrabäcken, Sala kommun",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-1"
+        },
+        {
+          "handling_number": "4006-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-2"
+        },
+        {
+          "handling_number": "4006-2026-3",
+          "title": "Bekräftelse av anmälan och begäran av om komplettering, svar senast 30 juli dnr TRV 2026/75219",
+          "date": "2026-07-13",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-3"
+        },
+        {
+          "handling_number": "4006-2026-4",
+          "title": "Begäran om yttrande vattenverksamhet",
+          "date": "2026-07-13",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-4"
+        },
+        {
+          "handling_number": "4006-2026-5",
+          "title": "Yttrande över remiss, ingen erinran",
+          "date": "2026-07-13",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-5"
+        },
+        {
+          "handling_number": "4006-2026-6",
+          "title": "Tjänsteanteckning vid samtal dnr TRV 2026/75219",
+          "date": "2026-07-22",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-6"
+        },
+        {
+          "handling_number": "4006-2026-7",
+          "title": "Meddelande om förlängd tid till 19 augusti att inkomma med kompletteringar dnr TRV 2026/75219",
+          "date": "2026-07-22",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-7"
+        },
+        {
+          "handling_number": "4006-2026-8",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2026-08-19",
+          "sender_recipient": "Trafikverket dnr TRV 2026/75219",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-8"
+        },
+        {
+          "handling_number": "4006-2026-9",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-08-21",
+          "sender_recipient": "Trafikverket dnr TRV 2026/75219",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-9"
+        },
+        {
+          "handling_number": "4006-2026-10",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-10"
+        },
+        {
+          "handling_number": "4006-2026-11",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-08-24",
+          "sender_recipient": "Trafikverket dnr TRV 2026/75219",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-11"
+        },
+        {
+          "handling_number": "4006-2026-12",
+          "title": "Komplettering",
+          "date": "2026-09-17",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-12"
+        },
+        {
+          "handling_number": "4006-2026-13",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-13"
+        },
+        {
+          "handling_number": "4006-2026-14",
+          "title": "Meddelande om beslut och begäran om bekräftelse om delgivning",
+          "date": "2026-10-08",
+          "sender_recipient": "Trafikverket dnr TRV 2026/75219",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-14"
+        },
+        {
+          "handling_number": "4006-2026-15",
+          "title": "Bekräftelse av delgivning av beslut",
+          "date": "2026-10-08",
+          "sender_recipient": "Trafikverket dnr TRV 2026/75219",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-15"
+        },
+        {
+          "handling_number": "4006-2026-16",
+          "title": "Meddelande om beslut till markavvatningsföretag",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4006-2026::4006-2026-16"
+        }
+      ],
+      "content_hash": "5bd1a780b99f3d630a577f8a62b9977ac6ebf0e9c302165a02ccf05b376c8075",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4007-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4007-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5546013",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4007-2026",
+        "registered_date": "2026-06-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Biflöde till Isätrabäcken, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Sala"
+      },
+      "handlings": [
+        {
+          "handling_number": "4007-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Biflöde till Isätrabäcken, Sala kommun",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-1"
+        },
+        {
+          "handling_number": "4007-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-2"
+        },
+        {
+          "handling_number": "4007-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-07-13",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-3"
+        },
+        {
+          "handling_number": "4007-2026-4",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-4"
+        },
+        {
+          "handling_number": "4007-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-07-15",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-5"
+        },
+        {
+          "handling_number": "4007-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-6"
+        },
+        {
+          "handling_number": "4007-2026-7",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-22",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-7"
+        },
+        {
+          "handling_number": "4007-2026-8",
+          "title": "Meddelande om förlängd tid  för kompletteringar 19 aug",
+          "date": "2026-07-22",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-8"
+        },
+        {
+          "handling_number": "4007-2026-9",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2026-08-19",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-9"
+        },
+        {
+          "handling_number": "4007-2026-10",
+          "title": "Beslut om förlängd handläggningstid",
+          "date": "2026-08-21",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-10"
+        },
+        {
+          "handling_number": "4007-2026-11",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-08-21",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-11"
+        },
+        {
+          "handling_number": "4007-2026-12",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-08-24",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-12"
+        },
+        {
+          "handling_number": "4007-2026-13",
+          "title": "Komplettering",
+          "date": "2026-09-17",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-13"
+        },
+        {
+          "handling_number": "4007-2026-14",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-10-07",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-14"
+        },
+        {
+          "handling_number": "4007-2026-15",
+          "title": "Meddelande om beslut samt begäran om bekräftelse på delgivning",
+          "date": "2026-10-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-15"
+        },
+        {
+          "handling_number": "4007-2026-16",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-16"
+        },
+        {
+          "handling_number": "4007-2026-17",
+          "title": "Meddelande om beslut till kommun",
+          "date": "2026-10-08",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4007-2026::4007-2026-17"
+        }
+      ],
+      "content_hash": "d728d6fa246c7c6d1fe064f1ccee2d36708eb919a6c6640ff5ab222079113349",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4010-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4010-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5546066",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4010-2026",
+        "registered_date": "2026-06-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Biflöde till Isätrabäcken, Sala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Sala"
+      },
+      "handlings": [
+        {
+          "handling_number": "4010-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Biflöde till Isätrabäcken, Sala kommun",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-1"
+        },
+        {
+          "handling_number": "4010-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-2"
+        },
+        {
+          "handling_number": "4010-2026-3",
+          "title": "Begäran om komplettering, svar senast 10 aug",
+          "date": "2026-07-14",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-3"
+        },
+        {
+          "handling_number": "4010-2026-4",
+          "title": "Remiss om vattenverksamhet till kommun",
+          "date": "2026-07-15",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-4"
+        },
+        {
+          "handling_number": "4010-2026-5",
+          "title": "Yttrande över remiss, ingen erinran",
+          "date": "2026-07-16",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-5"
+        },
+        {
+          "handling_number": "4010-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-22",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-6"
+        },
+        {
+          "handling_number": "4010-2026-7",
+          "title": "Meddelande om förlängd tid  för kompletteringar 19 aug",
+          "date": "2026-07-22",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-7"
+        },
+        {
+          "handling_number": "4010-2026-8",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2026-08-19",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-8"
+        },
+        {
+          "handling_number": "4010-2026-9",
+          "title": "Beslut om förlängd handläggningstid",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-9"
+        },
+        {
+          "handling_number": "4010-2026-10",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-08-21",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-10"
+        },
+        {
+          "handling_number": "4010-2026-11",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-11"
+        },
+        {
+          "handling_number": "4010-2026-12",
+          "title": "Komplettering",
+          "date": "2026-09-17",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-12"
+        },
+        {
+          "handling_number": "4010-2026-13",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-13"
+        },
+        {
+          "handling_number": "4010-2026-14",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-10-09",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-14"
+        },
+        {
+          "handling_number": "4010-2026-15",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-09",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-15"
+        },
+        {
+          "handling_number": "4010-2026-16",
+          "title": "Meddelande om beslut för kännedom",
+          "date": "2026-10-09",
+          "sender_recipient": "Sala kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4010-2026::4010-2026-16"
+        }
+      ],
+      "content_hash": "02181b71b4dc0e704bf736525b8f5df1f24e05a76d4e8226787431a2ffeb107c",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4090-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4090-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5552462",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4090-2026",
+        "registered_date": "2026-07-01",
+        "title": "Överklagande av Länsstyrelsens beslut 2026-06-12, 2822-2026 om vattenverksamhet för vattenuttag i \nKolbäcksgropen, Hallstahammars kommun - M 5740-26",
+        "status": "Avslutat",
+        "decision_date": "2026-07-20",
+        "sender_recipient": "Strömsholms Golfklubb",
+        "municipality": "Hallstahammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "4090-2026-1",
+          "title": "Överklagande av Länsstyrelsens beslut 2026-06-12, 2822-2026 om vattenverksamhet för vattenuttag i \nKolbäcksgropen, Hallstahammars kommun",
+          "date": "2026-07-01",
+          "sender_recipient": "Strömsholms Golfklubb",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-1"
+        },
+        {
+          "handling_number": "4090-2026-2",
+          "title": "Överklagandet och övriga handlingar i ärendet överlämnas",
+          "date": "2026-07-02",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-2"
+        },
+        {
+          "handling_number": "4090-2026-3",
+          "title": "Meddelande om överlämnande",
+          "date": "2026-07-02",
+          "sender_recipient": "Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-3"
+        },
+        {
+          "handling_number": "4090-2026-4",
+          "title": "Förfrågan om sektress",
+          "date": "2026-07-02",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-4"
+        },
+        {
+          "handling_number": "4090-2026-5",
+          "title": "Meddelande om sekretess",
+          "date": "2026-07-02",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-5"
+        },
+        {
+          "handling_number": "4090-2026-6",
+          "title": "Tjänsteanteckning om inkommit anonymt klagomål",
+          "date": "2026-07-08",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-6"
+        },
+        {
+          "handling_number": "4090-2026-7",
+          "title": "Dom från högre instans, ej ändrat beslut avslår överklagandet i mål M 5740-26",
+          "date": "2026-07-20",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-7"
+        },
+        {
+          "handling_number": "4090-2026-8",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-08-06",
+          "sender_recipient": "SFK Atletfiskarna, Ragge",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-8"
+        },
+        {
+          "handling_number": "4090-2026-9",
+          "title": "Tjänsteanteckning efter tillsyn, installation av pegel",
+          "date": "2026-08-06",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-9"
+        },
+        {
+          "handling_number": "4090-2026-10",
+          "title": "Bild av pegel vid tillsyn 5 augusti 2026.",
+          "date": "2026-08-06",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-10"
+        },
+        {
+          "handling_number": "4090-2026-11",
+          "title": "Meddelande om markering av sänkningsgräns",
+          "date": "2026-08-06",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-11"
+        },
+        {
+          "handling_number": "4090-2026-12",
+          "title": "Meddelande om att dom vunnit laga kraft",
+          "date": "2026-08-14",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::4090-2026::4090-2026-12"
+        }
+      ],
+      "content_hash": "73ad86777f5c775d44ee5c62c0c2b703a512472ff83c59801efcb9ef3e0337e7",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4096-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4096-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5552794",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4096-2026",
+        "registered_date": "2026-07-02",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, storsjön norberg, Norberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-25",
+        "sender_recipient": "Vattenfall eldistribution AB",
+        "municipality": "Norberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "4096-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, storsjön norberg, Norberg kommun",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-1"
+        },
+        {
+          "handling_number": "4096-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-2"
+        },
+        {
+          "handling_number": "4096-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-3"
+        },
+        {
+          "handling_number": "4096-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-4"
+        },
+        {
+          "handling_number": "4096-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-5"
+        },
+        {
+          "handling_number": "4096-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-6"
+        },
+        {
+          "handling_number": "4096-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-7"
+        },
+        {
+          "handling_number": "4096-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-8"
+        },
+        {
+          "handling_number": "4096-2026-9",
+          "title": "Meddelande om mottagen anmälan",
+          "date": "2026-07-03",
+          "sender_recipient": "Vattenfall eldistribution AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-9"
+        },
+        {
+          "handling_number": "4096-2026-10",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-07-10",
+          "sender_recipient": "Västmanland-Dalarna miljö och byggförvaltning",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-10"
+        },
+        {
+          "handling_number": "4096-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-25",
+          "sender_recipient": "Vattenfall eldistribution AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-11"
+        },
+        {
+          "handling_number": "4096-2026-12",
+          "title": "Tjänsteanteckning om mottaget beslut.",
+          "date": "2026-08-26",
+          "sender_recipient": "Vattenfall eldistribution AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4096-2026::4096-2026-12"
+        }
+      ],
+      "content_hash": "77d02528b6cc246ac66e8a32c88a174f21b2c74aab0c8f4b4a90989187fdd45e",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4128-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4128-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5554777",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4128-2026",
+        "registered_date": "2026-07-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Flöde vid Arboga Prästtorp 1:8, Arboga kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-02",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Arboga"
+      },
+      "handlings": [
+        {
+          "handling_number": "4128-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Flöde vid Arboga Prästtorp 1:8, Arboga kommun",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-1"
+        },
+        {
+          "handling_number": "4128-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-2"
+        },
+        {
+          "handling_number": "4128-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-3"
+        },
+        {
+          "handling_number": "4128-2026-4",
+          "title": "Bekräftelse av anmälan och info om underhållsplikt av dike",
+          "date": "2026-07-15",
+          "sender_recipient": "Trafikverket Underhåll Mellersta regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-4"
+        },
+        {
+          "handling_number": "4128-2026-5",
+          "title": "Remiss om vattenverksamhet trumbyte svar 10 aug",
+          "date": "2026-07-16",
+          "sender_recipient": "Arboga kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-5"
+        },
+        {
+          "handling_number": "4128-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-08-24",
+          "sender_recipient": "Väg och Miljö AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-6"
+        },
+        {
+          "handling_number": "4128-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-7"
+        },
+        {
+          "handling_number": "4128-2026-8",
+          "title": "Beslut om bifall med villkor och begäran om bekräftelse på delgivning",
+          "date": "2026-09-02",
+          "sender_recipient": "Trafikverket Underhåll Mellersta regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::4128-2026::4128-2026-8"
+        }
+      ],
+      "content_hash": "57f065e4527e29532480f5e8cacc7c2dc91b8ba319fc61d2e703d9d421dd189d",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4162-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4162-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5557313",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4162-2026",
+        "registered_date": "2026-07-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, rensning och muddring av sjöbotten på fastighet Måla i Arboga kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-01",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Arboga"
+      },
+      "handlings": [
+        {
+          "handling_number": "4162-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, rensning och muddring av sjöbotten på fastighet Måla i Arboga kommun",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4162-2026::4162-2026-1"
+        },
+        {
+          "handling_number": "4162-2026-2",
+          "title": "Begäran om yttrande",
+          "date": "2026-07-10",
+          "sender_recipient": "Arboga kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4162-2026::4162-2026-2"
+        },
+        {
+          "handling_number": "4162-2026-3",
+          "title": "Bekräftelse av anmälan",
+          "date": "2026-07-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4162-2026::4162-2026-3"
+        },
+        {
+          "handling_number": "4162-2026-4",
+          "title": "Yttrande över remiss",
+          "date": "2026-08-04",
+          "sender_recipient": "Västra Mälardalens Myndighetsförbund",
+          "handling_key": "länsstyrelsen i västmanlands län::4162-2026::4162-2026-4"
+        },
+        {
+          "handling_number": "4162-2026-5",
+          "title": "Meddelande om prövningsavgift",
+          "date": "2026-08-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4162-2026::4162-2026-5"
+        },
+        {
+          "handling_number": "4162-2026-6",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4162-2026::4162-2026-6"
+        },
+        {
+          "handling_number": "4162-2026-7",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-09-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4162-2026::4162-2026-7"
+        }
+      ],
+      "content_hash": "570318c2679c4272be33e49de060d577cec12d516498933b3fcee59043cbf2f1",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4173-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4173-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5558066",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4173-2026",
+        "registered_date": "2026-07-08",
+        "title": "Avropsavtal för drönarfotografering av naturvårdsbränningar - Life2Taiga",
+        "status": "Avslutat",
+        "decision_date": "2026-07-10",
+        "sender_recipient": "Swescan AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4173-2026-1",
+          "title": "Start av ärende om avropsavtal för drönarfotografering av naturvårdsbränningar - Life2Taiga",
+          "date": "2026-07-08",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4173-2026::4173-2026-1"
+        },
+        {
+          "handling_number": "4173-2026-2",
+          "title": "Avropsavtal",
+          "date": "2026-07-10",
+          "sender_recipient": "Swescan AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4173-2026::4173-2026-2"
+        }
+      ],
+      "content_hash": "a74ef5b289409e1444b5598f1cf10e4163742e5a2d9a9467308b48966aa15113",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4174-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4174-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5558068",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4174-2026",
+        "registered_date": "2026-07-08",
+        "title": "Avropsavtal för drönarfotografering av naturvårdsbränningar - Life2Taiga",
+        "status": "Avslutat",
+        "decision_date": "2026-07-09",
+        "sender_recipient": "GLOBHE DRONES AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4174-2026-1",
+          "title": "Start av ärende om avropsavtal för drönarfotografering av naturvårdsbränningar - Life2Taiga",
+          "date": "2026-07-08",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4174-2026::4174-2026-1"
+        },
+        {
+          "handling_number": "4174-2026-2",
+          "title": "Avropsavtal",
+          "date": "2026-07-09",
+          "sender_recipient": "GLOBHE DRONES AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4174-2026::4174-2026-2"
+        }
+      ],
+      "content_hash": "d77a91ffaf054474178867fb09dfd13d2de56f750bff6b63652da0a7aafdc102",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4473-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4473-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5575288",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4473-2026",
+        "registered_date": "2026-08-06",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Finns ej registrerat som vattenområde eller vattendrag, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-30",
+        "sender_recipient": "Mälarenergi Elnät AB",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "4473-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Finns ej registrerat som vattenområde eller vattendrag, Västerås kommun",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-1"
+        },
+        {
+          "handling_number": "4473-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-2"
+        },
+        {
+          "handling_number": "4473-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-3"
+        },
+        {
+          "handling_number": "4473-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-4"
+        },
+        {
+          "handling_number": "4473-2026-5",
+          "title": "Begäran om yttrande",
+          "date": "2026-08-28",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-5"
+        },
+        {
+          "handling_number": "4473-2026-6",
+          "title": "Bekräftelse av anmälan",
+          "date": "2026-08-28",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-6"
+        },
+        {
+          "handling_number": "4473-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-09-02",
+          "sender_recipient": "Västerås stad",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-7"
+        },
+        {
+          "handling_number": "4473-2026-9",
+          "title": "Yttrande över remiss",
+          "date": "2026-09-18",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-9"
+        },
+        {
+          "handling_number": "4473-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-30",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-10"
+        },
+        {
+          "handling_number": "4473-2026-11",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-21",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4473-2026::4473-2026-11"
+        }
+      ],
+      "content_hash": "7e738b05359634dbb9c53e8635cc78ee8959472b2fa0b2984545d0d20769d511",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4476-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4476-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5575414",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4476-2026",
+        "registered_date": "2026-08-06",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Finns ej registrerat som vattenområde eller vattendrag, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-30",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "4476-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Finns ej registrerat som vattenområde eller vattendrag, Västerås kommun",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-1"
+        },
+        {
+          "handling_number": "4476-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-2"
+        },
+        {
+          "handling_number": "4476-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-3"
+        },
+        {
+          "handling_number": "4476-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-4"
+        },
+        {
+          "handling_number": "4476-2026-5",
+          "title": "Komplettering med reviderad ansökan",
+          "date": "2026-08-12",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-5"
+        },
+        {
+          "handling_number": "4476-2026-6",
+          "title": "Bekräftelse av anmälan och begäran om komplettering",
+          "date": "2026-08-25",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-6"
+        },
+        {
+          "handling_number": "4476-2026-7",
+          "title": "Begäran om yttrande",
+          "date": "2026-08-25",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-7"
+        },
+        {
+          "handling_number": "4476-2026-8",
+          "title": "Komplettering med information",
+          "date": "2026-08-26",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-8"
+        },
+        {
+          "handling_number": "4476-2026-9",
+          "title": "Yttrande över remiss",
+          "date": "2026-09-14",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-9"
+        },
+        {
+          "handling_number": "4476-2026-10",
+          "title": "Yttrande över remiss",
+          "date": "2026-09-02",
+          "sender_recipient": "Västerås stad, stadsledningskontoret",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-10"
+        },
+        {
+          "handling_number": "4476-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-30",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-11"
+        },
+        {
+          "handling_number": "4476-2026-12",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-21",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4476-2026::4476-2026-12"
+        }
+      ],
+      "content_hash": "23399c1c999659081fefc7dfe7c4002ff2c5564ab606e94da9ebe405ae6cffa0",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4479-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4479-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5575462",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4479-2026",
+        "registered_date": "2026-08-06",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Finns ej registrerat som vattenområde, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-30",
+        "sender_recipient": "Mälarenergi Elnät AB",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "4479-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Finns ej registrerat som vattenområde, Västerås kommun",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-1"
+        },
+        {
+          "handling_number": "4479-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-2"
+        },
+        {
+          "handling_number": "4479-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-3"
+        },
+        {
+          "handling_number": "4479-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-4"
+        },
+        {
+          "handling_number": "4479-2026-5",
+          "title": "Bekräftelse av anmälan och begäran om kompletteringar",
+          "date": "2026-08-20",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-5"
+        },
+        {
+          "handling_number": "4479-2026-6",
+          "title": "Begäran om yttrande",
+          "date": "2026-08-20",
+          "sender_recipient": "Västerås kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-6"
+        },
+        {
+          "handling_number": "4479-2026-7",
+          "title": "Begäran om komplettering",
+          "date": "2026-08-21",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-7"
+        },
+        {
+          "handling_number": "4479-2026-8",
+          "title": "Komplettering med information",
+          "date": "2026-08-26",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-8"
+        },
+        {
+          "handling_number": "4479-2026-9",
+          "title": "Komplettering med information",
+          "date": "2026-08-26",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-9"
+        },
+        {
+          "handling_number": "4479-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-10"
+        },
+        {
+          "handling_number": "4479-2026-11",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-21",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4479-2026::4479-2026-11"
+        }
+      ],
+      "content_hash": "cb363fd05e87cfe74f35d86964da36a439f2ad9b9d63c81a76f1efd68b62cbcb",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4480-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4480-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5575497",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4480-2026",
+        "registered_date": "2026-08-06",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Landforsån, Skinnskatteberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-30",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Skinnskatteberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "4480-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Landforsån, Skinnskatteberg kommun",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-1"
+        },
+        {
+          "handling_number": "4480-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-2"
+        },
+        {
+          "handling_number": "4480-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-3"
+        },
+        {
+          "handling_number": "4480-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-4"
+        },
+        {
+          "handling_number": "4480-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-5"
+        },
+        {
+          "handling_number": "4480-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-6"
+        },
+        {
+          "handling_number": "4480-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-7"
+        },
+        {
+          "handling_number": "4480-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-8"
+        },
+        {
+          "handling_number": "4480-2026-9",
+          "title": "Begäran om yttrande, kommunremiss, svar 11 sept",
+          "date": "2026-08-28",
+          "sender_recipient": "Skinnskattebergs kommun",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-9"
+        },
+        {
+          "handling_number": "4480-2026-10",
+          "title": "Komplettering med svar",
+          "date": "2026-09-21",
+          "sender_recipient": "T&B Broproduktion AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-10"
+        },
+        {
+          "handling_number": "4480-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-11"
+        },
+        {
+          "handling_number": "4480-2026-12",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-12"
+        },
+        {
+          "handling_number": "4480-2026-13",
+          "title": "Meddelande om beslut vv + ss till kommun",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4480-2026::4480-2026-13"
+        }
+      ],
+      "content_hash": "08817534aab024203b0228d6fd94b906287a351a0487e09a9f76c9885bb08b95",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4497-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4497-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5576012",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4497-2026",
+        "registered_date": "2026-08-07",
+        "title": "Underrättelse med möjlighet till yttrande över yttrande från sökande rörande omprövning för moderna miljövillkor för vattenverksamhet som bedrivs vid Karbenningby vattenkraft i mål M 6889-25",
+        "status": "Avslutat",
+        "decision_date": "2026-09-14",
+        "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+        "municipality": "Norberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "4497-2026-1",
+          "title": "Underrättelse med möjlighet till yttrande över yttrande från sökande rörande omprövning för moderna miljövillkor för vattenverksamhet som bedrivs vid Karbenningby vattenkraft i mål M 6889-25",
+          "date": "2026-08-07",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::4497-2026::4497-2026-1"
+        },
+        {
+          "handling_number": "4497-2026-2",
+          "title": "Förlängd svarstid, 14 september",
+          "date": "2026-08-11",
+          "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i västmanlands län::4497-2026::4497-2026-2"
+        },
+        {
+          "handling_number": "4497-2026-3",
+          "title": "Yttrande i mål M 6889-25",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4497-2026::4497-2026-3"
+        }
+      ],
+      "content_hash": "c39124b189d7ad633b3f899bc3ac690e9d30d0eb59136238b253bcd861342996",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4507-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4507-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5576775",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4507-2026",
+        "registered_date": "2026-08-10",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skvalbäcken, Arboga kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Arboga"
+      },
+      "handlings": [
+        {
+          "handling_number": "4507-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skvalbäcken, Arboga kommun",
+          "date": "2026-08-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4507-2026::4507-2026-1"
+        },
+        {
+          "handling_number": "4507-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4507-2026::4507-2026-2"
+        },
+        {
+          "handling_number": "4507-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-08-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4507-2026::4507-2026-3"
+        },
+        {
+          "handling_number": "4507-2026-4",
+          "title": "Bilaga 1",
+          "date": "2026-08-21",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::4507-2026::4507-2026-4"
+        },
+        {
+          "handling_number": "4507-2026-5",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-11",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::4507-2026::4507-2026-5"
+        },
+        {
+          "handling_number": "4507-2026-6",
+          "title": "Meddelande om mottaget beslut.",
+          "date": "2026-09-14",
+          "sender_recipient": "Trafikverket Underhåll Mellersta Regionen",
+          "handling_key": "länsstyrelsen i västmanlands län::4507-2026::4507-2026-6"
+        }
+      ],
+      "content_hash": "fcc95b1f382aeba77738de19d31ddd44fc37d0e564c884c4431e85833f3e4b6a",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4524-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4524-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5577904",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4524-2026",
+        "registered_date": "2026-08-07",
+        "title": "Tillsyn av vattenverksamhet till följd av låga vattennivåer i sjön Rölen i Köpings kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Köping"
+      },
+      "handlings": [
+        {
+          "handling_number": "4524-2026-1",
+          "title": "Meddelande om låga vattennivåer i sjön Rölen i Köpings kommun",
+          "date": "2026-08-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-1"
+        },
+        {
+          "handling_number": "4524-2026-2",
+          "title": "Bekräftelse av anmälan",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-2"
+        },
+        {
+          "handling_number": "4524-2026-3",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-3"
+        },
+        {
+          "handling_number": "4524-2026-4",
+          "title": "Tillsyn av vattenverksamhet",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-4"
+        },
+        {
+          "handling_number": "4524-2026-5",
+          "title": "Meddelande om Kvarndammen",
+          "date": "2026-08-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-5"
+        },
+        {
+          "handling_number": "4524-2026-6",
+          "title": "Meddelande om eventuell grävd sjö",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-6"
+        },
+        {
+          "handling_number": "4524-2026-7",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-09-15",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-7"
+        },
+        {
+          "handling_number": "4524-2026-8",
+          "title": "Meddelande om Kvarndammen och grävd sjö",
+          "date": "2026-09-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-8"
+        },
+        {
+          "handling_number": "4524-2026-9",
+          "title": "Meddelande om Nedre Bruket",
+          "date": "2026-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-9"
+        },
+        {
+          "handling_number": "4524-2026-10",
+          "title": "Meddelande om grävd sjö och Kvarndammen",
+          "date": "2026-09-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4524-2026::4524-2026-10"
+        }
+      ],
+      "content_hash": "2284d35dc2a8fbbea8355ca5e8d3adf8929cb37d65340fda3927401f79c5155c",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4538-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4538-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5578829",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4538-2026",
+        "registered_date": "2026-08-12",
+        "title": "Tillsyn av vattenverksamhet av låga vattennivåer i Karbenningsby",
+        "status": "Avslutat",
+        "decision_date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4538-2026-1",
+          "title": "Tillsyn av vattenverksamhet av låga vattennivåer i Karbenningsby",
+          "date": "2026-08-12",
+          "sender_recipient": "SVT Nyheter Västmanland",
+          "handling_key": "länsstyrelsen i västmanlands län::4538-2026::4538-2026-1"
+        },
+        {
+          "handling_number": "4538-2026-2",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-08-12",
+          "sender_recipient": "SVT Nyheter Västmanland",
+          "handling_key": "länsstyrelsen i västmanlands län::4538-2026::4538-2026-2"
+        },
+        {
+          "handling_number": "4538-2026-4",
+          "title": "Tjänsteanteckning vid samtal med dammägare",
+          "date": "2026-08-12",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4538-2026::4538-2026-4"
+        },
+        {
+          "handling_number": "4538-2026-5",
+          "title": "Tjänsteanteckning efter tillsyn",
+          "date": "2026-08-13",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4538-2026::4538-2026-5"
+        },
+        {
+          "handling_number": "4538-2026-6",
+          "title": "Bilder vid tillsyn",
+          "date": "2026-08-13",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4538-2026::4538-2026-6"
+        },
+        {
+          "handling_number": "4538-2026-7",
+          "title": "Tjänsteanteckning",
+          "date": "2026-09-07",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4538-2026::4538-2026-7"
+        }
+      ],
+      "content_hash": "362e573d05678ab462264813d42432a4e0fe551765554b77c425e20219b514a5",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4590-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4590-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5580665",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4590-2026",
+        "registered_date": "2026-08-14",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Borgåsund, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-24",
+        "sender_recipient": "Mälarenergi Elnät AB",
+        "municipality": "Hallstahammar,Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "4590-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Borgåsund, Västerås kommun",
+          "date": "2026-08-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-1"
+        },
+        {
+          "handling_number": "4590-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-2"
+        },
+        {
+          "handling_number": "4590-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-3"
+        },
+        {
+          "handling_number": "4590-2026-4",
+          "title": "Sedimentprover – analysresultat",
+          "date": "2026-08-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-4"
+        },
+        {
+          "handling_number": "4590-2026-5",
+          "title": "Sedimentprover – analysresultat",
+          "date": "2026-08-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-5"
+        },
+        {
+          "handling_number": "4590-2026-6",
+          "title": "Yttrande över remiss Bilaga 2",
+          "date": "2026-08-19",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-6"
+        },
+        {
+          "handling_number": "4590-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-24",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-7"
+        },
+        {
+          "handling_number": "4590-2026-8",
+          "title": "Meddelande om mottaget beslut.",
+          "date": "2026-08-25",
+          "sender_recipient": "Mälarenergi Elnät AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4590-2026::4590-2026-8"
+        }
+      ],
+      "content_hash": "df0578c37bf3fb9f6e0dbaeb708838d5c6644d26d3bd188ebcd1c1653334729b",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4650-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4650-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5583684",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4650-2026",
+        "registered_date": "2026-08-19",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Västerås kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-12",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Västerås"
+      },
+      "handlings": [
+        {
+          "handling_number": "4650-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Västerås kommun",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-1"
+        },
+        {
+          "handling_number": "4650-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-2"
+        },
+        {
+          "handling_number": "4650-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-3"
+        },
+        {
+          "handling_number": "4650-2026-4",
+          "title": "Begäran om komplettering och bekräftelse på mottagen anmälan",
+          "date": "2026-08-28",
+          "sender_recipient": "Västerås stad, Kultur-, idrotts- och fritidsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-4"
+        },
+        {
+          "handling_number": "4650-2026-5",
+          "title": "Begäran om yttrande",
+          "date": "2026-08-28",
+          "sender_recipient": "Miljö-Hälsoskyddsförvaltningen Västerås",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-5"
+        },
+        {
+          "handling_number": "4650-2026-6",
+          "title": "Komplettering med begärda uppgifter",
+          "date": "2026-08-31",
+          "sender_recipient": "Västerås stad, Kultur-, idrotts- och fritidsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-6"
+        },
+        {
+          "handling_number": "4650-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-09-18",
+          "sender_recipient": "Västerås stad, miljö och hälsoskydd",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-7"
+        },
+        {
+          "handling_number": "4650-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-10-12",
+          "sender_recipient": "Västerås stad, Kultur-, idrotts- och fritidsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-8"
+        },
+        {
+          "handling_number": "4650-2026-9",
+          "title": "Begäran om bekräftelse på delgivning",
+          "date": "2026-10-12",
+          "sender_recipient": "Västerås stad, Kultur-, idrotts- och fritidsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-9"
+        },
+        {
+          "handling_number": "4650-2026-10",
+          "title": "Meddelande om beslut till kommun",
+          "date": "2026-10-13",
+          "sender_recipient": "Miljö- och hälsokyddsförvaltningen",
+          "handling_key": "länsstyrelsen i västmanlands län::4650-2026::4650-2026-10"
+        }
+      ],
+      "content_hash": "9446ae7099c9adb95801f074f3f3c35a20387d962985200dff55e0bd39b768a8",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4779-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4779-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5589180",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4779-2026",
+        "registered_date": "2026-08-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för byte av ledningar mellan Virsbo och Gammelby i Virsbosjöns norra del i Surahammars kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-14",
+        "sender_recipient": "Mälarenergi vatten AB",
+        "municipality": "Surahammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "4779-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för  byte av ledningar mellan Virsbo och Gammelby i Virsbosjöns norra del i Surahammars kommun",
+          "date": "2026-08-26",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-1"
+        },
+        {
+          "handling_number": "4779-2026-2",
+          "title": "Komplettering med underskriven anmälan",
+          "date": "2026-08-26",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-2"
+        },
+        {
+          "handling_number": "4779-2026-3",
+          "title": "Komplettering med bilagor",
+          "date": "2026-08-26",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-3"
+        },
+        {
+          "handling_number": "4779-2026-7",
+          "title": "Meddelande om avgift m.m.",
+          "date": "2026-09-14",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-7"
+        },
+        {
+          "handling_number": "4779-2026-8",
+          "title": "Yttrande över remiss. Bilaga 1",
+          "date": "2026-09-15",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-8"
+        },
+        {
+          "handling_number": "4779-2026-9",
+          "title": "Komplettering med mailkonversation.",
+          "date": "2026-10-07",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-9"
+        },
+        {
+          "handling_number": "4779-2026-10",
+          "title": "Komplettering med efterfrågad information.",
+          "date": "2026-10-13",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-10"
+        },
+        {
+          "handling_number": "4779-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-10-14",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-11"
+        },
+        {
+          "handling_number": "4779-2026-12",
+          "title": "Meddelande om mottaget beslut.",
+          "date": "2026-10-14",
+          "sender_recipient": "Mälarenergi vatten AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4779-2026::4779-2026-12"
+        }
+      ],
+      "content_hash": "475e7b49dd9af2e314d993168590aecbcddc45e8c2f6e6c27ea0366fddc06cff",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i västmanlands län::4966-2026": {
+      "case_key": "länsstyrelsen i västmanlands län::4966-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5597773",
+      "observed_at": "2026-11-09T14:20:03.417549+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Västmanlands län",
+        "diary_number": "4966-2026",
+        "registered_date": "2026-09-03",
+        "title": "Avrop 2 2026 från DIS drönarfotografering av naturvårdsbränningar - Life2Taiga",
+        "status": "Avslutat",
+        "decision_date": "2026-09-29",
+        "sender_recipient": "Länsstyrelsen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4966-2026-1",
+          "title": "Start av ärende om avrop 2 2026 från DIS drönarfotografering av naturvårdsbränningar - Life2Taiga",
+          "date": "2026-09-03",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-1"
+        },
+        {
+          "handling_number": "4966-2026-2",
+          "title": "Avropsförfrågan från ramavtal med samtliga villkor fastställda",
+          "date": "2026-09-15",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-2"
+        },
+        {
+          "handling_number": "4966-2026-3",
+          "title": "Öppningsprotokoll",
+          "date": "2026-09-23",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-3"
+        },
+        {
+          "handling_number": "4966-2026-4",
+          "title": "Tilldelningsbeslut för avrop 2",
+          "date": "2026-09-23",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-4"
+        },
+        {
+          "handling_number": "4966-2026-5",
+          "title": "Anbud, antaget",
+          "date": "2026-09-23",
+          "sender_recipient": "GLOBHE DRONES AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-5"
+        },
+        {
+          "handling_number": "4966-2026-6",
+          "title": "Anbud, delvis antaget",
+          "date": "2026-09-23",
+          "sender_recipient": "Björn Olin Design Teknik AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-6"
+        },
+        {
+          "handling_number": "4966-2026-7",
+          "title": "Anbud, ej antaget",
+          "date": "2026-09-23",
+          "sender_recipient": "Gerdes solutions AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-7"
+        },
+        {
+          "handling_number": "4966-2026-8",
+          "title": "Anbud, ej antaget",
+          "date": "2026-09-23",
+          "sender_recipient": "Onsalagruppen Fastighetsutveckling AB",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-8"
+        },
+        {
+          "handling_number": "4966-2026-9",
+          "title": "Anbud, ej antaget",
+          "date": "2026-09-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-9"
+        },
+        {
+          "handling_number": "4966-2026-10",
+          "title": "Sekretessmarkerad",
+          "date": "2026-09-23",
+          "sender_recipient": "Sekretessmarkerad",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-10"
+        },
+        {
+          "handling_number": "4966-2026-11",
+          "title": "Frågor och svar under anbudstid",
+          "date": "2026-09-17",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-11"
+        },
+        {
+          "handling_number": "4966-2026-12",
+          "title": "Justerat tilldelningsbeslut för anbudsdel 2, avrop 2 2026",
+          "date": "2026-09-29",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-12"
+        },
+        {
+          "handling_number": "4966-2026-13",
+          "title": "Efterannonsering",
+          "date": "2026-10-09",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i västmanlands län::4966-2026::4966-2026-13"
+        }
+      ],
+      "content_hash": "d98b7db5b1df5b9bff45d62078f39eb49764f3b77af6c7a02b07c24a2c0f6ce7",
+      "first_seen_at": "2026-11-09T14:20:03.417549+00:00",
+      "last_seen_at": "2026-11-09T14:20:03.417549+00:00",
       "observation_count": 1
     }
   }

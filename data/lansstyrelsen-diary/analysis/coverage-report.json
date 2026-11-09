@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-08T13:16:45.470622+00:00",
+  "generated_at": "2026-11-09T14:20:03.417549+00:00",
   "source": "Länsstyrelsernas offentliga diarium",
   "scope": "Current eligible national case set discovered by the collector",
   "eligible_case_count": 3785,
-  "observed_case_count": 450,
-  "unobserved_case_count": 3335,
-  "coverage_percent": 11.89,
+  "observed_case_count": 500,
+  "unobserved_case_count": 3285,
+  "coverage_percent": 13.21,
   "by_county": [
     {
       "county": "Länsstyrelsen i Blekinge län",
@@ -130,9 +130,9 @@
     {
       "county": "Länsstyrelsen i Västmanlands län",
       "eligible_case_count": 76,
-      "observed_case_count": 0,
-      "unobserved_case_count": 76,
-      "coverage_percent": 0.0
+      "observed_case_count": 50,
+      "unobserved_case_count": 26,
+      "coverage_percent": 65.79
     },
     {
       "county": "Länsstyrelsen i Västra Götalands län",
