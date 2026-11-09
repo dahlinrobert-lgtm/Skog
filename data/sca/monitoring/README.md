@@ -54,3 +54,25 @@ A 404, timeout or other request failure never deletes features. The monitor reta
 3. Verify a second successful weekly run before treating disappearance events as operational signals.
 4. Review the multi-zoom audit response signatures and positive descendants; adjust sample strategy only from observed evidence.
 5. Integrate version 1 event archives into the Skogskoll event feed. Keep notification delivery disabled until a second comparable run verifies event repeatability.
+
+
+## Cross-tile event matching (analysis layer)
+
+The separate `scripts/analyze_sca_event_cross_tile_matches.py` utility compares polygon geometries carried by one event archive across adjacent tiles. It converts tile-local MVT coordinates to a common EPSG:3857 diagnostic coordinate space before calculating overlap. Only same-zoom, adjacent-tile observations from the same source layer are compared.
+
+Example:
+
+```bash
+python scripts/analyze_sca_event_cross_tile_matches.py \
+  --events output/sca-voluntary-change-events.jsonl.gz \
+  --output output/sca-voluntary-cross-tile-candidates.json
+```
+
+The default candidate threshold is intersection area divided by the smaller polygon area >= 0.80. Results are classified as:
+- `strong_geometry_and_attributes_candidate`: exact property equality plus strong overlap;
+- `geometry_overlap_attributes_compatible`: same resolved class and motive but other property differences;
+- `geometry_overlap_attribute_conflict_review`: strong overlap with class/motive disagreement or missing values.
+
+The output retains event IDs and both source tile coordinates. It deliberately does not assign object IDs, merge geometries, deduplicate the event archive, or change notification eligibility. It is scoped to geometry observations in the supplied archive, not the full baseline or a national object census. Historical missing/removal observations are not interpreted as proof that a neighboring tile currently lacks the object.
+
+The initial run #23 archive can be used as a pilot input. Its 591 events include multiple event types; technical events, tile-availability events and metadata-only events are excluded. A no-match result is inconclusive where the corresponding observation is absent from that archive.
