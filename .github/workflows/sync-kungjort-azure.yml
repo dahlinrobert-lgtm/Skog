@@ -97,7 +97,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Run direct-to-Azure synchronization
-        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report'
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report' && steps.mode.outputs.mode != 'selection-report'
         env:
           KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
         run: |
