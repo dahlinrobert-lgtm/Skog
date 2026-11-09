@@ -48,6 +48,7 @@ def value_type(value: object) -> str:
 
 def summarize_records(records: list[dict], source: str) -> dict:
     fields = defaultdict(Counter)
+    records_with_field = Counter()
     record_types = Counter()
 
     def visit(value: object, path: str, seen: set[str]) -> None:
@@ -68,6 +69,7 @@ def summarize_records(records: list[dict], source: str) -> dict:
         record_types[str(record.get("record_type", "unknown"))] += 1
         seen_fields: set[str] = set()
         visit(record, "", seen_fields)
+        records_with_field.update(seen_fields)
 
     return {
         "source": source,
@@ -76,7 +78,8 @@ def summarize_records(records: list[dict], source: str) -> dict:
         "fields": [
             {
                 "path": path,
-                "present_in_records": sum(counts.values()),
+                "records_with_field": records_with_field[path],
+                "value_occurrences": sum(counts.values()),
                 "observed_types": dict(sorted(counts.items())),
             }
             for path, counts in sorted(fields.items())
@@ -86,8 +89,6 @@ def summarize_records(records: list[dict], source: str) -> dict:
 
 def read_jsonl_gzip(payload: bytes) -> list[dict]:
     rows = []
-    with gzip.decompress(payload).decode("utf-8").splitlines() as _unused:
-        pass
     for line in gzip.decompress(payload).decode("utf-8").splitlines():
         if line.strip():
             rows.append(json.loads(line))
