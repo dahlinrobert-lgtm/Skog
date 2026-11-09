@@ -7,7 +7,7 @@ Responses are summarized (not geometries); failures remain explicit and the
 JSON checkpoint is updated throughout the run.
 """
 from __future__ import annotations
-import hashlib, json, math, os, time
+import argparse, hashlib, json, math, os, time
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -88,7 +88,7 @@ def fetch_one(sess, layer_key, x, y):
         return {"state": "request_error", "error": str(e)[:240], "layers": []}
 
 
-def write_checkpoint(rows, total, complete):
+def write_checkpoint(rows, total, complete, out_path=OUT):
     def summary():
         result = {"bbox": BBOX, "zoom": Z, "tiles_in_bbox": total,
                   "tiles_completed": complete}
@@ -118,7 +118,7 @@ def write_checkpoint(rows, total, complete):
     }
     tmp = OUT.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
-    os.replace(tmp, OUT)
+    os.replace(tmp, out_path)
     return payload["summary"]
 
 
@@ -139,7 +139,7 @@ def main():
             completed += 1
             if completed % 25 == 0 or completed == len(tiles):
                 rows.sort(key=lambda r: (r["x"], r["y"]))
-                summary = write_checkpoint(rows, len(tiles), completed)
+                summary = write_checkpoint(rows, len(tiles), completed, args.out)
                 print(json.dumps({"progress": completed, **summary}, ensure_ascii=False), flush=True)
     rows.sort(key=lambda r: (r["x"], r["y"]))
     print(json.dumps(write_checkpoint(rows, len(tiles), completed), ensure_ascii=False, indent=2))
