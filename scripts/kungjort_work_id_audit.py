@@ -18,9 +18,9 @@ from typing import Any
 
 ACCOUNT = "stskogkolldata"
 CONTAINER = "metadata"
-SELECTION_PREFIX = "kungjort/selection/v1/"
+SELECTION_PREFIX = "kungjort/selection/v2/"
 DETAIL_SOURCES = (("kungjort-raw", "bootstrap-live/"), ("kungjort-raw", "bootstrap/"))
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 # Deliberately conservative: municipal prefix + four-digit year + slash + serial.
 WORK_ID_RE = re.compile(r"(?<![\w])([A-ZÅÄÖ]{2,12})\s*(\d{4})\s*/\s*(\d{1,8})(?!\w)", re.IGNORECASE)
@@ -161,16 +161,15 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         combined = "\n".join(text_parts)
         work_ids = work_id_matches(combined)
         protocols = protocol_references(combined)
-        resolution = selection.get("authority_resolution") or {}
-        municipality = str(selection.get("municipality") or "").strip()
-        # Backward compatibility for already-created private selection indexes.
-        if not resolution and municipality:
-            resolution = {"status": "resolved", "name": municipality, "method": "legacy_explicit_municipality", "evidence": []}
-        authority = str(resolution.get("name") or "").strip()
+        identity = selection.get("organizational_identity") or {}
+        municipality_resolution = identity.get("municipality") or selection.get("authority_resolution") or {}
+        municipality = str(selection.get("municipality") or municipality_resolution.get("name") or "").strip()
+        committee_resolution = identity.get("committee") or {}
+        committee = str(committee_resolution.get("name") or "").strip()
         docs_with_explicit_municipality += bool(municipality)
-        if authority and resolution.get("status") == "resolved":
+        if municipality_resolution.get("status") == "resolved" and municipality:
             docs_with_resolved_authority += 1
-        elif resolution.get("status") == "conflict":
+        elif municipality_resolution.get("status") == "conflict":
             docs_with_conflicting_authority += 1
         else:
             docs_with_unknown_authority += 1
@@ -178,11 +177,11 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         docs_with_protocol += bool(protocols)
         priority = str((selection.get("selection") or {}).get("priority", "unknown"))
         for work_id in work_ids:
-            # Authority is part of the namespace. Never group identical IDs across authorities.
-            authority_key = authority.casefold()
-            if authority_key:
-                groups[(authority_key, work_id)].append(doc_id)
-                work_ids_by_authority[work_id].add(authority_key)
+            # Only an explicitly resolved committee may define a committee-level candidate group.
+            committee_key = committee.casefold()
+            if committee_key and committee_resolution.get("status") == "resolved":
+                groups[(committee_key, work_id)].append(doc_id)
+                work_ids_by_authority[work_id].add(committee_key)
             work_id_occurrences[work_id] += 1
         for protocol in protocols:
             protocol_occurrences[(protocol["decision_date"], protocol["protocol_paragraph"])] += 1
@@ -194,7 +193,11 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
             "selection_run_id": run_id,
             "document_id": doc_id,
             "priority": priority,
-            "municipality_authority": authority or None,
+            "municipality_name": municipality or None,
+            "committee_name": committee or None,
+            "committee_resolution_status": committee_resolution.get("status", "unknown"),
+            "committee_evidence": committee_resolution.get("evidence", []),
+            "administration_name": (identity.get("administration") or {}).get("name"),
             "authority_resolution_status": resolution.get("status", "unknown"),
             "authority_resolution_method": resolution.get("method"),
             "authority_evidence": resolution.get("evidence", []),
@@ -242,11 +245,11 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         "documents_with_resolved_authority": docs_with_resolved_authority,
         "documents_with_conflicting_authority": docs_with_conflicting_authority,
         "documents_with_unknown_authority": docs_with_unknown_authority,
-        "repeated_work_ids_across_resolved_authorities": sum(1 for authorities in work_ids_by_authority.values() if len(authorities) > 1),
+        "repeated_work_ids_across_resolved_committees": sum(1 for authorities in work_ids_by_authority.values() if len(authorities) > 1),
         "documents_with_protocol_reference": docs_with_protocol,
         "distinct_work_ids": len(work_id_occurrences),
         "work_ids_found_in_multiple_documents": sum(1 for n in work_id_occurrences.values() if n > 1),
-        "candidate_groups_same_authority_and_work_id": multi_doc_groups,
+        "candidate_groups_same_committee_and_work_id": multi_doc_groups,
         "documents_in_multi_document_candidate_groups": len(documents_in_multi_doc_groups),
         "distinct_protocol_date_paragraph_pairs": len(protocol_occurrences),
         "private_document_audit_blob": private_blob,
@@ -285,7 +288,7 @@ def main() -> None:
             "Work ID extraction complete: "
             f"documents={aggregate['selection_documents']}; "
             f"with_work_id={docs if (docs := aggregate['documents_with_work_id']) else 0}; "
-            f"candidate_groups={aggregate['candidate_groups_same_authority_and_work_id']}"
+            f"candidate_groups={aggregate['candidate_groups_same_committee_and_work_id']}"
         )
     finally:
         service.close()
