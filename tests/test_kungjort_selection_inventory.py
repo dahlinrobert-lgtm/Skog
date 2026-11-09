@@ -118,3 +118,22 @@ class KungjortSelectionInventoryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+    def test_resolves_authority_from_explicit_municipality_or_municipal_organ(self):
+        from scripts.kungjort_selection_inventory import resolve_authority
+        self.assertEqual(resolve_authority({"municipality": "Luleå"})["name"], "Luleå")
+        result = resolve_authority({"organ": "Luleå kommun"})
+        self.assertEqual(result["status"], "resolved")
+        self.assertEqual(result["name"], "Luleå")
+
+    def test_conflicting_authority_evidence_is_not_resolved(self):
+        from scripts.kungjort_selection_inventory import resolve_authority
+        result = resolve_authority({"municipality": "Luleå", "organ": "Umeå kommun"})
+        self.assertEqual(result["status"], "conflict")
+        self.assertIsNone(result["name"])
+
+    def test_non_municipal_organ_is_not_treated_as_authority(self):
+        from scripts.kungjort_selection_inventory import resolve_authority
+        result = resolve_authority({"organ": "Länsstyrelsen"})
+        self.assertEqual(result["status"], "unknown")
