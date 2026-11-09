@@ -111,9 +111,6 @@ class WorkIdAuditTests(unittest.TestCase):
         self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 0)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
     def test_groups_using_resolved_authority_when_explicit_municipality_field_is_missing(self):
         selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
@@ -149,3 +146,7 @@ if __name__ == "__main__":
         rows, report = build_audit(FakeService(blobs), 20, "test", "audit")
         self.assertFalse(any(row["record_type"] == "kungjort_work_id_candidate_group" for row in rows))
         self.assertEqual(report["documents_with_conflicting_authority"], 2)
+
+
+if __name__ == "__main__":
+    unittest.main()
