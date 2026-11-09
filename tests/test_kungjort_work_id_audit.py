@@ -57,7 +57,10 @@ class WorkIdAuditTests(unittest.TestCase):
     def test_does_not_match_numeric_suffix_alone(self):
         self.assertEqual(work_id_matches("1308 eller 2023/1308"), [])
 
-    def test_does_not_treat_common_swedish_words_as_authority_prefixes(self):\n        self.assertEqual(work_id_matches("planen eller 2023/1308"), [])\n\n    def test_extracts_protocol_date_and_paragraph(self):
+    def test_does_not_treat_common_swedish_words_as_authority_prefixes(self):
+        self.assertEqual(work_id_matches("planen eller 2023/1308"), [])
+
+    def test_extracts_protocol_date_and_paragraph(self):
         refs = protocol_references("beslutat 2023-10-23 (§ 21)")
         self.assertEqual(refs[0]["decision_date"], "2023-10-23")
         self.assertEqual(refs[0]["protocol_paragraph"], "21")
