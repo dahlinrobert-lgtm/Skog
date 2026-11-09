@@ -39,7 +39,7 @@ def normalize_work_id(value: str) -> str:
 
 
 def work_id_matches(text: str) -> list[str]:
-    found = {normalize_work_id(m.group(0)) for m in WORK_ID_RE.finditer(text)}
+    found = {normalize_work_id(m.group(0)) for m in WORK_ID_RE.finditer(text) if m.group(1).casefold() not in WORK_ID_PREFIX_STOPWORDS}
     return sorted(found)
 
 
