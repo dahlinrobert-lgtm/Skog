@@ -15,9 +15,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from azure.identity import DefaultAzureCredential
-from azure.storage.blob import BlobServiceClient, ContentSettings
-
 try:
     from .kungjort_document_selection import classify_plan_scope
 except ImportError:  # direct script execution from the scripts directory
@@ -103,7 +100,7 @@ def _detail_has_case_reference(detail: dict) -> bool:
     return False
 
 
-def build_inventory(service: BlobServiceClient, max_batches: int, run_id: str) -> tuple[dict, dict]:
+def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, dict]:
     # Canonical record per source document. Metadata precedence is explicit:
     # current reclassification > live listing index > available detail records.
     documents: dict[str, dict] = {}
@@ -226,7 +223,10 @@ def main() -> None:
     if not 1 <= args.max_batches <= 2000:
         parser.error("--max-batches must be between 1 and 2000")
 
-    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    from azure.identity import DefaultAzureCredential
+    from azure.storage.blob import BlobServiceClient, ContentSettings
+
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     credential = DefaultAzureCredential()
     service = BlobServiceClient(
         account_url=f"https://{ACCOUNT}.blob.core.windows.net",
