@@ -164,7 +164,9 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
         totals = class_totals[priority]
         totals["documents"] += 1
         totals["documents_with_detail"] += bool(detail)
-        totals["documents_with_any_reference"] += any(values.values())
+        has_reference = any(values[field] for field in REFERENCE_FIELDS)
+        totals["documents_with_any_reference"] += has_reference
+        totals["documents_with_case_relation"] += bool(values["case_relation"])
         for field, found in values.items():
             if found:
                 reference_documents[priority][field] += 1
@@ -181,7 +183,8 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
             "selection_class": (selection.get("selection") or {}).get("selection_class"),
             "has_detail_record": bool(detail),
             "reference_value_counts": counts,
-            "has_any_reference": any(values.values()),
+            "has_any_reference": any(values[field] for field in REFERENCE_FIELDS),
+            "has_case_relation": bool(values["case_relation"]),
         })
 
     by_priority = {}
@@ -193,7 +196,8 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
             "detail_coverage_pct": round(100 * totals["documents_with_detail"] / totals["documents"], 2) if totals["documents"] else 0,
             "documents_with_any_reference": totals["documents_with_any_reference"],
             "reference_coverage_pct": round(100 * totals["documents_with_any_reference"] / totals["documents"], 2) if totals["documents"] else 0,
-            "documents_with_reference_by_field": dict(sorted(reference_documents[priority].items())),
+            "documents_with_case_relation": totals["documents_with_case_relation"],
+            "documents_with_structured_field_by_field": dict(sorted(reference_documents[priority].items())),
         }
 
     shared = {}
