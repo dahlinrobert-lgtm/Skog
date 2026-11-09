@@ -29,6 +29,7 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
+          python -m pytest -q tests/test_sca_national_independent_layer_census.py
           python -m pytest -q tests/test_monitor_sca_voluntary_tiles.py
           python -m pytest -q tests/test_sca_parent_child_geometry_overlap.py
           python -m pytest -q tests/test_sca_cluster_point_targeted_probes.py
@@ -36,7 +37,7 @@ jobs:
       - name: Refresh independent national z9 seed census
         run: |
           python -m py_compile scripts/sca_national_independent_layer_census_z9.py
-          python scripts/sca_national_independent_layer_census_z9.py --out output/sca-national-independent-layer-census-z9.json
+          python scripts/sca_national_independent_layer_census_z9.py --out output/sca-national-independent-layer-census-z9.json --workers 4
       - name: Audit sampled z8-z12 tile coverage
         run: |
           python -m py_compile scripts/audit_sca_tile_coverage.py
