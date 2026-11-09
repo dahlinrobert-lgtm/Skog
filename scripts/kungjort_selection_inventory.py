@@ -28,7 +28,7 @@ SOURCES = (
     ("kungjort-raw", "bootstrap-live/", "document_details", 3),
     ("kungjort-raw", "bootstrap/", "legacy_document_details", 4),
 )
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 def read_jsonl_gzip(payload: bytes) -> list[dict]:
@@ -107,6 +107,40 @@ def resolve_authority(metadata: dict) -> dict:
     if len(names) > 1:
         return {"status": "conflict", "name": None, "evidence": evidence, "method": "conflicting_metadata"}
     return {"status": "unknown", "name": None, "evidence": [], "method": None}
+
+
+def _resolve_explicit_name(metadata: dict, keys: tuple[str, ...]) -> dict:
+    evidence = []
+    for key in keys:
+        value = _first_text(metadata.get(key))
+        if value:
+            evidence.append({"source": key, "value": value})
+    names = {item["value"].casefold() for item in evidence}
+    if len(names) == 1:
+        return {"status": "resolved", "name": evidence[0]["value"], "evidence": evidence}
+    if len(names) > 1:
+        return {"status": "conflict", "name": None, "evidence": evidence}
+    return {"status": "unknown", "name": None, "evidence": []}
+
+
+def resolve_organizational_identity(metadata: dict) -> dict:
+    """Keep municipality, committee and administration as separate source-backed entities."""
+    return {
+        "municipality": resolve_authority(metadata),
+        "committee": _resolve_explicit_name(
+            metadata,
+            ("committee", "committee_name", "issuing_committee", "namnd", "nämnd"),
+        ),
+        "administration": _resolve_explicit_name(
+            metadata,
+            ("administration", "administration_name", "forvaltning", "förvaltning", "department"),
+        ),
+        # Generic organ/sender labels are retained as evidence, never promoted to committee.
+        "issuing_organ": _resolve_explicit_name(
+            metadata,
+            ("issuing_organ", "organ", "organ_name", "sender", "sender_name"),
+        ),
+    }
 
 
 def _detail_has_case_reference(detail: dict) -> bool:
@@ -214,6 +248,7 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
             "title": _first_text(metadata.get("title"), metadata.get("rubrik"), metadata.get("subject")),
             "municipality": _first_text(metadata.get("municipality"), metadata.get("municipality_name")),
             "authority_resolution": resolve_authority(metadata),
+            "organizational_identity": resolve_organizational_identity(metadata),
             "document_type": _first_text(metadata.get("doc_type"), metadata.get("document_type"), metadata.get("type")),
         })
 
