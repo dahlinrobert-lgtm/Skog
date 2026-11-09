@@ -57,7 +57,7 @@ class WorkIdAuditTests(unittest.TestCase):
     def test_does_not_match_numeric_suffix_alone(self):
         self.assertEqual(work_id_matches("1308 eller 2023/1308"), [])
 
-    def test_extracts_protocol_date_and_paragraph(self):
+    def test_does_not_treat_common_swedish_words_as_authority_prefixes(self):\n        self.assertEqual(work_id_matches("planen eller 2023/1308"), [])\n\n    def test_extracts_protocol_date_and_paragraph(self):
         refs = protocol_references("beslutat 2023-10-23 (§ 21)")
         self.assertEqual(refs[0]["decision_date"], "2023-10-23")
         self.assertEqual(refs[0]["protocol_paragraph"], "21")
@@ -85,7 +85,7 @@ class WorkIdAuditTests(unittest.TestCase):
         groups = [r for r in rows if r["record_type"] == "kungjort_work_id_candidate_group"]
         self.assertEqual(len(groups), 1)
         self.assertEqual(groups[0]["document_ids"], ["a", "b"])
-        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 1)
+        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 1)\n\n    def test_missing_municipality_never_creates_candidate_group(self):\n        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"\n        detail_path = "bootstrap-live/batch.jsonl.gz"\n        blobs = {\n            ("metadata", selection_path): encode_jsonl_gzip([\n                {"document_id": "a", "selection": {"priority": "P1"}},\n                {"document_id": "b", "selection": {"priority": "P1"}},\n            ]),\n            ("kungjort-raw", detail_path): encode_jsonl_gzip([\n                {"document_id": "a", "detail": {"rubrik": "KLF2023/1308"}},\n                {"document_id": "b", "detail": {"rubrik": "KLF2023/1308"}},\n            ]),\n        }\n        rows, report = build_audit(FakeService(blobs), 20, "test", "audit")\n        groups = [r for r in rows if r["record_type"] == "kungjort_work_id_candidate_group"]\n        self.assertEqual(groups, [])\n        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 0)
         self.assertNotIn("KLF2023/1308", str(report))
         self.assertNotIn("document_ids", report)
 
