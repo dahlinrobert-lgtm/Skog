@@ -73,7 +73,7 @@ class ScaCrossTileMatchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "events.jsonl.gz"
             with gzip.open(path, "wt", encoding="utf-8") as stream:
-                stream.write(json.dumps({"event_type": "tile_poll_error"}) + "\\n")
+                stream.write(json.dumps({"event_type": "tile_poll_error"}) + "\n")
             self.assertEqual(read_events(path), [{"event_type": "tile_poll_error"}])
 
     def test_404_and_technical_events_are_not_geometry_observations(self):
