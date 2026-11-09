@@ -24,6 +24,10 @@ class KungjortDocumentSelectionTests(unittest.TestCase):
         self.assertEqual(result["selection_class"], "adjacent_geography")
         self.assertFalse(result["include_in_core_plan_set"])
 
+    def test_adjacent_process_notice_stays_in_adjacent_track(self):
+        result = classify_plan_scope({"title": "Samråd om järnvägsplan"})
+        self.assertEqual(result["selection_class"], "adjacent_geography")
+
     def test_generic_word_plan_is_not_a_trigger(self):
         result = classify_plan_scope({"title": "Plan för sammanträdet"})
         self.assertEqual(result["selection_class"], "other")
