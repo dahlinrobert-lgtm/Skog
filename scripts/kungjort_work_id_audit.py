@@ -162,8 +162,11 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         work_ids = work_id_matches(combined)
         protocols = protocol_references(combined)
         resolution = selection.get("authority_resolution") or {}
-        authority = str(resolution.get("name") or "").strip()
         municipality = str(selection.get("municipality") or "").strip()
+        # Backward compatibility for already-created private selection indexes.
+        if not resolution and municipality:
+            resolution = {"status": "resolved", "name": municipality, "method": "legacy_explicit_municipality", "evidence": []}
+        authority = str(resolution.get("name") or "").strip()
         docs_with_explicit_municipality += bool(municipality)
         if authority and resolution.get("status") == "resolved":
             docs_with_resolved_authority += 1
