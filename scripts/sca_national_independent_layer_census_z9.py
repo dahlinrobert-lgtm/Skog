@@ -7,7 +7,7 @@ Responses are summarized (not geometries); failures remain explicit and the
 JSON checkpoint is updated throughout the run.
 """
 from __future__ import annotations
-import argparse, hashlib, json, math, os, time
+import argparse, hashlib, json, math, os, threading, time
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -25,6 +25,7 @@ LAYERS = {
 WORKERS = 2
 TIMEOUT = (20, 60)
 OUT = Path("sca-national-independent-layer-census-z9.json")
+LOCAL = threading.local()
 
 
 def xyz(lon, lat, z):
@@ -43,6 +44,8 @@ def tile_range():
 
 
 def session():
+    if getattr(LOCAL, "session", None) is not None:
+        return LOCAL.session
     retry = Retry(total=4, connect=4, read=3, status=3,
                   backoff_factor=1.0,
                   status_forcelist=[429, 500, 502, 503, 504],
@@ -53,6 +56,7 @@ def session():
         "Accept": "application/vnd.mapbox-vector-tile, application/x-protobuf, */*",
     })
     s.mount("https://", HTTPAdapter(max_retries=retry, pool_connections=2, pool_maxsize=2))
+    LOCAL.session = s
     return s
 
 
@@ -102,6 +106,7 @@ def write_checkpoint(rows, total, complete, out_path=OUT):
                 row[key].get("state") == "valid_mvt_with_features" for row in rows)
         return result
     payload = {
+        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "purpose": "Independent national z9 census: ownership and voluntary layers queried for every tile, not ownership-gated.",
         "source_layers": LAYERS,
         "summary": summary(),
@@ -116,13 +121,17 @@ def write_checkpoint(rows, total, complete, out_path=OUT):
         ],
         "tile_results": rows,
     }
-    tmp = OUT.with_suffix(".json.tmp")
+    tmp = out_path.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     os.replace(tmp, out_path)
     return payload["summary"]
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--out", type=Path, default=OUT)
+    parser.add_argument("--workers", type=int, default=WORKERS)
+    args = parser.parse_args()
     tiles = tile_range()
     rows = []
     completed = 0
@@ -132,7 +141,7 @@ def main():
         return {"z": Z, "x": x, "y": y,
                 "ownership": fetch_one(s, "ownership", x, y),
                 "voluntary": fetch_one(s, "voluntary", x, y)}
-    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+    with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
         futures = [pool.submit(task, xy) for xy in tiles]
         for future in as_completed(futures):
             rows.append(future.result())
@@ -142,7 +151,7 @@ def main():
                 summary = write_checkpoint(rows, len(tiles), completed, args.out)
                 print(json.dumps({"progress": completed, **summary}, ensure_ascii=False), flush=True)
     rows.sort(key=lambda r: (r["x"], r["y"]))
-    print(json.dumps(write_checkpoint(rows, len(tiles), completed), ensure_ascii=False, indent=2))
+    print(json.dumps(write_checkpoint(rows, len(tiles), completed, args.out), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
