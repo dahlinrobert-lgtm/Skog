@@ -24,6 +24,7 @@ SCHEMA_VERSION = 1
 
 # Deliberately conservative: municipal prefix + four-digit year + slash + serial.
 WORK_ID_RE = re.compile(r"(?<![\w])([A-ZÅÄÖ]{2,12})\s*(\d{4})\s*/\s*(\d{1,8})(?!\w)", re.IGNORECASE)
+WORK_ID_PREFIX_STOPWORDS = {"eller", "och", "med", "från", "för", "av", "till", "på", "i", "är"}
 PROTOCOL_RE = re.compile(r"(?<!\d)(20\d{2}-\d{2}-\d{2})\s*\(\s*§\s*(\d{1,4}[a-z]?)\s*\)", re.IGNORECASE)
 TEXT_KEYS = {
     "title", "rubrik", "subject", "summary", "sammanfattning", "description",
