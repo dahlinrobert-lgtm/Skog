@@ -163,7 +163,8 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         for work_id in work_ids:
             # Authority is part of the namespace. Never group identical IDs across authorities.
             authority_key = municipality.casefold()
-            if authority_key:\n                groups[(authority_key, work_id)].append(doc_id)
+            if authority_key:
+                groups[(authority_key, work_id)].append(doc_id)
             work_id_occurrences[work_id] += 1
         for protocol in protocols:
             protocol_occurrences[(protocol["decision_date"], protocol["protocol_paragraph"])] += 1
