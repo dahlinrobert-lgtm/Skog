@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "purpose": "Diagnostic spatial intersection of positive z8 parent MVT features with sampled z9 children returning 404.",
+  "candidate_child_tiles": 9,
+  "unique_parent_tiles_fetched": 8,
+  "result_counts": {
+    "no_parent_geometry_overlap_in_child_core": 9
+  },
+  "rows": [
+    {
+      "child_z9": {
+        "x": 272,
+        "y": 140,
+        "class": "not_found_404_z9",
+        "sampling_stratum": "near_positive"
+      },
+      "parent_z8": {
+        "x": 136,
+        "y": 70,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "45a32faf066ceacf17fd020b011220fb88746d715310e185d67e0d66212f05f4",
+      "parent_bytes": 817,
+      "child_bounds_epsg3857": [
+        1252344.271424327,
+        9001224.450862356,
+        1330615.7883883475,
+        9079495.967826376
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 18
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 273,
+        "y": 141,
+        "class": "ownership_positive_voluntary_404_z9",
+        "sampling_stratum": "ownership_positive_voluntary_404"
+      },
+      "parent_z8": {
+        "x": 136,
+        "y": 70,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "45a32faf066ceacf17fd020b011220fb88746d715310e185d67e0d66212f05f4",
+      "parent_bytes": 817,
+      "child_bounds_epsg3857": [
+        1330615.788388349,
+        8922952.933898335,
+        1408887.3053523696,
+        9001224.450862356
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 18
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 278,
+        "y": 143,
+        "class": "ownership_positive_voluntary_404_z9",
+        "sampling_stratum": "ownership_positive_voluntary_404"
+      },
+      "parent_z8": {
+        "x": 139,
+        "y": 71,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "3dd0fbef936a8de24f736a52f3c6a9c559d8675ee3d109a75108bfb35266e070",
+      "parent_bytes": 7187,
+      "child_bounds_epsg3857": [
+        1721973.373208452,
+        8766409.899970295,
+        1800244.8901724725,
+        8844681.416934315
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 250
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 278,
+        "y": 145,
+        "class": "ownership_positive_voluntary_404_z9",
+        "sampling_stratum": "ownership_positive_voluntary_404"
+      },
+      "parent_z8": {
+        "x": 139,
+        "y": 72,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "1baf7e4a614ee2643cb0dbe784e5c290459a2333bcc2c3b5b5abf0c6122668d9",
+      "parent_bytes": 237,
+      "child_bounds_epsg3857": [
+        1721973.373208452,
+        8609866.866042253,
+        1800244.8901724725,
+        8688138.383006273
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 1
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 280,
+        "y": 126,
+        "class": "not_found_404_z9",
+        "sampling_stratum": "near_positive"
+      },
+      "parent_z8": {
+        "x": 140,
+        "y": 63,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "df5efbb58c53b254ce2548177f2a6818f356a378080973017b6be5e7a339f740",
+      "parent_bytes": 486,
+      "child_bounds_epsg3857": [
+        1878516.4071364924,
+        10097025.688358642,
+        1956787.9241005129,
+        10175297.205322662
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 8
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 280,
+        "y": 128,
+        "class": "ownership_positive_voluntary_404_z9",
+        "sampling_stratum": "ownership_positive_voluntary_404"
+      },
+      "parent_z8": {
+        "x": 140,
+        "y": 64,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "36302c24be8ae71c387f2befb0d2ce71fce0329e94b59da3a2b112b8b2883250",
+      "parent_bytes": 885,
+      "child_bounds_epsg3857": [
+        1878516.4071364924,
+        9940482.654430602,
+        1956787.9241005129,
+        10018754.171394622
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 22
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 281,
+        "y": 144,
+        "class": "not_found_404_z9",
+        "sampling_stratum": "near_positive"
+      },
+      "parent_z8": {
+        "x": 140,
+        "y": 72,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "516c34673013607bdf106ed59db3d2fa6d98a10c0af5d6d1557547ad069e07bb",
+      "parent_bytes": 237,
+      "child_bounds_epsg3857": [
+        1956787.9241005108,
+        8688138.383006275,
+        2035059.4410645312,
+        8766409.899970295
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 1
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 285,
+        "y": 137,
+        "class": "ownership_positive_voluntary_404_z9",
+        "sampling_stratum": "ownership_positive_voluntary_404"
+      },
+      "parent_z8": {
+        "x": 142,
+        "y": 68,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "d27893a9e8c64f807823e261ee0248eea0920276eb7e32e8b12e62e1f259f0ce",
+      "parent_bytes": 1991,
+      "child_bounds_epsg3857": [
+        2269873.9919565953,
+        9236039.001754418,
+        2348145.508920616,
+        9314310.518718438
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 59
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    },
+    {
+      "child_z9": {
+        "x": 287,
+        "y": 133,
+        "class": "not_found_404_z9",
+        "sampling_stratum": "near_positive"
+      },
+      "parent_z8": {
+        "x": 143,
+        "y": 66,
+        "state": "valid_mvt"
+      },
+      "parent_sha256": "44fa94fa1a0a289ecc16af00b9b91f9da1da26c9ebf9b783a1d34c8c91125f8c",
+      "parent_bytes": 2512,
+      "child_bounds_epsg3857": [
+        2426417.0258846357,
+        9549125.069610499,
+        2504688.5428486564,
+        9627396.586574519
+      ],
+      "parent_layer_feature_counts": {
+        "Frivilliga_Avsattningar_punkt": 84
+      },
+      "feature_count_intersecting_child": 0,
+      "intersections": [],
+      "geometry_errors": [],
+      "result": "no_parent_geometry_overlap_in_child_core"
+    }
+  ],
+  "limitations": [
+    "Parent geometry intersection is not proof that z9 endpoint should return a feature.",
+    "MVT geometry may be generalized or buffered by zoom.",
+    "404 is unavailable/unknown, not proof of geographic absence.",
+    "No geometries are merged, dissolved, or assigned global identity.",
+    "EPSG:3857 areas are diagnostic only."
+  ]
+}

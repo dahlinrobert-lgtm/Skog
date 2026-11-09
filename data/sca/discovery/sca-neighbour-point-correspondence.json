@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "purpose": "Measure spatial proximity between parent point-cluster representations and features in positive z9 neighbour tiles.",
+  "source_point_count": 0,
+  "positive_z9_neighbour_tiles": 0,
+  "unique_neighbour_tiles_decoded": 0,
+  "tile_decode_states": {},
+  "points": [],
+  "interpretation_limits": [
+    "Distance is diagnostic in EPSG:3857, not a geodesic measurement.",
+    "Nearest features are not declared to be the same source objects.",
+    "Parent cluster coordinates may be generalized or displaced representations.",
+    "No geometry is merged, dissolved, or identity-resolved."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "purpose": "Point-directed MVT probes around parent features that overlap z9 404 children.",
+  "source_overlap_report": "output/sca-parent-child-geometry-overlap.json",
+  "source_point_count": 0,
+  "unique_tiles_probed": 0,
+  "state_counts": {},
+  "points": [],
+  "tile_results": [],
+  "interpretation_limits": [
+    "MVT point clusters are generalized representations, not necessarily exact source-object coordinates.",
+    "A positive neighbouring tile does not prove the target tile should contain the same feature.",
+    "A 404 is unavailable/unknown, not proof of geographic absence.",
+    "This diagnostic does not alter monitoring plans or merge geometries."
+  ]
+}
