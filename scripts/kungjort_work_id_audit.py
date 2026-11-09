@@ -146,6 +146,11 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
     docs_with_work_id = 0
     docs_with_protocol = 0
     docs_with_detail = 0
+    docs_with_explicit_municipality = 0
+    docs_with_resolved_authority = 0
+    docs_with_conflicting_authority = 0
+    docs_with_unknown_authority = 0
+    work_ids_by_authority: dict[str, set[str]] = defaultdict(set)
 
     for doc_id, selection in sorted(selected.items()):
         detail = details.get(doc_id, {})
@@ -156,15 +161,25 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         combined = "\n".join(text_parts)
         work_ids = work_id_matches(combined)
         protocols = protocol_references(combined)
+        resolution = selection.get("authority_resolution") or {}
+        authority = str(resolution.get("name") or "").strip()
         municipality = str(selection.get("municipality") or "").strip()
+        docs_with_explicit_municipality += bool(municipality)
+        if authority and resolution.get("status") == "resolved":
+            docs_with_resolved_authority += 1
+        elif resolution.get("status") == "conflict":
+            docs_with_conflicting_authority += 1
+        else:
+            docs_with_unknown_authority += 1
         docs_with_work_id += bool(work_ids)
         docs_with_protocol += bool(protocols)
         priority = str((selection.get("selection") or {}).get("priority", "unknown"))
         for work_id in work_ids:
             # Authority is part of the namespace. Never group identical IDs across authorities.
-            authority_key = municipality.casefold()
+            authority_key = authority.casefold()
             if authority_key:
                 groups[(authority_key, work_id)].append(doc_id)
+                work_ids_by_authority[work_id].add(authority_key)
             work_id_occurrences[work_id] += 1
         for protocol in protocols:
             protocol_occurrences[(protocol["decision_date"], protocol["protocol_paragraph"])] += 1
@@ -176,7 +191,10 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
             "selection_run_id": run_id,
             "document_id": doc_id,
             "priority": priority,
-            "municipality_authority": municipality or None,
+            "municipality_authority": authority or None,
+            "authority_resolution_status": resolution.get("status", "unknown"),
+            "authority_resolution_method": resolution.get("method"),
+            "authority_evidence": resolution.get("evidence", []),
             "has_detail_record": bool(detail),
             "work_ids": [
                 {"raw": value, "normalized": value, "role": "detected_in_semantic_text"}
@@ -217,6 +235,11 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         "detail_source_batches_reviewed": batch_reviewed,
         "detail_source_scan_truncated": truncated,
         "documents_with_work_id": docs_with_work_id,
+        "documents_with_explicit_municipality": docs_with_explicit_municipality,
+        "documents_with_resolved_authority": docs_with_resolved_authority,
+        "documents_with_conflicting_authority": docs_with_conflicting_authority,
+        "documents_with_unknown_authority": docs_with_unknown_authority,
+        "repeated_work_ids_across_resolved_authorities": sum(1 for authorities in work_ids_by_authority.values() if len(authorities) > 1),
         "documents_with_protocol_reference": docs_with_protocol,
         "distinct_work_ids": len(work_id_occurrences),
         "work_ids_found_in_multiple_documents": sum(1 for n in work_id_occurrences.values() if n > 1),
