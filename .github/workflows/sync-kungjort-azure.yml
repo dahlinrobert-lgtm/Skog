@@ -56,7 +56,7 @@ jobs:
       - name: Test Azure sync helpers
         if: github.event_name == 'pull_request'
         run: |
-          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py
+          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py scripts/kungjort_document_selection.py
           python -m unittest discover -s tests -p "test_kungjort_*.py"
       - name: Resolve run mode
         if: github.event_name != 'pull_request'
