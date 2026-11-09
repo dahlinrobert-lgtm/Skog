@@ -18,7 +18,7 @@ from typing import Any
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient, ContentSettings
 
-from kungjort_document_selection import classify_plan_scope
+try:\n    from .kungjort_document_selection import classify_plan_scope\nexcept ImportError:  # direct script execution from the scripts directory\n    from kungjort_document_selection import classify_plan_scope
 
 ACCOUNT = "stskogkolldata"
 METADATA_CONTAINER = "metadata"
