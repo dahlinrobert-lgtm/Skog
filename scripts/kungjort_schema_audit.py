@@ -143,7 +143,7 @@ def main() -> None:
             raise RuntimeError("No readable Kungjort records found in the selected Azure prefixes")
         output = Path(args.output)
         output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(
             f"Schema inventory exported: batches={report['batches_reviewed']}, "
             f"sections={len(report['sections'])}, records="
