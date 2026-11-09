@@ -28,6 +28,7 @@ REFERENCE_FIELDS = (
     "case_id", "case_dnr", "normalized_dnr", "section_dnr",
     "decision_id", "diarieplan_kod", "section_id",
 )
+COVERAGE_FIELDS = REFERENCE_FIELDS + ("case_relation",)
 SCHEMA_VERSION = 1
 
 
@@ -74,7 +75,7 @@ def _add(values: dict[str, set[str]], field: str, value: Any) -> None:
 
 def extract_reference_values(detail: dict) -> dict[str, set[str]]:
     """Extract only known structured reference fields; no free-text search."""
-    values = {field: set() for field in REFERENCE_FIELDS}
+    values = {field: set() for field in COVERAGE_FIELDS}
     sections = detail.get("sections")
     if not isinstance(sections, list):
         return values
@@ -89,6 +90,7 @@ def extract_reference_values(detail: dict) -> dict[str, set[str]]:
                 _add(values, "case_id", case.get("case_id"))
                 _add(values, "case_dnr", case.get("dnr"))
                 _add(values, "normalized_dnr", case.get("normalized_dnr"))
+                _add(values, "case_relation", case.get("relation"))
         section_dnrs = section.get("dnr")
         if isinstance(section_dnrs, list):
             for value in section_dnrs:
@@ -115,7 +117,8 @@ def _latest_selection_blob(service: Any) -> tuple[str, str]:
     return parts[3], name
 
 
-def build_reference_audit(service: Any, max_batches: int, run_id: str) -> tuple[list[dict], dict]:
+def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str | None = None) -> tuple[list[dict], dict]:
+    audit_run_id = audit_run_id or run_id
     selection_container = service.get_blob_client(container=METADATA_CONTAINER, blob=SELECTION_PREFIX + run_id + "/document-selection.jsonl.gz")
     selection_rows = read_jsonl_gzip(selection_container.download_blob().readall())
     selected = {
@@ -165,11 +168,14 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str) -> tuple[
         for field, found in values.items():
             if found:
                 reference_documents[priority][field] += 1
-                reference_frequency[field].update(found)
+                if field in REFERENCE_FIELDS:
+                    reference_frequency[field].update(found)
         per_document.append({
             "record_type": "kungjort_reference_coverage",
             "schema_version": SCHEMA_VERSION,
-            "run_id": run_id,
+            "audit_run_id": audit_run_id,
+            "selection_run_id": run_id,
+        "audit_run_id": audit_run_id,
             "document_id": doc_id,
             "priority": priority,
             "selection_class": (selection.get("selection") or {}).get("selection_class"),
@@ -201,7 +207,7 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str) -> tuple[
             "maximum_documents_per_reference": max(frequencies.values(), default=0),
         }
 
-    private_blob = f"kungjort/relationship-audit/v{SCHEMA_VERSION}/{run_id}/document-reference-coverage.jsonl.gz"
+    private_blob = f"kungjort/relationship-audit/v{SCHEMA_VERSION}/{audit_run_id}/document-reference-coverage.jsonl.gz"
     aggregate = {
         "schema_version": SCHEMA_VERSION,
         "report_type": "kungjort_planning_reference_coverage",
@@ -234,7 +240,8 @@ def main() -> None:
     service = BlobServiceClient(account_url=f"https://{ACCOUNT}.blob.core.windows.net", credential=credential)
     try:
         run_id, _ = _latest_selection_blob(service)
-        records, aggregate = build_reference_audit(service, args.max_batches, run_id)
+        audit_run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+        records, aggregate = build_reference_audit(service, args.max_batches, run_id, audit_run_id)
         audit_payload = encode_jsonl_gzip(records)
         audit_blob = service.get_blob_client(container=METADATA_CONTAINER, blob=aggregate["private_document_audit_blob"])
         audit_blob.upload_blob(
