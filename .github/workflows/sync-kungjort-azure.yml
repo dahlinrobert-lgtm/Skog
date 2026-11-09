@@ -110,6 +110,18 @@ jobs:
                   blob="kungjort/index/reclassified-v2/quality-review.json",
               )
               report = json.loads(blob.download_blob().readall())
+              import unicodedata
+
+              def normalize_term(term):
+                  value = unicodedata.normalize("NFKD", unicodedata.normalize("NFKC", str(term)).casefold())
+                  value = "".join(char for char in value if not unicodedata.combining(char))
+                  return " ".join(value.split())
+
+              normalized_terms = {}
+              for term, count in report.get("matched_term_counts", {}).items():
+                  key = normalize_term(term)
+                  normalized_terms[key] = normalized_terms.get(key, 0) + int(count)
+
               aggregate = {
                   "schema_version": report.get("schema_version"),
                   "generated_at": report.get("generated_at"),
@@ -118,6 +130,7 @@ jobs:
                   "priority_counts": report.get("priority_counts", {}),
                   "category_counts": report.get("category_counts", {}),
                   "matched_term_counts": report.get("matched_term_counts", {}),
+                  "normalized_matched_term_counts": dict(sorted(normalized_terms.items(), key=lambda item: (-item[1], item[0]))),
                   "privacy_note": "Aggregate counts only; no document IDs, titles, organs, examples, full text or original files.",
               }
               os.makedirs("quality-report-export", exist_ok=True)
