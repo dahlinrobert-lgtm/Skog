@@ -88,3 +88,52 @@ jobs:
           python scripts/sync_kungjort_azure.py \
             --mode "${{ steps.mode.outputs.mode }}" \
             --max-pages "${{ steps.mode.outputs.max_pages }}"
+      - name: Export aggregate quality summary
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'quality-report'
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from azure.identity import DefaultAzureCredential
+          from azure.storage.blob import BlobServiceClient
+          account = "stskogkolldata"
+          container = os.environ["KUNGJORT_STATE_CONTAINER"]
+          credential = DefaultAzureCredential()
+          service = BlobServiceClient(
+              account_url=f"https://{account}.blob.core.windows.net",
+              credential=credential,
+          )
+          try:
+              blob = service.get_blob_client(
+                  container=container,
+                  blob="kungjort/index/reclassified-v2/quality-review.json",
+              )
+              report = json.loads(blob.download_blob().readall())
+              aggregate = {
+                  "schema_version": report.get("schema_version"),
+                  "generated_at": report.get("generated_at"),
+                  "source_batches": report.get("source_batches"),
+                  "rows_reviewed": report.get("rows_reviewed"),
+                  "priority_counts": report.get("priority_counts", {}),
+                  "category_counts": report.get("category_counts", {}),
+                  "matched_term_counts": report.get("matched_term_counts", {}),
+                  "privacy_note": "Aggregate counts only; no document IDs, titles, organs, examples, full text or original files.",
+              }
+              os.makedirs("quality-report-export", exist_ok=True)
+              with open("quality-report-export/quality-summary.json", "w", encoding="utf-8") as f:
+                  json.dump(aggregate, f, ensure_ascii=False, indent=2)
+          finally:
+              service.close()
+              credential.close()
+          PY
+        env:
+          KUNGJORT_STATE_CONTAINER: ${{ secrets.KUNGJORT_STATE_CONTAINER }}
+      - name: Upload aggregate quality summary
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'quality-report'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-quality-summary
+          path: quality-report-export/quality-summary.json
+          if-no-files-found: error
+          retention-days: 14
