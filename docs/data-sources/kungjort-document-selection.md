@@ -63,6 +63,30 @@ The classifier uses case- and accent-insensitive substring matching. The
 generic word `plan` is intentionally not a trigger. Rules are versioned and
 return explicit reasons and matched terms for auditability.
 
+## What the first source-schema sample confirms
+
+The value-free schema audit reviewed 69 archive batches. This is a bounded
+sample, not a census of every archived record. It confirms that:
+
+- Listing metadata consistently exposes document type, municipality,
+  municipality name, meeting/publication meeting dates and revision fields in
+  the reviewed records.
+- Detail records expose nested section-level case references:
+  `detail.sections[].cases[].case_id`, `dnr`, `normalized_dnr` and
+  `relation`.
+- The same detail structure also contains section-level `dnr[]`,
+  `decision_id`, `diarieplan_kod`, `rubrik`, `sammanfattning` and
+  `section_id`.
+- Change records expose `operation`, `revision` and `changed_at`, which
+  can help preserve source-change history but must not be confused with a
+  planning event date.
+
+The case-reference arrays are not populated in every reviewed detail record.
+For that reason, the context expansion cannot rely on one identifier alone.
+The next inventory must measure coverage by document class and distinguish
+missing values from missing fields. The schema sample proves field availability,
+not that any given reference is unique, stable or semantically equivalent.
+
 ## Context expansion: do not lose the rest of a process
 
 The initial P1/P2/P3 classification is not the final document population.
