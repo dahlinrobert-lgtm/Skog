@@ -116,9 +116,6 @@ class KungjortSelectionInventoryTests(unittest.TestCase):
         self.assertTrue(doc1["has_case_reference_in_detail"])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
     def test_resolves_authority_from_explicit_municipality_or_municipal_organ(self):
         from scripts.kungjort_selection_inventory import resolve_authority
@@ -137,3 +134,7 @@ if __name__ == "__main__":
         from scripts.kungjort_selection_inventory import resolve_authority
         result = resolve_authority({"organ": "Länsstyrelsen"})
         self.assertEqual(result["status"], "unknown")
+
+
+if __name__ == "__main__":
+    unittest.main()
