@@ -38,6 +38,24 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: python -m pytest -q tests/test_monitor_sca_voluntary_tiles.py
+      - name: Bootstrap discovery cache when no monthly snapshot exists
+        if: ${{ !hashFiles('data/sca/discovery/sca-national-independent-layer-census-z9.json') || !hashFiles('data/sca/discovery/sca-multizoom-coverage-audit.json') }}
+        run: |
+          mkdir -p output data/sca/discovery
+          python scripts/sca_national_independent_layer_census_z9.py --out output/sca-national-independent-layer-census-z9.json --workers 4
+          python scripts/audit_sca_tile_coverage.py \
+            --census output/sca-national-independent-layer-census-z9.json \
+            --out output/sca-multizoom-coverage-audit.json \
+            --samples-per-class 8 --no-positive-404-samples 8 \
+            --near-positive-404-samples 4 --ownership-positive-404-samples 9 --workers 2
+          python scripts/audit_sca_parent_child_geometry_overlap.py --audit output/sca-multizoom-coverage-audit.json --out output/sca-parent-child-geometry-overlap.json
+          python scripts/audit_sca_cluster_point_targeted_probes.py --overlap output/sca-parent-child-geometry-overlap.json --out output/sca-cluster-point-targeted-probes.json --workers 4
+          python scripts/audit_sca_neighbour_point_correspondence.py --input output/sca-cluster-point-targeted-probes.json --out output/sca-neighbour-point-correspondence.json --workers 4
+          cp output/sca-national-independent-layer-census-z9.json data/sca/discovery/
+          cp output/sca-multizoom-coverage-audit.json data/sca/discovery/
+          cp output/sca-parent-child-geometry-overlap.json data/sca/discovery/
+          cp output/sca-cluster-point-targeted-probes.json data/sca/discovery/
+          cp output/sca-neighbour-point-correspondence.json data/sca/discovery/
       - name: Validate cached monthly SCA discovery snapshot
         run: |
           python - <<'PY'
