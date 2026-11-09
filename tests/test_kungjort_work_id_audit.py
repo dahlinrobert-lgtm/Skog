@@ -112,7 +112,7 @@ class WorkIdAuditTests(unittest.TestCase):
 
 
 
-    def test_groups_using_resolved_authority_when_explicit_municipality_field_is_missing(self):
+    def test_municipality_only_identity_does_not_create_committee_group(self):
         selection_path = "kungjort/selection/v2/test/document-selection.jsonl.gz"
         detail_path = "bootstrap-live/batch.jsonl.gz"
         blobs = {
