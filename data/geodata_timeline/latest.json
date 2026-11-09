@@ -1,6 +1,6 @@
 {
-  "snapshot_id": "20261102T124112Z",
-  "observed_at_utc": "2026-11-02T12:41:12.154728+00:00",
+  "snapshot_id": "20261109T130640Z",
+  "observed_at_utc": "2026-11-09T13:06:40.545641+00:00",
   "purpose": "weekly information-flow change detection; not a map layer",
   "sample_area": {
     "name": "Gräsmyr, Nordmalings kommun",
@@ -58,18 +58,29 @@
         500
       ],
       "http_status": 200,
-      "sample_file": "data/geodata_timeline/samples/20261102T124112Z_torvkarta.npz",
+      "sample_file": "data/geodata_timeline/samples/20261109T130640Z_torvkarta.npz",
       "pixel_comparison": {
-        "comparison_status": "previous_array_unavailable",
-        "note": "Previous metadata/hash baseline exists but has no stored NPZ array."
+        "comparison_status": "compared",
+        "bands": [
+          {
+            "band_index": 1,
+            "valid_pixel_count": 250000,
+            "changed_pixel_count": 0,
+            "changed_percent": 0.0
+          },
+          {
+            "band_index": 2,
+            "valid_pixel_count": 250000,
+            "changed_pixel_count": 0,
+            "changed_percent": 0.0
+          }
+        ]
       },
-      "pixel_content_changed": null,
-      "change_status": "changed",
-      "previous_snapshot_id": "20261101T094009Z",
-      "changes": [
-        "service_metadata_changed"
-      ],
-      "metadata_changed": true,
+      "pixel_content_changed": false,
+      "change_status": "unchanged",
+      "previous_snapshot_id": "20261102T124112Z",
+      "changes": [],
+      "metadata_changed": false,
       "pixel_hash_changed": false,
       "comparable_grid": true
     },
@@ -113,18 +124,29 @@
         80
       ],
       "http_status": 200,
-      "sample_file": "data/geodata_timeline/samples/20261102T124112Z_sis.npz",
+      "sample_file": "data/geodata_timeline/samples/20261109T130640Z_sis.npz",
       "pixel_comparison": {
-        "comparison_status": "previous_array_unavailable",
-        "note": "Previous metadata/hash baseline exists but has no stored NPZ array."
+        "comparison_status": "compared",
+        "bands": [
+          {
+            "band_index": 1,
+            "valid_pixel_count": 6400,
+            "changed_pixel_count": 0,
+            "changed_percent": 0.0
+          },
+          {
+            "band_index": 2,
+            "valid_pixel_count": 6400,
+            "changed_pixel_count": 0,
+            "changed_percent": 0.0
+          }
+        ]
       },
-      "pixel_content_changed": null,
-      "change_status": "changed",
-      "previous_snapshot_id": "20261101T094009Z",
-      "changes": [
-        "service_metadata_changed"
-      ],
-      "metadata_changed": true,
+      "pixel_content_changed": false,
+      "change_status": "unchanged",
+      "previous_snapshot_id": "20261102T124112Z",
+      "changes": [],
+      "metadata_changed": false,
       "pixel_hash_changed": false,
       "comparable_grid": true
     }
