@@ -111,5 +111,42 @@ class WorkIdAuditTests(unittest.TestCase):
         self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 0)
 
 
+
+    def test_groups_using_resolved_authority_when_explicit_municipality_field_is_missing(self):
+        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
+        detail_path = "bootstrap-live/batch.jsonl.gz"
+        blobs = {
+            ("metadata", selection_path): encode_jsonl_gzip([
+                {"document_id": "a", "authority_resolution": {"status": "resolved", "name": "Luleå", "method": "municipal_organ", "evidence": []}},
+                {"document_id": "b", "authority_resolution": {"status": "resolved", "name": "Luleå", "method": "municipal_organ", "evidence": []}},
+            ]),
+            ("kungjort-raw", detail_path): encode_jsonl_gzip([
+                {"document_id": "a", "detail": {"sections": [{"rubrik": "KLF2023/1308"}]}},
+                {"document_id": "b", "detail": {"sections": [{"rubrik": "KLF2023/1308"}]}},
+            ]),
+        }
+        rows, report = build_audit(FakeService(blobs), 20, "test", "audit")
+        groups = [row for row in rows if row["record_type"] == "kungjort_work_id_candidate_group"]
+        self.assertEqual(len(groups), 1)
+        self.assertEqual(report["documents_with_resolved_authority"], 2)
+
+    def test_conflicting_authority_does_not_create_candidate_group(self):
+        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
+        detail_path = "bootstrap-live/batch.jsonl.gz"
+        blobs = {
+            ("metadata", selection_path): encode_jsonl_gzip([
+                {"document_id": "a", "authority_resolution": {"status": "conflict", "name": None}},
+                {"document_id": "b", "authority_resolution": {"status": "conflict", "name": None}},
+            ]),
+            ("kungjort-raw", detail_path): encode_jsonl_gzip([
+                {"document_id": "a", "detail": {"rubrik": "KLF2023/1308"}},
+                {"document_id": "b", "detail": {"rubrik": "KLF2023/1308"}},
+            ]),
+        }
+        rows, report = build_audit(FakeService(blobs), 20, "test", "audit")
+        self.assertFalse(any(row["record_type"] == "kungjort_work_id_candidate_group" for row in rows))
+        self.assertEqual(report["documents_with_conflicting_authority"], 2)
+
+
 if __name__ == "__main__":
     unittest.main()

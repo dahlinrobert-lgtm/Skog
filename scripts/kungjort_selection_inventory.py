@@ -83,6 +83,32 @@ def _first_text(*values: Any) -> str | None:
     return None
 
 
+def resolve_authority(metadata: dict) -> dict:
+    """Resolve only explicit municipality names or an unambiguous municipal organ."""
+    explicit = []
+    for key in ("municipality", "municipality_name"):
+        value = _first_text(metadata.get(key))
+        if value:
+            explicit.append(("explicit_municipality", value.removesuffix(" kommun").strip()))
+
+    organ_values = []
+    for key in ("organ", "organ_name"):
+        value = _first_text(metadata.get(key))
+        if value and value.casefold().endswith(" kommun"):
+            organ_values.append(("municipal_organ", value[:-len(" kommun")].strip()))
+
+    candidates = {(value.casefold(), value, source) for source, value in explicit + organ_values if value}
+    names = {item[0] for item in candidates}
+    evidence = [{"source": source, "value": value} for _, value, source in sorted(candidates)]
+    if len(names) == 1:
+        resolved = next(iter(candidates))[1]
+        source_types = sorted({source for _, _, source in candidates})
+        return {"status": "resolved", "name": resolved, "evidence": evidence, "method": "+".join(source_types)}
+    if len(names) > 1:
+        return {"status": "conflict", "name": None, "evidence": evidence, "method": "conflicting_metadata"}
+    return {"status": "unknown", "name": None, "evidence": [], "method": None}
+
+
 def _detail_has_case_reference(detail: dict) -> bool:
     sections = detail.get("sections")
     if not isinstance(sections, list):
@@ -187,6 +213,7 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
             "source_kinds": sorted(item["sources"]),
             "title": _first_text(metadata.get("title"), metadata.get("rubrik"), metadata.get("subject")),
             "municipality": _first_text(metadata.get("municipality"), metadata.get("municipality_name")),
+            "authority_resolution": resolve_authority(metadata),
             "document_type": _first_text(metadata.get("doc_type"), metadata.get("document_type"), metadata.get("type")),
         })
 
