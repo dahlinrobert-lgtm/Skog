@@ -154,7 +154,14 @@ def compare(observations: list[dict[str, Any]], threshold: float = 0.80):
                     attributes_equal = a["properties"] == b["properties"]
                     if attributes_equal:
                         classification = "strong_geometry_and_attributes_candidate"
-                    elif (class_equal and motive_equal and a["class_value"] is not None\n                          and b["class_value"] is not None and a["motive_value"] is not None\n                          and b["motive_value"] is not None):
+                    elif (
+                        class_equal
+                        and motive_equal
+                        and a["class_value"] is not None
+                        and b["class_value"] is not None
+                        and a["motive_value"] is not None
+                        and b["motive_value"] is not None
+                    ):
                         classification = "geometry_overlap_attributes_compatible"
                     else:
                         classification = "geometry_overlap_attribute_conflict_review"
