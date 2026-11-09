@@ -6,6 +6,8 @@ on:
       - "scripts/sync_kungjort_azure.py"
       - "tests/test_kungjort_azure_sync.py"
       - "scripts/kungjort_schema_audit.py"
+      - "scripts/kungjort_document_selection.py"
+      - "tests/test_kungjort_document_selection.py"
       - "tests/test_kungjort_schema_audit.py"
       - ".github/workflows/sync-kungjort-azure.yml"
   workflow_dispatch:
