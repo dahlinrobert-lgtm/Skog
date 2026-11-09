@@ -5,6 +5,8 @@ on:
     paths:
       - "scripts/sync_kungjort_azure.py"
       - "tests/test_kungjort_azure_sync.py"
+      - "scripts/kungjort_schema_audit.py"
+      - "tests/test_kungjort_schema_audit.py"
       - ".github/workflows/sync-kungjort-azure.yml"
   workflow_dispatch:
     inputs:
@@ -18,10 +20,16 @@ on:
           - changes
           - reclassify
           - quality-report
+          - schema-report
       max_pages:
-        description: Maximum pages or metadata batches to process
+        description: Maximum API pages or reclassification batches to process
         required: true
         default: "300"
+        type: string
+      max_batches:
+        description: Maximum archive batches per source prefix for schema-report
+        required: true
+        default: "20"
         type: string
   schedule:
     - cron: "23 4 * * *"
@@ -48,8 +56,8 @@ jobs:
       - name: Test Azure sync helpers
         if: github.event_name == 'pull_request'
         run: |
-          python -m py_compile scripts/sync_kungjort_azure.py
-          python -m unittest discover -s tests -p "test_kungjort_azure_sync.py"
+          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py
+          python -m unittest discover -s tests -p "test_kungjort_*.py"
       - name: Resolve run mode
         if: github.event_name != 'pull_request'
         id: mode
@@ -57,6 +65,7 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           INPUT_MODE: ${{ inputs.mode }}
           INPUT_MAX_PAGES: ${{ inputs.max_pages }}
+          INPUT_MAX_BATCHES: ${{ inputs.max_batches }}
         run: |
           set -euo pipefail
           if [[ "$EVENT_NAME" == "schedule" ]]; then
@@ -72,6 +81,12 @@ jobs:
           fi
           echo "mode=$mode" >> "$GITHUB_OUTPUT"
           echo "max_pages=$max_pages" >> "$GITHUB_OUTPUT"
+          max_batches="${INPUT_MAX_BATCHES:-20}"
+          if ! [[ "$max_batches" =~ ^[0-9]+$ ]] || (( max_batches < 1 || max_batches > 500 )); then
+            echo "max_batches must be between 1 and 500" >&2
+            exit 1
+          fi
+          echo "max_batches=$max_batches" >> "$GITHUB_OUTPUT"
       - name: Sign in to Azure with GitHub OIDC
         if: github.event_name != 'pull_request'
         uses: azure/login@v2
@@ -80,7 +95,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Run direct-to-Azure synchronization
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report'
         env:
           KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
         run: |
@@ -88,6 +103,20 @@ jobs:
           python scripts/sync_kungjort_azure.py \
             --mode "${{ steps.mode.outputs.mode }}" \
             --max-pages "${{ steps.mode.outputs.max_pages }}"
+      - name: Export value-free schema inventory
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'schema-report'
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/kungjort_schema_audit.py
+          python scripts/kungjort_schema_audit.py --max-batches "${{ steps.mode.outputs.max_batches }}"
+      - name: Upload value-free schema inventory
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'schema-report'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-schema-inventory
+          path: schema-report-export/schema-inventory.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Export aggregate quality summary
         if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'quality-report'
         run: |
