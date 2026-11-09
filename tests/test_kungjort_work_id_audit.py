@@ -88,9 +88,27 @@ class WorkIdAuditTests(unittest.TestCase):
         groups = [r for r in rows if r["record_type"] == "kungjort_work_id_candidate_group"]
         self.assertEqual(len(groups), 1)
         self.assertEqual(groups[0]["document_ids"], ["a", "b"])
-        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 1)\n\n    def test_missing_municipality_never_creates_candidate_group(self):\n        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"\n        detail_path = "bootstrap-live/batch.jsonl.gz"\n        blobs = {\n            ("metadata", selection_path): encode_jsonl_gzip([\n                {"document_id": "a", "selection": {"priority": "P1"}},\n                {"document_id": "b", "selection": {"priority": "P1"}},\n            ]),\n            ("kungjort-raw", detail_path): encode_jsonl_gzip([\n                {"document_id": "a", "detail": {"rubrik": "KLF2023/1308"}},\n                {"document_id": "b", "detail": {"rubrik": "KLF2023/1308"}},\n            ]),\n        }\n        rows, report = build_audit(FakeService(blobs), 20, "test", "audit")\n        groups = [r for r in rows if r["record_type"] == "kungjort_work_id_candidate_group"]\n        self.assertEqual(groups, [])\n        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 0)
+        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 1)
         self.assertNotIn("KLF2023/1308", str(report))
         self.assertNotIn("document_ids", report)
+
+    def test_missing_municipality_never_creates_candidate_group(self):
+        selection_path = "kungjort/selection/v1/test/document-selection.jsonl.gz"
+        detail_path = "bootstrap-live/batch.jsonl.gz"
+        blobs = {
+            ("metadata", selection_path): encode_jsonl_gzip([
+                {"document_id": "a", "selection": {"priority": "P1"}},
+                {"document_id": "b", "selection": {"priority": "P1"}},
+            ]),
+            ("kungjort-raw", detail_path): encode_jsonl_gzip([
+                {"document_id": "a", "detail": {"rubrik": "KLF2023/1308"}},
+                {"document_id": "b", "detail": {"rubrik": "KLF2023/1308"}},
+            ]),
+        }
+        rows, report = build_audit(FakeService(blobs), 20, "test", "audit")
+        groups = [r for r in rows if r["record_type"] == "kungjort_work_id_candidate_group"]
+        self.assertEqual(groups, [])
+        self.assertEqual(report["candidate_groups_same_authority_and_work_id"], 0)
 
 
 if __name__ == "__main__":
