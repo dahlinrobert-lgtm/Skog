@@ -98,7 +98,7 @@ jobs:
           from azure.identity import DefaultAzureCredential
           from azure.storage.blob import BlobServiceClient
           account = "stskogkolldata"
-          container = os.environ["KUNGJORT_STATE_CONTAINER"]
+          container = "metadata"
           credential = DefaultAzureCredential()
           service = BlobServiceClient(
               account_url=f"https://{account}.blob.core.windows.net",
@@ -127,8 +127,6 @@ jobs:
               service.close()
               credential.close()
           PY
-        env:
-          KUNGJORT_STATE_CONTAINER: ${{ secrets.KUNGJORT_STATE_CONTAINER }}
       - name: Upload aggregate quality summary
         if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'quality-report'
         uses: actions/upload-artifact@v4
