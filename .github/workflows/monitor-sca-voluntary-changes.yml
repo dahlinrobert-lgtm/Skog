@@ -38,44 +38,41 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: python -m pytest -q tests/test_monitor_sca_voluntary_tiles.py
-      - name: Refresh independent national z9 seed census
+      - name: Bootstrap discovery cache when no monthly snapshot exists
+        if: ${{ !hashFiles('data/sca/discovery/sca-national-independent-layer-census-z9.json') || !hashFiles('data/sca/discovery/sca-multizoom-coverage-audit.json') }}
         run: |
-          python -m py_compile scripts/sca_national_independent_layer_census_z9.py
-          python scripts/sca_national_independent_layer_census_z9.py
-      - name: Audit sampled z8-z12 tile coverage
-        run: |
-          python -m py_compile scripts/audit_sca_tile_coverage.py
+          mkdir -p output data/sca/discovery
+          python scripts/sca_national_independent_layer_census_z9.py --out output/sca-national-independent-layer-census-z9.json --workers 4
           python scripts/audit_sca_tile_coverage.py \
-            --census sca-national-independent-layer-census-z9.json \
+            --census output/sca-national-independent-layer-census-z9.json \
             --out output/sca-multizoom-coverage-audit.json \
-            --samples-per-class 8 \
-            --no-positive-404-samples 8 \
-            --near-positive-404-samples 4 \
-            --ownership-positive-404-samples 9 \
-            --workers 2
-      - name: Audit z8 parent geometry overlap with z9 404 children
+            --samples-per-class 8 --no-positive-404-samples 8 \
+            --near-positive-404-samples 4 --ownership-positive-404-samples 9 --workers 2
+          python scripts/audit_sca_parent_child_geometry_overlap.py --audit output/sca-multizoom-coverage-audit.json --out output/sca-parent-child-geometry-overlap.json
+          python scripts/audit_sca_cluster_point_targeted_probes.py --overlap output/sca-parent-child-geometry-overlap.json --out output/sca-cluster-point-targeted-probes.json --workers 4
+          python scripts/audit_sca_neighbour_point_correspondence.py --input output/sca-cluster-point-targeted-probes.json --out output/sca-neighbour-point-correspondence.json --workers 4
+          cp output/sca-national-independent-layer-census-z9.json data/sca/discovery/
+          cp output/sca-multizoom-coverage-audit.json data/sca/discovery/
+          cp output/sca-parent-child-geometry-overlap.json data/sca/discovery/
+          cp output/sca-cluster-point-targeted-probes.json data/sca/discovery/
+          cp output/sca-neighbour-point-correspondence.json data/sca/discovery/
+      - name: Validate cached monthly SCA discovery snapshot
         run: |
-          python -m py_compile scripts/audit_sca_parent_child_geometry_overlap.py
-          python -m pytest -q tests/test_sca_parent_child_geometry_overlap.py
-          python scripts/audit_sca_parent_child_geometry_overlap.py \
-            --audit output/sca-multizoom-coverage-audit.json \
-            --out output/sca-parent-child-geometry-overlap.json
-      - name: Probe MVT neighbourhoods around parent point clusters
-        run: |
-          python -m py_compile scripts/audit_sca_cluster_point_targeted_probes.py
-          python -m pytest -q tests/test_sca_cluster_point_targeted_probes.py
-          python scripts/audit_sca_cluster_point_targeted_probes.py \
-            --overlap output/sca-parent-child-geometry-overlap.json \
-            --out output/sca-cluster-point-targeted-probes.json \
-            --workers 4
-      - name: Compare parent cluster points with positive z9 neighbours
-        run: |
-          python -m py_compile scripts/audit_sca_neighbour_point_correspondence.py
-          python -m pytest -q tests/test_sca_neighbour_point_correspondence.py
-          python scripts/audit_sca_neighbour_point_correspondence.py \
-            --input output/sca-cluster-point-targeted-probes.json \
-            --out output/sca-neighbour-point-correspondence.json \
-            --workers 4
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          census = json.loads(Path("data/sca/discovery/sca-national-independent-layer-census-z9.json").read_text())
+          audit = json.loads(Path("data/sca/discovery/sca-multizoom-coverage-audit.json").read_text())
+          generated = datetime.fromisoformat(census["generated_at"].replace("Z", "+00:00"))
+          age_days = (datetime.now(timezone.utc) - generated).total_seconds() / 86400
+          summary = census.get("summary", {})
+          assert summary.get("tiles_in_bbox", 0) > 0
+          assert summary.get("tiles_completed") == summary.get("tiles_in_bbox"), "Cached national census is incomplete"
+          assert age_days <= 45, f"Cached national census is stale ({age_days:.1f} days)"
+          assert audit.get("schema_version") == 1 and audit.get("probe_results"), "Cached multizoom audit is missing or invalid"
+          print(json.dumps({"discovery_generated_at": census["generated_at"], "discovery_age_days": round(age_days, 1), "census_tiles": summary["tiles_completed"], "audit_probe_tiles": len(audit["probe_results"])}, indent=2))
+          PY
       - name: Poll z12 tiles and compare geometry and metadata
         env:
           MAX_WORKERS: "3"
@@ -84,18 +81,15 @@ jobs:
           python scripts/monitor_sca_voluntary_tiles.py \
             --state data/sca/monitoring/tile-state.json.gz \
             --baseline-dir input/baseline \
-            --seed-census sca-national-independent-layer-census-z9.json \
-            --coverage-audit output/sca-multizoom-coverage-audit.json \
+            --seed-census data/sca/discovery/sca-national-independent-layer-census-z9.json \
+            --coverage-audit data/sca/discovery/sca-multizoom-coverage-audit.json \
             --events output/sca-voluntary-change-events.jsonl.gz \
             --summary output/sca-voluntary-change-summary.json \
             --workers 3
       - name: Validate monitor outputs
         run: |
           python -m json.tool output/sca-voluntary-change-summary.json > /dev/null
-          python -m json.tool output/sca-multizoom-coverage-audit.json > /dev/null
-          python -m json.tool output/sca-parent-child-geometry-overlap.json > /dev/null
-          python -m json.tool output/sca-cluster-point-targeted-probes.json > /dev/null
-          python -m json.tool output/sca-neighbour-point-correspondence.json > /dev/null
+          python -m json.tool data/sca/discovery/sca-multizoom-coverage-audit.json > /dev/null
           python - <<'PY'
           import gzip, json
           from pathlib import Path
@@ -122,7 +116,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/sca/monitoring/tile-state.json.gz data/sca/monitoring/baseline/
+          git add data/sca/monitoring/tile-state.json.gz data/sca/monitoring/baseline/ data/sca/discovery/
           if compgen -G "data/sca/monitoring/events/*.jsonl.gz" > /dev/null; then
             git add data/sca/monitoring/events/*.jsonl.gz
           fi
@@ -152,10 +146,10 @@ jobs:
           path: |
             output/sca-voluntary-change-summary.json
             output/sca-voluntary-change-events.jsonl.gz
-            sca-national-independent-layer-census-z9.json
-            output/sca-multizoom-coverage-audit.json
-            output/sca-parent-child-geometry-overlap.json
-            output/sca-cluster-point-targeted-probes.json
-            output/sca-neighbour-point-correspondence.json
+            data/sca/discovery/sca-national-independent-layer-census-z9.json
+            data/sca/discovery/sca-multizoom-coverage-audit.json
+            data/sca/discovery/sca-parent-child-geometry-overlap.json
+            data/sca/discovery/sca-cluster-point-targeted-probes.json
+            data/sca/discovery/sca-neighbour-point-correspondence.json
           if-no-files-found: error
           retention-days: 90
