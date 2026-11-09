@@ -78,12 +78,12 @@ def classify_plan_scope(record: Mapping) -> dict:
     if primary:
         selection_class, include, priority = "core_plan", True, "P1"
         reasons = [f"explicit_plan_term:{term}" for term in primary]
-    elif process:
-        selection_class, include, priority = "process_candidate", False, "P2"
-        reasons = [f"procedural_term_requires_plan_context:{term}" for term in process]
     elif adjacent:
         selection_class, include, priority = "adjacent_geography", False, "P3"
         reasons = [f"adjacent_sector_term:{term}" for term in adjacent]
+    elif process:
+        selection_class, include, priority = "process_candidate", False, "P2"
+        reasons = [f"procedural_term_requires_plan_context:{term}" for term in process]
     else:
         selection_class, include, priority = "other", False, "P4"
         reasons = ["no_supported_plan_scope_signal"]
