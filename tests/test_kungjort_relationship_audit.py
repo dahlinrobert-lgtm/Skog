@@ -83,8 +83,8 @@ class KungjortRelationshipAuditTests(unittest.TestCase):
 
     def test_latest_selection_blob_resolves_run_id(self):
         service = FakeService({
-            ("metadata", "kungjort/selection/v1/20261109T100000Z/document-selection.jsonl.gz"): b"",
-            ("metadata", "kungjort/selection/v1/20261109T110000Z/document-selection.jsonl.gz"): b"",
+            ("metadata", "kungjort/selection/v2/20261109T100000Z/document-selection.jsonl.gz"): b"",
+            ("metadata", "kungjort/selection/v2/20261109T110000Z/document-selection.jsonl.gz"): b"",
         })
         run_id, name = _latest_selection_blob(service)
         self.assertEqual(run_id, "20261109T110000Z")
@@ -92,7 +92,7 @@ class KungjortRelationshipAuditTests(unittest.TestCase):
 
     def test_builds_priority_coverage_and_shared_reference_counts(self):
         run_id = "test-run"
-        selection_name = f"kungjort/selection/v1/{run_id}/document-selection.jsonl.gz"
+        selection_name = f"kungjort/selection/v2/{run_id}/document-selection.jsonl.gz"
         detail_name = "bootstrap-live/batch.jsonl.gz"
         blobs = {
             ("metadata", selection_name): encode_jsonl_gzip([
