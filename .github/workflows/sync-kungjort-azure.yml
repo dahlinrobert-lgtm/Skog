@@ -8,6 +8,7 @@ on:
       - "scripts/kungjort_schema_audit.py"
       - "scripts/kungjort_document_selection.py"
       - "scripts/kungjort_selection_inventory.py"
+      - "scripts/kungjort_municipality_crosswalk.py"
       - "scripts/kungjort_relationship_audit.py"
       - "scripts/kungjort_work_id_audit.py"
       - "tests/test_kungjort_selection_inventory.py"
@@ -144,7 +145,7 @@ jobs:
         if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'selection-report'
         run: |
           set -euo pipefail
-          python -m py_compile scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py
+          python -m py_compile scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py scripts/kungjort_municipality_crosswalk.py
           python scripts/kungjort_selection_inventory.py --max-batches "${{ steps.mode.outputs.selection_max_batches }}"
       - name: Upload aggregate planning selection summary
         if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'selection-report'
