@@ -40579,9 +40579,9 @@
     "diary_number": "4021-2026",
     "diary": "Länsstyrelsen i Gotlands län",
     "handling_number": "4021-2026-2",
-    "title": "Sekretessmarkerad",
+    "title": "Bekräftelse av inkommet ärende, komplettering samt information om förenklad delgivning",
     "date": "2026-10-06",
-    "sender_recipient": "Sekretessmarkerad",
+    "sender_recipient": "Region Gotland",
     "classes": [
       "other"
     ],
@@ -40614,6 +40614,19 @@
     "matched_rules": [
       "opinion"
     ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4021-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4021-2026-7",
+    "title": "Begäran om komplettering",
+    "date": "2026-11-09",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
     "classification_version": "1.0.0"
   },
   {
@@ -40876,6 +40889,19 @@
     "handling_number": "4549-2026-4",
     "title": "Bekräftelse av inkommet ärende",
     "date": "2026-11-04",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4549-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4549-2026-5",
+    "title": "Begäran om komplettering av ansökan",
+    "date": "2026-11-09",
     "sender_recipient": "Personuppgift",
     "classes": [
       "other"
@@ -54695,6 +54721,1613 @@
       "other"
     ],
     "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4672-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4672-2026-1",
+    "title": "Start av ärende",
+    "date": "2026-11-09",
+    "sender_recipient": "Länsstyrelsen Gotlands län",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4672-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4672-2026-2",
+    "title": "Anskaffningsbeslut",
+    "date": "2026-11-09",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "procurement"
+    ],
+    "matched_rules": [
+      "procurement"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4712-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4712-2026-1",
+    "title": "Anmälan om olovlig vattenverksamhet",
+    "date": "2026-11-09",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-1",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Klassas ej som vattenområde är en nedlagd branddamm., Arboga kommun",
+    "date": "2026-09-04",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-2",
+    "title": "Begäran om komplettering",
+    "date": "2026-09-10",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-3",
+    "title": "Begäran om yttrande",
+    "date": "2026-09-11",
+    "sender_recipient": "Arboga kommun och Räddningstjänsten Mälardalen",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-4",
+    "title": "Begäran om yttrande",
+    "date": "2026-09-11",
+    "sender_recipient": "Trafikverket",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-5",
+    "title": "Komplettering",
+    "date": "2026-09-23",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-6",
+    "title": "Yttrande över remiss",
+    "date": "2026-09-30",
+    "sender_recipient": "Räddningstjänsten Mälardalen",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-7",
+    "title": "Yttrande över remiss",
+    "date": "2026-10-09",
+    "sender_recipient": "Trafikverket",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-8",
+    "title": "Delbeslut om förlängd handläggningstid",
+    "date": "2026-10-14",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-9",
+    "title": "Meddelande med delgivning av beslut",
+    "date": "2026-10-15",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5116-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5116-2026-1",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Köping kommun",
+    "date": "2026-09-10",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5116-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5116-2026-2",
+    "title": "Bekräftelse av anmälan",
+    "date": "2026-10-02",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5116-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5116-2026-3",
+    "title": "Begäran om yttrande",
+    "date": "2026-10-02",
+    "sender_recipient": "Köpings kommun",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5116-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5116-2026-4",
+    "title": "Yttrande över remiss",
+    "date": "2026-10-23",
+    "sender_recipient": "Köpings kommun",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5116-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5116-2026-5",
+    "title": "Beslut om bifall med villkor",
+    "date": "2026-11-05",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5116-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5116-2026-6",
+    "title": "Bekräftelse av delgivning",
+    "date": "2026-11-05",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5140-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5140-2026-1",
+    "title": "Föreläggande om yttrande över överklagan om tillstånd till täktverksamhet och därtill nödvändig vattenverksamhet på fastigheten Lycksta i Västerås kommun - M 11298-26 - svar senast 2026-09-25",
+    "date": "2026-09-11",
+    "sender_recipient": "Svea hovrätt, Mark- och miljööverdomstolen",
+    "classes": [
+      "permit",
+      "opinion"
+    ],
+    "matched_rules": [
+      "permit",
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5140-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5140-2026-2",
+    "title": "Internremiss - Svar senast 25 september",
+    "date": "2026-09-11",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5140-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5140-2026-3",
+    "title": "Länsstyrelsens begäran om förlängd tid till den 2 oktober för yttrande",
+    "date": "2026-09-11",
+    "sender_recipient": "Svea hovrätt, Mark- och miljööverdomstolen",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5140-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5140-2026-4",
+    "title": "Domstolen beviljar anstånd till den 2 oktober",
+    "date": "2026-09-14",
+    "sender_recipient": "Svea hovrätt, Mark- och miljööverdomstolen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5140-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5140-2026-5",
+    "title": "Länsstyrelsens yttrande",
+    "date": "2026-10-02",
+    "sender_recipient": "Svea hovrätt, Mark- och miljööverdomstolen",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5492-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5492-2026-1",
+    "title": "Start av ärende om avropsavtal om drönarfotografering av naturvårdsbränningar, anbudsdel 1 och 3",
+    "date": "2026-09-24",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "procurement",
+      "administrative"
+    ],
+    "matched_rules": [
+      "procurement",
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5492-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5492-2026-2",
+    "title": "Avtal om avrop",
+    "date": "2026-10-01",
+    "sender_recipient": "GLOBHE DRONES AB",
+    "classes": [
+      "contract"
+    ],
+    "matched_rules": [
+      "contract"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5493-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5493-2026-1",
+    "title": "Start av ärende om avropsavtal om drönarfotografering av naturvårdsbränningar, anbudsdel 2",
+    "date": "2026-09-24",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "procurement",
+      "administrative"
+    ],
+    "matched_rules": [
+      "procurement",
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5493-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5493-2026-2",
+    "title": "Avtal om avrop",
+    "date": "2026-10-14",
+    "sender_recipient": "Björn Olin Design Teknik AB",
+    "classes": [
+      "contract"
+    ],
+    "matched_rules": [
+      "contract"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5561-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5561-2026-1",
+    "title": "Information om vattenverksamhet och restaureringsärenden och önskan att i god tid underrättas om planerade aktiviteter eller förändringar som berör vattendrag där hydrologiska mätstationer finns",
+    "date": "2026-09-28",
+    "sender_recipient": "SMHI",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5561-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5561-2026-2",
+    "title": "Meddelande om diarienummer SMHI23:1 2026/2124/3.1.1",
+    "date": "2026-09-28",
+    "sender_recipient": "SMHI",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5605-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5605-2026-1",
+    "title": "Start av ärende om avropsavtal om drönarfotografering av naturvårdsbränningar, del av anbudsdel 2",
+    "date": "2026-09-29",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "procurement",
+      "administrative"
+    ],
+    "matched_rules": [
+      "procurement",
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5605-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5605-2026-2",
+    "title": "Avtal om avrop",
+    "date": "2026-10-01",
+    "sender_recipient": "Yachay AB",
+    "classes": [
+      "contract"
+    ],
+    "matched_rules": [
+      "contract"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-1",
+    "title": "Begäran om samråd inför tillståndsansökan av vattenverksamhet, grundvattenbortledning för grundvattenvärmepump på Möklintagården på fastighet Möklinta prästgård i Sala kommun",
+    "date": "2025-09-04",
+    "sender_recipient": "Föreningen Möklintagården",
+    "classes": [
+      "permit"
+    ],
+    "matched_rules": [
+      "permit"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-2",
+    "title": "Meddelande om svar på fråga om deltagande på samrådsmöte",
+    "date": "2025-09-05",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-3",
+    "title": "Meddelande om f-gasförordningen och ev krav enligt andra lagrum",
+    "date": "2025-09-05",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-4",
+    "title": "Tjänsteanteckning vid samtal",
+    "date": "2025-10-02",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-5",
+    "title": "Underrättelse om att ett ärende om samråd upprättats samt svar på fråga",
+    "date": "2025-10-07",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-6",
+    "title": "Meddelande om fråga om inledande möte med sökande och kommunen",
+    "date": "2025-10-07",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-7",
+    "title": "Tjänsteanteckning efter möte",
+    "date": "2025-10-17",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-8",
+    "title": "Meddelande om fråga om köldmedium",
+    "date": "2025-10-21",
+    "sender_recipient": "Sala kommun",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-9",
+    "title": "Tjänsteanteckning efter möte",
+    "date": "2025-11-21",
+    "sender_recipient": "Länsstyrelsen och Sala kommun",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-10",
+    "title": "Meddelande om fråga om förlängd tidsfrist",
+    "date": "2025-12-02",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-11",
+    "title": "Meddelande om svar på fråga om förlängd tidsfrist",
+    "date": "2025-12-03",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-12",
+    "title": "Tjänsteanteckning vid samtal",
+    "date": "2025-12-18",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-13",
+    "title": "Meddelande om synpunkter på mötesanteckningar från möte i september 2025",
+    "date": "2025-12-18",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-16",
+    "title": "Meddelande om stresstest av reurbrunn vid installation2015",
+    "date": "2026-02-25",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-17",
+    "title": "Meddelande om inskickad planritning till kommunen 20150325",
+    "date": "2026-02-25",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-18",
+    "title": "Meddelande om beslut från Sala kommun att ändring av anläggning inte föranleder någon åtgärd",
+    "date": "2026-03-05",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-19",
+    "title": "Begäran om handling från Sala kommun",
+    "date": "2026-03-06",
+    "sender_recipient": "Sala kommun",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-20",
+    "title": "Meddelande om att begärda handlingar översänds",
+    "date": "2026-03-09",
+    "sender_recipient": "Sala kommun",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-21",
+    "title": "Meddelande om handling från Möklintagården till miljöinspektör 2021",
+    "date": "2026-03-10",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-22",
+    "title": "Meddelande om uppgift",
+    "date": "2026-03-11",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5745-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5745-2025-23",
+    "title": "Komplettering med motivering till tidsfristförlängning",
+    "date": "2026-03-17",
+    "sender_recipient": "Föreningen Mökliintagården",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5843-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5843-2026-1",
+    "title": "Begäran om yttrande om förslag på tillstånds-, gransknings- och anmälningspliktiga vattenverksamheter, HaV 2026-003194",
+    "date": "2026-10-08",
+    "sender_recipient": "Havs- och vattenmyndigheten",
+    "classes": [
+      "permit",
+      "opinion"
+    ],
+    "matched_rules": [
+      "permit",
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5868-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5868-2026-1",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren, Västerås kommun",
+    "date": "2026-10-11",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5868-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5868-2026-2",
+    "title": "Komplettering med mer information",
+    "date": "2026-10-23",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5868-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5868-2026-3",
+    "title": "Komplettering med mer information efterfrågas.",
+    "date": "2026-10-27",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5868-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5868-2026-4",
+    "title": "Komplettering svar på mail",
+    "date": "2026-10-29",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5868-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5868-2026-5",
+    "title": "Komplettering med köpekontrakt",
+    "date": "2026-10-29",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "contract"
+    ],
+    "matched_rules": [
+      "contract"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5868-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5868-2026-6",
+    "title": "Komplettering med information om utförande mm",
+    "date": "2026-10-29",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5934-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5934-2026-1",
+    "title": "Föreläggande om yttrande i mål M 6889-25 omprövning för moderna miljövillkor för den vattenverksamhet som bedrivs och som medger fortsatt produktion av vattenkraftsel vid Karbenningby vattenkraftverk",
+    "date": "2026-10-13",
+    "sender_recipient": "Nacka tingsrätt, Mark- och miljödomstolen",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5934-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5934-2026-3",
+    "title": "Yttrande Karbenning",
+    "date": "2026-10-27",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5958-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5958-2026-1",
+    "title": "Överklagande av Länsstyrelsens beslut om avgift  för tillsyn av vattenverksamhet på fastigheten Lerkulan i Skinnskattebergs kommun",
+    "date": "2026-10-13",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5958-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5958-2026-2",
+    "title": "Överklagandet och övriga handlingar i ärendet överlämnas",
+    "date": "2026-10-16",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5958-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5958-2026-3",
+    "title": "Meddelande om att överlämning skett",
+    "date": "2026-10-16",
+    "sender_recipient": "Mark- och miljödomstolen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5989-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5989-2023-1",
+    "title": "Meddelande om tillstånd finns för anläggandet av väg och pir-likande anordning i sjön Stenbarken, Västerfärnebo, fastighet Hedåker, Sala kommun",
+    "date": "2023-10-29",
+    "sender_recipient": "Anonym",
+    "classes": [
+      "permit"
+    ],
+    "matched_rules": [
+      "permit"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5990-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5990-2023-1",
+    "title": "Klagomål på underhåll dikningsföretaget Bysingsbergsbäckens sänkning 1923",
+    "date": "2023-11-03",
+    "sender_recipient": "Räddningstjänsten Mälardalen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-1",
+    "title": "Begäran om samråd inför tillståndsansökan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, för en befintlig badbrygga i sjön Lillsvan, Skinnskattebergs kommun - svar senast 2025-10-31",
+    "date": "2025-10-14",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "permit"
+    ],
+    "matched_rules": [
+      "permit"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-2",
+    "title": "Bekräftelse av mottagen begäran om samråd",
+    "date": "2025-10-20",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-3",
+    "title": "Meddelande till sökande och fråga om digitalt undersökningssamråd",
+    "date": "2025-10-28",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-4",
+    "title": "Meddelande om inkomna mejl",
+    "date": "2025-10-28",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-5",
+    "title": "Meddelande om till lst att tid bör ges för synpunkter samt svar",
+    "date": "2025-10-29",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-6",
+    "title": "Meddelande om att länsstyrelsen tar tillbaka sitt förslag på tid för undersökningssamråd",
+    "date": "2025-10-29",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-7",
+    "title": "Meddelande om att skriftligt samråd tillräckligt",
+    "date": "2025-10-29",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-8",
+    "title": "Meddelande om till sökande att tid bör ges för synpunkter",
+    "date": "2025-10-29",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-9",
+    "title": "Meddelande om att länsstyrelsen avböjer deltagande i undersökningssamråd 6 nov",
+    "date": "2025-10-30",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-10",
+    "title": "Meddelande om fastighetsägares fråga till sökande",
+    "date": "2025-10-31",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-11",
+    "title": "Meddelande till sökande om synpunkter på samrådshandlingar",
+    "date": "2025-11-03",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-12",
+    "title": "Begäran om bekräftelse på delgivning",
+    "date": "2025-11-03",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-13",
+    "title": "Bekräftelse från sakägare att hen tagit emot handling",
+    "date": "2025-11-03",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-14",
+    "title": "Meddelande om yttranderätt",
+    "date": "2025-11-03",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-15",
+    "title": "Meddelande om sakägarkrets",
+    "date": "2025-11-05",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-16",
+    "title": "Påminnelse om bekräftelse på delgivning",
+    "date": "2025-11-06",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-17",
+    "title": "Tjänsteanteckning om makuleringsorsak handling 14.1-14.4",
+    "date": "2025-11-06",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-18",
+    "title": "Begäran om handlingar",
+    "date": "2025-11-06",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-19",
+    "title": "Handlingar översändes enligt begäran",
+    "date": "2025-11-06",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-20",
+    "title": "Meddelande till sökande om tidsfrist",
+    "date": "2025-11-07",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-21",
+    "title": "Meddelande om tidsfrist från sökande",
+    "date": "2025-11-10",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-22",
+    "title": "Samrådsredogörelse",
+    "date": "2025-11-21",
+    "sender_recipient": "Wescon Miljökonsult AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5998-2025",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5998-2025-23",
+    "title": "Beslut att avsluta utan ytterligare åtgärd",
+    "date": "2026-10-13",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-1",
+    "title": "Anmälan om fördämning av bäck vid Skomakartorp, Lermansbo, Skinnskattebergs kommun",
+    "date": "2023-11-09",
+    "sender_recipient": "Sveaskog Förvaltnings AB",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-2",
+    "title": "Komplettering med korrigering av platsangivelse för fördämning",
+    "date": "2023-11-10",
+    "sender_recipient": "Sveaskog Förvaltnings AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-3",
+    "title": "Svar på anmälan om fördämning av bäck vid Skomakartorp_ Lermansbo",
+    "date": "2023-12-20",
+    "sender_recipient": "Sveaskog Förvaltnings AB",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-4",
+    "title": "Anmälan om fördämning av bäck vid Skomakartorp_ Lermansbo",
+    "date": "2024-01-19",
+    "sender_recipient": "Sveaskog Förvaltnings AB",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-5",
+    "title": "Sv_ Anmälan om fördämning av bäck vid Skomakartorp_ Lermansbo",
+    "date": "2024-01-22",
+    "sender_recipient": "Sveaskog Förvaltnings AB",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-6",
+    "title": "Meddelande ifrån Sportfiskarna",
+    "date": "2024-02-19",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-7",
+    "title": "Tjänsteanteckning efter samtal",
+    "date": "2024-03-05",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-8",
+    "title": "Tjänsteanteckning vid samtal",
+    "date": "2025-11-27",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-9",
+    "title": "Meddelande om status i ärendet och fråga om plats",
+    "date": "2025-12-01",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-10",
+    "title": "Meddelande om plats för dämmet",
+    "date": "2025-12-01",
+    "sender_recipient": "Sveaskog Förvaltnings AB",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6025-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6025-2023-11",
+    "title": "Tjänsteanteckning om makulering av logotypebilagor 1-6",
+    "date": "2025-12-03",
+    "sender_recipient": "Länsstyrelsen",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-1",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+    "date": "2023-11-13",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-2",
+    "title": "Översiktkarta",
+    "date": "2023-11-13",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-3",
+    "title": "Foton/bilder från platsen",
+    "date": "2023-11-13",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-4",
+    "title": "Bekräftelse av anmälan",
+    "date": "2023-11-30",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-5",
+    "title": "Remiss om vattenverksamhet",
+    "date": "2023-11-30",
+    "sender_recipient": "Sjöfartsverket",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-6",
+    "title": "Remiss om vattenverksamhet",
+    "date": "2023-11-30",
+    "sender_recipient": "Miljöenheten Köpings kommun",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-7",
+    "title": "Yttrande över remiss",
+    "date": "2023-12-12",
+    "sender_recipient": "Sjöfartsverket",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-8",
+    "title": "Yttrande över remiss",
+    "date": "2023-12-13",
+    "sender_recipient": "Miljöenheten Köping kommun",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-9",
+    "title": "Begäran om komplettering",
+    "date": "2023-12-18",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-10",
+    "title": "Delbeslut",
+    "date": "2024-01-04",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-11",
+    "title": "Information om ärende",
+    "date": "2024-01-04",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-12",
+    "title": "Komplettering i ärende",
+    "date": "2024-04-05",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-13",
+    "title": "Godkännande muddring",
+    "date": "2024-04-11",
+    "sender_recipient": "Köping kommun",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-14",
+    "title": "Beslut om bifall med villkor",
+    "date": "2024-04-12",
+    "sender_recipient": "Holger Frense",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6056-2023",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6056-2023-15",
+    "title": "Beslut anmälan vattenverksamhet_ dnr 535-6056-2023",
+    "date": "2024-04-12",
+    "sender_recipient": "Holger Frense",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
     "classification_version": "1.0.0"
   }
 ]
