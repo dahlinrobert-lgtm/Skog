@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-09T23:36:10.946783Z",
+  "checked_at": "2026-11-10T00:01:37.298950Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27557,7 +27557,7 @@
       },
       {
         "type": "Feature",
-        "id": 6545743,
+        "id": 6546060,
         "geometry": {
           "type": "Polygon",
           "coordinates": [
@@ -27602,7 +27602,7 @@
           ]
         },
         "properties": {
-          "OBJECTID": 6545743,
+          "OBJECTID": 6546060,
           "Lannr": "24",
           "Lan": "VÄSTERBOTTENS LÄN",
           "Kommunnr": "2401",
@@ -27626,8 +27626,144 @@
     "count": 165,
     "note": "Features intersect a 10 km point-distance query around the configured centre; this is not a cadastral or village boundary. A notification does not prove felling occurred."
   },
-  "new_cutting_notification_ids_since_previous_run": [],
-  "recent_new_cutting_notification_ids_since_previous_run": [],
+  "new_cutting_notification_ids_since_previous_run": [
+    {
+      "type": "Feature",
+      "id": 6546060,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              19.555870551502085,
+              63.7690956122291
+            ],
+            [
+              19.556426614761097,
+              63.76921379475332
+            ],
+            [
+              19.556671780742782,
+              63.769545473196494
+            ],
+            [
+              19.55587613484861,
+              63.7698421923626
+            ],
+            [
+              19.55501209922565,
+              63.76971675393251
+            ],
+            [
+              19.55481858904941,
+              63.76946832055302
+            ],
+            [
+              19.554949391029588,
+              63.76932840987617
+            ],
+            [
+              19.555186626656464,
+              63.76913423997369
+            ],
+            [
+              19.555870551502085,
+              63.7690956122291
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "OBJECTID": 6546060,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2401",
+        "Kommun": "NORDMALING",
+        "ArendeAr": 2026,
+        "Beteckn": "A 40124-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1790602130000,
+        "AnmaldHa": 0.5,
+        "SkogsodlHa": 0.5,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      }
+    }
+  ],
+  "recent_new_cutting_notification_ids_since_previous_run": [
+    {
+      "type": "Feature",
+      "id": 6546060,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              19.555870551502085,
+              63.7690956122291
+            ],
+            [
+              19.556426614761097,
+              63.76921379475332
+            ],
+            [
+              19.556671780742782,
+              63.769545473196494
+            ],
+            [
+              19.55587613484861,
+              63.7698421923626
+            ],
+            [
+              19.55501209922565,
+              63.76971675393251
+            ],
+            [
+              19.55481858904941,
+              63.76946832055302
+            ],
+            [
+              19.554949391029588,
+              63.76932840987617
+            ],
+            [
+              19.555186626656464,
+              63.76913423997369
+            ],
+            [
+              19.555870551502085,
+              63.7690956122291
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "OBJECTID": 6546060,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2401",
+        "Kommun": "NORDMALING",
+        "ArendeAr": 2026,
+        "Beteckn": "A 40124-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1790602130000,
+        "AnmaldHa": 0.5,
+        "SkogsodlHa": 0.5,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      }
+    }
+  ],
   "sentinel1": {
     "status": "ok",
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
