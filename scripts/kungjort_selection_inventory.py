@@ -85,6 +85,30 @@ def _first_text(*values: Any) -> str | None:
     return None
 
 
+ORGANIZATIONAL_FIELD_TOKENS = (
+    "organ", "committee", "namnd", "nämnd", "forvalt", "förvalt",
+    "depart", "kommun", "authority", "issuing", "sender",
+    "organization", "organisation", "board",
+)
+
+
+def organizational_field_presence(metadata: dict) -> dict[str, int]:
+    """Count populated top-level organization-related fields without exposing values."""
+    counts = {}
+    if not isinstance(metadata, dict):
+        return counts
+    for key, value in metadata.items():
+        normalized_key = str(key).casefold()
+        if not any(token in normalized_key for token in ORGANIZATIONAL_FIELD_TOKENS):
+            continue
+        if value is None or (isinstance(value, str) and not value.strip()):
+            continue
+        if isinstance(value, (list, dict)) and not value:
+            continue
+        counts[str(key)] = 1
+    return counts
+
+
 def resolve_authority(metadata: dict) -> dict:
     """Resolve municipality from explicit names, codes, IDs or municipal organs."""
     name_fields = ("municipality", "municipality_name", "kommun", "kommunnamn", "publication_municipality", "publication_municipality_name")
@@ -238,11 +262,13 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
     municipality_evidence_sources = Counter()
     municipality_crosswalk_status_counts = Counter()
     municipality_crosswalk_distribution = Counter()
+    organizational_field_presence_counts = Counter()
 
     for doc_id, item in sorted(documents.items()):
         metadata = item["metadata"]
         detail = item["detail"]
         authority = resolve_authority(metadata)
+        organizational_field_presence_counts.update(organizational_field_presence(metadata))
         municipality_status_counts[authority["status"]] += 1
         if authority.get("method"):
             municipality_method_counts[authority["method"]] += 1
@@ -338,6 +364,7 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
         "duplicate_source_records": duplicate_records,
         "records_missing_document_id": dict(sorted(missing_id_counts.items())),
         "records_missing_metadata": missing_metadata_count,
+        "organizational_identity_field_presence": dict(sorted(organizational_field_presence_counts.items())),
         "selection_class_counts": dict(sorted(class_counts.items())),
         "priority_counts": dict(sorted(priority_counts.items())),
         "documents_with_detail": detail_count,
