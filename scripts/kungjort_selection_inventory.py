@@ -226,10 +226,24 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
     detail_count = 0
     case_reference_count = 0
     missing_metadata_count = 0
+    municipality_status_counts = Counter()
+    municipality_method_counts = Counter()
+    municipality_name_documents = 0
+    municipality_code_documents = 0
+    municipality_id_documents = 0
+    municipality_conflict_documents = 0
 
     for doc_id, item in sorted(documents.items()):
         metadata = item["metadata"]
         detail = item["detail"]
+        authority = resolve_authority(metadata)
+        municipality_status_counts[authority["status"]] += 1
+        if authority.get("method"):
+            municipality_method_counts[authority["method"]] += 1
+        municipality_name_documents += bool(authority.get("name"))
+        municipality_code_documents += bool(authority.get("municipality_code"))
+        municipality_id_documents += bool(authority.get("municipality_id"))
+        municipality_conflict_documents += authority["status"] == "conflict"
         if detail:
             detail_count += 1
         if _detail_has_case_reference(detail):
@@ -273,6 +287,16 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
         "source_scan_truncated": dict(sorted(source_scan_truncated.items())),
         "source_records_reviewed": dict(sorted(source_record_counts.items())),
         "unique_documents": len(selection_records),
+        "municipality_attribution": {
+            "status_counts": dict(sorted(municipality_status_counts.items())),
+            "method_counts": dict(sorted(municipality_method_counts.items())),
+            "documents_with_municipality_name": municipality_name_documents,
+            "documents_with_municipality_code": municipality_code_documents,
+            "documents_with_municipality_id": municipality_id_documents,
+            "documents_with_conflicting_municipality_evidence": municipality_conflict_documents,
+            "documents_without_municipality_evidence": municipality_status_counts.get("unknown", 0),
+            "provenance_scope": "canonical source metadata record only; parent-container inheritance not yet assessed",
+        },
         "duplicate_source_records": duplicate_records,
         "records_missing_document_id": dict(sorted(missing_id_counts.items())),
         "records_missing_metadata": missing_metadata_count,
