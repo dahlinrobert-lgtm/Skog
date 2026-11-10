@@ -86,7 +86,7 @@ def _first_text(*values: Any) -> str | None:
 
 
 ORGANIZATIONAL_FIELD_TOKENS = (
-    "organ", "committee", "namnd", "nämnd", "forvalt", "förvalt",
+    "organ", "committee", "administration", "namnd", "nämnd", "forvalt", "förvalt",
     "depart", "kommun", "authority", "issuing", "sender",
     "organization", "organisation", "board",
 )
