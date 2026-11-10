@@ -87,7 +87,7 @@ class KungjortSelectionInventoryTests(unittest.TestCase):
                 {
                     "record_type": "document_index",
                     "document_id": "doc-1",
-                    "metadata": {"title": "Samråd om detaljplan", "kommunkod": 2580},
+                    "metadata": {"title": "Samråd om detaljplan", "kommunkod": 2580, "municipality": "Luleå"},
                 },
                 {
                     "record_type": "document_index",
@@ -114,6 +114,8 @@ class KungjortSelectionInventoryTests(unittest.TestCase):
         self.assertEqual(aggregate["municipality_attribution"]["documents_with_municipality_code"], 1)
         self.assertEqual(aggregate["municipality_attribution"]["documents_without_municipality_evidence"], 1)
         self.assertEqual(aggregate["municipality_attribution"]["status_counts"]["resolved"], 1)
+        self.assertEqual(aggregate["municipality_attribution"]["municipality_distribution"],
+                         [{"municipality_name": "Luleå", "documents": 1}])
         self.assertFalse(any(aggregate["source_scan_truncated"].values()))
         doc1 = next(row for row in result["records"] if row["document_id"] == "doc-1")
         self.assertEqual(doc1["title"], "Samråd om detaljplan")
