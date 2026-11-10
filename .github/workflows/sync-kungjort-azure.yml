@@ -11,9 +11,11 @@ on:
       - "scripts/kungjort_municipality_crosswalk.py"
       - "scripts/kungjort_relationship_audit.py"
       - "scripts/kungjort_work_id_audit.py"
+      - "scripts/kungjort_hierarchy_audit.py"
       - "tests/test_kungjort_selection_inventory.py"
       - "tests/test_kungjort_relationship_audit.py"
       - "tests/test_kungjort_work_id_audit.py"
+      - "tests/test_kungjort_hierarchy_audit.py"
       - "tests/test_kungjort_document_selection.py"
       - "tests/test_kungjort_schema_audit.py"
       - ".github/workflows/sync-kungjort-azure.yml"
@@ -33,6 +35,7 @@ on:
           - selection-report
           - relationship-report
           - work-id-report
+          - hierarchy-report
       max_pages:
         description: Maximum API pages or reclassification batches to process
         required: true
@@ -73,7 +76,7 @@ jobs:
       - name: Test Azure sync helpers
         if: github.event_name == 'pull_request'
         run: |
-          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py scripts/kungjort_relationship_audit.py scripts/kungjort_work_id_audit.py
+          python -m py_compile scripts/sync_kungjort_azure.py scripts/kungjort_schema_audit.py scripts/kungjort_document_selection.py scripts/kungjort_selection_inventory.py scripts/kungjort_relationship_audit.py scripts/kungjort_work_id_audit.py scripts/kungjort_hierarchy_audit.py
           python -m unittest discover -s tests -p "test_kungjort_*.py"
       - name: Resolve run mode
         if: github.event_name != 'pull_request'
@@ -119,7 +122,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Run direct-to-Azure synchronization
-        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report' && steps.mode.outputs.mode != 'selection-report' && steps.mode.outputs.mode != 'relationship-report' && steps.mode.outputs.mode != 'work-id-report'
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report' && steps.mode.outputs.mode != 'selection-report' && steps.mode.outputs.mode != 'relationship-report' && steps.mode.outputs.mode != 'work-id-report' && steps.mode.outputs.mode != 'hierarchy-report'
         env:
           KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
         run: |
@@ -181,6 +184,20 @@ jobs:
         with:
           name: kungjort-work-id-extraction-summary
           path: work-id-report-export/work-id-summary.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Export private document hierarchy audit
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'hierarchy-report'
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/kungjort_hierarchy_audit.py
+          python scripts/kungjort_hierarchy_audit.py --max-batches 2000
+      - name: Upload aggregate document hierarchy summary
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'hierarchy-report'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-document-hierarchy-summary
+          path: hierarchy-report-export/hierarchy-summary.json
           if-no-files-found: error
           retention-days: 14
       - name: Export aggregate quality summary
