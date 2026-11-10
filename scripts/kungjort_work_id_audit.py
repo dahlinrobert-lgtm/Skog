@@ -73,6 +73,36 @@ def collect_semantic_text(value: Any, out: list[str]) -> None:
                 collect_semantic_text(child, out)
 
 
+def structured_protocol_data(detail: dict) -> dict:
+    """Extract structured meeting, section and case references."""
+    organ = str(detail.get("organ") or "").strip() or None
+    meeting_date = str(detail.get("meeting_date") or "").strip() or None
+    sections = detail.get("sections") if isinstance(detail.get("sections"), list) else []
+    section_rows = []
+    case_rows = []
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+        paragraph = str(section.get("paragraf") or "").strip() or None
+        decision_id = str(section.get("decision_id") or "").strip() or None
+        section_id = str(section.get("section_id") or "").strip() or None
+        if paragraph or decision_id or section_id:
+            section_rows.append({"paragraph": paragraph, "decision_id": decision_id, "section_id": section_id, "decision_type": section.get("beslut_typ"), "decision_text_present": bool(str(section.get("beslut_text") or "").strip())})
+        cases = section.get("cases") if isinstance(section.get("cases"), list) else []
+        for case in cases:
+            if isinstance(case, dict):
+                dnr = str(case.get("normalized_dnr") or case.get("dnr") or "").strip()
+                if dnr:
+                    case_rows.append({"dnr": dnr, "case_id": str(case.get("case_id") or "").strip() or None, "relation": str(case.get("relation") or "").strip() or None, "paragraph": paragraph, "decision_id": decision_id})
+        direct_dnrs = section.get("dnr") if isinstance(section.get("dnr"), list) else []
+        known = {item["dnr"] for item in case_rows}
+        for value in direct_dnrs:
+            dnr = str(value or "").strip()
+            if dnr and dnr not in known:
+                case_rows.append({"dnr": dnr, "case_id": None, "relation": None, "paragraph": paragraph, "decision_id": decision_id})
+                known.add(dnr)
+    return {"organ": organ, "meeting_date": meeting_date, "sections": section_rows, "cases": case_rows}
+
 def read_jsonl_gzip(payload: bytes) -> list[dict]:
     rows = []
     for line in gzip.decompress(payload).decode("utf-8").splitlines():
