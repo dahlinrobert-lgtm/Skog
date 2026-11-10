@@ -181,6 +181,8 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
     docs_with_conflicting_authority = 0
     docs_with_unknown_authority = 0
     work_ids_by_authority: dict[str, set[str]] = defaultdict(set)
+    structured_docs = structured_section_count = structured_case_count = 0
+    structured_docs_with_organ = structured_docs_with_meeting_date = 0
 
     for doc_id, selection in sorted(selected.items()):
         detail = details.get(doc_id, {})
@@ -191,6 +193,13 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         combined = "\n".join(text_parts)
         work_ids = work_id_matches(combined)
         protocols = protocol_references(combined)
+        structured = structured_protocol_data(detail)
+        structured_docs += bool(structured["sections"] or structured["cases"])
+        structured_section_count += len(structured["sections"])
+        structured_case_count += len(structured["cases"])
+        structured_docs_with_organ += bool(structured["organ"])
+        structured_docs_with_meeting_date += bool(structured["meeting_date"])
+        structured_ids = sorted({item["dnr"] for item in structured["cases"]})
         identity = selection.get("organizational_identity") or {}
         municipality_resolution = identity.get("municipality") or selection.get("authority_resolution") or {}
         municipality = str(selection.get("municipality") or municipality_resolution.get("name") or "").strip()
@@ -237,6 +246,11 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
                 for value in work_ids
             ],
             "protocol_decision_references": protocols,
+            "source_organ": structured["organ"],
+            "meeting_date": structured["meeting_date"],
+            "structured_sections": structured["sections"],
+            "structured_cases": structured["cases"],
+            "structured_case_dnrs": structured_ids,
         })
 
     group_rows = []
@@ -277,6 +291,12 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
         "documents_with_unknown_authority": docs_with_unknown_authority,
         "repeated_work_ids_across_resolved_committees": sum(1 for authorities in work_ids_by_authority.values() if len(authorities) > 1),
         "documents_with_protocol_reference": docs_with_protocol,
+        "documents_with_structured_protocol_data": structured_docs,
+        "structured_sections_extracted": structured_section_count,
+        "structured_case_references_extracted": structured_case_count,
+        "documents_with_source_organ": structured_docs_with_organ,
+        "documents_with_meeting_date": structured_docs_with_meeting_date,
+        "documents_with_structured_case_dnr": sum(1 for row in document_rows if row.get("structured_case_dnrs")),
         "distinct_work_ids": len(work_id_occurrences),
         "work_ids_found_in_multiple_documents": sum(1 for n in work_id_occurrences.values() if n > 1),
         "candidate_groups_same_committee_and_work_id": multi_doc_groups,
