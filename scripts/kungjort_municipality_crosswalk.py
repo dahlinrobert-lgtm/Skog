@@ -30,7 +30,7 @@ SCB_OBSERVED_MUNICIPALITIES = {
 def normalize_municipality_name(value: str) -> str:
     """Normalize Swedish municipality labels without guessing abbreviations."""
     text = unicodedata.normalize("NFKC", str(value)).casefold().strip()
-    text = re.sub(r"\\bkommun\\b$", "", text).strip()
+    text = re.sub(r"\bkommun\b$", "", text).strip()
     decomposed = unicodedata.normalize("NFKD", text)
     text = "".join(char for char in decomposed if not unicodedata.combining(char))
     text = re.sub(r"[^a-z0-9]+", " ", text)
