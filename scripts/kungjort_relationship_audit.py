@@ -29,7 +29,8 @@ REFERENCE_FIELDS = (
     "decision_id", "diarieplan_kod", "section_id",
 )
 COVERAGE_FIELDS = REFERENCE_FIELDS + ("case_relation",)
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+STRONG_LINK_FIELDS = ("case_id", "case_dnr", "normalized_dnr", "section_dnr")
 
 
 def read_jsonl_gzip(payload: bytes) -> list[dict]:
@@ -156,6 +157,7 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
     class_totals: dict[str, Counter] = defaultdict(Counter)
     reference_documents: dict[str, Counter] = defaultdict(Counter)
     reference_frequency: dict[str, Counter] = defaultdict(Counter)
+    candidate_members: dict[tuple[str, str], set[str]] = defaultdict(set)
     for doc_id, selection in sorted(selected.items()):
         priority = str((selection.get("selection") or {}).get("priority", "unknown"))
         detail = details.get(doc_id, {})
@@ -172,6 +174,9 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
                 reference_documents[priority][field] += 1
                 if field in REFERENCE_FIELDS:
                     reference_frequency[field].update(found)
+                if field in STRONG_LINK_FIELDS:
+                    for reference in found:
+                        candidate_members[(field, reference)].add(doc_id)
         per_document.append({
             "record_type": "kungjort_reference_coverage",
             "schema_version": SCHEMA_VERSION,
@@ -210,6 +215,28 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
             "maximum_documents_per_reference": max(frequencies.values(), default=0),
         }
 
+    candidate_groups = []
+    candidate_group_counts = Counter()
+    candidate_documents = set()
+    for (field, reference), members in sorted(candidate_members.items()):
+        if len(members) < 2:
+            continue
+        candidate_group_counts[field] += 1
+        candidate_documents.update(members)
+        candidate_groups.append({
+            "record_type": "kungjort_relationship_candidate_group",
+            "schema_version": SCHEMA_VERSION,
+            "audit_run_id": audit_run_id,
+            "selection_run_id": run_id,
+            "reference_field": field,
+            "reference_hash": hashlib.sha256(reference.encode("utf-8")).hexdigest(),
+            "document_ids": sorted(members),
+            "document_count": len(members),
+            "link_status": "candidate_only",
+            "evidence_strength": "structured_case_reference",
+        })
+    per_document.extend(candidate_groups)
+
     private_blob = f"kungjort/relationship-audit/v{SCHEMA_VERSION}/{audit_run_id}/document-reference-coverage.jsonl.gz"
     aggregate = {
         "schema_version": SCHEMA_VERSION,
@@ -222,6 +249,13 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
         "detail_source_scan_truncated": dict(sorted(source_scan_truncated.items())),
         "coverage_by_priority": by_priority,
         "cross_document_reference_frequency": shared,
+        "candidate_relationship_groups": {
+            "total_groups": len(candidate_groups),
+            "documents_in_groups": len(candidate_documents),
+            "groups_by_reference_field": dict(sorted(candidate_group_counts.items())),
+            "link_status": "candidate_only",
+            "excluded_weak_fields": ["diarieplan_kod", "decision_id", "section_id"],
+        },
         "private_document_audit_blob": private_blob,
         "privacy_note": "Aggregate only. No document IDs, reference values, titles, municipality values, URLs, text or examples.",
     }
