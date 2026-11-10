@@ -5,6 +5,7 @@ from scripts.kungjort_work_id_audit import (
     encode_jsonl_gzip,
     protocol_references,
     read_jsonl_gzip,
+    structured_protocol_data,
     work_id_matches,
 )
 
@@ -147,6 +148,28 @@ class WorkIdAuditTests(unittest.TestCase):
         self.assertFalse(any(row["record_type"] == "kungjort_work_id_candidate_group" for row in rows))
         self.assertEqual(report["documents_with_conflicting_authority"], 2)
 
+
+    def test_extracts_structured_meeting_sections_and_case_references(self):
+        detail = {
+            "organ": "Miljö- och byggnadsnämnden",
+            "meeting_date": "2025-03-12",
+            "sections": [{
+                "paragraf": "§ 14", "decision_id": "d-14", "section_id": "s-14",
+                "beslut_typ": "Bifall", "beslut_text": "Beslutstext",
+                "cases": [{"dnr": "M-2024-123", "normalized_dnr": "M2024-123", "case_id": "c-1", "relation": "main"}],
+            }],
+        }
+        result = structured_protocol_data(detail)
+        self.assertEqual(result["organ"], "Miljö- och byggnadsnämnden")
+        self.assertEqual(result["meeting_date"], "2025-03-12")
+        self.assertEqual(result["sections"][0]["paragraph"], "§ 14")
+        self.assertEqual(result["cases"][0]["dnr"], "M2024-123")
+        self.assertEqual(result["cases"][0]["paragraph"], "§ 14")
+
+    def test_structured_extraction_handles_missing_sections(self):
+        result = structured_protocol_data({"organ": "Kommunstyrelsen", "meeting_date": None})
+        self.assertEqual(result["sections"], [])
+        self.assertEqual(result["cases"], [])
 
 if __name__ == "__main__":
     unittest.main()
