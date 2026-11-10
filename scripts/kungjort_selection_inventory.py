@@ -17,8 +17,10 @@ from typing import Any
 
 try:
     from .kungjort_document_selection import classify_plan_scope
+    from .kungjort_municipality_crosswalk import resolve_scb_municipality
 except ImportError:  # direct script execution from the scripts directory
     from kungjort_document_selection import classify_plan_scope
+    from kungjort_municipality_crosswalk import resolve_scb_municipality
 
 ACCOUNT = "stskogkolldata"
 METADATA_CONTAINER = "metadata"
@@ -234,6 +236,8 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
     municipality_conflict_documents = 0
     municipality_distribution = Counter()
     municipality_evidence_sources = Counter()
+    municipality_crosswalk_status_counts = Counter()
+    municipality_crosswalk_distribution = Counter()
 
     for doc_id, item in sorted(documents.items()):
         metadata = item["metadata"]
@@ -248,6 +252,12 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
         municipality_conflict_documents += authority["status"] == "conflict"
         if authority["status"] == "resolved" and authority.get("name"):
             municipality_distribution[authority["name"]] += 1
+            crosswalk = resolve_scb_municipality(authority["name"])
+            municipality_crosswalk_status_counts[crosswalk["status"]] += 1
+            if crosswalk["status"] == "matched":
+                municipality_crosswalk_distribution[(crosswalk["municipality_code"], crosswalk["municipality_name"])] += 1
+            else:
+                municipality_crosswalk_distribution[(None, authority["name"])] += 1
         for evidence in authority.get("evidence", {}).get("names", []):
             source_key = evidence.get("source", "")
             if source_key in ("municipality", "municipality_name", "kommun", "kommunnamn",
@@ -310,6 +320,17 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
                 {"municipality_name": name, "documents": count}
                 for name, count in sorted(municipality_distribution.items(), key=lambda item: (-item[1], item[0].casefold()))
             ],
+            "scb_crosswalk": {
+                "reference_year": 2026,
+                "source": "Statistics Sweden (SCB), municipalities in numerical order",
+                "source_url": "https://www.scb.se/hitta-statistik/regional-statistik-och-kartor/regionala-indelningar/lan-och-kommuner/lan-och-kommuner-i-kodnummerordning/",
+                "coverage_scope": "Curated crosswalk for municipality names observed in the 2026-11-10 selection inventory; not yet the complete national list of 290 municipalities",
+                "status_counts": dict(sorted(municipality_crosswalk_status_counts.items())),
+                "distribution": [
+                    {"municipality_code": code, "municipality_name": name, "documents": count}
+                    for (code, name), count in sorted(municipality_crosswalk_distribution.items(), key=lambda item: (-item[1], item[0][1].casefold()))
+                ],
+            },
             "municipality_evidence_source_counts": dict(sorted(municipality_evidence_sources.items())),
             "provenance_scope": "canonical source metadata record only; parent-container inheritance not yet assessed; names are candidates pending SCB crosswalk validation",
         },
