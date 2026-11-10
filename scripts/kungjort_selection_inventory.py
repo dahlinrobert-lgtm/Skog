@@ -95,7 +95,9 @@ def resolve_authority(metadata: dict) -> dict:
     organs = [(key, value[:-len(" kommun")].strip()) for key, value in values(organ_fields) if value.casefold().endswith(" kommun")]
     codes = [(key, value.zfill(4) if value.isdigit() and len(value) <= 4 else value) for key, value in values(code_fields)]
     ids = values(id_fields)
-    distinct_names = {value.casefold() for _, value in names + organs if value}
+    name_values = [value for _, value in names + organs if value]
+    names_by_key = {value.casefold(): value for value in name_values}
+    distinct_names = set(names_by_key)
     distinct_codes = {value for _, value in codes}
     distinct_ids = {value for _, value in ids}
     evidence = {
@@ -105,7 +107,7 @@ def resolve_authority(metadata: dict) -> dict:
     }
     if len(distinct_names) > 1 or len(distinct_codes) > 1 or len(distinct_ids) > 1:
         return {"status": "conflict", "name": None, "municipality_code": None, "municipality_id": None, "evidence": evidence, "method": "conflicting_metadata"}
-    name = next(iter(distinct_names), None)
+    name = names_by_key[next(iter(distinct_names))] if distinct_names else None
     code = next(iter(distinct_codes), None)
     municipality_id = next(iter(distinct_ids), None)
     if name or code or municipality_id:
