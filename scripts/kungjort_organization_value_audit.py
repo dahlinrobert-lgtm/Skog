@@ -31,15 +31,17 @@ def classify_organization(value: str) -> str:
     normalized = normalize_organization(value)
     if not normalized:
         return "empty"
-    if re.search(r"\b(forvaltningen|forvaltning|forvaltningskontor)\b", normalized):
+    # Swedish organization names are commonly compounds (e.g. byggnadsnämnden,
+    # kommunstyrelsen and stadsbyggnadsförvaltningen), so match meaningful suffixes.
+    if re.search(r"(?:^| )(?:forvaltningen|forvaltning|forvaltningskontor)(?: |$)|(?:forvaltningen|forvaltning)$", normalized):
         return "administration_candidate"
-    if re.search(r"\b(namnden|namnd|styrelsen|styrelse|utskott|beredning)\b", normalized):
+    if re.search(r"(?:^| )(?:namnden|namnd|styrelsen|styrelse|utskott|beredning)(?: |$)|(?:namnden|namnd|styrelsen|styrelse)$", normalized):
         return "committee_or_board_candidate"
-    if re.search(r"\b(fullmaktige|kommunfullmaktige)\b", normalized):
+    if re.search(r"(?:^| )fullmaktige(?: |$)|fullmaktige$", normalized):
         return "municipal_assembly_candidate"
-    if re.search(r"\bkommun\b", normalized):
+    if re.search(r"(?:^| )kommun(?: |$)|kommun$", normalized):
         return "municipality_level_publisher"
-    if re.search(r"\b(lansstyrelsen|region|myndighet|domstol)\b", normalized):
+    if re.search(r"(?:^| )(?:lansstyrelsen|region|myndighet|domstol)(?: |$)|(?:lansstyrelsen)$", normalized):
         return "other_public_authority"
     return "unclassified_organ"
 
