@@ -84,31 +84,39 @@ def _first_text(*values: Any) -> str | None:
 
 
 def resolve_authority(metadata: dict) -> dict:
-    """Resolve only explicit municipality names or an unambiguous municipal organ."""
-    explicit = []
-    for key in ("municipality", "municipality_name"):
-        value = _first_text(metadata.get(key))
-        if value:
-            explicit.append(("explicit_municipality", value.removesuffix(" kommun").strip()))
-
-    organ_values = []
-    for key in ("organ", "organ_name"):
-        value = _first_text(metadata.get(key))
-        if value and value.casefold().endswith(" kommun"):
-            organ_values.append(("municipal_organ", value[:-len(" kommun")].strip()))
-
-    candidates = {(value.casefold(), value, source) for source, value in explicit + organ_values if value}
-    names = {item[0] for item in candidates}
-    evidence = [{"source": source, "value": value} for _, value, source in sorted(candidates)]
-    if len(names) == 1:
-        resolved = next(iter(candidates))[1]
-        source_types = sorted({source for _, _, source in candidates})
-        return {"status": "resolved", "name": resolved, "evidence": evidence, "method": "+".join(source_types)}
-    if len(names) > 1:
-        return {"status": "conflict", "name": None, "evidence": evidence, "method": "conflicting_metadata"}
-    return {"status": "unknown", "name": None, "evidence": [], "method": None}
-
-
+    """Resolve municipality from explicit names, codes, IDs or municipal organs."""
+    name_fields = ("municipality", "municipality_name", "kommun", "kommunnamn", "publication_municipality", "publication_municipality_name")
+    code_fields = ("municipality_code", "municipalityCode", "kommun_kod", "kommunkod", "kommun_kod4")
+    id_fields = ("municipality_id", "municipalityId", "kommun_id", "kommunid")
+    organ_fields = ("organ", "organ_name", "publication_organ")
+    def values(fields):
+        return [(key, str(metadata[key]).strip()) for key in fields if metadata.get(key) is not None and str(metadata[key]).strip()]
+    names = [(key, value.removesuffix(" kommun").strip()) for key, value in values(name_fields)]
+    organs = [(key, value[:-len(" kommun")].strip()) for key, value in values(organ_fields) if value.casefold().endswith(" kommun")]
+    codes = [(key, value.zfill(4) if value.isdigit() and len(value) <= 4 else value) for key, value in values(code_fields)]
+    ids = values(id_fields)
+    name_values = [value for _, value in names + organs if value]
+    names_by_key = {value.casefold(): value for value in name_values}
+    distinct_names = set(names_by_key)
+    distinct_codes = {value for _, value in codes}
+    distinct_ids = {value for _, value in ids}
+    evidence = {
+        "names": [{"source": key, "value": value} for key, value in names + organs],
+        "codes": [{"source": key, "value": value} for key, value in codes],
+        "ids": [{"source": key, "value": value} for key, value in ids],
+    }
+    if len(distinct_names) > 1 or len(distinct_codes) > 1 or len(distinct_ids) > 1:
+        return {"status": "conflict", "name": None, "municipality_code": None, "municipality_id": None, "evidence": evidence, "method": "conflicting_metadata"}
+    name = names_by_key[next(iter(distinct_names))] if distinct_names else None
+    code = next(iter(distinct_codes), None)
+    municipality_id = next(iter(distinct_ids), None)
+    if name or code or municipality_id:
+        methods = []
+        if name: methods.append("explicit_name_or_municipal_organ")
+        if code: methods.append("explicit_municipality_code")
+        if municipality_id: methods.append("explicit_municipality_id")
+        return {"status": "resolved", "name": name, "municipality_code": code, "municipality_id": municipality_id, "evidence": evidence, "method": "+".join(methods)}
+    return {"status": "unknown", "name": None, "municipality_code": None, "municipality_id": None, "evidence": evidence, "method": None}
 def _resolve_explicit_name(metadata: dict, keys: tuple[str, ...]) -> dict:
     evidence = []
     for key in keys:
@@ -138,7 +146,7 @@ def resolve_organizational_identity(metadata: dict) -> dict:
         # Generic organ/sender labels are retained as evidence, never promoted to committee.
         "issuing_organ": _resolve_explicit_name(
             metadata,
-            ("issuing_organ", "organ", "organ_name", "sender", "sender_name"),
+            ("issuing_organ", "organ", "organ_name", "publication_organ", "sender", "sender_name"),
         ),
     }
 
@@ -246,8 +254,11 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
             "has_case_reference_in_detail": _detail_has_case_reference(detail),
             "source_kinds": sorted(item["sources"]),
             "title": _first_text(metadata.get("title"), metadata.get("rubrik"), metadata.get("subject")),
-            "municipality": _first_text(metadata.get("municipality"), metadata.get("municipality_name")),
+            "municipality": resolve_authority(metadata).get("name"),
+            "municipality_code": resolve_authority(metadata).get("municipality_code"),
+            "municipality_id": resolve_authority(metadata).get("municipality_id"),
             "authority_resolution": resolve_authority(metadata),
+            "provenance_scope": "source_metadata_record",
             "organizational_identity": resolve_organizational_identity(metadata),
             "document_type": _first_text(metadata.get("doc_type"), metadata.get("document_type"), metadata.get("type")),
         })

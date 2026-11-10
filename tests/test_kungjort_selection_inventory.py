@@ -125,6 +125,19 @@ class KungjortSelectionInventoryTests(unittest.TestCase):
         self.assertEqual(result["status"], "resolved")
         self.assertEqual(result["name"], "Luleå")
 
+    def test_resolves_municipality_code_and_id_without_name(self):
+        from scripts.kungjort_selection_inventory import resolve_authority
+        result = resolve_authority({"kommunkod": 2580, "kommun_id": "municipality-2580"})
+        self.assertEqual(result["status"], "resolved")
+        self.assertEqual(result["municipality_code"], "2580")
+        self.assertEqual(result["municipality_id"], "municipality-2580")
+        self.assertIsNone(result["name"])
+
+    def test_publication_organ_can_establish_municipality(self):
+        from scripts.kungjort_selection_inventory import resolve_authority
+        result = resolve_authority({"publication_organ": "Luleå kommun"})
+        self.assertEqual(result["name"], "Luleå")
+
     def test_conflicting_authority_evidence_is_not_resolved(self):
         from scripts.kungjort_selection_inventory import resolve_authority
         result = resolve_authority({"municipality": "Luleå", "organ": "Umeå kommun"})
