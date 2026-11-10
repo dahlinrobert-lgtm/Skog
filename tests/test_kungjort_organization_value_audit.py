@@ -13,6 +13,7 @@ class KungjortOrganizationValueAuditTests(unittest.TestCase):
 
     def test_classification_is_conservative_and_separates_entity_types(self):
         self.assertEqual(classify_organization("Miljö- och byggnadsnämnden"), "committee_or_board_candidate")
+        self.assertEqual(classify_organization("Kommunstyrelsen"), "committee_or_board_candidate")
         self.assertEqual(classify_organization("Stadsbyggnadsförvaltningen"), "administration_candidate")
         self.assertEqual(classify_organization("Kommunfullmäktige"), "municipal_assembly_candidate")
         self.assertEqual(classify_organization("Luleå kommun"), "municipality_level_publisher")
