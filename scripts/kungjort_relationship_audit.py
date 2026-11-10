@@ -19,7 +19,7 @@ from typing import Any
 
 ACCOUNT = "stskogkolldata"
 METADATA_CONTAINER = "metadata"
-SELECTION_PREFIX = "kungjort/selection/v1/"
+SELECTION_PREFIX = "kungjort/selection/v2/"
 DETAIL_SOURCES = (
     ("kungjort-raw", "bootstrap-live/", "document_details", 1),
     ("kungjort-raw", "bootstrap/", "legacy_document_details", 2),
@@ -177,7 +177,6 @@ def build_reference_audit(service: Any, max_batches: int, run_id: str, audit_run
             "schema_version": SCHEMA_VERSION,
             "audit_run_id": audit_run_id,
             "selection_run_id": run_id,
-        "audit_run_id": audit_run_id,
             "document_id": doc_id,
             "priority": priority,
             "selection_class": (selection.get("selection") or {}).get("selection_class"),
