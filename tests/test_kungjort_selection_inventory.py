@@ -8,6 +8,7 @@ from scripts.kungjort_selection_inventory import (
     encode_jsonl_gzip,
     resolve_organizational_identity,
     read_jsonl_gzip,
+    organizational_field_presence,
 )
 
 
@@ -54,6 +55,22 @@ class FakeService:
 
 
 class KungjortSelectionInventoryTests(unittest.TestCase):
+    def test_organizational_field_presence_reports_keys_not_values(self):
+        result = organizational_field_presence({
+            "committee_name": "Secret committee label",
+            "departmentCode": "D-123",
+            "title": "Ordinary title",
+            "organ": None,
+            "administration": ["Planning"],
+        })
+        self.assertEqual(result, {
+            "committee_name": 1,
+            "departmentCode": 1,
+            "administration": 1,
+        })
+        self.assertNotIn("Secret committee label", str(result))
+        self.assertNotIn("D-123", str(result))
+
     def test_jsonl_gzip_roundtrip(self):
         rows = [{"document_id": "A", "record_type": "document_index"}]
         self.assertEqual(read_jsonl_gzip(encode_jsonl_gzip(rows)), rows)
