@@ -110,8 +110,15 @@ class KungjortRelationshipAuditTests(unittest.TestCase):
         self.assertEqual(report["coverage_by_priority"]["P1"]["documents_with_any_reference"], 2)
         self.assertEqual(report["coverage_by_priority"]["P2"]["documents_with_any_reference"], 0)
         self.assertEqual(report["cross_document_reference_frequency"]["case_dnr"]["reference_values_shared_by_multiple_documents"], 1)
-        self.assertEqual(len(records), 3)
+        self.assertEqual(len(records), 4)
         self.assertNotIn("document_id", report)
+        groups = [row for row in records if row["record_type"] == "kungjort_relationship_candidate_group"]
+        self.assertEqual(len(groups), 1)
+        self.assertEqual(groups[0]["reference_field"], "case_dnr")
+        self.assertEqual(groups[0]["document_count"], 2)
+        self.assertEqual(groups[0]["link_status"], "candidate_only")
+        self.assertEqual(report["candidate_relationship_groups"]["total_groups"], 1)
+        self.assertIn("diarieplan_kod", report["candidate_relationship_groups"]["excluded_weak_fields"])
 
 
 if __name__ == "__main__":
