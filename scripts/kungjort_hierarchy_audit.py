@@ -14,6 +14,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+# Running this file directly adds scripts/ rather than the repository root
+# to sys.path. Add the root explicitly so shared helpers import in Actions.
+import sys
+_REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPOSITORY_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPOSITORY_ROOT))
+
 from scripts.kungjort_relationship_audit import (
     ACCOUNT, METADATA_CONTAINER, SELECTION_PREFIX, DETAIL_SOURCES,
     read_jsonl_gzip, encode_jsonl_gzip, document_id,
