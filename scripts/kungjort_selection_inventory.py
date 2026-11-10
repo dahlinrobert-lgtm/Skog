@@ -232,6 +232,8 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
     municipality_code_documents = 0
     municipality_id_documents = 0
     municipality_conflict_documents = 0
+    municipality_distribution = Counter()
+    municipality_evidence_sources = Counter()
 
     for doc_id, item in sorted(documents.items()):
         metadata = item["metadata"]
@@ -244,6 +246,15 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
         municipality_code_documents += bool(authority.get("municipality_code"))
         municipality_id_documents += bool(authority.get("municipality_id"))
         municipality_conflict_documents += authority["status"] == "conflict"
+        if authority["status"] == "resolved" and authority.get("name"):
+            municipality_distribution[authority["name"]] += 1
+        for evidence in authority.get("evidence", {}).get("names", []):
+            source_key = evidence.get("source", "")
+            if source_key in ("municipality", "municipality_name", "kommun", "kommunnamn",
+                              "publication_municipality", "publication_municipality_name"):
+                municipality_evidence_sources["explicit_municipality_field"] += 1
+            elif source_key in ("organ", "organ_name", "publication_organ"):
+                municipality_evidence_sources["municipal_organ_label"] += 1
         if detail:
             detail_count += 1
         if _detail_has_case_reference(detail):
@@ -295,7 +306,12 @@ def build_inventory(service: Any, max_batches: int, run_id: str) -> tuple[dict, 
             "documents_with_municipality_id": municipality_id_documents,
             "documents_with_conflicting_municipality_evidence": municipality_conflict_documents,
             "documents_without_municipality_evidence": municipality_status_counts.get("unknown", 0),
-            "provenance_scope": "canonical source metadata record only; parent-container inheritance not yet assessed",
+            "municipality_distribution": [
+                {"municipality_name": name, "documents": count}
+                for name, count in sorted(municipality_distribution.items(), key=lambda item: (-item[1], item[0].casefold()))
+            ],
+            "municipality_evidence_source_counts": dict(sorted(municipality_evidence_sources.items())),
+            "provenance_scope": "canonical source metadata record only; parent-container inheritance not yet assessed; names are candidates pending SCB crosswalk validation",
         },
         "duplicate_source_records": duplicate_records,
         "records_missing_document_id": dict(sorted(missing_id_counts.items())),
