@@ -173,5 +173,32 @@ class KungjortSelectionInventoryTests(unittest.TestCase):
         self.assertEqual(identity["administration"]["status"], "unknown")
 
 
+    def test_scb_crosswalk_matches_observed_municipalities(self):
+        from scripts.kungjort_municipality_crosswalk import resolve_scb_municipality
+        expected = {
+            "Örnsköldsvik": "2284",
+            "Umeå": "2480",
+            "Skellefteå": "2482",
+            "Luleå": "2580",
+            "Sundsvall": "2281",
+        }
+        for name, code in expected.items():
+            with self.subTest(name=name):
+                result = resolve_scb_municipality(name)
+                self.assertEqual(result["status"], "matched")
+                self.assertEqual(result["municipality_code"], code)
+
+    def test_scb_crosswalk_normalizes_accents_and_kommun_suffix(self):
+        from scripts.kungjort_municipality_crosswalk import resolve_scb_municipality
+        self.assertEqual(resolve_scb_municipality("LULEA KOMMUN")["municipality_code"], "2580")
+        self.assertEqual(resolve_scb_municipality("Ornskoldsvik")["municipality_code"], "2284")
+
+    def test_scb_crosswalk_fails_closed_for_unknown_names(self):
+        from scripts.kungjort_municipality_crosswalk import resolve_scb_municipality
+        result = resolve_scb_municipality("Exempels kommun")
+        self.assertEqual(result["status"], "unmatched")
+        self.assertIsNone(result["municipality_code"])
+
+
 if __name__ == "__main__":
     unittest.main()
