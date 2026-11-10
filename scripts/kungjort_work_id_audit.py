@@ -233,6 +233,8 @@ def build_audit(service: Any, max_batches: int, run_id: str, audit_run_id: str) 
             "document_id": doc_id,
             "priority": priority,
             "municipality_name": municipality or None,
+            "municipality_code": municipality_resolution.get("municipality_code"),
+            "municipality_id": municipality_resolution.get("municipality_id"),
             "committee_name": committee or None,
             "committee_resolution_status": committee_resolution.get("status", "unknown"),
             "committee_evidence": committee_resolution.get("evidence", []),
