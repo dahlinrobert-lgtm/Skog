@@ -17,7 +17,6 @@ AREA = "Norrbottens län"
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "police_events"
 EVENTS = DATA / "events.csv"
-RAW = DATA / "raw_events.jsonl"
 WILDLIFE = DATA / "wildlife_candidates.csv"
 
 FIELDS = [
@@ -177,7 +176,7 @@ def main() -> None:
     parser.add_argument("--max-pages", type=int, default=10000)
     parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--sleep", type=float, default=0.35)
-    parser.add_argument("--raw-output", type=Path, default=RAW, help="Append newly observed event versions to this JSONL file")
+    parser.add_argument("--raw-output", type=Path, required=True, help="Required isolated JSONL segment path; upload it to durable object storage")
     args = parser.parse_args()
     collect(args.full, args.max_pages, args.limit, args.sleep, args.raw_output)
 
