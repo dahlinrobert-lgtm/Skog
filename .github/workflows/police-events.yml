@@ -64,6 +64,8 @@ jobs:
       - name: Build archive quality report
         run: python scripts/report_police_events_quality.py
       - name: Commit archive, candidates and quality report
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -72,5 +74,14 @@ jobs:
             echo "No police-event changes"
           else
             git commit -m "Archive Norrbotten police events"
-            git push
+            # Integrate any commits that reached main while this job was running.
+            # Abort on overlapping changes rather than force-pushing or discarding data.
+            git fetch origin main
+            if ! git merge --no-edit --no-commit origin/main; then
+              echo "::error::Concurrent main changes overlap with police archive outputs; manual reconciliation required."
+              git merge --abort || true
+              exit 1
+            fi
+            git commit --no-edit || true
+            git push origin HEAD:main
           fi
