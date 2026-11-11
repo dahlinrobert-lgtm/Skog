@@ -40,7 +40,9 @@ jobs:
           fi
       - name: Extract individual wildlife incident candidates
         run: python scripts/extract_police_wildlife_incidents.py
-      - name: Commit archive and wildlife candidates
+      - name: Build archive quality report
+        run: python scripts/report_police_events_quality.py
+      - name: Commit archive, candidates and quality report
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
