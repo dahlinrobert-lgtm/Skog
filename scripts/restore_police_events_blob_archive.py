@@ -146,10 +146,12 @@ def restore_one(container, manifest_name: str, expected_type: str, db: sqlite3.C
                         if text_line[position].isspace():
                             position += 1
                             continue
-                        # The legacy export contains literal backslash-n
-                        # separators between JSON objects, not physical LF.
-                        if text_line.startswith("\\\\n", position):
-                            position += 3
+                        # Legacy separators were escaped more than once
+                        # during the historical export. Accept only the
+                        # separator alphabet (backslash + letter n), never
+                        # arbitrary characters between JSON objects.
+                        if text_line[position] in (chr(92), "n"):
+                            position += 1
                             continue
                         break
                     if position >= len(text_line):
