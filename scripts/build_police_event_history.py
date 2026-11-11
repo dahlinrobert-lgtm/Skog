@@ -48,6 +48,20 @@ def _first(*values):
     return ""
 
 
+def flatten_source_event(value, prefix: str = "") -> dict[str, str]:
+    """Flatten nested source JSON into stable dotted paths for field-level diffs."""
+    flattened: dict[str, str] = {}
+    if isinstance(value, dict):
+        for key in sorted(value):
+            child = f"{prefix}.{key}" if prefix else str(key)
+            flattened.update(flatten_source_event(value[key], child))
+    elif isinstance(value, list):
+        flattened[prefix] = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    else:
+        flattened[prefix] = _csv_value(value)
+    return flattened
+
+
 def normalize_record(record: dict) -> dict:
     event = record.get("event") if isinstance(record.get("event"), dict) else record
     event_id = str(_first(record.get("event_id"), event.get("id")))
@@ -92,6 +106,7 @@ def normalize_record(record: dict) -> dict:
         "is_summary": str(
             str(_first(event.get("title_type"), event.get("type"))).casefold().startswith("sammanfattning")
         ).lower(),
+        "source_event_json": json.dumps(event, ensure_ascii=False, sort_keys=True, separators=(",", ":")),
     }
     # Legacy CSV snapshots already contain a normalized is_summary flag.
     if event.get("is_summary") not in (None, ""):
@@ -154,9 +169,17 @@ def build_history(records: list[dict]) -> tuple[list[dict], list[dict], dict]:
                     field for field in FIELDS
                     if previous.get(field, "") != row.get(field, "")
                 ]
+                previous_source = flatten_source_event(json.loads(previous["source_event_json"]))
+                current_source = flatten_source_event(json.loads(row["source_event_json"]))
+                source_changed = sorted(
+                    key for key in set(previous_source) | set(current_source)
+                    if previous_source.get(key, "") != current_source.get(key, "")
+                )
                 if previous["payload_sha256"] != row["payload_sha256"]:
                     before = {field: previous.get(field, "") for field in changed}
                     after = {field: row.get(field, "") for field in changed}
+                    source_before = {field: previous_source.get(field, "") for field in source_changed}
+                    source_after = {field: current_source.get(field, "") for field in source_changed}
                     change_rows.append({
                         "event_id": event_id,
                         "from_retrieved_at": previous["retrieved_at"],
@@ -165,8 +188,11 @@ def build_history(records: list[dict]) -> tuple[list[dict], list[dict], dict]:
                         "to_payload_sha256": row["payload_sha256"],
                         "change_type": "updated" if changed else "payload_changed_unmapped",
                         "changed_fields": ";".join(changed),
+                        "source_changed_fields": ";".join(source_changed),
                         "before_values_json": json.dumps(before, ensure_ascii=False, sort_keys=True),
                         "after_values_json": json.dumps(after, ensure_ascii=False, sort_keys=True),
+                        "source_before_values_json": json.dumps(source_before, ensure_ascii=False, sort_keys=True),
+                        "source_after_values_json": json.dumps(source_after, ensure_ascii=False, sort_keys=True),
                     })
             previous = row
         version_histogram[len(seen_hashes)] += 1
@@ -184,6 +210,11 @@ def build_history(records: list[dict]) -> tuple[list[dict], list[dict], dict]:
         "version_count_histogram": {str(k): v for k, v in sorted(version_histogram.items())},
         "change_transition_count": len(change_rows),
         "field_change_transition_count": sum(1 for row in change_rows if row["change_type"] == "updated"),
+        "source_field_change_transition_count": sum(1 for row in change_rows if row.get("source_changed_fields")),
+        "payload_changed_without_source_field_diff_count": sum(
+            1 for row in change_rows
+            if row["change_type"] == "payload_changed_unmapped" and not row.get("source_changed_fields")
+        ),
         "interpretation": (
             "Only changed/new versions written by the collector are represented. "
             "Absence from a later API response is not evidence that an event was deleted. "
@@ -215,11 +246,13 @@ def main() -> None:
                 raise RuntimeError(f"Cannot parse restored stream at physical line {physical_line}: {exc}") from exc
     versions, changes, summary = build_history(records)
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    version_fields = ["event_id", "version_number", "retrieved_at", "payload_sha256", *FIELDS]
+    version_fields = ["event_id", "version_number", "retrieved_at", "payload_sha256", *FIELDS, "source_event_json"]
     change_fields = [
         "event_id", "from_retrieved_at", "to_retrieved_at",
         "from_payload_sha256", "to_payload_sha256", "change_type",
-        "changed_fields", "before_values_json", "after_values_json",
+        "changed_fields", "source_changed_fields",
+        "before_values_json", "after_values_json",
+        "source_before_values_json", "source_after_values_json",
     ]
     write_csv(args.output_dir / "event_versions.csv", versions, version_fields)
     write_csv(args.output_dir / "event_changes.csv", changes, change_fields)
