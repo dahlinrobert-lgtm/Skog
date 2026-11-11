@@ -60,3 +60,46 @@ The restore report distinguishes:
 - output byte count and SHA-256.
 
 The workflow is manual and read-only against Azure. It uploads the reconstructed gzip and report as a GitHub Actions artifact with 30-day retention. This is a restore test artifact, not a replacement for the durable Azure source archive. A successful run proves that the currently inventoried objects can be reconstructed and verified; it does not prove complete historical API coverage.
+
+
+## Verified restore baseline — 2026-11-11
+
+The first complete end-to-end reconstruction passed in GitHub Actions run
+[43050217200](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43050217200)
+(workflow run #9, commit `59e5c7d06802d929d76ada6d14512fd0862c656c`).
+
+Verified results from the uploaded `restore_report.json`:
+
+- Status: `passed`; inventory match: `true`; all source segments verified: `true`.
+- Four source objects reconstructed: one legacy object and three immutable run segments.
+- 22,000 parsed records from 21,500 physical source lines; the legacy object contains 20,500 parsed records over 20,000 physical lines.
+- 10,000 unique event IDs; all 10,000 have multiple archived versions.
+- Version histogram: 9,499 IDs with 2 versions, 1 with 3, 1 with 5, and 499 with 6.
+- Exact duplicate records: 0; records missing payload SHA-256: 0.
+- Restored raw stream: 83,031,377 bytes; SHA-256
+  `7aa212adf851502aa70e39b6ac3cebca7bffbcd32afe0fe9d0bf48d1dfe55196`.
+- Restored gzip: 11,944,071 bytes; SHA-256
+  `2c13a2411e823a8ea0dbea96c86762ec30e866125b2b58677c86be204293017a`.
+
+The legacy manifest's `row_count=20,000` records physical lines, whereas the
+restore parser identifies 20,500 JSON records in that object. This distinction
+is intentional and is reported separately; raw bytes and SHA-256 still match
+the legacy manifest exactly.
+
+The run artifact contains `restored_raw_events.jsonl.gz` and
+`restore_report.json` and is retained by GitHub Actions for 30 days. The
+durable source remains the immutable Azure archive. The report's summary and
+hashes are recorded here as the long-lived operational checkpoint.
+
+## Recurring restore verification
+
+The restore workflow runs automatically once per quarter (January, April,
+July and October) and remains manually dispatchable. Each run performs the
+same read-only reconstruction and verification against the current Azure
+inventory. Review the workflow result and retain the run URL and report
+summary in this document when a scheduled run completes.
+
+A successful restore verifies integrity and reconstructability of the
+currently inventoried archive objects. It does not prove that the upstream
+API supplied a complete history or that event IDs represent distinct real
+incidents.
