@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import gzip
+import io
 import hashlib
 import json
 import os
@@ -96,30 +98,58 @@ def restore_one(container, manifest_name: str, expected_type: str, db: sqlite3.C
     raw_bytes = 0
     rows = 0
     with gzip.open(compressed_path, "rb") as source:
-        for line in source:
-            raw_digest.update(line)
-            raw_bytes += len(line)
-            if not line.strip():
-                continue
-            try:
-                record = json.loads(line)
-            except json.JSONDecodeError as exc:
-                raise RuntimeError(f"Invalid JSONL record in {blob_name}, row {rows + 1}") from exc
-            if not isinstance(record, dict):
-                raise RuntimeError(f"Non-object JSONL record in {blob_name}, row {rows + 1}")
-            event = record.get("event") if isinstance(record.get("event"), dict) else {}
-            event_id = str(record.get("event_id") or event.get("id") or "")
-            retrieved_at = str(record.get("retrieved_at") or "")
-            payload_sha = str(record.get("payload_sha256") or "")
-            if not retrieved_at or not event_id:
-                raise RuntimeError(
-                    f"Record missing retrieved_at/event_id in {blob_name}, row {rows + 1}"
+        # Legacy backfill originated from the pre-migration CSV export despite
+        # its historical .jsonl filename. Detect the file format from its header.
+        prefix = source.peek(4096)
+        legacy_csv = expected_type == "legacy_raw_jsonl_backfill" and prefix.lstrip().startswith(b"event_id,")
+        if legacy_csv:
+            text_stream = io.TextIOWrapper(source, encoding="utf-8-sig", newline="")
+            reader = csv.DictReader(text_stream)
+            required_columns = {"event_id", "retrieved_at", "payload_sha256"}
+            if not reader.fieldnames or not required_columns.issubset(set(reader.fieldnames)):
+                raise RuntimeError(f"Legacy CSV is missing required columns: {blob_name}")
+            for row in reader:
+                # Hash exact decompressed source bytes separately below; CSV
+                # rows are reconstructed only for deterministic restore output.
+                event_id = str(row.get("event_id") or "")
+                retrieved_at = str(row.get("retrieved_at") or "")
+                payload_sha = str(row.get("payload_sha256") or "")
+                if not event_id or not retrieved_at:
+                    raise RuntimeError(f"CSV record missing retrieved_at/event_id in {blob_name}, row {rows + 1}")
+                normalized = json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode("utf-8") + b"\\n"
+                db.execute(
+                    "INSERT INTO records(retrieved_at,event_id,payload_sha256,line) VALUES(?,?,?,?)",
+                    (retrieved_at, event_id, payload_sha, normalized),
                 )
-            db.execute(
-                "INSERT INTO records(retrieved_at,event_id,payload_sha256,line) VALUES(?,?,?,?)",
-                (retrieved_at, event_id, payload_sha, line),
-            )
-            rows += 1
+                rows += 1
+            text_stream.detach()
+            source.seek(0)
+            for chunk in iter(lambda: source.read(CHUNK_SIZE), b""):
+                raw_digest.update(chunk)
+                raw_bytes += len(chunk)
+        else:
+            for line in source:
+                raw_digest.update(line)
+                raw_bytes += len(line)
+                if not line.strip():
+                    continue
+                try:
+                    record = json.loads(line)
+                except json.JSONDecodeError as exc:
+                    raise RuntimeError(f"Invalid JSONL record in {blob_name}, row {rows + 1}") from exc
+                if not isinstance(record, dict):
+                    raise RuntimeError(f"Non-object JSONL record in {blob_name}, row {rows + 1}")
+                event = record.get("event") if isinstance(record.get("event"), dict) else {}
+                event_id = str(record.get("event_id") or event.get("id") or "")
+                retrieved_at = str(record.get("retrieved_at") or "")
+                payload_sha = str(record.get("payload_sha256") or "")
+                if not retrieved_at or not event_id:
+                    raise RuntimeError(f"Record missing retrieved_at/event_id in {blob_name}, row {rows + 1}")
+                db.execute(
+                    "INSERT INTO records(retrieved_at,event_id,payload_sha256,line) VALUES(?,?,?,?)",
+                    (retrieved_at, event_id, payload_sha, line),
+                )
+                rows += 1
     if raw_digest.hexdigest() != manifest["raw_sha256"] or raw_bytes != int(manifest["raw_bytes"]):
         raise RuntimeError(f"Raw content SHA-256/byte-count mismatch: {blob_name}")
     if rows != int(manifest["row_count"]):
@@ -232,6 +262,7 @@ def main() -> None:
             "storage_account": ACCOUNT,
             "container": CONTAINER,
             "ordering": ["retrieved_at", "event_id", "payload_sha256", "original_line"],
+            "legacy_csv_converted_to_jsonl": True,
             "preserves_all_versions": True,
             "source_objects": restored,
             "source_manifest_count": len(restored),
