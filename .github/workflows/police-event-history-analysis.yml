@@ -1,0 +1,52 @@
+name: Police event history analysis
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 5 2 * *'
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: skog-police-event-history-analysis
+  cancel-in-progress: false
+
+jobs:
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Rebuild and verify raw archive
+        env:
+          AZURE_STORAGE_ACCOUNT: stskogkolldata
+          POLICE_ARCHIVE_CONTAINER: police-events
+        run: python scripts/restore_police_events_blob_archive.py --output-dir police-archive-restore
+      - name: Build version and change history
+        run: |
+          python scripts/build_police_event_history.py \
+            --input police-archive-restore/restored_raw_events.jsonl.gz \
+            --output-dir police-event-history
+      - name: Upload verified history tables
+        uses: actions/upload-artifact@v4
+        with:
+          name: police-event-history-${{ github.run_id }}
+          path: |
+            police-event-history/event_versions.csv
+            police-event-history/event_changes.csv
+            police-event-history/history_summary.json
+          if-no-files-found: error
+          retention-days: 90
