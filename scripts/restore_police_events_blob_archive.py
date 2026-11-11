@@ -9,6 +9,7 @@ import json
 import os
 import sqlite3
 import tempfile
+from json import JSONDecoder
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
