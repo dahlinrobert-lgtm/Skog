@@ -68,7 +68,7 @@ def main() -> None:
                 dst.write(chunk)
 
         compressed_sha, compressed_bytes = sha256_file(compressed)
-        row_count = sum(1 for _ in source.open("rb"))
+        with source.open("rb") as stream:\n            row_count = sum(1 for _ in stream)
         blob_name = "legacy/raw_events.jsonl.gz"
         manifest_name = "legacy/manifest.json"
 
@@ -132,7 +132,7 @@ def main() -> None:
         manifest_bytes = (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
         manifest_blob = container.get_blob_client(manifest_name)
         try:
-            manifest_blob.upload_blob(manifest_bytes, overwrite=False, content_type="application/json")
+            manifest_blob.upload_blob(\n                manifest_bytes,\n                overwrite=False,\n                content_settings=ContentSettings(content_type="application/json"),\n            )
             print(f"manifest_uploaded={manifest_name}")
         except ResourceExistsError:
             existing_manifest = json.loads(manifest_blob.download_blob().readall())
