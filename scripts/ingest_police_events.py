@@ -88,8 +88,10 @@ def normalize(event: dict, retrieved_at: str) -> dict:
     }
 
 
-def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float) -> None:
+def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float, raw_path: Path) -> None:
     DATA.mkdir(parents=True, exist_ok=True)
+    raw_path.parent.mkdir(parents=True, exist_ok=True)
+    raw_path.touch(exist_ok=True)
     current = read_events()
     retrieved_at = now()
     new_versions = 0
@@ -124,7 +126,7 @@ def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float) -> Non
             links = payload.get("links") or {}
             if not items:
                 break
-            with RAW.open("a", encoding="utf-8") as raw:
+            with raw_path.open("a", encoding="utf-8") as raw:
                 for event in items:
                     event_id = str(event.get("id") or "")
                     if not event_id or event_id in seen:
@@ -175,8 +177,9 @@ def main() -> None:
     parser.add_argument("--max-pages", type=int, default=10000)
     parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--sleep", type=float, default=0.35)
+    parser.add_argument("--raw-output", type=Path, default=RAW, help="Append newly observed event versions to this JSONL file")
     args = parser.parse_args()
-    collect(args.full, args.max_pages, args.limit, args.sleep)
+    collect(args.full, args.max_pages, args.limit, args.sleep, args.raw_output)
 
 
 if __name__ == "__main__":
