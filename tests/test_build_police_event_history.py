@@ -29,6 +29,17 @@ class PoliceEventHistoryTests(unittest.TestCase):
         self.assertEqual(updated["changed_fields"], "headline")
         self.assertEqual(updated["from_retrieved_at"], "2026-01-01T00:00:00Z")
 
+    def test_summary_counts_event_ids_not_version_buckets(self):
+        records = [
+            {"event_id":"a","retrieved_at":"2026-01-01T00:00:00Z","payload_sha256":"a1","event":{"id":"a","headline":"A"}},
+            {"event_id":"a","retrieved_at":"2026-01-02T00:00:00Z","payload_sha256":"a2","event":{"id":"a","headline":"A2"}},
+            {"event_id":"b","retrieved_at":"2026-01-01T00:00:00Z","payload_sha256":"b1","event":{"id":"b","headline":"B"}},
+            {"event_id":"b","retrieved_at":"2026-01-02T00:00:00Z","payload_sha256":"b2","event":{"id":"b","headline":"B2"}},
+            {"event_id":"c","retrieved_at":"2026-01-01T00:00:00Z","payload_sha256":"c1","event":{"id":"c","headline":"C"}},
+        ]
+        _versions, _changes, summary = build_history(records)
+        self.assertEqual(summary["event_ids_with_multiple_versions"], 2)
+
     def test_identical_payload_versions_are_not_double_counted(self):
         records = [
             {"event_id":"a","retrieved_at":"2026-01-01T00:00:00Z","payload_sha256":"same",
