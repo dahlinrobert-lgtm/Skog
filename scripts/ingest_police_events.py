@@ -92,48 +92,64 @@ def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float) -> Non
     DATA.mkdir(parents=True, exist_ok=True)
     current = read_events()
     retrieved_at = now()
-    seen: set[str] = set()
     new_versions = 0
-    page = 1
-    while page <= max_pages:
-        try:
-            payload = get_page(page, limit)
-        except requests.HTTPError as exc:
-            status = exc.response.status_code if exc.response is not None else None
-            # The provider advertises more pages than it currently serves.
-            # Preserve all successfully collected pages and report the boundary.
-            if full and status == 400 and page > 1:
-                print(f"pagination_stopped_at_page={page} status=400; preserving pages 1-{page - 1}")
+    requested_limit = limit
+    min_limit = 10
+    while True:
+        seen: set[str] = set()
+        page = 1
+        restart_with_smaller_limit = False
+        while page <= max_pages:
+            try:
+                payload = get_page(page, requested_limit)
+            except requests.HTTPError as exc:
+                status = exc.response.status_code if exc.response is not None else None
+                if full and status == 400 and page > 1 and requested_limit > min_limit:
+                    next_limit = max(min_limit, requested_limit // 2)
+                    print(
+                        f"pagination_retry=smaller_limit old_limit={requested_limit} "
+                        f"new_limit={next_limit} failed_page={page}; restarting at page 1"
+                    )
+                    requested_limit = next_limit
+                    restart_with_smaller_limit = True
+                    break
+                if full and status == 400 and page > 1:
+                    print(
+                        f"pagination_stopped_at_page={page} status=400 limit={requested_limit}; "
+                        f"preserving successfully retrieved records"
+                    )
+                    break
+                raise
+            items = payload.get("data") or []
+            links = payload.get("links") or {}
+            if not items:
                 break
-            raise
-        items = payload.get("data") or []
-        links = payload.get("links") or {}
-        if not items:
+            with RAW.open("a", encoding="utf-8") as raw:
+                for event in items:
+                    event_id = str(event.get("id") or "")
+                    if not event_id or event_id in seen:
+                        continue
+                    seen.add(event_id)
+                    row = normalize(event, retrieved_at)
+                    previous = current.get(event_id)
+                    if previous and previous.get("payload_sha256") == row["payload_sha256"]:
+                        continue
+                    raw.write(json.dumps({
+                        "retrieved_at": retrieved_at,
+                        "event_id": event_id,
+                        "payload_sha256": row["payload_sha256"],
+                        "event": event,
+                    }, ensure_ascii=False) + "\n")
+                    current[event_id] = row
+                    new_versions += 1
+            last_page = links.get("last_page")
+            print(f"page={page} rows={len(items)} limit={requested_limit} last_page={last_page}")
+            if (full and last_page and page >= int(last_page)) or (not full and page >= max_pages):
+                break
+            page += 1
+            time.sleep(sleep_seconds)
+        if not restart_with_smaller_limit:
             break
-        with RAW.open("a", encoding="utf-8") as raw:
-            for event in items:
-                event_id = str(event.get("id") or "")
-                if not event_id or event_id in seen:
-                    continue
-                seen.add(event_id)
-                row = normalize(event, retrieved_at)
-                previous = current.get(event_id)
-                if previous and previous.get("payload_sha256") == row["payload_sha256"]:
-                    continue
-                raw.write(json.dumps({
-                    "retrieved_at": retrieved_at,
-                    "event_id": event_id,
-                    "payload_sha256": row["payload_sha256"],
-                    "event": event,
-                }, ensure_ascii=False) + "\n")
-                current[event_id] = row
-                new_versions += 1
-        last_page = links.get("last_page")
-        print(f"page={page} rows={len(items)} last_page={last_page}")
-        if (full and last_page and page >= int(last_page)) or (not full and page >= max_pages):
-            break
-        page += 1
-        time.sleep(sleep_seconds)
 
     ordered = sorted(current.values(), key=lambda r: (r["published_datetime"], r["event_id"]))
     write_csv(EVENTS, FIELDS, ordered)
