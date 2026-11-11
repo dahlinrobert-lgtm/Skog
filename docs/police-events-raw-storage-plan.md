@@ -1,32 +1,33 @@
 # Durable storage for the police-event raw archive
 
-## Why this is required
+## Migration status
 
-The append-only `data/police_events/raw_events.jsonl` file exceeded GitHub's 100 MB per-file limit during the full-history workflow on 2026-11-11. The collector and quality-report steps completed; only the final Git push failed.
+The initial Azure migration and a subsequent incremental run have both been verified.
 
-The raw JSONL is a version history, not a generated convenience file. It contains each newly observed event payload and subsequent changed payloads, with retrieval timestamp and SHA-256. It must therefore be retained append-only and must not be truncated or rewritten as part of this migration.
+- Legacy backfill: `legacy/raw_events.jsonl.gz` and `legacy/manifest.json` were uploaded and verified against the original 20,000-row raw file (78,655,286 bytes; SHA-256 `33820ff172a0274ffe339b3676fbfeb3106ebf409cb608184eada494ff496ebd`).
+- Incremental run: run `43041322803` uploaded and verified its immutable run segment in Azure.
+- Follow-up run: run `43042048315` uploaded and verified 500 rows (2,038,197 raw bytes; SHA-256 `6711c51bf13b43d543b269ed514a30ca95304e201ac63c70ecad5e75045f498d`) and successfully published analysis outputs to Git.
+- Azure account/container: `stskogkolldata` / `police-events`.
+- The legacy raw JSONL is being removed from the current Git working tree only after the verified Azure backfill. This does not rewrite old Git commits.
 
 ## Required target architecture
 
 - Keep small, reproducible analysis outputs in Git: `events.csv`, `wildlife_candidates.csv`, `wildlife_incidents.csv`, and `run_quality_report.json`, subject to repository-size review.
-- Move raw JSONL history to durable object storage (Azure Blob Storage) in a dedicated container/prefix for police events.
+- Store raw JSONL history in Azure Blob Storage in the dedicated `police-events` container.
 - Use GitHub Actions OIDC for Azure authentication; do not store storage account keys in the repository.
-- Upload a new immutable daily/run segment rather than repeatedly replacing a single large JSONL object. Include run ID, retrieval timestamp, row count, byte count and SHA-256 in a small manifest.
-- Maintain an append-only manifest/index that identifies every committed segment and its hash. A retry must be idempotent: same run segment/hash must not create duplicate logical history.
-- Verify the uploaded blob by downloading it or checking provider-supported content length and hash metadata before marking a segment complete.
-- Keep a local temporary working copy only for processing within the Actions job. Do not stage the full raw history in Git.
-- Backfill the existing Git raw archive to object storage before removing it from tracked Git history. Verify source and destination SHA-256 and byte counts first.
-- Do not delete or rewrite existing Git history as part of the first migration PR. Any later Git-history rewrite requires an explicit backup, verification and coordinated repository maintenance.
+- Upload a new immutable daily/run segment rather than replacing a single large JSONL object. Include run ID, retrieval timestamp, row count, byte count and SHA-256 in a manifest.
+- Keep each segment and manifest under its run/attempt-specific prefix. Do not overwrite an existing run segment.
+- Verify uploaded blobs by downloading and checking raw byte count and SHA-256 before marking a segment complete.
+- Keep a local temporary working copy only for processing within the Actions job. Never stage the full raw history in Git.
+- The collector requires an explicit `--raw-output` path. The workflow supplies a unique temporary path for every run.
 
-## Migration sequence
+## Operational safeguards
 
-1. Confirm Azure container, OIDC role assignment and lifecycle/immutability settings.
-2. Add a storage adapter with tests for deterministic segment naming, append-only behavior, retry idempotency, manifest generation and hash verification.
-3. Backfill all currently tracked raw JSONL history and verify exact SHA-256/byte count.
-4. Update the workflow so the collector writes new run segments to Azure and never commits raw JSONL.
-5. Stop tracking the legacy raw JSONL in Git only after successful backfill verification. Add the path to `.gitignore`.
-6. Keep event/candidate CSVs and the compact quality report in Git only while they remain below repository file-size limits; otherwise export them as versioned, compact artifacts as well.
-7. Run a full-history test, verify the manifest and report, then a scheduled incremental test.
+- Do not delete Azure legacy or run segments as part of Git cleanup.
+- Do not rewrite Git history as part of this migration. Old commits may still contain the historical raw file; removing it from the current tree prevents future commits from carrying it.
+- Keep `data/police_events/raw_events.jsonl` in `.gitignore` as a guard against accidental reintroduction.
+- A retry must remain isolated by run ID and attempt. Verify Azure upload and hash before publishing analysis outputs.
+- Retain the normalized CSVs and compact quality report in Git only while they remain below repository file-size limits; otherwise export them as versioned compact artifacts as well.
 
 ## Safety and interpretation
 
