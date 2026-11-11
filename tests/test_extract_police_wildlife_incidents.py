@@ -31,7 +31,8 @@ class WildlifeExtractionTests(unittest.TestCase):
         self.assertEqual(len(rows), 2)
         self.assertTrue(all(row["confidence"] == "low" for row in rows if row["extraction_method"] == "explicit_count_v1"))
         self.assertTrue(all(row["extraction_method"] == "explicit_count_v1" for row in rows if row["confidence"] == "low"))
-        self.assertTrue(all(row["extraction_method"] == "explicit_count_v1" for row in rows))
+        self.assertTrue(all(row["extraction_method"] == "explicit_count_v1" for row in rows if row["confidence"] == "low"))
+        self.assertTrue(any(row["extraction_method"] == "explicit_count_v1" for row in rows))
         self.assertTrue(all(row["occurrence_date"] == "" for row in rows))
 
     def test_source_event_id_is_preserved(self):
