@@ -30,13 +30,13 @@ class AdaptivePolicePaginationTests(unittest.TestCase):
             with (
                 patch.object(ingest_police_events, "DATA", root),
                 patch.object(ingest_police_events, "EVENTS", root / "events.csv"),
-                patch.object(ingest_police_events, "RAW", root / "raw.jsonl"),
                 patch.object(ingest_police_events, "WILDLIFE", root / "wildlife.csv"),
                 patch.object(ingest_police_events, "get_page", side_effect=page),
                 patch.object(ingest_police_events.time, "sleep"),
             ):
                 ingest_police_events.collect(
-                    full=True, max_pages=100, limit=100, sleep_seconds=0
+                    full=True, max_pages=100, limit=100, sleep_seconds=0,
+                    raw_path=root / "raw.jsonl",
                 )
 
             with (root / "events.csv").open(encoding="utf-8-sig", newline="") as handle:
