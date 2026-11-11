@@ -23,7 +23,7 @@ class WildlifeExtractionTests(unittest.TestCase):
         rows = MODULE.extract(self.row("Kl. 07:15: En viltolycka inträffade vid Luleå."))
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["publication_date"], "2026-11-10")
-        self.assertEqual(rows[0]["occurrence_date"], "")
+        self.assertEqual(rows[0]["occurrence_date"], "2026-11-10")
         self.assertEqual(rows[0]["occurrence_time"], "07:15")
 
     def test_explicit_count_is_kept_as_low_confidence_candidates(self):
@@ -34,6 +34,25 @@ class WildlifeExtractionTests(unittest.TestCase):
         self.assertTrue(all(row["extraction_method"] == "explicit_count_v1" for row in rows if row["confidence"] == "low"))
         self.assertTrue(any(row["extraction_method"] == "explicit_count_v1" for row in rows))
         self.assertTrue(all(row["occurrence_date"] == "" for row in rows))
+
+
+    def test_night_summary_assigns_after_midnight_to_publication_date(self):
+        row = self.row("00:35 Viltolycka, Luleå: En ren har blivit påkörd.")
+        row["date"] = "2021-05-13"
+        row["type_original"] = "Sammanfattning natt"
+        row["is_summary"] = "true"
+        rows = MODULE.extract(row)
+        self.assertEqual(rows[0]["occurrence_date"], "2021-05-13")
+        self.assertEqual(rows[0]["occurrence_date_basis"], "night_summary_after_midnight")
+
+    def test_night_summary_assigns_late_evening_to_previous_date(self):
+        row = self.row("22:45 Viltolycka, Boden: En älg har blivit påkörd.")
+        row["date"] = "2021-05-13"
+        row["type_original"] = "Sammanfattning natt"
+        row["is_summary"] = "true"
+        rows = MODULE.extract(row)
+        self.assertEqual(rows[0]["occurrence_date"], "2021-05-12")
+        self.assertEqual(rows[0]["occurrence_date_basis"], "night_summary_previous_evening")
 
     def test_source_event_id_is_preserved(self):
         rows = MODULE.extract(self.row("En älgolycka rapporterades vid Boden."))
