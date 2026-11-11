@@ -123,3 +123,21 @@ The generated tables contained:
 This first run covers only the observations currently present in the four archived source objects. Most observations share a single collection timestamp from the legacy backfill, so they do not establish a long-term trend.
 
 The next analysis revision compares nested source JSON paths as well as the normalized reporting fields. It will report exact changed paths and before/after values, while retaining payload-hash changes with no identifiable JSON-field diff as an explicit diagnostic category.
+
+
+## Source-level change analysis — run #2, 2026-11-11
+
+The refined history analysis completed in
+[workflow run 43053147153](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43053147153).
+The artifact is `police-event-history-43053147153`.
+
+- 22,000 observations; 10,000 event IDs; 10,024 distinct payload versions.
+- 11,976 observations repeat a payload hash already seen for the same event ID.
+- 9,978 event IDs have one distinct version; 20 have two; 2 have three.
+- 24 payload-change transitions were found across 22 event IDs.
+- The normalized reporting fields did not change in these transitions, but source-level comparison found a difference in the original JSON for all 24 transitions.
+- Payload changes without an identifiable source-field difference: 0.
+
+The earlier summary counted the 10,000 first-observation rows as change transitions. The next builder revision separates first observations from actual subsequent transitions; until that correction is applied, use 24 as the verified number of actual payload-change transitions.
+
+This remains a small set of source observations and is not a representative time series of all incidents. Missing events in later API responses are not classified as deletions.
