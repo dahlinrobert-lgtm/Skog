@@ -5,6 +5,7 @@ import html
 import re
 from html.parser import HTMLParser
 from pathlib import Path
+from datetime import date, timedelta
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "police_events"
@@ -69,6 +70,27 @@ def species(text: str) -> str:
     return ", ".join(hits)
 
 
+def infer_occurrence_date(row: dict, clock_time: str) -> tuple[str, str]:
+    """Infer a calendar date from report date and an explicit clock time."""
+    report_date = row.get("date", "")
+    if not clock_time:
+        return "", "no_explicit_occurrence_time"
+    try:
+        published_day = date.fromisoformat(report_date)
+    except (TypeError, ValueError):
+        return "", "publication_date_unusable"
+    kind = " ".join(str(row.get(key, "")) for key in
+                    ("type_original", "headline", "description")).casefold()
+    is_night_summary = "natt" in kind and (
+        row.get("is_summary", "").casefold() == "true" or "sammanfattning" in kind
+    )
+    hour, _minute = (int(part) for part in clock_time.replace(".", ":").split(":"))
+    if is_night_summary and hour >= 22:
+        return (published_day - timedelta(days=1)).isoformat(), "night_summary_previous_evening"
+    if is_night_summary and hour < 7:
+        return published_day.isoformat(), "night_summary_after_midnight"
+    return published_day.isoformat(), "dated_report_explicit_time"
+
 def extract(row: dict) -> list[dict]:
     body = clean(row.get("content") or row.get("description") or row.get("headline") or "")
     lines = [line.strip(" -–—") for line in body.splitlines() if line.strip()]
@@ -95,11 +117,14 @@ def extract(row: dict) -> list[dict]:
         if key in seen:
             continue
         seen.add(key)
+        occurrence_time = tm.group("time").replace(".", ":") if tm else ""
+        occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
         out.append({
             "parent_event_id": row.get("event_id", ""),
             "publication_date": row.get("date", ""),
-            "occurrence_date": "",
-            "occurrence_time": tm.group("time").replace(".", ":") if tm else "",
+            "occurrence_date": occurrence_date,
+            "occurrence_date_basis": date_basis,
+            "occurrence_time": occurrence_time,
             "municipality": municipality(segment),
             "species": species(segment),
             "place_text": segment[:500],
@@ -124,6 +149,7 @@ def extract(row: dict) -> list[dict]:
                     "parent_event_id": row.get("event_id", ""),
                     "publication_date": row.get("date", ""),
                     "occurrence_date": "",
+                    "occurrence_date_basis": "count_without_time",
                     "occurrence_time": "",
                     "municipality": municipality(line),
                     "species": species(line),
@@ -149,7 +175,7 @@ def main():
         ):
             results.extend(extract(row))
     fields = [
-        "parent_event_id", "publication_date", "occurrence_date", "occurrence_time",
+        "parent_event_id", "publication_date", "occurrence_date", "occurrence_date_basis", "occurrence_time",
         "municipality", "species", "place_text", "description", "source_link",
         "extraction_method", "confidence", "occurrence_index",
     ]
