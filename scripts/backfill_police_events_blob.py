@@ -9,8 +9,9 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
+from azure.core.exceptions import ResourceExistsError
 from azure.identity import DefaultAzureCredential
-from azure.storage.blob import BlobServiceClient, ContentSettings, ResourceExistsError
+from azure.storage.blob import BlobServiceClient, ContentSettings
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT / "data" / "police_events" / "raw_events.jsonl"
