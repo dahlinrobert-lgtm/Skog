@@ -35,3 +35,12 @@ The initial Azure migration and a subsequent incremental run have both been veri
 - Do not infer complete API history from the number of records or a successful run.
 - Wildlife extraction results remain candidates, not confirmed collisions.
 - Preserve source event IDs, retrieval timestamps and payload hashes so later changes can be audited.
+
+
+## Independent Azure archive audit
+
+The workflow `Police Azure archive audit` inventories the legacy object and all run segments from their manifests. It checks manifest schema and archive type, blob existence, blob size and metadata consistency, manifest-to-object pairing, and unreferenced or missing raw objects. The scheduled monthly run performs this metadata/inventory audit without downloading the full archive.
+
+A manual run with `deep=true` additionally downloads each gzip object, decompresses it incrementally, and verifies the original raw byte count and SHA-256 against its manifest. This is the stronger end-to-end integrity check and may take longer as the archive grows.
+
+The audit deliberately does not infer API-history completeness, event uniqueness across different runs, or collision truth from row counts. Repeated event versions across snapshots are expected; reconstruction and deduplication must use event IDs, retrieval timestamps, and payload hashes rather than summing segment row counts as unique events.
