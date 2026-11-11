@@ -103,3 +103,23 @@ A successful restore verifies integrity and reconstructability of the
 currently inventoried archive objects. It does not prove that the upstream
 API supplied a complete history or that event IDs represent distinct real
 incidents.
+
+
+## Historical version analysis — first run 2026-11-11
+
+The first history analysis completed successfully in
+[workflow run 43051685265](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43051685265).
+Its artifact is police-event-history-43051685265.
+
+The generated tables contained:
+
+- 22,000 archived source observations.
+- 10,000 unique event IDs.
+- 10,024 distinct payload versions after collapsing 11,976 repeated observations with identical payload hashes.
+- 22 event IDs with more than one distinct payload version: 20 with two versions and 2 with three versions.
+- 10,000 first-observation rows and 24 payload-change transitions.
+- No detected changes in the selected normalized fields during those 24 payload transitions. The initial analysis did not compare every nested source JSON field, so those transitions were marked payload_changed_unmapped, not as unchanged content.
+
+This first run covers only the observations currently present in the four archived source objects. Most observations share a single collection timestamp from the legacy backfill, so they do not establish a long-term trend.
+
+The next analysis revision compares nested source JSON paths as well as the normalized reporting fields. It will report exact changed paths and before/after values, while retaining payload-hash changes with no identifiable JSON-field diff as an explicit diagnostic category.
