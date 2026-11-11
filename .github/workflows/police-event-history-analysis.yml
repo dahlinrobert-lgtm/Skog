@@ -24,6 +24,8 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Test history builder
+        run: python -m unittest tests.test_build_police_event_history
       - name: Sign in to Azure with GitHub OIDC
         uses: azure/login@v2
         with:
