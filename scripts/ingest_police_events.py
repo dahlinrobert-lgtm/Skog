@@ -116,7 +116,7 @@ def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float) -> Non
                     "event_id": event_id,
                     "payload_sha256": row["payload_sha256"],
                     "event": event,
-                }, ensure_ascii=False) + "\\n")
+                }, ensure_ascii=False) + "\n")
                 current[event_id] = row
                 new_versions += 1
         last_page = links.get("last_page")
@@ -147,7 +147,7 @@ def write_csv(path: Path, fields: list[str], rows: list[dict]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--full", action="store_true", help="Paginate the complete area history")
-    parser.add_argument("--max-pages", type=int, default=5)
+    parser.add_argument("--max-pages", type=int, default=10000)
     parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--sleep", type=float, default=0.35)
     args = parser.parse_args()
