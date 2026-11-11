@@ -1,0 +1,51 @@
+import csv
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+import requests
+
+from scripts import ingest_police_events
+
+
+class AdaptivePolicePaginationTests(unittest.TestCase):
+    def test_full_fetch_restarts_with_smaller_limit_after_http_400(self):
+        calls = []
+
+        def page(page_number, limit):
+            calls.append((page_number, limit))
+            if limit == 100 and page_number == 2:
+                response = requests.Response()
+                response.status_code = 400
+                raise requests.HTTPError("400 Client Error", response=response)
+            event_id = f"{limit}-{page_number}"
+            return {
+                "data": [{"id": event_id, "pubdate_iso8601": "2026-01-01T12:00:00Z"}],
+                "links": {"last_page": 2},
+            }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with (
+                patch.object(ingest_police_events, "DATA", root),
+                patch.object(ingest_police_events, "EVENTS", root / "events.csv"),
+                patch.object(ingest_police_events, "RAW", root / "raw.jsonl"),
+                patch.object(ingest_police_events, "WILDLIFE", root / "wildlife.csv"),
+                patch.object(ingest_police_events, "get_page", side_effect=page),
+                patch.object(ingest_police_events.time, "sleep"),
+            ):
+                ingest_police_events.collect(
+                    full=True, max_pages=100, limit=100, sleep_seconds=0
+                )
+
+            with (root / "events.csv").open(encoding="utf-8-sig", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+
+        self.assertEqual(calls, [(1, 100), (2, 100), (1, 50), (2, 50)])
+        self.assertEqual(len(rows), 2)
+        self.assertEqual({row["event_id"] for row in rows}, {"50-1", "50-2"})
+
+
+if __name__ == "__main__":
+    unittest.main()
