@@ -208,7 +208,8 @@ def build_history(records: list[dict]) -> tuple[list[dict], list[dict], dict]:
         "duplicate_payload_version_count": duplicate_versions,
         "event_ids_with_multiple_versions": sum(count for versions, count in version_histogram.items() if versions > 1),
         "version_count_histogram": {str(k): v for k, v in sorted(version_histogram.items())},
-        "change_transition_count": len(change_rows),
+        "first_observation_count": sum(1 for row in change_rows if row["change_type"] == "first_seen"),
+        "change_transition_count": sum(1 for row in change_rows if row["change_type"] != "first_seen"),
         "field_change_transition_count": sum(1 for row in change_rows if row["change_type"] == "updated"),
         "source_field_change_transition_count": sum(1 for row in change_rows if row.get("source_changed_fields")),
         "payload_changed_without_source_field_diff_count": sum(
