@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-11-11T14:49:30.740596+00:00",
+  "scope": "Norrbottens län",
+  "source": "Brottsplatskartan API; public Police event material",
+  "interpretation": "Successful workflow and counts do not attest complete historical API coverage. Extracted wildlife rows are candidates, not confirmed collisions.",
+  "archive": {
+    "event_count": 500,
+    "unique_event_ids": 500,
+    "missing_publication_date_count": 0,
+    "publication_year_counts": {
+      "2026": 500
+    },
+    "oldest_publication_date": "2026-07-16",
+    "newest_publication_date": "2026-11-11",
+    "event_type_counts": {
+      "Arbetsplatsolycka": 15,
+      "Bedrägeri": 1,
+      "Brand": 11,
+      "Bråk": 2,
+      "Farligt föremål,  misstänkt": 1,
+      "Fjällräddning": 11,
+      "Fylleri": 19,
+      "Försvunnen person": 8,
+      "Häleri": 1,
+      "Inbrott": 4,
+      "Knivlagen": 4,
+      "Misshandel": 15,
+      "Mord/dråp": 1,
+      "Motorfordon,  anträffat stulet": 1,
+      "Motorfordon,  stöld": 1,
+      "Narkotikabrott": 9,
+      "Ofredande/förargelse": 2,
+      "Olaga hot": 4,
+      "Olaga intrång": 3,
+      "Olovlig körning": 6,
+      "Rattfylleri": 27,
+      "Sammanfattning helg": 1,
+      "Sammanfattning natt": 117,
+      "Skadegörelse": 4,
+      "Skyddslagen": 2,
+      "Stöld": 20,
+      "Stöld/inbrott": 3,
+      "Trafikbrott": 14,
+      "Trafikhinder": 2,
+      "Trafikkontroll": 95,
+      "Trafikolycka": 62,
+      "Trafikolycka,  singel": 5,
+      "Trafikolycka,  smitning från": 5,
+      "Trafikolycka,  vilt": 18,
+      "Vapenlagen": 1,
+      "Övrigt": 5
+    }
+  },
+  "wildlife_text": {
+    "broad_candidate_count": 60,
+    "individual_incident_candidate_count": 736,
+    "candidate_year_counts": {
+      "2026": 26
+    },
+    "candidate_missing_occurrence_date_count": 710,
+    "extraction_method_counts": {
+      "explicit_count_v1": 665,
+      "wildlife_text_line_v1": 71
+    },
+    "confidence_counts": {
+      "low": 665,
+      "review": 71
+    },
+    "species_mentions": {
+      "(missing)": 698,
+      "ren": 16,
+      "rådjur": 7,
+      "älg": 15
+    }
+  }
+}
