@@ -246,7 +246,7 @@ def main() -> None:
                 raise RuntimeError(f"Cannot parse restored stream at physical line {physical_line}: {exc}") from exc
     versions, changes, summary = build_history(records)
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    version_fields = ["event_id", "version_number", "retrieved_at", "payload_sha256", *FIELDS, "source_event_json"]
+    version_fields = ["event_id", "version_number", "retrieved_at", "payload_sha256", *FIELDS]
     change_fields = [
         "event_id", "from_retrieved_at", "to_retrieved_at",
         "from_payload_sha256", "to_payload_sha256", "change_type",
