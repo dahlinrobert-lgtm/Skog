@@ -22,6 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
+      - name: Validate manual confirmation
+        env:
+          CONFIRMATION: ${{ inputs.confirm }}
+        run: |
+          if [ "$CONFIRMATION" != "BACKFILL" ]; then
+            echo "::error::Confirmation must be exactly BACKFILL (uppercase)."
+            exit 1
+          fi
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
