@@ -1,0 +1,29 @@
+name: Police event history builder tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/build_police_event_history.py'
+      - 'tests/test_build_police_event_history.py'
+      - '.github/workflows/police-event-history-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_police_event_history.py'
+      - 'tests/test_build_police_event_history.py'
+      - '.github/workflows/police-event-history-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run police event history tests
+        run: python -m unittest tests.test_build_police_event_history
