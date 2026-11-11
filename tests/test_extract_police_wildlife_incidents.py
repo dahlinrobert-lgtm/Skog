@@ -29,7 +29,8 @@ class WildlifeExtractionTests(unittest.TestCase):
     def test_explicit_count_is_kept_as_low_confidence_candidates(self):
         rows = MODULE.extract(self.row("Två viltolyckor har rapporterats."))
         self.assertEqual(len(rows), 2)
-        self.assertTrue(all(row["confidence"] == "low" for row in rows))
+        self.assertTrue(all(row["confidence"] == "low" for row in rows if row["extraction_method"] == "explicit_count_v1"))
+        self.assertTrue(all(row["extraction_method"] == "explicit_count_v1" for row in rows if row["confidence"] == "low"))
         self.assertTrue(all(row["extraction_method"] == "explicit_count_v1" for row in rows))
         self.assertTrue(all(row["occurrence_date"] == "" for row in rows))
 
