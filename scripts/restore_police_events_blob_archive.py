@@ -142,8 +142,16 @@ def restore_one(container, manifest_name: str, expected_type: str, db: sqlite3.C
                     continue
                 position = 0
                 while position < len(text_line):
-                    while position < len(text_line) and text_line[position].isspace():
-                        position += 1
+                    while position < len(text_line):
+                        if text_line[position].isspace():
+                            position += 1
+                            continue
+                        # The legacy export contains literal backslash-n
+                        # separators between JSON objects, not physical LF.
+                        if text_line.startswith(r"\\n", position):
+                            position += 2
+                            continue
+                        break
                     if position >= len(text_line):
                         break
                     try:
