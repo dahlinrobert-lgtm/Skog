@@ -9,6 +9,7 @@ import json
 import os
 import sqlite3
 import tempfile
+from json import JSONDecoder
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -128,28 +129,50 @@ def restore_one(container, manifest_name: str, expected_type: str, db: sqlite3.C
                 raw_digest.update(chunk)
                 raw_bytes += len(chunk)
         else:
-            for line in source:
+            # JSONL producers normally emit one object per line. The legacy
+            # backfill contains adjacent JSON objects on some physical lines,
+            # so use raw_decode repeatedly while preserving each original
+            # record as canonical JSON in the reconstructed JSONL.
+            decoder = JSONDecoder()
+            for line_number, line in enumerate(source, start=1):
                 raw_digest.update(line)
                 raw_bytes += len(line)
-                if not line.strip():
+                text_line = line.decode("utf-8").strip()
+                if not text_line:
                     continue
-                try:
-                    record = json.loads(line)
-                except json.JSONDecodeError as exc:
-                    raise RuntimeError(f"Invalid JSONL record in {blob_name}, row {rows + 1}") from exc
-                if not isinstance(record, dict):
-                    raise RuntimeError(f"Non-object JSONL record in {blob_name}, row {rows + 1}")
-                event = record.get("event") if isinstance(record.get("event"), dict) else {}
-                event_id = str(record.get("event_id") or event.get("id") or "")
-                retrieved_at = str(record.get("retrieved_at") or "")
-                payload_sha = str(record.get("payload_sha256") or "")
-                if not retrieved_at or not event_id:
-                    raise RuntimeError(f"Record missing retrieved_at/event_id in {blob_name}, row {rows + 1}")
-                db.execute(
-                    "INSERT INTO records(retrieved_at,event_id,payload_sha256,line) VALUES(?,?,?,?)",
-                    (retrieved_at, event_id, payload_sha, line),
-                )
-                rows += 1
+                position = 0
+                while position < len(text_line):
+                    while position < len(text_line) and text_line[position].isspace():
+                        position += 1
+                    if position >= len(text_line):
+                        break
+                    try:
+                        record, next_position = decoder.raw_decode(text_line, position)
+                    except json.JSONDecodeError as exc:
+                        raise RuntimeError(
+                            f"Invalid concatenated JSON record in {blob_name}, "
+                            f"physical row {line_number}, character {position}"
+                        ) from exc
+                    if not isinstance(record, dict):
+                        raise RuntimeError(
+                            f"Non-object JSON record in {blob_name}, physical row {line_number}"
+                        )
+                    event = record.get("event") if isinstance(record.get("event"), dict) else {}
+                    event_id = str(record.get("event_id") or event.get("id") or "")
+                    retrieved_at = str(record.get("retrieved_at") or "")
+                    payload_sha = str(record.get("payload_sha256") or "")
+                    if not retrieved_at or not event_id:
+                        raise RuntimeError(
+                            f"Record missing retrieved_at/event_id in {blob_name}, "
+                            f"physical row {line_number}, record {rows + 1}"
+                        )
+                    normalized = json.dumps(record, ensure_ascii=False, separators=(",", ":")).encode("utf-8") + b"\\n"
+                    db.execute(
+                        "INSERT INTO records(retrieved_at,event_id,payload_sha256,line) VALUES(?,?,?,?)",
+                        (retrieved_at, event_id, payload_sha, normalized),
+                    )
+                    rows += 1
+                    position = next_position
     if raw_digest.hexdigest() != manifest["raw_sha256"] or raw_bytes != int(manifest["raw_bytes"]):
         raise RuntimeError(f"Raw content SHA-256/byte-count mismatch: {blob_name}")
     if rows != int(manifest["row_count"]):
@@ -262,7 +285,7 @@ def main() -> None:
             "storage_account": ACCOUNT,
             "container": CONTAINER,
             "ordering": ["retrieved_at", "event_id", "payload_sha256", "original_line"],
-            "legacy_csv_converted_to_jsonl": True,
+            "legacy_csv_converted_to_jsonl": False,\n            "concatenated_json_values_supported": True,
             "preserves_all_versions": True,
             "source_objects": restored,
             "source_manifest_count": len(restored),
