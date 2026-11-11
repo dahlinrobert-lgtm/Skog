@@ -44,3 +44,19 @@ The workflow `Police Azure archive audit` inventories the legacy object and all 
 A manual run with `deep=true` additionally downloads each gzip object, decompresses it incrementally, and verifies the original raw byte count and SHA-256 against its manifest. This is the stronger end-to-end integrity check and may take longer as the archive grows.
 
 The audit deliberately does not infer API-history completeness, event uniqueness across different runs, or collision truth from row counts. Repeated event versions across snapshots are expected; reconstruction and deduplication must use event IDs, retrieval timestamps, and payload hashes rather than summing segment row counts as unique events.
+
+
+## Restore and reconstruction test
+
+The manual workflow `Police Azure archive restore test` reconstructs a combined JSONL gzip from the verified legacy object and all run segments. It rechecks each manifest, Azure metadata, compressed-object SHA-256 and size, decompressed raw SHA-256 and size, and row count before accepting records.
+
+Records are retained as original JSONL lines and ordered deterministically by retrieval timestamp, event ID, payload hash, and original line. No event versions are discarded. A SQLite temporary database is used for sorting so the workflow does not need to hold the complete archive in memory.
+
+The restore report distinguishes:
+- source rows from unique event IDs;
+- event IDs with multiple archived versions;
+- exact duplicate records;
+- records missing payload hashes;
+- output byte count and SHA-256.
+
+The workflow is manual and read-only against Azure. It uploads the reconstructed gzip and report as a GitHub Actions artifact with 30-day retention. This is a restore test artifact, not a replacement for the durable Azure source archive. A successful run proves that the currently inventoried objects can be reconstructed and verified; it does not prove complete historical API coverage.
