@@ -149,9 +149,17 @@ def restore_one(container, manifest_name: str, expected_type: str, db: sqlite3.C
                     try:
                         record, next_position = decoder.raw_decode(text_line, position)
                     except json.JSONDecodeError as exc:
+                        context_start = max(0, position - 48)
+                        context_end = min(len(text_line), position + 96)
+                        context = text_line[context_start:context_end]
+                        safe_context = "".join(
+                            char if char.isprintable() else f"\\x{ord(char):02x}"
+                            for char in context
+                        )
                         raise RuntimeError(
                             f"Invalid concatenated JSON record in {blob_name}, "
-                            f"physical row {line_number}, character {position}"
+                            f"physical row {line_number}, character {position}; "
+                            f"decoder_message={exc.msg!r}; context={safe_context!r}"
                         ) from exc
                     if not isinstance(record, dict):
                         raise RuntimeError(
