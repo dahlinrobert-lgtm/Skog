@@ -54,6 +54,24 @@ class PoliceEventHistoryTests(unittest.TestCase):
         self.assertEqual(summary["source_field_change_transition_count"], 1)
         self.assertEqual(summary["payload_changed_without_source_field_diff_count"], 0)
 
+
+    def test_source_only_change_is_classified_as_updated_transition(self):
+        records = [
+            {"event_id":"x","retrieved_at":"2026-01-01T00:00:00Z","payload_sha256":"x1",
+             "event":{"id":"x","headline":"same","metadata":{"status":"old"}}},
+            {"event_id":"x","retrieved_at":"2026-01-02T00:00:00Z","payload_sha256":"x2",
+             "event":{"id":"x","headline":"same","metadata":{"status":"new"}}},
+        ]
+        _versions, changes, summary = build_history(records)
+        change = next(row for row in changes if row["change_type"] != "first_seen")
+        self.assertEqual(change["change_type"], "updated")
+        self.assertEqual(change["changed_fields"], "")
+        self.assertEqual(change["source_changed_fields"], "metadata.status")
+        self.assertEqual(summary["first_observation_count"], 1)
+        self.assertEqual(summary["change_transition_count"], 1)
+        self.assertEqual(summary["field_change_transition_count"], 1)
+        self.assertEqual(summary["source_field_change_transition_count"], 1)
+
     def test_identical_payload_versions_are_not_double_counted(self):
         records = [
             {"event_id":"a","retrieved_at":"2026-01-01T00:00:00Z","payload_sha256":"same",

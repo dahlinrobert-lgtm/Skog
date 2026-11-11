@@ -186,7 +186,7 @@ def build_history(records: list[dict]) -> tuple[list[dict], list[dict], dict]:
                         "to_retrieved_at": row["retrieved_at"],
                         "from_payload_sha256": previous["payload_sha256"],
                         "to_payload_sha256": row["payload_sha256"],
-                        "change_type": "updated" if changed else "payload_changed_unmapped",
+                        "change_type": "updated" if (changed or source_changed) else "payload_changed_unmapped",
                         "changed_fields": ";".join(changed),
                         "source_changed_fields": ";".join(source_changed),
                         "before_values_json": json.dumps(before, ensure_ascii=False, sort_keys=True),
@@ -219,7 +219,7 @@ def build_history(records: list[dict]) -> tuple[list[dict], list[dict], dict]:
         "interpretation": (
             "Only changed/new versions written by the collector are represented. "
             "Absence from a later API response is not evidence that an event was deleted. "
-            "Field changes are limited to the normalized fields listed in the version table."
+            "Normalized field changes are limited to the reporting fields listed in the version table; source-level changes also include every flattened field in the original event payload."
         ),
     }
     return version_rows, change_rows, summary
