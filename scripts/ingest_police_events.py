@@ -4,7 +4,6 @@ import argparse
 import csv
 import hashlib
 import json
-import os
 import re
 import time
 from datetime import datetime, timezone
@@ -117,12 +116,12 @@ def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float) -> Non
                     "event_id": event_id,
                     "payload_sha256": row["payload_sha256"],
                     "event": event,
-                }, ensure_ascii=False) + "\n")
+                }, ensure_ascii=False) + "\\n")
                 current[event_id] = row
                 new_versions += 1
         last_page = links.get("last_page")
         print(f"page={page} rows={len(items)} last_page={last_page}")
-        if not full or (last_page and page >= int(last_page)):
+        if (full and last_page and page >= int(last_page)) or (not full and page >= max_pages):
             break
         page += 1
         time.sleep(sleep_seconds)
@@ -131,8 +130,8 @@ def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float) -> Non
     write_csv(EVENTS, FIELDS, ordered)
     candidates = []
     for row in ordered:
-        text = " ".join(str(row.get(k, "")) for k in ("type_original", "headline", "description", "content"))
-        if WILDLIFE_RE.search(text):
+        searchable = " ".join(str(row.get(k, "")) for k in ("type_original", "headline", "description", "content"))
+        if WILDLIFE_RE.search(searchable):
             candidates.append(row)
     write_csv(WILDLIFE, FIELDS, candidates)
     print(f"archive_events={len(ordered)} wildlife_candidates={len(candidates)} changed_or_new_versions={new_versions}")
