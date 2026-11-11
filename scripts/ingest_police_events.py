@@ -96,7 +96,16 @@ def collect(full: bool, max_pages: int, limit: int, sleep_seconds: float) -> Non
     new_versions = 0
     page = 1
     while page <= max_pages:
-        payload = get_page(page, limit)
+        try:
+            payload = get_page(page, limit)
+        except requests.HTTPError as exc:
+            status = exc.response.status_code if exc.response is not None else None
+            # The provider advertises more pages than it currently serves.
+            # Preserve all successfully collected pages and report the boundary.
+            if full and status == 400 and page > 1:
+                print(f"pagination_stopped_at_page={page} status=400; preserving pages 1-{page - 1}")
+                break
+            raise
         items = payload.get("data") or []
         links = payload.get("links") or {}
         if not items:
