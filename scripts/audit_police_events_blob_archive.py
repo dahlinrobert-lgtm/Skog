@@ -16,16 +16,6 @@ CONTAINER = os.environ.get("POLICE_ARCHIVE_CONTAINER", "police-events")
 CHUNK_SIZE = 1024 * 1024
 
 
-def sha256_file(path: Path) -> tuple[str, int]:
-    digest = hashlib.sha256()
-    size = 0
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(CHUNK_SIZE), b""):
-            digest.update(chunk)
-            size += len(chunk)
-    return digest.hexdigest(), size
-
-
 def verify_gzip_blob(container, blob_name: str, expected_sha: str, expected_bytes: int) -> None:
     # Stream the compressed object to disk, then decompress and hash incrementally.
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -85,8 +75,12 @@ def check_archive(container, manifest_name: str, expected_type: str, deep: bool)
         "raw_sha256": str(manifest["raw_sha256"]),
         "raw_bytes": str(manifest["raw_bytes"]),
         "compressed_bytes": str(manifest["compressed_bytes"]),
+        "compressed_sha256": str(manifest["compressed_sha256"]),
     }
     if expected_type == "police_raw_run_segment":
+        for key in ("run_id", "run_attempt"):
+            if not manifest.get(key):
+                raise RuntimeError(f"{manifest_name} missing {key}")
         expected_metadata.update({
             "run_id": str(manifest["run_id"]),
             "run_attempt": str(manifest["run_attempt"]),
