@@ -2,6 +2,8 @@ name: Police Azure archive restore test
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 5 1 1,4,7,10 *'
 
 permissions:
   contents: read
