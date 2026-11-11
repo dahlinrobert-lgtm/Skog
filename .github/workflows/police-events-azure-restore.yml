@@ -1,0 +1,44 @@
+name: Police Azure archive restore test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: skog-police-azure-archive-restore
+  cancel-in-progress: false
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Rebuild and verify raw archive
+        env:
+          AZURE_STORAGE_ACCOUNT: stskogkolldata
+          POLICE_ARCHIVE_CONTAINER: police-events
+        run: python scripts/restore_police_events_blob_archive.py --output-dir police-archive-restore
+      - name: Upload restore test artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: police-azure-archive-restore-${{ github.run_id }}
+          path: |
+            police-archive-restore/restored_raw_events.jsonl.gz
+            police-archive-restore/restore_report.json
+          if-no-files-found: error
+          retention-days: 30
