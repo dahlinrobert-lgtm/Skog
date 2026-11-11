@@ -98,7 +98,7 @@ def extract(row: dict) -> list[dict]:
         out.append({
             "parent_event_id": row.get("event_id", ""),
             "publication_date": row.get("date", ""),
-            "occurrence_date": row.get("date", ""),
+            "occurrence_date": "",
             "occurrence_time": tm.group("time").replace(".", ":") if tm else "",
             "municipality": municipality(segment),
             "species": species(segment),
@@ -123,7 +123,7 @@ def extract(row: dict) -> list[dict]:
                 out.append({
                     "parent_event_id": row.get("event_id", ""),
                     "publication_date": row.get("date", ""),
-                    "occurrence_date": row.get("date", ""),
+                    "occurrence_date": "",
                     "occurrence_time": "",
                     "municipality": municipality(line),
                     "species": species(line),
