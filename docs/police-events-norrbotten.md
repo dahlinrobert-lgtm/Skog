@@ -32,3 +32,26 @@ Workflowen **Police events archive (Norrbotten)** körs dagligen. En manuell kö
 
 - Brottsplatskartan API: https://brottsplatskartan.se/sida/api
 - Ursprungsdata publiceras av Polismyndigheten.
+
+
+## Geografisk matchning mot NVR
+
+Det operativa analysmålet är att koppla polisens dagliga, textbaserade viltolyckshändelser till NVR:s olycksposter med exakta koordinater. Källorna ska inte behandlas som om de hade samma geografiska precision:
+
+- NVR är den geografiska referensen för koordinatsatta olyckor. NVR:s djurposter måste vid behov aggregeras till en olyckshändelse så att flera djur från samma kollision inte blir flera olyckor.
+- Polisens platsuppgifter kan vara ortnamn, vägnummer, väg-/gatunamn, sträckor mellan platser eller fritext. Polisens generella händelsekoordinat får inte automatiskt betraktas som olycksplatsens exakta koordinat, särskilt för sammanfattningar med flera händelser.
+- Ursprunglig platsbeskrivning, käll-ID, publiceringstid, möjlig olyckstid, textutdrag och payloadversion ska bevaras. Geokodade resultat lagras separat från källposten.
+
+### Matchningsmodell
+
+1. Extrahera enskilda olyckspåståenden ur polisens händelsetext. En sammanfattning med flera olyckor ska ge separata kandidater; antal utan individuell plats eller tid är inte individuellt matchbara.
+2. Tolka platsreferensen och klassificera dess geometri: punkt, vägsträcka, ort/område eller olöst fritext. Geokodning ska ge källa, metod, precision/utbredning och status – inte bara latitud/longitud.
+3. Skapa kandidatpar mot NVR med tidsfönster, djurslag och geografiskt avstånd/överlapp. För en vägsträcka används avstånd till linje/sträckgeometri; för en ort eller ett område används dess utbredning och lägre geografisk säkerhet.
+4. Spara varje möjligt par med matchningspoäng, delkomponenter, metodversion och granskningsstatus. En matchning är inte en bekräftad identitet enbart för att tid och plats ligger nära.
+5. Håll statusarna åtskilda: bekräftad, sannolik, möjlig, avvisad och ej matchningsbar. Tillåt att en polispost innehåller flera olyckor och att flera NVR-djurposter hör till en olycka.
+
+### GIS- och Power BI-underlag
+
+Det långsiktiga utdataformatet bör vara separata, relationsbara tabeller: polisens händelser/versioner, extraherade polisolyckskandidater, geokodade platsreferenser/geometrier, NVR-olyckor (aggregerade från djurposter) och matchningskandidater. GIS ska kunna visa NVR-punkter, polisens geokodade punkter/linjer/områden och matchningsrelationer. Power BI ska kunna använda samma nycklar och tabeller utan att behöva återskapa geokodning eller matchningslogik i DAX.
+
+Ingen automatisk matchning ska presenteras som säker innan den har validerats mot ett granskat urval. Publiceringsdatum får inte ersätta olyckstid när den senare kan utläsas, och polisens koordinat på sammanfattningsnivå får inte kopieras till varje olyckskandidat.
