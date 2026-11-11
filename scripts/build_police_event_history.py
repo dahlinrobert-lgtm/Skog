@@ -26,7 +26,7 @@ def iter_records(text: str) -> Iterator[dict]:
         while position < len(text):
             if text[position].isspace():
                 position += 1
-            elif text.startswith(r"\\n", position):
+            elif text.startswith(r"\n", position):
                 position += 2
             else:
                 break
