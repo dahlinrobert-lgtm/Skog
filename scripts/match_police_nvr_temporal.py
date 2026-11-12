@@ -64,8 +64,10 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180):
             # NVR event-level builder does not yet contain road/place labels; keep these empty unless enriched upstream.
             shared_roads = sorted(p_roads & n_roads)
             shared_terms = sorted((p_words & n_words) - {"luleå"})
+            # Missing Police time is unavailable, not a time conflict against a known NVR time.
             delta = min((abs((pdt - ndt).total_seconds()) / 60 for ndt in n["_dts"] if pdt and ndt.date() == day), default=None)
-            if delta is not None and delta <= 15: time_band = "within_15m"
+            if pdt is None: time_band = "same_date_time_unavailable"
+            elif delta is not None and delta <= 15: time_band = "within_15m"
             elif delta is not None and delta <= 60: time_band = "within_1h"
             elif delta is not None and delta <= max_time_delta_minutes: time_band = "within_configured_window"
             elif delta is not None: time_band = "same_date_time_conflict"
