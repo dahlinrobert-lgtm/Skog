@@ -109,7 +109,7 @@ def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes
         police_ids.append(f"{row.get('parent_event_id', '')}:{occurrence_index or f'row-{index}'}")
 
     police_counts = Counter(row["police_candidate_id"] for row in candidates)
-    nvr_keys = [row.get("accident_key", "") for row in nvr_rows if row.get("accident_key")]
+    nvr_keys = sorted({row.get("accident_key", "") for row in nvr_rows if row.get("accident_key")})
     nvr_counts = Counter(row["nvr_accident_key"] for row in candidates)
 
     def distribution(keys, counts):
@@ -160,7 +160,7 @@ def main():
     nvr_rows=read_csv(args.nvr)
     rows=build_candidates(police_rows,nvr_rows,args.max_time_delta_minutes)
     args.output.parent.mkdir(parents=True,exist_ok=True)
-    fields=list(rows[0]) if rows else ["police_event_id","police_occurrence_date","nvr_accident_key","same_date","time_delta_minutes","candidate_score","candidate_status","review_status"]
+    fields=list(rows[0]) if rows else ["police_candidate_id","police_event_id","police_occurrence_index","police_occurrence_date","nvr_accident_key","same_date","time_delta_minutes","candidate_score","candidate_status","review_status"]
     with args.output.open("w",encoding="utf-8-sig",newline="") as f:
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
     summary={"status":"completed","candidate_pairs":len(rows),"status_counts":dict(Counter(r["candidate_status"] for r in rows)),"output":str(args.output)}
