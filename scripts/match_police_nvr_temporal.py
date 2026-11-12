@@ -6,8 +6,8 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
-TIME_RE = re.compile(r"(?<!\\d)([01]?\\d|2[0-3])[.:]([0-5]\\d)(?!\\d)")
-ROAD_RE = re.compile(r"\\b(?:e\\s?4|e\\s?10|e\\s?45|riksväg\\s+\\d+|länsväg\\s+\\d+)\\b", re.I)
+TIME_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])[.:]([0-5]\d)(?!\d)")
+ROAD_RE = re.compile(r"\b(?:e\s?4|e\s?10|e\s?45|riksväg\s+\d+|länsväg\s+\d+)\b", re.I)
 STOP = {"och","med","utan","vid","mellan","på","i","en","ett","det","som","för","från","till","luleå","viltolycka","olycka","personbil","lastbil","polis","inga","uppgifter","personskador","rapporterats","rapporteras"}
 
 def norm(value):
@@ -31,6 +31,56 @@ def text_terms(text):
 
 def split_values(value):
     return [x.strip() for x in (value or "").split(";") if x.strip()]
+
+def extract_geographic_cues(text):
+    """Extract literal road/place cues without geocoding or assigning a match score."""
+    value = re.sub(r"\s+", " ", text or "").strip()
+    road_match = ROAD_RE.search(value)
+    road = road_match.group(0).strip() if road_match else ""
+    tail = value[road_match.end():] if road_match else value
+
+    level = re.search(r"\bi\s+höjd\s+med\s+([^.,;]+)", value, re.I)
+    if level:
+        return {
+            "police_geography_type": "road_cross_level",
+            "police_road_reference": road,
+            "police_place_reference": level.group(1).strip(),
+            "police_segment_from": "",
+            "police_segment_to": "",
+            "police_geography_relation": "i_hojd_med",
+        }
+
+    between = re.search(r"\bmellan\s+(.+?)\s+och\s+(.+?)(?:[.,;]|$)", tail, re.I)
+    if between:
+        return {
+            "police_geography_type": "road_segment",
+            "police_road_reference": road,
+            "police_place_reference": "",
+            "police_segment_from": between.group(1).strip(),
+            "police_segment_to": between.group(2).strip(),
+            "police_geography_relation": "between_reference_places",
+        }
+
+    near = re.match(r"\s*,\s*(?:i\s+)?([^.,;]+)", tail)
+    if road and near:
+        return {
+            "police_geography_type": "road_near_place",
+            "police_road_reference": road,
+            "police_place_reference": near.group(1).strip(),
+            "police_segment_from": "",
+            "police_segment_to": "",
+            "police_geography_relation": "near_place",
+        }
+
+    return {
+        "police_geography_type": "road_only" if road else "unparsed",
+        "police_road_reference": road,
+        "police_place_reference": "",
+        "police_segment_from": "",
+        "police_segment_to": "",
+        "police_geography_relation": "road_reference_only" if road else "no_structured_cue",
+    }
+
 
 UNKNOWN_SPECIES = {"", "okänd", "okänt", "okanda", "okända", "unknown", "vilt", "djur", "övrigt", "övriga", "däggdjur"}
 
@@ -129,6 +179,7 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
             elif date_offset == 1: status = "next_day_time_conflict_review"
             elif delta > max_time_delta_minutes: status = "same_date_time_conflict_review"
             else: status = "temporal_candidate_review"
+            geography = extract_geographic_cues(" ".join([p.get("description", ""), p.get("place_text", "")]))
             output.append({
                 "police_candidate_id": police_candidate_id,
                 "police_event_id": p.get("parent_event_id",""), "police_occurrence_index": occurrence_index,
@@ -139,6 +190,9 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
                 "nvr_accident_key": n.get("accident_key",""), "nvr_olycks_id": n.get("OlycksID",""),
                 "nvr_event_datetime_values": n.get("event_datetime_values",""),
                 "nvr_municipalities": n.get("source_municipalities",""), "nvr_species": n.get("species",""),
+                "nvr_latitude_wgs84": n.get("latitude_wgs84", ""), "nvr_longitude_wgs84": n.get("longitude_wgs84", ""),
+                "nvr_coordinate_status": n.get("coordinate_status", ""), "nvr_coordinate_spread_m": n.get("coordinate_spread_m", ""),
+                **geography,
                 "same_date": date_offset == 0, "date_offset_days": date_offset,
                 "date_relation": "same_date" if date_offset == 0 else "nvr_next_day",
                 "time_delta_minutes": "" if delta is None else round(delta,1),

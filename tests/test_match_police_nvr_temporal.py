@@ -26,6 +26,38 @@ class TemporalMatchTests(unittest.TestCase):
             "species": "Älg",
         }]
 
+    def test_extract_i_hojd_med_as_cross_level_reference(self):
+        cue = M.extract_geographic_cues("Olycka på E4, i höjd med Måttsund.")
+        self.assertEqual(cue["police_geography_type"], "road_cross_level")
+        self.assertEqual(cue["police_road_reference"], "E4")
+        self.assertEqual(cue["police_place_reference"], "Måttsund")
+        self.assertEqual(cue["police_geography_relation"], "i_hojd_med")
+
+    def test_extract_road_near_place(self):
+        cue = M.extract_geographic_cues("Olycka på E4, Norra Rutvik.")
+        self.assertEqual(cue["police_geography_type"], "road_near_place")
+        self.assertEqual(cue["police_place_reference"], "Norra Rutvik")
+
+    def test_extract_road_segment_between_places(self):
+        cue = M.extract_geographic_cues("Olycka på riksväg 97 mellan Södra Sunderbyn och Notviken.")
+        self.assertEqual(cue["police_geography_type"], "road_segment")
+        self.assertEqual(cue["police_road_reference"], "riksväg 97")
+        self.assertEqual(cue["police_segment_from"], "Södra Sunderbyn")
+        self.assertEqual(cue["police_segment_to"], "Notviken")
+
+    def test_geographic_cues_and_nvr_coordinates_are_descriptive_only(self):
+        self.police[0]["description"] = "Olycka på E4, i höjd med Måttsund"
+        self.nvr[0].update({
+            "latitude_wgs84": "65.56", "longitude_wgs84": "21.89",
+            "coordinate_status": "consistent", "coordinate_spread_m": "0.0",
+        })
+        rows = M.build_candidates(self.police, self.nvr)
+        self.assertEqual(rows[0]["police_geography_type"], "road_cross_level")
+        self.assertEqual(rows[0]["nvr_latitude_wgs84"], "65.56")
+        self.assertEqual(rows[0]["nvr_coordinate_status"], "consistent")
+        self.assertFalse(rows[0]["geographic_match_used"])
+        self.assertEqual(rows[0]["candidate_score"], 80)
+
     def test_same_date_close_time_and_species_produce_candidate(self):
         rows = M.build_candidates(self.police, self.nvr)
         self.assertEqual(len(rows), 1)

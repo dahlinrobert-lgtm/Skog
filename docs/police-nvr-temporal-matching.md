@@ -39,6 +39,14 @@ python scripts/match_police_nvr_temporal.py --police data/police_events/lulea_re
 ```
 The candidate CSV contains eligible pairs and evidence fields. Use `--excluded-output /path/to/species-excluded.csv` to retain pairs excluded by known species conflict. The optional JSON report counts Police statements and NVR events with zero, one, or multiple candidate links, including Police statements with no valid occurrence date. It is a local derived file and must not be committed with row-level data. Each Police statement is identified by `police_candidate_id` (parent event ID plus occurrence index), so two statements under the same Police event remain distinct.
 
+## Geographic cue extraction (initial, non-scoring)
+The matcher extracts literal geographic clues from the Police statement into separate fields. This is not geocoding and does not establish a geographic match:
+- `road_cross_level`: wording such as "E4, i höjd med Måttsund". The place is a cross-level reference along the named road, not a point at the settlement centre.
+- `road_near_place`: wording such as "E4, Norra Rutvik".
+- `road_segment`: wording such as "riksväg 97 mellan Södra Sunderbyn och Notviken".
+- `road_only` or `unparsed`: no structured place/segment could be extracted.
+The output also carries through NVR WGS84 coordinates and coordinate-quality fields when present. These fields are descriptive only: they do not alter candidate inclusion, score, status, or `geographic_match_used`. A later version must compare cross-level references against the named road geometry and its local direction, not simply measure distance to the settlement centroid. Road-segment references should be compared with the road section between the two named anchors. Keep source text unchanged for review.
+
 ## Known limitations and validation
 - NVR reports can lag by up to two months; absence of a same-date NVR event is not evidence that the Police event did not occur.
 - NVR's public contractor dataset does not cover every Police-reported collision.
