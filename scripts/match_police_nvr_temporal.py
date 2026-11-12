@@ -34,12 +34,12 @@ def split_values(value):
 
 def extract_geographic_cues(text):
     """Extract literal road/place cues without geocoding or assigning a match score."""
-    value = re.sub(r"\\s+", " ", text or "").strip()
+    value = re.sub(r"\s+", " ", text or "").strip()
     road_match = ROAD_RE.search(value)
     road = road_match.group(0).strip() if road_match else ""
     tail = value[road_match.end():] if road_match else value
 
-    level = re.search(r"\\bi\\s+höjd\\s+med\\s+([^.,;]+)", value, re.I)
+    level = re.search(r"\bi\s+höjd\s+med\s+([^.,;]+)", value, re.I)
     if level:
         return {
             "police_geography_type": "road_cross_level",
@@ -50,7 +50,7 @@ def extract_geographic_cues(text):
             "police_geography_relation": "i_hojd_med",
         }
 
-    between = re.search(r"\\bmellan\\s+(.+?)\\s+och\\s+(.+?)(?:[.,;]|$)", tail, re.I)
+    between = re.search(r"\bmellan\s+(.+?)\s+och\s+(.+?)(?:[.,;]|$)", tail, re.I)
     if between:
         return {
             "police_geography_type": "road_segment",
@@ -61,7 +61,7 @@ def extract_geographic_cues(text):
             "police_geography_relation": "between_reference_places",
         }
 
-    near = re.match(r"\\s*,\\s*(?:i\\s+)?([^.,;]+)", tail)
+    near = re.match(r"\s*,\s*(?:i\s+)?([^.,;]+)", tail)
     if road and near:
         return {
             "police_geography_type": "road_near_place",
