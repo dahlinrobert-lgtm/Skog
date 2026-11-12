@@ -26,7 +26,8 @@ WILDLIFE_RE = re.compile(
 )
 TIME_RE = re.compile(r"(?<!\d)(?P<time>[0-2]?\d[:.]\d{2})(?!\d)")
 COUNT_RE = re.compile(
-    r"(?i)\b(?P<count>\d{1,2}|en|ett|två|tre|fyra|fem|sex|sju|åtta|nio|tio)"
+    # Do not interpret the minute part of HH:MM as an explicit accident count.
+    r"(?i)(?<![\d:])\b(?P<count>\d{1,2}|en|ett|två|tre|fyra|fem|sex|sju|åtta|nio|tio)"
     r"\s+(?P<kind>viltolyck(?:a|or)|renpåkörning(?:ar)?)\b"
 )
 WORDS = {"en": 1, "ett": 1, "två": 2, "tre": 3, "fyra": 4, "fem": 5,
@@ -97,43 +98,58 @@ def extract(row: dict) -> list[dict]:
     out = []
     seen = set()
 
-    # A timed police summary often has one incident per line or paragraph.
+    # Ordinary timestamped events retain the original line-based behavior.
+    # Only summary records are expanded at multiple timestamps within a line.
+    is_summary = row.get("is_summary", "").casefold() == "true" or "sammanfattning" in " ".join(
+        str(row.get(k, "")) for k in ("type_original", "headline", "description")
+    ).casefold()
+
     for i, line in enumerate(lines):
-        if not WILDLIFE_RE.search(line):
-            continue
-        tm = TIME_RE.search(line)
-        # Keep nearby following sentence(s) with the same occurrence until
-        # the next explicit time marker; this preserves road/place context.
-        details = [line]
-        for nxt in lines[i + 1:i + 3]:
-            if TIME_RE.search(nxt) and WILDLIFE_RE.search(nxt):
-                break
-            if TIME_RE.search(nxt) and not WILDLIFE_RE.search(nxt):
-                break
-            if len(" ".join(details)) < 500:
-                details.append(nxt)
-        segment = " ".join(details)
-        key = (tm.group("time") if tm else "", segment.casefold())
-        if key in seen:
-            continue
-        seen.add(key)
-        occurrence_time = tm.group("time").replace(".", ":") if tm else ""
-        occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
-        out.append({
-            "parent_event_id": row.get("event_id", ""),
-            "publication_date": row.get("date", ""),
-            "occurrence_date": occurrence_date,
-            "occurrence_date_basis": date_basis,
-            "occurrence_time": occurrence_time,
-            "municipality": municipality(segment),
-            "species": species(segment),
-            "place_text": segment[:500],
-            "description": segment,
-            "source_link": row.get("external_source_link", ""),
-            "extraction_method": "wildlife_text_line_v1",
-            "confidence": "review",
-            "occurrence_index": "",
-        })
+        # Expand each timestamp in summary lines before applying the wildlife
+        # test: the wildlife wording may occur only after a later timestamp.
+        time_matches = list(TIME_RE.finditer(line))
+        if not time_matches:
+            segments = [(None, line)] if WILDLIFE_RE.search(line) else []
+        elif is_summary:
+            segments = []
+            for j, tm in enumerate(time_matches):
+                seg_end = time_matches[j + 1].start() if j + 1 < len(time_matches) else len(line)
+                own_segment = line[tm.start():seg_end].strip(" -–—")
+                if WILDLIFE_RE.search(own_segment):
+                    segments.append((tm, own_segment))
+        else:
+            tm = time_matches[0]
+            segments = [(tm, line)] if WILDLIFE_RE.search(line) else []
+
+        for tm, own_segment in segments:
+            details = [own_segment]
+            for nxt in lines[i + 1:i + 3]:
+                if TIME_RE.search(nxt):
+                    break
+                if len(" ".join(details)) < 500:
+                    details.append(nxt)
+            segment = " ".join(details)
+            occurrence_time = tm.group("time").replace(".", ":") if tm else ""
+            occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
+            key = (occurrence_time, segment.casefold())
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({
+                "parent_event_id": row.get("event_id", ""),
+                "publication_date": row.get("date", ""),
+                "occurrence_date": occurrence_date,
+                "occurrence_date_basis": date_basis,
+                "occurrence_time": occurrence_time,
+                "municipality": municipality(segment),
+                "species": species(segment),
+                "place_text": segment[:500],
+                "description": segment,
+                "source_link": row.get("external_source_link", ""),
+                "extraction_method": "wildlife_time_segment_v2" if tm and is_summary else "wildlife_text_line_v1",
+                "confidence": "review",
+                "occurrence_index": "",
+            })
 
     # Explicit counts in summary prose are retained as separate count-only
     # candidates, never treated as independently located confirmed accidents.
@@ -160,6 +176,11 @@ def extract(row: dict) -> list[dict]:
                     "confidence": "low",
                     "occurrence_index": idx,
                 })
+    # Stable child identity within the parent source event. These indices
+    # identify extracted statements, not confirmed collision counts.
+    for index, item in enumerate(out, start=1):
+        item["occurrence_index"] = index
+
     return out
 
 
