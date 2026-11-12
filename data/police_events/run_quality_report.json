@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-11T14:56:14.730120+00:00",
+  "generated_at": "2026-11-12T13:13:43.591645+00:00",
   "scope": "Norrbottens län",
   "source": "Brottsplatskartan API; public Police event material",
   "interpretation": "Successful workflow and counts do not attest complete historical API coverage. Extracted wildlife rows are candidates, not confirmed collisions.",
@@ -11,8 +11,8 @@
     "publication_year_counts": {
       "2026": 500
     },
-    "oldest_publication_date": "2026-07-16",
-    "newest_publication_date": "2026-11-11",
+    "oldest_publication_date": "2026-07-17",
+    "newest_publication_date": "2026-11-12",
     "event_type_counts": {
       "Arbetsplatsolycka": 15,
       "Bedrägeri": 1,
@@ -33,7 +33,7 @@
       "Ofredande/förargelse": 2,
       "Olaga hot": 4,
       "Olaga intrång": 3,
-      "Olovlig körning": 6,
+      "Olovlig körning": 7,
       "Rattfylleri": 27,
       "Sammanfattning helg": 1,
       "Sammanfattning natt": 117,
@@ -43,7 +43,7 @@
       "Stöld/inbrott": 3,
       "Trafikbrott": 14,
       "Trafikhinder": 2,
-      "Trafikkontroll": 95,
+      "Trafikkontroll": 94,
       "Trafikolycka": 62,
       "Trafikolycka,  singel": 5,
       "Trafikolycka,  smitning från": 5,
@@ -53,22 +53,22 @@
     }
   },
   "wildlife_text": {
-    "broad_candidate_count": 60,
-    "individual_incident_candidate_count": 736,
+    "broad_candidate_count": 61,
+    "individual_incident_candidate_count": 737,
     "candidate_year_counts": {
       "2026": 26
     },
-    "candidate_missing_occurrence_date_count": 710,
+    "candidate_missing_occurrence_date_count": 711,
     "extraction_method_counts": {
       "explicit_count_v1": 665,
-      "wildlife_text_line_v1": 71
+      "wildlife_text_line_v1": 72
     },
     "confidence_counts": {
       "low": 665,
-      "review": 71
+      "review": 72
     },
     "species_mentions": {
-      "(missing)": 698,
+      "(missing)": 699,
       "ren": 16,
       "rådjur": 7,
       "älg": 15
