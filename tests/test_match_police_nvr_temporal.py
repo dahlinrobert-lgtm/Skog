@@ -15,6 +15,8 @@ class TemporalMatchTests(unittest.TestCase):
         self.assertFalse(rows[0]["geographic_match_used"])
     def test_same_date_only_is_kept_as_weak_candidate(self):
         self.police[0]["occurrence_time"]=""
+        # Remove the explicit clock from the narrative too: this is genuinely date-only.
+        self.police[0]["description"]="Viltolycka på länsväg 383, Smedsbyn"
         self.nvr[0]["event_datetime_values"]="2026-08-31 23:50"
         rows=M.build_candidates(self.police,self.nvr)
         self.assertEqual(len(rows),1);self.assertEqual(rows[0]["time_band"],"same_date_time_unavailable")
