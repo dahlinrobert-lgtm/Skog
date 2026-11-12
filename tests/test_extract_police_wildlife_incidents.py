@@ -54,6 +54,34 @@ class WildlifeExtractionTests(unittest.TestCase):
         self.assertEqual(rows[0]["occurrence_date"], "2021-05-12")
         self.assertEqual(rows[0]["occurrence_date_basis"], "night_summary_previous_evening")
 
+    def test_one_summary_line_expands_each_timestamped_wildlife_occurrence(self):
+        row = self.row(
+            "22:48 Viltolycka, Luleå: En älg kolliderar med en lastbil. "
+            "03:10 Viltolycka, Luleå: En älg kolliderar med en personbil."
+        )
+        row["type_original"] = "Sammanfattning natt"
+        row["is_summary"] = "true"
+        rows = MODULE.extract(row)
+        self.assertEqual(len(rows), 2)
+        self.assertEqual([item["occurrence_time"] for item in rows], ["22:48", "03:10"])
+        self.assertEqual([item["occurrence_date"] for item in rows], ["2026-11-09", "2026-11-10"])
+        self.assertEqual([item["occurrence_index"] for item in rows], [1, 2])
+        self.assertTrue(all(item["parent_event_id"] == "event-1" for item in rows))
+        self.assertTrue(all(item["extraction_method"] == "wildlife_time_segment_v2" for item in rows))
+
+    def test_summary_expansion_preserves_following_description_until_next_time(self):
+        row = self.row(
+            "22:48 Viltolycka, Luleå:\nEn älg kolliderar med en lastbil på E4 Norra Rutvik.\n"
+            "03:10 Viltolycka, Luleå:\nEn älg kolliderar med en personbil vid Måttsund."
+        )
+        row["type_original"] = "Sammanfattning natt"
+        row["is_summary"] = "true"
+        rows = MODULE.extract(row)
+        self.assertEqual(len(rows), 2)
+        self.assertIn("Norra Rutvik", rows[0]["description"])
+        self.assertNotIn("Måttsund", rows[0]["description"])
+        self.assertIn("Måttsund", rows[1]["description"])
+
     def test_source_event_id_is_preserved(self):
         rows = MODULE.extract(self.row("En älgolycka rapporterades vid Boden."))
         self.assertTrue(rows)
