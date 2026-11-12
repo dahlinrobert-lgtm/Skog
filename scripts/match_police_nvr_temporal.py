@@ -167,7 +167,7 @@ def main():
     if args.report:
         report=build_audit_report(police_rows,nvr_rows,rows,args.max_time_delta_minutes)
         args.report.parent.mkdir(parents=True,exist_ok=True)
-        args.report.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+        args.report.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         summary["report"]=str(args.report)
     print(json.dumps(summary,ensure_ascii=False,sort_keys=True))
 
