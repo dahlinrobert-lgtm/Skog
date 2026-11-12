@@ -97,27 +97,29 @@ def extract(row: dict) -> list[dict]:
     out = []
     seen = set()
 
-    # A timed police summary often has one incident per line or paragraph.
-    for i, line in enumerate(lines):
-        if not WILDLIFE_RE.search(line):
+    # Expand every timestamped wildlife statement inside a source event.
+    # A summary may contain several occurrences on one physical line, so split
+    # the complete text at each time marker rather than taking only the first
+    # time on each line. The original parent event remains unchanged.
+    time_matches = list(TIME_RE.finditer(body))
+    for i, tm in enumerate(time_matches):
+        segment_end = time_matches[i + 1].start() if i + 1 < len(time_matches) else len(body)
+        segment = body[tm.start():segment_end].strip(" \n-–—")
+        if not WILDLIFE_RE.search(segment):
             continue
-        tm = TIME_RE.search(line)
-        # Keep nearby following sentence(s) with the same occurrence until
-        # the next explicit time marker; this preserves road/place context.
-        details = [line]
-        for nxt in lines[i + 1:i + 3]:
-            if TIME_RE.search(nxt) and WILDLIFE_RE.search(nxt):
-                break
-            if TIME_RE.search(nxt) and not WILDLIFE_RE.search(nxt):
-                break
-            if len(" ".join(details)) < 500:
-                details.append(nxt)
-        segment = " ".join(details)
-        key = (tm.group("time") if tm else "", segment.casefold())
+
+        # A clock range is not itself an incident timestamp.
+        before = body[max(0, tm.start() - 8):tm.start()]
+        after = body[tm.end():tm.end() + 12]
+        if re.search(r"\b[0-2]?\d[:.]\d{2}\s*[-–—]\s*[0-2]?\d[:.]\d{2}\b",
+                     before + tm.group(0) + after):
+            continue
+
+        key = (tm.group("time").replace(".", ":"), segment.casefold())
         if key in seen:
             continue
         seen.add(key)
-        occurrence_time = tm.group("time").replace(".", ":") if tm else ""
+        occurrence_time = tm.group("time").replace(".", ":")
         occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
         out.append({
             "parent_event_id": row.get("event_id", ""),
@@ -130,7 +132,7 @@ def extract(row: dict) -> list[dict]:
             "place_text": segment[:500],
             "description": segment,
             "source_link": row.get("external_source_link", ""),
-            "extraction_method": "wildlife_text_line_v1",
+            "extraction_method": "wildlife_time_segment_v2",
             "confidence": "review",
             "occurrence_index": "",
         })
@@ -160,6 +162,11 @@ def extract(row: dict) -> list[dict]:
                     "confidence": "low",
                     "occurrence_index": idx,
                 })
+    # Stable child identity within the parent source event. These indices
+    # identify extracted statements, not confirmed collision counts.
+    for index, item in enumerate(out, start=1):
+        item["occurrence_index"] = index
+
     return out
 
 
