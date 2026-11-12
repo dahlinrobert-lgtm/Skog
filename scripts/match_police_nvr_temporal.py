@@ -33,10 +33,14 @@ def split_values(value):
     return [x.strip() for x in (value or "").split(";") if x.strip()]
 
 def clock_delta_minutes(left, right):
-    """Absolute wall-clock difference for the one-day-rollover hypothesis."""
+    """Absolute wall-clock difference, ignoring the calendar date."""
     a = left.hour * 60 + left.minute
     b = right.hour * 60 + right.minute
     return abs(a - b)
+
+def elapsed_delta_minutes(left, right):
+    """Absolute elapsed-time difference between complete timestamps."""
+    return abs((left - right).total_seconds()) / 60
 
 def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_window_days=1):
     # NVR rows must already be event-level (one row per year-qualified accident_key).
@@ -70,19 +74,15 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
                 if date_offset < 0 or date_offset > date_window_days: continue
                 if pdt is None:
                     delta = None
-                    absolute_delta = None
-                elif date_offset == 0:
-                    delta = abs((pdt - ndt).total_seconds()) / 60
-                    absolute_delta = delta
+                    clock_delta = None
                 else:
-                    # For a Police date that may be one day early, compare clock time
-                    # while preserving the original dates and recording the offset.
-                    delta = clock_delta_minutes(pdt, ndt)
-                    absolute_delta = abs((pdt - ndt).total_seconds()) / 60
-                eligible.append((delta if delta is not None else float("inf"), date_offset, ndt, absolute_delta))
+                    # Always classify by actual elapsed time. Keep wall-clock
+                    # difference separately for diagnosis across midnight.
+                    delta = elapsed_delta_minutes(pdt, ndt)
+                    clock_delta = clock_delta_minutes(pdt, ndt)
+                eligible.append((delta if delta is not None else float("inf"), date_offset, ndt, delta, clock_delta))
             if not eligible: continue
-            _, date_offset, best_ndt, absolute_delta = min(eligible, key=lambda x:(x[0], x[1], x[2]))
-            delta = None if pdt is None else min(x[0] for x in eligible)
+            _, date_offset, best_ndt, delta, clock_delta = min(eligible, key=lambda x:(x[0], x[1], x[2]))
             n_species = n["_species"]
             species_match = bool(p_species and p_species in n_species)
             n_roads, n_words = text_terms(" ".join([n.get("species",""), n.get("source_municipalities",""), n.get("road_name",""), n.get("place_name","")]))
@@ -115,7 +115,8 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
                 "same_date": date_offset == 0, "date_offset_days": date_offset,
                 "date_relation": "same_date" if date_offset == 0 else "nvr_next_day",
                 "time_delta_minutes": "" if delta is None else round(delta,1),
-                "absolute_datetime_delta_minutes": "" if absolute_delta is None else round(absolute_delta,1),
+                "absolute_datetime_delta_minutes": "" if delta is None else round(delta,1),
+                "clock_time_delta_minutes": "" if clock_delta is None else round(clock_delta,1),
                 "time_band": time_band, "species_match": species_match,
                 "shared_road_terms": ";".join(shared_roads), "shared_text_terms": ";".join(shared_terms[:10]),
                 "candidate_score": score, "candidate_status": status,
@@ -156,8 +157,13 @@ def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes
         "date_window_days_after_police_date": date_window_days,
         "max_time_delta_minutes": max_time_delta_minutes,
         "next_day_rollover_candidate_count": sum(row.get("date_offset_days") == 1 for row in candidates),
-        "interpretation": "Police occurrence dates may be preliminary or one calendar day early. NVR next-day candidates compare time-of-day and are explicitly flagged; no candidate is an automatically confirmed match. Zero candidates do not prove that no collision occurred.",
+        "interpretation": "Police occurrence dates may be preliminary or one calendar day early. Time differences use absolute elapsed time between full timestamps; clock-time differences are diagnostic only. Next-day candidates remain review-only; no candidate is automatically confirmed. Zero candidates do not prove that no collision occurred.",
     }
+
+def write_audit_report(report, path):
+    """Write valid UTF-8 JSON with a real newline and a BOM for Windows PowerShell."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8-sig")
 
 def read_csv(path, delimiter=",", encoding="utf-8-sig"):
     with path.open(encoding=encoding, newline="") as f: return list(csv.DictReader(f, delimiter=delimiter))
@@ -183,8 +189,7 @@ def main():
     summary={"status":"completed","candidate_pairs":len(rows),"status_counts":dict(Counter(r["candidate_status"] for r in rows)),"output":str(args.output)}
     if args.report:
         report=build_audit_report(police_rows,nvr_rows,rows,args.max_time_delta_minutes,args.date_window_days)
-        args.report.parent.mkdir(parents=True,exist_ok=True)
-        args.report.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+        write_audit_report(report, args.report)
         summary["report"]=str(args.report)
     print(json.dumps(summary,ensure_ascii=False,sort_keys=True))
 
