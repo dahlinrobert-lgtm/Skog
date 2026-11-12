@@ -3210,6 +3210,217 @@
     ]
   },
   {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "1934-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, dräneringsledning",
+    "status": "Avslutat",
+    "registered_date": "2026-02-26",
+    "decision_date": "2026-06-02",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5427655",
+    "handling_count": 16,
+    "evidence_score": 6,
+    "priority": "follow_up_lead",
+    "reasons": [
+      "Uppföljning/redovisning nämns: Tjänsteanteckning vid besiktning/tillsyn",
+      "Uppföljning/redovisning nämns: Meddelande om redovisning"
+    ],
+    "handlings": [
+      {
+        "handling_number": "1934-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, dräneringsledning",
+        "date": "2026-02-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-2",
+        "title": "Karta",
+        "date": "2026-02-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-3",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2026-03-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-4",
+        "title": "Begäran om yttrande",
+        "date": "2026-03-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-5",
+        "title": "Tjänsteanteckning vid besiktning/tillsyn",
+        "date": "2026-05-06",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "follow_up",
+          "administrative"
+        ],
+        "matched_rules": [
+          "follow_up",
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-6",
+        "title": "Fotografier från fältbesök",
+        "date": "2026-05-06",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-7",
+        "title": "Föreläggande att inkomma med uppgifter",
+        "date": "2026-05-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-8",
+        "title": "Yttrande över föreläggande",
+        "date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-9",
+        "title": "Yttrande över föreläggande",
+        "date": "2026-05-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-10",
+        "title": "Meddelande om åtgärd",
+        "date": "2026-05-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-11",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2026-05-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-12",
+        "title": "Meddelande om åtgärd",
+        "date": "2026-05-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-13",
+        "title": "Beslut om föreläggande",
+        "date": "2026-06-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-14",
+        "title": "Meddelande om information",
+        "date": "2026-08-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-15",
+        "title": "Komplettering med bilder",
+        "date": "2026-09-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1934-2026-16",
+        "title": "Meddelande om redovisning",
+        "date": "2026-09-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "follow_up"
+        ],
+        "matched_rules": [
+          "follow_up"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
     "diary": "Länsstyrelsen i Blekinge län",
     "diary_number": "2724-2026",
     "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Färskesjön, Karlskrona kommun",
@@ -6381,6 +6592,153 @@
         "matched_rules": [
           "award"
         ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5360-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, Ålgårda kraftverk, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-11",
+    "decision_date": "2026-10-07",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5578464",
+    "handling_count": 11,
+    "evidence_score": 4,
+    "priority": "planning_or_procurement",
+    "reasons": [
+      "Uppföljning/redovisning nämns: Tjänsteanteckning vid besiktning/tillsyn"
+    ],
+    "handlings": [
+      {
+        "handling_number": "5360-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, Ålgårda kraftverk, Kungsbacka kommun",
+        "date": "2026-08-11",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-2",
+        "title": "Tjänsteanteckning vid besiktning/tillsyn",
+        "date": "2026-08-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "follow_up",
+          "administrative"
+        ],
+        "matched_rules": [
+          "follow_up",
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-3",
+        "title": "Komplettering med uppgifter om driftstörning",
+        "date": "2026-08-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-4",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2026-08-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-5",
+        "title": "Meddelande om skrivelse samt fråga",
+        "date": "2026-08-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-6",
+        "title": "Meddelande om fråga gällande tillsyn",
+        "date": "2026-08-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-7",
+        "title": "Information om tillsyn",
+        "date": "2026-08-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-8",
+        "title": "Komplettering med uppgifter angående anmälan om driftstörningar gällande vattenverksamhet",
+        "date": "2026-09-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-9",
+        "title": "Meddelande om inkomna handlingar",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-10",
+        "title": "Information om driften vid Ålgårda vattenkraftverk",
+        "date": "2026-10-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5360-2026-11",
+        "title": "Beslut att avsluta utan åtgärd",
+        "date": "2026-10-07",
+        "sender_recipient": "Vattenfall Services",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
         "classification_version": "1.0.0"
       }
     ]
@@ -11442,6 +11800,111 @@
         "title": "Beslut om att erosionsskydd m.m. får åtgärdas vid bro över Söderalaån i Söderhamns kommun",
         "date": "2026-08-20",
         "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4994-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, trasig vattentrumma",
+    "status": "Handläggning",
+    "registered_date": "2026-07-21",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5566936",
+    "handling_count": 7,
+    "evidence_score": 3,
+    "priority": "planning_or_procurement",
+    "reasons": [
+      "Uppföljning/redovisning nämns: Tjänsteanteckning vid besiktning/tillsyn"
+    ],
+    "handlings": [
+      {
+        "handling_number": "4994-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, trasig vattentrumma",
+        "date": "2026-07-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4994-2026-2",
+        "title": "Begäran om yttrande",
+        "date": "2026-09-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4994-2026-3",
+        "title": "Yttrande",
+        "date": "2026-09-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4994-2026-4",
+        "title": "Komplettering med bild",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4994-2026-5",
+        "title": "Yttrande",
+        "date": "2026-09-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4994-2026-6",
+        "title": "Tjänsteanteckning vid besiktning/tillsyn",
+        "date": "2026-10-20",
+        "sender_recipient": "Länsstyrelsen",
+        "classes": [
+          "follow_up",
+          "administrative"
+        ],
+        "matched_rules": [
+          "follow_up",
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4994-2026-7",
+        "title": "Fotografier tagna vid fältbesök",
+        "date": "2026-10-20",
+        "sender_recipient": "Länsstyrelsen",
         "classes": [
           "other"
         ],
@@ -18235,6 +18698,861 @@
         "title": "Komplettering med inventering",
         "date": "2026-10-08",
         "sender_recipient": "Ellevio AB",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "2931-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Falkenberg",
+    "status": "Avslutat",
+    "registered_date": "2026-04-16",
+    "decision_date": "2026-05-19",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5470760",
+    "handling_count": 4,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "2931-2026-1",
+        "title": "Sekretessmarkerad",
+        "date": "2026-04-16",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2931-2026-2",
+        "title": "Meddelande om kopia på anmälan om vattenverksamhet",
+        "date": "2026-04-24",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2931-2026-3",
+        "title": "Yttrande över anmälan, inga synpunkter",
+        "date": "2026-05-11",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "notification",
+          "opinion"
+        ],
+        "matched_rules": [
+          "notification",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2931-2026-4",
+        "title": "Beslut om bifall",
+        "date": "2026-05-19",
+        "sender_recipient": "Falkenbergs Vatten och Renhållnings AB",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3256-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, dike, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-05-05",
+    "decision_date": "2026-06-05",
+    "municipality": "Kungsbacka",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5485146",
+    "handling_count": 8,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3256-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, dike, Kungsbacka kommun",
+        "date": "2026-05-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3256-2026-2",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-05-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3256-2026-3",
+        "title": "Meddelande med möjlighet till yttrande",
+        "date": "2026-05-06",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3256-2026-4",
+        "title": "Begäran om komplettering",
+        "date": "2026-05-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3256-2026-5",
+        "title": "Komplettering med karta",
+        "date": "2026-05-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3256-2026-6",
+        "title": "Komplettering meddelande med möjlighet till yttrande",
+        "date": "2026-05-08",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3256-2026-7",
+        "title": "Yttrande över anmälan",
+        "date": "2026-06-02",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "notification",
+          "opinion"
+        ],
+        "matched_rules": [
+          "notification",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3256-2026-8",
+        "title": "Föreläggande om försiktighetsåtgärder",
+        "date": "2026-06-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3508-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Rolfsån, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-05-15",
+    "decision_date": "2026-06-12",
+    "municipality": "Kungsbacka",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5495807",
+    "handling_count": 7,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3508-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Rolfsån, Kungsbacka kommun",
+        "date": "2026-05-15",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3508-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-05-15",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3508-2026-3",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-05-15",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3508-2026-4",
+        "title": "Ritning (ange skalan och norrpil på ritning)",
+        "date": "2026-05-15",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3508-2026-5",
+        "title": "Meddelande med möjlighet till yttrande",
+        "date": "2026-05-19",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3508-2026-6",
+        "title": "Yttrande över anmälan",
+        "date": "2026-06-03",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "notification",
+          "opinion"
+        ],
+        "matched_rules": [
+          "notification",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3508-2026-7",
+        "title": "Föreläggande om försiktighetsmått",
+        "date": "2026-06-12",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3837-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sennan, Halmstad kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-06-01",
+    "decision_date": "2026-07-06",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5513706",
+    "handling_count": 16,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3837-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sennan, Halmstad kommun",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-3",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-4",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-5",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-6",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-7",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-8",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-9",
+        "title": "Lista berörda fastigheter och fastighetsägare (markägare)",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-10",
+        "title": "Lista berörda fastigheter och fastighetsägare (markägare)",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-11",
+        "title": "Yttranden grannfastigheter och nyttjanderättsinnehavare",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-12",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-13",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-14",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-06-01",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-15",
+        "title": "Meddelande om kopia på anmälan om vattenverksamhet",
+        "date": "2026-06-02",
+        "sender_recipient": "Halmstad kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3837-2026-16",
+        "title": "Beslut om bifall",
+        "date": "2026-07-06",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3987-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hallabäcken, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-06-05",
+    "decision_date": "2026-07-06",
+    "municipality": "Kungsbacka",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5521018",
+    "handling_count": 13,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3987-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hallabäcken, Kungsbacka kommun",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-3",
+        "title": "Ritning (ange skalan och norrpil på ritning)",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-4",
+        "title": "Ritning (ange skalan och norrpil på ritning)",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-5",
+        "title": "Ritning (ange skalan och norrpil på ritning)",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-6",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-7",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-8",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-9",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-10",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-11",
+        "title": "Meddelande om kopia på anmälan om vattenverksamhet",
+        "date": "2026-06-10",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-12",
+        "title": "Meddelande om att avstå yttrande",
+        "date": "2026-06-26",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3987-2026-13",
+        "title": "Beslut om att avvisa ärendet",
+        "date": "2026-07-06",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4368-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fylleån, Halmstad kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-06-23",
+    "decision_date": "2026-06-25",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5540248",
+    "handling_count": 2,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "4368-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fylleån, Halmstad kommun",
+        "date": "2026-06-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4368-2026-2",
+        "title": "Meddelande om att anmälan om vattenverksamhet dras tillbaka",
+        "date": "2026-06-25",
+        "sender_recipient": "Länsstyrelsen i Halland",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4465-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, renovering av Bro 20, Falkenbergs kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-06-25",
+    "decision_date": "2026-08-27",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5543805",
+    "handling_count": 4,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "4465-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, renovering av Bro 20, Falkenbergs kommun",
+        "date": "2026-06-25",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4465-2026-2",
+        "title": "Meddelande om kopia på anmälan om vattenverksamhet med möjlighet till yttrande",
+        "date": "2026-06-25",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "notification",
+          "opinion"
+        ],
+        "matched_rules": [
+          "notification",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4465-2026-3",
+        "title": "Yttrande över remiss",
+        "date": "2026-08-11",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4465-2026-4",
+        "title": "Beslut om bifall",
+        "date": "2026-08-27",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5259-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Litet vattendrag från Gällsjön, Falkenberg kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-05",
+    "decision_date": "2026-09-29",
+    "municipality": "Falkenberg",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5574572",
+    "handling_count": 7,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5259-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Litet vattendrag från Gällsjön, Falkenberg kommun",
+        "date": "2026-08-05",
+        "sender_recipient": "Svenska kraftnät",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5259-2026-2",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-08-05",
+        "sender_recipient": "Svenska kraftnät",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5259-2026-3",
+        "title": "Meddelande med möjlighet till yttrande",
+        "date": "2026-08-03",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5259-2026-4",
+        "title": "Begäran om komplettering",
+        "date": "2026-08-11",
+        "sender_recipient": "Svenska kraftnät",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5259-2026-5",
+        "title": "Yttrande över anmälan",
+        "date": "2026-08-12",
+        "sender_recipient": "Falkenbergs kommun",
+        "classes": [
+          "notification",
+          "opinion"
+        ],
+        "matched_rules": [
+          "notification",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5259-2026-6",
+        "title": "Beslut om avvisning",
+        "date": "2026-09-29",
+        "sender_recipient": "Svenska kraftnät",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5259-2026-7",
+        "title": "Komplettering med bilder",
+        "date": "2026-10-01",
+        "sender_recipient": "Svenska kraftnät",
         "classes": [
           "other"
         ],
@@ -42455,6 +43773,1220 @@
   },
   {
     "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "2903-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderå, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-04-20",
+    "decision_date": "2026-10-23",
+    "municipality": "Kungsbacka",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5469112",
+    "handling_count": 18,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "2903-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderå, Kungsbacka kommun",
+        "date": "2026-04-20",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-04-20",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-3",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-04-20",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-4",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-04-20",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-5",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-04-20",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-6",
+        "title": "Miljöutredning",
+        "date": "2026-04-20",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-7",
+        "title": "Komplettering",
+        "date": "2026-04-20",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-8",
+        "title": "Meddelande med möjlighet till yttrande",
+        "date": "2026-04-27",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-9",
+        "title": "Yttrande över remiss",
+        "date": "2026-05-11",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-10",
+        "title": "Begäran om komplettering",
+        "date": "2026-06-08",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-11",
+        "title": "Meddelande om förlängd handläggningstid",
+        "date": "2026-06-08",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-12",
+        "title": "Begäran om anstånd",
+        "date": "2026-06-12",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-13",
+        "title": "Meddelande om förlängd svarstid 7 september 2026",
+        "date": "2026-06-15",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-14.5",
+        "title": "Ritning",
+        "date": "2026-09-04",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-14",
+        "title": "Komplettering",
+        "date": "2026-09-04",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-15",
+        "title": "Meddelande",
+        "date": "2026-10-15",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-16",
+        "title": "Meddelande",
+        "date": "2026-10-16",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2903-2026-17",
+        "title": "Föreläggande om försiktighetsåtgärder",
+        "date": "2026-10-23",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3198-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Nissan, Halmstad kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-04-30",
+    "decision_date": "2026-06-12",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5481241",
+    "handling_count": 10,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3198-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Nissan, Halmstad kommun",
+        "date": "2026-04-30",
+        "sender_recipient": "Laholmsbuktens VA AB",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-2",
+        "title": "Sekretessmarkerad",
+        "date": "2026-04-30",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-3",
+        "title": "Sekretessmarkerad",
+        "date": "2026-04-30",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-4",
+        "title": "Sekretessmarkerad",
+        "date": "2026-04-30",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-5",
+        "title": "Sekretessmarkerad",
+        "date": "2026-04-30",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-6",
+        "title": "Sekretessmarkerad",
+        "date": "2026-04-30",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-7",
+        "title": "Sekretessmarkerad",
+        "date": "2026-04-30",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-8",
+        "title": "Sekretessmarkerad",
+        "date": "2026-05-06",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-9",
+        "title": "Sekretessmarkerad",
+        "date": "2026-05-11",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3198-2026-10",
+        "title": "Föreläggande om försiktighetsåtgärder",
+        "date": "2026-06-12",
+        "sender_recipient": "Laholmsbuktens VA AB",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3707-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Grävning, schaktning, muddring eller sprängning, Lundaån, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-05-26",
+    "decision_date": "2026-07-16",
+    "municipality": "Kungsbacka",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5506338",
+    "handling_count": 14,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3707-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Lundaån, Kungsbacka kommun",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-3",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-4",
+        "title": "Lista fastighet och fastighetsägare (markägare)",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-5",
+        "title": "Lista fastighet och fastighetsägare (markägare)",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-6",
+        "title": "Lista fastighet och fastighetsägare (markägare)",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-7",
+        "title": "Lista fastighet och fastighetsägare (markägare)",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-8",
+        "title": "Yttranden grannfastigheter och nyttjanderättsinnehavare",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-9",
+        "title": "Yttranden grannfastigheter och nyttjanderättsinnehavare",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-10",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-11",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-12",
+        "title": "Remiss",
+        "date": "2026-05-27",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-13",
+        "title": "Yttrande över remiss",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3707-2026-14",
+        "title": "Beslut om föreläggande",
+        "date": "2026-07-16",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3731-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Nedläggning/byte av trumma, Munkån, Varberg kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-05-26",
+    "decision_date": "2026-06-12",
+    "municipality": "Varberg",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5507562",
+    "handling_count": 5,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3731-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Munkån, Varberg kommun",
+        "date": "2026-05-26",
+        "sender_recipient": "Miljöschakt väst ab",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3731-2026-2",
+        "title": "Remiss",
+        "date": "2026-05-27",
+        "sender_recipient": "Varberg kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3731-2026-3",
+        "title": "Yttrande över remiss",
+        "date": "2026-06-05",
+        "sender_recipient": "Varberg kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3731-2026-4",
+        "title": "Yttrande över remiss",
+        "date": "2026-06-10",
+        "sender_recipient": "Varbergs kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3731-2026-5",
+        "title": "Beslut om avvisning",
+        "date": "2026-06-12",
+        "sender_recipient": "Miljöschakt väst ab",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3960-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Lillån, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-06-05",
+    "decision_date": "2026-06-09",
+    "municipality": "Kungsbacka",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5519994",
+    "handling_count": 9,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3960-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Lillån, Kungsbacka kommun",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-2",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-3",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-4",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-5",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-6",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-7",
+        "title": "Begäran om komplettering",
+        "date": "2026-06-05",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-8",
+        "title": "Komplettering med handlingar",
+        "date": "2026-06-08",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3960-2026-9",
+        "title": "Beslut om bifall",
+        "date": "2026-06-09",
+        "sender_recipient": "Kungsbacka kommun, Planering VA",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4222-2026",
+    "title": "Överklagande av Länsstyrelsens beslut den 4 december 2024 om Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-06-16",
+    "decision_date": "2026-06-16",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5533003",
+    "handling_count": 9,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "4222-2026-1",
+        "title": "Överklagande av Länsstyrelsens beslut den 4 december 2024 om Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kungsbacka kommun",
+        "date": "2026-06-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-2",
+        "title": "Överlämnande av överklagan och övriga handlingar",
+        "date": "2026-06-16",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-3",
+        "title": "Beslut om avslag avseende inhibition",
+        "date": "2026-06-18",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-4",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-06-18",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-5",
+        "title": "Meddelande om anståndsbegärdan",
+        "date": "2026-06-23",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-6",
+        "title": "Yttrande",
+        "date": "2026-08-06",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-7",
+        "title": "Underrättelse om handlingar",
+        "date": "2026-09-01",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-8",
+        "title": "Dom från högre instans, beslut om avvisning",
+        "date": "2026-10-07",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4222-2026-9",
+        "title": "Meddelande om att dom har vunnit laga kraft",
+        "date": "2026-11-03",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4732-2026",
+    "title": "Anmälan om mindre ändring i tillstånd vattenverksamhet, längsgående bryggor, Västerport etapp 1 i Varbergs kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-07-06",
+    "decision_date": "2026-09-07",
+    "municipality": "Varberg",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5556568",
+    "handling_count": 2,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "4732-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, längsgående bryggor, Västerport etapp 1 i Varbergs kommun",
+        "date": "2026-07-06",
+        "sender_recipient": "Varbergs kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4732-2026-2",
+        "title": "Beslut om mindre ändring",
+        "date": "2026-09-07",
+        "sender_recipient": "Varbergs kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5048-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet Färgensjöarnas reglering, Hylte kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-07-22",
+    "decision_date": "",
+    "municipality": "Hylte",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5568528",
+    "handling_count": 8,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5048-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet Färgensjöarnas reglering, Hylte kommun",
+        "date": "2026-07-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5048-2026-2",
+        "title": "Tjänsteanteckning vid samtal med Hylte Paper",
+        "date": "2026-07-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5048-2026-3",
+        "title": "Tjänsteanteckning vid samtal med part",
+        "date": "2026-07-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5048-2026-4",
+        "title": "Komplettering med hadlingar",
+        "date": "2026-07-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5048-2026-5",
+        "title": "Komplettering med handling",
+        "date": "2026-07-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5048-2026-6",
+        "title": "Meddelande angående anmälan",
+        "date": "2026-07-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5048-2026-7",
+        "title": "Meddelande om skrivelse",
+        "date": "2026-07-31",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5048-2026-9",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2026-09-11",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5569-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Björkeredsbäcken, Laholm kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-24",
+    "decision_date": "2026-09-02",
+    "municipality": "Laholm",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5587339",
+    "handling_count": 6,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5569-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Björkeredsbäcken, Laholm kommun",
+        "date": "2026-08-24",
+        "sender_recipient": "Laholms kommun",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5569-2026-2",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-08-24",
+        "sender_recipient": "Laholms kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5569-2026-3",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-08-24",
+        "sender_recipient": "Laholms kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5569-2026-4",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-08-24",
+        "sender_recipient": "Laholms kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5569-2026-5",
+        "title": "Fullmakt",
+        "date": "2026-08-24",
+        "sender_recipient": "Laholms kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5569-2026-6",
+        "title": "Beslut att avsluta utan åtgärd",
+        "date": "2026-09-02",
+        "sender_recipient": "Laholms kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5585-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fylleån, Halmstad kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-25",
+    "decision_date": "2026-10-01",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588212",
+    "handling_count": 2,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5585-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fylleån, Halmstad kommun",
+        "date": "2026-08-25",
+        "sender_recipient": "Länsstyrelsen i Halland",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5585-2026-2",
+        "title": "Beslut om överlämnande av ärende enligt 25 § länsstyrelseinstruktionen",
+        "date": "2026-10-01",
+        "sender_recipient": "Länsstyrelsen i Kalmar län",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "6326-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, låg vattennivå Lagan",
+    "status": "Handläggning",
+    "registered_date": "2026-09-10",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5607174",
+    "handling_count": 7,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6326-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, låg vattennivå Lagan",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6326-2026-2",
+        "title": "Begäran om uppgifter kring drift",
+        "date": "2026-09-21",
+        "sender_recipient": "Statkraft",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6326-2026-3",
+        "title": "Komplettering med information om drift",
+        "date": "2026-10-12",
+        "sender_recipient": "Statkraft Sverige",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6326-2026-4",
+        "title": "Begäran om uppgifter",
+        "date": "2026-10-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6326-2026-5",
+        "title": "Komplettering av anmälan om driftstörningar gällande vattenverksamhet",
+        "date": "2026-10-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6326-2026-6",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2026-11-10",
+        "sender_recipient": "Statkraft Sverige",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6326-2026-7",
+        "title": "Beslut att avsluta utan åtgärd",
+        "date": "2026-11-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
     "diary_number": "8288-2025",
     "title": "Upphandling av tjänster inom arbetsområdet naturvårdsbränningar",
     "status": "Handläggning",
@@ -55220,6 +57752,697 @@
   },
   {
     "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "1213-2023",
+    "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet Allareds mölla i Laholms kommun",
+    "status": "Handläggning",
+    "registered_date": "2023-02-17",
+    "decision_date": "",
+    "municipality": "Laholm",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4321513",
+    "handling_count": 19,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "1213-2023-1",
+        "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Laholms kommun",
+        "date": "2023-02-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-2",
+        "title": "Tjänsteanteckning om särskild förvaring av förstora filer",
+        "date": "2023-02-17",
+        "sender_recipient": "Länsstyrelsen",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-3",
+        "title": "Begäran om anstånd",
+        "date": "2023-02-21",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-4",
+        "title": "Meddelande om begäran om anstånd",
+        "date": "2023-02-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-5",
+        "title": "Meddelande om svar",
+        "date": "2023-02-23",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-6",
+        "title": "Meddelande om beviljat anstånd",
+        "date": "2023-02-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-7",
+        "title": "Yttrande över komplettering av ansökan",
+        "date": "2023-04-03",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-8",
+        "title": "Meddelande om mellandom",
+        "date": "2024-07-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-9",
+        "title": "Protokoll, avslag om vilandeförklaring den 30 januari 2026",
+        "date": "2026-01-30",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-10",
+        "title": "Begäran om yttrande över kungörelse",
+        "date": "2026-02-25",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-11",
+        "title": "Yttrande över ansökan",
+        "date": "2026-04-15",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-12",
+        "title": "Underrättelse om huvudförhandling",
+        "date": "2026-04-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-13",
+        "title": "Meddelande om handlingar",
+        "date": "2026-05-19",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-14",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-06-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-15",
+        "title": "Yttrande över tid för komplettering",
+        "date": "2026-06-05",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-16",
+        "title": "Meddelande om anstånd",
+        "date": "2026-06-08",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-17",
+        "title": "Komplettering med handlingar",
+        "date": "2026-06-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-18",
+        "title": "Meddelande om förelaäggande",
+        "date": "2026-10-21",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1213-2023-19",
+        "title": "Meddelande om anstånd",
+        "date": "2026-10-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "1214-2023",
+    "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet Bölarps kvarn i Laholms kommun",
+    "status": "Handläggning",
+    "registered_date": "2023-02-17",
+    "decision_date": "",
+    "municipality": "Laholm",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4321524",
+    "handling_count": 14,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "1214-2023-18",
+        "title": "Beslut om återförvisning till Mark- och miljödomstolen den 1 april 2025",
+        "date": "2025-04-01",
+        "sender_recipient": "Svea Hovrätt, Mark- och miljööverdomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-19",
+        "title": "Meddelande om vilandeförklaring",
+        "date": "2025-05-07",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-20",
+        "title": "Meddelar ej prövningstillstånd den 23 oktober 2025",
+        "date": "2025-10-23",
+        "sender_recipient": "Högsta Domstolen",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-21",
+        "title": "Begäran om yttrande över ansökan om omprövning av vattenverksamhet i Genevadsån vid Bölarps kvarn i Laholms kommun",
+        "date": "2025-11-18",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-22",
+        "title": "Meddelande om anstånd",
+        "date": "2025-12-16",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-23",
+        "title": "Yttrande över ansökan",
+        "date": "2026-01-27",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-24",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-03-25",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-25",
+        "title": "Meddelande om huvudförhandling",
+        "date": "2026-04-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-26",
+        "title": "Meddelande om huvudförhandlingsdag och syn",
+        "date": "2026-05-04",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-27",
+        "title": "Yttrande över aktbilaga 18 m.fl",
+        "date": "2026-05-08",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-28",
+        "title": "Kungörelse om huvudförhandling och syn",
+        "date": "2026-05-21",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-29",
+        "title": "Underrättelse med möjlighet till yttrande",
+        "date": "2026-06-16",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-30",
+        "title": "Yttrande över aktbilaga 26",
+        "date": "2026-07-07",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1214-2023-31",
+        "title": "Meddelande om förhandlingsordning",
+        "date": "2026-09-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "1215-2023",
+    "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet Tönnersa kvarn i Halmstads kommun",
+    "status": "Handläggning",
+    "registered_date": "2023-02-17",
+    "decision_date": "",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4321539",
+    "handling_count": 22,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "1215-2023-1",
+        "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Halmstads kommun",
+        "date": "2023-02-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-2",
+        "title": "Tjänsteanteckning om särskild förvaring av förstora filer",
+        "date": "2023-02-17",
+        "sender_recipient": "Länsstyrelsen",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-3",
+        "title": "Begäran om anstånd",
+        "date": "2023-02-21",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-4",
+        "title": "Meddelande om begäran om anstånd",
+        "date": "2023-02-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-5",
+        "title": "Meddelande om svar",
+        "date": "2023-02-23",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-6",
+        "title": "Meddelande om beviljat anstånd",
+        "date": "2023-02-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-7",
+        "title": "Yttrande över komplettering av ansökan",
+        "date": "2023-04-03",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-8",
+        "title": "Meddelande om mellandom",
+        "date": "2024-07-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-9",
+        "title": "Protokoll, avslag om vilandeförklaring",
+        "date": "2026-01-30",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-10",
+        "title": "Kungörelse med möjlighet till yttrande",
+        "date": "2026-02-24",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-11",
+        "title": "Yttrande över ansökan",
+        "date": "2026-04-15",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-12",
+        "title": "Underrättelse om huvudförhandling",
+        "date": "2026-04-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-13",
+        "title": "Kungörelse om huvudförhandlingar",
+        "date": "2026-04-27",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-14",
+        "title": "Meddelande om förslag till förhandlingsplan",
+        "date": "2026-05-13",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-15",
+        "title": "Meddelande om handlingar",
+        "date": "2026-05-19",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-16",
+        "title": "Meddelande om handlingar",
+        "date": "2026-05-19",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-17",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-06-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-18",
+        "title": "Yttrande över tid för komplettering",
+        "date": "2026-06-05",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-19",
+        "title": "Meddelande om anstånd",
+        "date": "2026-06-08",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-20",
+        "title": "Komplettering med handling",
+        "date": "2026-06-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-21",
+        "title": "Meddelande om föreläggande",
+        "date": "2026-10-21",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "1215-2023-22",
+        "title": "Meddelande om anstånd",
+        "date": "2026-10-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
     "diary_number": "1262-2026",
     "title": "Ansökan om stöd för naturvårdsbränning av ljunghed och gräsmark",
     "status": "Handläggning",
@@ -55268,6 +58491,2661 @@
           "other"
         ],
         "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "2151-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kungsbackaån, Kungsbacka kommun",
+    "status": "",
+    "registered_date": "",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5436469",
+    "handling_count": 0,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": []
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "2152-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet",
+    "status": "Handläggning",
+    "registered_date": "2026-03-19",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5436526",
+    "handling_count": 5,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "2152-2026-1",
+        "title": "Begäran om anstånd med att inkomma med årsrapport",
+        "date": "2026-03-19",
+        "sender_recipient": "Halmstads kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2152-2026-2",
+        "title": "Information om svar om anstånd",
+        "date": "2026-03-30",
+        "sender_recipient": "Halmstads kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2152-2026-3",
+        "title": "Tjänsteanteckning om fråga om förlängt anstånd",
+        "date": "2026-04-27",
+        "sender_recipient": "Halmstads kommun",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2152-2026-4",
+        "title": "Information om svar om anstånd",
+        "date": "2026-04-29",
+        "sender_recipient": "Halmstads kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "2152-2026-5",
+        "title": "Årsrapport för år 2025 för uppfyllnadsarbete",
+        "date": "2026-05-27",
+        "sender_recipient": "WSP",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "2249-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Lillån, Kungsbacka kommun",
+    "status": "",
+    "registered_date": "",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5440529",
+    "handling_count": 0,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": []
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "2730-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ätran, Falkenbergs kommun",
+    "status": "",
+    "registered_date": "",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5461150",
+    "handling_count": 0,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": []
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "302-2026",
+    "title": "Förfrågan om handlingarna behöver kompletteras gällande ansökan om vattenverksamhet vid Kvarndammens \n(Bergets) vattenkraftverk, Kungsbacka kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-01-13",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5367001",
+    "handling_count": 10,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "302-2026-1",
+        "title": "Förfrågan om handlingarna behöver kompletteras gällande ansökan om vattenverksamhet vid Kvarndammens \n(Bergets) vattenkraftverk, Kungsbacka kommun",
+        "date": "2026-01-13",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-2",
+        "title": "Förfrågan om handlingarna behöver kompletteras, bilagor",
+        "date": "2026-01-13",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-3",
+        "title": "Yttrande över ansökan om omprövning av vattenverksamhet",
+        "date": "2026-03-02",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-4",
+        "title": "Underrättelse om anstånd",
+        "date": "2026-04-08",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-5",
+        "title": "Underrättelse med möjlighet till yttrande",
+        "date": "2026-05-21",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-6",
+        "title": "Yttrande över underrättelse",
+        "date": "2026-06-30",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-7",
+        "title": "Underrättelse med möjlighet till yttrande",
+        "date": "2026-07-03",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-8",
+        "title": "Komplettering med handling",
+        "date": "2026-07-06",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-9",
+        "title": "Meddelande om anstånd",
+        "date": "2026-07-07",
+        "sender_recipient": "Mark- och Miljödomstolen vid Vänersborgs Tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "302-2026-10",
+        "title": "Yttrande över komplettering",
+        "date": "2026-09-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "315-2024",
+    "title": "Förfrågan om handlingarna behöver kompletteras avseende ansökan om utrivning av Knorrasjöns vattenföretag avseende vattenverksamhet på fastigheter i Halmstads kommun",
+    "status": "Handläggning",
+    "registered_date": "2024-01-11",
+    "decision_date": "",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4638587",
+    "handling_count": 11,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "315-2024-1",
+        "title": "Förfrågan om handlingarna behöver kompletteras avseende ansökan om utrivning av Knorrasjöns vattenföretag avseende vattenverksamhet på fastigheter i Halmstads kommun",
+        "date": "2024-01-11",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-2",
+        "title": "Yttrande över kompletteringsbehov",
+        "date": "2024-02-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-3",
+        "title": "Föreläggande om yttrande",
+        "date": "2024-03-15",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-5",
+        "title": "Yttrande över ansökan",
+        "date": "2024-04-11",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-6",
+        "title": "Föreläggande om yttrande",
+        "date": "2024-06-03",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-8",
+        "title": "Yttrande till Mark- och miljödomstolen",
+        "date": "2024-06-20",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-9",
+        "title": "Kungörelse av miljökonsekvensbeskrivning",
+        "date": "2024-10-04",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-10",
+        "title": "Förfrågan om yttrande med anledning av kungörelse",
+        "date": "2024-11-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-11",
+        "title": "Yttrande till Mark- och miljödomstolen",
+        "date": "2024-11-26",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-12",
+        "title": "Dom om tillstånd den 6 februari 2025",
+        "date": "2025-02-06",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "315-2024-13",
+        "title": "Lagakraftbevis",
+        "date": "2025-03-04",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3444-2026",
+    "title": "Kompletterande yttrande ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-05-12",
+    "decision_date": "2026-05-13",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5493665",
+    "handling_count": 3,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3444-2026-1",
+        "title": "Tjänsteanteckning om uppstart av ärende",
+        "date": "2026-05-12",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3444-2026-2",
+        "title": "Länsstyrelsens kompletterande yttrande",
+        "date": "2026-05-13",
+        "sender_recipient": "Miljöprövningsdelegationen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3444-2026-3",
+        "title": "Meddelande om tidsplan",
+        "date": "2026-08-18",
+        "sender_recipient": "Miljöprövningsdelegationen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3519-2026",
+    "title": "Begäran om yttrande över ansökan om tillstånd till vattenverksamhet, Halmstads hamn i Halmstads kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-05-15",
+    "decision_date": "",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5496412",
+    "handling_count": 7,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3519-2026-1",
+        "title": "Begäran om yttrande över ansökan om tillstånd till vattenverksamhet, Halmstads hamn i Halmstads kommun",
+        "date": "2026-05-15",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "permit",
+          "opinion"
+        ],
+        "matched_rules": [
+          "permit",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3519-2026-2",
+        "title": "Yttrande ansökan MMD",
+        "date": "2026-06-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3519-2026-3",
+        "title": "Tjänsteanteckning om godkännande av yttrande",
+        "date": "2026-06-17",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "opinion",
+          "administrative"
+        ],
+        "matched_rules": [
+          "opinion",
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3519-2026-4",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-09-23",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3519-2026-5",
+        "title": "Yttrande över preliminär tidplan",
+        "date": "2026-09-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3519-2026-6",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-10-08",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3519-2026-7",
+        "title": "Yttrande MMD",
+        "date": "2026-10-27",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3716-2026",
+    "title": "Överklagande av Länsstyrelsens beslut den 13 maj 2026 om tillsyn av vattenverksamhet i Kungsbacka kommun",
+    "status": "Beslutat",
+    "registered_date": "2026-05-26",
+    "decision_date": "2026-05-26",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5506670",
+    "handling_count": 3,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3716-2026-2",
+        "title": "Överklagande av Länsstyrelsens beslut den 13 maj 2026 om tillsyn av vattenverksamhet i Kungsbacka kommun",
+        "date": "2026-05-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3716-2026-3",
+        "title": "Överklagandet och övriga handlingar i ärendet överlämnas",
+        "date": "2026-05-26",
+        "sender_recipient": "Mark- och miljödomstolen, Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3716-2026-4",
+        "title": "Beslut om avslag gällande inhibition den 1 juni 2026",
+        "date": "2026-06-01",
+        "sender_recipient": "Elisabeth Norström-Nilsson",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3770-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, Himleån, Varbetgs kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-05-27",
+    "decision_date": "2026-06-09",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5509959",
+    "handling_count": 7,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3770-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, Himleån, Varbetgs kommun",
+        "date": "2026-05-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3770-2026-2",
+        "title": "Begäran om komplettering",
+        "date": "2026-05-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3770-2026-3",
+        "title": "Komplettering med skrivelse och handling",
+        "date": "2026-05-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3770-2026-4",
+        "title": "Komplettering med handlingar",
+        "date": "2026-05-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3770-2026-5",
+        "title": "Komplettering med handlingar",
+        "date": "2026-05-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3770-2026-6",
+        "title": "Komplettering med foton",
+        "date": "2026-06-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3770-2026-7",
+        "title": "Beslut om avskrivning",
+        "date": "2026-06-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3776-2025",
+    "title": "Begäran om tillsyn av vattenverksamhet, vattenuttag Antorpa sjö i Laholms kommun",
+    "status": "Avslutat",
+    "registered_date": "2025-05-12",
+    "decision_date": "2026-11-11",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5136139",
+    "handling_count": 4,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3776-2025-1",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2025-05-12",
+        "sender_recipient": "Anonym",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3776-2025-2",
+        "title": "Begäran om yttrande",
+        "date": "2025-06-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3776-2025-3",
+        "title": "Yttrande",
+        "date": "2025-08-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3776-2025-4",
+        "title": "Beslut om avskrivning",
+        "date": "2026-11-11",
+        "sender_recipient": "Anonym",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "3866-2026",
+    "title": "Ansökan om strandskyddsdispens för vattenverksamhet, Lundaån, Kungsbacka kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-05-26",
+    "decision_date": "2026-07-16",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5515211",
+    "handling_count": 3,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "3866-2026-1",
+        "title": "Ansökan om strandskyddsdispens för vattenverksamhet, Lundaån, Kungsbacka kommun",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3866-2026-2",
+        "title": "Ansökan om strandskyddsdispens",
+        "date": "2026-05-26",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "3866-2026-3",
+        "title": "Beslut om bifall",
+        "date": "2026-07-16",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4171-2026",
+    "title": "Överklagande av Länsstyrelsens beslut 2026-06-09 om avskrivning av ärende om tillsyn av vattenverksamhet, Varbergs kommun",
+    "status": "Beslutat",
+    "registered_date": "2026-06-13",
+    "decision_date": "2026-06-15",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5530106",
+    "handling_count": 2,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "4171-2026-1",
+        "title": "Överklagande av Länsstyrelsens beslut 2026-06-09 om avskrivning av ärende om tillsyn av vattenverksamhet, Varbergs kommun",
+        "date": "2026-06-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4171-2026-2",
+        "title": "Rättidsprövning",
+        "date": "2026-06-15",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "428-2024",
+    "title": "Förfrågan om handlingarna behöver kompletteras avseende ansökan om tillstånd till täktverksamhet samt vattenverksamhet i Hylte kommun",
+    "status": "Handläggning",
+    "registered_date": "2024-01-16",
+    "decision_date": "",
+    "municipality": "Hylte",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4642408",
+    "handling_count": 17,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "428-2024-1",
+        "title": "Förfrågan om handlingarna behöver kompletteras avseende ansökan om tillstånd till täktverksamhet samt vattenverksamhet i Hylte kommun",
+        "date": "2024-01-16",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-2",
+        "title": "Begäran om anstånd",
+        "date": "2024-01-31",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-3",
+        "title": "Begärt anstånd medges",
+        "date": "2024-02-01",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-4",
+        "title": "Länsstyrelsens yttrande till Mark- och miljödomstolen",
+        "date": "2024-02-28",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-5",
+        "title": "Protokoll",
+        "date": "2024-07-03",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-6",
+        "title": "Meddelande om kungörelse av ansökan",
+        "date": "2024-08-21",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-7",
+        "title": "Länsstyrelsens yttrande över ansökan",
+        "date": "2024-10-07",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-8",
+        "title": "Föreläggande om yttrande den 17 december 2017, svar senast 21 januari 2025",
+        "date": "2024-12-17",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-9",
+        "title": "Förfrågan om deltagande förhandlingsdag",
+        "date": "2024-12-17",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-10",
+        "title": "Meddelande om datum för huvudförhandling",
+        "date": "2024-12-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-11",
+        "title": "Förfrågan om deltagande huvudförhandling, tidigare datum felaktigt",
+        "date": "2024-12-19",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-12",
+        "title": "Meddelande om datum för huvudförhandling",
+        "date": "2024-12-20",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-13",
+        "title": "Meddelande om huvudförhandling",
+        "date": "2025-01-17",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-14",
+        "title": "Länsstyrelsens yttrande, mål nr M 5719-23",
+        "date": "2025-01-21",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-15",
+        "title": "Underrättelse med möjlighet till yttrande",
+        "date": "2025-02-13",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-16",
+        "title": "Länsstyrelsens yttrande till Mark- och miljödomstolen, mål nr M 5719-23",
+        "date": "2025-02-25",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "428-2024-17",
+        "title": "Dom om Tillstånd till miljöfarlig verksamhet den 1 april 2025",
+        "date": "2025-04-01",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4886-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, vattenflöde under minimitappning vid Ätrafors kraftverk",
+    "status": "Avslutat",
+    "registered_date": "2026-07-14",
+    "decision_date": "2026-07-15",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5562643",
+    "handling_count": 4,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "4886-2026-1",
+        "title": "Meddelande om vattenflöde under minimitappning vid Ätrafors kraftverk",
+        "date": "2026-07-14",
+        "sender_recipient": "Sportfiskarna region Väst",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4886-2026-2",
+        "title": "Begäran om yttrande",
+        "date": "2026-07-14",
+        "sender_recipient": "Uniper",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4886-2026-3",
+        "title": "Meddelande om begäran besvarad",
+        "date": "2026-07-15",
+        "sender_recipient": "Uniper",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4886-2026-4",
+        "title": "Meddelande om tappning under minimitapping Ätrafors kraftverk",
+        "date": "2026-07-13",
+        "sender_recipient": "Uniper",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "4912-2025",
+    "title": "Samråd inför tillståndsansökan för tillstånd för verksamhet vid hafi i brännarp och vattenverksamhet i Halmstad kommun",
+    "status": "Avslutat",
+    "registered_date": "2025-06-19",
+    "decision_date": "2026-10-28",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5181329",
+    "handling_count": 6,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "4912-2025-1",
+        "title": "Samråd inför tillståndsansökan för tillstånd för verksamhet vid hafi i brännarp och vattenverksamhet i Halmstad kommun",
+        "date": "2025-06-19",
+        "sender_recipient": "HAFI, Hallands Fruktindustri AB",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4912-2025-2",
+        "title": "Begäran om förlängd tid för att lämna synpunkter till den 15 september 2025",
+        "date": "2025-06-27",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4912-2025-3",
+        "title": "Meddelande om förlängd svarstid till den 15 september 2025",
+        "date": "2025-06-27",
+        "sender_recipient": "Hallands fruktindustri AB",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4912-2025-4",
+        "title": "Meddelande om frågor",
+        "date": "2025-08-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4912-2025-5",
+        "title": "Meddelande om kompletterat samrådsunderlag",
+        "date": "2025-09-08",
+        "sender_recipient": "Hallands Fruktindustri AB, HAFI",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "4912-2025-6",
+        "title": "Tjänsteanteckning om att ärendet avslutas",
+        "date": "2026-10-28",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5144-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, Varbergs kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-07-30",
+    "decision_date": "2026-10-27",
+    "municipality": "Varberg",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5571879",
+    "handling_count": 5,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5144-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, Varbergs kommun",
+        "date": "2026-07-30",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5144-2026-2",
+        "title": "Komplettering med information",
+        "date": "2026-07-30",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5144-2026-3",
+        "title": "Komplettering med skrivelse och foton",
+        "date": "2026-08-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5144-2026-4",
+        "title": "Beslut om avskrivning",
+        "date": "2026-10-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5144-2026-5",
+        "title": "Meddelande om information",
+        "date": "2026-11-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5284-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, Varbergs kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-05",
+    "decision_date": "2026-08-19",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5575270",
+    "handling_count": 2,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5284-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, Varbergs kommun",
+        "date": "2026-08-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5284-2026-2",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2026-08-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5615-2026",
+    "title": "Information om vattenverksamhet, Färgaryds damm",
+    "status": "Handläggning",
+    "registered_date": "2026-08-18",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5589148",
+    "handling_count": 1,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5615-2026-1",
+        "title": "Information om vattenverksamhet, Färgaryds damm",
+        "date": "2026-08-18",
+        "sender_recipient": "Hylte Paper AB",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "5861-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, Fylleån i Halmstads kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-02",
+    "decision_date": "2026-10-02",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5597385",
+    "handling_count": 3,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5861-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, Fylleån i Halmstads kommun",
+        "date": "2026-09-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5861-2026-2",
+        "title": "Komplettering med uppgifter",
+        "date": "2026-09-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5861-2026-3",
+        "title": "Beslut om överlämnande av ärende enligt 25 § länsstyrelseinstruktionen",
+        "date": "2026-10-02",
+        "sender_recipient": "Länsstyrelsen i Kalmar län",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "6128-2022",
+    "title": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet i Mostorpsån vid Sembs kraftverk i Falkenbergs kommun",
+    "status": "Handläggning",
+    "registered_date": "2022-09-05",
+    "decision_date": "",
+    "municipality": "Falkenberg",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4157123",
+    "handling_count": 31,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6128-2022-1",
+        "title": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet i Mostorpsån vid Sembs kraftverk i Falkenbergs kommun",
+        "date": "2022-09-05",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-2",
+        "title": "Meddelande om förlängd svarstid till den 11 oktober 2022",
+        "date": "2022-09-21",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-3",
+        "title": "Yttrande över remiss gällande komplettering",
+        "date": "2022-09-29",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-4",
+        "title": "Föreläggande om yttrande",
+        "date": "2023-06-01",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-5",
+        "title": "Tjänsteanteckning om granskning",
+        "date": "2023-06-29",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-6",
+        "title": "Yttrande över inkomna kompletteringar samt behov av Natura 2000-tillstånd",
+        "date": "2023-06-29",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "permit",
+          "opinion"
+        ],
+        "matched_rules": [
+          "permit",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-7",
+        "title": "Meddelande om godkännande av yttrande",
+        "date": "2023-07-11",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-8",
+        "title": "Meddelande om godkännande av yttrande",
+        "date": "2023-08-08",
+        "sender_recipient": "Länsstyrelsen i Hallands län",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-9",
+        "title": "Meddelande om kungörelse",
+        "date": "2024-02-01",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-10",
+        "title": "Begäran om anstånd",
+        "date": "2024-02-05",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-11",
+        "title": "Meddelande om att begärt anstånd medges",
+        "date": "2024-02-08",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-12",
+        "title": "Komplettering med handlingar",
+        "date": "2024-02-09",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-14",
+        "title": "Meddelande om anstånd till den 31 maj 2024",
+        "date": "2024-04-16",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-15",
+        "title": "Yttrande över ansökan",
+        "date": "2024-05-30",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-16",
+        "title": "Förfrågan om förhandlingsdag",
+        "date": "2024-09-16",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-17",
+        "title": "Underrättelse med möjlighet till yttrande",
+        "date": "2024-10-04",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-18",
+        "title": "Kungörelse av ansökan",
+        "date": "2024-10-14",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-19",
+        "title": "Komplettering med handlingar",
+        "date": "2024-10-14",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-20",
+        "title": "Komplettering med ny Kungörelse",
+        "date": "2024-10-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-21",
+        "title": "Meddelande om inför huvudförhandling",
+        "date": "2024-11-20",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-22",
+        "title": "Yttrande över underrättelse",
+        "date": "2024-11-25",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-23",
+        "title": "Underrättelse om handlingar för kännedom",
+        "date": "2024-12-23",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-24",
+        "title": "Dom från högre instans, beslut om avvisning den 13 januari 2025",
+        "date": "2025-01-13",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-25",
+        "title": "Föreläggande om yttrande",
+        "date": "2025-04-11",
+        "sender_recipient": "Svea Hovrätt, Mark- och miljööverdomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-26",
+        "title": "Meddelande om prövningstillstånd den 10 april 2025",
+        "date": "2025-04-11",
+        "sender_recipient": "Svea Hovrätt, Mark- och miljööverdomstolen",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-27",
+        "title": "Underrättelse om beviljat anstånd",
+        "date": "2025-04-16",
+        "sender_recipient": "Svea Hovrätt, Mark- och miljööverdomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-28",
+        "title": "Yttrande över överklagan",
+        "date": "2025-06-12",
+        "sender_recipient": "Mark- och miljööverdomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-29",
+        "title": "Delbeslut om att syn inte behövs den 6 oktober 2025",
+        "date": "2025-10-06",
+        "sender_recipient": "Svea Hovrätt, Mark- och miljööverdomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-30",
+        "title": "Föreläggande om yttrande",
+        "date": "2025-12-16",
+        "sender_recipient": "Svea Hovrätt, Mark- och miljööverdomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-31",
+        "title": "Yttrande över aktbilaga 19",
+        "date": "2026-01-16",
+        "sender_recipient": "Svea hovrätt, Mark- och miljööverdomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6128-2022-32",
+        "title": "Underrättelse om handlingar för kännedom",
+        "date": "2026-01-21",
+        "sender_recipient": "Svea hovrätt, mark- och miljööverdomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "6262-2025",
+    "title": "Förfrågan om handlingarna behöver kompletteras gällande täkt av berg, återvinning samt vattenverksamhet i Varbergs kommun",
+    "status": "Handläggning",
+    "registered_date": "2025-09-03",
+    "decision_date": "",
+    "municipality": "Varberg",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5242068",
+    "handling_count": 16,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6262-2025-1",
+        "title": "Förfrågan om handlingarna behöver kompletteras gällande täkt av berg, återvinning samt vattenverksamhet i Varbergs kommun",
+        "date": "2025-09-03",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-2",
+        "title": "Begäran om anstånd",
+        "date": "2025-09-30",
+        "sender_recipient": "Vänersborgs tingsrätt, mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-3",
+        "title": "Meddelande om att anstånd medges",
+        "date": "2025-09-30",
+        "sender_recipient": "Vänersborgs tingsrätt, mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-4",
+        "title": "Länsstyrelsens yttrande till Mark- och miljööverdomstolen",
+        "date": "2025-10-09",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-5",
+        "title": "Information om datum för sammanträde och syn",
+        "date": "2026-02-04",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-6",
+        "title": "Meddelande om datum för sammanträde och syn",
+        "date": "2026-02-09",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-7",
+        "title": "Kungörelse av ansökan med möjlighet till yttrande",
+        "date": "2026-03-09",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-8",
+        "title": "Meddelande om tidsplan",
+        "date": "2026-03-09",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-9",
+        "title": "Meddelande om anstånd",
+        "date": "2026-04-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-10",
+        "title": "Yttrande över vattenverksamhet",
+        "date": "2026-04-30",
+        "sender_recipient": "Statens geotekniska institut",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-11",
+        "title": "Länsstyrelsens yttrande i mål nr M 3274–25",
+        "date": "2026-05-11",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-12",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-06-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-13",
+        "title": "Meddelande om huvudförhandling",
+        "date": "2026-08-11",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-14",
+        "title": "Länsstyrelsens yttrande till Mark- och miljödomstolen",
+        "date": "2026-08-13",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-15",
+        "title": "Meddelande om förhandlingsordning",
+        "date": "2026-08-27",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6262-2025-16",
+        "title": "Underrättelse om handlingar",
+        "date": "2026-10-06",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "634-2023",
+    "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Brostorpsån vid Öringe mölla i Laholms kommun",
+    "status": "Handläggning",
+    "registered_date": "2023-01-26",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4298264",
+    "handling_count": 19,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "634-2023-1",
+        "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Brostorpsån vid Öringe mölla i Laholms kommun. Svar senast den 9 mars 2023",
+        "date": "2023-01-26",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-2",
+        "title": "Begäran om anstånd",
+        "date": "2023-01-31",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-3",
+        "title": "Beslut om anstånd",
+        "date": "2023-02-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-4",
+        "title": "Yttrande över komplettering av ansökan",
+        "date": "2023-03-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-5",
+        "title": "Föreläggande om yttrande",
+        "date": "2025-06-27",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-6",
+        "title": "Meddelande om anstånd",
+        "date": "2025-07-08",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-7",
+        "title": "Yttrande över aktbilaga 15 m.fl.",
+        "date": "2025-09-15",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-8",
+        "title": "Protokoll, avslag om vilandeförklaring den 30 januari 2026",
+        "date": "2026-01-30",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-9",
+        "title": "Begäran om yttrande över kungörelse",
+        "date": "2026-02-24",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-10",
+        "title": "Yttrande över ansökan",
+        "date": "2026-04-15",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-11",
+        "title": "Underrättelse om huvudförhandling",
+        "date": "2026-04-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-12",
+        "title": "Meddelande om handlingar",
+        "date": "2026-05-19",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-13",
+        "title": "Meddelande om handlingar",
+        "date": "2026-05-19",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-14",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-06-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-15",
+        "title": "Yttrande över tid för komplettering",
+        "date": "2026-06-05",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-16",
+        "title": "Meddelande om anstånd",
+        "date": "2026-06-08",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-17",
+        "title": "Komplettering med handling",
+        "date": "2026-06-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-18",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-08-07",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "634-2023-19",
+        "title": "Yttrande över aktbilaga 54 m.fl.",
+        "date": "2026-09-18",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "637-2023",
+    "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Alslövsån vid Lindoms kvarn i Halmstads kommun",
+    "status": "Handläggning",
+    "registered_date": "2023-01-26",
+    "decision_date": "",
+    "municipality": "Halmstad",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4298315",
+    "handling_count": 23,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "637-2023-1",
+        "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Alslövsån vid Lindoms kvarn i Halmstads kommun. Svar senast den 9 mars 2023",
+        "date": "2023-01-26",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-2",
+        "title": "Begäran om anstånd",
+        "date": "2023-01-31",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-3",
+        "title": "Beslut om anstånd",
+        "date": "2023-02-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-4",
+        "title": "Yttrande över kompletteringsbehov",
+        "date": "2023-03-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-5",
+        "title": "Tjänsteanteckning om granskning",
+        "date": "2023-03-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-6",
+        "title": "Meddelande om yttrande",
+        "date": "2023-03-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-7",
+        "title": "Föreläggande om yttrande",
+        "date": "2025-07-08",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-8",
+        "title": "Begäran om anstånd",
+        "date": "2025-07-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-9",
+        "title": "Underrättelse om anstånd",
+        "date": "2025-07-09",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-10",
+        "title": "Begäran om anstånd",
+        "date": "2025-08-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-11",
+        "title": "Meddelande om anstånd till 26 september",
+        "date": "2025-08-29",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-12",
+        "title": "Yttrande över ab 11-12 och 14-17",
+        "date": "2025-09-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-13",
+        "title": "Protokoll, avslag om vilandeförklaring",
+        "date": "2026-01-30",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-14",
+        "title": "Begäran om yttrande över Kungörelse",
+        "date": "2026-02-24",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-16",
+        "title": "Yttrande över ansökan",
+        "date": "2026-04-15",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-17",
+        "title": "Underrättelse om huvudförhandling",
+        "date": "2026-04-17",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-18",
+        "title": "Meddelande om handlingar",
+        "date": "2026-05-19",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-19",
+        "title": "Föreläggande om yttrande",
+        "date": "2026-06-02",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-20",
+        "title": "Yttrande över tid för komplettering",
+        "date": "2026-06-05",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-21",
+        "title": "Meddelande om anstånd",
+        "date": "2026-06-08",
+        "sender_recipient": "Mark- och miljödomstolen vid Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-22",
+        "title": "Komplettering med handling",
+        "date": "2026-06-22",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-23",
+        "title": "Meddelande om föreläggande",
+        "date": "2026-10-21",
+        "sender_recipient": "Mark- och miljödomstolen, Vänersborgs tingsrätt",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "637-2023-24",
+        "title": "Meddelande om anstånd",
+        "date": "2026-10-28",
+        "sender_recipient": "Vänersborgs tingsrätt, Mark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Hallands län",
+    "diary_number": "6473-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, vattendjup",
+    "status": "Handläggning",
+    "registered_date": "2026-09-15",
+    "decision_date": "",
+    "municipality": "Falkenberg",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5611633",
+    "handling_count": 8,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6473-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, vattendjup",
+        "date": "2026-09-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6473-2026-2",
+        "title": "Komplettering med fotografi",
+        "date": "2026-09-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6473-2026-3",
+        "title": "Komplettering med handlingar",
+        "date": "2026-09-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6473-2026-4",
+        "title": "Komplettering med handlingar",
+        "date": "2026-09-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6473-2026-5",
+        "title": "Komplettering med uppgifter",
+        "date": "2026-09-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6473-2026-6",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2026-10-06",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6473-2026-7",
+        "title": "Komplettering med handlingar",
+        "date": "2026-10-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6473-2026-8",
+        "title": "Begäran om yttrande",
+        "date": "2026-10-19",
+        "sender_recipient": "Falkenberg kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
         "classification_version": "1.0.0"
       }
     ]
