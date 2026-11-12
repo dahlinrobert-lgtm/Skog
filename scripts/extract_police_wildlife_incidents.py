@@ -27,7 +27,7 @@ WILDLIFE_RE = re.compile(
 TIME_RE = re.compile(r"(?<!\d)(?P<time>[0-2]?\d[:.]\d{2})(?!\d)")
 COUNT_RE = re.compile(
     # Do not interpret the minute part of HH:MM as an explicit accident count.
-    r"(?i)(?<![\d:])\b(?P<count>\d{1,2}|en|ett|två|tre|fyra|fem|sex|sju|åtta|nio|tio)"
+    r"(?i)(?<![\d:.])\b(?P<count>\d{1,2}|en|ett|två|tre|fyra|fem|sex|sju|åtta|nio|tio)"
     r"\s+(?P<kind>viltolyck(?:a|or)|renpåkörning(?:ar)?)\b"
 )
 WORDS = {"en": 1, "ett": 1, "två": 2, "tre": 3, "fyra": 4, "fem": 5,
