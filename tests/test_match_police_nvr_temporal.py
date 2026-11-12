@@ -69,7 +69,7 @@ class TemporalMatchTests(unittest.TestCase):
         self.nvr[0]["event_datetime_values"] = "2026-09-01 12:00"
         rows = M.build_candidates(self.police, self.nvr)
         self.assertEqual(len(rows), 1)
-        self.assertEqual(rows[0]["time_delta_minutes"], 215? )
+        self.assertEqual(rows[0]["time_delta_minutes"], 2147.0)
         self.assertEqual(rows[0]["candidate_status"], "next_day_time_conflict_review")
 
     def test_same_date_only_is_kept_as_weak_candidate(self):
