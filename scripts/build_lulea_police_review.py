@@ -14,7 +14,7 @@ def read_rows(path):
 
 def classify_geography(text):
     value = (text or "").casefold()
-    if any(token in value for token in ("e4", "e10", "e45", "riksväg", "länsväg", "väg  ")):
+    if any(token in value for token in ("e4", "e10", "e45", "riksväg ", "länsväg ", "väg ")):
         return "possible_road_reference"
     if any(token in value for token in ("mellan ", "på ", "vid ", "i luleå", "luleå")):
         return "place_or_route_text_needs_review"
