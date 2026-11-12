@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_DATA = Path(__file__).resolve().parents[1] / "data" / "police_events"
-INDIVIDUAL_METHOD = "wildlife_text_line_v1"
+INDIVIDUAL_METHODS = {"wildlife_text_line_v1", "wildlife_time_segment_v2"}
 COUNT_METHOD = "explicit_count_v1"
 
 def read_rows(path):
@@ -22,7 +22,7 @@ def classify_geography(text):
 
 def build_review(rows):
     lulea = [r for r in rows if (r.get("municipality") or "").strip().casefold() == "luleå"]
-    individual = [dict(r) for r in lulea if r.get("extraction_method") == INDIVIDUAL_METHOD]
+    individual = [dict(r) for r in lulea if r.get("extraction_method") in INDIVIDUAL_METHODS]
     count_only = [r for r in lulea if r.get("extraction_method") == COUNT_METHOD]
     for row in individual:
         has_time = bool((row.get("occurrence_time") or "").strip())
@@ -33,7 +33,7 @@ def build_review(rows):
     report = {
         "schema_version": "1.0", "generated_at": datetime.now(timezone.utc).isoformat(),
         "scope": "Luleå municipality", "source_file": "wildlife_incidents.csv",
-        "interpretation": "Review subset only. Individual text-line candidates are not verified collisions. Count-only rows are excluded and reported separately. No geocoding or NVR matching is performed.",
+        "interpretation": "Review subset only. Individual extracted time-segment candidates are not verified collisions. Count-only rows are excluded and reported separately. Expanded child rows retain parent event IDs and occurrence indices. No geocoding or NVR matching is performed.",
         "input_row_count": len(rows), "lulea_candidate_row_count": len(lulea),
         "individual_text_candidate_count": len(individual), "count_only_candidate_row_count": len(count_only),
         "individual_with_occurrence_date_count": sum(bool(r.get("occurrence_date")) for r in individual),
