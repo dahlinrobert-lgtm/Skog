@@ -104,12 +104,11 @@ def extract(row: dict) -> list[dict]:
     ).casefold()
 
     for i, line in enumerate(lines):
-        if not WILDLIFE_RE.search(line):
-            continue
-
+        # Expand each timestamp in summary lines before applying the wildlife
+        # test: the wildlife wording may occur only after a later timestamp.
         time_matches = list(TIME_RE.finditer(line))
         if not time_matches:
-            segments = [(None, line)]
+            segments = [(None, line)] if WILDLIFE_RE.search(line) else []
         elif is_summary:
             segments = []
             for j, tm in enumerate(time_matches):
@@ -119,7 +118,7 @@ def extract(row: dict) -> list[dict]:
                     segments.append((tm, own_segment))
         else:
             tm = time_matches[0]
-            segments = [(tm, line)]
+            segments = [(tm, line)] if WILDLIFE_RE.search(line) else []
 
         for tm, own_segment in segments:
             details = [own_segment]
