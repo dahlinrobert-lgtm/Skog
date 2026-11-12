@@ -15,6 +15,9 @@ class LuleaPoliceReviewTests(unittest.TestCase):
         self.assertEqual(candidates[0]["review_priority"],"time_and_date_available")
         self.assertEqual(candidates[0]["geographic_evidence_type"],"possible_road_reference")
         self.assertEqual(report["count_only_candidate_row_count"],1)
+    def test_lansvag_reference_is_classified_as_road_reference(self):
+        self.assertEqual(MODULE.classify_geography("Olycka på länsväg 383, Smedsbyn"), "possible_road_reference")
+        self.assertEqual(MODULE.classify_geography("Olycka på länsväg 596 vid Sinksundet"), "possible_road_reference")
     def test_missing_time_is_retained_and_flagged(self):
         rows=[{"municipality":"Luleå","extraction_method":"wildlife_text_line_v1","parent_event_id":"3","description":"Viltolycka, Luleå"}]
         candidates, report=MODULE.build_review(rows)
