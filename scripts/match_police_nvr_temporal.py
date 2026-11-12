@@ -33,11 +33,10 @@ def split_values(value):
     return [x.strip() for x in (value or "").split(";") if x.strip()]
 
 def clock_delta_minutes(left, right):
-    """Circular time-of-day distance, so 23:58 and 00:03 are five minutes apart."""
+    """Absolute wall-clock difference for the one-day-rollover hypothesis."""
     a = left.hour * 60 + left.minute
     b = right.hour * 60 + right.minute
-    delta = abs(a - b)
-    return min(delta, 1440 - delta)
+    return abs(a - b)
 
 def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_window_days=1):
     # NVR rows must already be event-level (one row per year-qualified accident_key).
