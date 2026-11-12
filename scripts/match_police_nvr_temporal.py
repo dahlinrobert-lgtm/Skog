@@ -6,8 +6,8 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
-TIME_RE = re.compile(r"(?<!\\d)([01]?\\d|2[0-3])[.:]([0-5]\\d)(?!\\d)")
-ROAD_RE = re.compile(r"\\b(?:e\\s?4|e\\s?10|e\\s?45|riksväg\\s+\\d+|länsväg\\s+\\d+)\\b", re.I)
+TIME_RE = re.compile(r"(?<!\d)([01]?\d|2[0-3])[.:]([0-5]\d)(?!\d)")
+ROAD_RE = re.compile(r"\b(?:e\s?4|e\s?10|e\s?45|riksväg\s+\d+|länsväg\s+\d+)\b", re.I)
 STOP = {"och","med","utan","vid","mellan","på","i","en","ett","det","som","för","från","till","luleå","viltolycka","olycka","personbil","lastbil","polis","inga","uppgifter","personskador","rapporterats","rapporteras"}
 
 def norm(value):
