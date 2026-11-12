@@ -97,50 +97,54 @@ def extract(row: dict) -> list[dict]:
     out = []
     seen = set()
 
-    # Split only on explicit time markers that introduce a new wildlife
-    # statement. Other clock times (for example a period/range in prose) must
-    # not create empty or duplicate child rows.
-    time_matches = list(TIME_RE.finditer(body))
-    statement_starts = []
-    for tm in time_matches:
-        tail = body[tm.start():]
-        next_time = TIME_RE.search(body, tm.end())
-        end = next_time.start() if next_time else len(body)
-        segment = tail[:end - tm.start()].strip(" \n-–—")
-        prefix = body[max(0, tm.start() - 40):tm.start()]
-        if not WILDLIFE_RE.search(segment):
+    # Preserve the established line-based extraction for ordinary events,
+    # but split a wildlife line at every explicit timestamp when a summary
+    # contains multiple timestamped statements on that same physical line.
+    for i, line in enumerate(lines):
+        if not WILDLIFE_RE.search(line):
             continue
-        # Require the time to be a statement lead-in, not a time mentioned
-        # inside a sentence. Accept start of text, punctuation, or whitespace
-        # after a line break / sentence boundary.
-        if prefix and not re.search(r"(?:^|[\n.!?])\s*$", prefix):
-            continue
-        statement_starts.append(tm)
+        time_matches = list(TIME_RE.finditer(line))
+        if not time_matches:
+            segments = [(None, line)]
+        else:
+            segments = []
+            for j, tm in enumerate(time_matches):
+                seg_end = time_matches[j + 1].start() if j + 1 < len(time_matches) else len(line)
+                segment = line[tm.start():seg_end].strip(" -–—")
+                if WILDLIFE_RE.search(segment):
+                    segments.append((tm, segment))
 
-    for i, tm in enumerate(statement_starts):
-        segment_end = statement_starts[i + 1].start() if i + 1 < len(statement_starts) else len(body)
-        segment = body[tm.start():segment_end].strip(" \n-–—")
-        occurrence_time = tm.group("time").replace(".", ":")
-        occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
-        key = (occurrence_time, segment.casefold())
-        if key in seen:
-            continue
-        seen.add(key)
-        out.append({
-            "parent_event_id": row.get("event_id", ""),
-            "publication_date": row.get("date", ""),
-            "occurrence_date": occurrence_date,
-            "occurrence_date_basis": date_basis,
-            "occurrence_time": occurrence_time,
-            "municipality": municipality(segment),
-            "species": species(segment),
-            "place_text": segment[:500],
-            "description": segment,
-            "source_link": row.get("external_source_link", ""),
-            "extraction_method": "wildlife_time_segment_v2",
-            "confidence": "review",
-            "occurrence_index": "",
-        })
+        for tm, own_segment in segments:
+            details = [own_segment]
+            # Preserve following descriptive lines, but stop at the next
+            # timestamped wildlife statement or any new timestamp marker.
+            for nxt in lines[i + 1:i + 3]:
+                if TIME_RE.search(nxt):
+                    break
+                if len(" ".join(details)) < 500:
+                    details.append(nxt)
+            segment = " ".join(details)
+            occurrence_time = tm.group("time").replace(".", ":") if tm else ""
+            occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
+            key = (occurrence_time, segment.casefold())
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({
+                "parent_event_id": row.get("event_id", ""),
+                "publication_date": row.get("date", ""),
+                "occurrence_date": occurrence_date,
+                "occurrence_date_basis": date_basis,
+                "occurrence_time": occurrence_time,
+                "municipality": municipality(segment),
+                "species": species(segment),
+                "place_text": segment[:500],
+                "description": segment,
+                "source_link": row.get("external_source_link", ""),
+                "extraction_method": "wildlife_time_segment_v2" if tm else "wildlife_text_line_v1",
+                "confidence": "review",
+                "occurrence_index": "",
+            })
 
     # Explicit counts in summary prose are retained as separate count-only
     # candidates, never treated as independently located confirmed accidents.
