@@ -26,6 +26,15 @@ class WildlifeExtractionTests(unittest.TestCase):
         self.assertEqual(rows[0]["occurrence_date"], "2026-11-10")
         self.assertEqual(rows[0]["occurrence_time"], "07:15")
 
+    def test_dot_timestamp_is_not_parsed_as_explicit_collision_count(self):
+        row = self.row("22.48 Viltolycka, Luleå: En älg kolliderar med en lastbil.")
+        row["type_original"] = "Sammanfattning natt"
+        row["is_summary"] = "true"
+        rows = MODULE.extract(row)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["occurrence_time"], "22:48")
+        self.assertEqual(rows[0]["extraction_method"], "wildlife_time_segment_v2")
+
     def test_explicit_count_is_kept_as_low_confidence_candidates(self):
         rows = MODULE.extract(self.row("Två viltolyckor har rapporterats."))
         self.assertEqual(len(rows), 2)
