@@ -42,7 +42,9 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180):
         nvr.append({**row, "_dts": dts, "_municipalities": {norm(x) for x in split_values(row.get("source_municipalities"))},
                     "_species": {norm(x) for x in split_values(row.get("species"))}})
     output = []
-    for p in police_rows:
+    for police_row_index, p in enumerate(police_rows, start=1):
+        occurrence_index = (p.get("occurrence_index") or "").strip()
+        police_candidate_id = f"{p.get('parent_event_id', '')}:{occurrence_index or f'row-{police_row_index}'}"
         pdate = (p.get("occurrence_date") or "").strip()
         try: day = datetime.strptime(pdate, "%Y-%m-%d").date()
         except ValueError: continue
@@ -81,7 +83,9 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180):
             elif delta is not None and delta > max_time_delta_minutes: status = "same_date_time_conflict_review"
             else: status = "temporal_candidate_review"
             output.append({
-                "police_event_id": p.get("parent_event_id",""), "police_occurrence_date": pdate,
+                "police_candidate_id": police_candidate_id,
+                "police_event_id": p.get("parent_event_id",""), "police_occurrence_index": occurrence_index,
+                "police_occurrence_date": pdate,
                 "police_occurrence_date_basis": p.get("occurrence_date_basis",""),
                 "police_occurrence_time": ptime, "police_municipality": p.get("municipality",""),
                 "police_species": p.get("species",""), "police_text": p.get("description",""),
@@ -97,6 +101,49 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180):
     output.sort(key=lambda r:(r["police_occurrence_date"],r["police_event_id"],-r["candidate_score"],r["nvr_accident_key"]))
     return output
 
+def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes=180):
+    """Summarize candidate multiplicity, including source rows with zero matches."""
+    police_ids = []
+    for index, row in enumerate(police_rows, start=1):
+        occurrence_index = (row.get("occurrence_index") or "").strip()
+        police_ids.append(f"{row.get('parent_event_id', '')}:{occurrence_index or f'row-{index}'}")
+
+    police_counts = Counter(row["police_candidate_id"] for row in candidates)
+    nvr_keys = sorted({row.get("accident_key", "") for row in nvr_rows if row.get("accident_key")})
+    nvr_counts = Counter(row["nvr_accident_key"] for row in candidates)
+
+    def distribution(keys, counts):
+        values = [counts.get(key, 0) for key in keys]
+        return {
+            "zero_candidates": sum(value == 0 for value in values),
+            "one_candidate": sum(value == 1 for value in values),
+            "multiple_candidates": sum(value > 1 for value in values),
+        }
+
+    valid_dates = 0
+    for row in police_rows:
+        try:
+            datetime.strptime((row.get("occurrence_date") or "").strip(), "%Y-%m-%d")
+            valid_dates += 1
+        except ValueError:
+            pass
+
+    return {
+        "schema_version": "1.0",
+        "scope": "Luleå Police statements against event-level NVR rows",
+        "police_statement_count": len(police_ids),
+        "police_statements_with_valid_occurrence_date": valid_dates,
+        "police_statements_without_valid_occurrence_date": len(police_ids) - valid_dates,
+        "police_candidate_distribution": distribution(police_ids, police_counts),
+        "nvr_event_count": len(nvr_keys),
+        "nvr_event_candidate_distribution": distribution(nvr_keys, nvr_counts),
+        "candidate_pair_count": len(candidates),
+        "candidate_status_counts": dict(sorted(Counter(row["candidate_status"] for row in candidates).items())),
+        "max_time_delta_minutes": max_time_delta_minutes,
+        "interpretation": "Zero candidates do not prove that no collision occurred. NVR may lag or omit Police-reported events. Counts are candidate links, not confirmed matches.",
+    }
+
+
 def read_csv(path, delimiter=",", encoding="utf-8-sig"):
     with path.open(encoding=encoding, newline="") as f: return list(csv.DictReader(f, delimiter=delimiter))
 
@@ -106,13 +153,22 @@ def main():
     ap.add_argument("--nvr",type=Path,required=True,help="Event-level NVR CSV from build_nvr_accident_points.py")
     ap.add_argument("--output",type=Path,required=True)
     ap.add_argument("--max-time-delta-minutes",type=int,default=180)
+    ap.add_argument("--report",type=Path,help="Optional JSON audit report including zero/one/multiple candidate counts")
     args=ap.parse_args()
     if args.max_time_delta_minutes < 0: ap.error("--max-time-delta-minutes must be non-negative")
-    rows=build_candidates(read_csv(args.police),read_csv(args.nvr))
+    police_rows=read_csv(args.police)
+    nvr_rows=read_csv(args.nvr)
+    rows=build_candidates(police_rows,nvr_rows,args.max_time_delta_minutes)
     args.output.parent.mkdir(parents=True,exist_ok=True)
-    fields=list(rows[0]) if rows else ["police_event_id","police_occurrence_date","nvr_accident_key","same_date","time_delta_minutes","candidate_score","candidate_status","review_status"]
+    fields=list(rows[0]) if rows else ["police_candidate_id","police_event_id","police_occurrence_index","police_occurrence_date","nvr_accident_key","same_date","time_delta_minutes","candidate_score","candidate_status","review_status"]
     with args.output.open("w",encoding="utf-8-sig",newline="") as f:
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
-    print(json.dumps({"status":"completed","candidate_pairs":len(rows),"status_counts":dict(Counter(r["candidate_status"] for r in rows)),"output":str(args.output)},ensure_ascii=False,sort_keys=True))
+    summary={"status":"completed","candidate_pairs":len(rows),"status_counts":dict(Counter(r["candidate_status"] for r in rows)),"output":str(args.output)}
+    if args.report:
+        report=build_audit_report(police_rows,nvr_rows,rows,args.max_time_delta_minutes)
+        args.report.parent.mkdir(parents=True,exist_ok=True)
+        args.report.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        summary["report"]=str(args.report)
+    print(json.dumps(summary,ensure_ascii=False,sort_keys=True))
 
 if __name__=="__main__": main()

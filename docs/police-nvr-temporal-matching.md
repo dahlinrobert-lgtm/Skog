@@ -34,9 +34,9 @@ python scripts/build_lulea_police_review.py
 Then build NVR event-level rows from the validated annual exports using the existing `build_nvr_accident_points.py` in the bear-data repository. Copy the resulting derived CSV into a restricted local working folder; do not commit it.
 Run:
 ```bash
-python scripts/match_police_nvr_temporal.py --police data/police_events/lulea_review_candidates.csv --nvr /path/to/nvr-accidents.csv --output /path/to/lulea-police-nvr-temporal-candidates.csv
+python scripts/match_police_nvr_temporal.py --police data/police_events/lulea_review_candidates.csv --nvr /path/to/nvr-accidents.csv --output /path/to/lulea-police-nvr-temporal-candidates.csv --report /path/to/lulea-police-nvr-temporal-audit.json
 ```
-The output contains candidate pairs and evidence fields. It is a local derived file and must not be committed with row-level data.
+The CSV contains candidate pairs and evidence fields. The optional JSON report counts Police statements and NVR events with zero, one, or multiple candidate links, including Police statements with no valid occurrence date. It is a local derived file and must not be committed with row-level data. Each Police statement is identified by `police_candidate_id` (parent event ID plus occurrence index), so two statements under the same Police event remain distinct.
 
 ## Known limitations and validation
 - NVR reports can lag by up to two months; absence of a same-date NVR event is not evidence that the Police event did not occur.
