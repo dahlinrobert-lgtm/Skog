@@ -103,6 +103,30 @@ class TemporalMatchTests(unittest.TestCase):
         self.nvr[0]["source_municipalities"] = "Boden"
         self.assertEqual(M.build_candidates(self.police, self.nvr), [])
 
+    def test_known_species_conflict_is_excluded_and_audited(self):
+        self.police[0]["species"] = "rådjur"
+        self.nvr[0]["species"] = "Älg"
+        excluded = []
+        rows = M.build_candidates(self.police, self.nvr, excluded_rows=excluded)
+        self.assertEqual(rows, [])
+        self.assertEqual(len(excluded), 1)
+        self.assertEqual(excluded[0]["exclusion_reason"], "known_species_conflict")
+        self.assertEqual(excluded[0]["police_species"], "rådjur")
+        self.assertEqual(excluded[0]["nvr_species"], "Älg")
+
+    def test_unknown_species_is_retained_with_unknown_evidence(self):
+        self.police[0]["species"] = ""
+        rows = M.build_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["species_evidence"], "unknown")
+        self.assertFalse(rows[0]["species_match"])
+
+    def test_multi_species_nvr_row_matches_if_species_overlaps(self):
+        self.nvr[0]["species"] = "Älg; Rådjur"
+        rows = M.build_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["species_evidence"], "match")
+
     def test_time_conflict_remains_visible_but_flagged(self):
         self.nvr[0]["event_datetime_values"] = "2026-08-31 12:00"
         rows = M.build_candidates(self.police, self.nvr)

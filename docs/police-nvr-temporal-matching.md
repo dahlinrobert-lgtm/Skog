@@ -19,10 +19,11 @@ Same municipality + same date creates a candidate pair, not a confirmed match. A
 2. Require Luleå on both sides for this Luleå pilot.
 3. Generate all pairs on the same calendar date.
 4. If Police time is available, compare it with each NVR event time on that date and retain the minimum absolute difference.
-5. Record time bands: within 15 minutes, within 1 hour, within configured window (default 180 minutes), same-date time conflict, or time unavailable. Missing Police time is always classified as unavailable; it is not treated as a conflict with a known NVR time. A pair without Police time remains a date-only weak candidate even if species matches; species is supporting evidence, not a substitute for temporal evidence.
-6. Add species and text-term evidence. Road/place fields on NVR are optional and will be empty until the separately versioned NVR location-enrichment output is joined.
-7. Keep all same-date pairs, including time conflicts, for audit; do not discard a pair solely because its time differs.
-8. Do not resolve one-to-many or many-to-one relationships automatically. Multiple Police statements can share a parent event, and multiple NVR events can occur on the same date.
+5. Compare species as an explicit gate. If both sources provide known species and they disagree, exclude the pair and write it to the optional excluded-pairs CSV with `known_species_conflict`. If either source has missing, generic, or unknown species, retain the pair with `species_evidence=unknown`; do not treat missing species as a disagreement. If species overlap, record `species_evidence=match`. Multi-species NVR events match when at least one species overlaps.
+6. Record time bands: within 15 minutes, within 1 hour, within configured window (default 180 minutes), same-date time conflict, or time unavailable. Missing Police time is always classified as unavailable; it is not treated as a conflict with a known NVR time. A pair without Police time remains a date-only weak candidate even if species matches; species is supporting evidence, not a substitute for temporal evidence.
+7. Add text-term evidence. Road/place fields on NVR are optional and will be empty until the separately versioned NVR location-enrichment output is joined.
+8. Keep all same-date pairs with compatible or unknown species, including time conflicts, for audit; do not discard a pair solely because its time differs.
+9. Do not resolve one-to-many or many-to-one relationships automatically. Multiple Police statements can share a parent event, and multiple NVR events can occur on the same date.
 
 The score is an ordinal candidate-priority aid, not a probability. It must not be interpreted as match confidence until calibrated against manually reviewed positive and negative pairs.
 
@@ -36,7 +37,7 @@ Run:
 ```bash
 python scripts/match_police_nvr_temporal.py --police data/police_events/lulea_review_candidates.csv --nvr /path/to/nvr-accidents.csv --output /path/to/lulea-police-nvr-temporal-candidates.csv --report /path/to/lulea-police-nvr-temporal-audit.json
 ```
-The CSV contains candidate pairs and evidence fields. The optional JSON report counts Police statements and NVR events with zero, one, or multiple candidate links, including Police statements with no valid occurrence date. It is a local derived file and must not be committed with row-level data. Each Police statement is identified by `police_candidate_id` (parent event ID plus occurrence index), so two statements under the same Police event remain distinct.
+The candidate CSV contains eligible pairs and evidence fields. Use `--excluded-output /path/to/species-excluded.csv` to retain pairs excluded by known species conflict. The optional JSON report counts Police statements and NVR events with zero, one, or multiple candidate links, including Police statements with no valid occurrence date. It is a local derived file and must not be committed with row-level data. Each Police statement is identified by `police_candidate_id` (parent event ID plus occurrence index), so two statements under the same Police event remain distinct.
 
 ## Known limitations and validation
 - NVR reports can lag by up to two months; absence of a same-date NVR event is not evidence that the Police event did not occur.
@@ -44,6 +45,7 @@ The CSV contains candidate pairs and evidence fields. The optional JSON report c
 - Police date basis must be inspected. A date inferred from a night summary can be less certain than a clearly stated occurrence date; retain `occurrence_date_basis`.
 - Clock times may be rounded, delayed, or reflect a report time rather than exact collision time. The 15/60/180-minute bands are provisional review categories, not validated thresholds.
 - A single date may contain several collisions in Luleå. Date alone is not enough to choose one.
+- Species values must be normalized consistently. A known species conflict is a strong exclusion signal, but missing or generic species is not. Review any multi-species or ambiguous source values.
 - Text token overlap is weak evidence and not a geocoder. No geography is used by this first version.
 - The current Police extractor may have false positive text candidates; manual review is required before matching.
 

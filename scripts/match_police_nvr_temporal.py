@@ -32,6 +32,16 @@ def text_terms(text):
 def split_values(value):
     return [x.strip() for x in (value or "").split(";") if x.strip()]
 
+UNKNOWN_SPECIES = {"", "okänd", "okänt", "okanda", "okända", "unknown", "vilt", "djur", "övrigt", "övriga", "däggdjur"}
+
+def species_relation(police_species, nvr_species):
+    """Return match, conflict, or unknown; only explicit known disagreement excludes."""
+    police = {norm(x) for x in split_values(police_species)} - UNKNOWN_SPECIES
+    nvr = {norm(x) for x in split_values(nvr_species)} - UNKNOWN_SPECIES
+    if not police or not nvr:
+        return "unknown"
+    return "match" if police & nvr else "conflict"
+
 def clock_delta_minutes(left, right):
     """Absolute wall-clock difference, ignoring the calendar date."""
     a = left.hour * 60 + left.minute
@@ -42,7 +52,7 @@ def elapsed_delta_minutes(left, right):
     """Absolute elapsed-time difference between complete timestamps."""
     return abs((left - right).total_seconds()) / 60
 
-def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_window_days=1):
+def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_window_days=1, excluded_rows=None):
     # NVR rows must already be event-level (one row per year-qualified accident_key).
     nvr = []
     for row in nvr_rows:
@@ -52,6 +62,7 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
         nvr.append({**row, "_dts": dts, "_municipalities": {norm(x) for x in split_values(row.get("source_municipalities"))},
                     "_species": {norm(x) for x in split_values(row.get("species"))}})
     output = []
+    excluded_rows = excluded_rows if excluded_rows is not None else []
     for police_row_index, p in enumerate(police_rows, start=1):
         occurrence_index = (p.get("occurrence_index") or "").strip()
         police_candidate_id = f"{p.get('parent_event_id', '')}:{occurrence_index or f'row-{police_row_index}'}"
@@ -84,7 +95,23 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
             if not eligible: continue
             _, date_offset, best_ndt, delta, clock_delta = min(eligible, key=lambda x:(x[0], x[1], x[2]))
             n_species = n["_species"]
-            species_match = bool(p_species and p_species in n_species)
+            species_state = species_relation(p.get("species", ""), n.get("species", ""))
+            species_match = species_state == "match"
+            if species_state == "conflict":
+                excluded_rows.append({
+                    "police_candidate_id": police_candidate_id,
+                    "police_event_id": p.get("parent_event_id", ""),
+                    "police_occurrence_index": occurrence_index,
+                    "police_occurrence_date": pdate,
+                    "police_occurrence_time": ptime,
+                    "police_species": p.get("species", ""),
+                    "nvr_accident_key": n.get("accident_key", ""),
+                    "nvr_olycks_id": n.get("OlycksID", ""),
+                    "nvr_event_datetime_values": n.get("event_datetime_values", ""),
+                    "nvr_species": n.get("species", ""),
+                    "exclusion_reason": "known_species_conflict",
+                })
+                continue
             n_roads, n_words = text_terms(" ".join([n.get("species",""), n.get("source_municipalities",""), n.get("road_name",""), n.get("place_name","")]))
             shared_roads = sorted(p_roads & n_roads)
             shared_terms = sorted((p_words & n_words) - {"luleå"})
@@ -117,7 +144,7 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
                 "time_delta_minutes": "" if delta is None else round(delta,1),
                 "absolute_datetime_delta_minutes": "" if delta is None else round(delta,1),
                 "clock_time_delta_minutes": "" if clock_delta is None else round(clock_delta,1),
-                "time_band": time_band, "species_match": species_match,
+                "time_band": time_band, "species_match": species_match, "species_evidence": species_state,
                 "shared_road_terms": ";".join(shared_roads), "shared_text_terms": ";".join(shared_terms[:10]),
                 "candidate_score": score, "candidate_status": status,
                 "geographic_match_used": False, "review_status": "unreviewed",
@@ -125,7 +152,7 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
     output.sort(key=lambda r:(r["police_occurrence_date"],r["police_event_id"],-r["candidate_score"],r["nvr_accident_key"]))
     return output
 
-def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes=180, date_window_days=1):
+def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes=180, date_window_days=1, excluded_rows=None):
     """Summarize candidate multiplicity, including source rows with zero matches."""
     police_ids = []
     for index, row in enumerate(police_rows, start=1):
@@ -153,11 +180,12 @@ def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes
         "nvr_event_count": len(nvr_keys),
         "nvr_event_candidate_distribution": distribution(nvr_keys, nvr_counts),
         "candidate_pair_count": len(candidates),
+        "excluded_known_species_conflict_count": len(excluded_rows or []),
         "candidate_status_counts": dict(sorted(Counter(row["candidate_status"] for row in candidates).items())),
         "date_window_days_after_police_date": date_window_days,
         "max_time_delta_minutes": max_time_delta_minutes,
         "next_day_rollover_candidate_count": sum(row.get("date_offset_days") == 1 for row in candidates),
-        "interpretation": "Police occurrence dates may be preliminary or one calendar day early. Time differences use absolute elapsed time between full timestamps; clock-time differences are diagnostic only. Next-day candidates remain review-only; no candidate is automatically confirmed. Zero candidates do not prove that no collision occurred.",
+        "interpretation": "Police occurrence dates may be preliminary or one calendar day early. Time differences use absolute elapsed time between full timestamps; clock-time differences are diagnostic only. Explicit disagreement between two known species excludes a pair; missing or generic species remains eligible with unknown species evidence. Next-day candidates remain review-only; no candidate is automatically confirmed. Zero candidates do not prove that no collision occurred.",
     }
 
 def write_audit_report(report, path):
@@ -176,19 +204,27 @@ def main():
     ap.add_argument("--max-time-delta-minutes",type=int,default=180)
     ap.add_argument("--date-window-days",type=int,default=1,help="Also consider NVR events up to this many calendar days after the Police date; default 1")
     ap.add_argument("--report",type=Path,help="Optional JSON audit report including zero/one/multiple candidate counts")
+    ap.add_argument("--excluded-output",type=Path,help="Optional CSV of pairs excluded because both sources specify different known species")
     args=ap.parse_args()
     if args.max_time_delta_minutes < 0: ap.error("--max-time-delta-minutes must be non-negative")
     if args.date_window_days < 0: ap.error("--date-window-days must be non-negative")
     police_rows=read_csv(args.police)
     nvr_rows=read_csv(args.nvr)
-    rows=build_candidates(police_rows,nvr_rows,args.max_time_delta_minutes,args.date_window_days)
+    excluded_rows=[]
+    rows=build_candidates(police_rows,nvr_rows,args.max_time_delta_minutes,args.date_window_days,excluded_rows)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     fields=list(rows[0]) if rows else ["police_candidate_id","police_event_id","police_occurrence_index","police_occurrence_date","nvr_accident_key","same_date","date_offset_days","date_relation","time_delta_minutes","candidate_score","candidate_status","review_status"]
     with args.output.open("w",encoding="utf-8-sig",newline="") as f:
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
-    summary={"status":"completed","candidate_pairs":len(rows),"status_counts":dict(Counter(r["candidate_status"] for r in rows)),"output":str(args.output)}
+    summary={"status":"completed","candidate_pairs":len(rows),"excluded_species_conflict_pairs":len(excluded_rows),"status_counts":dict(Counter(r["candidate_status"] for r in rows)),"output":str(args.output)}
+    if args.excluded_output:
+        args.excluded_output.parent.mkdir(parents=True,exist_ok=True)
+        excluded_fields=list(excluded_rows[0]) if excluded_rows else ["police_candidate_id","police_event_id","police_occurrence_index","police_occurrence_date","police_occurrence_time","police_species","nvr_accident_key","nvr_olycks_id","nvr_event_datetime_values","nvr_species","exclusion_reason"]
+        with args.excluded_output.open("w",encoding="utf-8-sig",newline="") as f:
+            w=csv.DictWriter(f,fieldnames=excluded_fields);w.writeheader();w.writerows(excluded_rows)
+        summary["excluded_output"]=str(args.excluded_output)
     if args.report:
-        report=build_audit_report(police_rows,nvr_rows,rows,args.max_time_delta_minutes,args.date_window_days)
+        report=build_audit_report(police_rows,nvr_rows,rows,args.max_time_delta_minutes,args.date_window_days,excluded_rows)
         write_audit_report(report, args.report)
         summary["report"]=str(args.report)
     print(json.dumps(summary,ensure_ascii=False,sort_keys=True))
