@@ -97,27 +97,32 @@ def extract(row: dict) -> list[dict]:
     out = []
     seen = set()
 
-    # Preserve the established line-based extraction for ordinary events,
-    # but split a wildlife line at every explicit timestamp when a summary
-    # contains multiple timestamped statements on that same physical line.
+    # Ordinary timestamped events retain the original line-based behavior.
+    # Only summary records are expanded at multiple timestamps within a line.
+    is_summary = row.get("is_summary", "").casefold() == "true" or "sammanfattning" in " ".join(
+        str(row.get(k, "")) for k in ("type_original", "headline", "description")
+    ).casefold()
+
     for i, line in enumerate(lines):
         if not WILDLIFE_RE.search(line):
             continue
+
         time_matches = list(TIME_RE.finditer(line))
         if not time_matches:
             segments = [(None, line)]
-        else:
+        elif is_summary:
             segments = []
             for j, tm in enumerate(time_matches):
                 seg_end = time_matches[j + 1].start() if j + 1 < len(time_matches) else len(line)
-                segment = line[tm.start():seg_end].strip(" -–—")
-                if WILDLIFE_RE.search(segment):
-                    segments.append((tm, segment))
+                own_segment = line[tm.start():seg_end].strip(" -–—")
+                if WILDLIFE_RE.search(own_segment):
+                    segments.append((tm, own_segment))
+        else:
+            tm = time_matches[0]
+            segments = [(tm, line)]
 
         for tm, own_segment in segments:
             details = [own_segment]
-            # Preserve following descriptive lines, but stop at the next
-            # timestamped wildlife statement or any new timestamp marker.
             for nxt in lines[i + 1:i + 3]:
                 if TIME_RE.search(nxt):
                     break
@@ -141,7 +146,7 @@ def extract(row: dict) -> list[dict]:
                 "place_text": segment[:500],
                 "description": segment,
                 "source_link": row.get("external_source_link", ""),
-                "extraction_method": "wildlife_time_segment_v2" if tm else "wildlife_text_line_v1",
+                "extraction_method": "wildlife_time_segment_v2" if tm and is_summary else "wildlife_text_line_v1",
                 "confidence": "review",
                 "occurrence_index": "",
             })
