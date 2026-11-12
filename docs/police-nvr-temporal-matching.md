@@ -19,7 +19,7 @@ Same municipality + same date creates a candidate pair, not a confirmed match. A
 2. Require Luleå on both sides for this Luleå pilot.
 3. Generate all pairs on the same calendar date.
 4. If Police time is available, compare it with each NVR event time on that date and retain the minimum absolute difference.
-5. Record time bands: within 15 minutes, within 1 hour, within configured window (default 180 minutes), same-date time conflict, or time unavailable.
+5. Record time bands: within 15 minutes, within 1 hour, within configured window (default 180 minutes), same-date time conflict, or time unavailable. Missing Police time is always classified as unavailable; it is not treated as a conflict with a known NVR time.
 6. Add species and text-term evidence. Road/place fields on NVR are optional and will be empty until the separately versioned NVR location-enrichment output is joined.
 7. Keep all same-date pairs, including time conflicts, for audit; do not discard a pair solely because its time differs.
 8. Do not resolve one-to-many or many-to-one relationships automatically. Multiple Police statements can share a parent event, and multiple NVR events can occur on the same date.
