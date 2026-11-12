@@ -97,30 +97,35 @@ def extract(row: dict) -> list[dict]:
     out = []
     seen = set()
 
-    # Expand every timestamped wildlife statement inside a source event.
-    # A summary may contain several occurrences on one physical line, so split
-    # the complete text at each time marker rather than taking only the first
-    # time on each line. The original parent event remains unchanged.
+    # Split only on explicit time markers that introduce a new wildlife
+    # statement. Other clock times (for example a period/range in prose) must
+    # not create empty or duplicate child rows.
     time_matches = list(TIME_RE.finditer(body))
-    for i, tm in enumerate(time_matches):
-        segment_end = time_matches[i + 1].start() if i + 1 < len(time_matches) else len(body)
-        segment = body[tm.start():segment_end].strip(" \n-–—")
+    statement_starts = []
+    for tm in time_matches:
+        tail = body[tm.start():]
+        next_time = TIME_RE.search(body, tm.end())
+        end = next_time.start() if next_time else len(body)
+        segment = tail[:end - tm.start()].strip(" \n-–—")
+        prefix = body[max(0, tm.start() - 40):tm.start()]
         if not WILDLIFE_RE.search(segment):
             continue
-
-        # A clock range is not itself an incident timestamp.
-        before = body[max(0, tm.start() - 8):tm.start()]
-        after = body[tm.end():tm.end() + 12]
-        if re.search(r"\b[0-2]?\d[:.]\d{2}\s*[-–—]\s*[0-2]?\d[:.]\d{2}\b",
-                     before + tm.group(0) + after):
+        # Require the time to be a statement lead-in, not a time mentioned
+        # inside a sentence. Accept start of text, punctuation, or whitespace
+        # after a line break / sentence boundary.
+        if prefix and not re.search(r"(?:^|[\n.!?])\s*$", prefix):
             continue
+        statement_starts.append(tm)
 
-        key = (tm.group("time").replace(".", ":"), segment.casefold())
+    for i, tm in enumerate(statement_starts):
+        segment_end = statement_starts[i + 1].start() if i + 1 < len(statement_starts) else len(body)
+        segment = body[tm.start():segment_end].strip(" \n-–—")
+        occurrence_time = tm.group("time").replace(".", ":")
+        occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
+        key = (occurrence_time, segment.casefold())
         if key in seen:
             continue
         seen.add(key)
-        occurrence_time = tm.group("time").replace(".", ":")
-        occurrence_date, date_basis = infer_occurrence_date(row, occurrence_time)
         out.append({
             "parent_event_id": row.get("event_id", ""),
             "publication_date": row.get("date", ""),
