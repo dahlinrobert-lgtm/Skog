@@ -855,7 +855,63 @@ def collect_national_news_inventory_monthly(start_year: int = 2024, max_pages_pe
         "records": records, "complete": all(report["status"] == "ok" and report["terminated_by_two_empty_pages"] for report in monthly_reports),
     }
 
+def build_gis_linkage_inventory(records: list[dict]) -> dict:
+    """Screen articles only against the Trafikverket layers in our snapshot pilot."""
+    import re
+    rules = {
+        "miljowebb_landskap": (
+            r"viltpassage|faunapassage|faunastängsel|utterpassage|groddjur|"
+            r"artrik(?:a|t)? vägkant|invasiv(?:a| art| artss)?|"
+            r"kulturmiljö|kulturarv|vattenfauna|fiskpassage|"
+            r"naturvärde|landskapsvärde|ekologiskt samband|"
+            r"naturmiljö|biologisk mångfald"
+        ),
+        "nvdb_viltolyckor": (
+            r"viltolyck|vilt[a-zåäö]*olyck|älg(?:ar)?|vildsvin|rådjur|"
+            r"ren(?:ar)?|kronhjort|dovhjort|viltstängsel|"
+            r"viltvarning|vilt[a-zåäö]*risk"
+        ),
+    }
+    route_pattern = r"(?:\bE[ ]?[0-9]{1,2}\b|\bväg[ ]?[0-9]{1,4}\b|\briksväg[ ]?[0-9]{1,3}\b|\blänsväg[ ]?[0-9]{1,4}\b)"
+    results = []
+    totals = {key: 0 for key in rules}
+    route_reference_count = 0
+    for record in records:
+        fields = [record.get(key) or '' for key in ('title', 'preamble', 'category', 'url')]
+        article_text = ' '.join(str(value) for value in fields)
+        matches = [key for key, pattern in rules.items() if re.search(pattern, article_text, flags=re.IGNORECASE)]
+        for key in matches:
+            totals[key] += 1
+        route_refs = sorted(set(
+            re.sub(r"\s+", "", match.group(0)).upper()
+            for match in re.finditer(route_pattern, article_text, flags=re.IGNORECASE)
+        ))
+        if route_refs:
+            route_reference_count += 1
+        results.append({
+            'title': record.get('title'), 'url': record.get('url'),
+            'published_date': record.get('published_date'), 'category': record.get('category'),
+            'candidate_gis_layers': matches, 'route_references': route_refs,
+            'linkage_status': 'thematic_candidate_only' if matches else 'unclassified',
+            'snapshot_layer_scope': ['Miljöwebb Landskap', 'NVDB Viltolyckor'],
+        })
+    return {
+        'method': 'keyword_rules_title_preamble_category_url',
+        'scope': {
+            'miljowebb_landskap': 'MWLEXGEO/MiljowebbGeo MapServer feature layers included in Trafikverket snapshots',
+            'nvdb_viltolyckor': 'Seven NVDB road-link wildlife accident-frequency layers included in Trafikverket snapshots',
+            'route_references': 'Textual route clues only; not a road-network feature match',
+        },
+        'warning': 'Thematic candidates only. No coordinates, geometry intersection, road-link ID or verified feature match is inferred from news text.',
+        'candidate_counts_overlapping': totals,
+        'records': results,
+        'records_with_any_candidate': sum(bool(row['candidate_gis_layers']) for row in results),
+        'records_with_route_reference': route_reference_count,
+    }
+
 def main() -> None:
+    monthly_inventory = collect_national_news_inventory_monthly(start_year=2024)
+    gis_linkage_inventory = build_gis_linkage_inventory(monthly_inventory["records"])
     html, final_url = fetch(ARCHIVE_URL)
     archive = parse_archive(html)
     report = {
@@ -882,7 +938,8 @@ def main() -> None:
         "national_monthly_pagination_repeatability": diagnose_monthly_pagination_repeatability(),
         "national_monthly_pages_after_empty": diagnose_monthly_pages_after_empty(),
         "national_news_inventory_from_2024": collect_national_news_inventory(start_year=2024),
-        "national_monthly_news_inventory_from_2024": collect_national_news_inventory_monthly(start_year=2024),
+        "national_monthly_news_inventory_from_2024": monthly_inventory,
+        "national_news_gis_linkage_inventory": gis_linkage_inventory,
         "limitations": [
             "This probe does not assume an undocumented pagination parameter.",
             "It does not download article bodies; the next implementation step depends on the discovered public links and paging mechanism.",
