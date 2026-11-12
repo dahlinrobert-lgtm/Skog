@@ -13,18 +13,32 @@ class TemporalMatchTests(unittest.TestCase):
         self.assertEqual(len(rows),1);self.assertEqual(rows[0]["time_delta_minutes"],5.0)
         self.assertTrue(rows[0]["species_match"]);self.assertEqual(rows[0]["candidate_status"],"temporal_candidate_review")
         self.assertFalse(rows[0]["geographic_match_used"])
+        self.assertEqual(rows[0]["date_offset_days"],0)
+    def test_next_day_same_clock_time_is_rollover_candidate(self):
+        self.nvr[0]["event_datetime_values"]="2026-09-01 00:18"
+        rows=M.build_candidates(self.police,self.nvr)
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["date_offset_days"],1)
+        self.assertEqual(rows[0]["date_relation"],"nvr_next_day")
+        self.assertEqual(rows[0]["time_delta_minutes"],5.0)
+        self.assertEqual(rows[0]["candidate_status"],"next_day_rollover_review")
+        self.assertEqual(rows[0]["absolute_datetime_delta_minutes"],1445.0)
+    def test_next_day_large_clock_conflict_remains_flagged(self):
+        self.nvr[0]["event_datetime_values"]="2026-09-01 12:00"
+        rows=M.build_candidates(self.police,self.nvr)
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["candidate_status"],"next_day_time_conflict_review")
     def test_same_date_only_is_kept_as_weak_candidate(self):
         self.police[0]["occurrence_time"]=""
-        # Remove the explicit clock from the narrative too: this is genuinely date-only.
         self.police[0]["description"]="Viltolycka på länsväg 383, Smedsbyn"
         self.nvr[0]["event_datetime_values"]="2026-08-31 23:50"
         rows=M.build_candidates(self.police,self.nvr)
-        self.assertEqual(len(rows),1);self.assertEqual(rows[0]["time_band"],"same_date_time_unavailable")
+        self.assertEqual(len(rows),1);self.assertEqual(rows[0]["time_band"],"time_unavailable")
         self.assertEqual(rows[0]["candidate_status"],"date_only_weak_candidate")
         self.assertTrue(rows[0]["species_match"])
         self.assertEqual(rows[0]["time_delta_minutes"],"")
-    def test_wrong_date_does_not_match(self):
-        self.nvr[0]["event_datetime_values"]="2026-09-01 00:18"
+    def test_wrong_date_beyond_window_does_not_match(self):
+        self.nvr[0]["event_datetime_values"]="2026-09-02 00:18"
         self.assertEqual(M.build_candidates(self.police,self.nvr),[])
     def test_other_municipality_is_not_candidate(self):
         self.nvr[0]["source_municipalities"]="Boden"
