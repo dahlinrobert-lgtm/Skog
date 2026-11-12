@@ -21,6 +21,7 @@ class TemporalMatchTests(unittest.TestCase):
         rows=M.build_candidates(self.police,self.nvr)
         self.assertEqual(len(rows),1);self.assertEqual(rows[0]["time_band"],"same_date_time_unavailable")
         self.assertEqual(rows[0]["candidate_status"],"date_only_weak_candidate")
+        self.assertTrue(rows[0]["species_match"])
         self.assertEqual(rows[0]["time_delta_minutes"],"")
     def test_wrong_date_does_not_match(self):
         self.nvr[0]["event_datetime_values"]="2026-09-01 00:18"
