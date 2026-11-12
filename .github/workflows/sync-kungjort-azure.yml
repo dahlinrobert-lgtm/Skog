@@ -122,7 +122,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Run direct-to-Azure synchronization
-        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report' && steps.mode.outputs.mode != 'selection-report' && steps.mode.outputs.mode != 'relationship-report' && steps.mode.outputs.mode != 'work-id-report' && steps.mode.outputs.mode != 'hierarchy-report'
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode != 'schema-report' && steps.mode.outputs.mode != 'selection-report' && steps.mode.outputs.mode != 'organization-report' && steps.mode.outputs.mode != 'relationship-report' && steps.mode.outputs.mode != 'work-id-report' && steps.mode.outputs.mode != 'hierarchy-report'
         env:
           KUNGJORT_API_KEY: ${{ secrets.KUNGJORT_API_KEY }}
         run: |
@@ -156,6 +156,20 @@ jobs:
         with:
           name: kungjort-planning-selection-summary
           path: selection-report-export/selection-summary.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Export private organizational value audit
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'organization-report'
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/kungjort_organization_value_audit.py scripts/kungjort_selection_inventory.py
+          python scripts/kungjort_organization_value_audit.py --max-batches "${{ steps.mode.outputs.selection_max_batches }}"
+      - name: Upload aggregate organizational value summary
+        if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'organization-report'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kungjort-organization-value-summary
+          path: organization-report-export/organization-summary.json
           if-no-files-found: error
           retention-days: 14
       - name: Export private planning reference coverage audit
