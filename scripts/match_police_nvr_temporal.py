@@ -77,8 +77,8 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180):
             score += 20 if species_match else 0
             score += 15 if shared_roads else 0
             score += 5 if shared_terms else 0
-            if delta is not None and delta > max_time_delta_minutes: status = "same_date_time_conflict_review"
-            elif delta is None and not species_match: status = "date_only_weak_candidate"
+            if pdt is None: status = "date_only_weak_candidate"
+            elif delta is not None and delta > max_time_delta_minutes: status = "same_date_time_conflict_review"
             else: status = "temporal_candidate_review"
             output.append({
                 "police_event_id": p.get("parent_event_id",""), "police_occurrence_date": pdate,
