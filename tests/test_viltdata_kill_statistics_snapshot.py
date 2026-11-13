@@ -6,16 +6,14 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from viltdata_kill_statistics_snapshot import (
-    build_statistics_url,
-    get_start_year,
-    validate_statistics,
+    build_statistics_url, chunk_items, get_start_year, validate_statistics,
 )
 
 
 class ViltdataKillSnapshotTests(unittest.TestCase):
     def test_builds_multi_species_kill_query_and_county_filter(self):
         url = build_statistics_url(
-            [{"id": 48, "name": "Rådjur"}, {"id": 37, "name": "Kronhjort"}],
+            [{"id": 48, "name": "Rådjur\r\n"}, {"id": 37, "name": "Kronhjort"}],
             1960, 2025, {"id": 1, "name": "Stockholms län"},
         )
         self.assertIn("StatisticsReportType=kill", url)
@@ -23,6 +21,13 @@ class ViltdataKillSnapshotTests(unittest.TestCase):
         self.assertIn("Species%5B1%5D%5BID%5D=37", url)
         self.assertIn("Counties%5B0%5D%5Bid%5D=1", url)
         self.assertIn("R%C3%A5djur", url)
+        self.assertNotIn("%0D", url)
+        self.assertNotIn("%0A", url)
+
+    def test_species_are_split_into_small_batches(self):
+        self.assertEqual(chunk_items(list(range(5)), 2), [[0, 1], [2, 3], [4]])
+        with self.assertRaises(ValueError):
+            chunk_items([1], 0)
 
     def test_start_year_uses_model_value(self):
         self.assertEqual(get_start_year({"avskjutning": {"Nationellt": 1939}}, ["Nationellt"], 1900), 1939)
