@@ -1,29 +1,33 @@
 # Viltdata – avskjutningssnapshots
 
-Första statistikpiloten fokuserar på publik aggregerad avskjutning (`StatisticsReportType=kill`). Den är separat från geografiinventeringen och hämtar inte privata jaktlagsuppgifter.
+Första statistikpiloten fokuserar på publik aggregerad avskjutning (`StatisticsReportType=kill`). Den hämtar inte privata jaktlagsuppgifter.
 
 ## Körning
 
 Kräver Python 3.10+ och inga externa paket.
 
 ```powershell
-# Begränsat test: nationellt + första länet
-python scripts/viltdata_kill_statistics_snapshot.py --max-counties 1
+# Snabbt API-test: två arter, nationellt + första länet
+python scripts/viltdata_kill_statistics_snapshot.py --max-species 2 --max-counties 1
 
-# Full pilot: nationellt + samtliga län
+# Full pilot: alla arter i små batchar, nationellt + samtliga län
 python scripts/viltdata_kill_statistics_snapshot.py
 ```
 
-Skriptet hämtar `GetStatisticsModel`, väljer alla arter med `enableForKill=true`, hämtar länslistan och begär en nationell serie samt en serie per län. Hela tillgängliga perioden hämtas från modellens startår till dess aktiva år. Modellen och länslistan sparas också som rå JSON.
+Skriptet hämtar `GetStatisticsModel`, väljer alla arter med `enableForKill=true`, hämtar länslistan och begär hela tillgängliga perioden. Artnamnen trimmas från inledande/avslutande blanktecken eftersom modellsvaret innehåller radbrytningar i vissa namn.
+
+## Batchning
+
+API-anropen görs som GET-anrop. För att hålla URL:erna korta skickas som standard två arter per statistikfråga. Med 49 arter blir det 25 batchar per geografiskt scope. `--species-batch-size` kan ändra batchstorleken efter verifiering. `--max-species` och `--max-counties` är avsedda för pilotkörningar och gör att körningen markeras `partial`.
 
 ## Lagring och validering
 
-Varje körning får en egen UTC-tidsstämplad katalog under `data/viltdata/kill-statistics/`. Råsvaret sparas oförändrat per scope. Manifestet innehåller URL/parametrar, hämtningstid, HTTP-status, Content-Type, SHA-256, filstorlek, antal årsetiketter och antal dataserier.
+Varje körning får en egen UTC-tidsstämplad katalog under `data/viltdata/kill-statistics/`. Varje råsvar sparas separat med URL, hämtningstid, HTTP-status, Content-Type, SHA-256, filstorlek och valideringsräkningar.
 
-- `null` behålls som null; det konverteras aldrig till noll.
-- Ett svar måste vara JSON och innehålla icke-tomma `labels` och `dataSets`.
+- `null` bevaras och konverteras aldrig till noll.
+- Svar måste vara JSON med icke-tomma `labels` och `dataSets`.
 - Varje dataseries längd måste motsvara antalet etiketter.
-- En ofullständig körning markeras `partial` och får inte användas som komplett jämförelsebas.
+- Ofullständiga körningar markeras `partial` och får inte användas som komplett jämförelsebas.
 - Befintliga körningar skrivs aldrig över.
 
 ## Test
@@ -32,8 +36,4 @@ Varje körning får en egen UTC-tidsstämplad katalog under `data/viltdata/kill-
 python -m unittest discover -s tests -p "test_viltdata_kill_statistics_snapshot.py" -v
 ```
 
-## Avsiktlig begränsning i första piloten
-
-Detta är rapporterad avskjutning, inte en inventering eller skattning av viltbestånd. Första piloten omfattar nationell nivå och länsnivå. ÄFO, delområden, jaktområden och kretsar samt andra statistiktyper hanteras i senare steg efter att anropsmönster och datavolymer verifierats.
-
-Ingen schemaläggning aktiveras av denna implementation. Först ska en full pilotkörning verifieras och jämförelselogiken byggas/testas.
+Ingen schemaläggning aktiveras innan full pilot och snapshot-jämförelse har verifierats.
