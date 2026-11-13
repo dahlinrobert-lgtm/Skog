@@ -8,7 +8,7 @@ The diff tool compares two complete immutable snapshots produced by
 From the repository root:
 
 ```powershell
-python -m unittest tests.test_viltdata_kill_statistics_diff -v
+python -m unittest discover -s tests -p "test_viltdata_kill_statistics_diff.py" -v
 
 python scripts/viltdata_kill_statistics_diff.py `
   data/viltdata/kill-statistics/20261113T170433Z `
