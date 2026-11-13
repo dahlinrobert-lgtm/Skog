@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
   "generated_from": "data/lansstyrelsen-diary/case-details.json",
-  "case_count": 578,
-  "lead_count": 512,
+  "case_count": 608,
+  "lead_count": 541,
   "category_counts": {
-    "A": 53,
-    "B": 512
+    "A": 56,
+    "B": 541
   },
   "action_type_counts": {
-    "water_activity_general": 512,
+    "water_activity_general": 541,
     "excavation_or_groundwork": 16,
     "watercourse_modification": 23,
     "road_or_track": 25,
     "drainage_or_ditch": 14,
-    "wetland_or_restoration": 6,
-    "construction_or_facility": 6,
-    "line_or_cable": 10,
+    "wetland_or_restoration": 7,
+    "construction_or_facility": 8,
+    "line_or_cable": 11,
     "culvert_or_crossing": 21
   },
   "leads": [
@@ -38006,6 +38006,12 @@
           "text_kind": "handling_title",
           "date": "2026-09-03",
           "matched_text": "Yttrande över komplettering"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-11-12",
+          "matched_text": "Föreläggande om handlingar"
         }
       ],
       "evidence_level": "title_and_handling_metadata_only",
@@ -38310,9 +38316,9 @@
       "diary": "Länsstyrelsen i Hallands län",
       "diary_number": "3444-2026",
       "title": "Kompletterande yttrande ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun",
-      "status": "Avslutat",
-      "registered_date": "2026-05-12",
-      "decision_date": "2026-05-13",
+      "status": "",
+      "registered_date": "",
+      "decision_date": "",
       "municipality": "",
       "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5493665",
       "categories": [
@@ -38328,7 +38334,7 @@
           "category": "A",
           "action_type": "construction_or_facility",
           "text_kind": "case_title",
-          "date": "2026-05-12",
+          "date": "",
           "matched_text": "Kompletterande yttrande ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun",
           "rule_version": "1.0.0"
         },
@@ -38336,7 +38342,7 @@
           "category": "B",
           "action_type": "water_activity_general",
           "text_kind": "case_title",
-          "date": "2026-05-12",
+          "date": "",
           "matched_text": "Kompletterande yttrande ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun",
           "rule_version": "1.0.0"
         }
@@ -38345,26 +38351,20 @@
         {
           "stage": "application_or_notification",
           "text_kind": "case_title",
-          "date": "2026-05-12",
+          "date": "",
           "matched_text": "Kompletterande yttrande ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun"
         },
         {
           "stage": "opinion_or_consultation",
           "text_kind": "case_title",
-          "date": "2026-05-12",
+          "date": "",
           "matched_text": "Kompletterande yttrande ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun"
         },
         {
           "stage": "decision_or_conditions",
           "text_kind": "case_title",
-          "date": "2026-05-12",
+          "date": "",
           "matched_text": "Kompletterande yttrande ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun"
-        },
-        {
-          "stage": "opinion_or_consultation",
-          "text_kind": "handling_title",
-          "date": "2026-05-13",
-          "matched_text": "Länsstyrelsens kompletterande yttrande"
         }
       ],
       "evidence_level": "title_and_handling_metadata_only",
@@ -41267,6 +41267,3263 @@
           "matched_text": "Begäran om yttrande"
         }
       ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "6522-2022",
+      "title": "Omprövning av vattenverksamhet i Hovgårdsån vid Knobesholms kraftverk i Falkenbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2022-09-21",
+      "decision_date": "",
+      "municipality": "Falkenberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4179653",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2022-09-21",
+          "matched_text": "Omprövning av vattenverksamhet i Hovgårdsån vid Knobesholms kraftverk i Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2022-09-21",
+          "matched_text": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet i Hovgårdsån vid Knobesholms kraftverk i Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-01-13",
+          "matched_text": "Dom om omprövning av vattenverksamhet",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2022-10-11",
+          "matched_text": "Yttrande över remiss gällande komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2022-10-11",
+          "matched_text": "Yttrande över remiss gällande komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-06-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2023-06-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-06-29",
+          "matched_text": "Yttrande över inkomna kompletteringar samt behov av Natura 2000-tillstånd"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2023-06-29",
+          "matched_text": "Yttrande över inkomna kompletteringar samt behov av Natura 2000-tillstånd"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-07-11",
+          "matched_text": "Meddelande om godkännande av yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-08-08",
+          "matched_text": "Meddelande om godkännande av yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-02-09",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-05-30",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-05-30",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-06-05",
+          "matched_text": "Tjänsteanteckning om godkännande av yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-10-04",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-10-04",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-10-14",
+          "matched_text": "Kungörelse av ansökan"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-10-17",
+          "matched_text": "Komplettering med ny Kungörelse"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-11-20",
+          "matched_text": "Underrättelse om uttalande inför omprövning"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-11-25",
+          "matched_text": "Yttrande över underrättelse"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-11-25",
+          "matched_text": "Yttrande över underrättelse"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-11-29",
+          "matched_text": "Yttrande efter huvudförhandling"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-12-05",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-04-11",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-04-11",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-04-16",
+          "matched_text": "Underrättelse om beviljat anstånd"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-06-12",
+          "matched_text": "Yttrande över överklagan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-12-16",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-12-16",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-01-16",
+          "matched_text": "Yttrande över aktbilaga 23"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-01-21",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-05",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-02-05",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-13",
+          "matched_text": "Yttrande över aktbilaga 31"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "6523-2022",
+      "title": "Omprövning av vattenverksamhet i Suseån vid Mostorps kvarn i Halmstads och Falkenbergs kommuner",
+      "status": "Handläggning",
+      "registered_date": "2022-09-21",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4179688",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2022-09-21",
+          "matched_text": "Omprövning av vattenverksamhet i Suseån vid Mostorps kvarn i Halmstads och Falkenbergs kommuner",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2022-09-21",
+          "matched_text": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet i Suseån vid Motorps kvarn i Halmstads och Falkenbergs kommuner",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2022-10-10",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-06-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2023-06-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-06-29",
+          "matched_text": "Yttrande över inlämnade kompletteringar och behov av  Natura 2000-tilstånd"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-07-11",
+          "matched_text": "Meddelande om godkännande av yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-08-08",
+          "matched_text": "Meddelande om godkännande av yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-02-09",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-05-30",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-05-30",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-06-05",
+          "matched_text": "Tjänsteanteckning om godkännande av yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-10-02",
+          "matched_text": "Dom om ansökan den 2 oktober 2024"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-09-04",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-09-04",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-09-09",
+          "matched_text": "Yttrande över vilandeförklaring Mostorp"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-09-23",
+          "matched_text": "Beslut om avslag om vilandeförklaring den 23 september 2025"
+        },
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2025-09-23",
+          "matched_text": "Beslut om avslag om vilandeförklaring den 23 september 2025"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-09-23",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-09-23",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-25",
+          "matched_text": "Komplettering med handlingar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-25",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-30",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-11-11",
+          "matched_text": "Yttrande över aktbilaga 13"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-14",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-08-14",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-11",
+          "matched_text": "Yttrande över aktbilaga 23 m.fl."
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "6525-2022",
+      "title": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet i Suseån vid Bobergs kraftstation i Falkenbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2022-09-21",
+      "decision_date": "",
+      "municipality": "Falkenberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4179711",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2022-09-21",
+          "matched_text": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet i Suseån vid Bobergs kraftstation i Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2022-09-21",
+          "matched_text": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet i Suseån vid Bobergs kraftstation i Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2022-10-11",
+          "matched_text": "Yttrande över remiss gällande kompletteringsbehov"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-06-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2023-06-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-06-29",
+          "matched_text": "Yttrande över inlämnade kompletteringar samt behov av Natura 2000-tillstånd"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2023-06-29",
+          "matched_text": "Yttrande över inlämnade kompletteringar samt behov av Natura 2000-tillstånd"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-07-11",
+          "matched_text": "Meddelande om godkännande av yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-08-08",
+          "matched_text": "Meddelande om godkännande av yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-02-09",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-05-31",
+          "matched_text": "Yttrande över ansökan och miljökonsekvensbeskrivningen"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-05-31",
+          "matched_text": "Yttrande över ansökan och miljökonsekvensbeskrivningen"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-05-30",
+          "matched_text": "Meddelande om godkännande av yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-09-26",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-09-26",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-10-14",
+          "matched_text": "Kungörelse över ansökan"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-10-17",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-11-15",
+          "matched_text": "Yttrande över kompletteringar"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-12-02",
+          "matched_text": "Yttrande efter huvudförhandling"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-12-05",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-12-05",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-12-10",
+          "matched_text": "Underrättelse om aktbilagor"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-12-16",
+          "matched_text": "Yttrande över aktbilaga 49 och 52"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-12-23",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2025-01-13",
+          "matched_text": "Dom om avvisning den 13 januari 2025"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-04-11",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-04-11",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-04-16",
+          "matched_text": "Underrättelse om beviljat anstånd"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-06-12",
+          "matched_text": "Yttrande över överklagan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-12-16",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-12-16",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-01-16",
+          "matched_text": "Yttrande över aktbilaga 19"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-01-21",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "6727-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet",
+      "status": "Handläggning",
+      "registered_date": "2026-09-18",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5619909",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-18",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-18",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-18",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-18",
+          "matched_text": "Komplettering med länk"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-19",
+          "matched_text": "Komplettering med uppgift"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-21",
+          "matched_text": "Komplettering med handlingar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Komplettering med filmer"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-10-15",
+          "matched_text": "Yttrande"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "6915-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, förlängt dig gällande arbeten i Nissan, Halmstad kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-09-23",
+      "decision_date": "2026-09-28",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5626923",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-23",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, förlängt dig gällande arbeten i Nissan, Halmstad kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-09-23",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, förlängt dig gällande arbeten i Nissan, Halmstad kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Beslut om föreläggande"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7089-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Träslövshamn, Stenhall, Varbergs kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-09-30",
+      "decision_date": "2026-10-02",
+      "municipality": "Varberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5633253",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-30",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Träslövshamn, Stenhall, Varbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-30",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Träslövshamn, Stenhall, Varberg kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-09-30",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Träslövshamn, Stenhall, Varbergs kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-30",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Träslövshamn, Stenhall, Varberg kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-02",
+          "matched_text": "Beslut om bifall"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7109-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vägdike i Anneberg, Kungsbacka kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-10-01",
+      "decision_date": "2026-10-06",
+      "municipality": "Kungsbacka",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5634064",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vägdike i Anneberg, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vägdike i Anneberg, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vägdike i Anneberg, Kungsbacka kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vägdike i Anneberg, Kungsbacka kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-10-02",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-10-05",
+          "matched_text": "Komplettering med uppgifter"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-06",
+          "matched_text": "Begäran om återkallelse av anmälan"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7132-2025",
+      "title": "Begäran om tillsyn av vattenverksamhet, Laholms kommun",
+      "status": "Handläggning",
+      "registered_date": "2025-10-05",
+      "decision_date": "",
+      "municipality": "Laholm",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5274358",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-10-05",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, Laholms kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-10-05",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, Laholms kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-10-23",
+          "matched_text": "Begäran om uppgifter"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-12-04",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-05-06",
+          "matched_text": "Komplettering med uppgifter"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7164-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Litet vattendrag från Gällsjön, Falkenberg kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-10-01",
+      "decision_date": "2026-10-05",
+      "municipality": "Falkenberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5636164",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Litet vattendrag från Gällsjön, Falkenberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Litet vattendrag från Gällsjön, Falkenberg kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Litet vattendrag från Gällsjön, Falkenberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Litet vattendrag från Gällsjön, Falkenberg kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-05",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7223-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Österån, Hylte kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-10-02",
+      "decision_date": "2026-11-02",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5637640",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Österån, Hylte kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Österån, Hylte kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-06",
+          "matched_text": "Meddelande om kopia på anmälan om vattenverksamhet",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Österån, Hylte kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Österån, Hylte kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-06",
+          "matched_text": "Meddelande om kopia på anmälan om vattenverksamhet"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Beslut om bifall"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7340-2026",
+      "title": "Anmälan om vattenverksamhet, Kungsbacka kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-10-07",
+      "decision_date": "2026-11-10",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5641872",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-07",
+          "matched_text": "Anmälan om vattenverksamhet, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-07",
+          "matched_text": "Dom överklagat beslut anmälan om vattenverksamhet, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-07",
+          "matched_text": "Anmälan om vattenverksamhet, Kungsbacka kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-07",
+          "matched_text": "Dom överklagat beslut anmälan om vattenverksamhet, Kungsbacka kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-07",
+          "matched_text": "Dom överklagat beslut anmälan om vattenverksamhet, Kungsbacka kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-11-10",
+          "matched_text": "Beslut om förbud"
+        },
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2026-11-10",
+          "matched_text": "Beslut om förbud"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7496-2023",
+      "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende bergtäkt, återvinningsverksamhet och vattenverksamhet m.m i Falkenbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2023-10-30",
+      "decision_date": "",
+      "municipality": "Falkenberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4565042",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2023-10-30",
+          "matched_text": "Förfrågan om ansökningshandlingar behöver kompletteras avseende bergtäkt, återvinningsverksamhet och vattenverksamhet m.m i Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2023-10-30",
+          "matched_text": "Förfrågan om ansökningshandlingar behöver kompletteras avseende återvinningsverksamhet och vattenverksamhet m.m i Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-12-06",
+          "matched_text": "Länsstyrelsens yttrande till Mark- och miljödomstolen angående behov av kompletteringar"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-05-30",
+          "matched_text": "Länsstyrelsens yttrande till Mark- och miljödomstolen"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-09-23",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-09-23",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-10-14",
+          "matched_text": "Länsstyrelsens yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-10-31",
+          "matched_text": "Länsstyrelsens kompletterande yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-11-01",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-11-01",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-11-04",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2024-11-04",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-01-13",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-01-16",
+          "matched_text": "Dom om tillstånd den 16 januari 2025"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-04-07",
+          "matched_text": "Beslut om avvisning den 2 april 2025"
+        },
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2025-04-07",
+          "matched_text": "Beslut om avvisning den 2 april 2025"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-05-06",
+          "matched_text": "Meddelande om att beslut inte har överklagats"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7534-2026",
+      "title": "Tillsyn av vattenverksamhet",
+      "status": "Handläggning",
+      "registered_date": "2026-09-09",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5648833",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-09",
+          "matched_text": "Tillsyn av vattenverksamhet",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-19",
+          "matched_text": "Föreläggande om att lämna in ansökan om omprövning för moderna miljövillkor avseende vattenverksamhet",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-19",
+          "matched_text": "Föreläggande om att lämna in ansökan om omprövning för moderna miljövillkor avseende vattenverksamhet"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-19",
+          "matched_text": "Föreläggande om att lämna in ansökan om omprövning för moderna miljövillkor avseende vattenverksamhet"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7631-2022",
+      "title": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet mellan Sundsjön och Stensjön vid Ålgårda kraftverk i Kungsbacka kommun",
+      "status": "Handläggning",
+      "registered_date": "2022-11-03",
+      "decision_date": "",
+      "municipality": "Kungsbacka",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4220587",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2022-11-03",
+          "matched_text": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet mellan Sundsjön och Stensjön vid Ålgårda kraftverk i Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2022-11-03",
+          "matched_text": "Förfrågan om ansökningshandlingarna behöver kompletteras i något avseende gällande omprövning av vattenverksamhet mellan Sundsjön och Stensjön vid Ålgårda kraftverk i Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-02-16",
+          "matched_text": "Komplettering med yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-02-16",
+          "matched_text": "Komplettering med yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2023-02-16",
+          "matched_text": "Yttrande över komplettering av ansökan"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-02-16",
+          "matched_text": "Yttrande över komplettering av ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-02-16",
+          "matched_text": "Yttrande över komplettering av ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-08-29",
+          "matched_text": "Yttrande över kompletteringar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-08-29",
+          "matched_text": "Komplettering med handlingar från MMD"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-01-10",
+          "matched_text": "Komplettering med aktbilaga 27"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-01-10",
+          "matched_text": "Komplettering med Aktbilaga 31"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-01-10",
+          "matched_text": "Komplettering med Aktbilaga 30"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-02-29",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-02-29",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2024-03-01",
+          "matched_text": "Beslut om rättelse"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-09-25",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-12-12",
+          "matched_text": "Yttrande över kompletteringar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-07-04",
+          "matched_text": "Komplettering med handlinga"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-08-11",
+          "matched_text": "Komplettering med handlingar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-24",
+          "matched_text": "Komplettering med handlingar"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-09-23",
+          "matched_text": "Yttrande över kompletteringar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-08",
+          "matched_text": "Komplettering med handling"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-12",
+          "matched_text": "Yttrande över komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-12-12",
+          "matched_text": "Yttrande över komplettering"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-15",
+          "matched_text": "Meddelande om föreläggande"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "7859-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Kalmar",
+      "status": "Handläggning",
+      "registered_date": "2026-10-20",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5657657",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-20",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Kalmar",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-20",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Kalmar",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-20",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Kalmar"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-20",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Kalmar"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "79-2025",
+      "title": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun",
+      "status": "Beslutat",
+      "registered_date": "2025-01-03",
+      "decision_date": "2026-09-08",
+      "municipality": "Falkenberg,Halmstad",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4992829",
+      "categories": [
+        "A",
+        "B"
+      ],
+      "action_types": [
+        "construction_or_facility",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "A",
+          "action_type": "construction_or_facility",
+          "text_kind": "case_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "A",
+          "action_type": "construction_or_facility",
+          "text_kind": "handling_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Halmstads kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Halmstads kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Falkenbergs och Halmstads kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Halmstads kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-01-03",
+          "matched_text": "Ansökan om frivilligt tillstånd till miljöfarlig verksamhet och vattenverksamhet för solcellsanläggning Bjernared, Halmstads kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-06-03",
+          "matched_text": "Komplettering av handlingar behövs"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-08-25",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-08-25",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-08-26",
+          "matched_text": "Komplettering av handlingar behövs"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-03",
+          "matched_text": "Föreläggande om komplettering"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-09-03",
+          "matched_text": "Föreläggande om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-24",
+          "matched_text": "Anstånd beviljas med komplettering till den 1 december 2025"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-01",
+          "matched_text": "Komplettering av handlingar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-01",
+          "matched_text": "Komplettering av handlingar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-01",
+          "matched_text": "Komplettering av handlingar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-09",
+          "matched_text": "Föreläggande om komplettering"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-12-09",
+          "matched_text": "Föreläggande om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-01-12",
+          "matched_text": "Komplettering av handlingar"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-01-30",
+          "matched_text": "Kungörelse av ansökan"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-01-30",
+          "matched_text": "Meddelande om kopia av kungörelse av ansökan"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-02-02",
+          "matched_text": "Meddelande om kungörelse av ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-02",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-05",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-06",
+          "matched_text": "Anstånd beviljas med yttrande till den 2 april 2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-16",
+          "matched_text": "Avstår från yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-25",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-02-27",
+          "matched_text": "Begäran om yttrande, kompletterande remiss via e-post"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-02",
+          "matched_text": "Anstånd beviljas med yttrande till den 13 april 2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-04",
+          "matched_text": "Förfrågan om ny remiss har skickats till Försvarsmakten"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-05",
+          "matched_text": "Meddelande om att ny remiss skickats till Försvarsmakten  den 27 februari 2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-10",
+          "matched_text": "Anstånd beviljas med yttrande till den 17 april 2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-23",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-23",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-24",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-27",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-27",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-30",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-30",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-29",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-30",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-03-30",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-30",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-03-30",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-02",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-10",
+          "matched_text": "Begäran om anstånd med yttrande till den 28 april 2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-04-10",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-10",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-10",
+          "matched_text": "Anstånd beviljas med yttrande till den 17 april 2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-16",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-04-16",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-16",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-16",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-04-20",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-20",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-05-07",
+          "matched_text": "Yttrande över underrättelse"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-05-07",
+          "matched_text": "Yttrande över underrättelse"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-05-13",
+          "matched_text": "Länsstyrelsens yttrande till Miljöprövningsdelegationen"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-18",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-18",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-24",
+          "matched_text": "Yttrande över länsstyrelsens yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "2026-09-08 Beslut om bifall med villkor Bjernareds solpark"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "Kungörelse av beslut"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-11",
+          "matched_text": "Meddelande om kopia av kungörelse av beslut som skickats med e-post"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-11",
+          "matched_text": "Kungörelse av beslut i Post- och Inrikes Tidningar"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-11",
+          "matched_text": "Meddelande om kungörelse av beslut"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-11",
+          "matched_text": "Meddelande om kungörelse av beslut"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Korrigerat Meddelande om kopia av kungörelse av beslut skickat som e-post"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8003-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Hylte kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-10-23",
+      "decision_date": "",
+      "municipality": "Hylte",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5662358",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-23",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Hylte kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-23",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Hylte kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-23",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Hylte kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-23",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet i Hylte kommun"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Remiss"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Komplettering med karta"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-12",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-13",
+          "matched_text": "Komplettering"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8004-2026",
+      "title": "Ansökan om tillstånd/ dispens för strandskydd i samband med anmälan om vattenverksamhet i Hylte kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-10-23",
+      "decision_date": "",
+      "municipality": "Hylte",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5662367",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-23",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskydd i samband med anmälan om vattenverksamhet i Hylte kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-23",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskydd i samband med anmälan om vattenverksamhet i Hylte kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-23",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskydd i samband med anmälan om vattenverksamhet i Hylte kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-10-23",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskydd i samband med anmälan om vattenverksamhet i Hylte kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-23",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskydd i samband med anmälan om vattenverksamhet i Hylte kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-23",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskydd i samband med anmälan om vattenverksamhet i Hylte kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Komplettering med karta"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8086-2026",
+      "title": "Överklagande av Länsstyrelsens beslut 2026-10-07 Angående begäran om tillsyn av vattenverksamhet, Ålgårda vattenkraftverk, Rolfsån",
+      "status": "Handläggning",
+      "registered_date": "2026-10-26",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5665610",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-26",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-07 Angående begäran om tillsyn av vattenverksamhet, Ålgårda vattenkraftverk, Rolfsån",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-26",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-07 Angående begäran om tillsyn av vattenverksamhet, Ålgårda vattenkraftverk, Rolfsån",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-10-26",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-07 Angående begäran om tillsyn av vattenverksamhet, Ålgårda vattenkraftverk, Rolfsån"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-26",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-07 Angående begäran om tillsyn av vattenverksamhet, Ålgårda vattenkraftverk, Rolfsån"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8215-2026",
+      "title": "Förfrågan om handlingarna behöver kompletteras om ansökan om omprövning av vattenverksamhet vid Ödegärdets kraftverk, Falkenbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-10-29",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5670220",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-29",
+          "matched_text": "Förfrågan om handlingarna behöver kompletteras om ansökan om omprövning av vattenverksamhet vid Ödegärdets kraftverk, Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-29",
+          "matched_text": "Förfrågan om handlingarna behöver kompletteras om ansökan om omprövning av vattenverksamhet vid Ödegärdets kraftverk, Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-29",
+          "matched_text": "Förfrågan om handlingarna behöver kompletteras om ansökan om omprövning av vattenverksamhet vid Ödegärdets kraftverk, Falkenbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-29",
+          "matched_text": "Förfrågan om handlingarna behöver kompletteras om ansökan om omprövning av vattenverksamhet vid Ödegärdets kraftverk, Falkenbergs kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-29",
+          "matched_text": "Förfrågan om handlingarna behöver kompletteras om ansökan om omprövning av vattenverksamhet vid Ödegärdets kraftverk, Falkenbergs kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-29",
+          "matched_text": "Förfrågan om handlingarna behöver kompletteras om ansökan om omprövning av vattenverksamhet vid Ödegärdets kraftverk, Falkenbergs kommun"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8315-2026",
+      "title": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-11-02",
+      "decision_date": "",
+      "municipality": "Halmstad",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5674185",
+      "categories": [
+        "A",
+        "B"
+      ],
+      "action_types": [
+        "construction_or_facility",
+        "water_activity_general",
+        "wetland_or_restoration"
+      ],
+      "evidence": [
+        {
+          "category": "A",
+          "action_type": "construction_or_facility",
+          "text_kind": "case_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "wetland_or_restoration",
+          "text_kind": "case_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "A",
+          "action_type": "construction_or_facility",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "wetland_or_restoration",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Ansökan om tillstånd/ dispens för strandskyddsdispens för vattenverksamhet, anläggning av våtmark, Halmstad kommun"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8370-2026",
+      "title": "Överklagande av Länsstyrelsens beslut 2026-10-27 Begäran om tillsyn av vattenverksamhet, Varbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-11-03",
+      "decision_date": "",
+      "municipality": "Varberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5676139",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-11-03",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-27 Begäran om tillsyn av vattenverksamhet, Varbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-03",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-27 Begäran om tillsyn av vattenverksamhet, Varbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-11-03",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-27 Begäran om tillsyn av vattenverksamhet, Varbergs kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-11-03",
+          "matched_text": "Överklagande av Länsstyrelsens beslut 2026-10-27 Begäran om tillsyn av vattenverksamhet, Varbergs kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-03",
+          "matched_text": "Komplettering med information till överklagan"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Komplettering med information till överklagan"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Komplettering med information till överklagan"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8483-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet i Kungsbacka kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-10-31",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5680304",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-31",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet i Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-31",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet i Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8545-2026",
+      "title": "Begäran om ändring av tidigare beslut enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sennan, Halmstad kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-11-03",
+      "decision_date": "",
+      "municipality": "Halmstad",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5681989",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-11-03",
+          "matched_text": "Begäran om ändring av tidigare beslut enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sennan, Halmstad kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-03",
+          "matched_text": "Begäran om ändring av tidigare beslut enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sennan, Halmstad kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-11-03",
+          "matched_text": "Begäran om ändring av tidigare beslut enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sennan, Halmstad kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-11-03",
+          "matched_text": "Begäran om ändring av tidigare beslut enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sennan, Halmstad kommun"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8750-2025",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Kungsbacka kommun",
+      "status": "Avslutat",
+      "registered_date": "2025-12-05",
+      "decision_date": "2026-06-16",
+      "municipality": "Kungsbacka",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5335170",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-12-05",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-12-05",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2025-12-05",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Kungsbacka kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-12-05",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kattegatt, Kungsbacka kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-17",
+          "matched_text": "Komplettering med handlingar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-01-21",
+          "matched_text": "Begäran om komplettering och meddelande om förlängd tid"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-02-25",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-09",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-04-16",
+          "matched_text": "Yttrande över anmälan, avstår"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-16",
+          "matched_text": "Yttrande över anmälan, avstår"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-21",
+          "matched_text": "Svar på remiss: avstår från yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-29",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-30",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-05-11",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-05-25",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-06-16",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8766-2025",
+      "title": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun",
+      "status": "Avslutat",
+      "registered_date": "2025-12-05",
+      "decision_date": "2026-06-16",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5335805",
+      "categories": [
+        "A",
+        "B"
+      ],
+      "action_types": [
+        "line_or_cable",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "A",
+          "action_type": "line_or_cable",
+          "text_kind": "case_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "A",
+          "action_type": "line_or_cable",
+          "text_kind": "handling_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-12-05",
+          "matched_text": "Ansökan om tillstånd/ dispens för förläggning av kabel i samband med anmälan av vattenverksamhet, Kungsbacka kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-01-21",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-02-25",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-02-25",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-02-25",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-06-16",
+          "matched_text": "Beslut"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8811-2022",
+      "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet mm i Fylleån vid Linebergsmöllans kraftverk i Halmstads kommun. Svar senast den 18 januari 2023",
+      "status": "Handläggning",
+      "registered_date": "2022-12-15",
+      "decision_date": "",
+      "municipality": "Halmstad",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4260857",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2022-12-15",
+          "matched_text": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet mm i Fylleån vid Linebergsmöllans kraftverk i Halmstads kommun. Svar senast den 18 januari 2023",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2022-12-15",
+          "matched_text": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet mm i Fylleån vid Lindbergsmöllans kraftverk i Halmstads kommun. Svar senast den 18 januari 2023",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2024-08-27",
+          "matched_text": "Dom om omprövning av vattenverksamhet",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2023-02-03",
+          "matched_text": "Yttrande gällande remiss om komplettering av ansökan"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-02-03",
+          "matched_text": "Yttrande gällande remiss om komplettering av ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-02-03",
+          "matched_text": "Yttrande gällande remiss om komplettering av ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-02-07",
+          "matched_text": "Påminnelse om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-03-21",
+          "matched_text": "Kompletterande yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-04-06",
+          "matched_text": "Föreläggande om komplettering senast den 27 april 2023"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2023-04-06",
+          "matched_text": "Föreläggande om komplettering senast den 27 april 2023"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-04-25",
+          "matched_text": "Yttrande över komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-04-25",
+          "matched_text": "Yttrande över komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-07-18",
+          "matched_text": "Begäran om yttrande över kungörelse, svar senast den 1 september 2023"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2023-10-04",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-10-04",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2023-12-14",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-02-21",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-05-03",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2024-05-03",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2024-06-13",
+          "matched_text": "Yttrande över kompletteringar"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-09-02",
+          "matched_text": "Komplettering med rättelse"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-10-17",
+          "matched_text": "Meddelande om  behov av komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-11-27",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-11-27",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-12-17",
+          "matched_text": "Yttrande efter huvudförhandling"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-03-12",
+          "matched_text": "Komplettering med dagboksblad"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-04-01",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-04-02",
+          "matched_text": "Komplettering med dagboksblad"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-04-17",
+          "matched_text": "Yttrande över aktbilaga 94 m.fl"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-05-11",
+          "matched_text": "Dom om tillstånd"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-05-12",
+          "matched_text": "Komplettering med rättelse"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8814-2022",
+      "title": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Fylleån vid Marbäcks kraftverk i Halmstads kommun. Svar senast den 18 januari",
+      "status": "Handläggning",
+      "registered_date": "2022-12-15",
+      "decision_date": "",
+      "municipality": "Halmstad",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4260889",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2022-12-15",
+          "matched_text": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Fylleån vid Marbäcks kraftverk i Halmstads kommun. Svar senast den 18 januari",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2022-12-15",
+          "matched_text": "Förfrågan om ansökningshandlingar behöver kompletteras avseende omprövning av vattenverksamhet i Fylleån vid Marbäcks kraftverk i Halmstads kommun. Svar senast den 18 januari",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-02-03",
+          "matched_text": "Yttrande över remiss gällande komplettering av ansökningshandlingar"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-02-03",
+          "matched_text": "Yttrande över remiss gällande komplettering av ansökningshandlingar"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-02-07",
+          "matched_text": "Påminnelse om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-03-21",
+          "matched_text": "Kompletterande yttrande"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-04-06",
+          "matched_text": "Föreläggande om komplettering senast den  27 april 2023"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2023-04-06",
+          "matched_text": "Föreläggande om komplettering senast den  27 april 2023"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2023-04-25",
+          "matched_text": "Yttrande över komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-04-25",
+          "matched_text": "Yttrande över komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-07-18",
+          "matched_text": "Begäran om yttrande över kungörelse med svar senast den 1 september 2023"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2023-10-05",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2023-10-05",
+          "matched_text": "Yttrande över ansökan"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-01-23",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-02-21",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-03-14",
+          "matched_text": "Komplettering med förhandlingsordning"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2024-05-17",
+          "matched_text": "Komplettering med rapport från FUG"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2024-06-07",
+          "matched_text": "Underrättelse om handlingar för kännedom"
+        },
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2024-07-03",
+          "matched_text": "Dom om avslag den 28 juni 2024"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-02-05",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-02-05",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-02-14",
+          "matched_text": "Yttrande över överklagan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-04-28",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2025-04-28",
+          "matched_text": "Föreläggande om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2025-05-12",
+          "matched_text": "Yttrande över överklagan"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-09-24",
+          "matched_text": "Dom om ansökan om omprövning, återförvisat till Mark- och miljödomstolen"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Underrättelse med möjlighet till yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-28",
+          "matched_text": "Yttrande över aktbilaga 12 m.fl."
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-10-06",
+          "matched_text": "Komplettering med aktbilaga"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Hallands län",
+      "diary_number": "8855-2025",
+      "title": "Begäran om tillsyn av vattenverksamhet i Kungsbacka kommun Återförvisat för ny handläggning den 10 december 2025",
+      "status": "",
+      "registered_date": "",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5339081",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet i Kungsbacka kommun Återförvisat för ny handläggning den 10 december 2025",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [],
       "evidence_level": "title_and_handling_metadata_only",
       "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
     }

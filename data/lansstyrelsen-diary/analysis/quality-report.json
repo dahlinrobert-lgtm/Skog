@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "classification_version": "1.0.0",
-  "source_updated_at": "2026-11-12T13:58:57.339570+00:00",
-  "case_count": 578,
-  "handling_count": 4565,
+  "source_updated_at": "2026-11-13T13:25:37.824776+00:00",
+  "case_count": 608,
+  "handling_count": 4953,
   "county_case_counts": {
     "Länsstyrelsen i Blekinge län": 139,
     "Länsstyrelsen i Dalarnas län": 178,
     "Länsstyrelsen i Gotlands län": 33,
     "Länsstyrelsen i Gävleborgs län": 80,
-    "Länsstyrelsen i Hallands län": 54,
+    "Länsstyrelsen i Hallands län": 84,
     "Länsstyrelsen i Jämtlands län": 3,
     "Länsstyrelsen i Jönköpings län": 8,
     "Länsstyrelsen i Kalmar län": 6,
@@ -17,23 +17,23 @@
     "Länsstyrelsen i Västmanlands län": 76
   },
   "missing_case_fields": {
-    "decision_date": 234,
-    "municipality": 211,
-    "registered_date": 18,
-    "status": 18
+    "decision_date": 255,
+    "municipality": 224,
+    "registered_date": 20,
+    "status": 20
   },
   "missing_handling_fields": {},
   "handling_class_counts": {
-    "administrative": 287,
+    "administrative": 306,
     "procurement": 42,
     "aftercare": 3,
-    "permit": 91,
-    "notification": 484,
-    "opinion": 800,
+    "permit": 103,
+    "notification": 497,
+    "opinion": 929,
     "contract": 18,
-    "other": 2913,
+    "other": 3137,
     "award": 8,
-    "follow_up": 54,
+    "follow_up": 55,
     "burn_execution": 8,
     "invoice_compensation": 3
   },
