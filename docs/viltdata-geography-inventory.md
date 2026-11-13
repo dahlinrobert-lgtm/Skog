@@ -11,7 +11,7 @@ python scripts/viltdata_geography_inventory.py --max-counties 1
 python scripts/viltdata_geography_inventory.py
 ```
 
-Första kommandot är ett begränsat funktionstest, inte en nationell inventering. Andra kommandot hämtar samtliga län. Körningen kan ta tid beroende på antal underområden och API-svar. Ingen schemalagd hämtning aktiveras av denna PR.
+Första kommandot är ett begränsat funktionstest, inte en nationell inventering. Andra kommandot hämtar samtliga län. Ingen schemalagd hämtning aktiveras av inventeringsskriptet.
 
 ## Utdata
 
@@ -19,9 +19,30 @@ Varje körning skapar en egen UTC-tidsstämplad katalog under `data/viltdata/geo
 
 `complete=true` kräver full nationell körning utan registrerade fel. Ett HTTP-fel räknas aldrig som en tom lista. Processen ger exitkod 1 om fel registreras. Befintliga körningar skrivs inte över.
 
+## Jämförelse mellan snapshots
+
+När minst två inventeringar finns kan de jämföras:
+
+```powershell
+python scripts/viltdata_geography_snapshot_diff.py data/viltdata/geography-inventory/<baslinje> data/viltdata/geography-inventory/<ny-körning>
+```
+
+Rapporten skapas i `data/viltdata/geography-comparisons/`. Den identifierar tillkomna, ändrade och (när båda körningarna är kompletta) saknade ID:n samt ändrade föräldra–barn-relationer.
+
+- Identitet baseras på nivå + API-ID, aldrig på titel.
+- Råa JSON-svar ändras aldrig.
+- Om någon körning är ofullständig undertrycks borttagningar och redovisas i stället som obekräftat saknade poster/relationer.
+- Jaktområdets `parentId` är ett eget metadatafält. Delområdestillhörigheten kommer separat från inventeringens förfrågeparameter och manifestrelation.
+
+Enhetstester:
+
+```powershell
+python -m unittest discover -s tests -p "test_viltdata_geography_snapshot_diff.py" -v
+```
+
 ## Kvalitetskontroll av jaktområdesnamn
 
-Efter en inventering kan en separat kontroll köras mot den tidsstämplade katalogen:
+Efter en inventering kan en separat kontroll köras:
 
 ```powershell
 python scripts/viltdata_area_duplicate_qa.py data/viltdata/geography-inventory/<UTC-katalog>
@@ -29,21 +50,10 @@ python scripts/viltdata_area_duplicate_qa.py data/viltdata/geography-inventory/<
 
 Rapporten sparas som `qa/duplicate-area-titles.json` i samma körningskatalog. Den flaggar grupper där flera olika jaktområdes-ID:n har samma normaliserade titel inom samma delområde (`part_id`) och samma `parentId`. Normaliseringen använder Unicode NFKC, komprimerar blanksteg och ignorerar skiftläge.
 
-Kontrollen är avsiktligt konservativ:
-- Alla råa API-svar lämnas oförändrade.
-- Inga ID:n slås ihop eller tas bort.
-- Samma titel under olika föräldrar eller olika delområden flaggas inte som samma kandidat.
-- Träffarna är kandidater för manuell bedömning; API-fälten `id`, `parentId` och `title` avgör inte om objekten är legitima separata jaktområden eller källdubbletter.
-
-Enhetstester körs med:
-
-```powershell
-python -m unittest discover -s tests -p "test_viltdata_area_duplicate_qa.py" -v
-```
+Kontrollen ändrar inte rådata, slår inte ihop ID:n och flaggar inte samma titel under olika föräldrar eller delområden. Träffarna är kandidater för manuell bedömning.
 
 ## Viktiga begränsningar
 
-- Detta är endast metadata, inte historisk statistik eller observationer.
-- Resultatens områdesidentiteter måste kontrolleras över tid. Samma ID kan återkomma under flera föräldrar; relationerna bevaras.
-- `parentId=null` från jaktområdes-API:t är inte bevis för att geografisk relation saknas; föräldrarelationen kommer från frågeparametern.
-- API-belastning ska följas upp innan schemaläggning eller fullskalig insamling.
+- Detta är metadata, inte historisk statistik eller observationer.
+- En enda inventering är en baslinje, inte en tidsserie.
+- API-belastning ska följas upp innan schemaläggning.
