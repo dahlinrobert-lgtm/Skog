@@ -25,7 +25,8 @@ class ViltdataKillSnapshotTests(unittest.TestCase):
         self.assertIn("R%C3%A5djur", url)
 
     def test_start_year_uses_model_value(self):
-        self.assertEqual(get_start_year({"Nationellt": 1939}, ["Nationellt"], 1900), 1939)
+        self.assertEqual(get_start_year({"avskjutning": {"Nationellt": 1939}}, ["Nationellt"], 1900), 1939)
+        self.assertEqual(get_start_year({"avskjutning": {"Län": 1960}}, ["Län"], 1900), 1960)
         self.assertEqual(get_start_year({}, ["Län"], 1960), 1960)
 
     def test_validates_labels_and_dataset_alignment(self):
