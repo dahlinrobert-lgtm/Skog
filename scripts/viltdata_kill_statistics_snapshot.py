@@ -64,8 +64,12 @@ def write_raw(run_dir, relative_path, body):
 def get_start_year(start_years, keys, fallback):
     if not isinstance(start_years, dict):
         return fallback
+    # GetStatisticsModel nests harvest start years under startYears.avskjutning.
+    harvest_years = start_years.get("avskjutning", start_years)
+    if not isinstance(harvest_years, dict):
+        return fallback
     for key in keys:
-        value = start_years.get(key)
+        value = harvest_years.get(key)
         if isinstance(value, int):
             return value
         if isinstance(value, str) and value.isdigit():
