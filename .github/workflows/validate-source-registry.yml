@@ -5,11 +5,13 @@ on:
     paths:
       - "data-platform/config/sources.yml"
       - "data-platform/scripts/validate_source_registry.py"
+      - "data-platform/scripts/build_source_status_report.py"
       - ".github/workflows/validate-source-registry.yml"
   pull_request:
     paths:
       - "data-platform/config/sources.yml"
       - "data-platform/scripts/validate_source_registry.py"
+      - "data-platform/scripts/build_source_status_report.py"
       - ".github/workflows/validate-source-registry.yml"
   workflow_dispatch:
 
@@ -33,3 +35,13 @@ jobs:
 
       - name: Validate source registry
         run: python data-platform/scripts/validate_source_registry.py
+
+      - name: Build source status report
+        run: python data-platform/scripts/build_source_status_report.py --write
+
+      - name: Upload generated source status report
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogskoll-source-status-report
+          path: docs/SKOGSKOLL_SOURCE_STATUS.md
+          if-no-files-found: error
