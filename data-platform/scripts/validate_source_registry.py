@@ -34,7 +34,7 @@ OPERATIONAL_ALLOWED = {
     "commercial_use_status": {
         "verified", "verified_with_attribution", "conditional",
         "conditional_on_attribution_and_source_scope",
-        "conditional_per_product", "pending_product_terms",
+        "conditional_per_product", "conditional_per_record", "pending_product_terms",
         "pending_scope_confirmation", "restricted", "unknown",
     },
     "customer_display_status": {
@@ -141,7 +141,7 @@ def main() -> None:
                         )
                 last_verified = operations.get("last_verified")
                 if non_empty(last_verified) and not __import__("re").fullmatch(
-                    r"\\d{4}-\\d{2}-\\d{2}", last_verified
+                    r"\d{4}-\d{2}-\d{2}", last_verified
                 ):
                     errors.append(
                         f"{source_id}: operations.last_verified must use YYYY-MM-DD"
