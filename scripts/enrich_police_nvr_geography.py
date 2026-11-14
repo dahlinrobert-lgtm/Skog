@@ -78,6 +78,37 @@ def load_layer(path: Path, layer: str, columns: list[str]):
     return frame
 
 
+def extract_place_reference(row: dict[str, str]) -> str:
+    """Use the explicit place field, or a conservative 'between X and Y' cue."""
+    explicit = str(row.get("police_place_reference") or "").strip()
+    if explicit:
+        return explicit
+    text = str(row.get("police_text") or "")
+    match = re.search(r"\\bmellan\\s+(.+?)\\s+och\\s+([^.,;]+)", text, re.IGNORECASE)
+    return match.group(2).strip() if match else ""
+
+
+def place_search_term(reference: str) -> str:
+    """Remove a leading compass qualifier; retain the actual named locality."""
+    value = re.sub(r"\\s+", " ", str(reference or "")).strip()
+    value = re.sub(r"^(?:norra|södra|östra|västra)\\s+", "", value, flags=re.IGNORECASE)
+    return value
+
+
+def find_named_place_matches(crossings, reference: str):
+    """Return NVDB crossing rows matching a police place label.
+
+    Searches both the crossing name and traffic-place name. Missing names are
+    represented by an empty result, never interpreted as a geographic conflict.
+    """
+    term = place_search_term(reference)
+    if not term:
+        return term, crossings.iloc[0:0].copy()
+    name_mask = crossings["Namn"].fillna("").str.contains(term, case=False, regex=False)
+    traffic_mask = crossings["Trafikplatsnamn"].fillna("").str.contains(term, case=False, regex=False)
+    return term, crossings.loc[name_mask | traffic_mask].copy()
+
+
 def enrich_candidate(
     row: dict[str, str],
     roads,
@@ -115,6 +146,33 @@ def enrich_candidate(
     out["geo_parsed_road_number"] = (
         str(parsed_road[1]) if parsed_road else ""
     )
+
+    # Named-place evidence is independent of road-number evidence.
+    place_reference = extract_place_reference(row)
+    place_term, named_places = find_named_place_matches(crossings, place_reference)
+    out["geo_police_place_reference"] = place_reference
+    out["geo_place_search_term"] = place_term
+    if not named_places.empty:
+        named_distances = named_places.geometry.distance(point)
+        nearest_place_idx = named_distances.idxmin()
+        nearest_place = named_places.loc[nearest_place_idx]
+        out["geo_named_place_match_count"] = str(len(named_places))
+        out["geo_named_place_distance_m"] = f"{float(named_distances.loc[nearest_place_idx]):.1f}"
+        out["geo_named_place_element_id"] = str(nearest_place["ELEMENT_ID"])
+        out["geo_named_place_type"] = str(nearest_place["Generaliseringstyp"] or "")
+        out["geo_named_place_name"] = str(nearest_place["Namn"] or "")
+        out["geo_named_traffic_place_name"] = str(nearest_place["Trafikplatsnamn"] or "")
+        out["geo_named_place_match_status"] = "matched_nvdb_name"
+    else:
+        out["geo_named_place_match_count"] = "0"
+        out["geo_named_place_distance_m"] = ""
+        out["geo_named_place_element_id"] = ""
+        out["geo_named_place_type"] = ""
+        out["geo_named_place_name"] = ""
+        out["geo_named_traffic_place_name"] = ""
+        out["geo_named_place_match_status"] = (
+            "no_place_reference" if not place_term else "no_named_nvdb_object"
+        )
 
     road_distances = roads.geometry.distance(point)
     nearest_all_idx = road_distances.idxmin()
@@ -295,10 +353,15 @@ def main():
         "input_candidate_rows": len(candidates),
         "output_candidate_rows": len(enriched),
         "review_only": True,
+        "named_place_match_counts": {},
         "location_context_counts": {},
         "output": str(args.output),
     }
     for row in enriched:
+        place_status = row.get("geo_named_place_match_status", "unknown")
+        summary["named_place_match_counts"][place_status] = (
+            summary["named_place_match_counts"].get(place_status, 0) + 1
+        )
         key = row.get("location_context", "unknown")
         summary["location_context_counts"][key] = (
             summary["location_context_counts"].get(key, 0) + 1
