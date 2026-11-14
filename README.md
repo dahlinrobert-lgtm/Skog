@@ -3,6 +3,8 @@
 Follow changes in forest-related data around monitored properties and areas. Skog discovers, connects and explains events from multiple sources, then delivers relevant alerts. The map is supporting context; the monitoring feed is the product.
 
 ## Product direction
+- [AI handover / start here in a new chat](docs/AI_HANDOVER.md): durable project state, decisions, priorities and instructions for continuing work.
+- [Automatic source status report](docs/SKOGSKOLL_SOURCE_STATUS.md): operational access, snapshot, history and reuse status generated from the source registry.
 - [Skogskoll – data sources, access and usage](docs/SKOGSKOLL_DATA_OVERVIEW.md): consolidated source inventory, snapshot/history status, licensing and external dependencies.
 - [Product inspiration and roadmap](docs/product-inspiration-and-roadmap.md): lessons from Naturkartan and Skogsmonitor, current map capabilities, and prioritized next steps.
 
