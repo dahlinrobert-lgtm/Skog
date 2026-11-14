@@ -84,7 +84,7 @@ def extract_place_reference(row: dict[str, str]) -> str:
     if explicit:
         return explicit
     text = str(row.get("police_text") or "")
-    match = re.search(r"\bmellan\s+(.+?)\\s+och\\s+([^.,;]+)", text, re.IGNORECASE)
+    match = re.search(r"\bmellan\s+(.+?)\s+och\s+([^.,;]+)", text, re.IGNORECASE)
     return match.group(2).strip() if match else ""
 
 
