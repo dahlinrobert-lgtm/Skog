@@ -16,6 +16,11 @@ The optional `operations` block is being rolled out source by source. It records
 
 The first operational entries cover the highest-priority Skogskoll dependencies, including harvest notifications, Samråd, SIS, SLU Torvkarta, Trafikverket, Länsstyrelsen diaries, Fastighetsindelning Direkt and NVR. Other source records retain their existing descriptive and rights metadata until their operational state is reconciled; absence of an `operations` block means **not yet assessed**, not that access or rights are absent.
 
+The Trafikverket umbrella record `trafikverket.open_data` is catalogue-only. Use the product-specific records for operational decisions:
+- `trafikverket.miljoweb_landskap`: environmental/landscape layers and the weekly Gräsmyr pilot snapshots.
+- `trafikverket.nvdb.wildlife_collision_frequency`: aggregated collision frequency by road segment; not individual incidents.
+- `trafikverket.nvdb.road_network_lastkajen`: versioned road-network geometry and attributes; recurring update history is not yet verified.
+
 ## Principles
 
 - Preserve raw source payloads and original raster assets.
