@@ -1530,8 +1530,8 @@ sources:
     provider: Trafikverket
     access_method: api_or_download
     connector: to_be_implemented
-    status: planned
-    cadence: to_be_verified
+    status: umbrella_only
+    cadence: not_applicable_umbrella
     geography: Sweden
     format: [API, JSON, geodata_formats]
     rights:
@@ -1559,16 +1559,17 @@ sources:
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     operations:
-      access_status: partial
-      snapshot_status: pilot_for_selected_layers
-      history_status: partial
+      access_status: not_verified
+      snapshot_status: not_started
+      history_status: not_verified
       commercial_use_status: conditional_per_product
       customer_display_status: pending_per_product
       last_verified: "2026-11-14"
-      next_action: "Dela upp Trafikverkets generiska post i separata produktposter för Miljöwebb Landskap, NVDB Viltolyckor och vägnät/Lastkajen innan kundpublicering."
+      next_action: "Använd de tre separata produktposterna nedan för faktisk åtkomst, snapshotstatus, historik och rättighetsbedömning; uppdatera denna post endast om Trafikverket inför en ny gemensam produkt eller tjänst."
       evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; Trafikverket snapshot and Lastkajen project records"
     notes:
-      - "Register each product and endpoint separately."
+      - "Umbrella/catalogue entry only. Do not use this record as evidence that any individual Trafikverket product is ingested or cleared for customer display."
+      - "Use the product-specific records below for operational decisions."
 
   - source_id: boverket.climate_database
     name: "Boverket – Klimatdatabasen öppna data"
@@ -1800,3 +1801,148 @@ sources:
       - "Legacy event history (2015–2021) and animal-level exports (2022–2026) are maintained as distinct data products."
       - "Do not interpret an incomplete export as evidence that previously observed incidents disappeared."
       - "Keep NVR individual incidents separate from Trafikverket's aggregated NVDB wildlife-collision frequency layers."
+
+  - source_id: trafikverket.miljoweb_landskap
+    name: "Trafikverket – Miljöwebb Landskap"
+    source_type: environmental_and_landscape_geodata
+    provider: Trafikverket
+    access_method: map_service_and_geodata_download
+    connector: trafikverket_miljoweb_landskap
+    status: pilot
+    cadence: weekly_sampling
+    geography: Sweden
+    format: [geospatial_features, geodata_formats]
+    rights:
+      licence: "Verify the exact Miljöwebb Landskap layer and its metadata; do not infer CC0 solely from Trafikverket's general open-data policy."
+      licence_url: "https://bransch.trafikverket.se/tjanster/data-kartor-och-geodatatjanster/"
+      review_status: conditional_green_product_specific
+      commercial_use: pending_exact_layer_confirmation
+      historical_storage: conditional_on_layer_terms
+      derivatives: conditional_on_layer_terms
+      redistribution: pending_exact_layer_confirmation
+      attribution: "Follow the exact layer metadata and any source-specific attribution requirements."
+      api_or_service_constraints: "Respect service terms, request limits and the documented update behaviour of each layer."
+      evidence_checked_on: "2026-11-14"
+      caveat: "The weekly pilot snapshots describe observations of the service. They do not prove that the source dataset itself is updated weekly or that all layers have complete historical coverage."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_layer_and_embedded_assets
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_and_layer_metadata
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_exact_layer_metadata_and_terms
+      reviewed_on: "2026-11-14"
+      next_review: when_layer_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: partial
+      snapshot_status: pilot
+      history_status: partial
+      commercial_use_status: conditional_per_product
+      customer_display_status: pending_per_product
+      last_verified: "2026-11-14"
+      next_action: "Verifiera vilka lager som ingår i Gräsmyr-piloten, kontrollera antal/geografisk täckning och spara senaste två kompletta snapshots med manifest och kontrollsummor."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; weekly Trafikverket Miljöwebb Landskap pilot around Gräsmyr"
+    notes:
+      - "Keep source-layer identity, service metadata, retrieval time and source update time as separate fields."
+      - "Do not interpret a new weekly snapshot as a new environmental event."
+      - "Customer display remains blocked until the exact layer terms and attribution are confirmed."
+
+  - source_id: trafikverket.nvdb.wildlife_collision_frequency
+    name: "Trafikverket – NVDB Viltolyckor"
+    source_type: aggregated_road_segment_statistics
+    provider: Trafikverket
+    access_method: nvdb_open_data
+    connector: trafikverket_nvdb_wildlife
+    status: existing
+    cadence: weekly_sampling
+    geography: Sweden
+    format: [geospatial_features, geodata_formats]
+    rights:
+      licence: "Verify the exact NVDB product metadata and applicable open-data terms before customer publication."
+      licence_url: "https://bransch.trafikverket.se/tjanster/data-kartor-och-geodatatjanster/"
+      review_status: conditional_green_product_specific
+      commercial_use: conditional_on_exact_product_terms
+      historical_storage: conditional_on_exact_product_terms
+      derivatives: conditional_on_exact_product_terms
+      redistribution: pending_exact_product_confirmation
+      attribution: "Follow the exact NVDB product metadata; retain Trafikverket as source in provenance."
+      api_or_service_constraints: "Respect NVDB service and download constraints; record product version and retrieval time."
+      evidence_checked_on: "2026-11-14"
+      caveat: "This is aggregated wildlife-collision frequency associated with road segments. It is not a feed of individual, newly reported collisions and must not be presented as such."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_and_embedded_assets
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_and_product_metadata
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_exact_nvdb_product_metadata
+      reviewed_on: "2026-11-14"
+      next_review: when_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: partial
+      snapshot_status: pilot
+      history_status: partial
+      commercial_use_status: conditional_per_product
+      customer_display_status: pending_per_product
+      last_verified: "2026-11-14"
+      next_action: "Verifiera produktens exakta definition, referensperiod, geografiska täckning och uppdateringsdatum; spara jämförbara snapshots och dokumentera om värdena är frekvenser, antal eller klassningar."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; NVDB Viltolyckor investigation and Gräsmyr snapshot work"
+    notes:
+      - "Use as a historical or spatial risk indicator for roads, not as a real-time incident alert."
+      - "Keep this dataset separate from NVR animal-level incident exports and publicly reported police events."
+      - "Do not infer a new collision solely from a changed road-segment frequency value."
+
+  - source_id: trafikverket.nvdb.road_network_lastkajen
+    name: "Trafikverket – NVDB vägnät och Lastkajen"
+    source_type: road_network_reference_geodata
+    provider: Trafikverket
+    access_method: lastkajen_download_and_nvdb_services
+    connector: trafikverket_nvdb_road_network
+    status: pilot
+    cadence: product_versioned
+    geography: Sweden
+    format: [geospatial_features, geodata_formats]
+    rights:
+      licence: "Verify the exact NVDB product, Lastkajen delivery and any product-specific terms; do not infer rights from a generic open-data label."
+      licence_url: "https://bransch.trafikverket.se/tjanster/data-kartor-och-geodatatjanster/"
+      review_status: conditional_green_product_specific
+      commercial_use: pending_exact_product_confirmation
+      historical_storage: conditional_on_product_terms
+      derivatives: conditional_on_product_terms
+      redistribution: pending_exact_product_confirmation
+      attribution: "Follow product-specific metadata and retain product version and Trafikverket provenance."
+      api_or_service_constraints: "Record download order, product/version identifiers, delivery date and any restrictions on storage or redistribution."
+      evidence_checked_on: "2026-11-14"
+      caveat: "A local index and archived geometry do not establish that a recurring update workflow or a complete historical road-network series is operational."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_and_embedded_assets
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_and_delivery_terms
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: record_order_confirmation_delivery_metadata_and_terms
+      reviewed_on: "2026-11-14"
+      next_review: when_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: partial
+      snapshot_status: baseline_only
+      history_status: not_verified
+      commercial_use_status: conditional_per_product
+      customer_display_status: pending_per_product
+      last_verified: "2026-11-14"
+      next_action: "Dokumentera vilken NVDB-produktversion som finns lokalt, kontrollera Lastkajens beställnings- och licensvillkor och bygg ett versionsstyrt uppdateringsflöde innan vägnätsförändringar används i kundhistorik."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; local NVDB index/geometry archive and Lastkajen investigation"
+    notes:
+      - "Use as a reference network for geospatial matching and routing context, not as an event feed."
+      - "Keep product versions immutable and compare only compatible network releases."
+      - "Do not mark a road segment as removed until a complete, comparable network release has been processed."
+
