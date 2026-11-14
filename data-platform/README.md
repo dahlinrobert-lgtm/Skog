@@ -35,6 +35,7 @@ The Trafikverket umbrella record `trafikverket.open_data` is catalogue-only. Use
 
 - `config/sources.yml`: source, rights and operational registry (no credentials); optional `provenance` and `operations` blocks extend selected records without changing the canonical event model. Operational fields distinguish access, snapshots, history, commercial-use status and customer-display status.
 - `scripts/validate_source_registry.py`: validates registry structure, unique source IDs, optional provenance metadata and controlled operational status fields.
+- `scripts/build_source_status_report.py`: generates `docs/SKOGSKOLL_SOURCE_STATUS.md` from the registry; use `--write` to update and `--check` to verify it.
 - `schemas/event-bundle.schema.json`: JSON Schema contract for source runs, immutable observations, canonical events, evidence, relationships and event chains.
 - `scripts/validate_event_bundle.py`: validates the event bundle schema and cross-record references; run with `python data-platform/scripts/validate_event_bundle.py`.
 - `examples/event-bundle.example.json`: synthetic example showing one registered event and a one-event chain; it is not live source data.
