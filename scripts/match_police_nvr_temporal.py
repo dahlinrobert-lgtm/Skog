@@ -206,6 +206,67 @@ def build_candidates(police_rows, nvr_rows, max_time_delta_minutes=180, date_win
     output.sort(key=lambda r:(r["police_occurrence_date"],r["police_event_id"],-r["candidate_score"],r["nvr_accident_key"]))
     return output
 
+
+def build_delayed_candidates(police_rows, nvr_rows, primary_max_time_delta_minutes=180,
+                             extended_max_time_delta_minutes=4320, date_window_days=3):
+    """Separate review-only search for later NVR timestamps after Police occurrence time."""
+    if extended_max_time_delta_minutes <= primary_max_time_delta_minutes:
+        raise ValueError("Extended window must exceed the primary time window.")
+    if date_window_days < 0:
+        raise ValueError("date_window_days must be non-negative.")
+    excluded = []
+    wide_rows = build_candidates(police_rows, nvr_rows,
+        max_time_delta_minutes=extended_max_time_delta_minutes,
+        date_window_days=date_window_days, excluded_rows=excluded)
+    police_by_id = {}
+    for index, row in enumerate(police_rows, start=1):
+        occurrence_index = (row.get("occurrence_index") or "").strip()
+        candidate_id = f"{row.get('parent_event_id', '')}:{occurrence_index or f'row-{index}'}"
+        police_by_id[candidate_id] = row
+    delayed = []
+    for candidate in wide_rows:
+        police = police_by_id.get(candidate["police_candidate_id"])
+        if not police:
+            continue
+        police_date = (police.get("occurrence_date") or "").strip()
+        police_time = (police.get("occurrence_time") or "").strip()
+        if not police_time:
+            extracted = extract_times(police.get("description") or "")
+            police_time = extracted[0] if len(extracted) == 1 else ""
+        police_dt = parse_dt(f"{police_date} {police_time}") if police_time else None
+        if police_dt is None:
+            continue
+        later_values = []
+        for value in split_values(candidate.get("nvr_event_datetime_values")):
+            nvr_dt = parse_dt(value)
+            if nvr_dt is None or nvr_dt <= police_dt:
+                continue
+            delta = (nvr_dt - police_dt).total_seconds() / 60
+            if primary_max_time_delta_minutes < delta <= extended_max_time_delta_minutes:
+                later_values.append((delta, nvr_dt))
+        if not later_values:
+            continue
+        delta, selected_dt = min(later_values, key=lambda item: (item[0], item[1]))
+        hours = delta / 60
+        band = ("delayed_3_to_12h" if hours <= 12 else
+                "delayed_12_to_24h" if hours <= 24 else "delayed_24_to_72h")
+        row = dict(candidate)
+        row["nvr_selected_datetime_for_delayed_review"] = selected_dt.strftime("%Y-%m-%d %H:%M")
+        row["time_delta_minutes"] = round(delta, 1)
+        row["absolute_datetime_delta_minutes"] = round(delta, 1)
+        row["clock_time_delta_minutes"] = clock_delta_minutes(police_dt, selected_dt)
+        row["time_band"] = band
+        row["base_temporal_status"] = candidate["candidate_status"]
+        row["candidate_status"] = "delayed_event_review"
+        row["delayed_window_band"] = band
+        row["nvr_timestamp_semantics"] = "unverified_source_event_datetime"
+        row["delayed_match_direction"] = "nvr_timestamp_after_police_occurrence_time"
+        row["review_status"] = "unreviewed"
+        row["geographic_match_used"] = False
+        delayed.append(row)
+    delayed.sort(key=lambda row: (row["time_delta_minutes"], row["police_candidate_id"], row["nvr_accident_key"]))
+    return delayed
+
 def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes=180, date_window_days=1, excluded_rows=None):
     """Summarize candidate multiplicity, including source rows with zero matches."""
     police_ids = []
@@ -257,11 +318,14 @@ def main():
     ap.add_argument("--output",type=Path,required=True)
     ap.add_argument("--max-time-delta-minutes",type=int,default=180)
     ap.add_argument("--date-window-days",type=int,default=1,help="Also consider NVR events up to this many calendar days after the Police date; default 1")
+    ap.add_argument("--extended-output",type=Path,help="Optional separate CSV for later NVR timestamps 3–72 hours after Police occurrence time")
+    ap.add_argument("--extended-max-hours",type=int,default=72,help="Maximum later NVR timestamp lag for delayed review; default 72")
     ap.add_argument("--report",type=Path,help="Optional JSON audit report including zero/one/multiple candidate counts")
     ap.add_argument("--excluded-output",type=Path,help="Optional CSV of pairs excluded because both sources specify different known species")
     args=ap.parse_args()
     if args.max_time_delta_minutes < 0: ap.error("--max-time-delta-minutes must be non-negative")
     if args.date_window_days < 0: ap.error("--date-window-days must be non-negative")
+    if args.extended_max_hours * 60 <= args.max_time_delta_minutes: ap.error("--extended-max-hours must exceed the primary time window")
     police_rows=read_csv(args.police)
     nvr_rows=read_csv(args.nvr)
     excluded_rows=[]
@@ -271,6 +335,25 @@ def main():
     with args.output.open("w",encoding="utf-8-sig",newline="") as f:
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
     summary={"status":"completed","candidate_pairs":len(rows),"excluded_species_conflict_pairs":len(excluded_rows),"status_counts":dict(Counter(r["candidate_status"] for r in rows)),"output":str(args.output)}
+    if args.extended_output:
+        delayed_rows = build_delayed_candidates(
+            police_rows, nvr_rows,
+            primary_max_time_delta_minutes=args.max_time_delta_minutes,
+            extended_max_time_delta_minutes=args.extended_max_hours * 60,
+            date_window_days=max(args.date_window_days, 3),
+        )
+        args.extended_output.parent.mkdir(parents=True,exist_ok=True)
+        delayed_fields = list(delayed_rows[0]) if delayed_rows else [
+            "police_candidate_id","nvr_accident_key","nvr_event_datetime_values",
+            "time_delta_minutes","delayed_window_band","candidate_status",
+            "nvr_timestamp_semantics","review_status",
+        ]
+        with args.extended_output.open("w",encoding="utf-8-sig",newline="") as f:
+            writer=csv.DictWriter(f,fieldnames=delayed_fields);writer.writeheader();writer.writerows(delayed_rows)
+        summary["extended_candidate_pairs"] = len(delayed_rows)
+        summary["extended_status_counts"] = dict(Counter(r["delayed_window_band"] for r in delayed_rows))
+        summary["extended_output"] = str(args.extended_output)
+
     if args.excluded_output:
         args.excluded_output.parent.mkdir(parents=True,exist_ok=True)
         excluded_fields=list(excluded_rows[0]) if excluded_rows else ["police_candidate_id","police_event_id","police_occurrence_index","police_occurrence_date","police_occurrence_time","police_species","nvr_accident_key","nvr_olycks_id","nvr_event_datetime_values","nvr_species","exclusion_reason"]
