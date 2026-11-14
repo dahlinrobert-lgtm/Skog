@@ -10,7 +10,7 @@
 # Validate structure and provenance fields with data-platform/scripts/validate_source_registry.py.
 
 schema_version: 2
-registry_checked_on: "2026-11-02"
+registry_checked_on: "2026-11-14"
 default_rule: "Apply binding law and the legal hierarchy first. Silence or unknown source metadata is not by itself a prohibition or permission; assess the concrete use under general law and valid applicable licences/contracts, and restrict only the affected element where a specific obstacle is established."
 
 sources:
@@ -100,6 +100,15 @@ sources:
       evidence_reference: record_in_source_rights_evidence
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: verified
+      snapshot_status: pilot
+      history_status: partial
+      commercial_use_status: conditional
+      customer_display_status: pending_product_layer_check
+      last_verified: "2026-11-14"
+      next_action: "Verifiera komplett paginering och minst två kompletta jämförbara körningar; skilj nya anmälningar från äldre baslinje och bortfall."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; existing Skogskoll ArcGIS probe and snapshot/history workflows"
     notes:
       - Existing Skogskoll ingestion core and Supabase persistence are authoritative for alert workflow.
       - Do not duplicate or replace existing scan/session safety logic.
@@ -138,6 +147,15 @@ sources:
       evidence_reference: record_in_source_rights_evidence
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: verified
+      snapshot_status: pilot
+      history_status: partial
+      commercial_use_status: conditional
+      customer_display_status: pending_layer_check
+      last_verified: "2026-11-14"
+      next_action: "Verifiera fullständighet separat för punkt-, linje- och polygonlagren och fortsätt bevara dagliga snapshots."
+      evidence_reference: "data-platform/scripts/collect_samrad.py; .github/workflows/collect-samrad.yml"
     notes:
       - "Three ArcGIS sublayers are collected separately: point 0, line 1 and polygon 2."
       - "ObjectId, UUID and Beteckn are retained for case grouping and later matching."
@@ -253,6 +271,15 @@ sources:
       evidence_reference: docs/source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: partial
+      snapshot_status: monthly_archive_planned_or_pilot
+      history_status: partial
+      commercial_use_status: conditional_per_record
+      customer_display_status: pending_per_document_review
+      last_verified: "2026-11-14"
+      next_action: "Verifiera månatliga arkivkörningar och dokumentera täckning per län; granska dokument/bilagor separat från metadata."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; Länsstyrelsen diary API and monthly snapshot investigations"
     notes:
       - "Detailed preliminary assessment: docs/source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md"
       - Coverage and search behavior vary by county.
@@ -723,6 +750,15 @@ sources:
       evidence_reference: record_in_source_rights_evidence
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: verified
+      snapshot_status: pilot
+      history_status: metadata_series_only
+      commercial_use_status: verified_with_attribution
+      customer_display_status: conditional_on_attribution_and_source_scope
+      last_verified: "2026-11-14"
+      next_action: "Fortsätt versions-/metadatasnapshots; spara SLU:s skriftliga besked och kontrollera den nya produktens licens vid publicering."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; SLU written commercial-use statement received 2026-11-02"
     notes:
       - "Product contains classified peat-depth classes and continuous organic-layer thickness."
       - "Classified values: 0 water, 1 mineral soil, 2 >=30 cm, 3 >=40 cm, 4 >=50 cm."
@@ -771,6 +807,15 @@ sources:
       evidence_reference: record_in_source_rights_evidence
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: partial
+      snapshot_status: metadata_monitoring_needs_repair
+      history_status: not_verified
+      commercial_use_status: conditional
+      customer_display_status: pending_product_description_check
+      last_verified: "2026-11-14"
+      next_action: "Felsök misslyckade metadataövervakningskörningar 13–14 november och verifiera rasterhämtning samt produktvillkor."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; SIS geodata timeline workflow runs 2026-11-13 to 2026-11-14"
     notes:
       - "SIS means site index estimated from site properties; it is distinct from stand-based SIH."
       - "Separate products exist for spruce and pine."
@@ -1513,6 +1558,15 @@ sources:
       evidence_reference: record_in_source_rights_evidence
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: partial
+      snapshot_status: pilot_for_selected_layers
+      history_status: partial
+      commercial_use_status: conditional_per_product
+      customer_display_status: pending_per_product
+      last_verified: "2026-11-14"
+      next_action: "Dela upp Trafikverkets generiska post i separata produktposter för Miljöwebb Landskap, NVDB Viltolyckor och vägnät/Lastkajen innan kundpublicering."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; Trafikverket snapshot and Lastkajen project records"
     notes:
       - "Register each product and endpoint separately."
 
@@ -1664,6 +1718,15 @@ sources:
       evidence_reference: record_in_source_rights_evidence
       reviewed_on: "2026-11-02"
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    operations:
+      access_status: technical_probe
+      snapshot_status: not_started
+      history_status: none
+      commercial_use_status: pending_product_terms
+      customer_display_status: pending_written_or_ordered_scope
+      last_verified: "2026-11-14"
+      next_action: "Hämta och granska beslut/villkor för ärendena LM2026/171963 och LM2026/171968; verifiera kundvisning, lagring, historik och kommersiell användning."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; Geotorget orders/cases registered 2026-11-13"
     notes:
       - "Product contains property and joint-property geometries; boundaries are not legally binding."
 
@@ -1702,3 +1765,38 @@ sources:
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     notes:
       - "Support contact identified in prior investigation: servicedesk@support.triona.se."
+
+  - source_id: nvr.wildlife_collisions
+    name: "Nationella Viltolycksrådet – historiska och löpande viltolyckor"
+    source_type: incident_observations
+    provider: Nationella Viltolycksrådet
+    access_method: authorised_file_export
+    connector: nvr_archive
+    status: pilot
+    cadence: daily_observation_test
+    geography: Sweden
+    format: [CSV]
+    rights:
+      licence: "Specific access approval and applicable terms must be documented; no blanket open-data licence assumed"
+      review_status: amber_access_and_reuse_scope_to_document
+      commercial_use: pending_explicit_scope_confirmation
+      historical_storage: pending_explicit_scope_confirmation
+      derivatives: pending_use_scope_confirmation
+      redistribution: pending_explicit_permission
+      attribution: "Identify NVR as source and preserve export/retrieval dates; confirm required wording with the data provider."
+      api_or_service_constraints: "Use only the authorised export route and documented purpose; preserve raw exports and do not expose credentials."
+      evidence_checked_on: "2026-11-14"
+      caveat: "Historical exports from 2015–2026 have been collected, but completeness and comparability are not attested for every period. The 2026-11-09 import was partial."
+    operations:
+      access_status: authorised_access_used
+      snapshot_status: 30_day_daily_observation_test
+      history_status: historical_archive_partial
+      commercial_use_status: pending_scope_confirmation
+      customer_display_status: pending_scope_confirmation
+      last_verified: "2026-11-14"
+      next_action: "Följ upp 30-dagarstestet: verifiera de första automatiska körningarna, exportjämförelserna och dagsarkiven i OneDrive; dokumentera skriftligt godkännande, ändamål och återkommande hämtning."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; NVR import run 2026-11-09 (partial); backup/SHA-256 verification 2026-11-10"
+    notes:
+      - "Legacy event history (2015–2021) and animal-level exports (2022–2026) are maintained as distinct data products."
+      - "Do not interpret an incomplete export as evidence that previously observed incidents disappeared."
+      - "Keep NVR individual incidents separate from Trafikverket's aggregated NVDB wildlife-collision frequency layers."
