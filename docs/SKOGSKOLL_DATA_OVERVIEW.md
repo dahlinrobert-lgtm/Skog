@@ -203,6 +203,7 @@ Skogsstyrelsen har uppgett att vissa äldre produkter, bland annat äldre Markfu
 
 ### 4.8 Trafikverket – Miljöwebb Landskap
 
+**Käll-ID:** `trafikverket.miljoweb_landskap`  
 **Prioritet:** Medelhög  
 **Källa:** [MWLEXGEO MapServer](https://vektor.trafikverket.se/gis/rest/services/MWLEXGEO/MiljowebbGeo/MapServer)
 
@@ -222,6 +223,7 @@ Miljö- och infrastrukturinformation i närheten av bevakade fastigheter.
 
 ### 4.9 Trafikverket – NVDB Viltolyckor
 
+**Käll-ID:** `trafikverket.nvdb.wildlife_collision_frequency`  
 **Prioritet:** Hög  
 **Källa:** [Viltolyckor NVDB MapServer](https://vektor.trafikverket.se/gis/rest/services/NVDB_p%C3%A5_karta/Viltolyckor_NVDBpakarta/MapServer)
 
@@ -241,6 +243,7 @@ Visa risk-/frekvensunderlag per vägsegment. Presentera det inte som en lista ö
 
 ### 4.10 Trafikverket – NVDB vägnät och Lastkajen
 
+**Käll-ID:** `trafikverket.nvdb.road_network_lastkajen`  
 **Prioritet:** Hög
 
 **Nuvarande läge**
@@ -396,7 +399,9 @@ Identifiera relevanta myndighetsärenden och beslut. Publicera inte automatiskt 
 | NVR | Dagligt 30-dagarstest, fullständighet och dokumenterat godkännande | Kontrollera dagliga arkiv och exportjämförelser |
 | Skogsstyrelsen avverkningsanmälningar | Fullständig ingestion och validerad baslinje | Jämför kompletta skanningar |
 | Samråd | Verifiera snapshotstatus per lager | Kontrollera manifests, körningar och täckning |
-| Trafikverket | Verifiera veckosnapshots och Lastkajen-produktens villkor | Kontrollera senaste workflow och produktmetadata |
+| Miljöwebb Landskap | Verifiera täckning och senaste kompletta snapshots för Gräsmyr-piloten | Kontrollera måndagskörning, manifest, antal och lagervillkor |
+| NVDB Viltolyckor | Verifiera frekvensdefinition, referensperiod och jämförbar historik | Kontrollera sju lager, produktmetadata och snapshots |
+| NVDB vägnät/Lastkajen | Verifiera produktversion, beställningsvillkor och återkommande uppdatering | Dokumentera lokal baslinje och bygg versionsstyrt uppdateringsflöde |
 | NVDB vägnät | Automatiskt uppdateringsflöde saknas | Planera versionsbaserad uppdatering |
 | Viltdata älg | Nationell täckning saknas | Utöka från regional pilot efter källinventering |
 | Naturvårdsverket | Exakta prioriterade lager och producentvillkor | Välj lager och dokumentera metadata |
@@ -527,7 +532,7 @@ Varje statusändring ska ha datum och evidens: workflow-run, manifest, produktme
 
 ## 11. Samlad bedömning
 
-Skog har etablerat ett brett underlag av myndighets- och geodatakällor och utvecklat flera viktiga insamlings- och historikflöden. De mest konkreta spåren är Skogsstyrelsens avverkningsanmälningar, samråd, Trafikverkets miljö- och viltolycksdata, NVDB och NVR:s historiska olycksdata. Torvkartan har ett skriftligt kommersiellt användningsbesked från SLU. Lantmäteriets fastighetsprodukt är ett centralt externt beroende som kräver att beställningarnas exakta beslut och villkor verifieras.
+Skog har etablerat ett brett underlag av myndighets- och geodatakällor och utvecklat flera viktiga insamlings- och historikflöden. De mest konkreta spåren är Skogsstyrelsens avverkningsanmälningar, samråd, Trafikverkets tre separata produktspår: Miljöwebb Landskap, NVDB Viltolyckor och NVDB vägnät/Lastkajen, samt NVR:s historiska olycksdata. Torvkartan har ett skriftligt kommersiellt användningsbesked från SLU. Lantmäteriets fastighetsprodukt är ett centralt externt beroende som kräver att beställningarnas exakta beslut och villkor verifieras.
 
 Den viktigaste återstående förflyttningen är från separata prober och pilotflöden till en komplett, kvalitetssäkrad och rättighetsbedömd historisk dataplattform. Först därefter ska verkliga kundaviseringar aktiveras.
 
