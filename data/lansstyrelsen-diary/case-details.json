@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-13T13:25:37.824776+00:00",
+  "updated_at": "2026-11-14T12:29:54.588611+00:00",
   "cases": {
     "länsstyrelsen i dalarnas län::1034-2026": {
       "case_key": "länsstyrelsen i dalarnas län::1034-2026",
@@ -47417,6 +47417,4197 @@
       "content_hash": "884a0c1483060403eba1a9b9ce495844fb91ade045abcb0067bc7091fbcf821e",
       "first_seen_at": "2026-11-13T13:25:37.824776+00:00",
       "last_seen_at": "2026-11-13T13:25:37.824776+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1114-2026": {
+      "case_key": "länsstyrelsen i uppsala län::1114-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5396922",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1114-2026",
+        "registered_date": "2026-01-19",
+        "title": "Begäran om samråd om kontrollprogram för vattenverksamheten i samband med pålningsarbeten inom vattenområdet vid uppförandet av gång- och cykelbro, Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-25",
+        "sender_recipient": "Uppsala kommun",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1114-2026-1",
+          "title": "Begäran om samråd om kontrollprogram för vattenverksamheten i samband med pålningsarbeten inom vattenområdet vid uppförandet av gång- och cykelbro, Uppsala kommun",
+          "date": "2026-01-19",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::1114-2026::1114-2026-1"
+        },
+        {
+          "handling_number": "1114-2026-2",
+          "title": "Förfrågan om aktuellt läge i projektet",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1114-2026::1114-2026-2"
+        },
+        {
+          "handling_number": "1114-2026-3",
+          "title": "Svar med information om läget i projektet",
+          "date": "2026-05-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1114-2026::1114-2026-3"
+        },
+        {
+          "handling_number": "1114-2026-4",
+          "title": "Svar med information om handläggningstider m.m.",
+          "date": "2026-05-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1114-2026::1114-2026-4"
+        },
+        {
+          "handling_number": "1114-2026-5",
+          "title": "Meddelande om projektets tidplan",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1114-2026::1114-2026-5"
+        },
+        {
+          "handling_number": "1114-2026-6",
+          "title": "Meddelande som avslutar ärendet",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1114-2026::1114-2026-6"
+        }
+      ],
+      "content_hash": "403dd72498faffe5a4bcfc8bec6dab34afb4c31295d3be4c3f4028098f460565",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1299-2023": {
+      "case_key": "länsstyrelsen i uppsala län::1299-2023",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4318445",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1299-2023",
+        "registered_date": "2023-02-14",
+        "title": "Tillsyn initiativ, vattenverksamhet, Knivsta kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Knivsta"
+      },
+      "handlings": [
+        {
+          "handling_number": "1299-2023-1",
+          "title": "Begäran om tillsyn av byggnation i vattenområde",
+          "date": "2023-02-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-1"
+        },
+        {
+          "handling_number": "1299-2023-2",
+          "title": "Tjänsteanteckning vid tillsyn",
+          "date": "2023-02-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-2"
+        },
+        {
+          "handling_number": "1299-2023-3",
+          "title": "Föreläggande om förbud",
+          "date": "2023-02-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-3"
+        },
+        {
+          "handling_number": "1299-2023-4",
+          "title": "Yttrande över föreläggande",
+          "date": "2023-03-08",
+          "sender_recipient": "Niklas Braathen",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-4"
+        },
+        {
+          "handling_number": "1299-2023-5",
+          "title": "Meddelande om tillsynsbesök",
+          "date": "2023-03-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-5"
+        },
+        {
+          "handling_number": "1299-2023-6",
+          "title": "Svar på meddelande om tillsyn",
+          "date": "2023-04-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-6"
+        },
+        {
+          "handling_number": "1299-2023-7",
+          "title": "Tjänsteanteckning tillsyn 20 mars 2023",
+          "date": "2023-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-7"
+        },
+        {
+          "handling_number": "1299-2023-8",
+          "title": "Meddelande om fotografi",
+          "date": "2023-05-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-8"
+        },
+        {
+          "handling_number": "1299-2023-9",
+          "title": "Meddelande om foton",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-9"
+        },
+        {
+          "handling_number": "1299-2023-10",
+          "title": "Meddelande om foton",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-10"
+        },
+        {
+          "handling_number": "1299-2023-11",
+          "title": "Meddelande om foton",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-11"
+        },
+        {
+          "handling_number": "1299-2023-12",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-12"
+        },
+        {
+          "handling_number": "1299-2023-13",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-13"
+        },
+        {
+          "handling_number": "1299-2023-14",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-14"
+        },
+        {
+          "handling_number": "1299-2023-15",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-15"
+        },
+        {
+          "handling_number": "1299-2023-16",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-16"
+        },
+        {
+          "handling_number": "1299-2023-17",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-17"
+        },
+        {
+          "handling_number": "1299-2023-18",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-18"
+        },
+        {
+          "handling_number": "1299-2023-19",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-19"
+        },
+        {
+          "handling_number": "1299-2023-20",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-20"
+        },
+        {
+          "handling_number": "1299-2023-21",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-21"
+        },
+        {
+          "handling_number": "1299-2023-22",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-22"
+        },
+        {
+          "handling_number": "1299-2023-23",
+          "title": "Meddelande om foto",
+          "date": "2023-05-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-23"
+        },
+        {
+          "handling_number": "1299-2023-24",
+          "title": "Meddelande om foton",
+          "date": "2023-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-24"
+        },
+        {
+          "handling_number": "1299-2023-25",
+          "title": "Meddelande om foton",
+          "date": "2023-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-25"
+        },
+        {
+          "handling_number": "1299-2023-26",
+          "title": "Meddelande om foton",
+          "date": "2023-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-26"
+        },
+        {
+          "handling_number": "1299-2023-27",
+          "title": "Meddelande om foton",
+          "date": "2023-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-27"
+        },
+        {
+          "handling_number": "1299-2023-28",
+          "title": "Meddelande om foton",
+          "date": "2023-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-28"
+        },
+        {
+          "handling_number": "1299-2023-29",
+          "title": "Meddelande om foto",
+          "date": "2023-06-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-29"
+        },
+        {
+          "handling_number": "1299-2023-30",
+          "title": "Meddelande om foton",
+          "date": "2023-06-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1299-2023::1299-2023-30"
+        }
+      ],
+      "content_hash": "1aa5daebca6e06fbe793776383ada7a806c94aa1969bc977e7d35e89fc583daf",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1369-2026": {
+      "case_key": "länsstyrelsen i uppsala län::1369-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5402691",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1369-2026",
+        "registered_date": "2026-02-16",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+        "status": "Avslutat",
+        "decision_date": "2026-09-15",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1369-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, grävning, schaktning, muddring eller sprängning, Luckaviken, Gudinge, S6 Tierp,",
+          "date": "2026-02-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-1"
+        },
+        {
+          "handling_number": "1369-2026-2",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-02-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-2"
+        },
+        {
+          "handling_number": "1369-2026-3",
+          "title": "Remiss via epost",
+          "date": "2026-02-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-3"
+        },
+        {
+          "handling_number": "1369-2026-4",
+          "title": "Yttrande",
+          "date": "2026-03-20",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-4"
+        },
+        {
+          "handling_number": "1369-2026-5",
+          "title": "Yttranden för bemötande",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-5"
+        },
+        {
+          "handling_number": "1369-2026-6",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-6"
+        },
+        {
+          "handling_number": "1369-2026-7",
+          "title": "Delbeslut via epost",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-7"
+        },
+        {
+          "handling_number": "1369-2026-8",
+          "title": "Yttrande",
+          "date": "2026-04-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-8"
+        },
+        {
+          "handling_number": "1369-2026-9",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-9"
+        },
+        {
+          "handling_number": "1369-2026-10",
+          "title": "Delbeslut via epost",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-10"
+        },
+        {
+          "handling_number": "1369-2026-11",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-11"
+        },
+        {
+          "handling_number": "1369-2026-12",
+          "title": "Begäran om komplettering via epost",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-12"
+        },
+        {
+          "handling_number": "1369-2026-13",
+          "title": "Komplettering",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-13"
+        },
+        {
+          "handling_number": "1369-2026-14",
+          "title": "Fråga om ränna",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-14"
+        },
+        {
+          "handling_number": "1369-2026-15",
+          "title": "Tjänsteanteckning efter telefonsamtal",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-15"
+        },
+        {
+          "handling_number": "1369-2026-16",
+          "title": "Utkast till tjänsteanteckning efter telefonsamtal",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-16"
+        },
+        {
+          "handling_number": "1369-2026-17",
+          "title": "Svar om godkännande av utkastet,",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-17"
+        },
+        {
+          "handling_number": "1369-2026-18",
+          "title": "Beslut om vattenverksamhet",
+          "date": "2026-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-18"
+        },
+        {
+          "handling_number": "1369-2026-19",
+          "title": "Meddelande om mottaget beslut",
+          "date": "2026-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1369-2026::1369-2026-19"
+        }
+      ],
+      "content_hash": "4cce86d29004d2e8cb32e031e32150841ba10fae692358862e52350d21202eb2",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1370-2026": {
+      "case_key": "länsstyrelsen i uppsala län::1370-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5402692",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1370-2026",
+        "registered_date": "2026-02-16",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet grävning, schaktning, muddring eller sprängning, Gudinge, Tierp kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-05",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1370-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, grävning, schaktning, muddring eller sprängning, Gudinge, Tierp kommun",
+          "date": "2026-02-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-1"
+        },
+        {
+          "handling_number": "1370-2026-2",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-02-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-2"
+        },
+        {
+          "handling_number": "1370-2026-3",
+          "title": "Remiss via epost",
+          "date": "2026-02-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-3"
+        },
+        {
+          "handling_number": "1370-2026-4",
+          "title": "Yttrande",
+          "date": "2026-03-13",
+          "sender_recipient": "Tierp kommun",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-4"
+        },
+        {
+          "handling_number": "1370-2026-5",
+          "title": "Yttrande",
+          "date": "2026-03-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-5"
+        },
+        {
+          "handling_number": "1370-2026-6",
+          "title": "Yttranden för bemötande",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-6"
+        },
+        {
+          "handling_number": "1370-2026-8",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-8"
+        },
+        {
+          "handling_number": "1370-2026-9",
+          "title": "Delbeslut via epost",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-9"
+        },
+        {
+          "handling_number": "1370-2026-10",
+          "title": "Yttrande",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-10"
+        },
+        {
+          "handling_number": "1370-2026-11",
+          "title": "Komplettering",
+          "date": "2026-04-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-11"
+        },
+        {
+          "handling_number": "1370-2026-12",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-12"
+        },
+        {
+          "handling_number": "1370-2026-13",
+          "title": "Delbeslut via epost",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-13"
+        },
+        {
+          "handling_number": "1370-2026-14",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-14"
+        },
+        {
+          "handling_number": "1370-2026-15",
+          "title": "Beslut via epost",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-15"
+        },
+        {
+          "handling_number": "1370-2026-16",
+          "title": "Bekräftelse om mottaget beslut",
+          "date": "2026-06-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1370-2026::1370-2026-16"
+        }
+      ],
+      "content_hash": "b705129dc35fcff8a790e0c470010b5f3ea67da58596342d4d8d1f4c97516a1b",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1668-2026": {
+      "case_key": "länsstyrelsen i uppsala län::1668-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5412678",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1668-2026",
+        "registered_date": "2026-02-25",
+        "title": "Ansökan om förlängning av genomförandetid, anmälan\nom vattenverksamhet enligt 11 kap 9 a §",
+        "status": "Avslutat",
+        "decision_date": "2026-09-04",
+        "sender_recipient": "Östhammars kommun",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1668-2026-1",
+          "title": "Ansökan om förlängning av genomförandetid, anmälan\nom vattenverksamhet enligt 11 kap 9 a §",
+          "date": "2026-02-25",
+          "sender_recipient": "Östhammars kommun",
+          "handling_key": "länsstyrelsen i uppsala län::1668-2026::1668-2026-1"
+        },
+        {
+          "handling_number": "1668-2026-2",
+          "title": "Ändring gällande ansökan om förlängd genomförandetid",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1668-2026::1668-2026-2"
+        },
+        {
+          "handling_number": "1668-2026-3",
+          "title": "Beslut om förlängd genomförandetid",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1668-2026::1668-2026-3"
+        },
+        {
+          "handling_number": "1668-2026-4",
+          "title": "Beslut skickat med e-post",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1668-2026::1668-2026-4"
+        }
+      ],
+      "content_hash": "b677df41f6554c7638b89777d9700f7088293da19fd4042b1bcd973b7c953d09",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1794-2026": {
+      "case_key": "länsstyrelsen i uppsala län::1794-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5418424",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1794-2026",
+        "registered_date": "2026-03-03",
+        "title": "Tillsyn av vattenverksamhet, Ulva Kvarn, Uppsala kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Uppsala kommun arenor och fastigheter AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1794-2026-1",
+          "title": "Tillsyn av vattenverksamhet, Ulva Kvarn, Uppsala kommun",
+          "date": "2026-03-03",
+          "sender_recipient": "Uppsala kommun arenor och fastigheter AB",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-1"
+        },
+        {
+          "handling_number": "1794-2026-2",
+          "title": "Mail till Uppsala kommun",
+          "date": "2026-03-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-2"
+        },
+        {
+          "handling_number": "1794-2026-3",
+          "title": "Minnesanteckningar från möte 6 mars 2026",
+          "date": "2026-03-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-3"
+        },
+        {
+          "handling_number": "1794-2026-4",
+          "title": "PM med redogörelse från Uppsala kommun",
+          "date": "2026-03-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-4"
+        },
+        {
+          "handling_number": "1794-2026-5",
+          "title": "Uppdaterat PM med redogörelse från Uppsala kommun",
+          "date": "2026-03-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-5"
+        },
+        {
+          "handling_number": "1794-2026-6",
+          "title": "Mail till Uppsala kommun",
+          "date": "2026-03-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-6"
+        },
+        {
+          "handling_number": "1794-2026-7",
+          "title": "Mail från Uppsala kommun",
+          "date": "2026-03-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-7"
+        },
+        {
+          "handling_number": "1794-2026-8",
+          "title": "Meddelande om påbörjade åtgärder",
+          "date": "2026-03-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-8"
+        },
+        {
+          "handling_number": "1794-2026-9",
+          "title": "Meddelande från Uppsala kommun",
+          "date": "2026-03-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-9"
+        },
+        {
+          "handling_number": "1794-2026-10",
+          "title": "Svar till Uppsala kommun",
+          "date": "2026-03-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-10"
+        },
+        {
+          "handling_number": "1794-2026-11",
+          "title": "Tjänsteanteckning från platsbesök 17 mars",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-11"
+        },
+        {
+          "handling_number": "1794-2026-12",
+          "title": "Kopia av tjänsteanteckning till Uppsala kommun",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-12"
+        },
+        {
+          "handling_number": "1794-2026-13",
+          "title": "Mailkonversation om skadad pegel och felaktiga mätvärden",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-13"
+        },
+        {
+          "handling_number": "1794-2026-14",
+          "title": "Mail från Uppsala kommun om justering av styrsystem",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-14"
+        },
+        {
+          "handling_number": "1794-2026-15",
+          "title": "Mail till Uppsala kommun",
+          "date": "2026-08-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-15"
+        },
+        {
+          "handling_number": "1794-2026-16",
+          "title": "Svar från Uppsala kommun",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-16"
+        },
+        {
+          "handling_number": "1794-2026-17",
+          "title": "Mail till Uppsala kommun",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-17"
+        },
+        {
+          "handling_number": "1794-2026-18",
+          "title": "Meddelande om startdatum",
+          "date": "2026-08-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-18"
+        },
+        {
+          "handling_number": "1794-2026-19",
+          "title": "Mail till Uppsala kommun",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-19"
+        },
+        {
+          "handling_number": "1794-2026-20",
+          "title": "Mailkonversaion om slutförda åtgärder samt avslut av ärendet",
+          "date": "2026-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1794-2026::1794-2026-20"
+        }
+      ],
+      "content_hash": "fb35b3ee5bedc1819e80667ec8d714d4aee9468b95b0d8ebb879cdd8ce018a0f",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1875-2025": {
+      "case_key": "länsstyrelsen i uppsala län::1875-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5059477",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1875-2025",
+        "registered_date": "2025-03-03",
+        "title": "Upphandling av personal till Naturvårdsbränning",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1875-2025-1",
+          "title": "Upphandling av personal till Naturvårdsbränning",
+          "date": "2025-03-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1875-2025::1875-2025-1"
+        }
+      ],
+      "content_hash": "0d8506390b9a044f9de59bb2077108f82fdef591afcf0421731a9e5667575878",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1902-2026": {
+      "case_key": "länsstyrelsen i uppsala län::1902-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5421752",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1902-2026",
+        "registered_date": "2026-03-05",
+        "title": "Begäran om yttrande om tillstånd till vattenverksamhet för bortledande av grundvatten och uppförande av anläggning i vattenområde m.m. vid Fyrisån, Uppsala kommun, M 15991-25, svar senast 2026-03-19",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1902-2026-1",
+          "title": "Begäran om yttrande om tillstånd till vattenverksamhet för bortledande av grundvatten och uppförande av anläggning i vattenområde m.m. vid Fyrisån, Uppsala kommun, M 15991-25, svar senast 2026-03-19",
+          "date": "2026-03-05",
+          "sender_recipient": "SVEA HOVRÄTT",
+          "handling_key": "länsstyrelsen i uppsala län::1902-2026::1902-2026-1"
+        },
+        {
+          "handling_number": "1902-2026-2",
+          "title": "Yttrande i mål M 1599-25",
+          "date": "2026-03-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1902-2026::1902-2026-2"
+        },
+        {
+          "handling_number": "1902-2026-3",
+          "title": "Meddelande om mottaget yttrande",
+          "date": "2026-03-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1902-2026::1902-2026-3"
+        }
+      ],
+      "content_hash": "1b4bbcf64f27da46a7632fe573f4fdb49e1b75dfa2cb2d1f3432e529ac30f44f",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::1950-2025": {
+      "case_key": "länsstyrelsen i uppsala län::1950-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5062992",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "1950-2025",
+        "registered_date": "2025-03-05",
+        "title": "Inköp av brandslang och utrustning till naturvårdsbränning",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1950-2025-1",
+          "title": "Inköp av brandslang och utrustning till naturvårdsbränning",
+          "date": "2025-03-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::1950-2025::1950-2025-1"
+        }
+      ],
+      "content_hash": "e56b99f69f9f61be97f63d8237a7a3ae1536484e3a080228ff33e012f03af890",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2102-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2102-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5429088",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2102-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Siggebobäcken, Tierp kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "4902739e7e62b8cc30f24acf3be0ef37d921d918dc8215ac0f74172b6c2a9e9e",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2163-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2163-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5431247",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2163-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alasjön, Knivsta kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "cb2e5bd24a601cbbed4a6ee715409f71e7c6cb033ca4211ebe49ae12cb53386b",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2231-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2231-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5433305",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2231-2026",
+        "registered_date": "2026-03-18",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Oraån, Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-06",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "2231-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Oraån, Uppsala kommun",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-1"
+        },
+        {
+          "handling_number": "2231-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-2"
+        },
+        {
+          "handling_number": "2231-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-3"
+        },
+        {
+          "handling_number": "2231-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-4"
+        },
+        {
+          "handling_number": "2231-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-5"
+        },
+        {
+          "handling_number": "2231-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-6"
+        },
+        {
+          "handling_number": "2231-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-7"
+        },
+        {
+          "handling_number": "2231-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-8"
+        },
+        {
+          "handling_number": "2231-2026-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-9"
+        },
+        {
+          "handling_number": "2231-2026-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-10"
+        },
+        {
+          "handling_number": "2231-2026-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-11"
+        },
+        {
+          "handling_number": "2231-2026-12",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-03-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-12"
+        },
+        {
+          "handling_number": "2231-2026-13",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-13"
+        },
+        {
+          "handling_number": "2231-2026-15",
+          "title": "Begäran om komplettering - 2231-2026",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-15"
+        },
+        {
+          "handling_number": "2231-2026-16",
+          "title": "Komplettering i ärendet med godkännande och ny arbetsbeskrivning",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-16"
+        },
+        {
+          "handling_number": "2231-2026-17",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2231-2026::2231-2026-17"
+        }
+      ],
+      "content_hash": "415b03a03f4739c188b387b6d5023f0a104064516cf1e0d91280a9f55e418d65",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2388-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2388-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5438380",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2388-2026",
+        "registered_date": "2026-03-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Se Bilaga Uppgifter om verksamhet och miljöpåverkan., Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "2388-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Se Bilaga Uppgifter om verksamhet och miljöpåverkan., Uppsala kommun",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-1"
+        },
+        {
+          "handling_number": "2388-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-2"
+        },
+        {
+          "handling_number": "2388-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-3"
+        },
+        {
+          "handling_number": "2388-2026-4",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-03-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-4"
+        },
+        {
+          "handling_number": "2388-2026-5",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-5"
+        },
+        {
+          "handling_number": "2388-2026-6",
+          "title": "Remiss vi epost till kommuner",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-6"
+        },
+        {
+          "handling_number": "2388-2026-7",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-04-17",
+          "sender_recipient": "Svenska Kraftnät",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-7"
+        },
+        {
+          "handling_number": "2388-2026-8",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-04-17",
+          "sender_recipient": "Knivsta kommun",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-8"
+        },
+        {
+          "handling_number": "2388-2026-9",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-9"
+        },
+        {
+          "handling_number": "2388-2026-10",
+          "title": "Yttrande",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-10"
+        },
+        {
+          "handling_number": "2388-2026-11",
+          "title": "Yttranden för kännedom",
+          "date": "2026-05-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-11"
+        },
+        {
+          "handling_number": "2388-2026-12",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-12"
+        },
+        {
+          "handling_number": "2388-2026-13",
+          "title": "Beslut via epost",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-13"
+        },
+        {
+          "handling_number": "2388-2026-14",
+          "title": "Bekräftelse om mottaget beslut",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2388-2026::2388-2026-14"
+        }
+      ],
+      "content_hash": "4b9a21ce5d6d1ef069cd65c6b533f21f2f03a937a94fa9fb9e891e69d832d0e6",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2427-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2427-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5439761",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2427-2026",
+        "registered_date": "2026-03-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Se Bilaga Uppgifter om verksamhet och miljöpåverkan., Tierp kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Knivsta,Tierp"
+      },
+      "handlings": [
+        {
+          "handling_number": "2427-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Se Bilaga Uppgifter om verksamhet och miljöpåverkan., Tierp kommun",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-1"
+        },
+        {
+          "handling_number": "2427-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-2"
+        },
+        {
+          "handling_number": "2427-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-3"
+        },
+        {
+          "handling_number": "2427-2026-4",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-4"
+        },
+        {
+          "handling_number": "2427-2026-5",
+          "title": "Remiss via epost till kommunerna",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-5"
+        },
+        {
+          "handling_number": "2427-2026-6",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-04-17",
+          "sender_recipient": "Knivsta kommun",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-6"
+        },
+        {
+          "handling_number": "2427-2026-7",
+          "title": "Yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-7"
+        },
+        {
+          "handling_number": "2427-2026-8",
+          "title": "Yttrande för kännedom",
+          "date": "2026-05-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-8"
+        },
+        {
+          "handling_number": "2427-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-9"
+        },
+        {
+          "handling_number": "2427-2026-10",
+          "title": "Beslut via epost",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-10"
+        },
+        {
+          "handling_number": "2427-2026-11",
+          "title": "Bekräftelse om mottaget beslut",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2427-2026::2427-2026-11"
+        }
+      ],
+      "content_hash": "e05161366236ddf948c9d2199cffa3c6b545ade36b8c6488fac3bfdf7da1917c",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2446-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2446-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5440459",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2446-2026",
+        "registered_date": "2026-03-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag i jordbruksmark, Knivsta kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Knivsta"
+      },
+      "handlings": [
+        {
+          "handling_number": "2446-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag i jordbruksmark, Knivsta kommun",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-1"
+        },
+        {
+          "handling_number": "2446-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-2"
+        },
+        {
+          "handling_number": "2446-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-3"
+        },
+        {
+          "handling_number": "2446-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-4"
+        },
+        {
+          "handling_number": "2446-2026-5",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-5"
+        },
+        {
+          "handling_number": "2446-2026-6",
+          "title": "remiss till kommun via epost",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-6"
+        },
+        {
+          "handling_number": "2446-2026-7",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-04-17",
+          "sender_recipient": "Knivsta kommun",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-7"
+        },
+        {
+          "handling_number": "2446-2026-8",
+          "title": "Svar på remiss: Höjderna behöver godkännas",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-8"
+        },
+        {
+          "handling_number": "2446-2026-9",
+          "title": "Yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-9"
+        },
+        {
+          "handling_number": "2446-2026-10",
+          "title": "Yttrande för kännedom",
+          "date": "2026-05-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-10"
+        },
+        {
+          "handling_number": "2446-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-11"
+        },
+        {
+          "handling_number": "2446-2026-12",
+          "title": "Beslut via epost",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-12"
+        },
+        {
+          "handling_number": "2446-2026-13",
+          "title": "bekräftelse om mottaget beslut",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2446-2026::2446-2026-13"
+        }
+      ],
+      "content_hash": "6953d06204ee21014a14279320816048b45a2c274451615b1045fcc1f71b4b7e",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2452-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2452-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5440708",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2452-2026",
+        "registered_date": "2026-03-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattenverksamheten är belägen inom huvudavrinningsområde 52 Tämnarån,, Tierp kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Tierp"
+      },
+      "handlings": [
+        {
+          "handling_number": "2452-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattenverksamheten är belägen inom huvudavrinningsområde 52 Tämnarån,, Tierp kommun",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-1"
+        },
+        {
+          "handling_number": "2452-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-2"
+        },
+        {
+          "handling_number": "2452-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-3"
+        },
+        {
+          "handling_number": "2452-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-03-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-4"
+        },
+        {
+          "handling_number": "2452-2026-5",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-5"
+        },
+        {
+          "handling_number": "2452-2026-6",
+          "title": "Remiss till kommun via epost",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-6"
+        },
+        {
+          "handling_number": "2452-2026-7",
+          "title": "Yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-7"
+        },
+        {
+          "handling_number": "2452-2026-8",
+          "title": "Yttrande",
+          "date": "2026-04-27",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-8"
+        },
+        {
+          "handling_number": "2452-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-9"
+        },
+        {
+          "handling_number": "2452-2026-10",
+          "title": "Beslut via epost",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-10"
+        },
+        {
+          "handling_number": "2452-2026-11",
+          "title": "bekräftelse om mottaget beslut",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2452-2026::2452-2026-11"
+        }
+      ],
+      "content_hash": "f6a607110b9e87c2843853e0fc25e214bfc11166d09164b752360f62b0221429",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2499-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2499-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5442114",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2499-2026",
+        "registered_date": "2026-03-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, dike, Knivsta kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-20",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Knivsta"
+      },
+      "handlings": [
+        {
+          "handling_number": "2499-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, dike, Knivsta kommun",
+          "date": "2026-03-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-1"
+        },
+        {
+          "handling_number": "2499-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-03-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-2"
+        },
+        {
+          "handling_number": "2499-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-03-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-3"
+        },
+        {
+          "handling_number": "2499-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-03-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-4"
+        },
+        {
+          "handling_number": "2499-2026-5",
+          "title": "Fullmakt",
+          "date": "2026-03-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-5"
+        },
+        {
+          "handling_number": "2499-2026-6",
+          "title": "Komplettering",
+          "date": "2026-03-27",
+          "sender_recipient": "Vattenfall Services Nordic AB",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-6"
+        },
+        {
+          "handling_number": "2499-2026-7",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-7"
+        },
+        {
+          "handling_number": "2499-2026-8",
+          "title": "Remiss till kommun via epost",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-8"
+        },
+        {
+          "handling_number": "2499-2026-9",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-04-17",
+          "sender_recipient": "Knivsta kommun, Bygg- och miljönämnden",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-9"
+        },
+        {
+          "handling_number": "2499-2026-10",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-10"
+        },
+        {
+          "handling_number": "2499-2026-11",
+          "title": "Beslut via epost",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-11"
+        },
+        {
+          "handling_number": "2499-2026-12",
+          "title": "bekräftelse om mottaget beslut",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2499-2026::2499-2026-12"
+        }
+      ],
+      "content_hash": "5757819251a8ea953664bbd89d9745899ba619f83c7ff71d09ce63a5436fda22",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2690-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2690-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5449598",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2690-2026",
+        "registered_date": "2026-03-31",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Okänt, Östhammar kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-09",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Östhammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "2690-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Okänt, Östhammar kommun",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-1"
+        },
+        {
+          "handling_number": "2690-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-2"
+        },
+        {
+          "handling_number": "2690-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-3"
+        },
+        {
+          "handling_number": "2690-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-4"
+        },
+        {
+          "handling_number": "2690-2026-5",
+          "title": "Lista berörda fastigheter och fastighetsägare (markägare)",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-5"
+        },
+        {
+          "handling_number": "2690-2026-7",
+          "title": "Remiss_ anmälan om vattenverksamhet_ dnr 2690-2026 (1/1)",
+          "date": "2026-04-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-7"
+        },
+        {
+          "handling_number": "2690-2026-8",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-8"
+        },
+        {
+          "handling_number": "2690-2026-9",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-04-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-9"
+        },
+        {
+          "handling_number": "2690-2026-10",
+          "title": "Beslut om bifall",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2690-2026::2690-2026-10"
+        }
+      ],
+      "content_hash": "dd4a672deea858db08dc9771bcbda4fbb3bb5b12dfa8ba67f5b1db05dadff204",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::2860-2026": {
+      "case_key": "länsstyrelsen i uppsala län::2860-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5456643",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "2860-2026",
+        "registered_date": "2026-04-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sunnanöviken, Östhammar kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-03",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "2860-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sunnanöviken, Östhammar kommun",
+          "date": "2026-04-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-1"
+        },
+        {
+          "handling_number": "2860-2026-2",
+          "title": "Begäran om komplettering med uppgifter",
+          "date": "2026-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-2"
+        },
+        {
+          "handling_number": "2860-2026-3",
+          "title": "Begäran om komplettering via epost",
+          "date": "2026-04-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-3"
+        },
+        {
+          "handling_number": "2860-2026-4",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-4"
+        },
+        {
+          "handling_number": "2860-2026-5",
+          "title": "Remiss till kommun via epost",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-5"
+        },
+        {
+          "handling_number": "2860-2026-6",
+          "title": "Komplettering",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-6"
+        },
+        {
+          "handling_number": "2860-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-7"
+        },
+        {
+          "handling_number": "2860-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-9"
+        },
+        {
+          "handling_number": "2860-2026-10",
+          "title": "Beslut via epost",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-10"
+        },
+        {
+          "handling_number": "2860-2026-11",
+          "title": "Meddelande om att arbeten startas",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::2860-2026::2860-2026-11"
+        }
+      ],
+      "content_hash": "c94e66541c530d2d0b0ee0485b587bc36089aa7e714f236d3ef62edea6286b67",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3072-2026": {
+      "case_key": "länsstyrelsen i uppsala län::3072-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5464565",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3072-2026",
+        "registered_date": "2026-04-15",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Okänt, Tierp kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Tierp"
+      },
+      "handlings": [
+        {
+          "handling_number": "3072-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Okänt, Tierp kommun",
+          "date": "2026-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3072-2026::3072-2026-1"
+        },
+        {
+          "handling_number": "3072-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3072-2026::3072-2026-2"
+        },
+        {
+          "handling_number": "3072-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3072-2026::3072-2026-3"
+        },
+        {
+          "handling_number": "3072-2026-4",
+          "title": "Remiss_ anmälan om vattenverksamhet_ dnr 3072-2026",
+          "date": "2026-04-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3072-2026::3072-2026-4"
+        },
+        {
+          "handling_number": "3072-2026-5",
+          "title": "Yttrande",
+          "date": "2026-05-14",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::3072-2026::3072-2026-5"
+        },
+        {
+          "handling_number": "3072-2026-6",
+          "title": "Beslut om bifall",
+          "date": "2026-05-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3072-2026::3072-2026-6"
+        }
+      ],
+      "content_hash": "c5fc9de8fd80849b26f7e879514210d432edcd7359f69144028b82b26a501df4",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3169-2026": {
+      "case_key": "länsstyrelsen i uppsala län::3169-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5468987",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3169-2026",
+        "registered_date": "2026-04-20",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Öppet vatten som en del av Hunsaren plus ett på senare decennier uppkommet vassbälte., Östhammar kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Östhammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "3169-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Öppet vatten som en del av Hunsaren plus ett på senare decennier uppkommet vassbälte., Östhammar kommun",
+          "date": "2026-04-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3169-2026::3169-2026-1"
+        },
+        {
+          "handling_number": "3169-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3169-2026::3169-2026-2"
+        },
+        {
+          "handling_number": "3169-2026-3",
+          "title": "Komplettering med handlingar till anmälan",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3169-2026::3169-2026-3"
+        },
+        {
+          "handling_number": "3169-2026-4",
+          "title": "Komplettering med karta m.m.",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3169-2026::3169-2026-4"
+        },
+        {
+          "handling_number": "3169-2026-5",
+          "title": "Remiss_ anmälan om vattenverksamhet_ dnr 3169-2026 (1/1)",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3169-2026::3169-2026-5"
+        },
+        {
+          "handling_number": "3169-2026-6",
+          "title": "Beslut om bifall",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3169-2026::3169-2026-6"
+        },
+        {
+          "handling_number": "3169-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-07-09",
+          "sender_recipient": "Östhammars kommun",
+          "handling_key": "länsstyrelsen i uppsala län::3169-2026::3169-2026-7"
+        }
+      ],
+      "content_hash": "037d8341b2ab896581b772bd98b7a6e5473b46b471a67d4029a59735841c8537",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3260-2026": {
+      "case_key": "länsstyrelsen i uppsala län::3260-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5472043",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3260-2026",
+        "registered_date": "2026-04-21",
+        "title": "Begäran om sammanst över vattenbruk, NV-26-036808: Översyn vattenverksamheter som omfattas av producentansvar för fiskeredskap",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Naturvårdsverket",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3260-2026-1",
+          "title": "Begäran om sammanst över vattenbruk, NV-26-036808: Översyn vattenverksamheter som omfattas av producentansvar för fiskeredskap",
+          "date": "2026-04-21",
+          "sender_recipient": "Naturvårdsverket",
+          "handling_key": "länsstyrelsen i uppsala län::3260-2026::3260-2026-1"
+        }
+      ],
+      "content_hash": "0a5150bfd30e9cdf0faa8997a9ef076cefc76d2eb208eb0e3b2c487a57e591f6",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3534-2026": {
+      "case_key": "länsstyrelsen i uppsala län::3534-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5482340",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3534-2026",
+        "registered_date": "2026-05-04",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, två diken, Knivsta kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Knivsta"
+      },
+      "handlings": [
+        {
+          "handling_number": "3534-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, två diken, Knivsta kommun",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-1"
+        },
+        {
+          "handling_number": "3534-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-2"
+        },
+        {
+          "handling_number": "3534-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-3"
+        },
+        {
+          "handling_number": "3534-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-4"
+        },
+        {
+          "handling_number": "3534-2026-5",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-5"
+        },
+        {
+          "handling_number": "3534-2026-6",
+          "title": "Fullmakt",
+          "date": "2026-05-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-6"
+        },
+        {
+          "handling_number": "3534-2026-7",
+          "title": "Begäran om komplettering",
+          "date": "2026-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-7"
+        },
+        {
+          "handling_number": "3534-2026-8",
+          "title": "Komplettering",
+          "date": "2026-05-19",
+          "sender_recipient": "Vattenfall Services Nordic AB",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-8"
+        },
+        {
+          "handling_number": "3534-2026-9",
+          "title": "Beslut om avvisning",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-9"
+        },
+        {
+          "handling_number": "3534-2026-10",
+          "title": "Beslut via epost",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-10"
+        },
+        {
+          "handling_number": "3534-2026-11",
+          "title": "bekräftelse om mottaget beslut",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3534-2026::3534-2026-11"
+        }
+      ],
+      "content_hash": "06fe645bfe2fc29b3157297018e1fd6307275be72c1a3c7a2ba90f7e2cff6e8a",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3656-2026": {
+      "case_key": "länsstyrelsen i uppsala län::3656-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5487324",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3656-2026",
+        "registered_date": "2026-05-06",
+        "title": "Begäran om yttrande över strandskydd och reservatsföreskrifter, samt anmälan om vattenverksamhet\nför att anlägga en gemensam brygga, Mål nr M 27-26,  Östhammars kommun, svar senast 2026-05-20",
+        "status": "Avslutat",
+        "decision_date": "2026-05-20",
+        "sender_recipient": "NACKA TINGSRÄTTMark- och miljödomstolen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3656-2026-1",
+          "title": "Begäran om yttrande över strandskydd och reservatsföreskrifter, samt anmälan om vattenverksamhet\nför att anlägga en gemensam brygga, Mål nr M 27-26,  Östhammars kommun, svar senast 2026-05-20",
+          "date": "2026-05-06",
+          "sender_recipient": "NACKA TINGSRÄTTMark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i uppsala län::3656-2026::3656-2026-1"
+        },
+        {
+          "handling_number": "3656-2026-2",
+          "title": "Underrättelse om sammanträde i Mål nr M 27-26",
+          "date": "2026-05-12",
+          "sender_recipient": "NACKA TINGSRÄTT\nMark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i uppsala län::3656-2026::3656-2026-2"
+        },
+        {
+          "handling_number": "3656-2026-3",
+          "title": "Yttrande angående överklagat ärende",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3656-2026::3656-2026-3"
+        },
+        {
+          "handling_number": "3656-2026-4",
+          "title": "Autosvar_ Länsstyrelsens yttrande 2026-05-20 i Mål nr M 27-26",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3656-2026::3656-2026-4"
+        }
+      ],
+      "content_hash": "2119c94e9778e547c8166763404b7db419bd2346908ed84d8b03225c5d6fcc49",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3763-2026": {
+      "case_key": "länsstyrelsen i uppsala län::3763-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5490943",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3763-2026",
+        "registered_date": "2026-05-11",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Galtfjärden, Östhammar kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-09",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Östhammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "3763-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Galtfjärden, Östhammar kommun",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-1"
+        },
+        {
+          "handling_number": "3763-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-2"
+        },
+        {
+          "handling_number": "3763-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-3"
+        },
+        {
+          "handling_number": "3763-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-4"
+        },
+        {
+          "handling_number": "3763-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-5"
+        },
+        {
+          "handling_number": "3763-2026-6",
+          "title": "Begäran om komplettering",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-6"
+        },
+        {
+          "handling_number": "3763-2026-7",
+          "title": "Komplettering med ytterligare information",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-7"
+        },
+        {
+          "handling_number": "3763-2026-8",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-8"
+        },
+        {
+          "handling_number": "3763-2026-9",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-9"
+        },
+        {
+          "handling_number": "3763-2026-10",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-21",
+          "sender_recipient": "Östhammars kommun",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-10"
+        },
+        {
+          "handling_number": "3763-2026-11",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-27",
+          "sender_recipient": "Sjöfartsverket",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-11"
+        },
+        {
+          "handling_number": "3763-2026-12",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-02",
+          "sender_recipient": "Försvarsmakten",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-12"
+        },
+        {
+          "handling_number": "3763-2026-13",
+          "title": "Beslut om bifall",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3763-2026::3763-2026-13"
+        }
+      ],
+      "content_hash": "df09a1e41a252bcefe8347de6886169a7be7cf44afd70fec57147737a39002ae",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3847-2026": {
+      "case_key": "länsstyrelsen i uppsala län::3847-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5494472",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3847-2026",
+        "registered_date": "2026-05-13",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike, Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "3847-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike, Uppsala kommun",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3847-2026::3847-2026-1"
+        },
+        {
+          "handling_number": "3847-2026-2",
+          "title": "Remiss om  anmälan om vattenverksamhet",
+          "date": "2026-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3847-2026::3847-2026-2"
+        },
+        {
+          "handling_number": "3847-2026-3",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-04",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::3847-2026::3847-2026-3"
+        },
+        {
+          "handling_number": "3847-2026-4",
+          "title": "Beslut om bifall",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3847-2026::3847-2026-4"
+        }
+      ],
+      "content_hash": "57012f35e5ae77f6c5dc0e84b9ac3847a01efb66d78cc1287a411c73cbf2af34",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::3940-2025": {
+      "case_key": "länsstyrelsen i uppsala län::3940-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5135996",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "3940-2025",
+        "registered_date": "2025-05-12",
+        "title": "Begäran om tillsyn av vattenverksamhet",
+        "status": "Avslutat",
+        "decision_date": "2026-09-23",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "3940-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet",
+          "date": "2025-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3940-2025::3940-2025-1"
+        },
+        {
+          "handling_number": "3940-2025-2",
+          "title": "Tjänsteanteckning vid tillsyn",
+          "date": "2026-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3940-2025::3940-2025-2"
+        },
+        {
+          "handling_number": "3940-2025-3",
+          "title": "Beslut att avsluta utan ytterligare åtgärd",
+          "date": "2026-09-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::3940-2025::3940-2025-3"
+        }
+      ],
+      "content_hash": "b14234cef2bff87deda3cd5ae1b24ed88e8136929d08423203aac943fcc18645",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::411-2026": {
+      "case_key": "länsstyrelsen i uppsala län::411-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5371385",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "411-2026",
+        "registered_date": "2026-01-20",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjö, Östhammar kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Östhammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "411-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Östersjö, Östhammar kommun",
+          "date": "2026-01-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-1"
+        },
+        {
+          "handling_number": "411-2026-2",
+          "title": "Begäran om komplettering av ansökan",
+          "date": "2026-02-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-2"
+        },
+        {
+          "handling_number": "411-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-02-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-3"
+        },
+        {
+          "handling_number": "411-2026-4",
+          "title": "Sekretessmarkerad",
+          "date": "2026-02-09",
+          "sender_recipient": "Sekretessmarkerad",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-4"
+        },
+        {
+          "handling_number": "411-2026-5",
+          "title": "Remiss till kommuner, myndigheter och särskilt berörda",
+          "date": "2026-03-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-5"
+        },
+        {
+          "handling_number": "411-2026-6",
+          "title": "Remiss via epost till kommuner och myndigheter",
+          "date": "2026-03-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-6"
+        },
+        {
+          "handling_number": "411-2026-7",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-03-16",
+          "sender_recipient": "Älvkarleby kommun",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-7"
+        },
+        {
+          "handling_number": "411-2026-8",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-03-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-8"
+        },
+        {
+          "handling_number": "411-2026-9",
+          "title": "Delbeslut via epost",
+          "date": "2026-03-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-9"
+        },
+        {
+          "handling_number": "411-2026-10",
+          "title": "Yttrande",
+          "date": "2026-03-23",
+          "sender_recipient": "Östhammars kommun",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-10"
+        },
+        {
+          "handling_number": "411-2026-11",
+          "title": "Begäran om samt godkännande av  förlängd svarstid",
+          "date": "2026-03-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-11"
+        },
+        {
+          "handling_number": "411-2026-12",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-03-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-12"
+        },
+        {
+          "handling_number": "411-2026-13",
+          "title": "Yttrande över remiss",
+          "date": "2026-03-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-13"
+        },
+        {
+          "handling_number": "411-2026-14",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-14"
+        },
+        {
+          "handling_number": "411-2026-15",
+          "title": "Yttrande",
+          "date": "2026-04-03",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-15"
+        },
+        {
+          "handling_number": "411-2026-16",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-16"
+        },
+        {
+          "handling_number": "411-2026-17",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-17"
+        },
+        {
+          "handling_number": "411-2026-18",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-24",
+          "sender_recipient": "Försvarsmakten",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-18"
+        },
+        {
+          "handling_number": "411-2026-19",
+          "title": "Yttranden för bemötande",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-19"
+        },
+        {
+          "handling_number": "411-2026-20",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-20"
+        },
+        {
+          "handling_number": "411-2026-21",
+          "title": "Delbeslut via epost",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-21"
+        },
+        {
+          "handling_number": "411-2026-22",
+          "title": "Bemötande av inkomna yttranden",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-22"
+        },
+        {
+          "handling_number": "411-2026-24",
+          "title": "Delbeslut via epost",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-24"
+        },
+        {
+          "handling_number": "411-2026-25",
+          "title": "begäran om karta",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-25"
+        },
+        {
+          "handling_number": "411-2026-26",
+          "title": "komplettering med detaljkarta",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-26"
+        },
+        {
+          "handling_number": "411-2026-27",
+          "title": "Detaljkarta till berörd fastighetsägare",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-27"
+        },
+        {
+          "handling_number": "411-2026-28",
+          "title": "Yttrande",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-28"
+        },
+        {
+          "handling_number": "411-2026-29",
+          "title": "Delbeslut om förlängd arbetstid",
+          "date": "2026-07-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-29"
+        },
+        {
+          "handling_number": "411-2026-30",
+          "title": "Meddelande om delgivning",
+          "date": "2026-07-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-30"
+        },
+        {
+          "handling_number": "411-2026-31",
+          "title": "Beslut om bifall",
+          "date": "2026-08-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::411-2026::411-2026-31"
+        }
+      ],
+      "content_hash": "a0457a522fb0ac05c1811223aece80fcc2568042d0e69f41cb13c9848c78a12e",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4186-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4186-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5505888",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4186-2026",
+        "registered_date": "2026-05-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalälven, Älvkarleby kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-02",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Älvkarleby"
+      },
+      "handlings": [
+        {
+          "handling_number": "4186-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalälven, Älvkarleby kommun",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-1"
+        },
+        {
+          "handling_number": "4186-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-2"
+        },
+        {
+          "handling_number": "4186-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-3"
+        },
+        {
+          "handling_number": "4186-2026-4",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-4"
+        },
+        {
+          "handling_number": "4186-2026-5",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-5"
+        },
+        {
+          "handling_number": "4186-2026-6",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-06-04",
+          "sender_recipient": "Älvkarleby kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-6"
+        },
+        {
+          "handling_number": "4186-2026-7",
+          "title": "Beslut om vattenverksamhet nedläggning av ledning",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-7"
+        },
+        {
+          "handling_number": "4186-2026-8",
+          "title": "Beslut skickat via e-post",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4186-2026::4186-2026-8"
+        }
+      ],
+      "content_hash": "e77cc1208e8034747de13ae2576e23dc77f95b03859a476a33ae0b90a39323a1",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4214-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4214-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5506938",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4214-2026",
+        "registered_date": "2026-05-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, uttag av ytvatten för uppfyllnad av nyanlagd dagvattendamm, Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-25",
+        "sender_recipient": "Uppsala kommun",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "4214-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, uttag av ytvatten för uppfyllnad av nyanlagd dagvattendamm, Uppsala kommun",
+          "date": "2026-05-26",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-1"
+        },
+        {
+          "handling_number": "4214-2026-2",
+          "title": "Remiss till miljöförvaltningen och sjöfartsverket",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-2"
+        },
+        {
+          "handling_number": "4214-2026-3",
+          "title": "Remiss via epost",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-3"
+        },
+        {
+          "handling_number": "4214-2026-4",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-11",
+          "sender_recipient": "Sjöfartsverket",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-4"
+        },
+        {
+          "handling_number": "4214-2026-5",
+          "title": "Yttrande",
+          "date": "2026-06-17",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-5"
+        },
+        {
+          "handling_number": "4214-2026-6",
+          "title": "Begäran om komplettering",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-6"
+        },
+        {
+          "handling_number": "4214-2026-7",
+          "title": "begäran via epost",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-7"
+        },
+        {
+          "handling_number": "4214-2026-8",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-07-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-8"
+        },
+        {
+          "handling_number": "4214-2026-9",
+          "title": "Komplettering",
+          "date": "2026-08-03",
+          "sender_recipient": "Uppsala kommun/WSP",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-9"
+        },
+        {
+          "handling_number": "4214-2026-10",
+          "title": "Beslut om bifall med villkor(36597593) (0)",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4214-2026::4214-2026-10"
+        }
+      ],
+      "content_hash": "2eb3cd92d6a2677d3ffa67d4be6a516b5c5254f700cf52022e76fa19a34eb055",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::422-2024": {
+      "case_key": "länsstyrelsen i uppsala län::422-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4640464",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "422-2024",
+        "registered_date": "2024-01-15",
+        "title": "Upphandling avseende efterbevakning vid naturvårdsbränningar",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Länsstyrelsen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "422-2024-1",
+          "title": "Upphandling avseende efterbevakning vid naturvårdsbränningar",
+          "date": "2024-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-1"
+        },
+        {
+          "handling_number": "422-2024-2",
+          "title": "Beslut om upphandling, upphandling efterbevakning",
+          "date": "2024-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-2"
+        },
+        {
+          "handling_number": "422-2024-3",
+          "title": "Avtal om Personal till naturvårdsbränningar och efterbevakning i Uppsala län",
+          "date": "2024-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-3"
+        },
+        {
+          "handling_number": "422-2024-4",
+          "title": "Avtal om Personal till naturvårdsbränningar och efterbevakning i Uppsala län",
+          "date": "2024-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-4"
+        },
+        {
+          "handling_number": "422-2024-5",
+          "title": "Avtal om Personal till naturvårdsbränningar och efterbevakning i Uppsala län",
+          "date": "2024-05-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-5"
+        },
+        {
+          "handling_number": "422-2024-6",
+          "title": "Tilldelningsbeslut Ramavtal Arbete vid naturvårdsbränningar och efterbevakning i Uppsala län",
+          "date": "2024-05-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-6"
+        },
+        {
+          "handling_number": "422-2024-7",
+          "title": "Förfrågningsunderlag Ramavtal Personal till naturvårdsbränning och efterbevakning",
+          "date": "2024-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-7"
+        },
+        {
+          "handling_number": "422-2024-8",
+          "title": "Bilaga 1 Bedömningstabell. Ramavtal personal till naturvårdsbränning och efterbevakning",
+          "date": "2024-04-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::422-2024::422-2024-8"
+        }
+      ],
+      "content_hash": "0d94a7d8b47645c83645f2c503af348d8ca4976e3cff75cc1a4e2e0d4f7bc16d",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4317-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4317-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5511184",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4317-2026",
+        "registered_date": "2026-05-28",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fyrisån, Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "4317-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fyrisån, Uppsala kommun",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4317-2026::4317-2026-1"
+        },
+        {
+          "handling_number": "4317-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4317-2026::4317-2026-2"
+        },
+        {
+          "handling_number": "4317-2026-3",
+          "title": "Lista berörda fastigheter och nyttjanderättsinnehavare",
+          "date": "2026-05-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4317-2026::4317-2026-3"
+        },
+        {
+          "handling_number": "4317-2026-4",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4317-2026::4317-2026-4"
+        },
+        {
+          "handling_number": "4317-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-17",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4317-2026::4317-2026-5"
+        },
+        {
+          "handling_number": "4317-2026-6",
+          "title": "Beslut om bifall",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4317-2026::4317-2026-6"
+        },
+        {
+          "handling_number": "4317-2026-7",
+          "title": "Meddelande med svar på förfrågan om tid för utfört arbete och begränsningar i arbetstid",
+          "date": "2026-11-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4317-2026::4317-2026-7"
+        }
+      ],
+      "content_hash": "b9074856b4c41791eb5263dbede9ca41d2c8d2f51e74657dd9c7a572c1c1d3e1",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4464-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4464-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5518549",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4464-2026",
+        "registered_date": "2026-06-03",
+        "title": "Begäran om tillsyn av vattenverksamhet, muddring, Östhammars kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-26",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4464-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, muddring, Östhammars kommun",
+          "date": "2026-06-03",
+          "sender_recipient": "Polismyndigheten",
+          "handling_key": "länsstyrelsen i uppsala län::4464-2026::4464-2026-1"
+        },
+        {
+          "handling_number": "4464-2026-2",
+          "title": "Tjänsteanteckning vid samtal med fastighetsägare",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4464-2026::4464-2026-2"
+        },
+        {
+          "handling_number": "4464-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4464-2026::4464-2026-3"
+        },
+        {
+          "handling_number": "4464-2026-4",
+          "title": "Komplettering med bilder och beskrivning",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4464-2026::4464-2026-4"
+        },
+        {
+          "handling_number": "4464-2026-5",
+          "title": "Mail till Ove Johansson",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4464-2026::4464-2026-5"
+        },
+        {
+          "handling_number": "4464-2026-6",
+          "title": "Meddelande till polisen att ärendet avslutas",
+          "date": "2026-08-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4464-2026::4464-2026-6"
+        },
+        {
+          "handling_number": "4464-2026-7",
+          "title": "Meddelande till fastighetsägare att ärendet avslutas",
+          "date": "2026-08-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4464-2026::4464-2026-7"
+        }
+      ],
+      "content_hash": "b1e30a4275a262394d2fd8f335b40a9bc99ae00b844b00ec8040cf60ee9257fd",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4478-2024": {
+      "case_key": "länsstyrelsen i uppsala län::4478-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4792750",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4478-2024",
+        "registered_date": "2024-05-30",
+        "title": "Begäran om samråd om Natura 2000 tillstånd, vattenverksamhet enligt 11 kap. miljöbalken, gång- och cykelbro över Sävjaån, Uppsala kommun, svar senast 2024-08-23",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4478-2024-1",
+          "title": "Samråd inför tillståndsansökan, gång- och cykelbro över Sävjaån, Uppsala kommun",
+          "date": "2024-05-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4478-2024::4478-2024-1"
+        },
+        {
+          "handling_number": "4478-2024-2",
+          "title": "Meddelande om förslag på datum för samrådsmöte",
+          "date": "2024-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4478-2024::4478-2024-2"
+        },
+        {
+          "handling_number": "4478-2024-3",
+          "title": "Meddelande om inbokat samrådsmöte",
+          "date": "2024-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4478-2024::4478-2024-3"
+        },
+        {
+          "handling_number": "4478-2024-4",
+          "title": "Meddelande om Länsstyrelsens skriftliga yttrande 2024-10-08 samråd",
+          "date": "2024-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4478-2024::4478-2024-4"
+        },
+        {
+          "handling_number": "4478-2024-5",
+          "title": "Minnesanteckningar från samrådsmöte den 11 sep 2024",
+          "date": "2024-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4478-2024::4478-2024-5"
+        }
+      ],
+      "content_hash": "570bf1f313dae7d7a107f3e119c290b57cb12b7a19cbfbcaae956bcf850fd246",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4506-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4506-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5519121",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4506-2026",
+        "registered_date": "2026-06-04",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, omgrävning av vattendrag, Enköping kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-01",
+        "sender_recipient": "Oriola",
+        "municipality": "Enköping"
+      },
+      "handlings": [
+        {
+          "handling_number": "4506-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, omgrävning av vattendrag, Enköping kommun",
+          "date": "2026-06-04",
+          "sender_recipient": "Oriola",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-1"
+        },
+        {
+          "handling_number": "4506-2026-2",
+          "title": "Fullmakt",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-2"
+        },
+        {
+          "handling_number": "4506-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-3"
+        },
+        {
+          "handling_number": "4506-2026-4",
+          "title": "Begäran om komplettering via epost",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-4"
+        },
+        {
+          "handling_number": "4506-2026-5",
+          "title": "Komplettering",
+          "date": "2026-06-29",
+          "sender_recipient": "Oriola Sweden AB",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-5"
+        },
+        {
+          "handling_number": "4506-2026-6",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-6"
+        },
+        {
+          "handling_number": "4506-2026-7",
+          "title": "Remiss till kommun via epost",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-7"
+        },
+        {
+          "handling_number": "4506-2026-8",
+          "title": "Begäran om anstånd till 2026-08-26",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-8"
+        },
+        {
+          "handling_number": "4506-2026-9",
+          "title": "Beslut om förlängd handläggningstid",
+          "date": "2026-07-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-9"
+        },
+        {
+          "handling_number": "4506-2026-10",
+          "title": "Beviljat anstånd t.o.m. 24 augusti 2026",
+          "date": "2026-07-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-10"
+        },
+        {
+          "handling_number": "4506-2026-11",
+          "title": "Bekräftelse delgivning",
+          "date": "2026-08-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-11"
+        },
+        {
+          "handling_number": "4506-2026-12",
+          "title": "Svar på remiss: avstyrker",
+          "date": "2026-08-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-12"
+        },
+        {
+          "handling_number": "4506-2026-13",
+          "title": "Yttrande över remiss",
+          "date": "2026-08-10",
+          "sender_recipient": "Enköpings kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-13"
+        },
+        {
+          "handling_number": "4506-2026-14",
+          "title": "Remiss_ anmälan om vattenverksamhet_ dnr 4506-2026 (1/1)",
+          "date": "2026-08-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-14"
+        },
+        {
+          "handling_number": "4506-2026-15",
+          "title": "Samrådsyttrande",
+          "date": "2026-08-19",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-15"
+        },
+        {
+          "handling_number": "4506-2026-16",
+          "title": "Komplettering",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-16"
+        },
+        {
+          "handling_number": "4506-2026-17",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4506-2026::4506-2026-17"
+        }
+      ],
+      "content_hash": "0b894731bc615bfafc930825d0c71e640fe1e463d35353826633595ed8e98ceb",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4508-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4508-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5519343",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4508-2026",
+        "registered_date": "2026-05-25",
+        "title": "Begäran om tillsyn av vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4508-2026-1",
+          "title": "Tjänsteanteckning om start av ärende",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4508-2026::4508-2026-1"
+        },
+        {
+          "handling_number": "4508-2026-2",
+          "title": "Begäran om uppgifter",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4508-2026::4508-2026-2"
+        }
+      ],
+      "content_hash": "12166ec4694abf3f0887ae3a014806f8be03630c07203bc4b21dbf0114188b2c",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4554-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4554-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5521100",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4554-2026",
+        "registered_date": "2026-06-05",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren-Arnöfjärden, Enköping kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-09",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4554-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Mälaren-Arnöfjärden, Enköping kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4554-2026::4554-2026-1"
+        },
+        {
+          "handling_number": "4554-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4554-2026::4554-2026-2"
+        },
+        {
+          "handling_number": "4554-2026-3",
+          "title": "Beslut om avvisning",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4554-2026::4554-2026-3"
+        },
+        {
+          "handling_number": "4554-2026-4",
+          "title": "Beslut via epost",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4554-2026::4554-2026-4"
+        }
+      ],
+      "content_hash": "0ac71ca5c54df1b15393be7382a746a60f70694355191e130734847e4880a331",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4721-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4721-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5529670",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4721-2026",
+        "registered_date": "2026-06-12",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fyrisån, Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-07",
+        "sender_recipient": "Uppsala kommun",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "4721-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fyrisån, Uppsala kommun",
+          "date": "2026-06-12",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-1"
+        },
+        {
+          "handling_number": "4721-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-2"
+        },
+        {
+          "handling_number": "4721-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-3"
+        },
+        {
+          "handling_number": "4721-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-4"
+        },
+        {
+          "handling_number": "4721-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-5"
+        },
+        {
+          "handling_number": "4721-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-6"
+        },
+        {
+          "handling_number": "4721-2026-7",
+          "title": "Sedimentprover – analysresultat",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-7"
+        },
+        {
+          "handling_number": "4721-2026-8",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-8"
+        },
+        {
+          "handling_number": "4721-2026-9",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-9"
+        },
+        {
+          "handling_number": "4721-2026-10",
+          "title": "Yttrande över remiss",
+          "date": "2026-07-01",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-10"
+        },
+        {
+          "handling_number": "4721-2026-11",
+          "title": "Beslut med villkor anmälan om vattenuttag m.m.",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4721-2026::4721-2026-11"
+        }
+      ],
+      "content_hash": "ba6e262ae7981e65cfd4898f842e147ba4fd06f96b246c407fe3b44116d87cc8",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4967-2024": {
+      "case_key": "länsstyrelsen i uppsala län::4967-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4811005",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4967-2024",
+        "registered_date": "2024-06-20",
+        "title": "Anmälan om misstanke om brott avseende vattenverksamhet vid Älvkarleö bruk",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4967-2024-1",
+          "title": "Anmälan om misstanke om brott avseende vattenverksamhet vid Älvkarleö bruk",
+          "date": "2024-06-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4967-2024::4967-2024-1"
+        },
+        {
+          "handling_number": "4967-2024-2",
+          "title": "Sekretessmarkerad",
+          "date": "2024-06-27",
+          "sender_recipient": "Sekretessmarkerad",
+          "handling_key": "länsstyrelsen i uppsala län::4967-2024::4967-2024-2"
+        },
+        {
+          "handling_number": "4967-2024-3",
+          "title": "Underrättelse om mottagen anmälan",
+          "date": "2024-07-09",
+          "sender_recipient": "Åklagarmyndigheten",
+          "handling_key": "länsstyrelsen i uppsala län::4967-2024::4967-2024-3"
+        }
+      ],
+      "content_hash": "f1738f418dfebc99b46d97614f0aefb0db0f1a35536219bc6383ac0c53b8d745",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::4987-2026": {
+      "case_key": "länsstyrelsen i uppsala län::4987-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5538682",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "4987-2026",
+        "registered_date": "2026-06-22",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, vattendrag/dike som är klassat som övrigt vatten (WA36940518), Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-26",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "4987-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, vattendrag/dike som är klassat som övrigt vatten (WA36940518), Uppsala kommun",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4987-2026::4987-2026-1"
+        },
+        {
+          "handling_number": "4987-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4987-2026::4987-2026-2"
+        },
+        {
+          "handling_number": "4987-2026-3",
+          "title": "Yttranden grannfastigheter och nyttjanderättsinnehavare",
+          "date": "2026-06-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4987-2026::4987-2026-3"
+        },
+        {
+          "handling_number": "4987-2026-4",
+          "title": "Remiss om vattenverksamhet",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4987-2026::4987-2026-4"
+        },
+        {
+          "handling_number": "4987-2026-5",
+          "title": "Remiss till närboende",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4987-2026::4987-2026-5"
+        },
+        {
+          "handling_number": "4987-2026-6",
+          "title": "Yttrande",
+          "date": "2026-07-04",
+          "sender_recipient": "Uppsala kommun",
+          "handling_key": "länsstyrelsen i uppsala län::4987-2026::4987-2026-6"
+        },
+        {
+          "handling_number": "4987-2026-8",
+          "title": "Beslut om bifall (4987-2026)",
+          "date": "2026-08-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::4987-2026::4987-2026-8"
+        }
+      ],
+      "content_hash": "afdfa77998d20e7794419f05e2ab29c829499c77adb9e9c32bbb52de8248888f",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5032-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5032-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5540672",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5032-2026",
+        "registered_date": "2026-06-18",
+        "title": "Avgränsningssamråd vattenverksamhet för ny bro vid Vimpelgatan",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5032-2026-1",
+          "title": "Avgränsningssamråd vattenverksamhet för ny bro vid Vimpelgatan",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5032-2026::5032-2026-1"
+        },
+        {
+          "handling_number": "5032-2026-2",
+          "title": "Yttrande avgränsningssamråd Vimpelgatan",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5032-2026::5032-2026-2"
+        },
+        {
+          "handling_number": "5032-2026-3",
+          "title": "Yttrande skickat med e-post",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5032-2026::5032-2026-3"
+        }
+      ],
+      "content_hash": "589d4986cc4f8bc88453a912ef11e75aa855a337859c9167f86fc355d8161c7a",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5034-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5034-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5540840",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5034-2026",
+        "registered_date": "2026-06-23",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Björklingeån., Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-12",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Uppsala"
+      },
+      "handlings": [
+        {
+          "handling_number": "5034-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Björklingeån., Uppsala kommun",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5034-2026::5034-2026-1"
+        },
+        {
+          "handling_number": "5034-2026-2",
+          "title": "Remiss kommunen m.fl.",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5034-2026::5034-2026-2"
+        },
+        {
+          "handling_number": "5034-2026-3",
+          "title": "Remiss skickad via e-post",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5034-2026::5034-2026-3"
+        },
+        {
+          "handling_number": "5034-2026-4",
+          "title": "Yttrande",
+          "date": "2026-07-03",
+          "sender_recipient": "Uppsala kommun, Miljöförvaltningen",
+          "handling_key": "länsstyrelsen i uppsala län::5034-2026::5034-2026-4"
+        },
+        {
+          "handling_number": "5034-2026-5",
+          "title": "Remiss_ anmälan om vattenverksamhet_ dnr 5034-2026 (1/1)",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5034-2026::5034-2026-5"
+        },
+        {
+          "handling_number": "5034-2026-6",
+          "title": "Svar på remiss",
+          "date": "2026-09-29",
+          "sender_recipient": "Uppsala Vatten och Avfall AB",
+          "handling_key": "länsstyrelsen i uppsala län::5034-2026::5034-2026-6"
+        },
+        {
+          "handling_number": "5034-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-10-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5034-2026::5034-2026-7"
+        }
+      ],
+      "content_hash": "f3856b154fc14cef0c8ed235f6ab881b3de4c25cf6a10090268063aa4572cae3",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5063-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5063-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5542385",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5063-2026",
+        "registered_date": "2026-06-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Nedläggning/byte av trumma, Uppsala kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-08",
+        "sender_recipient": "Svenska Kraftnät",
+        "municipality": "Knivsta,Tierp"
+      },
+      "handlings": [
+        {
+          "handling_number": "5063-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Se Bilaga Uppgifter om verksamhet och miljöpåverkan., Uppsala kommun",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-1"
+        },
+        {
+          "handling_number": "5063-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-2"
+        },
+        {
+          "handling_number": "5063-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-3"
+        },
+        {
+          "handling_number": "5063-2026-4",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-4"
+        },
+        {
+          "handling_number": "5063-2026-5",
+          "title": "Begäran om komplettering av anmälan",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-5"
+        },
+        {
+          "handling_number": "5063-2026-6",
+          "title": "Begäran om komplettering skickad med e-post",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-6"
+        },
+        {
+          "handling_number": "5063-2026-7",
+          "title": "Remiss till berörda kommuner och enskilda",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-7"
+        },
+        {
+          "handling_number": "5063-2026-8",
+          "title": "Remiss via epost",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-8"
+        },
+        {
+          "handling_number": "5063-2026-9",
+          "title": "Sv Begäran av komplettering av anmälan om vattenverksamhet",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-9"
+        },
+        {
+          "handling_number": "5063-2026-10",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-07-23",
+          "sender_recipient": "Bygg- och miljönämnden, Knivsta kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-10"
+        },
+        {
+          "handling_number": "5063-2026-11",
+          "title": "Yttrande",
+          "date": "2026-07-30",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-11"
+        },
+        {
+          "handling_number": "5063-2026-12",
+          "title": "Begäran om uppgifter",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-12"
+        },
+        {
+          "handling_number": "5063-2026-13",
+          "title": "Svar på begärda uppgifter",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-13"
+        },
+        {
+          "handling_number": "5063-2026-15",
+          "title": "Beslut om bifall med villkor 5063-26",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-15"
+        },
+        {
+          "handling_number": "5063-2026-16",
+          "title": "Sv_ Elektronisk delgivning_ Beslut i ärende 5063-2026 - anmälan om vattenverksamhet (1/1)",
+          "date": "2026-10-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5063-2026::5063-2026-16"
+        }
+      ],
+      "content_hash": "ea2c1ef3f17240fe04998f34a2bdebe50a0fff638089a7e78ff25ab67d6c0f54",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5114-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5114-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5545428",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5114-2026",
+        "registered_date": "2026-06-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vet ej, eventuellt dike., Östhammar kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-14",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Östhammar"
+      },
+      "handlings": [
+        {
+          "handling_number": "5114-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vet ej, eventuellt dike., Östhammar kommun",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-1"
+        },
+        {
+          "handling_number": "5114-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-2"
+        },
+        {
+          "handling_number": "5114-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-3"
+        },
+        {
+          "handling_number": "5114-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-4"
+        },
+        {
+          "handling_number": "5114-2026-5",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-5"
+        },
+        {
+          "handling_number": "5114-2026-6",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-6"
+        },
+        {
+          "handling_number": "5114-2026-7",
+          "title": "Remiss till kommun och närboende",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-7"
+        },
+        {
+          "handling_number": "5114-2026-8",
+          "title": "Yttrande över remiss",
+          "date": "2026-07-07",
+          "sender_recipient": "Östhammars kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-8"
+        },
+        {
+          "handling_number": "5114-2026-9",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5114-2026::5114-2026-9"
+        }
+      ],
+      "content_hash": "2347778138ce11dc46b2b81ad886854adc3333bd8009098465487d52567573f3",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5118-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5118-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5545640",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5118-2026",
+        "registered_date": "2026-06-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike Enköping, Enköping kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-25",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Enköping"
+      },
+      "handlings": [
+        {
+          "handling_number": "5118-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike Enköping, Enköping kommun",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-1"
+        },
+        {
+          "handling_number": "5118-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-2"
+        },
+        {
+          "handling_number": "5118-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-3"
+        },
+        {
+          "handling_number": "5118-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-4"
+        },
+        {
+          "handling_number": "5118-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-5"
+        },
+        {
+          "handling_number": "5118-2026-6",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-6"
+        },
+        {
+          "handling_number": "5118-2026-7",
+          "title": "Remiss till kommunen",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-7"
+        },
+        {
+          "handling_number": "5118-2026-8",
+          "title": "Begäran om anstånd till 2026-08-20",
+          "date": "2026-07-06",
+          "sender_recipient": "Enköpings kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-8"
+        },
+        {
+          "handling_number": "5118-2026-9",
+          "title": "Anstånd beviljat till den 13 augusti",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-9"
+        },
+        {
+          "handling_number": "5118-2026-10",
+          "title": "Yttrande",
+          "date": "2026-08-13",
+          "sender_recipient": "Enköpings kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-10"
+        },
+        {
+          "handling_number": "5118-2026-11",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-09-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5118-2026::5118-2026-11"
+        }
+      ],
+      "content_hash": "722059274df7bde7a7c53a4fce07d51bb7cbc6434d7bc99a3cd5cfa06eb455e3",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5313-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5313-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5553661",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5313-2026",
+        "registered_date": "2026-07-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, STUBBO diken, Enköping kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-12",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5313-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, STUBBO diken, Enköping kommun",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-1"
+        },
+        {
+          "handling_number": "5313-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-2"
+        },
+        {
+          "handling_number": "5313-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-3"
+        },
+        {
+          "handling_number": "5313-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-4"
+        },
+        {
+          "handling_number": "5313-2026-5",
+          "title": "remiss till kommun m.fl.",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-5"
+        },
+        {
+          "handling_number": "5313-2026-6",
+          "title": "remiss skickad med e-post",
+          "date": "2026-07-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-6"
+        },
+        {
+          "handling_number": "5313-2026-7",
+          "title": "Begäran om anstånd till 2026-08-24",
+          "date": "2026-07-13",
+          "sender_recipient": "Enköpings kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-7"
+        },
+        {
+          "handling_number": "5313-2026-8",
+          "title": "Anstånd beviljas",
+          "date": "2026-07-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-8"
+        },
+        {
+          "handling_number": "5313-2026-9",
+          "title": "Yttrande över remiss",
+          "date": "2026-08-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-9"
+        },
+        {
+          "handling_number": "5313-2026-10",
+          "title": "Beslut om bifall",
+          "date": "2026-10-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5313-2026::5313-2026-10"
+        }
+      ],
+      "content_hash": "95a96fd28cda2c759c7c9420d02a0dde78112f6ea53e183e4ee8cb00bb0f3b9f",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5395-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5395-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5556644",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5395-2026",
+        "registered_date": "2026-07-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, 10938, Håbo kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Håbo"
+      },
+      "handlings": [
+        {
+          "handling_number": "5395-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, 10938, Håbo kommun",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5395-2026::5395-2026-1"
+        },
+        {
+          "handling_number": "5395-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5395-2026::5395-2026-2"
+        },
+        {
+          "handling_number": "5395-2026-5",
+          "title": "Tjänsteanteckning efter telefonsamtal",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5395-2026::5395-2026-5"
+        },
+        {
+          "handling_number": "5395-2026-6",
+          "title": "Beslut om avvisning",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5395-2026::5395-2026-6"
+        },
+        {
+          "handling_number": "5395-2026-7",
+          "title": "Beslut via epost",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5395-2026::5395-2026-7"
+        }
+      ],
+      "content_hash": "6e199521ea48f4e6533622dddd9cef45b3972fe6bf5ce1cc0d96a59b08b8b012",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5468-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5468-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5559684",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5468-2026",
+        "registered_date": "2026-07-09",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumma, Kvarnmyren, Tierp kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-11",
+        "sender_recipient": "Gysinge Skogsfastigheter AB",
+        "municipality": "Tierp"
+      },
+      "handlings": [
+        {
+          "handling_number": "5468-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumma, Kvarnmyren, Tierp kommun",
+          "date": "2026-07-09",
+          "sender_recipient": "Gysinge Skogsfastigheter AB",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-1"
+        },
+        {
+          "handling_number": "5468-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-2"
+        },
+        {
+          "handling_number": "5468-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-3"
+        },
+        {
+          "handling_number": "5468-2026-4",
+          "title": "Begäran om komplettering via epost",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-4"
+        },
+        {
+          "handling_number": "5468-2026-5",
+          "title": "Remiss till kommun och särskilt berörda",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-5"
+        },
+        {
+          "handling_number": "5468-2026-6",
+          "title": "Remiss anmälan om vattenverksamhet_ dnr 5468-2026 (1/1)",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-6"
+        },
+        {
+          "handling_number": "5468-2026-7",
+          "title": "Yttrande",
+          "date": "2026-08-10",
+          "sender_recipient": "Tierps kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-7"
+        },
+        {
+          "handling_number": "5468-2026-8",
+          "title": "Beslut anmälan om byta av trumma",
+          "date": "2026-09-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-8"
+        },
+        {
+          "handling_number": "5468-2026-9",
+          "title": "Beslutskarta 5468-2026",
+          "date": "2026-09-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-9"
+        },
+        {
+          "handling_number": "5468-2026-10",
+          "title": "Beslut skickat via e-post",
+          "date": "2026-09-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5468-2026::5468-2026-10"
+        }
+      ],
+      "content_hash": "dcd6f898fe2b61e94522dcffb5595a0030f97e204b882bb75f6a003691eab1da",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5493-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5493-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5560492",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5493-2026",
+        "registered_date": "2026-07-10",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Diken, Enköping kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-07",
+        "sender_recipient": "ACT Zero Sweden AB",
+        "municipality": "Enköping"
+      },
+      "handlings": [
+        {
+          "handling_number": "5493-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Diken, Enköping kommun",
+          "date": "2026-07-10",
+          "sender_recipient": "ACT Zero Sweden AB",
+          "handling_key": "länsstyrelsen i uppsala län::5493-2026::5493-2026-1"
+        },
+        {
+          "handling_number": "5493-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5493-2026::5493-2026-2"
+        },
+        {
+          "handling_number": "5493-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5493-2026::5493-2026-3"
+        },
+        {
+          "handling_number": "5493-2026-4",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5493-2026::5493-2026-4"
+        },
+        {
+          "handling_number": "5493-2026-5",
+          "title": "Remiss_ anmälan om vattenverksamhet_ dnr 5493-2026 (1/1)",
+          "date": "2026-08-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5493-2026::5493-2026-5"
+        },
+        {
+          "handling_number": "5493-2026-6",
+          "title": "Yttrande",
+          "date": "2026-09-16",
+          "sender_recipient": "Enköpings kommun",
+          "handling_key": "länsstyrelsen i uppsala län::5493-2026::5493-2026-6"
+        },
+        {
+          "handling_number": "5493-2026-7",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5493-2026::5493-2026-7"
+        }
+      ],
+      "content_hash": "a149b329597fe97720dece469445b3ca3fcb3f51ad5b8e8fcdc0dc7b786c9746",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i uppsala län::5586-2026": {
+      "case_key": "länsstyrelsen i uppsala län::5586-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5564441",
+      "observed_at": "2026-11-14T12:29:54.588611+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Uppsala län",
+        "diary_number": "5586-2026",
+        "registered_date": "2026-07-10",
+        "title": "Begäran om tillsyn av vattenverksamhet. Lanforsens vattenkraftverk. Älvkraleby kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-01",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "5586-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet. Lanforsens vattenkraftverk. Älvkraleby kommun",
+          "date": "2026-07-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-1"
+        },
+        {
+          "handling_number": "5586-2026-2",
+          "title": "Begäran om uppgifter från Fortum, svar senast 11 september",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-2"
+        },
+        {
+          "handling_number": "5586-2026-3",
+          "title": "Svar från fortum",
+          "date": "2026-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-3"
+        },
+        {
+          "handling_number": "5586-2026-4",
+          "title": "Begäran om kompletteringar",
+          "date": "2026-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-4"
+        },
+        {
+          "handling_number": "5586-2026-5",
+          "title": "Mailkonversation att kompletteringar inkommer nästa vecka",
+          "date": "2026-09-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-5"
+        },
+        {
+          "handling_number": "5586-2026-6",
+          "title": "Kompletterande uppgifter",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-6"
+        },
+        {
+          "handling_number": "5586-2026-7",
+          "title": "Mail till Fortum",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-7"
+        },
+        {
+          "handling_number": "5586-2026-8",
+          "title": "Tjänsteanteckning vid tillsyn",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-8"
+        },
+        {
+          "handling_number": "5586-2026-9",
+          "title": "Tjänsteanteckning vid samtal samt avslut av ärende",
+          "date": "2026-10-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i uppsala län::5586-2026::5586-2026-9"
+        }
+      ],
+      "content_hash": "bde2691236d6338e3ea58ad4c013648029ad4c5b3946a2e06e06ad8b76132701",
+      "first_seen_at": "2026-11-14T12:29:54.588611+00:00",
+      "last_seen_at": "2026-11-14T12:29:54.588611+00:00",
       "observation_count": 1
     }
   }
