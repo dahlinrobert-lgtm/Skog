@@ -47,6 +47,22 @@ The matcher extracts literal geographic clues from the Police statement into sep
 - `road_only` or `unparsed`: no structured place/segment could be extracted.
 The output also carries through NVR WGS84 coordinates and coordinate-quality fields when present. These fields are descriptive only: they do not alter candidate inclusion, score, status, or `geographic_match_used`. A later version must compare cross-level references against the named road geometry and its local direction, not simply measure distance to the settlement centroid. Road-segment references should be compared with the road section between the two named anchors. Keep source text unchanged for review.
 
+
+## Separate delayed-event candidate search (review-only)
+The primary temporal search remains unchanged (default 180 minutes). An optional second output can identify later NVR event timestamps after a timed Police occurrence, from beyond the primary window up to a configurable maximum (default 72 hours). It writes a separate CSV and does not add delayed candidates to the primary output.
+
+Run both outputs together:
+```bash
+python scripts/match_police_nvr_temporal.py \
+  --police data/police_events/lulea_review_candidates.csv \
+  --nvr /path/to/nvr-accidents.csv \
+  --output /path/to/lulea-police-nvr-temporal-candidates.csv \
+  --extended-output /path/to/lulea-police-nvr-delayed-candidates.csv
+```
+The delayed output uses three descriptive bands: 3–12 hours, 12–24 hours and 24–72 hours. It requires an explicit or uniquely extractable Police occurrence time, a later NVR timestamp, a compatible/unknown species relation, and an elapsed lag greater than the primary window. It does not search backward in time. The selected later timestamp and all original NVR datetime values are retained. Every row is marked `delayed_event_review`, `unreviewed`, and `geographic_match_used=false`. The maximum can be changed with `--extended-max-hours`; the primary output and its default 180-minute rule remain unchanged.
+
+**Critical interpretation limit:** the inspected NVR export has a `Datum` value, but the structural audit found no separate timestamps for original collision, search, recovery, discovery or euthanasia. Outcome values such as `Avlivat` and `Påträffat dött` are not timestamps. Therefore, the extended search only finds later NVR event-datetime observations relative to Police occurrence time. It cannot establish that an animal was found or euthanized later, nor prove a delayed reporting sequence. Confirm the source definition of `Datum` with the data provider before interpreting these candidates as delayed recovery/handling events. The time bands are exploratory review intervals, not validated matching thresholds.
+
 ## Known limitations and validation
 - NVR reports can lag by up to two months; absence of a same-date NVR event is not evidence that the Police event did not occur.
 - NVR's public contractor dataset does not cover every Police-reported collision.
