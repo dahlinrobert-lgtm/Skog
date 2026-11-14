@@ -33,6 +33,7 @@ OPERATIONAL_ALLOWED = {
     },
     "commercial_use_status": {
         "verified", "verified_with_attribution", "conditional",
+        "conditional_on_attribution_and_source_scope",
         "conditional_per_product", "pending_product_terms",
         "pending_scope_confirmation", "restricted", "unknown",
     },
