@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-13T12:35:54.076260+00:00",
+  "generated_at": "2026-11-14T11:45:09.698796+00:00",
   "scope": "Norrbottens län",
   "source": "Brottsplatskartan API; public Police event material",
   "interpretation": "Successful workflow and counts do not attest complete historical API coverage. Extracted wildlife rows are candidates, not confirmed collisions.",
@@ -11,12 +11,12 @@
     "publication_year_counts": {
       "2026": 500
     },
-    "oldest_publication_date": "2026-07-18",
-    "newest_publication_date": "2026-11-13",
+    "oldest_publication_date": "2026-07-20",
+    "newest_publication_date": "2026-11-14",
     "event_type_counts": {
       "Arbetsplatsolycka": 15,
       "Bedrägeri": 1,
-      "Brand": 12,
+      "Brand": 13,
       "Bråk": 2,
       "Farligt föremål,  misstänkt": 1,
       "Fjällräddning": 11,
@@ -24,9 +24,9 @@
       "Försvunnen person": 7,
       "Häleri": 1,
       "Inbrott": 4,
-      "Knivlagen": 4,
+      "Knivlagen": 5,
       "Misshandel": 14,
-      "Mord/dråp": 1,
+      "Mord/dråp": 2,
       "Motorfordon,  anträffat stulet": 1,
       "Motorfordon,  stöld": 1,
       "Narkotikabrott": 9,
@@ -34,17 +34,16 @@
       "Olaga hot": 4,
       "Olaga intrång": 3,
       "Olovlig körning": 7,
-      "Rattfylleri": 27,
-      "Sammanfattning helg": 1,
-      "Sammanfattning natt": 117,
+      "Rattfylleri": 26,
+      "Sammanfattning natt": 116,
       "Skadegörelse": 4,
       "Skyddslagen": 2,
       "Stöld": 21,
       "Stöld/inbrott": 3,
       "Trafikbrott": 14,
       "Trafikhinder": 2,
-      "Trafikkontroll": 93,
-      "Trafikolycka": 62,
+      "Trafikkontroll": 91,
+      "Trafikolycka": 64,
       "Trafikolycka,  singel": 5,
       "Trafikolycka,  smitning från": 5,
       "Trafikolycka,  vilt": 19,
@@ -53,26 +52,26 @@
     }
   },
   "wildlife_text": {
-    "broad_candidate_count": 62,
-    "individual_incident_candidate_count": 104,
+    "broad_candidate_count": 61,
+    "individual_incident_candidate_count": 102,
     "candidate_year_counts": {
-      "2026": 26
+      "2026": 24
     },
     "candidate_missing_occurrence_date_count": 78,
     "extraction_method_counts": {
       "explicit_count_v1": 32,
       "wildlife_text_line_v1": 46,
-      "wildlife_time_segment_v2": 26
+      "wildlife_time_segment_v2": 24
     },
     "confidence_counts": {
       "low": 32,
-      "review": 72
+      "review": 70
     },
     "species_mentions": {
       "(missing)": 66,
-      "ren": 16,
+      "ren": 15,
       "rådjur": 7,
-      "älg": 15
+      "älg": 14
     }
   }
 }
