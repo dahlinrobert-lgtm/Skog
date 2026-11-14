@@ -20,8 +20,8 @@ The source registry now includes a first-pass commercial reuse assessment. Read 
 
 ## Files
 
-- `config/sources.yml`: source and rights registry (no credentials); three pilot records include an optional `provenance` block.
-- `scripts/validate_source_registry.py`: validates registry structure, unique source IDs and optional provenance metadata.
+- `config/sources.yml`: source, rights and operational registry (no credentials); optional `provenance` and `operations` blocks extend selected records without changing the canonical event model. Operational fields distinguish access, snapshots, history, commercial-use status and customer-display status.
+- `scripts/validate_source_registry.py`: validates registry structure, unique source IDs, optional provenance metadata and controlled operational status fields.
 - `schemas/event-bundle.schema.json`: JSON Schema contract for source runs, immutable observations, canonical events, evidence, relationships and event chains.
 - `scripts/validate_event_bundle.py`: validates the event bundle schema and cross-record references; run with `python data-platform/scripts/validate_event_bundle.py`.
 - `examples/event-bundle.example.json`: synthetic example showing one registered event and a one-event chain; it is not live source data.
