@@ -165,5 +165,47 @@ class TemporalMatchTests(unittest.TestCase):
         self.assertEqual(rows[0]["candidate_status"], "same_date_time_conflict_review")
 
 
+    def test_delayed_candidate_3_to_12_hours_is_separate_review(self):
+        self.nvr[0]["event_datetime_values"] = "2026-08-31 05:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["time_delta_minutes"], 300.0)
+        self.assertEqual(rows[0]["delayed_window_band"], "delayed_3_to_12h")
+        self.assertEqual(rows[0]["candidate_status"], "delayed_event_review")
+        self.assertEqual(rows[0]["nvr_timestamp_semantics"], "unverified_source_event_datetime")
+        self.assertFalse(rows[0]["geographic_match_used"])
+
+    def test_delayed_candidate_12_to_24_hours_is_separate_review(self):
+        self.nvr[0]["event_datetime_values"] = "2026-08-31 15:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["delayed_window_band"], "delayed_12_to_24h")
+
+    def test_delayed_candidate_24_to_72_hours_is_separate_review(self):
+        self.nvr[0]["event_datetime_values"] = "2026-09-02 00:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["time_delta_minutes"], 2880.0)
+        self.assertEqual(rows[0]["delayed_window_band"], "delayed_24_to_72h")
+
+    def test_delayed_search_rejects_nvr_timestamp_before_police_time(self):
+        self.nvr[0]["event_datetime_values"] = "2026-08-30 23:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
+
+    def test_delayed_search_requires_police_occurrence_time(self):
+        self.police[0]["occurrence_time"] = ""
+        self.police[0]["description"] = "Viltolycka på länsväg 383, Smedsbyn"
+        self.nvr[0]["event_datetime_values"] = "2026-08-31 05:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
+
+    def test_delayed_search_rejects_known_species_conflict(self):
+        self.police[0]["species"] = "rådjur"
+        self.nvr[0]["species"] = "Älg"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
+
+
 if __name__ == "__main__":
     unittest.main()
