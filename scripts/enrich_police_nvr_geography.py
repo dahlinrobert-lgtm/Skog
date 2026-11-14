@@ -175,6 +175,9 @@ def enrich_candidate(
         out["geo_named_place_type"] = clean_text(nearest_place["Generaliseringstyp"])
         out["geo_named_place_name"] = clean_text(nearest_place["Namn"])
         out["geo_named_traffic_place_name"] = clean_text(nearest_place["Trafikplatsnamn"])
+        out["geo_named_place_display_name"] = (
+            out["geo_named_place_name"] or out["geo_named_traffic_place_name"]
+        )
         out["geo_named_place_match_status"] = "name_found_in_nvdb"
     else:
         out["geo_named_place_total_feature_count"] = "0"
