@@ -78,12 +78,25 @@ def load_layer(path: Path, layer: str, columns: list[str]):
     return frame
 
 
+def clean_text(value) -> str:
+    """Return an empty string for null-like values, including pandas NaN."""
+    if value is None:
+        return ""
+    try:
+        if value != value:  # NaN is unequal to itself
+            return ""
+    except (TypeError, ValueError):
+        pass
+    value = str(value).strip()
+    return "" if value.casefold() in {"nan", "none", "<na>"} else value
+
+
 def extract_place_reference(row: dict[str, str]) -> str:
     """Use the explicit place field, or a conservative 'between X and Y' cue."""
-    explicit = str(row.get("police_place_reference") or "").strip()
+    explicit = clean_text(row.get("police_place_reference"))
     if explicit:
         return explicit
-    text = str(row.get("police_text") or "")
+    text = clean_text(row.get("police_text"))
     match = re.search(r"\bmellan\s+(.+?)\s+och\s+([^.,;]+)", text, re.IGNORECASE)
     return match.group(2).strip() if match else ""
 
@@ -159,9 +172,9 @@ def enrich_candidate(
         out["geo_named_place_match_count"] = str(len(named_places))
         out["geo_named_place_distance_m"] = f"{float(named_distances.loc[nearest_place_idx]):.1f}"
         out["geo_named_place_element_id"] = str(nearest_place["ELEMENT_ID"])
-        out["geo_named_place_type"] = str(nearest_place["Generaliseringstyp"] or "")
-        out["geo_named_place_name"] = str(nearest_place["Namn"] or "")
-        out["geo_named_traffic_place_name"] = str(nearest_place["Trafikplatsnamn"] or "")
+        out["geo_named_place_type"] = clean_text(nearest_place["Generaliseringstyp"])
+        out["geo_named_place_name"] = clean_text(nearest_place["Namn"])
+        out["geo_named_traffic_place_name"] = clean_text(nearest_place["Trafikplatsnamn"])
         out["geo_named_place_match_status"] = "matched_nvdb_name"
     else:
         out["geo_named_place_match_count"] = "0"
