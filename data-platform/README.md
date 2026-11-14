@@ -8,6 +8,14 @@ This folder contains the source registry, initial logical contracts and a first 
 
 The source registry now includes a first-pass commercial reuse assessment. Read [the open-data and commercial-use register](../docs/open-data-and-commercial-use.md) before adding a source or publishing data to customers. Registry status is a project risk classification, not a legal opinion or a substitute for product-specific terms.
 
+The optional `operations` block is being rolled out source by source. It records:
+- `access_status`: whether technical/authorised access is verified.
+- `snapshot_status` and `history_status`: whether recurring snapshots and a usable time series exist.
+- `commercial_use_status` and `customer_display_status`: separate reuse and customer-publication assessments.
+- `last_verified`, `next_action` and `evidence_reference`: operational follow-up and audit trail.
+
+The first operational entries cover the highest-priority Skogskoll dependencies, including harvest notifications, Samråd, SIS, SLU Torvkarta, Trafikverket, Länsstyrelsen diaries, Fastighetsindelning Direkt and NVR. Other source records retain their existing descriptive and rights metadata until their operational state is reconciled; absence of an `operations` block means **not yet assessed**, not that access or rights are absent.
+
 ## Principles
 
 - Preserve raw source payloads and original raster assets.
