@@ -186,6 +186,7 @@ def enrich_candidate(
         out["geo_named_place_type"] = ""
         out["geo_named_place_name"] = ""
         out["geo_named_traffic_place_name"] = ""
+        out["geo_named_place_display_name"] = ""
         out["geo_named_place_match_status"] = (
             "no_place_reference" if not place_term else "no_named_nvdb_object"
         )
