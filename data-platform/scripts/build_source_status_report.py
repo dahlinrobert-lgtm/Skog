@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
-from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -99,7 +98,6 @@ def build_report(data: dict[str, Any]) -> str:
         "# Skogskoll – automatisk status för datakällor",
         "",
         f"**Register kontrollerat:** {md(data.get('registry_checked_on', 'Ej angivet'))}  ",
-        f"**Rapport genererad:** {date.today().isoformat()}  ",
         f"**Underlag:** data-platform/config/sources.yml",
         "",
         "> Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.",
