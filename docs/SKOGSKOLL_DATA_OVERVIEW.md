@@ -59,6 +59,10 @@ Ingestion-kärna, databasstruktur, historikmodell, scan-sessioner, atomisk sidco
 
 Den fullständiga ingestionen är ännu inte aktiverad. Den manuella scan-entrypointen är avsiktligt skyddad av explicita miljövariabler och databasuppgifter. Inga användarlarm ska aktiveras innan fullständig baslinje, historik, databas och källbeteende är verifierade.
 
+## Maskinläsbart källregister
+
+Det operativa källregistret finns i `data-platform/config/sources.yml`. För utvalda källor finns ett valfritt `operations`-block med separata statusar för teknisk åtkomst, snapshots, historik, kommersiell användning och kundvisning. Registret innehåller inga autentiseringsuppgifter och statusarna är granskningsstöd, inte automatiska rättsliga godkännanden. NVR finns nu som en egen datakälla eftersom individuella olyckshändelser inte ska blandas ihop med Trafikverkets aggregerade NVDB-frekvenser.
+
 ## 4. Datakällor – status och avsedd användning
 
 Statusorden nedan är avsiktligt försiktiga:
