@@ -306,7 +306,8 @@ def build_audit_report(police_rows, nvr_rows, candidates, max_time_delta_minutes
 def write_audit_report(report, path):
     """Write valid UTF-8 JSON with a real newline and a BOM for Windows PowerShell."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8-sig")
+    payload = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+    path.write_bytes(b"\xef\xbb\xbf" + payload.encode("utf-8"))
 
 def read_csv(path, delimiter=",", encoding="utf-8-sig"):
     with path.open(encoding=encoding, newline="") as f: return list(csv.DictReader(f, delimiter=delimiter))
