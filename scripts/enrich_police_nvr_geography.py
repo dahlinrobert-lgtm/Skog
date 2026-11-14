@@ -169,15 +169,15 @@ def enrich_candidate(
         named_distances = named_places.geometry.distance(point)
         nearest_place_idx = named_distances.idxmin()
         nearest_place = named_places.loc[nearest_place_idx]
-        out["geo_named_place_match_count"] = str(len(named_places))
+        out["geo_named_place_total_feature_count"] = str(len(named_places))
         out["geo_named_place_distance_m"] = f"{float(named_distances.loc[nearest_place_idx]):.1f}"
         out["geo_named_place_element_id"] = str(nearest_place["ELEMENT_ID"])
         out["geo_named_place_type"] = clean_text(nearest_place["Generaliseringstyp"])
         out["geo_named_place_name"] = clean_text(nearest_place["Namn"])
         out["geo_named_traffic_place_name"] = clean_text(nearest_place["Trafikplatsnamn"])
-        out["geo_named_place_match_status"] = "matched_nvdb_name"
+        out["geo_named_place_match_status"] = "name_found_in_nvdb"
     else:
-        out["geo_named_place_match_count"] = "0"
+        out["geo_named_place_total_feature_count"] = "0"
         out["geo_named_place_distance_m"] = ""
         out["geo_named_place_element_id"] = ""
         out["geo_named_place_type"] = ""
@@ -236,7 +236,7 @@ def enrich_candidate(
     nearby["geo_distance_m"] = crossing_distances.loc[nearby.index]
     nearby = nearby.sort_values("geo_distance_m")
 
-    out["geo_crossing_count_300m"] = str(len(nearby))
+    out["geo_crossing_count_within_search_radius"] = str(len(nearby))
     if nearby.empty:
         out.update({
             "geo_nearest_crossing_distance_m": "",
@@ -266,7 +266,7 @@ def enrich_candidate(
             str(v).strip() for v in traffic["Trafikplatsnamn"].dropna()
             if str(v).strip()
         })
-        out["geo_traffic_place_names_300m"] = ";".join(traffic_names)
+        out["geo_traffic_place_names_within_search_radius"] = ";".join(traffic_names)
         out["geo_traffic_place_nearest_distance_m"] = (
             f"{float(traffic['geo_distance_m'].min()):.1f}"
             if not traffic.empty else ""
