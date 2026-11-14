@@ -17,6 +17,39 @@ ALLOWED_ATTRIBUTION_STATUS = {
     "unknown",
     "pending_dataset_review",
 }
+OPERATIONAL_ALLOWED = {
+    "access_status": {
+        "verified", "partial", "technical_probe", "authorised_access_used",
+        "not_verified", "planned",
+    },
+    "snapshot_status": {
+        "recurring", "pilot", "partial", "baseline_only", "not_started",
+        "metadata_monitoring_needs_repair", "pilot_for_selected_layers",
+        "monthly_archive_planned_or_pilot", "30_day_daily_observation_test",
+    },
+    "history_status": {
+        "time_series", "partial", "metadata_series_only", "not_verified",
+        "none", "historical_archive_partial",
+    },
+    "commercial_use_status": {
+        "verified", "verified_with_attribution", "conditional",
+        "conditional_per_product", "pending_product_terms",
+        "pending_scope_confirmation", "restricted", "unknown",
+    },
+    "customer_display_status": {
+        "approved", "conditional", "conditional_on_attribution_and_source_scope",
+        "pending_product_layer_check", "pending_layer_check",
+        "pending_product_description_check", "pending_per_product",
+        "pending_per_document_review", "pending_written_or_ordered_scope",
+        "pending_scope_confirmation", "not_assessed",
+    },
+}
+OPERATIONAL_REQUIRED = {
+    "access_status", "snapshot_status", "history_status",
+    "commercial_use_status", "customer_display_status", "last_verified",
+    "next_action", "evidence_reference",
+}
+
 PROVENANCE_REQUIRED = {
     "producer_name",
     "distributor_name",
@@ -83,6 +116,36 @@ def main() -> None:
             errors.append(f"{source_id}: 'rights' must be a mapping")
             continue
 
+        operations = source.get("operations")
+        if operations is not None:
+            if not isinstance(operations, dict):
+                errors.append(f"{source_id}: 'operations' must be a mapping")
+            else:
+                missing_operations = sorted(OPERATIONAL_REQUIRED - operations.keys())
+                if missing_operations:
+                    errors.append(
+                        f"{source_id}: operations missing required fields: "
+                        f"{', '.join(missing_operations)}"
+                    )
+                for field, allowed in OPERATIONAL_ALLOWED.items():
+                    value = operations.get(field)
+                    if value is not None and value not in allowed:
+                        errors.append(
+                            f"{source_id}: unsupported operations.{field} {value!r}"
+                        )
+                for field in ("last_verified", "next_action", "evidence_reference"):
+                    if not non_empty(operations.get(field)):
+                        errors.append(
+                            f"{source_id}: operations.{field} must be a non-empty string"
+                        )
+                last_verified = operations.get("last_verified")
+                if non_empty(last_verified) and not __import__("re").fullmatch(
+                    r"\\d{4}-\\d{2}-\\d{2}", last_verified
+                ):
+                    errors.append(
+                        f"{source_id}: operations.last_verified must use YYYY-MM-DD"
+                    )
+
         provenance = source.get("provenance")
         if provenance is None:
             continue
@@ -136,9 +199,11 @@ def main() -> None:
         raise SystemExit(1)
 
     with_provenance = sum(isinstance(s, dict) and "provenance" in s for s in sources)
+    with_operations = sum(isinstance(s, dict) and "operations" in s for s in sources)
     print(
         f"Source registry valid: {len(sources)} sources, "
-        f"{with_provenance} with provenance/attribution metadata."
+        f"{with_provenance} with provenance/attribution metadata, "
+        f"{with_operations} with operational status."
     )
 
 
