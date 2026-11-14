@@ -4,3 +4,5 @@ pyproj>=3.6,<4
 jsonschema>=4.22,<5
 azure-identity>=1.17,<2
 azure-storage-blob>=12.20,<13
+geopandas>=0.14,<2
+pyogrio>=0.8,<1
