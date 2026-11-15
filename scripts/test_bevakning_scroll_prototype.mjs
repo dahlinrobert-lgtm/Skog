@@ -54,6 +54,12 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /imageryColors=\{planned:"#ff6238",done:"#00d5ef",samrad:"#f1e64b"\}/);
   assert.match(productionHtml, /data-basemap="imagery"/);
   assert.match(productionHtml, /data-basemap="standard"/);
+  assert.doesNotMatch(productionHtml, /getElementById\("forestFilterGroup"\)\.hidden=isElk\|\|isNvr/);
+  assert.match(productionHtml, /getElementById\("forestFilterGroup"\)\.hidden=false/);
+  assert.match(productionHtml, /forestFilterGroup"\)\.classList\.toggle\("is-active",!isElk&&!isNvr\)/);
+  assert.match(productionHtml, /animalFilterGroup"\)\.classList\.toggle\("is-active",isElk\|\|isNvr\)/);
+  assert.match(productionHtml, /\.filter-group\.is-active \.filter-group-heading\{/);
+  assert.match(productionHtml, /html\[data-theme="dark"\] \.filter-group\.is-active \.filter-group-heading/);
   assert.match(productionHtml, /if\(baseMapMode!=="imagery"\|\|!activityMap\|\|!label\)return/);
   assert.match(productionHtml, /imageryDateRequest\+\+;label\.hidden=true/);
 });
