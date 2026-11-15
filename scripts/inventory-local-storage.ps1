@@ -47,7 +47,13 @@ if (-not $Roots -or $Roots.Count -eq 0) {
 }
 
 if (-not $OutputDirectory) {
-    $OutputDirectory = Join-Path (Get-Location).Path "storage-inventory"
+    $oneDriveRoot = $env:OneDrive
+    if (-not $oneDriveRoot) { $oneDriveRoot = $env:OneDriveCommercial }
+    if ($oneDriveRoot -and (Test-Path -LiteralPath $oneDriveRoot)) {
+        $OutputDirectory = Join-Path $oneDriveRoot "Skogskoll\\_inventory"
+    } else {
+        $OutputDirectory = Join-Path $HOME "storage-inventory"
+    }
 }
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 
