@@ -54,6 +54,8 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /imageryColors=\{planned:"#ff6238",done:"#00d5ef",samrad:"#f1e64b"\}/);
   assert.match(productionHtml, /data-basemap="imagery"/);
   assert.match(productionHtml, /data-basemap="standard"/);
+  assert.match(productionHtml, /if\(baseMapMode!=="imagery"\|\|!activityMap\|\|!label\)return/);
+  assert.match(productionHtml, /imageryDateRequest\+\+;label\.hidden=true/);
 });
 
 test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händelseruta", () => {
