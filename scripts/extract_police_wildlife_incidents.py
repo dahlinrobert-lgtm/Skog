@@ -24,7 +24,7 @@ WILDLIFE_RE = re.compile(
     r"(?:älg|ren|rådjur|hjort)\w*.{0,60}(?:påkörd|påkö\w*|kollision)",
     re.I,
 )
-TIME_RE = re.compile(r"(?<!\d)(?P<time>[0-2]?\d[:.]\d{2})(?!\d)")
+TIME_RE = re.compile(r"(?<!\d)(?P<time>(?:[01]?\d|2[0-3])[:.][0-5]\d)(?!\d)")
 COUNT_RE = re.compile(
     # Do not interpret the minute part of HH:MM as an explicit accident count.
     r"(?i)(?<![\d:.])\b(?P<count>\d{1,2}|en|ett|två|tre|fyra|fem|sex|sju|åtta|nio|tio)"
@@ -90,7 +90,7 @@ def infer_occurrence_date(row: dict, clock_time: str) -> tuple[str, str]:
         return (published_day - timedelta(days=1)).isoformat(), "night_summary_previous_evening"
     if is_night_summary and hour < 7:
         return published_day.isoformat(), "night_summary_after_midnight"
-    return published_day.isoformat(), "dated_report_explicit_time"
+    return "", "publication_date_only"
 
 def extract(row: dict) -> list[dict]:
     body = clean(row.get("content") or row.get("description") or row.get("headline") or "")

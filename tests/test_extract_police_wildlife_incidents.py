@@ -23,9 +23,9 @@ class WildlifeExtractionTests(unittest.TestCase):
         rows = MODULE.extract(self.row("Kl. 07:15: En viltolycka inträffade vid Luleå."))
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["publication_date"], "2026-11-10")
-        self.assertEqual(rows[0]["occurrence_date"], "2026-11-10")
+        self.assertEqual(rows[0]["occurrence_date"], "")
+        self.assertEqual(rows[0]["occurrence_date_basis"], "publication_date_only")
         self.assertEqual(rows[0]["occurrence_time"], "07:15")
-
     def test_dot_timestamp_is_not_parsed_as_explicit_collision_count(self):
         row = self.row("22.48 Viltolycka, Luleå: En älg kolliderar med en lastbil.")
         row["type_original"] = "Sammanfattning natt"
@@ -90,6 +90,19 @@ class WildlifeExtractionTests(unittest.TestCase):
         self.assertIn("Norra Rutvik", rows[0]["description"])
         self.assertNotIn("Måttsund", rows[0]["description"])
         self.assertIn("Måttsund", rows[1]["description"])
+
+    def test_invalid_clock_time_is_not_extracted_as_time(self):
+        rows = MODULE.extract(self.row("Kl. 29:99: En viltolycka inträffade vid Luleå."))
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["occurrence_time"], "")
+        self.assertEqual(rows[0]["occurrence_date"], "")
+        self.assertEqual(rows[0]["occurrence_date_basis"], "no_explicit_occurrence_time")
+
+    def test_ordinary_report_with_time_has_no_occurrence_date(self):
+        rows = MODULE.extract(self.row("Kl. 14:30: En älg blev påkörd vid Boden."))
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["occurrence_date"], "")
+        self.assertEqual(rows[0]["occurrence_date_basis"], "publication_date_only")
 
     def test_source_event_id_is_preserved(self):
         rows = MODULE.extract(self.row("En älgolycka rapporterades vid Boden."))
