@@ -1794,7 +1794,7 @@ sources:
       history_status: historical_archive_partial
       commercial_use_status: conditional
       customer_display_status: conditional_attribution_scope_review
-      last_verified: "2026-11-14"
+      last_verified: "2026-11-15"
       next_action: "Följ upp 30-dagarstestet och etablera en kontrollerad, skrivskyddad publiceringsendpoint för NVR-händelser med manifest, fullständighetsstatus och källhänvisning. Rådata får inte publiceras direkt från OneDrive eller GitHub Pages utan separat publiceringskontroll."
       evidence_reference: "docs/source-rights-reviews/2026-11-15-nvr-public-information-attribution.md; NVR import run 2026-11-09 (partial); backup/SHA-256 verification 2026-11-10"
     notes:
