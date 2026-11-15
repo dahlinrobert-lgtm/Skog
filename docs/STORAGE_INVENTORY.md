@@ -126,11 +126,19 @@ För en begränsad inventering av särskilda mappar:
 .\\scripts\\inventory-local-storage.ps1 -Roots @('C:\\Users\\dahli\\GitHub','D:\\Skogskoll') -OutputDirectory 'C:\\Temp\\storage-inventory'
 ```
 
-Rapporter sparas som standard i OneDrive `Skogskoll\_inventory` när OneDrive-synkroten hittas, annars i `$HOME\storage-inventory`. SHA-256 är avstängt som standard för att undvika onödig belastning. Aktivera endast vid behov och använd storleksgräns:
+Rapporter sparas som standard i OneDrive `Skogskoll\_inventory` när OneDrive-synkroten hittas, annars i `$HOME\storage-inventory`. Skriptet jämför med föregående rapport och klassar nya, ändrade och saknade filer. SHA-256 är avstängt som standard för att undvika onödig belastning. Aktivera endast vid behov och använd storleksgräns:
 
 ```powershell
 .\\scripts\\inventory-local-storage.ps1 -IncludeRemovableDrives -HashFiles -MaxHashBytes 268435456
 ```
+
+Installera daglig körning efter att Skog-repot har uppdaterats lokalt:
+
+```powershell
+.\\scripts\\install-local-storage-inventory-task.ps1
+```
+
+Standardtid är 21:00 lokal tid. Datorn måste vara på och användarsessionen tillgänglig; missade körningar startas när det går. USB inventeras bara de dagar minnet är anslutet. Ta bort schemaläggningen med `Unregister-ScheduledTask -TaskName 'Skogskoll - local storage inventory' -Confirm:$false`.
 
 Rapporten kan innehålla personliga sökvägar och filnamn. Granska den innan den laddas upp till GitHub eller delas. Lägg inte råa inventeringslistor med privata filer i ett publikt repo.
 
@@ -150,7 +158,7 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 | Datum | Ändring |
 |---|---|
 | 2026-11-15 | Första samlade inventeringen skapad. Kända GitHub-repon, NVR-mappar i OneDrive, Kungjort-containrar i Azure samt känd lokal Skog-sökväg registrerade. |
-| 2026-11-15 | OneDrive inventerat via Microsoft Graph: Skogskoll-roten, NVR, historik/arbetsytor, Omdrev 1–3, Lastkajen, OpenStreetMap och Lantmäteriet dokumenterade med rapporterade storlekar. Read-only PowerShell-skript för lokal/USB-inventering tillagt. PC/USB och Azure-containrar utöver Kungjort återstår. |
+| 2026-11-15 | OneDrive inventerat via Microsoft Graph: Skogskoll-roten, NVR, historik/arbetsytor, Omdrev 1–3, Lastkajen, OpenStreetMap och Lantmäteriet dokumenterade med rapporterade storlekar. Read-only PowerShell-skript med förändringsdetektion och installerare för daglig lokal/USB-inventering tillagda. OneDrive-mappen `_inventory` skapad. PC/USB och Azure-containrar utöver Kungjort återstår. |
 
 ---
 **Arbetsregel för framtida ändringar:** När vi i ett arbetsflöde skapar, flyttar, byter namn på, ersätter eller raderar en viktig fil-/dataplats ska vi samtidigt uppdatera `docs/STORAGE_INVENTORY.md` och ändringsloggen.
