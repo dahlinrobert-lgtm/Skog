@@ -195,6 +195,9 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .filter-groups{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;margin:0 0 14px}
 .filter-group{display:flex;flex-direction:column;align-items:stretch;gap:6px;width:max-content}
 .filter-group[hidden]{display:none}
+.filter-group.is-active .filter-group-heading{background:#dcebdc;border-color:#739779;color:#173b2b;box-shadow:inset 0 0 0 1px rgba(49,95,66,.12),0 2px 8px rgba(23,59,43,.10)}
+.filter-group.is-active .filter-group-heading svg{opacity:1}
+
 .filter-group-heading{height:37px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 12px;border:1px solid #d8e3d6;border-radius:12px;background:#edf4e9;color:#285238;font-size:.84rem;font-weight:800;letter-spacing:.01em}
 .filter-group-heading svg{width:42px;height:26px;flex:0 0 auto;opacity:.9}
 .filter-group-heading.animal-heading{background:#f2f5ed}
@@ -331,6 +334,8 @@ html[data-theme="dark"] .toolbar :is(input,select){
 }
 html[data-theme="dark"] .filter-group-heading{background:#243b2c!important;color:#e4ece6!important;border-color:#405746!important}
 html[data-theme="dark"] .filter-group-heading.animal-heading{background:#29372b!important}
+html[data-theme="dark"] .filter-group.is-active .filter-group-heading{background:#365d42!important;border-color:#8ab294!important;color:#fff!important;box-shadow:inset 0 0 0 1px rgba(193,226,197,.18),0 0 0 1px rgba(138,178,148,.12)}
+
 html[data-theme="dark"] .quick-switch button{color:#dce9df!important}
 html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#376348!important;color:#fff!important}
 html[data-theme="dark"] .elkdata-caveat{background:#29372b!important;color:#e1e9dc!important;border-left-color:#d7ad67!important}
@@ -815,7 +820,9 @@ function render(){
  const isElk=mode==="hunting";
  const isNvr=mode==="collisions";
  const list=(isElk||isNvr)?[]:filtered();
- document.getElementById("forestFilterGroup").hidden=isElk||isNvr;
+ document.getElementById("forestFilterGroup").hidden=false;
+ document.getElementById("forestFilterGroup").classList.toggle("is-active",!isElk&&!isNvr);
+ document.getElementById("animalFilterGroup").classList.toggle("is-active",isElk||isNvr);
  document.getElementById("monthFilter").disabled=isElk||isNvr;
  document.querySelector(".map-card").hidden=isElk||isNvr;
  document.getElementById("storyLayout").classList.toggle("is-elk",isElk||isNvr);
