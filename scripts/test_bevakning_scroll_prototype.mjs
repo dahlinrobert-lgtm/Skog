@@ -14,9 +14,9 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   }
   assert.match(html, /bevakning-core\.mjs/);
   assert.match(html, /algdata-bevakning\.mjs/);
-  assert.match(html, /data-kind="samrad">Samråd/);
-  assert.match(html, /data-animal="collisions">Viltolyckor/);
-  assert.match(html, /data-animal="hunting">Jakt/);
+  assert.match(html, /data-kind="samrad"[^>]*>Samråd/);
+  assert.match(html, /data-animal="collisions"[^>]*>Viltolyckor/);
+  assert.match(html, /data-animal="hunting"[^>]*>Jakt/);
   assert.match(html, /GeodataportalVisaSamrad\/MapServer\/0\/query/);
   assert.match(html, /GeodataportalVisaSamrad\/MapServer\/1\/query/);
   assert.match(html, /GeodataportalVisaSamrad\/MapServer\/2\/query/);
