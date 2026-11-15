@@ -170,5 +170,6 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Separata filtergrupper ska finnas: skogliga aktiviteter (Alla/Planerade/Utförda/Samråd) samt vilt och jakt (Alla/Viltolyckor/Jakt).
 - Samråd ska visas med Skogsstyrelsens tre geolager: punkt, linje och polygon, och visa källans datum.
 - Älgstatistiken flyttas till Jakt. Viltolyckor ska visa individuella NVR-händelser med datum och geometri samt källtexten **Källa: Nationella viltolycksrådet (NVR)**.
+- Älgvyn i testprototypen visar endast jaktområden där `latest_delta > 0`. Tabellen visar Jaktområde, Län, ÄFO, Fällda totalt, Förändring och en datumkolumn med rubriken **Senaste rapporterade ökning observerad**. Kolumnerna Första observerade och Senaste uttag är borttagna ur tabellen; senaste uttagsdatum finns kvar i statusraden.
 - NVR-arkivet finns i OneDrive. GitHub Pages saknar ännu en verifierad publik, skrivskyddad läsendpoint; publicera inte OneDrive-rådata eller autentiseringsuppgifter direkt. Etablera en kontrollerad endpoint med manifest och fullständighetsstatus först.
 - Fortsätt endast i `docs/bevakning-test.html`; ändra inte `docs/bevakning.html` innan prototypen har godkänts.
