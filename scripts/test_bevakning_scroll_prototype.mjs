@@ -22,8 +22,13 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   assert.match(html, /GeodataportalVisaSamrad\/MapServer\/2\/query/);
   assert.doesNotMatch(html, /<option value="elk">Älg/);
   assert.match(html, /NVR-arkiv ej publicerat/);
-  assert.match(html, /Number\(area\.latest_delta\)>0/);
-  assert.match(html, /Senaste rapporterade ökning observerad/);
+  assert.match(html, /matchingAreas\.flatMap\(area=>\(area\.snapshots\|\|\[\]\)/);
+  assert.match(html, /Number\(snapshot\.delta\)!==0/);
+  assert.match(html, /delta>0\?"elkdata-positive":"elkdata-negative"/);
+  assert.match(html, /Rapporterad förändring observerad/);
+  assert.match(html, /En minskning kan bero på rättelse/);
+  assert.match(html, /html\[data-theme="dark"\] \.elkdata-caveat/);
+  assert.match(html, /html\[data-theme="dark"\] \.elkdata-negative/);
   assert.doesNotMatch(html, /<th>Första observerade<\/th>/);
   assert.doesNotMatch(html, /<th>Senaste uttag<\/th>/);
   assert.match(html, /colspan="6" class="elkdata-empty"/);
