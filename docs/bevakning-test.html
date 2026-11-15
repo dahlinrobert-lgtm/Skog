@@ -636,7 +636,7 @@ async function updateImageryDate(){
    return;
   }
   const source=attributes.NICE_DESC||attributes.NICE_NAME;
-  label.textContent="Flyg-/satellitbild tagen "+date+(source?" · Källa: "+source:"")+" (kartans mittpunkt).";
+  label.textContent="Flyg-/satellitbild tagen "+date+(source?" · Källa: "+source:"");
  }catch(error){
   if(requestId===imageryDateRequest)label.textContent="Bilddatum kunde inte hämtas just nu.";
  }

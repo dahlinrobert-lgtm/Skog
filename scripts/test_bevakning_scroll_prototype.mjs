@@ -40,6 +40,7 @@ test("kartan använder flyg-/satellitbilder och visar platsbaserat bilddatum", (
   assert.match(html, /id="imageryDate" aria-live="polite"/);
   assert.match(html, /activityMap\.on\("moveend",scheduleImageryDateUpdate\)/);
   assert.match(html, /Flyg-\/satellitbild tagen /);
+  assert.doesNotMatch(html, /\(kartans mittpunkt\)/);
   assert.match(html, /Bilddatum saknas för kartans mitt/);
   assert.doesNotMatch(html, /Kartan ger geografisk kontext till det valda bevakningsflödet/);
 });
