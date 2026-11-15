@@ -126,7 +126,35 @@ Before implementing inherited road identity, inspect the actual NVDB product sch
 
 Do not substitute endpoint snapping alone for authoritative connectivity where grade separation or parallel carriageways may be present.
 
-## 9. Evaluation plan
+## 9. NVDB topology model – verified public documentation
+
+Trafikverket's public NVDB documentation describes the road network using network elements:
+- **Reference link (referenslänk):** a directed road section starting at one node and ending at another; reference links have stable identities and are used to describe network topology.
+- **Node (nod):** a network connection point, normally where a route choice is possible, and also used at road endpoints.
+- **Port (port):** a connection point owned by a network element. Network connections are represented as port-to-port links; the connected ports point to one another.
+- **Reference link parts (referenslänkdelar):** time-valid portions of a reference link.
+
+Official references:
+- [Trafikverket – Dataproduktspecifikationer, vägdata](https://bransch.trafikverket.se/tjanster/data-kartor-och-geodatatjanster/leverera-in-data/data-om-anlaggningen--vag/dataproduktspecifikationer-vag--och-vagtrafikdata/) – definitions of reference links, nodes, ports and identities.
+- [Trafikverket – Introduktion till NVDB:s vägnät och företeelser (PDF)](https://bransch.trafikverket.se/contentassets/e0faf1739d244cb384aadf8c1f7a91dd/introduktion-till-nvdbs-vagnat-och-foreteelser.pdf) – describes how features are located on the network using reference-link object identity and relative positions.
+- [NVDB – Hämta aktuella data](https://www.nvdb.se/sv/kund/hamta-aktuella-data/) – lists current open-API datasets including Vägnummer and Vägtrafiknät, and points to Lastkajen for historical data.
+- [Trafikverket – Ruttning med NVDB](https://lastkajen.trafikverket.se/assets/Ruttning_med_NVDB.pdf) – explains why a single feature layer's geometries should not be treated as a complete routable network.
+
+**Important implication:** the current enrichment's road-number and crossing feature layers are not, by themselves, proof of network connectivity. A road-number feature may be located along a reference link; a separate road-network product may be required to retrieve link/node/port topology. Endpoint proximity or shared geometry alone is not enough to assert a connection, especially at grade-separated junctions.
+
+### Read-only schema inventory utility
+
+The branch adds `scripts/inspect_nvdb_network_schema.py`. It inventories GeoPackage layer names, geometry types, feature counts, CRS and field names, highlighting possible topology fields. It does not export feature rows, infer connectivity or modify the source file.
+
+Run locally against the exact NVDB GeoPackage intended for the pilot:
+```bash
+python scripts/inspect_nvdb_network_schema.py \\
+  --gpkg /path/to/nvdb-network.gpkg \\
+  --output /path/to/nvdb-network-schema-report.json
+```
+The field-name matches are discovery hints only. After inspection, compare the actual fields with the relevant official product specification and inspect relationship values before implementing graph traversal.
+
+## 10. Evaluation plan
 
 1. Build a manually labelled Luleå sample containing positive, negative and ambiguous pairs.
 2. Include the current cases:
@@ -138,10 +166,11 @@ Do not substitute endpoint snapping alone for authoritative connectivity where g
 5. Inspect false positives and false negatives before tuning weights or distance bands.
 6. Only after a sufficiently large, representative labelled sample exists, evaluate calibration (for example precision/recall and reliability of predicted probabilities). Until then, report ordinal review scores only.
 
-## 10. Current implementation status
+## 11. Current implementation status
 
 - Existing `scripts/enrich_police_nvr_geography.py` provides review-only nearest-road, named-crossing and named-segment evidence.
 - Existing segment construction uses the stated road number and named anchors, and flags multiple anchor-pair candidates.
 - Existing enrichment does not yet assign ramp/connector features an inherited major-road identity through verified network topology.
 - The 36-row local named-place distance export is review evidence only; it does not establish the network schema or topology.
-- No matching code, temporal logic, source data or production workflow is changed by this design document.
+- The read-only schema inspector and its tests are added in a separate implementation branch; it has not yet been run against the user's local NVDB GeoPackage.
+- No temporal matching logic, source data or production ingestion is changed.
