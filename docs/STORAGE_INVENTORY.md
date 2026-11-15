@@ -57,6 +57,15 @@ GitHub-repots storlek i API-metadata är en grov repoindikator, inte en fullstä
 
 **NVR-regel:** Originalexporten ska bevaras oförändrad. GitHub innehåller kod, tester, dokumentation och manifest – inte den stora råexporten. SHA-256 och uttagsmetadata ska följa original och arkivkopior.
 
+### OneDrive – verifierade detaljer i NVR-arbetsytan (2026-11-15)
+
+Under `OneDrive\\Skogskoll\\viltolycka_NVR\\working` finns bland annat `lulea-police-nvr` (cirka 47 MB), `nvdb-vagnummer` (cirka 185 MB), `ortnamn-deso-2025` (cirka 12 MB), `ortnamn-source` (cirka 156 MB), `split-2015-2026` (cirka 107 MB), samt separata restore-testmappar. Dessa är arbets-/testytor och ska inte automatiskt betraktas som auktoritativa arkiv.
+
+I `history` finns `legacy-events-2015-2021`, `legacy-event-snapshots`, `runs` och `state`. Test- och restore-kopior ska hållas isär från produktionshistoriken.
+
+**Storleksnotering:** OneDrive rapporterar mappstorlekar inklusive innehåll. Mappstorlekar ska inte summeras med alla underliggande filer en gång till. Storlekarna är ögonblicksbilder från inventeringsdatum och kan ändras.
+
+
 ## 4. Azure Blob Storage
 
 | ID | Projekt/innehåll | Konto/region | Container | Status | Kommentar |
@@ -66,14 +75,6 @@ GitHub-repots storlek i API-metadata är en grov repoindikator, inte en fullstä
 | AZ-03 | Kungjort – metadata och tillstånd | `stskogkolldata` / Sweden Central | `metadata` | Bekräftad | Privat container; bland annat kontroll-/state-metadata. |
 
 **Andra Azure-flöden att kartlägga:** Skog-repot innehåller workflows för polis-/viltolyckedata, Azure-backfill, audit och restore. Exakta konton, containrar, prefix och aktuell produktionsstatus är ännu inte verifierade i detta register. Lägg inte in hemligheter, SAS-token, connection strings eller credentials här.
-
-### OneDrive – verifierade detaljer i NVR-arbetsytan (2026-11-15)
-
-Under `OneDrive\\Skogskoll\\viltolycka_NVR\\working` finns bland annat `lulea-police-nvr` (cirka 47 MB), `nvdb-vagnummer` (cirka 185 MB), `ortnamn-deso-2025` (cirka 12 MB), `ortnamn-source` (cirka 156 MB), `split-2015-2026` (cirka 107 MB), samt separata restore-testmappar. Dessa är arbets-/testytor och ska inte automatiskt betraktas som auktoritativa arkiv.
-
-I `history` finns `legacy-events-2015-2021`, `legacy-event-snapshots`, `runs` och `state`. Test- och restore-kopior ska hållas isär från produktionshistoriken.
-
-**Storleksnotering:** OneDrive rapporterar mappstorlekar inklusive innehåll. Mappstorlekar ska inte summeras med alla underliggande filer en gång till. Storlekarna är ögonblicksbilder från inventeringsdatum och kan ändras.
 
 ## 5. Lokal dator och USB
 
@@ -124,7 +125,7 @@ För en begränsad inventering av särskilda mappar:
 .\\scripts\\inventory-local-storage.ps1 -Roots @('C:\\Users\\dahli\\GitHub','D:\\Skogskoll') -OutputDirectory 'C:\\Temp\\storage-inventory'
 ```
 
-SHA-256 är avstängt som standard för att undvika onödig belastning. Aktivera endast vid behov och använd storleksgräns:
+Rapporter sparas som standard i OneDrive\\Skogskoll\\_inventory när OneDrive-synkroten hittas, annars i $HOME\\storage-inventory. SHA-256 är avstängt som standard för att undvika onödig belastning. Aktivera endast vid behov och använd storleksgräns:
 
 ```powershell
 .\\scripts\\inventory-local-storage.ps1 -IncludeRemovableDrives -HashFiles -MaxHashBytes 268435456
