@@ -63,7 +63,9 @@ $errors = New-Object System.Collections.Generic.List[object]
 foreach ($root in $Roots) {
     Write-Host "Scanning: $root"
     try {
-        $files = Get-ChildItem -LiteralPath $root -File -Recurse -Force -ErrorAction SilentlyContinue
+        $files = Get-ChildItem -LiteralPath $root -File -Recurse -Force -ErrorAction SilentlyContinue | Where-Object {
+            -not ($OutputDirectory -and $_.FullName.StartsWith($OutputDirectory, [System.StringComparison]::OrdinalIgnoreCase))
+        }
         foreach ($file in $files) {
             $hash = $null
             if ($HashFiles -and $file.Length -le $MaxHashBytes) {
@@ -96,6 +98,39 @@ $rootSummary = foreach ($root in $Roots) {
     }
 }
 
+$previousSnapshot = Get-ChildItem -LiteralPath $OutputDirectory -Filter "local-storage-inventory-*.json" -File -ErrorAction SilentlyContinue |
+    Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
+
+$changes = New-Object System.Collections.Generic.List[object]
+if ($previousSnapshot) {
+    try {
+        $previous = Get-Content -LiteralPath $previousSnapshot.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
+        $previousByPath = @{}
+        foreach ($old in $previous.files) { $previousByPath[$old.path] = $old }
+        $currentByPath = @{}
+        foreach ($current in $items) {
+            $currentByPath[$current.path] = $current
+            if (-not $previousByPath.ContainsKey($current.path)) {
+                $changes.Add([pscustomobject]@{ change="added"; path=$current.path; old_size_bytes=$null; new_size_bytes=$current.size_bytes })
+            } else {
+                $old = $previousByPath[$current.path]
+                if ([long]$old.size_bytes -ne [long]$current.size_bytes -or $old.last_write_time_utc -ne $current.last_write_time_utc) {
+                    $changes.Add([pscustomobject]@{ change="modified"; path=$current.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=[long]$current.size_bytes })
+                }
+            }
+        }
+        foreach ($old in $previous.files) {
+            if (-not $currentByPath.ContainsKey($old.path)) {
+                $changes.Add([pscustomobject]@{ change="missing"; path=$old.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$null })
+            }
+        }
+    } catch {
+        $errors.Add([pscustomobject]@{ path=$previousSnapshot.FullName; error="Could not compare previous inventory: $($_.Exception.Message)" })
+    }
+} else {
+    $changes.Add([pscustomobject]@{ change="baseline"; path=$null; old_size_bytes=$null; new_size_bytes=$null })
+}
+
 $report = [ordered]@{
     schema_version = "1.0"
     generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
@@ -104,7 +139,10 @@ $report = [ordered]@{
     scan_mode = "read-only"
     hash_enabled = [bool]$HashFiles
     max_hash_bytes = $MaxHashBytes
+    previous_snapshot = if ($previousSnapshot) { $previousSnapshot.Name } else { $null }
     roots = @($rootSummary)
+    change_count = $changes.Count
+    changes = @($changes)
     files = @($items)
     errors = @($errors)
 }
@@ -126,6 +164,12 @@ foreach ($entry in $rootSummary) {
     $gb = [math]::Round(($entry.total_bytes / 1GB), 3)
     $lines.Add("| $($entry.root) | $($entry.file_count) | $gb |")
 }
+$lines.Add("")
+$lines.Add("")
+$lines.Add("Changes since previous snapshot: $($changes.Count)")
+$lines.Add("| Change | Path | Old bytes | New bytes |")
+$lines.Add("|---|---|---:|---:|")
+foreach ($change in $changes) { $lines.Add("| $($change.change) | $($change.path) | $($change.old_size_bytes) | $($change.new_size_bytes) |") }
 $lines.Add("")
 $lines.Add("Errors: $($errors.Count)")
 $lines.Add("")
