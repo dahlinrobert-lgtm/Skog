@@ -78,7 +78,7 @@ test("kartan använder flyg-/satellitbilder och visar platsbaserat bilddatum", (
   assert.match(html, /SRC_DATE,SRC_DATE2,NICE_NAME,NICE_DESC,SRC_RES/);
   assert.match(html, /id="imageryDate" aria-live="polite"/);
   assert.match(html, /#imageryDate\{min-height:2\.8em;line-height:1\.4;\}/);
-  assert.match(html, /activityMap\.on\("moveend",scheduleImageryDateUpdate\)/);
+  assert.match(html, /activityMap\.on\("moveend",\(\)=>\{if\(baseMapMode==="imagery"\)scheduleImageryDateUpdate\(\);\}\)/);
   assert.match(html, /Flyg-\/satellitbild tagen /);
   assert.doesNotMatch(html, /\(kartans mittpunkt\)/);
   assert.match(html, /Bilddatum saknas för kartans mitt/);
