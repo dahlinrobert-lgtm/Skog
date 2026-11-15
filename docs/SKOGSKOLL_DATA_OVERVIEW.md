@@ -329,7 +329,11 @@ Geometrierna är vägledande översiktsunderlag och inte juridiskt gällande gr�
 - Autentiserad ZIP-nedladdning verifierades 2026-11-13 med HTTP Basic: 58 553 634 byte; innehåller `ortnamn_se.gpkg` (156 000 256 byte).
 
 **Nuvarande läge**
-Teknisk nedladdning är verifierad, men GeoPackage-lager, attribut, objekttyper och faktiska namnträffar för Sunderbyn/Notviken är ännu inte inventerade. Ett read-only-inspektionsskript finns i `scripts/inspect_ortnamn_geopackage.py`; körning mot den lokala filen återstår.
+- Teknisk nedladdning är verifierad. Den lokala read-only-inspektionen 2026-11-15 identifierade ett lager (`ortnamn`), 990 073 objekt, EPSG:3006 och 53 namnträffar för Sunderbyn/Notviken.
+- Kommunurval med `kommunkod=2580` gav 11 poster i det granskade namnträffsutdraget: Norra Sunderbyn (1), Sunderbyn (1), Södra Sunderbyn (2), Notviken (6) och Notvikens badplats (1). Notviken-posterna har olika `detaljtyp`-värden. Koderna ska bevaras som källvärden; semantik ska följa verifierad produktkodlista.
+- Inspektionsskript: `scripts/inspect_ortnamn_geopackage.py`. Ett separat read-only kommunexportskript har lagts till i utvecklingsbranch `feat/ortnamn-lulea-reference-export`: `scripts/export_ortnamn_municipality_reference.py`. Det exporterar alla objekt för vald kommunkod, attribut, geometriuppgifter och källfilens SHA-256.
+- `lopnummer` är endast bevarat som källattribut; använd det inte som stabilt/unikt ID. `source_row_index` gäller endast aktuell källsnapshot. Exporten ska bevara källattribut och får inte ändra GeoPackage-filen.
+- Lokal fullständig kommunexport och dess antal är ännu inte verifierade; de 11 posterna ovan avser endast det tidigare namnträffsutdraget.
 
 **Avsedd användning**
 Använd ortnamn som namn- och områdesreferens för att tolka polisens text, exempelvis Sunderbyn, Södra Sunderbyn och Notviken. Kombinera därefter med NVDB:s vägnummer, korsningsobjekt och sammanhängande vägnät. Ortnamn är en referenskälla, inte en olycksdatakälla.
