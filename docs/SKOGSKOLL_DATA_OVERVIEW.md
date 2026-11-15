@@ -332,8 +332,12 @@ Geometrierna är vägledande översiktsunderlag och inte juridiskt gällande gr�
 - Teknisk nedladdning är verifierad. Den lokala read-only-inspektionen 2026-11-15 identifierade ett lager (`ortnamn`), 990 073 objekt, EPSG:3006 och 53 namnträffar för Sunderbyn/Notviken.
 - Kommunurval med `kommunkod=2580` gav 11 poster i det granskade namnträffsutdraget: Norra Sunderbyn (1), Sunderbyn (1), Södra Sunderbyn (2), Notviken (6) och Notvikens badplats (1). Notviken-posterna har olika `detaljtyp`-värden. Koderna ska bevaras som källvärden; semantik ska följa verifierad produktkodlista.
 - Inspektionsskript: `scripts/inspect_ortnamn_geopackage.py`. Ett separat read-only kommunexportskript har lagts till i utvecklingsbranch `feat/ortnamn-lulea-reference-export`: `scripts/export_ortnamn_municipality_reference.py`. Det exporterar alla objekt för vald kommunkod, attribut, geometriuppgifter och källfilens SHA-256.
-- `lopnummer` är endast bevarat som källattribut; använd det inte som stabilt/unikt ID. `source_row_index` gäller endast aktuell källsnapshot. Exporten ska bevara källattribut och får inte ändra GeoPackage-filen.
-- Lokal fullständig kommunexport och dess antal är ännu inte verifierade; de 11 posterna ovan avser endast det tidigare namnträffsutdraget.
+- `lopnummer` är endast bevarat som källattribut; använd det inte som stabilt/unikt ID. `source_row_index` gäller endast aktuell källsnapshot. Exporten bevarar källattribut och ändrar inte GeoPackage-filen.
+- Full kommunexport kördes lokalt 2026-11-15 med status `completed_read_only`: 6 239 objekt för kommunkod 2580 från 990 073 nationella objekt, EPSG:3006. Källfilens SHA-256: `3a3d26bc3ec95142f47208cc6afaff45a70e5ee04417f770d058777a5465a92d`.
+- Fördelning per källans `detaljtyp`: TERRTX 2 314; TRAKTTX 866; BEBTX 806; SANKTX 680; VATTTX 568; VATTDELTX 435; VATTDRTX 371; ANLTX 68; NATTX 58; KULTURTX 48; BEBTÄTTX 19; KYRKATX 6. Koderna bevaras som råa källvärden; semantik ska verifieras mot Lantmäteriets aktuella kodlista.
+- Kommunexportens CSV och JSON-rapport ligger i användarens OneDrive working-mapp och har inte committats. Käll-GeoPackage har inte ändrats.
+- Exportverktygets fyra enhetstester passerade lokalt. De 11 posterna ovan avser endast det tidigare Sunderbyn/Notviken-namnträffsutdraget, inte hela kommunen.
+- Nästa analyssteg är att använda den kommunala exporten för att välja relevanta ortnamnsreferenser till NVDB-granskningen. Inga automatiska Police–NVR-matchningar ska skapas.
 
 **Avsedd användning**
 Använd ortnamn som namn- och områdesreferens för att tolka polisens text, exempelvis Sunderbyn, Södra Sunderbyn och Notviken. Kombinera därefter med NVDB:s vägnummer, korsningsobjekt och sammanhängande vägnät. Ortnamn är en referenskälla, inte en olycksdatakälla.

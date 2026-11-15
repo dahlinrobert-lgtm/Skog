@@ -134,7 +134,9 @@ python scripts/inspect_ortnamn_geopackage.py \
 
 Den nationella GeoPackage-filen har inspekterats read-only. Lagret `ortnamn` innehöll 990 073 objekt i EPSG:3006. Namnsökningen för Sunderbyn/Notviken gav 53 träffrader. I det granskade utdraget med `kommunkod=2580` fanns 11 poster: Norra Sunderbyn (1), Sunderbyn (1), Södra Sunderbyn (2), Notviken (6) och Notvikens badplats (1).
 
-Ett separat exportverktyg, `scripts/export_ortnamn_municipality_reference.py`, är avsett att exportera samtliga objekt för en kommunkod till CSV och en JSON-rapport. Rapporten innehåller källfilens SHA-256, antal, CRS och fördelning per `detaljtyp`. Käll-GeoPackage ändras inte. `source_row_index` är endast en radposition i aktuell snapshot och `lopnummer` ska inte behandlas som stabilt eller unikt ID.
+Ett separat exportverktyg, `scripts/export_ortnamn_municipality_reference.py`, exporterar samtliga objekt för en kommunkod till CSV och en JSON-rapport. Rapporten innehåller källfilens SHA-256, antal, CRS och fördelning per `detaljtyp`. Käll-GeoPackage ändras inte. `source_row_index` är endast en radposition i aktuell snapshot och `lopnummer` ska inte behandlas som stabilt eller unikt ID.
+
+**Verifierad Luleå-export 2026-11-15:** 6 239 objekt för `kommunkod=2580` från ett nationellt lager med 990 073 objekt, EPSG:3006. Källfilens SHA-256: `3a3d26bc3ec95142f47208cc6afaff45a70e5ee04417f770d058777a5465a92d`. Fördelning: TERRTX 2 314; TRAKTTX 866; BEBTX 806; SANKTX 680; VATTTX 568; VATTDELTX 435; VATTDRTX 371; ANLTX 68; NATTX 58; KULTURTX 48; BEBTÄTTX 19; KYRKATX 6. Koderna är bevarade som källvärden; semantiken ska verifieras mot aktuell kodlista. Exportfilerna ligger lokalt i användarens OneDrive och är inte incheckade i Git.
 
 Behåll `detaljtyp` som ursprunglig kod tills kodlistans semantik har verifierats mot aktuell produktdokumentation. Ortnamnspunkter är namnreferenser/kartografiska placeringar, inte ortsgränser eller olyckspositioner. Exporten är ett internt analysunderlag; kommersiell användning, lagring, bearbetning och kundvisning är inte godkända genom teknisk åtkomst.
 
