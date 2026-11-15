@@ -118,9 +118,10 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 
 - En separat testvy finns i `docs/bevakning-test.html`; den ordinarie `docs/bevakning.html` är oförändrad.
 - Prototypen har en vertikal händelsetidslinje, läsprogress, diskreta scrollövergångar och synkronisering mellan aktiv händelse och kart-/ärendepanel. På mobil staplas flöde och karta.
+- Kartan/ärendepanelen förhandsvisar nu automatiskt den händelseruta som läsaren stannar vid i 250 ms. En ny scrollrörelse avbryter väntande byte; den aktiva rutan kontrolleras igen innan kartan uppdateras. Manuell knapp för förhandsvisning finns kvar.
 - Prototypen använder befintlig datainläsning, filter och kartfunktioner. Animationer respekterar `prefers-reduced-motion`.
-- PR #370 är sammanslagen. Automatiska bevakningstester och JavaScript-syntaxkontroll passerade i PR-körningen. Efterföljande push-/Pages-körningar ska kontrolleras separat.
-- **Nästa steg:** öppna testvyn när GitHub Pages-publiceringen är klar och gör manuell granskning av scrollkänsla, kartkoppling, mobil, tangentbordsnavigering och prestanda. Ersätt inte den officiella sidan innan användaren har godkänt resultatet.
+- PR #370 är sammanslagen. PR #373 innehåller den fördröjda kartförhandsvisningen och utökade regressionstester; verifiera CI innan merge.
+- **Nästa steg:** granska testvyn manuellt avseende scrollkänsla, kartkoppling, mobil, tangentbordsnavigering och prestanda. Ersätt inte den officiella sidan innan användaren har godkänt resultatet.
 
 ## 9. Hur en ny chatt ska arbeta vidare
 
