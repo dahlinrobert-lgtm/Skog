@@ -131,6 +131,11 @@ if ($previousSnapshot) {
     $changes.Add([pscustomobject]@{ change="baseline"; path=$null; old_size_bytes=$null; new_size_bytes=$null })
 }
 
+$previousSnapshotName = $null
+if ($previousSnapshot) {
+    $previousSnapshotName = $previousSnapshot.Name
+}
+
 $report = [ordered]@{
     schema_version = "1.0"
     generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
@@ -139,7 +144,7 @@ $report = [ordered]@{
     scan_mode = "read-only"
     hash_enabled = [bool]$HashFiles
     max_hash_bytes = $MaxHashBytes
-    previous_snapshot = if ($previousSnapshot) { $previousSnapshot.Name } else { $null }
+    previous_snapshot = $previousSnapshotName
     roots = @($rootSummary)
     change_count = $changes.Count
     changes = @($changes)
