@@ -34,8 +34,8 @@ test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händel
 });
 
 test("kartan använder flyg-/satellitbilder och visar platsbaserat bilddatum", () => {
-  assert.match(html, /World_Imagery\\/MapServer\\/tile/);
-  assert.match(html, /World_Imagery\\/MapServer\\/0\\/query/);
+  assert.ok(html.includes("World_Imagery/MapServer/tile/"));
+  assert.ok(html.includes("World_Imagery/MapServer/0/query"));
   assert.match(html, /SRC_DATE,SRC_DATE2,NICE_NAME,NICE_DESC,SRC_RES/);
   assert.match(html, /id="imageryDate" aria-live="polite"/);
   assert.match(html, /activityMap\.on\("moveend",scheduleImageryDateUpdate\)/);
