@@ -786,6 +786,331 @@
     ]
   },
   {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8667-2025",
+    "title": "Förslag till kontrollprogram för vattenverksamhet och privat brunnar, Knivsta kommun, Målnummer M 8627-24",
+    "status": "Handläggning",
+    "registered_date": "2025-11-14",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5313488",
+    "handling_count": 27,
+    "evidence_score": 9,
+    "priority": "follow_up_lead",
+    "reasons": [
+      "Uppföljning/redovisning nämns: Redovisning av nivåer mm"
+    ],
+    "handlings": [
+      {
+        "handling_number": "8667-2025-1",
+        "title": "Förslag till kontrollprogram för vattenverksamhet och privat brunnar, Knivsta kommun, Målnummer M 8627-24",
+        "date": "2025-11-14",
+        "sender_recipient": "Knivstavatten AB",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-2",
+        "title": "Synpunkter på kontrollprogram",
+        "date": "2025-12-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-3",
+        "title": "Synpunkter på kontrollprogram från Länsstyrelsen Stockholm",
+        "date": "2026-01-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-4",
+        "title": "Mailkonversation med Knivsta vatten",
+        "date": "2026-02-20",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-5",
+        "title": "Reviderat kontrollprogram",
+        "date": "2026-04-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-6",
+        "title": "Mail till Knivstavatten",
+        "date": "2026-04-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-7",
+        "title": "Meddelande om tangerade och uppdaterade åtgärdsnivåer",
+        "date": "2026-06-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-8",
+        "title": "Meddelande till Knivstavatten",
+        "date": "2026-06-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-9",
+        "title": "Meddelande om passerad åtgärdsnivå",
+        "date": "2026-08-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-10",
+        "title": "Meddelande till Knivstavatten",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-11",
+        "title": "Meddelande om påbörjad skyddsinfiltration",
+        "date": "2026-09-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-12",
+        "title": "Svar till Knivstavatten",
+        "date": "2026-09-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-13",
+        "title": "Mailväxling om byte av kontaktperson",
+        "date": "2026-09-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-14",
+        "title": "Redovisning av nivåer mm",
+        "date": "2026-09-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "follow_up"
+        ],
+        "matched_rules": [
+          "follow_up"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-15",
+        "title": "Redovisning av nivåer mm",
+        "date": "2026-10-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "follow_up"
+        ],
+        "matched_rules": [
+          "follow_up"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-16",
+        "title": "Information om byte av handläggare samt uppdatering av kontrollprogram",
+        "date": "2026-10-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-17",
+        "title": "Redovisning av nivåer mm",
+        "date": "2026-10-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "follow_up"
+        ],
+        "matched_rules": [
+          "follow_up"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-18",
+        "title": "Fråga om avetablering av skyddsinfiltration",
+        "date": "2026-10-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-19",
+        "title": "Information om att samtliga gv-nivåer har återhämtat sig till över larmnivå",
+        "date": "2026-10-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-20",
+        "title": "Svar till Knivstavatten",
+        "date": "2026-10-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-21",
+        "title": "Reviderat kontrollprogram",
+        "date": "2026-11-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-22",
+        "title": "Mail till Knivstavatten",
+        "date": "2026-11-06",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-23",
+        "title": "Halvårsrapport",
+        "date": "2026-11-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-24",
+        "title": "Fråga med anledning av rapport",
+        "date": "2026-11-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-25",
+        "title": "Fråga från Lst Stockholm",
+        "date": "2026-11-11",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-26",
+        "title": "Svar från Knivstavatten",
+        "date": "2026-11-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8667-2025-27",
+        "title": "Svar på fråga från Lst stockholm",
+        "date": "2026-11-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
     "diary": "Länsstyrelsen i Blekinge län",
     "diary_number": "3765-2026",
     "title": "Begäran om tillsyn av vattenverksamhet",
@@ -13480,6 +13805,377 @@
     ]
   },
   {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6481-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet bristande underhåll av vägtrumma och skada på vattendrag vid Gällbo/Juvastbobäcken, Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-31",
+    "decision_date": "2026-10-05",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5599271",
+    "handling_count": 6,
+    "evidence_score": 3,
+    "priority": "planning_or_procurement",
+    "reasons": [
+      "Uppföljning/redovisning nämns: Tjänsteanteckning vid besiktning_tillsyn (1/1)"
+    ],
+    "handlings": [
+      {
+        "handling_number": "6481-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet bristande underhåll av vägtrumma och skada på vattendrag vid Gällbo/Juvastbobäcken, Uppsala kommun",
+        "date": "2026-08-31",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6481-2026-2",
+        "title": "Komplettering",
+        "date": "2026-09-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6481-2026-3",
+        "title": "Komplettering",
+        "date": "2026-09-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6481-2026-4",
+        "title": "Meddelande via e-tjänst",
+        "date": "2026-10-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6481-2026-5",
+        "title": "Tjänsteanteckning vid besiktning_tillsyn (1/1)",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "follow_up",
+          "administrative"
+        ],
+        "matched_rules": [
+          "follow_up",
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6481-2026-6",
+        "title": "Beslut att avsluta utan åtgärd",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6509-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalbyviken, Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-07",
+    "decision_date": "2026-10-26",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5601213",
+    "handling_count": 13,
+    "evidence_score": 3,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6509-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalbyviken, Uppsala kommun",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-3",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-4",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-5",
+        "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-6",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-7",
+        "title": "Fullmakt",
+        "date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-8",
+        "title": "Begäran om komplettering_ ärende 6509-2026 - Anmälan om vattenverksamhet (1/1)",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-9",
+        "title": "Komplettering med uppgifter",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-10",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 6509-2026 (1/1)",
+        "date": "2026-09-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-11",
+        "title": "Yttrande",
+        "date": "2026-10-16",
+        "sender_recipient": "Miljöförvaltningen, Uppsala kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-12",
+        "title": "Beslut om bifall med villkor",
+        "date": "2026-10-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6509-2026-13",
+        "title": "Meddelande om mottagen delgivning",
+        "date": "2026-10-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "9253-2024",
+    "title": "Tillsyn av vattenverksamhet",
+    "status": "Avslutat",
+    "registered_date": "2024-12-12",
+    "decision_date": "2026-06-16",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4976930",
+    "handling_count": 8,
+    "evidence_score": 3,
+    "priority": "planning_or_procurement",
+    "reasons": [
+      "Uppföljning/redovisning nämns: Tjänsteanteckning vid besiktning/tillsyn - drönarbilder och ortofoto"
+    ],
+    "handlings": [
+      {
+        "handling_number": "9253-2024-1",
+        "title": "Start av ärende",
+        "date": "2024-12-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9253-2024-2",
+        "title": "Meddelande om vattenverksamhet",
+        "date": "2024-11-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9253-2024-3",
+        "title": "Svar ang pågående vattenverksamhet",
+        "date": "2024-11-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9253-2024-4",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2025-01-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9253-2024-5",
+        "title": "Meddelande med bilder",
+        "date": "2025-01-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9253-2024-6",
+        "title": "Tjänsteanteckning platsbesök 14 november 2024",
+        "date": "2025-01-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9253-2024-7",
+        "title": "Tjänsteanteckning vid besiktning/tillsyn - drönarbilder och ortofoto",
+        "date": "2026-05-06",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "follow_up",
+          "administrative"
+        ],
+        "matched_rules": [
+          "follow_up",
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9253-2024-8",
+        "title": "Beslut om avskrivning",
+        "date": "2026-06-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
     "diary": "Länsstyrelsen i Västmanlands län",
     "diary_number": "1340-2025",
     "title": "Manual för uppföljning i fält av naturvårdsbränningar, version 2.0.2025",
@@ -22466,6 +23162,1010 @@
         "handling_number": "5493-2026-7",
         "title": "Beslut om bifall med villkor",
         "date": "2026-10-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6232-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Lötsjön, Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-26",
+    "decision_date": "2026-10-01",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5589989",
+    "handling_count": 5,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6232-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Lötsjön, Uppsala kommun",
+        "date": "2026-08-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6232-2026-2",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-08-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6232-2026-3",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 6232-2026 (1/1)",
+        "date": "2026-09-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6232-2026-4",
+        "title": "Yttrande över remiss",
+        "date": "2026-09-28",
+        "sender_recipient": "Uppsala kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6232-2026-5",
+        "title": "Beslut om bifall med villkor",
+        "date": "2026-10-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6648-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, MS_CD: WA56221287 Olandsån - Bäck från Gimo damm (lokalt namn Svartån), Östhammar kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-09-10",
+    "decision_date": "",
+    "municipality": "Östhammar",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5606645",
+    "handling_count": 7,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6648-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, MS_CD: WA56221287 Olandsån - Bäck från Gimo damm (lokalt namn Svartån), Östhammar kommun",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6648-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6648-2026-3",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6648-2026-4",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6648-2026-5",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6648-2026-6",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 6648-2026 (1/1)",
+        "date": "2026-09-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6648-2026-7",
+        "title": "Yttrande över remiss",
+        "date": "2026-10-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6715-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ekoln, Vårdsätraviken, Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-14",
+    "decision_date": "2026-10-23",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5609981",
+    "handling_count": 5,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6715-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ekoln, Vårdsätraviken, Uppsala kommun",
+        "date": "2026-09-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6715-2026-2",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 6715-2026 (1/1)",
+        "date": "2026-09-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6715-2026-3",
+        "title": "Yttrande",
+        "date": "2026-10-16",
+        "sender_recipient": "Miljöförvaltningen, Uppsala kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6715-2026-4",
+        "title": "Beslut om bifall med villkor",
+        "date": "2026-10-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6715-2026-5",
+        "title": "Meddelande om mottagen delgivning",
+        "date": "2026-10-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6919-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Västersjön, Östhammar kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-17",
+    "decision_date": "2026-11-06",
+    "municipality": "Östhammar",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5614987",
+    "handling_count": 15,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6919-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Västersjön, Östhammar kommun",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-3",
+        "title": "Översiktkarta",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-4",
+        "title": "Ritning (ange skalan och norrpil på ritning)",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-5",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-6",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-7",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-8",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-9",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-10",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-11",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-09-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-12",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 6919-2026 (1/1)",
+        "date": "2026-09-30",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-13",
+        "title": "Svar på remiss: inga synpunkter",
+        "date": "2026-10-02",
+        "sender_recipient": "Östhammars kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-14",
+        "title": "Beslut om bifall med villkor",
+        "date": "2026-11-06",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6919-2026-15",
+        "title": "Meddelande om mottagen delgivning",
+        "date": "2026-11-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7889-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag vid Rydbylund, Enköping kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-10-13",
+    "decision_date": "",
+    "municipality": "Enköping",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5648534",
+    "handling_count": 4,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7889-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag vid Rydbylund, Enköping kommun",
+        "date": "2026-10-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7889-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-10-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7889-2026-3",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-10-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7889-2026-4",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 7889-2026 (1/1)",
+        "date": "2026-10-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8062-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Våtmark vid södefors (Dp432), Tierp kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-10-19",
+    "decision_date": "",
+    "municipality": "Tierp",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5656419",
+    "handling_count": 5,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "8062-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Våtmark vid södefors (Dp432), Tierp kommun",
+        "date": "2026-10-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8062-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-10-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8062-2026-3",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-10-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8062-2026-4",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-10-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8062-2026-5",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 8062-2026 (1/1)",
+        "date": "2026-10-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8360-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av rörbro, Tierps kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-10-27",
+    "decision_date": "",
+    "municipality": "Tierp",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5665799",
+    "handling_count": 2,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "8360-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av rörbro, Tierps kommun",
+        "date": "2026-10-27",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8360-2026-2",
+        "title": "Remiss_ anmälan om vattenverksamhet_ dnr 8360-2026 (1/1)",
+        "date": "2026-11-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8846-2025",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Öregrundsgrepen, Östhammar kommun",
+    "status": "Handläggning",
+    "registered_date": "2025-11-22",
+    "decision_date": "",
+    "municipality": "Östhammar",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5320654",
+    "handling_count": 31,
+    "evidence_score": 2,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "8846-2025-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Öregrundsgrepen, Östhammar kommun",
+        "date": "2025-11-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-2",
+        "title": "Ritning (ange skalan och norrpil på ritning)",
+        "date": "2025-11-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-3",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2025-11-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-4",
+        "title": "Remiss till kommun och särskild berörda",
+        "date": "2025-11-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-5",
+        "title": "Remiss via epost",
+        "date": "2025-11-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-6",
+        "title": "Yttrande över remiss",
+        "date": "2025-12-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-7",
+        "title": "Remissvar",
+        "date": "2025-12-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-8",
+        "title": "Yttrande",
+        "date": "2025-12-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-9",
+        "title": "Svar på remiss: avstyrker",
+        "date": "2025-12-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-10",
+        "title": "Yttrande över remiss",
+        "date": "2025-12-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-11",
+        "title": "fråga från servitutsinnehavare om möjlighet att yttra sig samt svar att yttrande kan ske till senast 5 januari",
+        "date": "2025-12-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-12",
+        "title": "Svar på remiss: tillstyrker",
+        "date": "2025-12-17",
+        "sender_recipient": "Sjöfartsverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-14",
+        "title": "Yttrande",
+        "date": "2025-12-17",
+        "sender_recipient": "Föreningen Mårtensboda vänner",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-15",
+        "title": "Yttrande",
+        "date": "2026-01-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-16",
+        "title": "Yttranden för bemötande",
+        "date": "2026-01-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-17",
+        "title": "Delbeslut om förlängd handläggningstid",
+        "date": "2026-01-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-18",
+        "title": "Delbeslut via epost",
+        "date": "2026-01-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-19",
+        "title": "Tjänsteanteckning efter telefonsamtal",
+        "date": "2026-01-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-20",
+        "title": "Svar på begäran om förlängd svarstid_ anmälan om vattenverksamhet dnr 8846-2025 (1/1)",
+        "date": "2026-01-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-21",
+        "title": "Yttrande",
+        "date": "2026-02-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-22",
+        "title": "Delbeslut",
+        "date": "2026-03-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-23",
+        "title": "Delbeslut via epost",
+        "date": "2026-03-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-24",
+        "title": "Begäran om komplettering",
+        "date": "2026-04-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-25",
+        "title": "Delbeslut om förlängd handläggningstid",
+        "date": "2026-04-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-26",
+        "title": "Delbeslut samt begäran om komplettering via epost",
+        "date": "2026-04-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-27",
+        "title": "bekräftelse om mottaget delbeslut och begäran om komplettering",
+        "date": "2026-04-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-28",
+        "title": "begäran om förlängd svarstid",
+        "date": "2026-05-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-29",
+        "title": "Godkännande om förlängd svarstid",
+        "date": "2026-05-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-30",
+        "title": "internyttrande för kännedom",
+        "date": "2026-07-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-31",
+        "title": "Bilder och komplettering med synpunkter",
+        "date": "2026-07-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8846-2025-32",
+        "title": "Komplettering med anledning av begäran daterad 27 april",
+        "date": "2026-10-30",
         "sender_recipient": "Personuppgift",
         "classes": [
           "other"
@@ -52330,6 +54030,942 @@
     ]
   },
   {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "5964-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag 0,7 km NO Marka, Östhammar kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-14",
+    "decision_date": "2026-09-22",
+    "municipality": "Östhammar",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5580185",
+    "handling_count": 6,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5964-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag 0,7 km NO Marka, Östhammar kommun",
+        "date": "2026-08-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5964-2026-2",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-08-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5964-2026-3",
+        "title": "Remiss till kommun och närboende",
+        "date": "2026-08-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5964-2026-4",
+        "title": "Svar på remiss: inga synpunkter",
+        "date": "2026-09-04",
+        "sender_recipient": "Östhammars kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5964-2026-5",
+        "title": "Beslut underhåll av bro Marka Östhammar",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5964-2026-6",
+        "title": "Bilaga 1 dnr 5964-2026",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "5968-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hågaån, Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-08-14",
+    "decision_date": "2026-09-23",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5580247",
+    "handling_count": 7,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5968-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hågaån, Uppsala kommun",
+        "date": "2026-08-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5968-2026-2",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-08-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5968-2026-3",
+        "title": "Remiss kommunen och närboende",
+        "date": "2026-08-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5968-2026-4",
+        "title": "Svar på remiss: inga synpunkter",
+        "date": "2026-09-14",
+        "sender_recipient": "Uppsala Vatten och Avfall AB",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5968-2026-5",
+        "title": "Beslut om underhåll av bro över Hågaån, Vänge Uppsala",
+        "date": "2026-09-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5968-2026-6",
+        "title": "Bilaga 1 dnr 5968-2026",
+        "date": "2026-09-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5968-2026-7",
+        "title": "Beslut skickat via e-post",
+        "date": "2026-09-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6613-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ej namngivet vattendrag, blått streck på topografiska kartan., Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-10",
+    "decision_date": "2026-10-22",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5605021",
+    "handling_count": 10,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6613-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ej namngivet vattendrag, blått streck på topografiska kartan., Uppsala kommun",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-3",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-4",
+        "title": "Begäran om komplettering",
+        "date": "2026-09-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-5",
+        "title": "Komplettering",
+        "date": "2026-09-16",
+        "sender_recipient": "Trafikverket Underhåll Mellersta regionen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-6",
+        "title": "Remiss till kommun och särskilt berörda",
+        "date": "2026-09-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-7",
+        "title": "Remiss skickad med e-post",
+        "date": "2026-09-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-8",
+        "title": "Yttrande över remiss",
+        "date": "2026-09-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-9",
+        "title": "Beslut vattenverksamhet byta av trumma, väg 678 Uppsala kommun",
+        "date": "2026-10-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6613-2026-10",
+        "title": "Beslut skickat med e-post",
+        "date": "2026-10-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7094-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderbodafjärden, Predikstolen, Östhammar kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-22",
+    "decision_date": "2026-10-22",
+    "municipality": "Östhammar",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5622466",
+    "handling_count": 7,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7094-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Söderbodafjärden, Predikstolen, Östhammar kommun",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7094-2026-2",
+        "title": "Översiktkarta",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7094-2026-3",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7094-2026-4",
+        "title": "Remiss till kommunen och särskilt berörda",
+        "date": "2026-09-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7094-2026-5",
+        "title": "Remiss om vattenverksamhet skickad via e-post",
+        "date": "2026-09-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7094-2026-6",
+        "title": "Svar på remiss: inga synpunkter",
+        "date": "2026-10-02",
+        "sender_recipient": "Östhammars kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7094-2026-7",
+        "title": "Beslut om renovering av stenkista Söderbodafjärden Östhammar",
+        "date": "2026-10-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7485-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet vid nya stenplattor samt underhåll av dränering och stenkista, Håbo kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-28",
+    "decision_date": "2026-10-09",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5634161",
+    "handling_count": 2,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7485-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet vid nya stenplattor samt underhåll av dränering och stenkista, Håbo kommun",
+        "date": "2026-09-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7485-2026-2",
+        "title": "Beslut om avskrivning",
+        "date": "2026-10-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7641-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Yttre hummerfjärd, Östhammar kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-10-05",
+    "decision_date": "2026-11-13",
+    "municipality": "Östhammar",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5638915",
+    "handling_count": 6,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7641-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Yttre hummerfjärd, Östhammar kommun",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7641-2026-2",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7641-2026-3",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7641-2026-4",
+        "title": "Foton/bilder från platsen",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7641-2026-5",
+        "title": "Yttrande",
+        "date": "2026-10-15",
+        "sender_recipient": "Miljöenheten vid Samhällsbyggnadskontoret, Östhammars kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7641-2026-6",
+        "title": "Beslut om bifall",
+        "date": "2026-11-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7645-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Enköping kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-10-05",
+    "decision_date": "",
+    "municipality": "Enköping",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5639125",
+    "handling_count": 4,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7645-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Enköping kommun",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7645-2026-2",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-10-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7645-2026-3",
+        "title": "Remiss om vattenverksamhet",
+        "date": "2026-10-20",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7645-2026-4",
+        "title": "Yttrande",
+        "date": "2026-11-10",
+        "sender_recipient": "Enköpings kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7730-2024",
+    "title": "Anmälan om tillsyn. Miljöbalken om vattenverksamhet, återställning öppet dike, Östhammars kommun",
+    "status": "Handläggning",
+    "registered_date": "2024-10-23",
+    "decision_date": "",
+    "municipality": "Östhammar",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4923802",
+    "handling_count": 3,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7730-2024-1",
+        "title": "Anmälan om tillsyn. vattenverksamhet att återställa öppet dike, Östhammars kommun",
+        "date": "2024-10-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7730-2024-2",
+        "title": "Tjänsteanteckning vid samtal",
+        "date": "2025-10-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7730-2024-3",
+        "title": "Epost om ärendet",
+        "date": "2025-10-20",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "9160-2025",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fyrisån, Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2025-12-03",
+    "decision_date": "2026-06-05",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5331522",
+    "handling_count": 23,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "9160-2025-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fyrisån, Uppsala kommun",
+        "date": "2025-12-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-2",
+        "title": "Remiss till kommun och särskilt berörda",
+        "date": "2025-12-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-3",
+        "title": "Remiss via epost",
+        "date": "2025-12-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-4",
+        "title": "Svar på remiss: avstyrker",
+        "date": "2025-12-19",
+        "sender_recipient": "Fyrisåns vattenförbund",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-5",
+        "title": "Yttrande",
+        "date": "2026-01-07",
+        "sender_recipient": "Uppsala kommun",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-6",
+        "title": "Yttrande",
+        "date": "2026-01-13",
+        "sender_recipient": "Sjöfartsverket",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-7",
+        "title": "komplettering med missad bilaga till yttrande",
+        "date": "2026-01-07",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-8",
+        "title": "Delbeslut om förlängd handläggningstid",
+        "date": "2026-01-30",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-9",
+        "title": "Yttranden för bemötande samt delbeslut om förlängd handläggningstid via epost",
+        "date": "2026-01-30",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-10",
+        "title": "Yttrande",
+        "date": "2026-02-20",
+        "sender_recipient": "Uppsala kommun Arenor och fastigheter",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-11",
+        "title": "Delbeslut om förlängd handläggningstid",
+        "date": "2026-02-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-12",
+        "title": "Delbeslut via epost",
+        "date": "2026-02-27",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-13",
+        "title": "Delbeslut om förlängd handläggningstid",
+        "date": "2026-03-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-14",
+        "title": "Delbeslut via epost",
+        "date": "2026-03-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-15",
+        "title": "Tjänsteanteckning efter telefonsamtal",
+        "date": "2026-04-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-17",
+        "title": "Delbeslut om förlängd handläggningstid",
+        "date": "2026-04-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-18",
+        "title": "delbeslut via epost",
+        "date": "2026-04-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-19",
+        "title": "Delbeslut om förlängd handläggningstid",
+        "date": "2026-05-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-20",
+        "title": "Delbeslut via epost",
+        "date": "2026-05-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-21",
+        "title": "Beslut om bifall med villkor",
+        "date": "2026-06-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-22",
+        "title": "Beslut via epost",
+        "date": "2026-06-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-23",
+        "title": "kopia för kännedom till miljöförvaltningen",
+        "date": "2026-06-05",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9160-2025-24",
+        "title": "bekräftelse om mottaget beslut",
+        "date": "2026-06-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
     "diary": "Länsstyrelsen i Västmanlands län",
     "diary_number": "2040-2026",
     "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet för dränering av odlingslotter vid Sylta i Köpings kommun",
@@ -72481,6 +75117,1645 @@
         "matched_rules": [
           "administrative"
         ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "5609-2025",
+    "title": "Begäran om tillsyn av vattenverksamhet, dikningar som strypt vattenflödet i vattendraget Horbäck, Tierps kommun",
+    "status": "Handläggning",
+    "registered_date": "2025-07-06",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5201418",
+    "handling_count": 8,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5609-2025-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, dikningar som strypt vattenflödet i vattendraget Horbäck, Tierps kommun",
+        "date": "2025-07-06",
+        "sender_recipient": "Naturskyddsföreningen i Tierp",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5609-2025-2",
+        "title": "Komplettering i ärende",
+        "date": "2026-01-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5609-2025-3",
+        "title": "meddelande med koordinater",
+        "date": "2026-02-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5609-2025-4",
+        "title": "Begäran om uppgifter",
+        "date": "2026-06-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5609-2025-5",
+        "title": "Komplettering med svar på begäran",
+        "date": "2026-07-20",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5609-2025-6",
+        "title": "Tjänsteanteckning tillsyn Horbäck",
+        "date": "2026-10-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5609-2025-7",
+        "title": "Begäran om uppgifter samt kommunicering av tjänsteanteckning",
+        "date": "2026-10-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5609-2025-8",
+        "title": "Yttrande över underrättelse",
+        "date": "2026-10-30",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "5620-2024",
+    "title": "Ansökan om tillstånd för vattenverksamhet för anläggandet av gång- och cykelbron över Jumkilsån",
+    "status": "Avslutat",
+    "registered_date": "2024-07-08",
+    "decision_date": "2026-07-02",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4839550",
+    "handling_count": 18,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "5620-2024-1",
+        "title": "Ansökan om tillstånd för vattenverksamhet för anläggandet av gång- och cykelbron över Jumkilsån",
+        "date": "2024-07-08",
+        "sender_recipient": "Ensucon",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-2",
+        "title": "Minnesanteckningar från samrådsmötet den 28 augusti 2024 samt uppdaterat samrådsunderlag",
+        "date": "2024-11-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-3",
+        "title": "Svar på minnesanteckningarna",
+        "date": "2024-11-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-4",
+        "title": "Meddelande med information om tidplan",
+        "date": "2025-09-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-5",
+        "title": "Meddelande om förändringar i projektet",
+        "date": "2025-10-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-6",
+        "title": "Förfrågan om förändring i projektet",
+        "date": "2025-10-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-7",
+        "title": "Meddelande med information om tidplan",
+        "date": "2025-10-20",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-8",
+        "title": "Meddelande om tidplan och önskan om nytt samråd",
+        "date": "2026-02-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-9",
+        "title": "Uppdaterat samrådsunderlag och begäran om nytt samrådsmöte",
+        "date": "2026-02-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-10",
+        "title": "Uppdaterat samrådsunderlag och utkast på minnesanteckningar från samrådsmöte",
+        "date": "2026-04-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-11",
+        "title": "Meddelande om mottagen handling och besked om datum för återkoppling",
+        "date": "2026-04-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-12",
+        "title": "Svar på minnesanteckningar och fråga om samrådsunderlaget",
+        "date": "2026-04-20",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-13",
+        "title": "Meddelande om tidplan",
+        "date": "2026-04-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-14",
+        "title": "Samrådsyttrande",
+        "date": "2026-05-25",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-15",
+        "title": "Begäran om beslut om betydande miljöpåverkan  - anläggande av gång- och cykelbro över Jumkilsån",
+        "date": "2026-06-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-16",
+        "title": "Bilagor till samrådsredogörelsen",
+        "date": "2026-06-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-17",
+        "title": "Bekräftelse på mottagen begäran",
+        "date": "2026-06-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "5620-2024-18",
+        "title": "Beslut om betydande miljöpåverkan",
+        "date": "2026-07-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6174-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet",
+    "status": "Handläggning",
+    "registered_date": "2026-08-24",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588129",
+    "handling_count": 1,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6174-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet",
+        "date": "2026-08-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6195-2025",
+    "title": "Tillsyn av vattenverksamhet",
+    "status": "Avslutat",
+    "registered_date": "2025-07-31",
+    "decision_date": "2026-11-09",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5225607",
+    "handling_count": 8,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6195-2025-1",
+        "title": "Inkommen skrivelse",
+        "date": "2025-07-31",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6195-2025-2",
+        "title": "Meddelande om tillsynsbesök",
+        "date": "2025-08-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6195-2025-3",
+        "title": "svar om utkast tjänsteanteckning",
+        "date": "2025-08-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6195-2025-4",
+        "title": "meddelande om reviderat utkast tjänsteanteckning",
+        "date": "2025-08-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6195-2025-5",
+        "title": "Svar på reviderat utkast tjänsteanteckning",
+        "date": "2025-08-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6195-2025-7",
+        "title": "Tjänsteanteckning",
+        "date": "2025-08-25",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6195-2025-8",
+        "title": "Beslut gällande tillsyn av brygga",
+        "date": "2026-11-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6195-2025-9",
+        "title": "Beslut skickat med e-post",
+        "date": "2026-11-09",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6496-2025",
+    "title": "Förfrågan om samverkan enligt 43 § vattenverksamhetsförordningen.",
+    "status": "Handläggning",
+    "registered_date": "2025-08-29",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5237222",
+    "handling_count": 7,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6496-2025-1",
+        "title": "Förfrågan om samverkan enligt 43 § vattenverksamhetsförordningen.",
+        "date": "2025-08-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6496-2025-2",
+        "title": "Meddelande om att Havs- och Vattenmyndigheten avser att delta i samverkan.",
+        "date": "2025-09-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6496-2025-3",
+        "title": "Tjänsteanteckning efter möte",
+        "date": "2025-09-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6496-2025-4",
+        "title": "Meddelande från Naturvårdsverket",
+        "date": "2025-09-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6496-2025-5",
+        "title": "Havs-och Vattenmyndighetens samrådsyttrande, för kännedom",
+        "date": "2025-09-30",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6496-2025-6",
+        "title": "Meddelande till Naturvårdsverket",
+        "date": "2025-10-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6496-2025-7",
+        "title": "Meddelande från Naturvårdsverket",
+        "date": "2025-10-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6514-2026",
+    "title": "Begäran om yttrande rörande vattenverksamhet avseende tillfällig avledning av Fyrisån för belastningstest vid Klastorpsbron, vid Ärna, Uppsala kommun, från Fortifik. Svar senast 2026-09-24",
+    "status": "Avslutat",
+    "registered_date": "2026-09-04",
+    "decision_date": "2026-09-10",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5601545",
+    "handling_count": 3,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6514-2026-1",
+        "title": "Begäran om yttrande rörande vattenverksamhet avseende tillfällig avledning av Fyrisån för belastningstest vid Klastorpsbron, vid Ärna, Uppsala kommun, från Fortifik. Svar senast 2026-09-24",
+        "date": "2026-09-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6514-2026-2",
+        "title": "Yttrande över remiss",
+        "date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6514-2026-3",
+        "title": "Beslut försiktighetsmått omledning Fyrisån",
+        "date": "2026-10-08",
+        "sender_recipient": "Försvarsinspektören för Hälsa och Miljö",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6658-2024",
+    "title": "Begäran om yttrande över ansökan rörande fortsatt och utökat tillstånd till bergtäkt och vattenverksamhet, Heby kommun mål nr M 5759-24. Svar senast 2024-10-13.",
+    "status": "Handläggning",
+    "registered_date": "2024-09-09",
+    "decision_date": "",
+    "municipality": "Heby",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4878051",
+    "handling_count": 17,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6658-2024-1",
+        "title": "Begäran om yttrande över ansökan rörande fortsatt och utökat tillstånd till bergtäkt och vattenverksamhet, Heby kommun. Svar senast 2024-10-13.",
+        "date": "2024-09-09",
+        "sender_recipient": "Nacka tingsrätt Mark- och Miljödomstolen",
+        "classes": [
+          "permit",
+          "opinion"
+        ],
+        "matched_rules": [
+          "permit",
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-2",
+        "title": "Underrättelse om beviljat anstånd till 2024-10-15, mål nr M 5759-24",
+        "date": "2024-10-10",
+        "sender_recipient": "Mark- och miljödomstolen, Nacka tingsrättInlämningstjänst",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-3",
+        "title": "Yttrande angående ansökan bergtäkt",
+        "date": "2024-10-15",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-4",
+        "title": "Underrättelse om meddelande för kännedom",
+        "date": "2024-10-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-5",
+        "title": "Begäran om yttrande över Mål nr M 5759-24, svar senast 2025-09-01",
+        "date": "2025-06-27",
+        "sender_recipient": "NACKA TINGSRÄTT\nMark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-6",
+        "title": "Påminnelse om Begäran om yttrande över Mål nr M 5759-24, svar snarast",
+        "date": "2025-09-02",
+        "sender_recipient": "NACKA TINGSRÄTT\nMark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-7",
+        "title": "Yttrande angående Buckarby bergtäkt M 5759-24",
+        "date": "2025-09-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-8",
+        "title": "Underrättelse med möjlighet till yttrande över M 5759-24, svar senast 2025-11-03",
+        "date": "2025-10-20",
+        "sender_recipient": "Nacka tingsrätt - Mark- och miljödomstolen",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-9",
+        "title": "Underrättelse om beviljat anstånd till 2025-11-11, Mål nr M 5759-24",
+        "date": "2025-10-27",
+        "sender_recipient": "NACKA TINGSRÄTT\nMark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-10",
+        "title": "Länsstyrelsens yttrande",
+        "date": "2025-11-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-11",
+        "title": "Kungörelse 2025-12-01, om huvudförhandling i Mål nr M 5759-24",
+        "date": "2025-12-01",
+        "sender_recipient": "NACKA TINGSRÄTT\nMark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-12",
+        "title": "Underrättelse om förhandlingsordning, Målnummer M 5759-24",
+        "date": "2025-12-10",
+        "sender_recipient": "NACKA TINGSRÄTT\nMark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-13",
+        "title": "Komplettering av handlingar",
+        "date": "2025-12-11",
+        "sender_recipient": "Nacka tingsrätt Mark- och Miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-14",
+        "title": "Komplettering av handlingar Målnummer M 5759-24",
+        "date": "2025-12-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-15",
+        "title": "Länsstyrelsens yttrande till MMD med yrkanden under huvudförhandling",
+        "date": "2026-01-26",
+        "sender_recipient": "Länsstyrelsen i Uppsala län",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-16",
+        "title": "Dom 2026-03-06, Målnummer M 5759-24",
+        "date": "2026-03-06",
+        "sender_recipient": "NACKA TINGSRÄTT\nMark- och miljödomstolen",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6658-2024-17",
+        "title": "M5759-24 dnr 6658-24 Laga kraft",
+        "date": "2026-06-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6760-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, provborrning, Enköpings kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-09-11",
+    "decision_date": "2026-09-22",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5610897",
+    "handling_count": 4,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6760-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, provborrning, Enköpings kommun",
+        "date": "2026-09-11",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6760-2026-2",
+        "title": "Tjänsteanteckning vid samtal med klagande",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "administrative"
+        ],
+        "matched_rules": [
+          "administrative"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6760-2026-3",
+        "title": "Beslut att avsluta utan åtgärd",
+        "date": "2026-09-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6760-2026-4",
+        "title": "Exp av beslut via epost",
+        "date": "2026-09-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "6936-2026",
+    "title": "Begäran om anstånd för inlämnande av ansökan om tillstånd för vattenverksamhet",
+    "status": "Avslutat",
+    "registered_date": "2026-09-17",
+    "decision_date": "2026-10-01",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5615910",
+    "handling_count": 4,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "6936-2026-1",
+        "title": "Begäran om anstånd för inlämnande av ansökan om tillstånd för vattenverksamhet",
+        "date": "2026-09-17",
+        "sender_recipient": "Vångelsta Drift AB",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6936-2026-2",
+        "title": "Beslut om anstånd",
+        "date": "2026-10-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6936-2026-3",
+        "title": "Exp av beslut",
+        "date": "2026-10-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "6936-2026-4",
+        "title": "Kvittens på mottaget beslut",
+        "date": "2026-10-01",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7088-2025",
+    "title": "Tillsyn av vattenverksamhet, Tierps kommun",
+    "status": "Handläggning",
+    "registered_date": "2025-09-22",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5263736",
+    "handling_count": 2,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7088-2025-1",
+        "title": "Inkommen skrivelse, Tierps kommun",
+        "date": "2025-09-22",
+        "sender_recipient": "Fortum",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7088-2025-2",
+        "title": "Rapport saneringsarbeten efter oljeläckage",
+        "date": "2025-11-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7161-2026",
+    "title": "Säkerhet för vattenverksamhet, täktverksamhet och inert deponi, Enköpings kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-09-24",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5624547",
+    "handling_count": 1,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7161-2026-1",
+        "title": "Säkerhet för vattenverksamhet, täktverksamhet och inert deponi, Enköpings kommun",
+        "date": "2026-09-24",
+        "sender_recipient": "NCC Industry AB",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7262-2025",
+    "title": "Kungörelse av ansökan om tillstånd till vattenverksamhet, täktverksamhet och inert deponi, Enköpings kommun. Svar senast 2025-11-04.",
+    "status": "",
+    "registered_date": "",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5269021",
+    "handling_count": 0,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": []
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7525-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, Uppsala kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-09-28",
+    "decision_date": "",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5635027",
+    "handling_count": 1,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7525-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, Uppsala kommun",
+        "date": "2026-09-28",
+        "sender_recipient": "Uppsala kommun",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7754-2026",
+    "title": "Begäran om yttrande gällande vattenverksamhet, flytt av vägtrumma inom Enköpings närövningsfält, Enköpings kommun, svar senast 2026-10-27",
+    "status": "Avslutat",
+    "registered_date": "2026-10-07",
+    "decision_date": "2026-10-26",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5643849",
+    "handling_count": 2,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7754-2026-1",
+        "title": "Begäran om yttrande gällande vattenverksamhet, flytt av vägtrumma inom Enköpings närövningsfält, Enköpings kommun, svar senast 2026-10-27",
+        "date": "2026-10-07",
+        "sender_recipient": "Försvarsinspektören för Hälsa och Miljö",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "7754-2026-2",
+        "title": "Yttrende över remiss",
+        "date": "2026-10-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "7798-2026",
+    "title": "Begäran om yttrande över Lämna synpunkter på regeringsuppdraget att se över indelningen i prövningsnivåer för vattenverksamheter (SOU 2024:98), svar senast 2026-11-06",
+    "status": "Handläggning",
+    "registered_date": "2026-10-08",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5644841",
+    "handling_count": 1,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "7798-2026-1",
+        "title": "Begäran om yttrande över Lämna synpunkter på regeringsuppdraget att se över indelningen i prövningsnivåer för vattenverksamheter, svar senast 2026-11-06",
+        "date": "2026-10-08",
+        "sender_recipient": "Havs- och vattenmyndigheten",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8182-2026",
+    "title": "Begäran om tillsyn av vattenverksamhet, arbete med att trumförlägga och lägga igen en bäckravin, Knivsta kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-10-21",
+    "decision_date": "",
+    "municipality": "Knivsta",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5660067",
+    "handling_count": 3,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "8182-2026-1",
+        "title": "Begäran om tillsyn av vattenverksamhet, arbete med att trumförlägga och lägga igen en bäckravin, Knivsta kommun",
+        "date": "2026-10-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8182-2026-2",
+        "title": "Komplettering med bilder",
+        "date": "2026-11-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "8182-2026-3",
+        "title": "Komplettering med film",
+        "date": "2026-11-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8344-2024",
+    "title": "Upphandling av Naturvårdsbränning på Själgrund inom Gårdskärskustens natura 2000 område.",
+    "status": "",
+    "registered_date": "",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4943848",
+    "handling_count": 0,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": []
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8352-2024",
+    "title": "Upphandling av restaureringshuggning inför naturvårdsbränning i gårdskärskustens natura 2000 område",
+    "status": "Handläggning",
+    "registered_date": "2024-11-12",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4944058",
+    "handling_count": 1,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "8352-2024-1",
+        "title": "Upphandling av restaurering av skog inför naturvårdsbränning i gårdskärskustens natura 2000 område",
+        "date": "2024-11-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "procurement"
+        ],
+        "matched_rules": [
+          "procurement"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "8986-2025",
+    "title": "Personal till naturvårdsbränning och efterbevakning",
+    "status": "Handläggning",
+    "registered_date": "2025-11-27",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5325868",
+    "handling_count": 1,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "8986-2025-1",
+        "title": "Beslut om upphandling Naturvårdsbränningpersonal",
+        "date": "2025-11-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "procurement"
+        ],
+        "matched_rules": [
+          "procurement"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "9263-2023",
+    "title": "Upphandling av naturvårdsbränning i gårdskärskustens natura 2000 område",
+    "status": "Avslutat",
+    "registered_date": "2023-12-13",
+    "decision_date": "2026-08-21",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4612923",
+    "handling_count": 2,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "9263-2023-1",
+        "title": "Upphandling av naturvårdsbränning i gårdskärskustens natura 2000 område",
+        "date": "2023-12-13",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "procurement"
+        ],
+        "matched_rules": [
+          "procurement"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9263-2023-2",
+        "title": "beslut-om-upphandling bränning",
+        "date": "2023-12-14",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "procurement"
+        ],
+        "matched_rules": [
+          "procurement"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "9267-2024",
+    "title": "Förslag till kontrollprogram för Cytivas vattenverksamhet i enlighet med mark- och miljödomstolen dom i mål nr M 6525-23, datum 2024-08-22, villkor 3.",
+    "status": "Handläggning",
+    "registered_date": "2024-12-10",
+    "decision_date": "",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4977639",
+    "handling_count": 8,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "9267-2024-1",
+        "title": "Förslag till kontrollprogram för Cytivas vattenverksamhet i enlighet med mark- och miljödomstolen dom i mål nr M 6525-23, datum 2024-08-22, villkor 3.",
+        "date": "2024-12-10",
+        "sender_recipient": "Cytiva",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9267-2024-2",
+        "title": "Meddelande om mottaget kontrollprogram",
+        "date": "2024-12-17",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9267-2024-3",
+        "title": "Kommentarer på inlämnat kontorllprogramm",
+        "date": "2025-01-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9267-2024-4",
+        "title": "Meddelande med kommentarer på kontrollprogrammet",
+        "date": "2025-01-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9267-2024-5",
+        "title": "Komplettering",
+        "date": "2025-03-31",
+        "sender_recipient": "Cytiva",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9267-2024-6",
+        "title": "Meddelande om mottaget och granskat kontrollprogram",
+        "date": "2025-04-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9267-2024-7",
+        "title": "Förfrågan om status i projektet",
+        "date": "2026-06-22",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9267-2024-8",
+        "title": "Svar angående tidplan",
+        "date": "2026-06-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "9454-2024",
+    "title": "Samrådsunderlag inför ansökan om tillstånd till vattenverksamhet",
+    "status": "Handläggning",
+    "registered_date": "2024-12-19",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4984340",
+    "handling_count": 14,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "9454-2024-1",
+        "title": "Samrådsunderlag inför ansökan om tillstånd till vattenverksamhet",
+        "date": "2024-12-19",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-2",
+        "title": "Sekretessmarkerad",
+        "date": "2025-01-15",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-3",
+        "title": "Yttrande över avgränsningssamråd",
+        "date": "2025-01-31",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-4",
+        "title": "Minnesanteckningar från samrådsmötet",
+        "date": "2025-01-21",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-5",
+        "title": "Synpunkter på minnesanteckningarna och yttrande",
+        "date": "2025-01-31",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-6",
+        "title": "Reviderat samrådsunderlag",
+        "date": "2025-05-28",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-7",
+        "title": "Meddelande med förslag på datum för samrådsmöte",
+        "date": "2025-06-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-8",
+        "title": "Minnesanteckningar från samrådsmötet den 28 augusti",
+        "date": "2025-09-02",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-9",
+        "title": "Yttrande gällande avgränsningssamråd",
+        "date": "2025-09-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-10",
+        "title": "Förfrågan om kompletterande samråd",
+        "date": "2026-02-23",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-11",
+        "title": "Svar på förfrågan",
+        "date": "2026-02-26",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-12",
+        "title": "Kompletterande samråd inför ansökan om tillstånd för vattenverksamhet",
+        "date": "2026-03-24",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-13",
+        "title": "Svar på förfrågan om handläggningstid",
+        "date": "2026-03-31",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "9454-2024-14",
+        "title": "Yttrande över kompletterande samråd",
+        "date": "2026-04-29",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Uppsala län",
+    "diary_number": "971-2026",
+    "title": "Samråd inför tillståndsansökan för Återvinning, bergtäkt och deponi och vattenverksamhet vid Nya Vedyxatippen i Uppsala kommun",
+    "status": "Avslutat",
+    "registered_date": "2026-02-08",
+    "decision_date": "2026-06-18",
+    "municipality": "Uppsala",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5392107",
+    "handling_count": 3,
+    "evidence_score": 0,
+    "priority": "low_signal",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "971-2026-1",
+        "title": "Samråd inför tillståndsansökan för Återvinning, bergtäkt och deponi och vattenverksamhet vid Nya Vedyxatippen i Uppsala kommun",
+        "date": "2026-02-08",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "permit"
+        ],
+        "matched_rules": [
+          "permit"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "971-2026-2",
+        "title": "Anteckningar från myndighetssamrådet",
+        "date": "2026-05-11",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "971-2026-3",
+        "title": "Sekretessmarkerad",
+        "date": "2026-06-18",
+        "sender_recipient": "Sekretessmarkerad",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
         "classification_version": "1.0.0"
       }
     ]
