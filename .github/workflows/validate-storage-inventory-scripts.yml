@@ -21,6 +21,27 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Parse PowerShell scripts with Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          $files = @(
+            "scripts/inventory-local-storage.ps1",
+            "scripts/install-local-storage-inventory-task.ps1"
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file),
+              [ref]$tokens,
+              [ref]$errors
+            ) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error $_.Message }
+              throw "Windows PowerShell 5.1 parse failed: $file"
+            }
+            Write-Host "OK (Windows PowerShell 5.1): $file"
+          }
       - name: Parse PowerShell scripts
         shell: pwsh
         run: |
