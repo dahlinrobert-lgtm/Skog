@@ -565,3 +565,9 @@ Skog har etablerat ett brett underlag av myndighets- och geodatakällor och utve
 Den viktigaste återstående förflyttningen är från separata prober och pilotflöden till en komplett, kvalitetssäkrad och rättighetsbedömd historisk dataplattform. Först därefter ska verkliga kundaviseringar aktiveras.
 
 **Långsiktig målbild:** Skogskoll ska kombinera historiska observationer, myndighetsdata och geografisk matchning till en tillförlitlig, fastighetsspecifik bevakningstjänst för skogsägare.
+
+
+### NVR – rättighetsbesked från Polismyndigheten (2026-11-15)
+Polismyndigheten har bekräftat att NVR-materialet är offentlig information, att CSV-uttaget omfattar de djurposter myndigheten har tillgång till från 2015 och framåt och att återkommande hämtning/arkivering för egen geografisk analys och statistik är tillåten med källhänvisningen **Nationella viltolycksrådet**. Beskedet stödjer inte uttryckligen vidare distribution av rådata eller försäljning av en fristående rådatatjänst. Se [evidensanteckningen](source-rights-reviews/2026-11-15-nvr-public-information-attribution.md).
+
+I bevakningsprototypen ska NVR visas som individuella händelser, inte som Trafikverkets aggregerade vägsegmentfrekvenser. Synlig källtext: **Källa: Nationella viltolycksrådet (NVR)**. En kontrollerad, skrivskyddad publiceringsendpoint med manifest och fullständighetsstatus krävs innan GitHub Pages kan läsa arkivet från OneDrive.
