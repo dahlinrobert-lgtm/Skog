@@ -45,7 +45,15 @@ The matcher extracts literal geographic clues from the Police statement into sep
 - `road_near_place`: wording such as "E4, Norra Rutvik".
 - `road_segment`: wording such as "riksväg 97 mellan Södra Sunderbyn och Notviken".
 - `road_only` or `unparsed`: no structured place/segment could be extracted.
-The output also carries through NVR WGS84 coordinates and coordinate-quality fields when present. These fields are descriptive only: they do not alter candidate inclusion, score, status, or `geographic_match_used`. A later version must compare cross-level references against the named road geometry and its local direction, not simply measure distance to the settlement centroid. Road-segment references should be compared with the road section between the two named anchors. Keep source text unchanged for review.
+The output carries through NVR WGS84 coordinates and coordinate-quality fields when present. The separate `scripts/enrich_police_nvr_geography.py` step adds review-only NVDB evidence:
+- nearest road and distance to the explicitly stated road number;
+- named crossing/traffic-place references, kept separate from road-number evidence;
+- for a `road_segment` with both `police_segment_from` and `police_segment_to`, a road-section geometry built from the connected stated-road line component that can be snapped to both named NVDB crossing anchors;
+- distance from the NVR point to that section, anchor snap distances, selected anchor element IDs, candidate count and route status.
+
+The road-section calculation selects its line component using anchor-fit distances only; it does not use the NVR candidate point to choose the route. Default anchor snap radius is 500 m and the review distance threshold is 100 m. Multiple anchor-pair candidates are flagged for manual review. If both anchors cannot be found on a connected stated-road component, no segment distance is emitted. These thresholds are diagnostic, not validated accuracy limits.
+
+All geographic fields remain descriptive/review-only: they do not alter candidate inclusion, score, status, or `geographic_match_used`, and do not confirm or reject an event pair. The road geometry may contain parallel carriageways, fragmented features or imperfect anchor names; inspect source geometry and candidate outputs manually. Keep source text unchanged for review.
 
 
 ## Separate delayed-event candidate search (review-only)
