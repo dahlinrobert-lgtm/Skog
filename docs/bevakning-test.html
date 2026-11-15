@@ -180,6 +180,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 .quick-switch{display:inline-flex;gap:4px;padding:4px;border:1px solid #e0e8de;border-radius:12px;background:#f5f8f3;margin:0 0 14px}
 .quick-switch button{border:0;border-radius:8px;padding:8px 14px;background:transparent;color:#52665a;font-size:.84rem;font-weight:760;cursor:pointer}
 .quick-switch button[aria-pressed="true"]{background:#24543b;color:#fff;box-shadow:0 2px 7px rgba(23,59,43,.14)}
+.animal-switch{margin-left:8px;background:#f7f8f4}
 .quick-switch button:focus-visible,.activity-action:focus-visible{outline:3px solid #d7ad67;outline-offset:2px}
 .period-comparison{margin:16px 2px 0;padding:11px 13px;border-left:3px solid #8da984;border-radius:0 9px 9px 0;background:#f7faf5;color:#5d6e61;font-size:.82rem}
 .map-card{margin-top:18px;padding:25px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
@@ -424,14 +425,20 @@ html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#37
       <h2 class="filter-title" id="filter-title">Hitta en aktivitet</h2>
       <span class="filter-hint">Välj period, aktivitetstyp eller sök bland kommunens hämtade objekt</span>
     </div>
-    <div class="quick-switch" role="group" aria-label="Växla aktivitetstyp">
+    <div class="quick-switch" id="forestFilter" role="group" aria-label="Skogliga aktiviteter">
       <button type="button" data-kind="all" aria-pressed="true">Alla</button>
       <button type="button" data-kind="planned" aria-pressed="false">Planerade</button>
       <button type="button" data-kind="done" aria-pressed="false">Utförda</button>
+      <button type="button" data-kind="samrad" aria-pressed="false">Samråd</button>
     </div>
+    <div class="quick-switch animal-switch" id="animalFilter" role="group" aria-label="Vilt och jakt">
+      <button type="button" data-animal="all" aria-pressed="true">Alla</button>
+      <button type="button" data-animal="collisions" aria-pressed="false">Viltolyckor</button>
+      <button type="button" data-animal="hunting" aria-pressed="false">Jakt</button>
+    </div>
+    <input type="hidden" id="animalMode" value="forest">
     <div class="toolbar">
       <div class="control"><select id="monthFilter" aria-label="Jämförelseperiod"><option value="all">Hela året hittills</option><option value="01">Januari</option><option value="02">Februari</option><option value="03">Mars</option><option value="04">April</option><option value="05">Maj</option><option value="06">Juni</option><option value="07">Juli</option><option value="08">Augusti</option><option value="09">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">December</option></select></div>
-      <div class="control"><select id="animalFilter" aria-label="Filtrera aktivitet efter vilt eller djur"><option value="forest">Skogliga aktiviteter</option><option value="elk">Älg</option></select></div>
       <div class="control search-control">
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         <input id="search" type="search" placeholder="Sök ärende, typ eller fastighet…" aria-label="Sök aktiviteter">
@@ -482,12 +489,16 @@ const ROOT="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataporta
 const CURRENT_YEAR=new Date().getFullYear();
 const sources=[
  {kind:"planned",label:"Planerad avverkning",url:ROOT+"GeodataportalVisaAvverkningsanmalan/MapServer/0/query",dateField:"Inkomdatum",areaField:"AnmaldHa",fields:"OBJECTID,Inkomdatum,Arendear,Kommun,Avverktyp,AnmaldHa,ArendeStatus,Beteckn,Lan,Kommunnr"},
- {kind:"done",label:"Satellitindikation",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"}
+ {kind:"done",label:"Satellitindikation",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"},
+ {kind:"samrad",label:"Samråd – punkt",url:ROOT+"GeodataportalVisaSamrad/MapServer/0/query",dateField:"Inkomdatum",fields:"OBJECTID,Inkomdatum,ArendeAr,Beteckn,Status,Samradsatgard,Kommun,Lan,Kommunnr"},
+ {kind:"samrad",label:"Samråd – linje",url:ROOT+"GeodataportalVisaSamrad/MapServer/1/query",dateField:"Inkomdatum",fields:"OBJECTID,Inkomdatum,ArendeAr,Beteckn,Status,Samradsatgard,Kommun,Lan,Kommunnr"},
+ {kind:"samrad",label:"Samråd – område",url:ROOT+"GeodataportalVisaSamrad/MapServer/2/query",dateField:"Inkomdatum",fields:"OBJECTID,Inkomdatum,ArendeAr,Beteckn,Status,Samradsatgard,Kommun,Lan,Kommunnr"}
 ];
 let all=[];
 let elkAreas=[];
 let elkSnapshotDate=null;
 let elkLoadError=null;
+let animalMode="all";
 let sourceWarnings=[];
 let activityMap=null;
 let activityLayer=null;
@@ -558,13 +569,13 @@ function normalize(item){
  const date=dateValue(rawDate);
  const area=get(p,item.source.areaField,"Arealha","AnmaldHa");
  const caseNo=get(p,"Beteckn","Beteckning","OBJECTID");
- return {...item,date,area,caseNo,municipality:get(p,"Kommun")||"Nordmaling",activityType:get(p,"Avverktyp","Skogstyp")||"Avverkning",status:get(p,"ArendeStatus"),year:get(p,"Arendear")};
+ return {...item,date,area,caseNo,municipality:get(p,"Kommun")||"Nordmaling",activityType:get(p,"Avverktyp","Skogstyp","Samradsatgard")|| (item.kind==="samrad"?"Samråd":"Avverkning"),status:get(p,"ArendeStatus"),year:get(p,"Arendear")};
 }
 function itemKey(item){
  const id=get(item.properties,"OBJECTID","ObjectId","objectid");
  return item.kind+":"+(id!==null?String(id):String(item.caseNo||"utan-id")+":"+(item.date?item.date.getTime():""));
 }
-function selectedKind(){return document.querySelector(".quick-switch button[aria-pressed='true']")?.dataset.kind||"all";}
+function selectedKind(){return document.querySelector("#forestFilter button[aria-pressed='true']")?.dataset.kind||"all";}
 function filtered(){
  const kind=selectedKind(),month=document.getElementById("monthFilter").value,search=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
  return all.filter(x=>{
@@ -722,15 +733,24 @@ function selectActivity(item,zoom=true){
  if(zoom&&layer&&activityMap){const bounds=layer.getBounds();if(bounds.isValid())activityMap.fitBounds(bounds.pad(0.55),{maxZoom:14});}
 }
 function render(){
- const isElk=document.getElementById("animalFilter").value==="elk";
- const list=isElk?[]:filtered();
- document.querySelector(".quick-switch").hidden=isElk;
- document.getElementById("monthFilter").disabled=isElk;
- document.querySelector(".map-card").hidden=isElk;
- document.getElementById("storyLayout").classList.toggle("is-elk",isElk);
- document.getElementById("storyProgress").hidden=isElk;
- document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":"Senaste händelserna";
- document.querySelector(".feed-subtitle").textContent=isElk?"Välj Älg under Vilt/djur för att se senaste registrerade avskjutning och observerade förändringar per jaktområde.":"Det här är huvudvyn: nya och relevanta händelser i dina bevakade områden. Välj en händelse för detaljer och geografisk kontext.";
+ const mode=document.getElementById("animalMode").value;
+ const isElk=mode==="hunting";
+ const isNvr=mode==="collisions";
+ const list=(isElk||isNvr)?[]:filtered();
+ document.getElementById("forestFilter").hidden=isElk||isNvr;
+ document.getElementById("monthFilter").disabled=isElk||isNvr;
+ document.querySelector(".map-card").hidden=isElk||isNvr;
+ document.getElementById("storyLayout").classList.toggle("is-elk",isElk||isNvr);
+ document.getElementById("storyProgress").hidden=isElk||isNvr;
+ document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":isNvr?"Viltolyckor":"Senaste händelserna";
+ document.querySelector(".feed-subtitle").textContent=isElk?"Jaktstatistik från Länsstyrelsernas Älgdata.":isNvr?"Individuella olyckshändelser från Nationella Viltolycksrådet.":"Nya och relevanta skogliga händelser. Välj en händelse för detaljer och geografisk kontext.";
+ if(isNvr){
+  document.getElementById("feed").innerHTML='<div class="empty">NVR:s historiska arkiv finns i OneDrive, men någon publik läsendpoint för GitHub Pages är ännu inte konfigurerad. Händelser visas när en kontrollerad endpoint med manifest och fullständighetsstatus finns.</div>';
+  document.getElementById("resultCount").textContent="NVR-arkiv ej publicerat";
+  document.getElementById("mapSummary").textContent="Inväntar NVR-dataendpoint";
+  renderMap([]);
+  return;
+ }
  if(isElk){
   const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
   const rows=elkAreas.filter(area=>[area.display_name,area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query))
@@ -893,15 +913,20 @@ function setupScrollExperience(list){
 }
 
 function bindControls(){
- document.querySelector(".quick-switch").addEventListener("click",event=>{
+ document.getElementById("forestFilter").addEventListener("click",event=>{
   const button=event.target.closest("button[data-kind]");
   if(!button)return;
-  document.querySelectorAll(".quick-switch button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+  document.querySelectorAll("#forestFilter button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
   render();
  });
  document.getElementById("monthFilter").addEventListener("change",render);
  document.getElementById("search").addEventListener("input",render);
- document.getElementById("animalFilter").addEventListener("change",render);
+ document.querySelectorAll("#animalFilter button").forEach(button=>button.addEventListener("click",()=>{
+  document.querySelectorAll("#animalFilter button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+  const mode=button.dataset.animal;
+  document.getElementById("animalMode").value=mode==="hunting"?"hunting":mode==="collisions"?"collisions":"forest";
+  render();
+ }));
  window.addEventListener("skog:elkdata-loaded",event=>{elkAreas=event.detail.areas||[];elkSnapshotDate=event.detail.latest_snapshot_date||null;elkLoadError=null;render();});
  window.addEventListener("skog:elkdata-error",event=>{elkLoadError=event.detail.message||"Okänt fel";render();});
  document.getElementById("reload").addEventListener("click",()=>window.dispatchEvent(new Event("skog:elkdata-refresh")));
