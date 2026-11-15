@@ -33,6 +33,17 @@ test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händel
   assert.doesNotMatch(html, /data-select=/);
 });
 
+test("kartan använder flyg-/satellitbilder och visar platsbaserat bilddatum", () => {
+  assert.ok(html.includes("World_Imagery/MapServer/tile/"));
+  assert.ok(html.includes("World_Imagery/MapServer/0/query"));
+  assert.match(html, /SRC_DATE,SRC_DATE2,NICE_NAME,NICE_DESC,SRC_RES/);
+  assert.match(html, /id="imageryDate" aria-live="polite"/);
+  assert.match(html, /activityMap\.on\("moveend",scheduleImageryDateUpdate\)/);
+  assert.match(html, /Flyg-\/satellitbild tagen /);
+  assert.match(html, /Bilddatum saknas för kartans mitt/);
+  assert.doesNotMatch(html, /Kartan ger geografisk kontext till det valda bevakningsflödet/);
+});
+
 test("inline module script passes Node syntax validation", () => {
   const match = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   assert.ok(match, "module script should exist");
