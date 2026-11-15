@@ -7,6 +7,7 @@ import { join } from "node:path";
 import { writeFileSync, unlinkSync } from "node:fs";
 
 const html = readFileSync(new URL("../docs/bevakning-test.html", import.meta.url), "utf8");
+const productionHtml = readFileSync(new URL("../docs/bevakning.html", import.meta.url), "utf8");
 
 test("scrollprototypen är separat och behåller befintliga datakomponenter", () => {
   for (const id of ["storyLayout", "storyProgress", "storyProgressFill", "feed", "activityMap", "casePreview", "monthFilter", "forestFilter", "animalFilter"]) {
@@ -42,6 +43,21 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   assert.match(html, /Till ordinarie sida/);
 });
 
+test("produktionssidan använder den godkända prototypen utan testmarkering", () => {
+  for (const id of ["storyLayout", "forestFilterGroup", "animalFilterGroup", "basemapImagery", "basemapStandard", "imageryDate", "activityMap", "casePreview"]) {
+    assert.match(productionHtml, new RegExp('id="' + id + '"'));
+  }
+  assert.match(productionHtml, /<title>Skogsbevakning – Nordmaling<\/title>/);
+  assert.doesNotMatch(productionHtml, /class="prototype-banner"|DESIGNTEST|Scrollprototyp ·/);
+  assert.match(productionHtml, /function setBasemap\(mode\)/);
+  assert.match(productionHtml, /standardColors=\{planned:"#d88a32",done:"#3e8b59",samrad:"#3e8b59"\}/);
+  assert.match(productionHtml, /imageryColors=\{planned:"#ff6238",done:"#00d5ef",samrad:"#f1e64b"\}/);
+  assert.match(productionHtml, /data-basemap="imagery"/);
+  assert.match(productionHtml, /data-basemap="standard"/);
+  assert.match(productionHtml, /if\(baseMapMode!=="imagery"\|\|!activityMap\|\|!label\)return/);
+  assert.match(productionHtml, /imageryDateRequest\+\+;label\.hidden=true/);
+});
+
 test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händelseruta", () => {
   assert.match(html, /IntersectionObserver/);
   assert.match(html, /prefers-reduced-motion:\s*reduce/);
@@ -64,22 +80,24 @@ test("kartan använder flyg-/satellitbilder och visar platsbaserat bilddatum", (
   assert.match(html, /SRC_DATE,SRC_DATE2,NICE_NAME,NICE_DESC,SRC_RES/);
   assert.match(html, /id="imageryDate" aria-live="polite"/);
   assert.match(html, /#imageryDate\{min-height:2\.8em;line-height:1\.4;\}/);
-  assert.match(html, /activityMap\.on\("moveend",scheduleImageryDateUpdate\)/);
+  assert.match(html, /activityMap\.on\("moveend",\(\)=>\{if\(baseMapMode==="imagery"\)scheduleImageryDateUpdate\(\);\}\)/);
   assert.match(html, /Flyg-\/satellitbild tagen /);
   assert.doesNotMatch(html, /\(kartans mittpunkt\)/);
   assert.match(html, /Bilddatum saknas för kartans mitt/);
   assert.doesNotMatch(html, /Kartan ger geografisk kontext till det valda bevakningsflödet/);
 });
 
-test("inline module script passes Node syntax validation", () => {
-  const match = html.match(/<script type="module">([\s\S]*?)<\/script>/);
-  assert.ok(match, "module script should exist");
-  const temp = join(tmpdir(), "skog-bevakning-scroll-check-" + process.pid + ".mjs");
-  try {
-    writeFileSync(temp, match[1].replace(/^import .*bevakning-core\.mjs";\s*/m, ""));
-    const result = spawnSync(process.execPath, ["--check", temp], { encoding: "utf8" });
-    assert.equal(result.status, 0, result.stderr || result.stdout);
-  } finally {
-    try { unlinkSync(temp); } catch {}
+test("prototype and production inline module scripts pass Node syntax validation", () => {
+  for (const [label, source] of [["prototype", html], ["production", productionHtml]]) {
+    const match = source.match(/<script type="module">([\s\S]*?)<\/script>/);
+    assert.ok(match, label + " module script should exist");
+    const temp = join(tmpdir(), "skog-bevakning-" + label + "-check-" + process.pid + ".mjs");
+    try {
+      writeFileSync(temp, match[1].replace(/^import .*bevakning-core\.mjs";\s*/m, ""));
+      const result = spawnSync(process.execPath, ["--check", temp], { encoding: "utf8" });
+      assert.equal(result.status, 0, result.stderr || result.stdout);
+    } finally {
+      try { unlinkSync(temp); } catch {}
+    }
   }
 });

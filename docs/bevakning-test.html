@@ -109,6 +109,21 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 .feed-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:19px}
 .feed-subtitle{margin:7px 0 0;color:var(--muted);font-size:.88rem}
 .map-card #imageryDate{min-height:2.8em;line-height:1.4;}
+.map-head-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.map-base-switch{display:inline-flex;gap:3px;padding:3px;border:1px solid #dce5da;border-radius:10px;background:#f4f7f2}
+.map-base-switch button{border:0;border-radius:7px;padding:7px 11px;background:transparent;color:#53665a;font-size:.76rem;font-weight:780;cursor:pointer}
+.map-base-switch button[aria-pressed="true"]{background:#315f42;color:#fff}
+.map-legend .planned-dot{background:#d88a32}
+.map-legend .done-dot{background:#3e8b59}
+.map-legend .samrad-dot{background:#7a65bd}
+.map-card.is-imagery .map-legend .planned-dot{background:#ff6238}
+.map-card.is-imagery .map-legend .done-dot{background:#00aeca}
+.map-card.is-imagery .map-legend .samrad-dot{background:#c7b900}
+.map-card.is-imagery #activityMap .leaflet-interactive{filter:drop-shadow(0 0 1px rgba(0,0,0,.85))}
+html[data-theme="dark"] .map-base-switch{background:#243329;border-color:#405746}
+html[data-theme="dark"] .map-base-switch button{color:#dce9df}
+html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:#376348;color:#fff}
+@media(max-width:620px){.map-head-actions{width:100%;justify-content:space-between}.map-feed-head{align-items:flex-start;flex-direction:column}}
 .result-count{display:inline-flex;align-items:center;justify-content:center;min-width:76px;padding:8px 12px;border:1px solid #e3eae1;border-radius:999px;background:#f7faf6;color:#536b56;font-size:.78rem;font-weight:750}
 .feed{display:flex;flex-direction:column;gap:10px}
 .activity{display:grid;grid-template-columns:112px minmax(0,1fr);gap:18px;padding:17px 18px;border:1px solid #e7ece6;border-radius:15px;background:#fff;transition:border-color .18s,box-shadow .18s,transform .18s}
@@ -491,9 +506,15 @@ html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
   </section>
 
   <section class="map-card" aria-labelledby="map-title">
-    <div class="feed-head">
+    <div class="feed-head map-feed-head">
       <div><p class="eyebrow">Stödjande vy</p><h2 id="map-title">Se händelserna på kartan</h2><p class="feed-subtitle" id="imageryDate" aria-live="polite">Hämtar bilddatum för kartans mitt …</p></div>
-      <span class="result-count" id="mapSummary">– objekt</span>
+      <div class="map-head-actions">
+        <div class="map-base-switch" role="group" aria-label="Välj kartbakgrund">
+          <button type="button" id="basemapImagery" data-basemap="imagery" aria-pressed="true">Flygfoto</button>
+          <button type="button" id="basemapStandard" data-basemap="standard" aria-pressed="false">Standard</button>
+        </div>
+        <span class="result-count" id="mapSummary">– objekt</span>
+      </div>
     </div>
     <div class="map-layout">
       <div id="activityMap" role="region" aria-label="Karta som visar geografisk kontext för bevakningsflödets händelser"></div>
@@ -501,7 +522,7 @@ html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
         <div class="preview-empty">Välj en aktivitet i flödet för att se dess geografiska läge och ärendeuppgifter här.</div>
       </aside>
     </div>
-    <div class="map-legend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Satellitindikation</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
+    <div class="map-legend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Satellitindikation / utförd</span><span><i class="samrad-dot"></i> Samråd</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
   </section>
 
   
@@ -534,6 +555,8 @@ let animalMode="all";
 let sourceWarnings=[];
 let activityMap=null;
 let activityLayer=null;
+let baseLayer=null;
+let baseMapMode="imagery";
 let imageryDateTimer=null;
 let imageryDateRequest=0;
 const activityLayers=new Map();
@@ -633,8 +656,10 @@ function metricNote(current,previous,unit){
 }
 function styleFor(item){
  const selected=itemKey(item)===selectedKey;
- const color=item.kind==="planned"?"#d88a32":"#3e8b59";
- return {color:selected?"#173b2b":color,weight:selected?5:2.5,opacity:1,fillColor:color,fillOpacity:selected?0.48:0.25};
+ const standardColors={planned:"#d88a32",done:"#3e8b59",samrad:"#3e8b59"};
+ const imageryColors={planned:"#ff6238",done:"#00d5ef",samrad:"#f1e64b"};
+ const color=(baseMapMode==="imagery"?imageryColors:standardColors)[item.kind]|| (baseMapMode==="imagery"?"#00d5ef":"#3e8b59");
+ return {color:selected?(baseMapMode==="imagery"?"#ffffff":"#173b2b"):color,weight:selected?5:(baseMapMode==="imagery"?3.5:2.5),opacity:1,fillColor:color,fillOpacity:selected?0.48:(baseMapMode==="imagery"?0.34:0.25)};
 }
 function formatImageryDate(attributes){
  const rawDate=attributes?.SRC_DATE2??attributes?.SRC_DATE;
@@ -653,7 +678,7 @@ function formatImageryDate(attributes){
 }
 async function updateImageryDate(){
  const label=document.getElementById("imageryDate");
- if(!activityMap||!label)return;
+ if(baseMapMode!=="imagery"||!activityMap||!label)return;
  const requestId=++imageryDateRequest;
  const center=activityMap.getCenter();
  label.textContent="Kontrollerar bilddatum för kartans mitt …";
@@ -692,17 +717,42 @@ function scheduleImageryDateUpdate(){
   updateImageryDate();
  },350);
 }
+function setBasemap(mode){
+ if(!activityMap||!window.L)return;
+ baseMapMode=mode==="standard"?"standard":"imagery";
+ if(baseLayer)activityMap.removeLayer(baseLayer);
+ if(baseMapMode==="imagery"){
+  baseLayer=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{
+   maxZoom:19,
+   attribution:'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+  });
+ }else{
+  baseLayer=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+   maxZoom:19,
+   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  });
+ }
+ baseLayer.addTo(activityMap);
+ const imagery=baseMapMode==="imagery";
+ document.getElementById("basemapImagery").setAttribute("aria-pressed",String(imagery));
+ document.getElementById("basemapStandard").setAttribute("aria-pressed",String(!imagery));
+ document.querySelector(".map-card").classList.toggle("is-imagery",imagery);
+ const label=document.getElementById("imageryDate");
+ if(label){
+  if(imagery){label.hidden=false;label.textContent="Kontrollerar bilddatum för kartans mitt …";scheduleImageryDateUpdate();}
+  else{if(imageryDateTimer)window.clearTimeout(imageryDateTimer);imageryDateTimer=null;imageryDateRequest++;label.hidden=true;label.textContent="";}
+ }
+ for(const [key,layer] of activityLayers){const item=all.find(candidate=>itemKey(candidate)===key);if(item)layer.setStyle(styleFor(item));}
+}
 function initMap(){
  const target=document.getElementById("activityMap");
  if(!window.L){target.innerHTML="Kartbiblioteket kunde inte laddas. Ärenden och kartlänkar finns fortfarande i listan.";return;}
  activityMap=L.map(target,{preferCanvas:true,zoomSnap:0.25}).setView([63.55,19.5],8);
- L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{
-  maxZoom:19,
-  attribution:'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
- }).addTo(activityMap);
- activityMap.on("moveend",scheduleImageryDateUpdate);
  activityLayer=L.featureGroup().addTo(activityMap);
- scheduleImageryDateUpdate();
+ setBasemap("imagery");
+ activityMap.on("moveend",()=>{if(baseMapMode==="imagery")scheduleImageryDateUpdate();});
+ document.getElementById("basemapImagery").addEventListener("click",()=>setBasemap("imagery"));
+ document.getElementById("basemapStandard").addEventListener("click",()=>setBasemap("standard"));
 }
 function renderMap(list){
  const summary=document.getElementById("mapSummary");
