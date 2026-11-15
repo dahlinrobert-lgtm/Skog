@@ -87,3 +87,4 @@ The delayed output uses three descriptive bands: 3–12 hours, 12–24 hours and
 3. Measure how many Police statements have 0, 1, or multiple NVR candidates, and vice versa.
 4. Review date/time offsets and false-positive patterns before tuning any thresholds.
 5. Add versioned geographic enrichment and a manually labelled evaluation sample before any automatic event resolution.
+6. Run the dedicated `.github/workflows/police-nvr-matching-tests.yml` regression workflow for the Luleå builder, Police extraction, temporal matching and geographic evidence.
