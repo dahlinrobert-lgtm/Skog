@@ -108,10 +108,28 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 .feed-card{margin-top:18px;padding:26px 25px 25px}
 .feed-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:19px}
 .feed-subtitle{margin:7px 0 0;color:var(--muted);font-size:.88rem}
+.map-card #imageryDate{min-height:2.8em;line-height:1.4;}
+.map-head-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.map-base-switch{display:inline-flex;gap:3px;padding:3px;border:1px solid #dce5da;border-radius:10px;background:#f4f7f2}
+.map-base-switch button{border:0;border-radius:7px;padding:7px 11px;background:transparent;color:#53665a;font-size:.76rem;font-weight:780;cursor:pointer}
+.map-base-switch button[aria-pressed="true"]{background:#315f42;color:#fff}
+.map-legend .planned-dot{background:#d88a32}
+.map-legend .done-dot{background:#3e8b59}
+.map-legend .samrad-dot{background:#7a65bd}
+.map-card.is-imagery .map-legend .planned-dot{background:#ff6238}
+.map-card.is-imagery .map-legend .done-dot{background:#00aeca}
+.map-card.is-imagery .map-legend .samrad-dot{background:#c7b900}
+.map-card.is-imagery #activityMap .leaflet-interactive{filter:drop-shadow(0 0 1px rgba(0,0,0,.85))}
+html[data-theme="dark"] .map-base-switch{background:#243329;border-color:#405746}
+html[data-theme="dark"] .map-base-switch button{color:#dce9df}
+html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:#376348;color:#fff}
+@media(max-width:620px){.map-head-actions{width:100%;justify-content:space-between}.map-feed-head{align-items:flex-start;flex-direction:column}}
 .result-count{display:inline-flex;align-items:center;justify-content:center;min-width:76px;padding:8px 12px;border:1px solid #e3eae1;border-radius:999px;background:#f7faf6;color:#536b56;font-size:.78rem;font-weight:750}
 .feed{display:flex;flex-direction:column;gap:10px}
 .activity{display:grid;grid-template-columns:112px minmax(0,1fr);gap:18px;padding:17px 18px;border:1px solid #e7ece6;border-radius:15px;background:#fff;transition:border-color .18s,box-shadow .18s,transform .18s}
 .activity:hover{border-color:#cbdac9;box-shadow:0 8px 24px rgba(35,66,43,.06);transform:translateY(-1px)}
+.activity{cursor:pointer}
+.activity:focus-visible{outline:3px solid #d7ad67;outline-offset:3px}
 .date-block{padding-top:2px}
 .date{color:#315b3e;font-size:.88rem;font-weight:780;font-variant-numeric:tabular-nums}
 .date-year{display:block;margin-top:3px;color:#9aa39b;font-size:.72rem}
@@ -174,9 +192,16 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 
 /* Skogsbevakning: periodjämförelse, snabbfilter och geografisk förhandsvisning */
-.quick-switch{display:inline-flex;gap:4px;padding:4px;border:1px solid #e0e8de;border-radius:12px;background:#f5f8f3;margin:0 0 14px}
+.filter-groups{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;margin:0 0 14px}
+.filter-group{display:flex;flex-direction:column;align-items:stretch;gap:6px;width:max-content}
+.filter-group[hidden]{display:none}
+.filter-group-heading{height:37px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 12px;border:1px solid #d8e3d6;border-radius:12px;background:#edf4e9;color:#285238;font-size:.84rem;font-weight:800;letter-spacing:.01em}
+.filter-group-heading svg{width:42px;height:26px;flex:0 0 auto;opacity:.9}
+.filter-group-heading.animal-heading{background:#f2f5ed}
+.quick-switch{display:inline-flex;gap:4px;padding:4px;border:1px solid #e0e8de;border-radius:12px;background:#f5f8f3;margin:0;width:max-content}
 .quick-switch button{border:0;border-radius:8px;padding:8px 14px;background:transparent;color:#52665a;font-size:.84rem;font-weight:760;cursor:pointer}
 .quick-switch button[aria-pressed="true"]{background:#24543b;color:#fff;box-shadow:0 2px 7px rgba(23,59,43,.14)}
+.animal-switch{margin-left:0;background:#f7f8f4}
 .quick-switch button:focus-visible,.activity-action:focus-visible{outline:3px solid #d7ad67;outline-offset:2px}
 .period-comparison{margin:16px 2px 0;padding:11px 13px;border-left:3px solid #8da984;border-radius:0 9px 9px 0;background:#f7faf5;color:#5d6e61;font-size:.82rem}
 .map-card{margin-top:18px;padding:25px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
@@ -240,7 +265,7 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 .elkdata-table td small{display:block;margin-top:3px;color:#89958c;font-size:.7rem}
 .elkdata-table tr:last-child td{border-bottom:0}
 .elkdata-number{font-variant-numeric:tabular-nums;text-align:right!important}
-.elkdata-positive{color:#287344;font-weight:800}
+.elkdata-positive{color:#287344;font-weight:800}\n.elkdata-negative{color:#a33d35;font-weight:800}
 .elkdata-empty{padding:22px!important;text-align:center!important;color:#78857b!important;white-space:normal!important}
 .elkdata-status{display:flex;align-items:center;gap:8px;margin-top:12px;color:#758177;font-size:.77rem}
 .elkdata-status:before{content:"";width:7px;height:7px;border-radius:50%;background:#8da984;flex:0 0 7px}
@@ -304,11 +329,60 @@ html[data-theme="dark"] .control :is(input,select),
 html[data-theme="dark"] .toolbar :is(input,select){
   background:#111c15!important;color:#e4ece6!important;border-color:#526557!important;
 }
+html[data-theme="dark"] .filter-group-heading{background:#243b2c!important;color:#e4ece6!important;border-color:#405746!important}
+html[data-theme="dark"] .filter-group-heading.animal-heading{background:#29372b!important}
 html[data-theme="dark"] .quick-switch button{color:#dce9df!important}
 html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#376348!important;color:#fff!important}
+html[data-theme="dark"] .elkdata-caveat{background:#29372b!important;color:#e1e9dc!important;border-left-color:#d7ad67!important}
+html[data-theme="dark"] .elkdata-negative{color:#f0a5a0!important;font-weight:800}
+html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
+</style>
+<style id="skog-scroll-prototype-style">
+/* Berättande tidslinje med synkroniserad kartkontext */
+.story-progress{position:fixed;z-index:1200;inset:0 0 auto;height:4px;background:rgba(23,59,43,.12);pointer-events:none}
+.story-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#8da984,#d7ad67);transform-origin:left center}
+.story-layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr);gap:18px;align-items:start}
+.story-layout>.feed-card,.story-layout>.map-card{margin-top:18px;min-width:0}
+.story-layout>.map-card{position:sticky;top:18px;align-self:start}
+.story-layout.is-elk{grid-template-columns:minmax(0,1fr)}
+.story-layout.is-elk>.map-card{display:none}
+.story-layout .feed{position:relative;padding-left:32px;gap:17px}
+.story-layout .feed:before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:2px;border-radius:2px;background:linear-gradient(180deg,#8da984 0%,#d7ad67 48%,#dfe7dc 100%)}
+.story-layout .activity{position:relative;transform-origin:center left}
+.story-layout .activity:before{content:"";position:absolute;left:-29px;top:25px;width:12px;height:12px;border:3px solid #fff;border-radius:50%;background:#8da984;box-shadow:0 0 0 1px #a8bda4;transition:background .25s,box-shadow .25s,transform .25s}
+.story-layout .activity[data-kind="planned"]:before{background:#d88a32}
+.story-layout .activity[data-kind="done"]:before{background:#3e8b59}
+.story-layout .activity.is-selected:before{transform:scale(1.25);box-shadow:0 0 0 5px rgba(76,126,79,.15)}
+.story-layout .activity.story-reveal{opacity:.35;transform:translateY(22px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1),border-color .2s,box-shadow .2s}
+.story-layout .activity.story-reveal.is-visible{opacity:1;transform:translateY(0)}
+.story-layout>.map-card .map-layout{grid-template-columns:1fr}
+.story-layout>.map-card #activityMap{height:clamp(260px,42vh,390px);min-height:260px}
+.story-layout>.map-card .case-preview{min-height:130px}
+.story-layout>.map-card .case-preview .preview-empty{min-height:110px}
+@media(max-width:980px){
+ .story-layout{grid-template-columns:1fr}
+ .story-layout>.map-card{position:static;grid-row:2}
+ .story-layout>.map-card .map-layout{grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr)}
+ .story-layout>.map-card #activityMap{height:350px}
+}
+@media(max-width:620px){
+ .story-layout{display:flex;flex-direction:column}
+ .story-layout>.feed-card{order:1}
+ .story-layout>.map-card{order:2;width:100%}
+ .story-layout>.map-card .map-layout{grid-template-columns:1fr}
+ .story-layout>.map-card #activityMap{height:300px;min-height:260px}
+ .story-layout .feed{padding-left:27px;gap:13px}
+ .story-layout .activity:before{left:-25px}
+}
+@media(prefers-reduced-motion:reduce){
+ .story-layout .activity.story-reveal,.story-layout .activity.story-reveal.is-visible{opacity:1;transform:none;transition:none}
+ .story-layout .activity:before{transition:none}
+}
 </style>
 </head>
 <body>
+<div class="story-progress" id="storyProgress" role="progressbar" aria-label="Läsförlopp i bevakningsflödet" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="storyProgressFill"></span></div>
+
 <header class="site-header">
   <div class="nav-wrap">
     <nav class="skog-global-nav" aria-label="Huvudmeny"><a class="skog-nav-brand" href="./index.html">🌲 Skog</a><div class="skog-nav-links">
@@ -323,8 +397,8 @@ html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#37
   </div>
   <div class="hero">
     <div>
-      <div class="kicker">Skoglig lägesbild · Nordmaling</div>
-      <h1>Se vad som händer <em>i skogen.</em></h1>
+      <div class="kicker">Skoglig lägesbild</div>
+      <h1>Följ förändringarna <em>i skogen.</em></h1>
       <p class="hero-copy">Följ avverkningsanmälningar, samråd och relaterade skogliga händelser. Skog samlar källor över tid, kopplar observationer till händelsekedjor och lyfter fram det som behöver följas upp. Kartan ger geografiskt sammanhang.</p>
       <div class="hero-links">
         <a class="hero-link primary" href="#aktiviteter">Utforska aktiviteter <span aria-hidden="true">↓</span></a>
@@ -373,14 +447,41 @@ html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#37
       <h2 class="filter-title" id="filter-title">Hitta en aktivitet</h2>
       <span class="filter-hint">Välj period, aktivitetstyp eller sök bland kommunens hämtade objekt</span>
     </div>
-    <div class="quick-switch" role="group" aria-label="Växla aktivitetstyp">
-      <button type="button" data-kind="all" aria-pressed="true">Alla</button>
-      <button type="button" data-kind="planned" aria-pressed="false">Planerade</button>
-      <button type="button" data-kind="done" aria-pressed="false">Utförda</button>
+    <div class="filter-groups">
+      <section class="filter-group" id="forestFilterGroup" aria-labelledby="forestFilterHeading">
+        <div class="filter-group-heading" id="forestFilterHeading">
+          <span>Skog</span>
+          <svg viewBox="0 0 64 32" aria-hidden="true" focusable="false">
+            <path d="M14 3 5 17h6l-4 7h14l-4-7h6L14 3Zm20 4-8 12h5l-4 6h14l-4-6h5L34 7Zm17-4-9 14h6l-4 7h14l-4-7h6L51 3Z" fill="currentColor"/>
+            <path d="M14 24v6m20-5v5m17-5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="quick-switch" id="forestFilter" role="group" aria-label="Skogliga aktiviteter">
+          <button type="button" data-kind="all" aria-pressed="true">Alla</button>
+          <button type="button" data-kind="planned" aria-pressed="false">Planerade</button>
+          <button type="button" data-kind="done" aria-pressed="false">Utförda</button>
+          <button type="button" data-kind="samrad" aria-pressed="false">Samråd</button>
+        </div>
+      </section>
+      <section class="filter-group" id="animalFilterGroup" aria-labelledby="animalFilterHeading">
+        <div class="filter-group-heading animal-heading" id="animalFilterHeading">
+          <span>Djur</span>
+          <svg viewBox="0 0 64 32" aria-hidden="true" focusable="false">
+            <path d="M12 23c4-7 9-10 15-10 4 0 7 2 9 5l8-2 6 4-2 4-8-1-5 4h-7l-3-4h-7l-3 3h-5l2-3Z" fill="currentColor"/>
+            <path d="m24 14-3-6m3 6 4-7m13 9 3-6m-3 6 7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="48" cy="19" r="1.4" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="quick-switch animal-switch" id="animalFilter" role="group" aria-label="Vilt och jakt">
+          <button type="button" data-animal="all" aria-pressed="true">Alla</button>
+          <button type="button" data-animal="collisions" aria-pressed="false">Viltolyckor</button>
+          <button type="button" data-animal="hunting" aria-pressed="false">Jakt</button>
+        </div>
+      </section>
     </div>
+    <input type="hidden" id="animalMode" value="forest">
     <div class="toolbar">
       <div class="control"><select id="monthFilter" aria-label="Jämförelseperiod"><option value="all">Hela året hittills</option><option value="01">Januari</option><option value="02">Februari</option><option value="03">Mars</option><option value="04">April</option><option value="05">Maj</option><option value="06">Juni</option><option value="07">Juli</option><option value="08">Augusti</option><option value="09">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">December</option></select></div>
-      <div class="control"><select id="animalFilter" aria-label="Filtrera aktivitet efter vilt eller djur"><option value="forest">Skogliga aktiviteter</option><option value="elk">Älg</option></select></div>
       <div class="control search-control">
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
         <input id="search" type="search" placeholder="Sök ärende, typ eller fastighet…" aria-label="Sök aktiviteter">
@@ -391,7 +492,8 @@ html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#37
     <p id="coverage"></p>
   </section>
 
-  <section class="feed-card" id="aktiviteter" aria-labelledby="feed-title">
+  <div class="story-layout" id="storyLayout">
+<section class="feed-card" id="aktiviteter" aria-labelledby="feed-title">
     <div class="feed-head">
       <div><p class="eyebrow">Bevakningsflöde</p><h2 id="feed-title">Senaste händelserna</h2><p class="feed-subtitle">Det här är huvudvyn: nya och relevanta händelser i dina bevakade områden. Välj en händelse för detaljer och geografisk kontext.</p></div>
       <span class="result-count" id="resultCount" aria-live="polite">– träffar</span>
@@ -400,9 +502,15 @@ html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#37
   </section>
 
   <section class="map-card" aria-labelledby="map-title">
-    <div class="feed-head">
-      <div><p class="eyebrow">Stödjande vy</p><h2 id="map-title">Se händelserna på kartan</h2><p class="feed-subtitle">Kartan ger geografisk kontext till det valda bevakningsflödet och följer samma filter.</p></div>
-      <span class="result-count" id="mapSummary">– objekt</span>
+    <div class="feed-head map-feed-head">
+      <div><p class="eyebrow">Stödjande vy</p><h2 id="map-title">Se händelserna på kartan</h2><p class="feed-subtitle" id="imageryDate" aria-live="polite">Hämtar bilddatum för kartans mitt …</p></div>
+      <div class="map-head-actions">
+        <div class="map-base-switch" role="group" aria-label="Välj kartbakgrund">
+          <button type="button" id="basemapImagery" data-basemap="imagery" aria-pressed="true">Flygfoto</button>
+          <button type="button" id="basemapStandard" data-basemap="standard" aria-pressed="false">Standard</button>
+        </div>
+        <span class="result-count" id="mapSummary">– objekt</span>
+      </div>
     </div>
     <div class="map-layout">
       <div id="activityMap" role="region" aria-label="Karta som visar geografisk kontext för bevakningsflödets händelser"></div>
@@ -410,10 +518,12 @@ html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#37
         <div class="preview-empty">Välj en aktivitet i flödet för att se dess geografiska läge och ärendeuppgifter här.</div>
       </aside>
     </div>
-    <div class="map-legend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Satellitindikation</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
+    <div class="map-legend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Satellitindikation / utförd</span><span><i class="samrad-dot"></i> Samråd</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
   </section>
 
   
+
+  </div>
 
   <footer class="footer">
     <strong>Datakälla: Skogsstyrelsens öppna geodatatjänster.</strong>
@@ -428,15 +538,23 @@ const ROOT="https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataporta
 const CURRENT_YEAR=new Date().getFullYear();
 const sources=[
  {kind:"planned",label:"Planerad avverkning",url:ROOT+"GeodataportalVisaAvverkningsanmalan/MapServer/0/query",dateField:"Inkomdatum",areaField:"AnmaldHa",fields:"OBJECTID,Inkomdatum,Arendear,Kommun,Avverktyp,AnmaldHa,ArendeStatus,Beteckn,Lan,Kommunnr"},
- {kind:"done",label:"Satellitindikation",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"}
+ {kind:"done",label:"Satellitindikation",url:ROOT+"GeodataportalVisaUtfordavverkning/MapServer/1/query",dateField:"Avvdatum",areaField:"Arealha",fields:"OBJECTID,Avvdatum,Kommun,Avverktyp,Arealha,Skogstyp,Beteckn,Lan,Kommunnr,KallaDatum"},
+ {kind:"samrad",label:"Samråd – punkt",url:ROOT+"GeodataportalVisaSamrad/MapServer/0/query",dateField:"Inkomdatum",fields:"OBJECTID,Inkomdatum,ArendeAr,Beteckn,Status,Samradsatgard,Kommun,Lan,Kommunnr"},
+ {kind:"samrad",label:"Samråd – linje",url:ROOT+"GeodataportalVisaSamrad/MapServer/1/query",dateField:"Inkomdatum",fields:"OBJECTID,Inkomdatum,ArendeAr,Beteckn,Status,Samradsatgard,Kommun,Lan,Kommunnr"},
+ {kind:"samrad",label:"Samråd – område",url:ROOT+"GeodataportalVisaSamrad/MapServer/2/query",dateField:"Inkomdatum",fields:"OBJECTID,Inkomdatum,ArendeAr,Beteckn,Status,Samradsatgard,Kommun,Lan,Kommunnr"}
 ];
 let all=[];
 let elkAreas=[];
 let elkSnapshotDate=null;
 let elkLoadError=null;
+let animalMode="all";
 let sourceWarnings=[];
 let activityMap=null;
 let activityLayer=null;
+let baseLayer=null;
+let baseMapMode="imagery";
+let imageryDateTimer=null;
+let imageryDateRequest=0;
 const activityLayers=new Map();
 let selectedKey=null;
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -502,13 +620,13 @@ function normalize(item){
  const date=dateValue(rawDate);
  const area=get(p,item.source.areaField,"Arealha","AnmaldHa");
  const caseNo=get(p,"Beteckn","Beteckning","OBJECTID");
- return {...item,date,area,caseNo,municipality:get(p,"Kommun")||"Nordmaling",activityType:get(p,"Avverktyp","Skogstyp")||"Avverkning",status:get(p,"ArendeStatus"),year:get(p,"Arendear")};
+ return {...item,date,area,caseNo,municipality:get(p,"Kommun")||"Nordmaling",activityType:get(p,"Avverktyp","Skogstyp","Samradsatgard")|| (item.kind==="samrad"?"Samråd":"Avverkning"),status:get(p,"ArendeStatus"),year:get(p,"Arendear")};
 }
 function itemKey(item){
  const id=get(item.properties,"OBJECTID","ObjectId","objectid");
  return item.kind+":"+(id!==null?String(id):String(item.caseNo||"utan-id")+":"+(item.date?item.date.getTime():""));
 }
-function selectedKind(){return document.querySelector(".quick-switch button[aria-pressed='true']")?.dataset.kind||"all";}
+function selectedKind(){return document.querySelector("#forestFilter button[aria-pressed='true']")?.dataset.kind||"all";}
 function filtered(){
  const kind=selectedKind(),month=document.getElementById("monthFilter").value,search=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
  return all.filter(x=>{
@@ -534,15 +652,103 @@ function metricNote(current,previous,unit){
 }
 function styleFor(item){
  const selected=itemKey(item)===selectedKey;
- const color=item.kind==="planned"?"#d88a32":"#3e8b59";
- return {color:selected?"#173b2b":color,weight:selected?5:2.5,opacity:1,fillColor:color,fillOpacity:selected?0.48:0.25};
+ const standardColors={planned:"#d88a32",done:"#3e8b59",samrad:"#3e8b59"};
+ const imageryColors={planned:"#ff6238",done:"#00d5ef",samrad:"#f1e64b"};
+ const color=(baseMapMode==="imagery"?imageryColors:standardColors)[item.kind]|| (baseMapMode==="imagery"?"#00d5ef":"#3e8b59");
+ return {color:selected?(baseMapMode==="imagery"?"#ffffff":"#173b2b"):color,weight:selected?5:(baseMapMode==="imagery"?3.5:2.5),opacity:1,fillColor:color,fillOpacity:selected?0.48:(baseMapMode==="imagery"?0.34:0.25)};
+}
+function formatImageryDate(attributes){
+ const rawDate=attributes?.SRC_DATE2??attributes?.SRC_DATE;
+ let date=null;
+ if(typeof rawDate==="number"&&rawDate>100000000000){
+  date=new Date(rawDate);
+ }else if(typeof rawDate==="number"||/^\d{8}$/.test(String(rawDate||""))){
+  const value=String(rawDate);
+  if(/^\d{8}$/.test(value))date=new Date(Number(value.slice(0,4)),Number(value.slice(4,6))-1,Number(value.slice(6,8)));
+ }else if(rawDate){
+  const parsed=new Date(rawDate);
+  if(!Number.isNaN(parsed.getTime()))date=parsed;
+ }
+ if(!date||Number.isNaN(date.getTime()))return null;
+ return new Intl.DateTimeFormat("sv-SE",{day:"numeric",month:"long",year:"numeric"}).format(date);
+}
+async function updateImageryDate(){
+ const label=document.getElementById("imageryDate");
+ if(!activityMap||!label)return;
+ const requestId=++imageryDateRequest;
+ const center=activityMap.getCenter();
+ label.textContent="Kontrollerar bilddatum för kartans mitt …";
+ const params=new URLSearchParams({
+  f:"json",
+  where:"1=1",
+  geometry:JSON.stringify({x:center.lng,y:center.lat,spatialReference:{wkid:4326}}),
+  geometryType:"esriGeometryPoint",
+  inSR:"4326",
+  spatialRel:"esriSpatialRelIntersects",
+  outFields:"SRC_DATE,SRC_DATE2,NICE_NAME,NICE_DESC,SRC_RES",
+  returnGeometry:"false"
+ });
+ try{
+  const response=await fetch("https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/0/query?"+params.toString());
+  if(!response.ok)throw new Error("Metadataförfrågan misslyckades");
+  const data=await response.json();
+  if(requestId!==imageryDateRequest)return;
+  if(data.error)throw new Error(data.error.message||"Bildmetadata kunde inte läsas");
+  const attributes=data.features?.[0]?.attributes;
+  const date=formatImageryDate(attributes);
+  if(!date){
+   label.textContent="Bilddatum saknas för kartans mitt.";
+   return;
+  }
+  const source=attributes.NICE_DESC||attributes.NICE_NAME;
+  label.textContent="Flyg-/satellitbild tagen "+date+(source?" · Källa: "+source:"");
+ }catch(error){
+  if(requestId===imageryDateRequest)label.textContent="Bilddatum kunde inte hämtas just nu.";
+ }
+}
+function scheduleImageryDateUpdate(){
+ if(imageryDateTimer)window.clearTimeout(imageryDateTimer);
+ imageryDateTimer=window.setTimeout(()=>{
+  imageryDateTimer=null;
+  updateImageryDate();
+ },350);
+}
+function setBasemap(mode){
+ if(!activityMap||!window.L)return;
+ baseMapMode=mode==="standard"?"standard":"imagery";
+ if(baseLayer)activityMap.removeLayer(baseLayer);
+ if(baseMapMode==="imagery"){
+  baseLayer=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{
+   maxZoom:19,
+   attribution:'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+  });
+ }else{
+  baseLayer=L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+   maxZoom:19,
+   attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  });
+ }
+ baseLayer.addTo(activityMap);
+ const imagery=baseMapMode==="imagery";
+ document.getElementById("basemapImagery").setAttribute("aria-pressed",String(imagery));
+ document.getElementById("basemapStandard").setAttribute("aria-pressed",String(!imagery));
+ document.querySelector(".map-card").classList.toggle("is-imagery",imagery);
+ const label=document.getElementById("imageryDate");
+ if(label){
+  if(imagery){label.hidden=false;label.textContent="Kontrollerar bilddatum för kartans mitt …";scheduleImageryDateUpdate();}
+  else{label.hidden=true;label.textContent="";}
+ }
+ for(const [key,layer] of activityLayers){const item=all.find(candidate=>itemKey(candidate)===key);if(item)layer.setStyle(styleFor(item));}
 }
 function initMap(){
  const target=document.getElementById("activityMap");
  if(!window.L){target.innerHTML="Kartbiblioteket kunde inte laddas. Ärenden och kartlänkar finns fortfarande i listan.";return;}
  activityMap=L.map(target,{preferCanvas:true,zoomSnap:0.25}).setView([63.55,19.5],8);
- L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(activityMap);
  activityLayer=L.featureGroup().addTo(activityMap);
+ setBasemap("imagery");
+ activityMap.on("moveend",()=>{if(baseMapMode==="imagery")scheduleImageryDateUpdate();});
+ document.getElementById("basemapImagery").addEventListener("click",()=>setBasemap("imagery"));
+ document.getElementById("basemapStandard").addEventListener("click",()=>setBasemap("standard"));
 }
 function renderMap(list){
  const summary=document.getElementById("mapSummary");
@@ -605,26 +811,42 @@ function selectActivity(item,zoom=true){
  if(zoom&&layer&&activityMap){const bounds=layer.getBounds();if(bounds.isValid())activityMap.fitBounds(bounds.pad(0.55),{maxZoom:14});}
 }
 function render(){
- const isElk=document.getElementById("animalFilter").value==="elk";
- const list=isElk?[]:filtered();
- document.querySelector(".quick-switch").hidden=isElk;
- document.getElementById("monthFilter").disabled=isElk;
- document.querySelector(".map-card").hidden=isElk;
- document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":"Senaste händelserna";
- document.querySelector(".feed-subtitle").textContent=isElk?"Välj Älg under Vilt/djur för att se senaste registrerade avskjutning och observerade förändringar per jaktområde.":"Det här är huvudvyn: nya och relevanta händelser i dina bevakade områden. Välj en händelse för detaljer och geografisk kontext.";
+ const mode=document.getElementById("animalMode").value;
+ const isElk=mode==="hunting";
+ const isNvr=mode==="collisions";
+ const list=(isElk||isNvr)?[]:filtered();
+ document.getElementById("forestFilterGroup").hidden=isElk||isNvr;
+ document.getElementById("monthFilter").disabled=isElk||isNvr;
+ document.querySelector(".map-card").hidden=isElk||isNvr;
+ document.getElementById("storyLayout").classList.toggle("is-elk",isElk||isNvr);
+ document.getElementById("storyProgress").hidden=isElk||isNvr;
+ document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":isNvr?"Viltolyckor":"Senaste händelserna";
+ document.querySelector(".feed-subtitle").textContent=isElk?"Jaktstatistik från Länsstyrelsernas Älgdata.":isNvr?"Individuella olyckshändelser från Nationella Viltolycksrådet.":"Nya och relevanta skogliga händelser. Välj en händelse för detaljer och geografisk kontext.";
+ if(isNvr){
+  document.getElementById("feed").innerHTML='<div class="empty">NVR:s historiska arkiv finns i OneDrive, men någon publik läsendpoint för GitHub Pages är ännu inte konfigurerad. Händelser visas när en kontrollerad endpoint med manifest och fullständighetsstatus finns.</div>';
+  document.getElementById("resultCount").textContent="NVR-arkiv ej publicerat";
+  document.getElementById("mapSummary").textContent="Inväntar NVR-dataendpoint";
+  renderMap([]);
+  return;
+ }
  if(isElk){
   const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
-  const rows=elkAreas.filter(area=>[area.display_name,area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query))
-   .sort((a,b)=>String(b.latest_observed_increase_date||"").localeCompare(String(a.latest_observed_increase_date||""))||String(a.area_name||"").localeCompare(String(b.area_name||""),"sv"));
+  const matchingAreas=elkAreas.filter(area=>[area.display_name,area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query));
+  const rows=matchingAreas.flatMap(area=>(area.snapshots||[])
+   .filter(snapshot=>snapshot.delta!==null&&snapshot.delta!==undefined&&Number(snapshot.delta)!==0)
+   .map(snapshot=>({area,snapshot,delta:Number(snapshot.delta)})))
+   .sort((a,b)=>String(b.snapshot.date||"").localeCompare(String(a.snapshot.date||""))||String(a.area.display_name||a.area.area_name||"").localeCompare(String(b.area.display_name||b.area.area_name||""),"sv"));
   const fmt=value=>value===null||value===undefined?"–":Number(value).toLocaleString("sv-SE",{maximumFractionDigits:1});
   const date=value=>value?new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"short",day:"numeric",timeZone:"UTC"}).format(new Date(value+"T12:00:00Z")):"Ej observerat";
-  const rowsHtml=rows.map(area=>{
-   const delta=area.latest_delta;
-   return '<tr><td><strong>'+esc(area.display_name||("Jaktområde "+(area.area_display_id||area.area_key||"okänt ID")) )+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(area.latest_total)+'</td><td class="elkdata-number '+(delta>0?"elkdata-positive":"")+'">'+(delta===null?"–":(delta>0?"+":"")+fmt(delta))+'</td><td>'+date(area.first_observed_positive_date)+'</td><td>'+date(area.latest_observed_increase_date)+'</td><td>'+date(area.latest_snapshot_date)+'</td></tr>';
+  const rowsHtml=rows.map(({area,snapshot,delta})=>{
+   const areaName=area.display_name||("Jaktområde "+(area.area_display_id||area.area_key||"okänt ID"));
+   const deltaClass=delta>0?"elkdata-positive":"elkdata-negative";
+   const deltaLabel=(delta>0?"+":"")+fmt(delta);
+   return '<tr><td><strong>'+esc(areaName)+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(snapshot.total)+'</td><td class="elkdata-number '+deltaClass+'">'+deltaLabel+'</td><td>'+date(snapshot.date)+'</td></tr>';
   }).join("");
   document.getElementById("feed").innerHTML=elkLoadError
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
-   : '<p class="elkdata-note">Regional avskjutningsstatistik för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Datum visar när uppgiften observerades i dagliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt</th><th>Förändring</th><th>Första observerade</th><th>Senaste ökning observerad</th><th>Senaste uttag</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="8" class="elkdata-empty">Inga områden matchar sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' områden visas av '+elkAreas.length.toLocaleString("sv-SE")+'.</div><p class="elkdata-caveat">Första observerade datum är inte ett säkert fältdatum. Senaste ökning är datumet då kumulativ rapportering ökade mellan snapshots. Rapportfördröjningar och rättelser kan påverka datumen.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
+   : '<p class="elkdata-note">Regional avskjutningsstatistik för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="6" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
   document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
   document.getElementById("mapSummary").textContent="Ingen geometri i älgstatistiken";
   renderMap([]);
@@ -640,7 +862,7 @@ function render(){
   const props=get(p,"Beteckn","Beteckning");
   const d=x.date;
   const dateYear=d?String(d.getFullYear()):"";
-  return '<article class="activity'+(key===selectedKey?' is-selected':'')+'" data-key="'+esc(key)+'"><div class="date-block"><div class="date">'+esc(dateLabel(x.date))+'</div><span class="date-year">'+esc(dateYear)+'</span></div><div class="activity-main"><div class="activity-top"><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span></div><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><div class="activity-actions"><button class="activity-action preview-action" type="button" data-select="'+esc(key)+'">Förhandsvisa ärende</button><a class="activity-action map-action" href="'+esc(mapUrl(x))+'">Öppna kartan ↗</a></div></div></article>';
+  return '<article class="activity'+(key===selectedKey?' is-selected':'')+'" data-key="'+esc(key)+'" data-kind="'+x.kind+'" tabindex="0" aria-label="Visa '+esc(x.activityType)+' på kartan"><div class="date-block"><div class="date">'+esc(dateLabel(x.date))+'</div><span class="date-year">'+esc(dateYear)+'</span></div><div class="activity-main"><div class="activity-top"><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span></div><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><div class="activity-actions"><a class="activity-action map-action" href="'+esc(mapUrl(x))+'">Öppna kartan ↗</a></div></div></article>';
  }).join(""):'<div class="empty">Inga aktiviteter matchar filtren för '+CURRENT_YEAR+'. Det kan också betyda att källan inte returnerar data för detta kommunfilter.</div>';
  const periods=getComparisonPeriods(CURRENT_YEAR,document.getElementById("monthFilter").value,new Date());
  const current=all.filter(x=>x.date&&x.date>=periods.currentStart&&x.date<periods.currentEnd);
@@ -664,6 +886,7 @@ function render(){
  if(sourceWarnings.length)document.getElementById("coverage").textContent+=" Databegränsning: "+sourceWarnings.join("; ")+".";
  document.getElementById("resultCount").textContent=list.length.toLocaleString("sv-SE")+" träffar";
  renderMap(list);
+ setupScrollExperience(list);
 }
 async function load(){
  const status=document.getElementById("status"),dot=document.getElementById("statusDot"),feed=document.getElementById("feed");
@@ -691,25 +914,124 @@ async function load(){
   renderDetail(null);
  }finally{document.getElementById("reload").disabled=false;}
 }
+
+let storyObserver=null;
+let storyActiveKey=null;
+let storyScrollHandler=null;
+let storyResizeHandler=null;
+let storyPreviewTimer=null;
+let storyPendingKey=null;
+const STORY_PREVIEW_DELAY=250;
+function activeStoryCard(cards){
+ const candidates=cards.filter(card=>{
+  const rect=card.getBoundingClientRect();
+  return rect.top<window.innerHeight*.68&&rect.bottom>window.innerHeight*.32;
+ });
+ candidates.sort((a,b)=>
+  Math.abs(a.getBoundingClientRect().top+a.offsetHeight/2-window.innerHeight/2)-
+  Math.abs(b.getBoundingClientRect().top+b.offsetHeight/2-window.innerHeight/2)
+ );
+ return candidates[0]||null;
+}
+function scheduleStoryPreview(card,list,cards){
+ if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+ storyPendingKey=card?.dataset.key||null;
+ if(!card)return;
+ const key=storyPendingKey;
+ storyPreviewTimer=window.setTimeout(()=>{
+  storyPreviewTimer=null;
+  const stillActive=activeStoryCard(cards);
+  if(!stillActive||stillActive.dataset.key!==key)return;
+  const item=list.find(candidate=>itemKey(candidate)===key);
+  if(item){
+   storyActiveKey=key;
+   selectActivity(item,false);
+  }
+ },STORY_PREVIEW_DELAY);
+}
+function setupScrollExperience(list){
+ const layout=document.getElementById("storyLayout");
+ const feed=document.getElementById("feed");
+ const progress=document.getElementById("storyProgress");
+ const fill=document.getElementById("storyProgressFill");
+ const cards=[...feed.querySelectorAll(".activity[data-key]")];
+ if(storyObserver){storyObserver.disconnect();storyObserver=null;}
+ if(storyScrollHandler)window.removeEventListener("scroll",storyScrollHandler);
+ if(storyResizeHandler)window.removeEventListener("resize",storyResizeHandler);
+ if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+ storyPendingKey=null;
+ storyActiveKey=null;
+ if(!cards.length){progress.hidden=true;fill.style.width="0%";progress.setAttribute("aria-valuenow","0");return;}
+ progress.hidden=false;
+ const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ if(!reduced && "IntersectionObserver" in window){
+  cards.forEach(card=>card.classList.add("story-reveal"));
+  storyObserver=new IntersectionObserver(entries=>{
+   entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("is-visible");});
+   scheduleStoryPreview(activeStoryCard(cards),list,cards);
+  },{threshold:[0,.15,.45],rootMargin:"-12% 0px -12% 0px"});
+  cards.forEach(card=>storyObserver.observe(card));
+ }else{
+  cards.forEach(card=>card.classList.add("is-visible"));
+ }
+ let ticking=false;
+ const update=()=>{
+  ticking=false;
+  const rect=layout.getBoundingClientRect();
+  const travel=Math.max(1,layout.offsetHeight-window.innerHeight*.72);
+  const amount=Math.min(1,Math.max(0,(window.innerHeight*.28-rect.top)/travel));
+  fill.style.width=(amount*100).toFixed(1)+"%";
+  progress.setAttribute("aria-valuenow",String(Math.round(amount*100)));
+  scheduleStoryPreview(activeStoryCard(cards),list,cards);
+ };
+ storyScrollHandler=()=>{
+  if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+  storyPendingKey=null;
+  if(!ticking){ticking=true;window.requestAnimationFrame(update);}
+ };
+ storyResizeHandler=update;
+ window.addEventListener("scroll",storyScrollHandler,{passive:true});
+ window.addEventListener("resize",storyResizeHandler);
+ update();
+}
+
 function bindControls(){
- document.querySelector(".quick-switch").addEventListener("click",event=>{
+ document.getElementById("forestFilter").addEventListener("click",event=>{
   const button=event.target.closest("button[data-kind]");
   if(!button)return;
-  document.querySelectorAll(".quick-switch button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+  document.querySelectorAll("#forestFilter button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
   render();
  });
  document.getElementById("monthFilter").addEventListener("change",render);
  document.getElementById("search").addEventListener("input",render);
- document.getElementById("animalFilter").addEventListener("change",render);
+ document.querySelectorAll("#animalFilter button").forEach(button=>button.addEventListener("click",()=>{
+  document.querySelectorAll("#animalFilter button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+  const mode=button.dataset.animal;
+  document.getElementById("animalMode").value=mode==="hunting"?"hunting":mode==="collisions"?"collisions":"forest";
+  render();
+ }));
  window.addEventListener("skog:elkdata-loaded",event=>{elkAreas=event.detail.areas||[];elkSnapshotDate=event.detail.latest_snapshot_date||null;elkLoadError=null;render();});
  window.addEventListener("skog:elkdata-error",event=>{elkLoadError=event.detail.message||"Okänt fel";render();});
  document.getElementById("reload").addEventListener("click",()=>window.dispatchEvent(new Event("skog:elkdata-refresh")));
  document.getElementById("reload").addEventListener("click",load);
+ const activateCard=card=>{
+  const item=all.find(x=>itemKey(x)===card.dataset.key);
+  if(!item)return;
+  if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+  storyPendingKey=itemKey(item);
+  storyActiveKey=storyPendingKey;
+  selectActivity(item,true);
+ };
  document.getElementById("feed").addEventListener("click",event=>{
-  const button=event.target.closest("[data-select]");
-  if(!button)return;
-  const item=all.find(x=>itemKey(x)===button.dataset.select);
-  if(item)selectActivity(item,true);
+  if(event.target.closest("a"))return;
+  const card=event.target.closest(".activity[data-key]");
+  if(card)activateCard(card);
+ });
+ document.getElementById("feed").addEventListener("keydown",event=>{
+  const card=event.target.closest(".activity[data-key]");
+  if(!card||event.target!==card||!(event.key==="Enter"||event.key===" "))return;
+  event.preventDefault();
+  activateCard(card);
  });
 }
 initMap();
