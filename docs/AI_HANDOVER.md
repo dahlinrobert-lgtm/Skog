@@ -101,7 +101,17 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 5. Fortsätt utöka `operations`-fält i källregistret endast när det finns konkret evidens.
 6. Håll den automatiska statusrapporten och denna överlämningsfil uppdaterade när beslut eller arbetssätt ändras.
 
-## 7. Hur en ny chatt ska arbeta vidare
+
+
+## 8. Bevakningsflöde – experimentell scrollprototyp
+
+- En separat testvy finns i `docs/bevakning-test.html`; den ordinarie `docs/bevakning.html` är oförändrad.
+- Prototypen har en vertikal händelsetidslinje, läsprogress, diskreta scrollövergångar och synkronisering mellan aktiv händelse och kart-/ärendepanel. På mobil staplas flöde och karta.
+- Prototypen använder befintlig datainläsning, filter och kartfunktioner. Animationer respekterar `prefers-reduced-motion`.
+- PR #370 är sammanslagen. Automatiska bevakningstester och JavaScript-syntaxkontroll passerade i PR-körningen. Efterföljande push-/Pages-körningar ska kontrolleras separat.
+- **Nästa steg:** öppna testvyn när GitHub Pages-publiceringen är klar och gör manuell granskning av scrollkänsla, kartkoppling, mobil, tangentbordsnavigering och prestanda. Ersätt inte den officiella sidan innan användaren har godkänt resultatet.
+
+## 9. Hur en ny chatt ska arbeta vidare
 
 - Börja med att läsa denna fil, statusrapporten och datakälleöversikten.
 - Kontrollera sedan relevanta filer, senaste commits och GitHub Actions i repot. Dokumenterade datum är inte bevis för aktuell driftstatus.
