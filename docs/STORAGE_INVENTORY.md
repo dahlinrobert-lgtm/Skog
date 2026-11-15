@@ -49,17 +49,18 @@ GitHub-repots storlek i API-metadata är en grov repoindikator, inte en fullstä
 | OD-02 | NVR årsuppdelade arbetsfiler | `OneDrive\Skogskoll\viltolycka_NVR\working\split-2015-2026` | Bekräftad | Cirka 107,2 MB; 14 objekt enligt OneDrive-metadata. |
 | OD-03 | NVR historiska legacy-snapshots | `OneDrive\Skogskoll\viltolycka_NVR\history\legacy-event-snapshots` | Bekräftad | Cirka 18,7 MB; 2 objekt vid inventeringen. 2019-staging hade tidigare ett Windows-behörighetsfel; kontrollera aktuell status innan flytt/radering. |
 | OD-04 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\Skogskoll\Skogliga grunddata - Volym (omdrev 1, 2008-2016)` | Bekräftad | Cirka 2,77 GB; 20 objekt enligt OneDrive-metadata. |
-| OD-05 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\\Skogskoll\\Skogliga grunddata - Volym (omdrev 2, 2018-2025)` | Bekräftad | Cirka 4,66 GB; 21 objekt enligt OneDrive-metadata. |
-| OD-06 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\\Skogskoll\\Skogliga grunddata - Volym (omdrev 3, 2025-)` | Bekräftad | Cirka 503 MB; 9 objekt enligt OneDrive-metadata. |
-| OD-07 | NVDB/Lastkajen – nationella vägnät | `OneDrive\\Skogskoll\\Lastkajen` | Bekräftad | Två ZIP-arkiv: räddningsfordonsnavigering cirka 441 MB och Norrbottens län GeoPackage cirka 533 MB. |
-| OD-08 | OpenStreetMap Sverige – original och derivat | `OneDrive\\Skogskoll\\openstreetmap` | Bekräftad | Cirka 1,11 GB; innehåller Sverige-PBF cirka 955 MB samt filtrerade PBF-filer, fältinventeringar och manifest. |
-| OD-09 | Lantmäteriet – adresser och ortnamn | `OneDrive\\Skogskoll\\lantmateriet` | Bekräftad | Cirka 228 MB; underkatalogerna `belagenhetsadresser` och `ortnamn`. |
+| OD-05 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\Skogskoll\Skogliga grunddata - Volym (omdrev 2, 2018-2025)` | Bekräftad | Cirka 4,66 GB; 21 objekt enligt OneDrive-metadata. |
+| OD-06 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\Skogskoll\Skogliga grunddata - Volym (omdrev 3, 2025-)` | Bekräftad | Cirka 503 MB; 9 objekt enligt OneDrive-metadata. |
+| OD-07 | NVDB/Lastkajen – nationella vägnät | `OneDrive\Skogskoll\Lastkajen` | Bekräftad | Två ZIP-arkiv: räddningsfordonsnavigering cirka 441 MB och Norrbottens län GeoPackage cirka 533 MB. |
+| OD-08 | OpenStreetMap Sverige – original och derivat | `OneDrive\Skogskoll\openstreetmap` | Bekräftad | Cirka 1,11 GB; innehåller Sverige-PBF cirka 955 MB samt filtrerade PBF-filer, fältinventeringar och manifest. |
+| OD-09 | Lantmäteriet – adresser och ortnamn | `OneDrive\Skogskoll\lantmateriet` | Bekräftad | Cirka 228 MB; underkatalogerna `belagenhetsadresser` och `ortnamn`. |
+| OD-10 | Löpande lokala inventeringsrapporter | `OneDrive\Skogskoll\_inventory` | Bekräftad | Ny molnmapp skapad 2026-11-15 för JSON- och Markdownrapporter från PowerShell-skriptet. |
 
 **NVR-regel:** Originalexporten ska bevaras oförändrad. GitHub innehåller kod, tester, dokumentation och manifest – inte den stora råexporten. SHA-256 och uttagsmetadata ska följa original och arkivkopior.
 
 ### OneDrive – verifierade detaljer i NVR-arbetsytan (2026-11-15)
 
-Under `OneDrive\\Skogskoll\\viltolycka_NVR\\working` finns bland annat `lulea-police-nvr` (cirka 47 MB), `nvdb-vagnummer` (cirka 185 MB), `ortnamn-deso-2025` (cirka 12 MB), `ortnamn-source` (cirka 156 MB), `split-2015-2026` (cirka 107 MB), samt separata restore-testmappar. Dessa är arbets-/testytor och ska inte automatiskt betraktas som auktoritativa arkiv.
+Under `OneDrive\Skogskoll\viltolycka_NVR\working` finns bland annat `lulea-police-nvr` (cirka 47 MB), `nvdb-vagnummer` (cirka 185 MB), `ortnamn-deso-2025` (cirka 12 MB), `ortnamn-source` (cirka 156 MB), `split-2015-2026` (cirka 107 MB), samt separata restore-testmappar. Dessa är arbets-/testytor och ska inte automatiskt betraktas som auktoritativa arkiv.
 
 I `history` finns `legacy-events-2015-2021`, `legacy-event-snapshots`, `runs` och `state`. Test- och restore-kopior ska hållas isär från produktionshistoriken.
 
@@ -112,30 +113,30 @@ För varje post dokumenteras:
 
 ## 7. Lokal inventering – användning
 
-Skriptet `scripts/inventory-local-storage.ps1` är read-only och skapar en tidsstämplad JSON-rapport samt en kort Markdownrapport. Standardläget inventerar GitHub-kloner under `$HOME\\GitHub` och `Skogskoll` under OneDrive-synkroten om de finns. USB-enheter kan inkluderas uttryckligen.
+Skriptet `scripts/inventory-local-storage.ps1` är read-only och skapar en tidsstämplad JSON-rapport samt en kort Markdownrapport. Standardläget inventerar GitHub-kloner under `$HOME\GitHub` och `Skogskoll` under OneDrive-synkroten om de finns. USB-enheter kan inkluderas uttryckligen.
 
 Exempel i PowerShell från Skog-repots rot:
 
 ```powershell
-.\\scripts\\inventory-local-storage.ps1 -IncludeRemovableDrives
+.\scripts\inventory-local-storage.ps1 -IncludeRemovableDrives
 ```
 
 För en begränsad inventering av särskilda mappar:
 
 ```powershell
-.\\scripts\\inventory-local-storage.ps1 -Roots @('C:\\Users\\dahli\\GitHub','D:\\Skogskoll') -OutputDirectory 'C:\\Temp\\storage-inventory'
+.\scripts\inventory-local-storage.ps1 -Roots @('C:\Users\dahli\GitHub','D:\Skogskoll') -OutputDirectory 'C:\Temp\storage-inventory'
 ```
 
 Rapporter sparas som standard i OneDrive `Skogskoll\_inventory` när OneDrive-synkroten hittas, annars i `$HOME\storage-inventory`. Skriptet jämför med föregående rapport och klassar nya, ändrade och saknade filer. SHA-256 är avstängt som standard för att undvika onödig belastning. Aktivera endast vid behov och använd storleksgräns:
 
 ```powershell
-.\\scripts\\inventory-local-storage.ps1 -IncludeRemovableDrives -HashFiles -MaxHashBytes 268435456
+.\scripts\inventory-local-storage.ps1 -IncludeRemovableDrives -HashFiles -MaxHashBytes 268435456
 ```
 
 Installera daglig körning efter att Skog-repot har uppdaterats lokalt:
 
 ```powershell
-.\\scripts\\install-local-storage-inventory-task.ps1
+.\scripts\install-local-storage-inventory-task.ps1
 ```
 
 Standardtid är 21:00 lokal tid. Datorn måste vara på och användarsessionen tillgänglig; missade körningar startas när det går. USB inventeras bara de dagar minnet är anslutet. Ta bort schemaläggningen med `Unregister-ScheduledTask -TaskName 'Skogskoll - local storage inventory' -Confirm:$false`.
