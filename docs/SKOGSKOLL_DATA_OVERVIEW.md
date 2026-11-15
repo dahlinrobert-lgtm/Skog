@@ -317,6 +317,26 @@ Användaren söker kommun, trakt och fastighetsbeteckning; väljer rätt registe
 
 Geometrierna är vägledande översiktsunderlag och inte juridiskt gällande gränsbevis. API-nycklar ska hanteras server-side och aldrig exponeras i webbläsaren.
 
+### 4.14 Lantmäteriet – Ortnamn Nedladdning, vektor
+
+**Prioritet:** Hög för geografisk tolkning av polisens platsbeskrivningar i den interna Luleå Police–NVR-piloten.
+
+**Teknisk åtkomst**
+- Geotorget-behörighet finns på användarens konto.
+- STAC API: `https://api.lantmateriet.se/stac-vektor/v1`
+- Collection: `ortnamn`; item: `ortnamn_se`.
+- Nationell GeoPackage i EPSG:3006.
+- Autentiserad ZIP-nedladdning verifierades 2026-11-13 med HTTP Basic: 58 553 634 byte; innehåller `ortnamn_se.gpkg` (156 000 256 byte).
+
+**Nuvarande läge**
+Teknisk nedladdning är verifierad, men GeoPackage-lager, attribut, objekttyper och faktiska namnträffar för Sunderbyn/Notviken är ännu inte inventerade. Ett read-only-inspektionsskript finns i `scripts/inspect_ortnamn_geopackage.py`; körning mot den lokala filen återstår.
+
+**Avsedd användning**
+Använd ortnamn som namn- och områdesreferens för att tolka polisens text, exempelvis Sunderbyn, Södra Sunderbyn och Notviken. Kombinera därefter med NVDB:s vägnummer, korsningsobjekt och sammanhängande vägnät. Ortnamn är en referenskälla, inte en olycksdatakälla.
+
+**Viktig begränsning**
+Ortnamnspunkter kan vara kartografisk textplacering och ska inte tolkas som exakta ortscentrum, ortsgränser eller olyckspositioner. Behåll geometri, objekttyp, avstånd och osäkerhet separat. Tekniskt åtkomstbesked är inte ett beslut om kommersiell användning, historisk lagring, bearbetning, kundvisning eller vidare distribution; dessa villkor ska granskas separat.
+
 ### 4.14 Lantmäteriet – fastighetsprisregistret
 
 **Prioritet:** Separat analysmöjlighet

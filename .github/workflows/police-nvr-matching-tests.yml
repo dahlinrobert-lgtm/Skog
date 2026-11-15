@@ -7,10 +7,12 @@ on:
       - 'scripts/enrich_police_nvr_geography.py'
       - 'scripts/extract_police_wildlife_incidents.py'
       - 'scripts/match_police_nvr_temporal.py'
+      - 'scripts/inspect_ortnamn_geopackage.py'
       - 'tests/test_build_lulea_police_review.py'
       - 'tests/test_enrich_police_nvr_geography.py'
       - 'tests/test_extract_police_wildlife_incidents.py'
       - 'tests/test_match_police_nvr_temporal.py'
+      - 'tests/test_inspect_ortnamn_geopackage.py'
       - '.github/workflows/police-nvr-matching-tests.yml'
   push:
     branches: [main]
