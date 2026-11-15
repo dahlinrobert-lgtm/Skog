@@ -17,7 +17,7 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   assert.match(html, /Till ordinarie sida/);
 });
 
-test("scrollupplevelsen har tillgänglig reserv och fördröjd kartförhandsvisning", () => {
+test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händelseruta", () => {
   assert.match(html, /IntersectionObserver/);
   assert.match(html, /prefers-reduced-motion:\s*reduce/);
   assert.match(html, /aria-valuenow/);
@@ -26,6 +26,11 @@ test("scrollupplevelsen har tillgänglig reserv och fördröjd kartförhandsvisn
   assert.match(html, /scheduleStoryPreview\(activeStoryCard\(cards\),list,cards\)/);
   assert.match(html, /window\.clearTimeout\(storyPreviewTimer\)/);
   assert.match(html, /stillActive\.dataset\.key!==key/);
+  assert.match(html, /tabindex="0" aria-label="Visa /);
+  assert.match(html, /event\.target\.closest\("a"\)/);
+  assert.match(html, /event\.key==="Enter"\|\|event\.key===" "/);
+  assert.doesNotMatch(html, /Förhandsvisa ärende/);
+  assert.doesNotMatch(html, /data-select=/);
 });
 
 test("inline module script passes Node syntax validation", () => {
