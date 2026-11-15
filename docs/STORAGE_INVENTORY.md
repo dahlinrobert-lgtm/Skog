@@ -154,7 +154,9 @@ Installera daglig körning efter att Skog-repot har uppdaterats lokalt:
 .\scripts\install-local-storage-inventory-task.ps1
 ```
 
-Standardtid är 21:00 lokal tid. Datorn måste vara på och användarsessionen tillgänglig; missade körningar startas när det går. USB inventeras bara de dagar minnet är anslutet. Ta bort schemaläggningen med `Unregister-ScheduledTask -TaskName 'Skogskoll - local storage inventory' -Confirm:$false`.
+Standardtid är 21:00 lokal tid. Den aktuella installeraren skapar en bakgrundsuppgift med Windows-kontots lösenord (inte PIN) så att den kan köras även när användaren är utloggad. Lösenordet efterfrågas lokalt vid installation och sparas av Windows Task Scheduler som skyddade uppgiftsuppgifter; det skrivs inte till skript eller GitHub. Uppgiften har `WakeToRun`, `StartWhenAvailable` och tillåts köras på batteri. Väckt körning ur viloläge/hibernate kräver dessutom att Windows väckningstimers är aktiverade och att BIOS/UEFI/hårdvaran stöder väckning. En helt avstängd dator kan inte startas av Windows Schemaläggaren.
+
+**OneDrive-begränsning:** OneDrive-synkklienten kör normalt inte i en utloggad session. Bakgrundsuppgiften skriver rapporterna till den lokala OneDrive-synkroniserade mappen (med profilbaserad sökvägsreserv om miljövariabeln saknas); uppladdningen till molnet sker först när OneDrive-klienten startar vid nästa inloggning. USB inventeras bara om minnet är anslutet och har en enhetsbokstav vid körningen. Ta bort schemaläggningen med `Unregister-ScheduledTask -TaskName 'Skogskoll - local storage inventory' -Confirm:$false`.
 
 Rapporten kan innehålla personliga sökvägar och filnamn. Granska den innan den laddas upp till GitHub eller delas. Lägg inte råa inventeringslistor med privata filer i ett publikt repo.
 
@@ -175,6 +177,7 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 |---|---|
 | 2026-11-15 | Första samlade inventeringen skapad. Kända GitHub-repon, NVR-mappar i OneDrive, Kungjort-containrar i Azure samt känd lokal Skog-sökväg registrerade. |
 | 2026-11-15 | OneDrive inventerat via Microsoft Graph: Skogskoll-roten, NVR, historik/arbetsytor, Omdrev 1–3, Lastkajen, OpenStreetMap och Lantmäteriet dokumenterade med rapporterade storlekar. Read-only PowerShell-skript med förändringsdetektion och installerare för daglig lokal/USB-inventering tillagda. OneDrive-mappen `_inventory` skapad. |
+| 2026-11-16 | Bakgrundsinstalleraren uppdaterad för lösenordsbaserad Task Scheduler-körning vid utloggning, `WakeToRun`, missade körningar och profilbaserad OneDrive-sökväg. OneDrive-molnsynkronisering sker dock först när klienten körs efter nästa inloggning; hibernate-väckning kräver aktiverade väckningstimers och hårdvarustöd. |
 | 2026-11-15 | Första lokala PowerShell-baslinjen verifierad på datorn ROBERT: 8 523 filer i GitHub (2,396 GB), 385 filer i OneDrive\\Skogskoll (26,052 GB) och 1 295 filer på flyttbar enhet D: (3,211 GB). Totalt 10 203 filer, 0 fel. D: är verifierad som flyttbar enhet men måste identifieras fysiskt innan den dokumenteras som USB-backup. JSON-granskningen visar dessutom Lastkajen 11,119 GB/24 filer och flera NVR-kopior på D:. SHA-256 saknas i baslinjen, så innehållslikhet är inte verifierad. |
 
 ---
