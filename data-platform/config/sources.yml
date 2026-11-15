@@ -106,7 +106,7 @@ sources:
       history_status: partial
       commercial_use_status: conditional
       customer_display_status: pending_product_layer_check
-      last_verified: "2026-11-14"
+      last_verified: "2026-11-15"
       next_action: "Verifiera komplett paginering och minst två kompletta jämförbara körningar; skilj nya anmälningar från äldre baslinje och bortfall."
       evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; existing Skogskoll ArcGIS probe and snapshot/history workflows"
     notes:
@@ -1778,25 +1778,25 @@ sources:
     geography: Sweden
     format: [CSV]
     rights:
-      licence: "Specific access approval and applicable terms must be documented; no blanket open-data licence assumed"
-      review_status: amber_access_and_reuse_scope_to_document
-      commercial_use: pending_explicit_scope_confirmation
-      historical_storage: pending_explicit_scope_confirmation
-      derivatives: pending_use_scope_confirmation
-      redistribution: pending_explicit_permission
-      attribution: "Identify NVR as source and preserve export/retrieval dates; confirm required wording with the data provider."
+      licence: "Public information; provider confirms recurring retrieval and archiving for own geographic analysis and statistics, provided source attribution is given"
+      review_status: green_for_recurring_archive_and_own_analysis
+      commercial_use: conditional_on_attribution_and_scope_of_analysis
+      historical_storage: yes_with_attribution_and_retrieval_metadata
+      derivatives: yes_for_own_geographic_analysis_and_statistics_with_attribution
+      redistribution: not_explicitly_confirmed_for_raw_data_or_standalone_data_service
+      attribution: "Nationella viltolycksrådet (NVR)"
       api_or_service_constraints: "Use only the authorised export route and documented purpose; preserve raw exports and do not expose credentials."
-      evidence_checked_on: "2026-11-14"
+      evidence_checked_on: "2026-11-15"
       caveat: "Historical exports from 2015–2026 have been collected, but completeness and comparability are not attested for every period. The 2026-11-09 import was partial."
     operations:
       access_status: authorised_access_used
       snapshot_status: 30_day_daily_observation_test
       history_status: historical_archive_partial
-      commercial_use_status: pending_scope_confirmation
-      customer_display_status: pending_scope_confirmation
+      commercial_use_status: conditional
+      customer_display_status: conditional_attribution_scope_review
       last_verified: "2026-11-14"
-      next_action: "Följ upp 30-dagarstestet: verifiera de första automatiska körningarna, exportjämförelserna och dagsarkiven i OneDrive; dokumentera skriftligt godkännande, ändamål och återkommande hämtning."
-      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; NVR import run 2026-11-09 (partial); backup/SHA-256 verification 2026-11-10"
+      next_action: "Följ upp 30-dagarstestet och etablera en kontrollerad, skrivskyddad publiceringsendpoint för NVR-händelser med manifest, fullständighetsstatus och källhänvisning. Rådata får inte publiceras direkt från OneDrive eller GitHub Pages utan separat publiceringskontroll."
+      evidence_reference: "docs/source-rights-reviews/2026-11-15-nvr-public-information-attribution.md; NVR import run 2026-11-09 (partial); backup/SHA-256 verification 2026-11-10"
     notes:
       - "Legacy event history (2015–2021) and animal-level exports (2022–2026) are maintained as distinct data products."
       - "Do not interpret an incomplete export as evidence that previously observed incidents disappeared."
