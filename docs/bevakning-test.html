@@ -177,10 +177,15 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 
 /* Skogsbevakning: periodjämförelse, snabbfilter och geografisk förhandsvisning */
-.quick-switch{display:inline-flex;gap:4px;padding:4px;border:1px solid #e0e8de;border-radius:12px;background:#f5f8f3;margin:0 0 14px}
+.filter-groups{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;margin:0 0 14px}
+.filter-group{display:flex;flex-direction:column;align-items:stretch;gap:6px;width:max-content}
+.filter-group-heading{height:37px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 12px;border:1px solid #d8e3d6;border-radius:12px;background:#edf4e9;color:#285238;font-size:.84rem;font-weight:800;letter-spacing:.01em}
+.filter-group-heading svg{width:42px;height:26px;flex:0 0 auto;opacity:.9}
+.filter-group-heading.animal-heading{background:#f2f5ed}
+.quick-switch{display:inline-flex;gap:4px;padding:4px;border:1px solid #e0e8de;border-radius:12px;background:#f5f8f3;margin:0;width:max-content}
 .quick-switch button{border:0;border-radius:8px;padding:8px 14px;background:transparent;color:#52665a;font-size:.84rem;font-weight:760;cursor:pointer}
 .quick-switch button[aria-pressed="true"]{background:#24543b;color:#fff;box-shadow:0 2px 7px rgba(23,59,43,.14)}
-.animal-switch{margin-left:8px;background:#f7f8f4}
+.animal-switch{margin-left:0;background:#f7f8f4}
 .quick-switch button:focus-visible,.activity-action:focus-visible{outline:3px solid #d7ad67;outline-offset:2px}
 .period-comparison{margin:16px 2px 0;padding:11px 13px;border-left:3px solid #8da984;border-radius:0 9px 9px 0;background:#f7faf5;color:#5d6e61;font-size:.82rem}
 .map-card{margin-top:18px;padding:25px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
@@ -308,6 +313,8 @@ html[data-theme="dark"] .control :is(input,select),
 html[data-theme="dark"] .toolbar :is(input,select){
   background:#111c15!important;color:#e4ece6!important;border-color:#526557!important;
 }
+html[data-theme="dark"] .filter-group-heading{background:#243b2c!important;color:#e4ece6!important;border-color:#405746!important}
+html[data-theme="dark"] .filter-group-heading.animal-heading{background:#29372b!important}
 html[data-theme="dark"] .quick-switch button{color:#dce9df!important}
 html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#376348!important;color:#fff!important}
 html[data-theme="dark"] .elkdata-caveat{background:#29372b!important;color:#e1e9dc!important;border-left-color:#d7ad67!important}
@@ -428,16 +435,37 @@ html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
       <h2 class="filter-title" id="filter-title">Hitta en aktivitet</h2>
       <span class="filter-hint">Välj period, aktivitetstyp eller sök bland kommunens hämtade objekt</span>
     </div>
-    <div class="quick-switch" id="forestFilter" role="group" aria-label="Skogliga aktiviteter">
-      <button type="button" data-kind="all" aria-pressed="true">Alla</button>
-      <button type="button" data-kind="planned" aria-pressed="false">Planerade</button>
-      <button type="button" data-kind="done" aria-pressed="false">Utförda</button>
-      <button type="button" data-kind="samrad" aria-pressed="false">Samråd</button>
-    </div>
-    <div class="quick-switch animal-switch" id="animalFilter" role="group" aria-label="Vilt och jakt">
-      <button type="button" data-animal="all" aria-pressed="true">Alla</button>
-      <button type="button" data-animal="collisions" aria-pressed="false">Viltolyckor</button>
-      <button type="button" data-animal="hunting" aria-pressed="false">Jakt</button>
+    <div class="filter-groups">
+      <section class="filter-group" id="forestFilterGroup" aria-labelledby="forestFilterHeading">
+        <div class="filter-group-heading" id="forestFilterHeading">
+          <span>Skog</span>
+          <svg viewBox="0 0 64 32" aria-hidden="true" focusable="false">
+            <path d="M14 3 5 17h6l-4 7h14l-4-7h6L14 3Zm20 4-8 12h5l-4 6h14l-4-6h5L34 7Zm17-4-9 14h6l-4 7h14l-4-7h6L51 3Z" fill="currentColor"/>
+            <path d="M14 24v6m20-5v5m17-5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="quick-switch" id="forestFilter" role="group" aria-label="Skogliga aktiviteter">
+          <button type="button" data-kind="all" aria-pressed="true">Alla</button>
+          <button type="button" data-kind="planned" aria-pressed="false">Planerade</button>
+          <button type="button" data-kind="done" aria-pressed="false">Utförda</button>
+          <button type="button" data-kind="samrad" aria-pressed="false">Samråd</button>
+        </div>
+      </section>
+      <section class="filter-group" id="animalFilterGroup" aria-labelledby="animalFilterHeading">
+        <div class="filter-group-heading animal-heading" id="animalFilterHeading">
+          <span>Djur</span>
+          <svg viewBox="0 0 64 32" aria-hidden="true" focusable="false">
+            <path d="M12 23c4-7 9-10 15-10 4 0 7 2 9 5l8-2 6 4-2 4-8-1-5 4h-7l-3-4h-7l-3 3h-5l2-3Z" fill="currentColor"/>
+            <path d="m24 14-3-6m3 6 4-7m13 9 3-6m-3 6 7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="48" cy="19" r="1.4" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="quick-switch animal-switch" id="animalFilter" role="group" aria-label="Vilt och jakt">
+          <button type="button" data-animal="all" aria-pressed="true">Alla</button>
+          <button type="button" data-animal="collisions" aria-pressed="false">Viltolyckor</button>
+          <button type="button" data-animal="hunting" aria-pressed="false">Jakt</button>
+        </div>
+      </section>
     </div>
     <input type="hidden" id="animalMode" value="forest">
     <div class="toolbar">
@@ -740,7 +768,7 @@ function render(){
  const isElk=mode==="hunting";
  const isNvr=mode==="collisions";
  const list=(isElk||isNvr)?[]:filtered();
- document.getElementById("forestFilter").hidden=isElk||isNvr;
+ document.getElementById("forestFilterGroup").hidden=isElk||isNvr;
  document.getElementById("monthFilter").disabled=isElk||isNvr;
  document.querySelector(".map-card").hidden=isElk||isNvr;
  document.getElementById("storyLayout").classList.toggle("is-elk",isElk||isNvr);
