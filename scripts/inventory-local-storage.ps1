@@ -50,7 +50,7 @@ if (-not $OutputDirectory) {
     $oneDriveRoot = $env:OneDrive
     if (-not $oneDriveRoot) { $oneDriveRoot = $env:OneDriveCommercial }
     if ($oneDriveRoot -and (Test-Path -LiteralPath $oneDriveRoot)) {
-        $OutputDirectory = Join-Path $oneDriveRoot "Skogskoll\\_inventory"
+        $OutputDirectory = Join-Path (Join-Path $oneDriveRoot "Skogskoll") "_inventory"
     } else {
         $OutputDirectory = Join-Path $HOME "storage-inventory"
     }
