@@ -345,6 +345,13 @@ Använd ortnamn som namn- och områdesreferens för att tolka polisens text, exe
 **Viktig begränsning**
 Ortnamnspunkter kan vara kartografisk textplacering och ska inte tolkas som exakta ortscentrum, ortsgränser eller olyckspositioner. Behåll geometri, objekttyp, avstånd och osäkerhet separat. Tekniskt åtkomstbesked är inte ett beslut om kommersiell användning, historisk lagring, bearbetning, kundvisning eller vidare distribution; dessa villkor ska granskas separat.
 
+**Luleå Police–NVR: lokal väg 97-diagnostik (2026-11-15)**
+En separat lokal analys byggde en cirka 9,26 km lång vägsektion mellan ortnamnsankare för Sunderbyn och Notviken genom 22 vägobjekt ur användarens vägnummer-GPKG. Ankarnas avstånd till väg 97-objekt var 14,3 m respektive 26,45 m. NVR-händelse `2026-348394` låg 3,0 m från den härledda sektionen; händelse `2026-348777` låg 11 478,39 m bort. Resultaten är endast diagnostiskt granskningsunderlag och ändrar inte temporal matchning eller kandidatstatus.
+
+Tolkningen har en kvarstående osäkerhet: polistexten anger Södra Sunderbyn, men vägsektionens använda ortnamnsankare var Sunderbyn (TRAKTTX). En Södra Sunderbyn-referens av typen BEBTÄTTX låg cirka 984 m från väg 97 i den använda vägnummerfilen. Ortnamnens objekttyp och ankarval måste därför granskas innan vägsektionen kan anses motsvara polisens text.
+
+Vägnummer-GPKG-filen har ett annat schema än NVDB-lagren som `scripts/enrich_police_nvr_geography.py` kräver. Den lokala analysen verifierar därför inte pipeline-skriptets reproducerbarhet. Nästa steg är att välja flera Luleå-testfall ur de lokala Police- och NVR-underlagen och genomföra separat regression av temporal matchning. Ingen automatisk matchning eller bekräftelse har gjorts.
+
 ### 4.14 Lantmäteriet – fastighetsprisregistret
 
 **Prioritet:** Separat analysmöjlighet
