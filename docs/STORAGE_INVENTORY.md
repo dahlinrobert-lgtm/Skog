@@ -51,7 +51,7 @@ GitHub-repots storlek i API-metadata är en grov repoindikator, inte en fullstä
 | OD-04 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\Skogskoll\Skogliga grunddata - Volym (omdrev 1, 2008-2016)` | Bekräftad | Cirka 2,77 GB; 20 objekt enligt OneDrive-metadata. |
 | OD-05 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\Skogskoll\Skogliga grunddata - Volym (omdrev 2, 2018-2025)` | Bekräftad | Cirka 4,66 GB; 21 objekt enligt OneDrive-metadata. |
 | OD-06 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\Skogskoll\Skogliga grunddata - Volym (omdrev 3, 2025-)` | Bekräftad | Cirka 503 MB; 9 objekt enligt OneDrive-metadata. |
-| OD-07 | NVDB/Lastkajen – nationella vägnät | `OneDrive\Skogskoll\Lastkajen` | Bekräftad | Två ZIP-arkiv: räddningsfordonsnavigering cirka 441 MB och Norrbottens län GeoPackage cirka 533 MB. |
+| OD-07 | NVDB/Lastkajen – nationella vägnät | `OneDrive\Skogskoll\Lastkajen` | Bekräftad | Den lokala inventeringen 2026-11-15 visar 24 filer och cirka 11,119 GB. Bland de största objekten finns länsvisa GeoPackage-ZIP för Västra Götaland (1,435 GB), Stockholm (0,880 GB), Skåne (0,738 GB), Västerbotten (0,640 GB) och Norrbotten (0,533 GB). Tidigare metadataöversikt var ofullständig och ska ersättas av denna filbaserade kontroll. |
 | OD-08 | OpenStreetMap Sverige – original och derivat | `OneDrive\Skogskoll\openstreetmap` | Bekräftad | Cirka 1,11 GB; innehåller Sverige-PBF cirka 955 MB samt filtrerade PBF-filer, fältinventeringar och manifest. |
 | OD-09 | Lantmäteriet – adresser och ortnamn | `OneDrive\Skogskoll\lantmateriet` | Bekräftad | Cirka 228 MB; underkatalogerna `belagenhetsadresser` och `ortnamn`. |
 | OD-10 | Löpande lokala inventeringsrapporter | `OneDrive\Skogskoll\_inventory` | Bekräftad | Ny molnmapp skapad 2026-11-15 för JSON- och Markdownrapporter från PowerShell-skriptet. |
@@ -101,7 +101,7 @@ PowerShell-körningen på datorn ROBERT slutfördes utan fel och skapade JSON- o
 | `D:\\` (detekterad flyttbar enhet) | 1 295 | 3,211 GB |
 | **Totalt** | **10 203** | **31,659 GB** |
 
-Detta var första baslinjen (`baseline`), med 0 inventeringsfel. Rapporten är en inventering av dessa tre lokala rötter – den är inte en fullständig inventering av hela datorn eller av allt innehåll i OneDrive-molnet. JSON-rapporten innehåller filmetadata per fil; SHA-256 var inte aktiverat.
+Detta var första baslinjen (`baseline`), med 0 inventeringsfel. Rapporten är en inventering av dessa tre lokala rötter – den är inte en fullständig inventering av hela datorn eller av allt innehåll i OneDrive-molnet. JSON-rapporten innehåller filmetadata per fil; SHA-256 var inte aktiverat. Fördelningen på första katalognivå visar att GitHub består av `Skog` (3 776 filer, cirka 1,504 GB) och `bear-data` (4 747 filer, cirka 1,069 GB). På D: är `skogskoll` och `X-JOBB` de klart största katalogerna. Inventeringen visar filstorlek och sökväg, men bevisar inte att kopior är identiska eller att någon av dem är en fungerande backup.
 
 ## 6. Vad som ska uppdateras när lagring ändras
 
@@ -175,7 +175,7 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 |---|---|
 | 2026-11-15 | Första samlade inventeringen skapad. Kända GitHub-repon, NVR-mappar i OneDrive, Kungjort-containrar i Azure samt känd lokal Skog-sökväg registrerade. |
 | 2026-11-15 | OneDrive inventerat via Microsoft Graph: Skogskoll-roten, NVR, historik/arbetsytor, Omdrev 1–3, Lastkajen, OpenStreetMap och Lantmäteriet dokumenterade med rapporterade storlekar. Read-only PowerShell-skript med förändringsdetektion och installerare för daglig lokal/USB-inventering tillagda. OneDrive-mappen `_inventory` skapad. |
-| 2026-11-15 | Första lokala PowerShell-baslinjen verifierad på datorn ROBERT: 8 523 filer i GitHub (2,396 GB), 385 filer i OneDrive\\Skogskoll (26,052 GB) och 1 295 filer på flyttbar enhet D: (3,211 GB). Totalt 10 203 filer, 0 fel. D: är verifierad som flyttbar enhet men måste identifieras fysiskt innan den dokumenteras som USB-backup. |
+| 2026-11-15 | Första lokala PowerShell-baslinjen verifierad på datorn ROBERT: 8 523 filer i GitHub (2,396 GB), 385 filer i OneDrive\\Skogskoll (26,052 GB) och 1 295 filer på flyttbar enhet D: (3,211 GB). Totalt 10 203 filer, 0 fel. D: är verifierad som flyttbar enhet men måste identifieras fysiskt innan den dokumenteras som USB-backup. JSON-granskningen visar dessutom Lastkajen 11,119 GB/24 filer och flera NVR-kopior på D:. SHA-256 saknas i baslinjen, så innehållslikhet är inte verifierad. |
 
 ---
 **Arbetsregel för framtida ändringar:** När vi i ett arbetsflöde skapar, flyttar, byter namn på, ersätter eller raderar en viktig fil-/dataplats ska vi samtidigt uppdatera `docs/STORAGE_INVENTORY.md` och ändringsloggen.
