@@ -7,6 +7,7 @@ import { join } from "node:path";
 import { writeFileSync, unlinkSync } from "node:fs";
 
 const html = readFileSync(new URL("../docs/bevakning-test.html", import.meta.url), "utf8");
+const productionHtml = readFileSync(new URL("../docs/bevakning.html", import.meta.url), "utf8");
 
 test("scrollprototypen är separat och behåller befintliga datakomponenter", () => {
   for (const id of ["storyLayout", "storyProgress", "storyProgressFill", "feed", "activityMap", "casePreview", "monthFilter", "forestFilter", "animalFilter"]) {
@@ -40,6 +41,19 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   assert.doesNotMatch(html, /<th>Senaste uttag<\/th>/);
   assert.match(html, /colspan="6" class="elkdata-empty"/);
   assert.match(html, /Till ordinarie sida/);
+});
+
+test("produktionssidan använder den godkända prototypen utan testmarkering", () => {
+  for (const id of ["storyLayout", "forestFilterGroup", "animalFilterGroup", "basemapImagery", "basemapStandard", "imageryDate", "activityMap", "casePreview"]) {
+    assert.match(productionHtml, new RegExp('id="' + id + '"'));
+  }
+  assert.match(productionHtml, /<title>Skogsbevakning – Nordmaling<\/title>/);
+  assert.doesNotMatch(productionHtml, /class="prototype-banner"|DESIGNTEST|Scrollprototyp ·/);
+  assert.match(productionHtml, /function setBasemap\(mode\)/);
+  assert.match(productionHtml, /standardColors=\{planned:"#d88a32",done:"#3e8b59",samrad:"#3e8b59"\}/);
+  assert.match(productionHtml, /imageryColors=\{planned:"#ff6238",done:"#00d5ef",samrad:"#f1e64b"\}/);
+  assert.match(productionHtml, /data-basemap="imagery"/);
+  assert.match(productionHtml, /data-basemap="standard"/);
 });
 
 test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händelseruta", () => {
