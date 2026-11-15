@@ -742,7 +742,6 @@ function setBasemap(mode){
   if(imagery){label.hidden=false;label.textContent="Kontrollerar bilddatum för kartans mitt …";scheduleImageryDateUpdate();}
   else{label.hidden=true;label.textContent="";}
  }
- for(const layer of activityLayers.values())layer.setStyle(styleFor(all.find(item=>itemKey(item)===layer.options?.itemKey)||{}));
  for(const [key,layer] of activityLayers){const item=all.find(candidate=>itemKey(candidate)===key);if(item)layer.setStyle(styleFor(item));}
 }
 function initMap(){
