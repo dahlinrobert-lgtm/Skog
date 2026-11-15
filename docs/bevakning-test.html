@@ -678,7 +678,7 @@ function formatImageryDate(attributes){
 }
 async function updateImageryDate(){
  const label=document.getElementById("imageryDate");
- if(!activityMap||!label)return;
+ if(baseMapMode!=="imagery"||!activityMap||!label)return;
  const requestId=++imageryDateRequest;
  const center=activityMap.getCenter();
  label.textContent="Kontrollerar bilddatum för kartans mitt …";
@@ -740,7 +740,7 @@ function setBasemap(mode){
  const label=document.getElementById("imageryDate");
  if(label){
   if(imagery){label.hidden=false;label.textContent="Kontrollerar bilddatum för kartans mitt …";scheduleImageryDateUpdate();}
-  else{label.hidden=true;label.textContent="";}
+  else{if(imageryDateTimer)window.clearTimeout(imageryDateTimer);imageryDateTimer=null;imageryDateRequest++;label.hidden=true;label.textContent="";}
  }
  for(const [key,layer] of activityLayers){const item=all.find(candidate=>itemKey(candidate)===key);if(item)layer.setStyle(styleFor(item));}
 }
