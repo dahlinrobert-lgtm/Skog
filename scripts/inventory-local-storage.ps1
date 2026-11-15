@@ -14,11 +14,17 @@ $timestamp = (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
 
 if (-not $Roots -or $Roots.Count -eq 0) {
     $candidateRoots = @()
-    $githubRoot = Join-Path $HOME "GitHub"
+    $profileRoot = $env:USERPROFILE
+    if (-not $profileRoot) { $profileRoot = $HOME }
+    $githubRoot = Join-Path $profileRoot "GitHub"
     if (Test-Path -LiteralPath $githubRoot) { $candidateRoots += $githubRoot }
 
     $oneDriveRoot = $env:OneDrive
     if (-not $oneDriveRoot) { $oneDriveRoot = $env:OneDriveCommercial }
+    if (-not $oneDriveRoot) {
+        $personalCandidate = Join-Path $profileRoot "OneDrive"
+        if (Test-Path -LiteralPath $personalCandidate) { $oneDriveRoot = $personalCandidate }
+    }
     if ($oneDriveRoot) {
         $skogskollRoot = Join-Path $oneDriveRoot "Skogskoll"
         if (Test-Path -LiteralPath $skogskollRoot) { $candidateRoots += $skogskollRoot }
@@ -47,8 +53,14 @@ if (-not $Roots -or $Roots.Count -eq 0) {
 }
 
 if (-not $OutputDirectory) {
+    $profileRoot = $env:USERPROFILE
+    if (-not $profileRoot) { $profileRoot = $HOME }
     $oneDriveRoot = $env:OneDrive
     if (-not $oneDriveRoot) { $oneDriveRoot = $env:OneDriveCommercial }
+    if (-not $oneDriveRoot) {
+        $personalCandidate = Join-Path $profileRoot "OneDrive"
+        if (Test-Path -LiteralPath $personalCandidate) { $oneDriveRoot = $personalCandidate }
+    }
     if ($oneDriveRoot -and (Test-Path -LiteralPath $oneDriveRoot)) {
         $OutputDirectory = Join-Path (Join-Path $oneDriveRoot "Skogskoll") "_inventory"
     } else {
