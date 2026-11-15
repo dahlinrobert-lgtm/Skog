@@ -553,6 +553,7 @@ let elkAreas=[];
 let elkSnapshotDate=null;
 let elkLoadError=null;
 let animalMode="all";
+let activeFilterCategory="forest";
 let sourceWarnings=[];
 let activityMap=null;
 let activityLayer=null;
@@ -821,8 +822,8 @@ function render(){
  const isNvr=mode==="collisions";
  const list=(isElk||isNvr)?[]:filtered();
  document.getElementById("forestFilterGroup").hidden=false;
- document.getElementById("forestFilterGroup").classList.toggle("is-active",!isElk&&!isNvr);
- document.getElementById("animalFilterGroup").classList.toggle("is-active",isElk||isNvr);
+ document.getElementById("forestFilterGroup").classList.toggle("is-active",activeFilterCategory==="forest");
+ document.getElementById("animalFilterGroup").classList.toggle("is-active",activeFilterCategory==="animal");
  document.getElementById("monthFilter").disabled=isElk||isNvr;
  document.querySelector(".map-card").hidden=isElk||isNvr;
  document.getElementById("storyLayout").classList.toggle("is-elk",isElk||isNvr);
@@ -1007,12 +1008,15 @@ function bindControls(){
   const button=event.target.closest("button[data-kind]");
   if(!button)return;
   document.querySelectorAll("#forestFilter button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+  activeFilterCategory="forest";
+  document.getElementById("animalMode").value="forest";
   render();
  });
  document.getElementById("monthFilter").addEventListener("change",render);
  document.getElementById("search").addEventListener("input",render);
  document.querySelectorAll("#animalFilter button").forEach(button=>button.addEventListener("click",()=>{
   document.querySelectorAll("#animalFilter button").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+  activeFilterCategory="animal";
   const mode=button.dataset.animal;
   document.getElementById("animalMode").value=mode==="hunting"?"hunting":mode==="collisions"?"collisions":"forest";
   render();
