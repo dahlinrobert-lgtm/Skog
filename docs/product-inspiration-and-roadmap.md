@@ -193,3 +193,8 @@ Acceptanskriterier:
 - Skogsradar – datakällor, licenser och årgångar: https://www.skogsradar.se/datakallor
 - Skogsstyrelsen – nationella skogliga grunddataprodukter: https://www.skogsstyrelsen.se/en/digital-open-forest-data/national-forest-attribute-maps/
 
+
+
+## 10. Scrollprototyp för bevakningsflödet
+
+En separat testvy, `docs/bevakning-test.html`, används för att utvärdera en mer berättande scrollupplevelse utan att ändra den ordinarie `docs/bevakning.html`. Prototypen behåller befintlig datainläsning, filtrering och kart-/ärendekoppling, men lägger till en vertikal händelsetidslinje, progressindikator, diskreta scrollinträden och synkronisering av vald händelse med kartpanelen. Kartan ligger bredvid flödet på större skärmar och staplas under flödet på mobil. Animationer ska respektera `prefers-reduced-motion`. Testvyn är experimentell och får inte bli officiell innan manuell kontroll av data, mobil, tillgänglighet och prestanda.
