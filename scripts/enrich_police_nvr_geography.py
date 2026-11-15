@@ -15,6 +15,7 @@ from pathlib import Path
 import pyogrio
 from pyproj import CRS, Transformer
 from shapely.geometry import Point
+from shapely.ops import linemerge, substring, unary_union
 
 
 ROAD_LAYER = "NVDB_DK_O_111_Vagnummer"
@@ -122,6 +123,144 @@ def find_named_place_matches(crossings, reference: str):
     return term, crossings.loc[name_mask | traffic_mask].copy()
 
 
+
+def _line_components(geometry):
+    """Flatten line-like geometries after merging connected road features."""
+    if geometry is None or geometry.is_empty:
+        return []
+    if geometry.geom_type == "LineString":
+        return [geometry]
+    if geometry.geom_type in {"MultiLineString", "GeometryCollection"}:
+        result = []
+        for part in geometry.geoms:
+            result.extend(_line_components(part))
+        return result
+    return []
+
+
+def build_segment_evidence(
+    point,
+    roads,
+    crossings,
+    parsed_road,
+    segment_from: str,
+    segment_to: str,
+    anchor_snap_radius: float = 500,
+    segment_search_radius: float = 100,
+) -> dict[str, str]:
+    """Measure a candidate against the named road section between two anchors.
+
+    The route geometry is built only from a connected component of the stated
+    road network that can be snapped to both named NVDB crossing references.
+    It is diagnostic evidence only and never changes temporal matching.
+    """
+    result = {
+        "geo_segment_route_status": "not_applicable",
+        "geo_segment_distance_m": "",
+        "geo_segment_within_radius": "",
+        "geo_segment_length_m": "",
+        "geo_segment_from_anchor_distance_m": "",
+        "geo_segment_to_anchor_distance_m": "",
+        "geo_segment_from_anchor_element_id": "",
+        "geo_segment_to_anchor_element_id": "",
+        "geo_segment_candidate_count": "0",
+        "geo_segment_road_feature_count": "0",
+    }
+    start_ref, end_ref = clean_text(segment_from), clean_text(segment_to)
+    if not start_ref or not end_ref:
+        result["geo_segment_route_status"] = "segment_reference_missing"
+        return result
+    if parsed_road is None:
+        result["geo_segment_route_status"] = "stated_road_unparsed"
+        return result
+
+    _, start_places = find_named_place_matches(crossings, start_ref)
+    _, end_places = find_named_place_matches(crossings, end_ref)
+    if start_places.empty or end_places.empty:
+        result["geo_segment_route_status"] = "segment_anchor_not_found"
+        return result
+
+    kind, number = parsed_road
+    if kind == "european":
+        mask = roads["Europavag"].astype(str).str.casefold().eq("ja") & (
+            roads["Huvudnummer"].astype(str).eq(str(number))
+        )
+    else:
+        mask = roads["Europavag"].astype(str).str.casefold().eq("nej") & (
+            roads["Huvudnummer"].astype(str).eq(str(number))
+        )
+    stated = roads.loc[mask]
+    result["geo_segment_road_feature_count"] = str(len(stated))
+    if stated.empty:
+        result["geo_segment_route_status"] = "no_matching_stated_road_features"
+        return result
+
+    geometries = [geometry for geometry in stated.geometry if geometry is not None and not geometry.is_empty]
+    if not geometries:
+        result["geo_segment_route_status"] = "stated_road_geometry_missing"
+        return result
+    merged = unary_union(geometries)
+    if merged.geom_type in {"MultiLineString", "GeometryCollection"}:
+        merged = linemerge(merged)
+    components = _line_components(merged)
+
+    candidates = []
+    for line in components:
+        for _, start_row in start_places.iterrows():
+            start_geom = start_row.geometry
+            start_anchor = start_geom if start_geom.geom_type == "Point" else start_geom.representative_point()
+            start_distance = float(line.distance(start_anchor))
+            if start_distance > anchor_snap_radius:
+                continue
+            for _, end_row in end_places.iterrows():
+                end_geom = end_row.geometry
+                end_anchor = end_geom if end_geom.geom_type == "Point" else end_geom.representative_point()
+                end_distance = float(line.distance(end_anchor))
+                if end_distance > anchor_snap_radius:
+                    continue
+                start_measure = float(line.project(start_anchor))
+                end_measure = float(line.project(end_anchor))
+                section = substring(line, min(start_measure, end_measure), max(start_measure, end_measure))
+                if section is None or section.is_empty:
+                    continue
+                candidates.append({
+                    "snap_sum": start_distance + end_distance,
+                    "max_snap": max(start_distance, end_distance),
+                    "line_length": float(line.length),
+                    "section": section,
+                    "start_distance": start_distance,
+                    "end_distance": end_distance,
+                    "start_id": clean_text(start_row.get("ELEMENT_ID")),
+                    "end_id": clean_text(end_row.get("ELEMENT_ID")),
+                })
+
+    result["geo_segment_candidate_count"] = str(len(candidates))
+    if not candidates:
+        result["geo_segment_route_status"] = "no_connected_road_component_within_anchor_radius"
+        return result
+
+    # Select the best anchor fit without consulting the NVR candidate point.
+    candidates.sort(key=lambda item: (
+        item["snap_sum"], item["max_snap"], item["line_length"],
+        item["start_id"], item["end_id"],
+    ))
+    chosen = candidates[0]
+    distance = float(point.distance(chosen["section"]))
+    result.update({
+        "geo_segment_route_status": (
+            "multiple_segment_paths_review" if len(candidates) > 1 else "segment_built"
+        ),
+        "geo_segment_distance_m": f"{distance:.1f}",
+        "geo_segment_within_radius": "yes" if distance <= segment_search_radius else "no",
+        "geo_segment_length_m": f"{float(chosen['section'].length):.1f}",
+        "geo_segment_from_anchor_distance_m": f"{chosen['start_distance']:.1f}",
+        "geo_segment_to_anchor_distance_m": f"{chosen['end_distance']:.1f}",
+        "geo_segment_from_anchor_element_id": chosen["start_id"],
+        "geo_segment_to_anchor_element_id": chosen["end_id"],
+    })
+    return result
+
+
 def enrich_candidate(
     row: dict[str, str],
     roads,
@@ -131,6 +270,8 @@ def enrich_candidate(
     crossing_radius: float,
     traffic_place_radius: float,
     intersection_radius: float,
+    segment_anchor_snap_radius: float,
+    segment_search_radius: float,
 ) -> dict[str, str]:
     out = dict(row)
     lat = safe_float(first_value(row, (
@@ -235,6 +376,14 @@ def enrich_candidate(
         out["geo_stated_road_role"] = ""
         out["geo_stated_road_within_radius"] = "unparsed_police_road"
 
+    out.update(build_segment_evidence(
+        point, roads, crossings, parsed_road,
+        clean_text(row.get("police_segment_from")),
+        clean_text(row.get("police_segment_to")),
+        anchor_snap_radius=segment_anchor_snap_radius,
+        segment_search_radius=segment_search_radius,
+    ))
+
     crossing_distances = crossings.geometry.distance(point)
     nearby = crossings.loc[crossing_distances <= crossing_radius].copy()
     nearby["geo_distance_m"] = crossing_distances.loc[nearby.index]
@@ -305,6 +454,8 @@ def enrich_candidate(
         "crossing_search_radius_m": crossing_radius,
         "traffic_place_radius_m": traffic_place_radius,
         "simple_intersection_radius_m": intersection_radius,
+        "segment_anchor_snap_radius_m": segment_anchor_snap_radius,
+        "segment_search_radius_m": segment_search_radius,
     }, ensure_ascii=False, sort_keys=True)
     return out
 
@@ -321,6 +472,10 @@ def main():
     parser.add_argument("--crossing-search-radius-m", type=float, default=300)
     parser.add_argument("--traffic-place-radius-m", type=float, default=150)
     parser.add_argument("--simple-intersection-radius-m", type=float, default=100)
+    parser.add_argument("--segment-anchor-snap-radius-m", type=float, default=500,
+                        help="Maximum distance from each named anchor to the stated road network.")
+    parser.add_argument("--segment-search-radius-m", type=float, default=100,
+                        help="Review threshold for distance to the road section between named anchors.")
     args = parser.parse_args()
 
     if not args.nvdb_gpkg.is_file():
@@ -328,6 +483,7 @@ def main():
     for value in (
         args.road_search_radius_m, args.crossing_search_radius_m,
         args.traffic_place_radius_m, args.simple_intersection_radius_m,
+        args.segment_anchor_snap_radius_m, args.segment_search_radius_m,
     ):
         if value < 0:
             parser.error("All distance thresholds must be non-negative.")
@@ -352,6 +508,7 @@ def main():
             row, roads, crossings, transformer,
             args.road_search_radius_m, args.crossing_search_radius_m,
             args.traffic_place_radius_m, args.simple_intersection_radius_m,
+            args.segment_anchor_snap_radius_m, args.segment_search_radius_m,
         )
         for row in candidates
     ]
