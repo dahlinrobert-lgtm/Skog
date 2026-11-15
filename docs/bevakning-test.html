@@ -597,9 +597,9 @@ function formatImageryDate(attributes){
  let date=null;
  if(typeof rawDate==="number"&&rawDate>100000000000){
   date=new Date(rawDate);
- }else if(typeof rawDate==="number"||/^\\d{8}$/.test(String(rawDate||""))){
+ }else if(typeof rawDate==="number"||/^\d{8}$/.test(String(rawDate||""))){
   const value=String(rawDate);
-  if(/^\\d{8}$/.test(value))date=new Date(Number(value.slice(0,4)),Number(value.slice(4,6))-1,Number(value.slice(6,8)));
+  if(/^\d{8}$/.test(value))date=new Date(Number(value.slice(0,4)),Number(value.slice(4,6))-1,Number(value.slice(6,8)));
  }else if(rawDate){
   const parsed=new Date(rawDate);
   if(!Number.isNaN(parsed.getTime()))date=parsed;
