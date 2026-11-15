@@ -3,9 +3,11 @@ on:
   pull_request:
     paths:
       - "docs/bevakning.html"
+      - "docs/bevakning-test.html"
       - "docs/bevakning-core.mjs"
       - "tests/bevakning-core.test.mjs"
       - "scripts/test_bevakning_page.mjs"
+      - "scripts/test_bevakning_scroll_prototype.mjs"
       - ".github/workflows/test-bevakning.yml"
   push:
     branches: [main]
@@ -27,3 +29,5 @@ jobs:
         run: node --test tests/bevakning-core.test.mjs
       - name: Validate page markup and inline JavaScript
         run: node --test scripts/test_bevakning_page.mjs
+      - name: Validate scroll prototype and inline JavaScript
+        run: node --test scripts/test_bevakning_scroll_prototype.mjs
