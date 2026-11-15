@@ -90,7 +90,8 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Senaste manuellt granskade urvalet omfattade 8 primära kandidatpar och 6 fördröjda kandidatpar. Ingen kandidat är bekräftad. Bland de starkaste geografiska observationerna finns riksväg 97/Notviken, länsväg 383/Smedsbyn och E4/Rutvik–Måttsund.
 - `2026-358465` ligger geografiskt nära E4 och Måttsund-referensen; det ger starkare platsstöd för polisuppgift `509449:2` (Måttsund) än för `509449:1` (Norra Rutvik). Behåll båda kandidatkopplingarna i granskningsunderlaget tills manuell bedömning är gjord.
 - Fördröjda kandidater ska ligga i separat fil och får inte tolkas som fynd-/eftersökstid; semantiken för NVR-fältet `Datum` är inte verifierad.
-- Regression-workflowen `.github/workflows/police-nvr-matching-tests.yml` har passerat 57 riktade tester och den breda `snapshot-store-tests.yml`-workflowen har passerat 272 tester (2026-11-15). Den senare behövde kompletteras med GeoPandas/Pyogrio eftersom den kör hela testsviten. Nästa steg är att köra berikningen på de faktiska lokala Luleå-filerna, kontrollera segmentet Södra Sunderbyn–Notviken och granska de fyra starkaste primära kandidaterna. Ingen nationell NVDB-utökning i detta steg.
+- Regression-workflowen `.github/workflows/police-nvr-matching-tests.yml` har passerat 57 riktade tester och den breda `snapshot-store-tests.yml`-workflowen har passerat 272 tester (2026-11-15). Den senare behövde kompletteras med GeoPandas/Pyogrio eftersom den kör hela testsviten.
+- Nästa steg är att köra berikningen på de faktiska lokala Luleå-filerna, kontrollera segmentet Södra Sunderbyn–Notviken och granska de fyra starkaste primära kandidaterna. Ingen nationell NVDB-utökning i detta steg.
 
 ### Lantmäteriet – Fastighetsindelning Direkt
 - Beställnings-/ärende-ID: LM2026/171963 och LM2026/171968 (registrerade 2026-11-13).
@@ -111,7 +112,17 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 5. Fortsätt utöka `operations`-fält i källregistret endast när det finns konkret evidens.
 6. Håll den automatiska statusrapporten och denna överlämningsfil uppdaterade när beslut eller arbetssätt ändras.
 
-## 7. Hur en ny chatt ska arbeta vidare
+
+
+## 8. Bevakningsflöde – experimentell scrollprototyp
+
+- En separat testvy finns i `docs/bevakning-test.html`; den ordinarie `docs/bevakning.html` är oförändrad.
+- Prototypen har en vertikal händelsetidslinje, läsprogress, diskreta scrollövergångar och synkronisering mellan aktiv händelse och kart-/ärendepanel. På mobil staplas flöde och karta.
+- Prototypen använder befintlig datainläsning, filter och kartfunktioner. Animationer respekterar `prefers-reduced-motion`.
+- PR #370 är sammanslagen. Automatiska bevakningstester och JavaScript-syntaxkontroll passerade i PR-körningen. Efterföljande push-/Pages-körningar ska kontrolleras separat.
+- **Nästa steg:** öppna testvyn när GitHub Pages-publiceringen är klar och gör manuell granskning av scrollkänsla, kartkoppling, mobil, tangentbordsnavigering och prestanda. Ersätt inte den officiella sidan innan användaren har godkänt resultatet.
+
+## 9. Hur en ny chatt ska arbeta vidare
 
 - Börja med att läsa denna fil, statusrapporten och datakälleöversikten.
 - Kontrollera sedan relevanta filer, senaste commits och GitHub Actions i repot. Dokumenterade datum är inte bevis för aktuell driftstatus.
