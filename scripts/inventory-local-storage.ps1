@@ -147,9 +147,9 @@ $report = [ordered]@{
     previous_snapshot = $previousSnapshotName
     roots = @($rootSummary)
     change_count = $changes.Count
-    changes = @($changes)
-    files = @($items)
-    errors = @($errors)
+    changes = $changes.ToArray()
+    files = $items.ToArray()
+    errors = $errors.ToArray()
 }
 
 $jsonPath = Join-Path $OutputDirectory "local-storage-inventory-$timestamp.json"
