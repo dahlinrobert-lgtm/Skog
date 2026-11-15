@@ -112,6 +112,8 @@ h2{margin:0;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.65rem);line-height:
 .feed{display:flex;flex-direction:column;gap:10px}
 .activity{display:grid;grid-template-columns:112px minmax(0,1fr);gap:18px;padding:17px 18px;border:1px solid #e7ece6;border-radius:15px;background:#fff;transition:border-color .18s,box-shadow .18s,transform .18s}
 .activity:hover{border-color:#cbdac9;box-shadow:0 8px 24px rgba(35,66,43,.06);transform:translateY(-1px)}
+.activity{cursor:pointer}
+.activity:focus-visible{outline:3px solid #d7ad67;outline-offset:3px}
 .date-block{padding-top:2px}
 .date{color:#315b3e;font-size:.88rem;font-weight:780;font-variant-numeric:tabular-nums}
 .date-year{display:block;margin-top:3px;color:#9aa39b;font-size:.72rem}
@@ -693,7 +695,7 @@ function render(){
   const props=get(p,"Beteckn","Beteckning");
   const d=x.date;
   const dateYear=d?String(d.getFullYear()):"";
-  return '<article class="activity'+(key===selectedKey?' is-selected':'')+'" data-key="'+esc(key)+'" data-kind="'+x.kind+'"><div class="date-block"><div class="date">'+esc(dateLabel(x.date))+'</div><span class="date-year">'+esc(dateYear)+'</span></div><div class="activity-main"><div class="activity-top"><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span></div><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><div class="activity-actions"><button class="activity-action preview-action" type="button" data-select="'+esc(key)+'">Förhandsvisa ärende</button><a class="activity-action map-action" href="'+esc(mapUrl(x))+'">Öppna kartan ↗</a></div></div></article>';
+  return '<article class="activity'+(key===selectedKey?' is-selected':'')+'" data-key="'+esc(key)+'" data-kind="'+x.kind+'" tabindex="0" aria-label="Visa '+esc(x.activityType)+' på kartan"><div class="date-block"><div class="date">'+esc(dateLabel(x.date))+'</div><span class="date-year">'+esc(dateYear)+'</span></div><div class="activity-main"><div class="activity-top"><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span></div><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><div class="activity-actions"><a class="activity-action map-action" href="'+esc(mapUrl(x))+'">Öppna kartan ↗</a></div></div></article>';
  }).join(""):'<div class="empty">Inga aktiviteter matchar filtren för '+CURRENT_YEAR+'. Det kan också betyda att källan inte returnerar data för detta kommunfilter.</div>';
  const periods=getComparisonPeriods(CURRENT_YEAR,document.getElementById("monthFilter").value,new Date());
  const current=all.filter(x=>x.date&&x.date>=periods.currentStart&&x.date<periods.currentEnd);
@@ -840,16 +842,24 @@ function bindControls(){
  window.addEventListener("skog:elkdata-error",event=>{elkLoadError=event.detail.message||"Okänt fel";render();});
  document.getElementById("reload").addEventListener("click",()=>window.dispatchEvent(new Event("skog:elkdata-refresh")));
  document.getElementById("reload").addEventListener("click",load);
+ const activateCard=card=>{
+  const item=all.find(x=>itemKey(x)===card.dataset.key);
+  if(!item)return;
+  if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+  storyPendingKey=itemKey(item);
+  storyActiveKey=storyPendingKey;
+  selectActivity(item,true);
+ };
  document.getElementById("feed").addEventListener("click",event=>{
-  const button=event.target.closest("[data-select]");
-  if(!button)return;
-  const item=all.find(x=>itemKey(x)===button.dataset.select);
-  if(item){
-   if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
-   storyPendingKey=itemKey(item);
-   storyActiveKey=storyPendingKey;
-   selectActivity(item,true);
-  }
+  if(event.target.closest("a"))return;
+  const card=event.target.closest(".activity[data-key]");
+  if(card)activateCard(card);
+ });
+ document.getElementById("feed").addEventListener("keydown",event=>{
+  const card=event.target.closest(".activity[data-key]");
+  if(!card||event.target!==card||!(event.key==="Enter"||event.key===" "))return;
+  event.preventDefault();
+  activateCard(card);
  });
 }
 initMap();
