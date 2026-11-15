@@ -90,7 +90,7 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Senaste manuellt granskade urvalet omfattade 8 primära kandidatpar och 6 fördröjda kandidatpar. Ingen kandidat är bekräftad. Bland de starkaste geografiska observationerna finns riksväg 97/Notviken, länsväg 383/Smedsbyn och E4/Rutvik–Måttsund.
 - `2026-358465` ligger geografiskt nära E4 och Måttsund-referensen; det ger starkare platsstöd för polisuppgift `509449:2` (Måttsund) än för `509449:1` (Norra Rutvik). Behåll båda kandidatkopplingarna i granskningsunderlaget tills manuell bedömning är gjord.
 - Fördröjda kandidater ska ligga i separat fil och får inte tolkas som fynd-/eftersökstid; semantiken för NVR-fältet `Datum` är inte verifierad.
-- Nästa steg: kör den nya regression-workflowen `.github/workflows/police-nvr-matching-tests.yml`, använd NVDB-linjernas geometri för att kontrollera segmentet Södra Sunderbyn–Notviken, och granska de fyra starkaste primära kandidaterna. Ingen nationell NVDB-utökning i detta steg.
+- Regression-workflowen `.github/workflows/police-nvr-matching-tests.yml` har passerat 57 tester (2026-11-15). Nästa steg är att köra berikningen på de faktiska lokala Luleå-filerna, kontrollera segmentet Södra Sunderbyn–Notviken och granska de fyra starkaste primära kandidaterna. Ingen nationell NVDB-utökning i detta steg.
 
 ### Lantmäteriet – Fastighetsindelning Direkt
 - Beställnings-/ärende-ID: LM2026/171963 och LM2026/171968 (registrerade 2026-11-13).
