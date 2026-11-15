@@ -85,15 +85,17 @@ test("kartan använder flyg-/satellitbilder och visar platsbaserat bilddatum", (
   assert.doesNotMatch(html, /Kartan ger geografisk kontext till det valda bevakningsflödet/);
 });
 
-test("inline module script passes Node syntax validation", () => {
-  const match = html.match(/<script type="module">([\s\S]*?)<\/script>/);
-  assert.ok(match, "module script should exist");
-  const temp = join(tmpdir(), "skog-bevakning-scroll-check-" + process.pid + ".mjs");
-  try {
-    writeFileSync(temp, match[1].replace(/^import .*bevakning-core\.mjs";\s*/m, ""));
-    const result = spawnSync(process.execPath, ["--check", temp], { encoding: "utf8" });
-    assert.equal(result.status, 0, result.stderr || result.stdout);
-  } finally {
-    try { unlinkSync(temp); } catch {}
+test("prototype and production inline module scripts pass Node syntax validation", () => {
+  for (const [label, source] of [["prototype", html], ["production", productionHtml]]) {
+    const match = source.match(/<script type="module">([\s\S]*?)<\/script>/);
+    assert.ok(match, label + " module script should exist");
+    const temp = join(tmpdir(), "skog-bevakning-" + label + "-check-" + process.pid + ".mjs");
+    try {
+      writeFileSync(temp, match[1].replace(/^import .*bevakning-core\.mjs";\s*/m, ""));
+      const result = spawnSync(process.execPath, ["--check", temp], { encoding: "utf8" });
+      assert.equal(result.status, 0, result.stderr || result.stdout);
+    } finally {
+      try { unlinkSync(temp); } catch {}
+    }
   }
 });
