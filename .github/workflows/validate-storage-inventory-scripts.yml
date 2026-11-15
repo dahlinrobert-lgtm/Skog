@@ -1,0 +1,44 @@
+name: Validate storage inventory scripts
+
+on:
+  push:
+    paths:
+      - "scripts/inventory-local-storage.ps1"
+      - "scripts/install-local-storage-inventory-task.ps1"
+      - ".github/workflows/validate-storage-inventory-scripts.yml"
+  pull_request:
+    paths:
+      - "scripts/inventory-local-storage.ps1"
+      - "scripts/install-local-storage-inventory-task.ps1"
+      - ".github/workflows/validate-storage-inventory-scripts.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  powershell-parse:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse PowerShell scripts
+        shell: pwsh
+        run: |
+          $files = @(
+            "scripts/inventory-local-storage.ps1",
+            "scripts/install-local-storage-inventory-task.ps1"
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file),
+              [ref]$tokens,
+              [ref]$errors
+            ) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error $_.Message }
+              throw "PowerShell parse failed: $file"
+            }
+            Write-Host "OK: $file"
+          }
