@@ -17,6 +17,13 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   assert.match(html, /data-kind="samrad"[^>]*>Samråd/);
   assert.match(html, /data-animal="collisions"[^>]*>Viltolyckor/);
   assert.match(html, /data-animal="hunting"[^>]*>Jakt/);
+  assert.match(html, /id="forestFilterGroup"[^>]*aria-labelledby="forestFilterHeading"/);
+  assert.match(html, /id="forestFilterHeading"[^>]*>[\s\S]*?Skog[\s\S]*?<svg/);
+  assert.match(html, /id="animalFilterGroup"[^>]*aria-labelledby="animalFilterHeading"/);
+  assert.match(html, /id="animalFilterHeading"[^>]*>[\s\S]*?Djur[\s\S]*?<svg/);
+  assert.match(html, /\.filter-group-heading\{height:37px/);
+  assert.match(html, /html\[data-theme="dark"\] \.filter-group-heading/);
+  assert.match(html, /getElementById\("forestFilterGroup"\)\.hidden=isElk\|\|isNvr/);
   assert.match(html, /GeodataportalVisaSamrad\/MapServer\/0\/query/);
   assert.match(html, /GeodataportalVisaSamrad\/MapServer\/1\/query/);
   assert.match(html, /GeodataportalVisaSamrad\/MapServer\/2\/query/);
