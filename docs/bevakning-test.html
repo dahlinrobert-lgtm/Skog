@@ -750,6 +750,36 @@ let storyObserver=null;
 let storyActiveKey=null;
 let storyScrollHandler=null;
 let storyResizeHandler=null;
+let storyPreviewTimer=null;
+let storyPendingKey=null;
+const STORY_PREVIEW_DELAY=250;
+function activeStoryCard(cards){
+ const candidates=cards.filter(card=>{
+  const rect=card.getBoundingClientRect();
+  return rect.top<window.innerHeight*.68&&rect.bottom>window.innerHeight*.32;
+ });
+ candidates.sort((a,b)=>
+  Math.abs(a.getBoundingClientRect().top+a.offsetHeight/2-window.innerHeight/2)-
+  Math.abs(b.getBoundingClientRect().top+b.offsetHeight/2-window.innerHeight/2)
+ );
+ return candidates[0]||null;
+}
+function scheduleStoryPreview(card,list,cards){
+ if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+ storyPendingKey=card?.dataset.key||null;
+ if(!card)return;
+ const key=storyPendingKey;
+ storyPreviewTimer=window.setTimeout(()=>{
+  storyPreviewTimer=null;
+  const stillActive=activeStoryCard(cards);
+  if(!stillActive||stillActive.dataset.key!==key)return;
+  const item=list.find(candidate=>itemKey(candidate)===key);
+  if(item){
+   storyActiveKey=key;
+   selectActivity(item,false);
+  }
+ },STORY_PREVIEW_DELAY);
+}
 function setupScrollExperience(list){
  const layout=document.getElementById("storyLayout");
  const feed=document.getElementById("feed");
@@ -759,6 +789,8 @@ function setupScrollExperience(list){
  if(storyObserver){storyObserver.disconnect();storyObserver=null;}
  if(storyScrollHandler)window.removeEventListener("scroll",storyScrollHandler);
  if(storyResizeHandler)window.removeEventListener("resize",storyResizeHandler);
+ if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+ storyPendingKey=null;
  storyActiveKey=null;
  if(!cards.length){progress.hidden=true;fill.style.width="0%";progress.setAttribute("aria-valuenow","0");return;}
  progress.hidden=false;
@@ -767,13 +799,7 @@ function setupScrollExperience(list){
   cards.forEach(card=>card.classList.add("story-reveal"));
   storyObserver=new IntersectionObserver(entries=>{
    entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("is-visible");});
-   const candidates=cards.filter(card=>{const rect=card.getBoundingClientRect();return rect.top<window.innerHeight*.68&&rect.bottom>window.innerHeight*.32;});
-   candidates.sort((a,b)=>Math.abs(a.getBoundingClientRect().top+a.offsetHeight/2-window.innerHeight/2)-Math.abs(b.getBoundingClientRect().top+b.offsetHeight/2-window.innerHeight/2));
-   const active=candidates[0];
-   if(active&&active.dataset.key!==storyActiveKey){
-    const item=list.find(candidate=>itemKey(candidate)===active.dataset.key);
-    if(item){storyActiveKey=active.dataset.key;selectActivity(item,false);}
-   }
+   scheduleStoryPreview(activeStoryCard(cards),list,cards);
   },{threshold:[0,.15,.45],rootMargin:"-12% 0px -12% 0px"});
   cards.forEach(card=>storyObserver.observe(card));
  }else{
@@ -787,8 +813,13 @@ function setupScrollExperience(list){
   const amount=Math.min(1,Math.max(0,(window.innerHeight*.28-rect.top)/travel));
   fill.style.width=(amount*100).toFixed(1)+"%";
   progress.setAttribute("aria-valuenow",String(Math.round(amount*100)));
+  scheduleStoryPreview(activeStoryCard(cards),list,cards);
  };
- storyScrollHandler=()=>{if(!ticking){ticking=true;window.requestAnimationFrame(update);}};
+ storyScrollHandler=()=>{
+  if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+  storyPendingKey=null;
+  if(!ticking){ticking=true;window.requestAnimationFrame(update);}
+ };
  storyResizeHandler=update;
  window.addEventListener("scroll",storyScrollHandler,{passive:true});
  window.addEventListener("resize",storyResizeHandler);
@@ -813,7 +844,12 @@ function bindControls(){
   const button=event.target.closest("[data-select]");
   if(!button)return;
   const item=all.find(x=>itemKey(x)===button.dataset.select);
-  if(item)selectActivity(item,true);
+  if(item){
+   if(storyPreviewTimer){window.clearTimeout(storyPreviewTimer);storyPreviewTimer=null;}
+   storyPendingKey=itemKey(item);
+   storyActiveKey=storyPendingKey;
+   selectActivity(item,true);
+  }
  });
 }
 initMap();

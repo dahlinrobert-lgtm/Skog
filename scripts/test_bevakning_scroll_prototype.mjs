@@ -17,11 +17,15 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   assert.match(html, /Till ordinarie sida/);
 });
 
-test("scrollupplevelsen har tillgänglig reserv utan animation", () => {
+test("scrollupplevelsen har tillgänglig reserv och fördröjd kartförhandsvisning", () => {
   assert.match(html, /IntersectionObserver/);
   assert.match(html, /prefers-reduced-motion:\s*reduce/);
   assert.match(html, /aria-valuenow/);
   assert.match(html, /setupScrollExperience\(list\)/);
+  assert.match(html, /STORY_PREVIEW_DELAY=250/);
+  assert.match(html, /scheduleStoryPreview\(activeStoryCard\(cards\),list,cards\)/);
+  assert.match(html, /window\.clearTimeout\(storyPreviewTimer\)/);
+  assert.match(html, /stillActive\.dataset\.key!==key/);
 });
 
 test("inline module script passes Node syntax validation", () => {

@@ -13,7 +13,9 @@ on:
     branches: [main]
     paths:
       - "docs/bevakning.html"
+      - "docs/bevakning-test.html"
       - "docs/bevakning-core.mjs"
+      - "scripts/test_bevakning_scroll_prototype.mjs"
       - "tests/bevakning-core.test.mjs"
       - "scripts/test_bevakning_page.mjs"
       - ".github/workflows/test-bevakning.yml"
