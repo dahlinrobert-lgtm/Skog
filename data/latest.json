@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T14:08:00.786266Z",
+  "checked_at": "2026-11-15T15:06:20.742860Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -32848,73 +32848,7 @@
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [
-    {
-      "id": "S2B_MSIL2A_20261114T103209_N0513_R108_T34VDR_20261114T125155",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-14T10:32:09.024000Z",
-      "published_at": "2026-11-14T13:29:26.000000Z",
-      "cloud_cover_percent": 0.4,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        20.489907969785712,
-        64.02250502047073
-      ]
-    },
-    {
-      "id": "S2C_MSIL2A_20261113T101251_N0513_R022_T34VDR_20261113T124302",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-13T10:12:51.025000Z",
-      "published_at": "2026-11-13T13:16:50.000000Z",
-      "cloud_cover_percent": 99.99,
-      "bbox": [
-        18.956865816712828,
-        63.15284556099827,
-        21.1981508036854,
-        64.01735339135443
-      ]
-    },
-    {
-      "id": "S2A_MSIL2A_20261111T103201_N0513_R108_T34VDR_20261111T151001",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-11T10:32:01.024000Z",
-      "published_at": "2026-11-11T15:52:32.000000Z",
-      "cloud_cover_percent": 73.83,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        20.46124291831408,
-        64.02232282706697
-      ]
-    },
-    {
-      "id": "S2B_MSIL2A_20261111T102149_N0513_R065_T34VDR_20261111T144546",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-11T10:21:49.024000Z",
-      "published_at": "2026-11-11T15:17:22.000000Z",
-      "cloud_cover_percent": 83.16,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        21.199734465434084,
-        64.02701663648664
-      ]
-    },
-    {
-      "id": "S2C_MSIL2A_20261109T103241_N0513_R108_T34VDR_20261109T132302",
-      "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-09T10:32:41.025000Z",
-      "published_at": "2026-11-09T14:11:41.000000Z",
-      "cloud_cover_percent": 68.57,
-      "bbox": [
-        18.953501523280057,
-        63.02793322568484,
-        20.4926052390972,
-        64.02252216415796
-      ]
-    }
-  ],
+  "new_scenes_since_previous_run": [],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
