@@ -6,6 +6,7 @@ Follow changes in forest-related data around monitored properties and areas. Sko
 - [AI handover / start here in a new chat](docs/AI_HANDOVER.md): durable project state, decisions, priorities and instructions for continuing work.
 - [Automatic source status report](docs/SKOGSKOLL_SOURCE_STATUS.md): operational access, snapshot, history and reuse status generated from the source registry.
 - [Skogskoll – data sources, access and usage](docs/SKOGSKOLL_DATA_OVERVIEW.md): consolidated source inventory, snapshot/history status, licensing and external dependencies.
+- [Storage inventory – what is stored where](docs/STORAGE_INVENTORY.md): central register for GitHub, Azure, OneDrive, local disks and USB, including storage lifecycle rules.
 - [Product inspiration and roadmap](docs/product-inspiration-and-roadmap.md): lessons from Naturkartan and Skogsmonitor, current map capabilities, and prioritized next steps.
 
 ## Initial area
