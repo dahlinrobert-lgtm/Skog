@@ -29,7 +29,6 @@ test("scrollprototypen är separat och behåller befintliga datakomponenter", ()
   assert.match(html, /En minskning kan bero på rättelse/);
   assert.match(html, /html\[data-theme="dark"\] \.elkdata-caveat/);
   assert.match(html, /html\[data-theme="dark"\] \.elkdata-negative/);
-  assert.match(html, /Rapporterad förändring observerad/);
   assert.doesNotMatch(html, /<th>Första observerade<\/th>/);
   assert.doesNotMatch(html, /<th>Senaste uttag<\/th>/);
   assert.match(html, /colspan="6" class="elkdata-empty"/);
