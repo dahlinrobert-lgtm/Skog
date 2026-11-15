@@ -83,10 +83,25 @@ I `history` finns `legacy-events-2015-2021`, `legacy-event-snapshots`, `runs` oc
 |---|---|---|---|---|
 | PC-01 | Skog-repo | `C:\Users\dahli\GitHub\Skog` | Bekräftad | Lokal utvecklingskopia. |
 | PC-02 | Lokalt inventeringsskript | `scripts/inventory-local-storage.ps1` i Skog-repot | Bekräftad | Read-only inventering av valda rötter och valfritt USB. Rapporter sparas som standard i OneDrive `Skogskoll\_inventory` om OneDrive-synkroten finns. |
-| PC-03 | Övriga projekt, nedladdningar och temporära data | Datorns diskar | Ej inventerad | Kör inventeringsskriptet på valda projektmappar; undvik att lista privata personliga filer. |
-| USB-01 | Backup-/arkivmaterial | USB-minne, enhetsbokstav och katalog okända | Ej inventerad | Identifiera volymnamn, sökvägar, innehåll, datum och om kopian är enda eller kompletterande backup. |
+| PC-03 | GitHub-kloner på datorn | `C:\\Users\\dahli\\GitHub` | Bekräftad 2026-11-15 | Lokal inventering: 8 523 filer, cirka 2,396 GB. Omfattar samtliga filer under GitHub-katalogen, inte bara Skog-repot. |
+| PC-04 | OneDrive-synkad Skogskoll | `C:\\Users\\dahli\\OneDrive\\Skogskoll` | Bekräftad 2026-11-15 | Lokal inventering: 385 filer, cirka 26,052 GB. Avser den lokalt synkade/åtkomliga mappens innehåll vid inventeringstillfället. |
+| USB-01 | Flyttbar enhet D: | `D:\\` | Bekräftad som flyttbar enhet 2026-11-15 | Lokal inventering: 1 295 filer, cirka 3,211 GB. Volymnamn, fysisk enhetstyp och backupinnehåll behöver fortfarande identifieras innan den kan klassas som verifierad USB-backup. |
+| PC-05 | Övriga diskar, nedladdningar och temporära data utanför ovanstående rötter | Datorns övriga diskar | Ej inventerad | Den första körningen omfattade endast GitHub, OneDrive\\Skogskoll och den detekterade flyttbara enheten D:. |
 
 **Viktigt:** En lokal fil eller USB-kopia räknas inte som säkerhetskopia förrän den är identifierad, går att läsa och har jämförts med en känd originalkopia (helst SHA-256 för viktiga arkiv).
+
+### Lokal inventering – verifierad baslinje 2026-11-15
+
+PowerShell-körningen på datorn ROBERT slutfördes utan fel och skapade JSON- och Markdownrapporter i `OneDrive\\Skogskoll\\_inventory`. Sammanfattningen var:
+
+| Inventerad rot | Antal filer | Storlek |
+|---|---:|---:|
+| `C:\\Users\\dahli\\GitHub` | 8 523 | 2,396 GB |
+| `C:\\Users\\dahli\\OneDrive\\Skogskoll` | 385 | 26,052 GB |
+| `D:\\` (detekterad flyttbar enhet) | 1 295 | 3,211 GB |
+| **Totalt** | **10 203** | **31,659 GB** |
+
+Detta var första baslinjen (`baseline`), med 0 inventeringsfel. Rapporten är en inventering av dessa tre lokala rötter – den är inte en fullständig inventering av hela datorn eller av allt innehåll i OneDrive-molnet. JSON-rapporten innehåller filmetadata per fil; SHA-256 var inte aktiverat.
 
 ## 6. Vad som ska uppdateras när lagring ändras
 
@@ -159,7 +174,8 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 | Datum | Ändring |
 |---|---|
 | 2026-11-15 | Första samlade inventeringen skapad. Kända GitHub-repon, NVR-mappar i OneDrive, Kungjort-containrar i Azure samt känd lokal Skog-sökväg registrerade. |
-| 2026-11-15 | OneDrive inventerat via Microsoft Graph: Skogskoll-roten, NVR, historik/arbetsytor, Omdrev 1–3, Lastkajen, OpenStreetMap och Lantmäteriet dokumenterade med rapporterade storlekar. Read-only PowerShell-skript med förändringsdetektion och installerare för daglig lokal/USB-inventering tillagda. OneDrive-mappen `_inventory` skapad. PC/USB och Azure-containrar utöver Kungjort återstår. |
+| 2026-11-15 | OneDrive inventerat via Microsoft Graph: Skogskoll-roten, NVR, historik/arbetsytor, Omdrev 1–3, Lastkajen, OpenStreetMap och Lantmäteriet dokumenterade med rapporterade storlekar. Read-only PowerShell-skript med förändringsdetektion och installerare för daglig lokal/USB-inventering tillagda. OneDrive-mappen `_inventory` skapad. |
+| 2026-11-15 | Första lokala PowerShell-baslinjen verifierad på datorn ROBERT: 8 523 filer i GitHub (2,396 GB), 385 filer i OneDrive\\Skogskoll (26,052 GB) och 1 295 filer på flyttbar enhet D: (3,211 GB). Totalt 10 203 filer, 0 fel. D: är verifierad som flyttbar enhet men måste identifieras fysiskt innan den dokumenteras som USB-backup. |
 
 ---
 **Arbetsregel för framtida ändringar:** När vi i ett arbetsflöde skapar, flyttar, byter namn på, ersätter eller raderar en viktig fil-/dataplats ska vi samtidigt uppdatera `docs/STORAGE_INVENTORY.md` och ändringsloggen.
