@@ -56,10 +56,11 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /data-basemap="standard"/);
   assert.doesNotMatch(productionHtml, /getElementById\("forestFilterGroup"\)\.hidden=isElk\|\|isNvr/);
   assert.match(productionHtml, /getElementById\("forestFilterGroup"\)\.hidden=false/);
-  assert.match(productionHtml, /forestFilterGroup"\)\.classList\.toggle\("is-active",!isElk&&!isNvr\)/);
   assert.match(productionHtml, /let activeFilterCategory="forest"/);
   assert.match(productionHtml, /forestFilterGroup"\)\.classList\.toggle\("is-active",activeFilterCategory==="forest"\)/);
   assert.match(productionHtml, /animalFilterGroup"\)\.classList\.toggle\("is-active",activeFilterCategory==="animal"\)/);
+  assert.match(productionHtml, /activeFilterCategory="forest"/);
+  assert.match(productionHtml, /activeFilterCategory="animal"/);
   assert.match(productionHtml, /activeFilterCategory="forest";[\s\S]*?animalMode/);
   assert.match(productionHtml, /activeFilterCategory="animal";[\s\S]*?const mode=button\.dataset\.animal/);
   assert.match(productionHtml, /\.filter-group\.is-active \.filter-group-heading\{/);
