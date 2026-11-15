@@ -28,9 +28,7 @@ try {
     $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $actionArgs
     $trigger = New-ScheduledTaskTrigger -Daily -At $time
     $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -WakeToRun -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Hours 4)
-    $principal = New-ScheduledTaskPrincipal -UserId $user -LogonType Password -RunLevel Limited
-
-    Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal -User $user -Password $plainPassword -Description "Read-only local inventory. Runs in the background while signed out; report files are written to the local OneDrive sync folder for synchronization after the user signs in." -Force | Out-Null
+    Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -User $user -Password $plainPassword -RunLevel Limited -Description "Read-only local inventory. Runs in the background while signed out; report files are written to the local OneDrive sync folder for synchronization after the user signs in." -Force | Out-Null
 }
 finally {
     $plainPassword = $null
@@ -43,4 +41,4 @@ Write-Host "Runs daily at $RunAt, including while the user is signed out."
 Write-Host "WakeToRun is enabled; hibernate wake still requires Windows wake timers and firmware support."
 Write-Host "IMPORTANT: OneDrive sync does not normally run in a signed-out session. Reports are written to the local OneDrive folder and sync after the next sign-in."
 Write-Host "The computer cannot be started from a fully powered-off state by this task."
-Write-Host "To remove later: Unregister-ScheduledTask -TaskName '$TaskName' -Confirm:\$false"
+Write-Host "To remove later: Unregister-ScheduledTask -TaskName '$TaskName' -Confirm:$false"
