@@ -693,7 +693,7 @@ function render(){
   const props=get(p,"Beteckn","Beteckning");
   const d=x.date;
   const dateYear=d?String(d.getFullYear()):"";
-  return '<article class="activity'+(key===selectedKey?' is-selected':'')+'" data-key="'+esc(key)+'"><div class="date-block"><div class="date">'+esc(dateLabel(x.date))+'</div><span class="date-year">'+esc(dateYear)+'</span></div><div class="activity-main"><div class="activity-top"><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span></div><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><div class="activity-actions"><button class="activity-action preview-action" type="button" data-select="'+esc(key)+'">Förhandsvisa ärende</button><a class="activity-action map-action" href="'+esc(mapUrl(x))+'">Öppna kartan ↗</a></div></div></article>';
+  return '<article class="activity'+(key===selectedKey?' is-selected':'')+'" data-key="'+esc(key)+'" data-kind="'+x.kind+'"><div class="date-block"><div class="date">'+esc(dateLabel(x.date))+'</div><span class="date-year">'+esc(dateYear)+'</span></div><div class="activity-main"><div class="activity-top"><span class="kind '+(x.kind==="planned"?"planned":"done")+'">'+esc(x.label)+'</span></div><div class="title">'+esc(x.activityType)+'</div><div class="meta"><span>'+caseText+'</span><span>'+esc(x.municipality)+'</span><span>'+esc(area)+'</span>'+(props?'<span>Fastighet/beteckning: '+esc(props)+'</span>':"")+(year?'<span>'+year+'</span>':"")+status+'</div><div class="activity-actions"><button class="activity-action preview-action" type="button" data-select="'+esc(key)+'">Förhandsvisa ärende</button><a class="activity-action map-action" href="'+esc(mapUrl(x))+'">Öppna kartan ↗</a></div></div></article>';
  }).join(""):'<div class="empty">Inga aktiviteter matchar filtren för '+CURRENT_YEAR+'. Det kan också betyda att källan inte returnerar data för detta kommunfilter.</div>';
  const periods=getComparisonPeriods(CURRENT_YEAR,document.getElementById("monthFilter").value,new Date());
  const current=all.filter(x=>x.date&&x.date>=periods.currentStart&&x.date<periods.currentEnd);
@@ -748,6 +748,8 @@ async function load(){
 
 let storyObserver=null;
 let storyActiveKey=null;
+let storyScrollHandler=null;
+let storyResizeHandler=null;
 function setupScrollExperience(list){
  const layout=document.getElementById("storyLayout");
  const feed=document.getElementById("feed");
@@ -755,6 +757,8 @@ function setupScrollExperience(list){
  const fill=document.getElementById("storyProgressFill");
  const cards=[...feed.querySelectorAll(".activity[data-key]")];
  if(storyObserver){storyObserver.disconnect();storyObserver=null;}
+ if(storyScrollHandler)window.removeEventListener("scroll",storyScrollHandler);
+ if(storyResizeHandler)window.removeEventListener("resize",storyResizeHandler);
  storyActiveKey=null;
  if(!cards.length){progress.hidden=true;fill.style.width="0%";progress.setAttribute("aria-valuenow","0");return;}
  progress.hidden=false;
@@ -784,9 +788,10 @@ function setupScrollExperience(list){
   fill.style.width=(amount*100).toFixed(1)+"%";
   progress.setAttribute("aria-valuenow",String(Math.round(amount*100)));
  };
- const onScroll=()=>{if(!ticking){ticking=true;window.requestAnimationFrame(update);}};
- window.addEventListener("scroll",onScroll,{passive:true});
- window.addEventListener("resize",update);
+ storyScrollHandler=()=>{if(!ticking){ticking=true;window.requestAnimationFrame(update);}};
+ storyResizeHandler=update;
+ window.addEventListener("scroll",storyScrollHandler,{passive:true});
+ window.addEventListener("resize",storyResizeHandler);
  update();
 }
 
