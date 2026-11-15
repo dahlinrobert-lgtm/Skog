@@ -45,10 +45,10 @@ GitHub-repots storlek i API-metadata är en grov repoindikator, inte en fullstä
 
 | ID | Projekt/innehåll | Sökväg | Status | Kommentar |
 |---|---|---|---|---|
-| OD-01 | NVR viltolyckor – original och arbetsmaterial | `OneDrive\Skogskoll\viltolycka_NVR` | Bekräftad | Originalexport och årsuppdelade CSV-/rapportfiler. |
-| OD-02 | NVR årsuppdelade arbetsfiler | `OneDrive\Skogskoll\viltolycka_NVR\working\split-2015-2026` | Bekräftad | Arbetskopia för splittrade CSV-filer 2015–2026. |
-| OD-03 | NVR historiska legacy-snapshots | `OneDrive\Skogskoll\viltolycka_NVR\history\legacy-event-snapshots` | Bekräftad | Historiska event-snapshots för äldre år. 2019-staging hade tidigare ett Windows-behörighetsfel; kontrollera aktuell status innan flytt/radering. |
-| OD-04 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\\Skogskoll\\Skogliga grunddata - Volym (omdrev 1, 2008-2016)` | Bekräftad | Cirka 2,77 GB; 20 objekt enligt OneDrive-metadata. |
+| OD-01 | NVR viltolyckor – original och arbetsmaterial | `OneDrive\Skogskoll\viltolycka_NVR` | Bekräftad | OneDrive rapporterade cirka 4,16 GB för mappen vid inventeringen 2026-11-15; innehåller originalexport, arbetsfiler, historik, testarkiv och diagnostik. |
+| OD-02 | NVR årsuppdelade arbetsfiler | `OneDrive\Skogskoll\viltolycka_NVR\working\split-2015-2026` | Bekräftad | Cirka 107,2 MB; 14 objekt enligt OneDrive-metadata. |
+| OD-03 | NVR historiska legacy-snapshots | `OneDrive\Skogskoll\viltolycka_NVR\history\legacy-event-snapshots` | Bekräftad | Cirka 18,7 MB; 2 objekt vid inventeringen. 2019-staging hade tidigare ett Windows-behörighetsfel; kontrollera aktuell status innan flytt/radering. |
+| OD-04 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\Skogskoll\Skogliga grunddata - Volym (omdrev 1, 2008-2016)` | Bekräftad | Cirka 2,77 GB; 20 objekt enligt OneDrive-metadata. |
 | OD-05 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\\Skogskoll\\Skogliga grunddata - Volym (omdrev 2, 2018-2025)` | Bekräftad | Cirka 4,66 GB; 21 objekt enligt OneDrive-metadata. |
 | OD-06 | Skogsstyrelsens skogliga grunddata/volymraster | `OneDrive\\Skogskoll\\Skogliga grunddata - Volym (omdrev 3, 2025-)` | Bekräftad | Cirka 503 MB; 9 objekt enligt OneDrive-metadata. |
 | OD-07 | NVDB/Lastkajen – nationella vägnät | `OneDrive\\Skogskoll\\Lastkajen` | Bekräftad | Två ZIP-arkiv: räddningsfordonsnavigering cirka 441 MB och Norrbottens län GeoPackage cirka 533 MB. |
@@ -81,6 +81,7 @@ I `history` finns `legacy-events-2015-2021`, `legacy-event-snapshots`, `runs` oc
 | ID | Innehåll | Plats | Status | Åtgärd |
 |---|---|---|---|---|
 | PC-01 | Skog-repo | `C:\Users\dahli\GitHub\Skog` | Bekräftad | Lokal utvecklingskopia. |
+| PC-02 | Lokalt inventeringsskript | `scripts/inventory-local-storage.ps1` i Skog-repot | Bekräftad | Read-only inventering av valda rötter och valfritt USB. Rapporter sparas som standard i OneDrive `Skogskoll\_inventory` om OneDrive-synkroten finns. |
 | PC-03 | Övriga projekt, nedladdningar och temporära data | Datorns diskar | Ej inventerad | Kör inventeringsskriptet på valda projektmappar; undvik att lista privata personliga filer. |
 | USB-01 | Backup-/arkivmaterial | USB-minne, enhetsbokstav och katalog okända | Ej inventerad | Identifiera volymnamn, sökvägar, innehåll, datum och om kopian är enda eller kompletterande backup. |
 
@@ -125,7 +126,7 @@ För en begränsad inventering av särskilda mappar:
 .\\scripts\\inventory-local-storage.ps1 -Roots @('C:\\Users\\dahli\\GitHub','D:\\Skogskoll') -OutputDirectory 'C:\\Temp\\storage-inventory'
 ```
 
-Rapporter sparas som standard i OneDrive\\Skogskoll\\_inventory när OneDrive-synkroten hittas, annars i $HOME\\storage-inventory. SHA-256 är avstängt som standard för att undvika onödig belastning. Aktivera endast vid behov och använd storleksgräns:
+Rapporter sparas som standard i OneDrive `Skogskoll\_inventory` när OneDrive-synkroten hittas, annars i `$HOME\storage-inventory`. SHA-256 är avstängt som standard för att undvika onödig belastning. Aktivera endast vid behov och använd storleksgräns:
 
 ```powershell
 .\\scripts\\inventory-local-storage.ps1 -IncludeRemovableDrives -HashFiles -MaxHashBytes 268435456
