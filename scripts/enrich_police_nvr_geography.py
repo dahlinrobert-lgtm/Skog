@@ -200,8 +200,14 @@ def build_segment_evidence(
         result["geo_segment_route_status"] = "stated_road_geometry_missing"
         return result
     merged = unary_union(geometries)
-    if merged.geom_type in {"MultiLineString", "GeometryCollection"}:
+    if merged.geom_type == "MultiLineString":
         merged = linemerge(merged)
+    elif merged.geom_type == "GeometryCollection":
+        line_parts = _line_components(merged)
+        if not line_parts:
+            result["geo_segment_route_status"] = "stated_road_geometry_missing"
+            return result
+        merged = linemerge(unary_union(line_parts)) if len(line_parts) > 1 else line_parts[0]
     components = _line_components(merged)
 
     candidates = []
@@ -248,7 +254,7 @@ def build_segment_evidence(
     distance = float(point.distance(chosen["section"]))
     result.update({
         "geo_segment_route_status": (
-            "multiple_segment_paths_review" if len(candidates) > 1 else "segment_built"
+            "multiple_anchor_pair_candidates_review" if len(candidates) > 1 else "segment_built"
         ),
         "geo_segment_distance_m": f"{distance:.1f}",
         "geo_segment_within_radius": "yes" if distance <= segment_search_radius else "no",
