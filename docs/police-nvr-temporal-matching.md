@@ -45,7 +45,31 @@ The matcher extracts literal geographic clues from the Police statement into sep
 - `road_near_place`: wording such as "E4, Norra Rutvik".
 - `road_segment`: wording such as "riksväg 97 mellan Södra Sunderbyn och Notviken".
 - `road_only` or `unparsed`: no structured place/segment could be extracted.
-The output also carries through NVR WGS84 coordinates and coordinate-quality fields when present. These fields are descriptive only: they do not alter candidate inclusion, score, status, or `geographic_match_used`. A later version must compare cross-level references against the named road geometry and its local direction, not simply measure distance to the settlement centroid. Road-segment references should be compared with the road section between the two named anchors. Keep source text unchanged for review.
+The output carries through NVR WGS84 coordinates and coordinate-quality fields when present. The separate `scripts/enrich_police_nvr_geography.py` step adds review-only NVDB evidence:
+- nearest road and distance to the explicitly stated road number;
+- named crossing/traffic-place references, kept separate from road-number evidence;
+- for a `road_segment` with both `police_segment_from` and `police_segment_to`, a road-section geometry built from the connected stated-road line component that can be snapped to both named NVDB crossing anchors;
+- distance from the NVR point to that section, anchor snap distances, selected anchor element IDs, candidate count and route status.
+
+The road-section calculation selects its line component using anchor-fit distances only; it does not use the NVR candidate point to choose the route. Default anchor snap radius is 500 m and the review distance threshold is 100 m. Multiple anchor-pair candidates are flagged for manual review. If both anchors cannot be found on a connected stated-road component, no segment distance is emitted. These thresholds are diagnostic, not validated accuracy limits.
+
+All geographic fields remain descriptive/review-only: they do not alter candidate inclusion, score, status, or `geographic_match_used`, and do not confirm or reject an event pair. The road geometry may contain parallel carriageways, fragmented features or imperfect anchor names; inspect source geometry and candidate outputs manually. Keep source text unchanged for review.
+
+
+## Separate delayed-event candidate search (review-only)
+The primary temporal search remains unchanged (default 180 minutes). An optional second output can identify later NVR event timestamps after a timed Police occurrence, from beyond the primary window up to a configurable maximum (default 72 hours). It writes a separate CSV and does not add delayed candidates to the primary output.
+
+Run both outputs together:
+```bash
+python scripts/match_police_nvr_temporal.py \
+  --police data/police_events/lulea_review_candidates.csv \
+  --nvr /path/to/nvr-accidents.csv \
+  --output /path/to/lulea-police-nvr-temporal-candidates.csv \
+  --extended-output /path/to/lulea-police-nvr-delayed-candidates.csv
+```
+The delayed output uses three descriptive bands: 3–12 hours, 12–24 hours and 24–72 hours. It requires an explicit or uniquely extractable Police occurrence time, a later NVR timestamp, a compatible/unknown species relation, and an elapsed lag greater than the primary window. It does not search backward in time. The selected later timestamp and all original NVR datetime values are retained. Every row is marked `delayed_event_review`, `unreviewed`, and `geographic_match_used=false`. The maximum can be changed with `--extended-max-hours`; the primary output and its default 180-minute rule remain unchanged.
+
+**Critical interpretation limit:** the inspected NVR export has a `Datum` value, but the structural audit found no separate timestamps for original collision, search, recovery, discovery or euthanasia. Outcome values such as `Avlivat` and `Påträffat dött` are not timestamps. Therefore, the extended search only finds later NVR event-datetime observations relative to Police occurrence time. It cannot establish that an animal was found or euthanized later, nor prove a delayed reporting sequence. Confirm the source definition of `Datum` with the data provider before interpreting these candidates as delayed recovery/handling events. The time bands are exploratory review intervals, not validated matching thresholds.
 
 ## Known limitations and validation
 - NVR reports can lag by up to two months; absence of a same-date NVR event is not evidence that the Police event did not occur.
@@ -63,3 +87,4 @@ The output also carries through NVR WGS84 coordinates and coordinate-quality fie
 3. Measure how many Police statements have 0, 1, or multiple NVR candidates, and vice versa.
 4. Review date/time offsets and false-positive patterns before tuning any thresholds.
 5. Add versioned geographic enrichment and a manually labelled evaluation sample before any automatic event resolution.
+6. Run the dedicated `.github/workflows/police-nvr-matching-tests.yml` regression workflow for the Luleå builder, Police extraction, temporal matching and geographic evidence.

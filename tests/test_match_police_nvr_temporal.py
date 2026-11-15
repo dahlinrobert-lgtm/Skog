@@ -127,6 +127,11 @@ class TemporalMatchTests(unittest.TestCase):
             self.assertNotIn("\\n", decoded)
             self.assertEqual(json.loads(decoded), report)
 
+    def test_missing_occurrence_date_is_not_primary_candidate(self):
+        self.police[0]["occurrence_date"] = ""
+        self.police[0]["occurrence_date_basis"] = "publication_date_only"
+        rows = M.build_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
     def test_wrong_date_beyond_window_does_not_match(self):
         self.nvr[0]["event_datetime_values"] = "2026-09-02 00:18"
         self.assertEqual(M.build_candidates(self.police, self.nvr), [])
@@ -163,6 +168,76 @@ class TemporalMatchTests(unittest.TestCase):
         self.nvr[0]["event_datetime_values"] = "2026-08-31 12:00"
         rows = M.build_candidates(self.police, self.nvr)
         self.assertEqual(rows[0]["candidate_status"], "same_date_time_conflict_review")
+
+
+    def test_delayed_candidate_3_to_12_hours_is_separate_review(self):
+        self.nvr[0]["event_datetime_values"] = "2026-08-31 05:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["time_delta_minutes"], 300.0)
+        self.assertEqual(rows[0]["delayed_window_band"], "delayed_3_to_12h")
+        self.assertEqual(rows[0]["candidate_status"], "delayed_event_review")
+        self.assertEqual(rows[0]["nvr_timestamp_semantics"], "unverified_source_event_datetime")
+        self.assertFalse(rows[0]["geographic_match_used"])
+
+    def test_delayed_candidate_12_to_24_hours_is_separate_review(self):
+        self.nvr[0]["event_datetime_values"] = "2026-08-31 15:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["delayed_window_band"], "delayed_12_to_24h")
+
+    def test_delayed_candidate_24_to_72_hours_is_separate_review(self):
+        self.nvr[0]["event_datetime_values"] = "2026-09-02 00:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["time_delta_minutes"], 2880.0)
+        self.assertEqual(rows[0]["delayed_window_band"], "delayed_24_to_72h")
+
+    def test_delayed_search_rejects_nvr_timestamp_before_police_time(self):
+        self.nvr[0]["event_datetime_values"] = "2026-08-30 23:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
+
+    def test_missing_occurrence_date_is_not_delayed_candidate(self):
+        self.police[0]["occurrence_date"] = ""
+        self.police[0]["occurrence_date_basis"] = "publication_date_only"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
+    def test_delayed_search_requires_police_occurrence_time(self):
+        self.police[0]["occurrence_time"] = ""
+        self.police[0]["description"] = "Viltolycka på länsväg 383, Smedsbyn"
+        self.nvr[0]["event_datetime_values"] = "2026-08-31 05:13"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
+
+    def test_delayed_search_rejects_known_species_conflict(self):
+        self.police[0]["species"] = "rådjur"
+        self.nvr[0]["species"] = "Älg"
+        rows = M.build_delayed_candidates(self.police, self.nvr)
+        self.assertEqual(rows, [])
+
+
+    def test_norm_collapses_repeated_whitespace(self):
+        value = "E4   VID    Lule\u00e5"
+        self.assertEqual(M.norm(value), "e4 vid lule\u00e5")
+
+    def test_road_regex_supports_european_routes(self):
+        routes = ["E4", "E10", "E12", "E14", "E20", "E45"]
+        for route in routes:
+            with self.subTest(route=route):
+                match = M.ROAD_RE.search(route + " vid orten")
+                self.assertIsNotNone(match)
+                self.assertEqual(match.group(0).casefold(), route.casefold())
+
+    def test_road_regex_keeps_swedish_numbered_roads(self):
+        cases = [
+            ("riksv\u00e4g 97 vid Boden", "riksv\u00e4g 97"),
+            ("l\u00e4nsv\u00e4g 506 vid Pite\u00e5", "l\u00e4nsv\u00e4g 506"),
+        ]
+        for text, expected in cases:
+            with self.subTest(text=text):
+                cue = M.extract_geographic_cues(text)
+                self.assertEqual(cue["police_road_reference"], expected)
 
 
 if __name__ == "__main__":
