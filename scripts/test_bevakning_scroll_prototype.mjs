@@ -9,11 +9,19 @@ import { writeFileSync, unlinkSync } from "node:fs";
 const html = readFileSync(new URL("../docs/bevakning-test.html", import.meta.url), "utf8");
 
 test("scrollprototypen är separat och behåller befintliga datakomponenter", () => {
-  for (const id of ["storyLayout", "storyProgress", "storyProgressFill", "feed", "activityMap", "casePreview", "monthFilter"]) {
+  for (const id of ["storyLayout", "storyProgress", "storyProgressFill", "feed", "activityMap", "casePreview", "monthFilter", "forestFilter", "animalFilter"]) {
     assert.match(html, new RegExp('id="' + id + '"'));
   }
   assert.match(html, /bevakning-core\.mjs/);
   assert.match(html, /algdata-bevakning\.mjs/);
+  assert.match(html, /data-kind="samrad">Samråd/);
+  assert.match(html, /data-animal="collisions">Viltolyckor/);
+  assert.match(html, /data-animal="hunting">Jakt/);
+  assert.match(html, /GeodataportalVisaSamrad\/MapServer\/0\/query/);
+  assert.match(html, /GeodataportalVisaSamrad\/MapServer\/1\/query/);
+  assert.match(html, /GeodataportalVisaSamrad\/MapServer\/2\/query/);
+  assert.doesNotMatch(html, /<option value="elk">Älg/);
+  assert.match(html, /NVR-arkiv ej publicerat/);
   assert.match(html, /Till ordinarie sida/);
 });
 
