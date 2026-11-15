@@ -98,3 +98,33 @@ Police event text is often richer in context than the NVR row (neighbourhood/are
 7. Publish a separate, versioned candidate/match table with source snapshot/checksum, reference object ID, geometry type, distance/overlap, method version, evidence and review status. Never alter Police source records or NVR source coordinates.
 
 The next implementation gate is to run the existing Police candidate extractor against the already archived dataset and inspect the Luleå subset of individual, time-bearing incident statements. Then test address-name and road/place candidate generation against the verified Luleå address snapshot, while explicitly measuring the cases that require a named-place/area or NVDB reference. Do not set distance thresholds or declare automatic matches before a manually reviewed sample exists.
+
+
+## Lantmäteriet Ortnamn – nationell referens för geografisk tolkning (2026-11-13)
+
+Lantmäteriet-behörigheten **Ortnamn Nedladdning, vektor** har verifierats i användarens Geotorget-konto. En autentiserad nedladdning från STAC-tjänsten fungerade:
+
+- STAC API: `https://api.lantmateriet.se/stac-vektor/v1`
+- Collection: `ortnamn`
+- Item: `ortnamn_se`
+- Item-uppdatering: `2026-11-06T23:01:23.521000Z`
+- Deklarerat CRS: EPSG:3006 (SWEREF 99 TM)
+- ZIP-storlek: 58 553 634 byte
+- ZIP-medlem: `ortnamn_se.gpkg`, 156 000 256 byte
+- Nedladdningen verifierades med HTTP Basic-autentisering. Inga autentiseringsuppgifter lagras i repot.
+
+Detta verifierar teknisk åtkomst och nedladdning, inte fullständig fält-/lagerinventering, historik eller rätt till kommersiell lagring, bearbetning, kundvisning eller vidare distribution. Sådana användningar ska bedömas separat mot de aktuella produktvillkoren.
+
+Ortnamn ska användas som **namn- och områdesreferens** när polisens text innehåller exempelvis Sunderbyn, Södra Sunderbyn eller Notviken. Det kompletterar NVDB:s vägnät och korsningsobjekt; det ersätter inte NVDB och ger inte i sig en exakt olycksposition. Ortnamnspunkter kan representera kartografisk textplacering och ska därför inte tolkas som ortens exakta centrum, gräns eller olyckskoordinat.
+
+Ett read-only-inspektionsskript har lagts till: `scripts/inspect_ortnamn_geopackage.py`. Det inventerar GeoPackage-lager via GeoPackage-metadata, läser vektorlager och söker efter namnträffar i textattribut utan att ändra källfilen. Det exporterar träffar och en rapport med lager, fält, geometri och CRS. Punktkoordinater och centroidvärden märks separat; de är ledtrådar för manuell tolkning, inte verifierade platsgränser.
+
+Exempel:
+```powershell
+python scripts/inspect_ortnamn_geopackage.py \
+  --gpkg "C:\\path\\to\\ortnamn_se.gpkg" \
+  --output-csv "$env:OneDrive\\Skogskoll\\viltolycka_NVR\\working\\ortnamn-sunderbyn-notviken.csv" \
+  --report-json "$env:OneDrive\\Skogskoll\\viltolycka_NVR\\working\\ortnamn-sunderbyn-notviken-report.json"
+```
+
+**Nästa kontroll:** kör inspektionsskriptet på den lokala GeoPackage-filen och granska de faktiska namnträffarna, lagren, attributen, objekttyperna och koordinaterna för Sunderbyn/Notviken. Först därefter väljs lämpliga ortnamnsobjekt som referenser i NVDB-analysen. Ingen geometri eller matchning ska automatiskt bekräftas.
