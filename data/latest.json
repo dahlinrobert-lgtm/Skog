@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T15:47:01.612552Z",
+  "checked_at": "2026-11-15T16:20:02.132666Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -30244,6 +30244,19 @@
     "collection": "sentinel-2-l2a",
     "items": [
       {
+        "id": "S2A_MSIL2A_20261115T101211_N0513_R022_T34VDR_20261115T150704",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-11-15T10:12:11.024000Z",
+        "published_at": "2026-11-15T15:54:00.000000Z",
+        "cloud_cover_percent": 99.91,
+        "bbox": [
+          18.955883680045744,
+          63.02793322568484,
+          21.199734465434084,
+          64.02701663648664
+        ]
+      },
+      {
         "id": "S2B_MSIL2A_20261114T103209_N0513_R108_T34VDR_20261114T125155",
         "collection": "sentinel-2-l2a",
         "acquired_at": "2026-11-14T10:32:09.024000Z",
@@ -32829,26 +32842,27 @@
           20.463832812882075,
           64.02233928828656
         ]
-      },
-      {
-        "id": "S2C_MSIL2A_20260407T101021_N0512_R022_T34VDR_20260407T151515",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-04-07T10:10:21.025000Z",
-        "published_at": "2026-04-07T16:06:11.000000Z",
-        "cloud_cover_percent": 99.88,
-        "bbox": [
-          18.95515233194797,
-          63.02793322568484,
-          21.199734465434084,
-          64.02701663648664
-        ]
       }
     ],
     "count": 200,
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [],
+  "new_scenes_since_previous_run": [
+    {
+      "id": "S2A_MSIL2A_20261115T101211_N0513_R022_T34VDR_20261115T150704",
+      "collection": "sentinel-2-l2a",
+      "acquired_at": "2026-11-15T10:12:11.024000Z",
+      "published_at": "2026-11-15T15:54:00.000000Z",
+      "cloud_cover_percent": 99.91,
+      "bbox": [
+        18.955883680045744,
+        63.02793322568484,
+        21.199734465434084,
+        64.02701663648664
+      ]
+    }
+  ],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
