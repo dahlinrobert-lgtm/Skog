@@ -247,10 +247,13 @@ Visa risk-/frekvensunderlag per vägsegment. Presentera det inte som en lista ö
 **Prioritet:** Hög
 
 **Nuvarande läge**
-Ett Lastkajen-material har bearbetats lokalt. Projektanteckningar anger ett attributindex med 455 812 poster, geometrier och attribut, EPSG:3006, SHA-256-kontroller och spatialt R-tree-index.
+- Ett Lastkajen-material har bearbetats lokalt. Projektanteckningar anger ett attributindex med 455 812 poster, geometrier och attribut, EPSG:3006, SHA-256-kontroller och spatialt R-tree-index.
+- OneDrive-mappen `Skogskoll/Lastkajen/Länsfiler NVDB data` inventerades via Microsoft Graph 2026-11-16: 21 länsvisa GeoPackage-ZIP-filer, totalt 10 677 114 317 byte (cirka 10,68 GB). Filinventeringen omfattar samtliga 21 länsfiler.
+- Inventeringen bekräftar filernas existens och storlek, inte att GeoPackage-lagren, vägnummerlagrets schema, CRS eller feature-täckning är kompatibla. Detta ska verifieras lokalt med `scripts/inventory_nvdb_county_archives.py`, som läser lager-/metadata via GDAL `/vsizip/` utan att extrahera eller ändra originalarkiven.
+- Nationell vägmatchning är ännu inte körd. Befintlig närmaste-vägmodell är fortsatt review-only.
 
 **Historik**
-Detta är en lokal baslinje, inte ännu ett verifierat automatiskt uppdaterings- och förändringsflöde.
+Detta är en nationell filbaslinje i OneDrive, inte ett verifierat automatiskt uppdaterings- och förändringsflöde. Ingen nationell feature-täckning eller komplett vägdatabas är ännu bekräftad.
 
 **Rättigheter**
 Dokumentera exakt produktpaket, leveransvillkor och tillåten lagring/kundvisning.
