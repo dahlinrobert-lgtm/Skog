@@ -207,7 +207,8 @@ def main():
             sources, args.search_radius_m, args.max_candidates,
         )
         if source_init_errors:
-            result["geo_nvdb_search_status"] = "partial_source_read"
+            if result["geo_nvdb_search_status"] != "missing_or_invalid_coordinates":
+                result["geo_nvdb_search_status"] = "partial_source_read"
             result["geo_nvdb_sources_failed"] = str(
                 int(result.get("geo_nvdb_sources_failed", "0")) + len(source_init_errors)
             )
