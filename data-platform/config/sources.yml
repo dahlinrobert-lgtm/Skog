@@ -10,7 +10,7 @@
 # Validate structure and provenance fields with data-platform/scripts/validate_source_registry.py.
 
 schema_version: 2
-registry_checked_on: "2026-11-14"
+registry_checked_on: "2026-11-16"
 default_rule: "Apply binding law and the legal hierarchy first. Silence or unknown source metadata is not by itself a prohibition or permission; assess the concrete use under general law and valid applicable licences/contracts, and restrict only the affected element where a specific obstacle is established."
 
 sources:
@@ -273,13 +273,13 @@ sources:
       next_review: when_source_product_terms_or_use_changes_and_at_least_annually
     operations:
       access_status: partial
-      snapshot_status: monthly_archive_planned_or_pilot
+      snapshot_status: pilot
       history_status: partial
       commercial_use_status: conditional_per_record
       customer_display_status: pending_per_document_review
-      last_verified: "2026-11-14"
-      next_action: "Verifiera månatliga arkivkörningar och dokumentera täckning per län; granska dokument/bilagor separat från metadata."
-      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; Länsstyrelsen diary API and monthly snapshot investigations"
+      last_verified: "2026-11-16"
+      next_action: "Upprepa en avgränsad, manuell månadskörning för att verifiera reproducerbarhet; dokumentera läns-/frasomfattning och utred Länsstyrelsens tekniska begränsningar innan återkommande drift. Granska dokument/bilagor separat från metadata."
+      evidence_reference: "GitHub Actions run 43964781619; commit dcd75e090ff2c49ad013b2cc2246b1f0d145b97f; docs/lansstyrelsen-monthly-snapshot-architecture.md"
     notes:
       - "Detailed preliminary assessment: docs/source-rights-reviews/2026-11-02-lansstyrelsen-kungjort.md"
       - Coverage and search behavior vary by county.
