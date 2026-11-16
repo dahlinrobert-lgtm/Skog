@@ -603,6 +603,16 @@ let all=[];
 let elkAreas=[];
 let elkSnapshotDate=null;
 let elkLoadError=null;
+let elkAfoMap=null;
+let elkAfoBaseLayer=null;
+let elkAfoGeoLayer=null;
+let elkAfoDashboard=null;
+let elkAfoGeoJSON=null;
+let elkAfoMapPromise=null;
+let elkAfoMapMode="imagery";
+let elkAfoMetric="harvested";
+const ELK_AFO_DASHBOARD_URL="https://raw.githubusercontent.com/dahlinrobert-lgtm/alg-grasmyr/main/data/national_afo_dashboard.json";
+const ELK_AFO_GEOJSON_URL="https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/1/query?where=1%3D1&outFields=OBJECTID%2Cafo_id%2Cnamn_afo%2Cforvaltare&returnGeometry=true&outSR=4326&f=geojson";
 let animalMode="all";
 let activeFilterCategory="forest";
 let sourceWarnings=[];
@@ -807,6 +817,153 @@ function initMap(){
  document.getElementById("basemapImagery").addEventListener("click",()=>setBasemap("imagery"));
  document.getElementById("basemapStandard").addEventListener("click",()=>setBasemap("standard"));
 }
+function elkAfoMetricValue(item){
+ if(!item)return null;
+ if(elkAfoMetric==="utilization"){
+  const killed=Number(item.fallda_totalt),target=Number(item.avskjutningsmal_totalt);
+  return Number.isFinite(killed)&&Number.isFinite(target)&&target>0?killed/target*100:null;
+ }
+ const value=Number(item.fallda_totalt);
+ return Number.isFinite(value)?value:null;
+}
+function elkAfoQuantiles(){
+ const values=(elkAfoDashboard?.areas||[]).map(elkAfoMetricValue).filter(v=>v!==null).sort((a,b)=>a-b);
+ if(!values.length)return [];
+ const at=q=>values[Math.min(values.length-1,Math.floor((values.length-1)*q))];
+ return [at(.25),at(.5),at(.75)];
+}
+function elkAfoPalette(){
+ return elkAfoMapMode==="imagery"
+  ? ["#ffe66d","#ffb347","#ff7043","#d62828"]
+  : ["#fff3bf","#ffd166","#f08c00","#c92a2a"];
+}
+function elkAfoColor(value,thresholds){
+ if(value===null||!thresholds.length)return "#87918b";
+ if(value<=thresholds[0])return 0;
+ if(value<=thresholds[1])return 1;
+ if(value<=thresholds[2])return 2;
+ return 3;
+}
+function elkAfoStyle(feature){
+ const id=String(feature?.properties?.afo_id||"");
+ const item=(elkAfoDashboard?.areas||[]).find(row=>String(row.afo_id)===id);
+ const value=elkAfoMetricValue(item);
+ const thresholds=elkAfoQuantiles();
+ const bucket=elkAfoColor(value,thresholds);
+ const palette=elkAfoPalette();
+ return {
+  color:elkAfoMapMode==="imagery"?"#f8fff9":"#46564b",
+  weight:elkAfoMapMode==="imagery"?1.25:1,
+  opacity:.95,
+  fillColor:typeof bucket==="number"?palette[bucket]:bucket,
+  fillOpacity:value===null?.22:(elkAfoMapMode==="imagery"?.72:.58)
+ };
+}
+function elkAfoPopup(feature){
+ const id=String(feature?.properties?.afo_id||"");
+ const item=(elkAfoDashboard?.areas||[]).find(row=>String(row.afo_id)===id);
+ const props=feature?.properties||{};
+ const fmt=v=>v===null||v===undefined?"–":Number(v).toLocaleString("sv-SE",{maximumFractionDigits:1});
+ const killed=item?.fallda_totalt;
+ const target=item?.avskjutningsmal_totalt;
+ const utilization=Number.isFinite(Number(killed))&&Number.isFinite(Number(target))&&Number(target)>0
+  ?fmt(Number(killed)/Number(target)*100)+" %":"–";
+ return '<div class="elk-afo-popup"><strong>'+esc(item?.afo_name||props.namn_afo||"Älgförvaltningsområde")+'</strong>'
+  +'<div class="muted">'+esc(item?.county||props.forvaltare||"")+' · '+esc(id)+'</div>'
+  +'<div class="value"><span>Fällda älgar</span><b>'+fmt(killed)+'</b></div>'
+  +'<div class="value"><span>Avskjutningsmål</span><b>'+fmt(target)+'</b></div>'
+  +'<div class="value"><span>Nyttjandegrad</span><b>'+utilization+'</b></div>'
+  +'<div class="muted" style="margin-top:7px">Jaktår '+esc(item?.hunting_season||elkAfoDashboard?.hunting_season||"–")+'</div>'
+  +'<div class="muted">Källa: Länsstyrelsernas Älgdata</div></div>';
+}
+function renderElkAfoLegend(){
+ const target=document.getElementById("elkAfoMapLegend");
+ if(!target||!elkAfoDashboard)return;
+ const thresholds=elkAfoQuantiles(),palette=elkAfoPalette();
+ const fmt=v=>Number(v).toLocaleString("sv-SE",{maximumFractionDigits:1});
+ const unit=elkAfoMetric==="utilization"?" %":"";
+ const ranges=thresholds.length?[
+  "≤ "+fmt(thresholds[0])+unit,
+  fmt(thresholds[0])+"–"+fmt(thresholds[1])+unit,
+  fmt(thresholds[1])+"–"+fmt(thresholds[2])+unit,
+  "> "+fmt(thresholds[2])+unit
+ ]:[];
+ target.innerHTML=(ranges.map((label,i)=>'<span class="elk-afo-map-legend-item"><i class="elk-afo-map-swatch" style="background:'+palette[i]+'"></i>'+label+'</span>').join(""))
+  +'<span class="elk-afo-map-legend-item"><i class="elk-afo-map-swatch" style="background:#87918b"></i>Ingen rapporterad data</span>';
+}
+function renderElkAfoMap(){
+ if(!elkAfoMap||!elkAfoGeoLayer||!elkAfoDashboard)return;
+ elkAfoGeoLayer.setStyle(elkAfoStyle);
+ renderElkAfoLegend();
+ const areas=elkAfoDashboard.areas||[];
+ const withData=areas.filter(item=>elkAfoMetricValue(item)!==null).length;
+ const status=document.getElementById("elkAfoMapStatus");
+ if(status)status.textContent=areas.length.toLocaleString("sv-SE")+" ÄFO i statistikuttaget · "+withData.toLocaleString("sv-SE")+" med värde · jaktår "+elkAfoDashboard.hunting_season+" · snapshot "+elkAfoDashboard.snapshot_date+". Klicka på ett område för detaljer.";
+}
+function setElkAfoBasemap(mode){
+ if(!elkAfoMap||!window.L)return;
+ elkAfoMapMode=mode==="standard"?"standard":"imagery";
+ if(elkAfoBaseLayer)elkAfoMap.removeLayer(elkAfoBaseLayer);
+ elkAfoBaseLayer=elkAfoMapMode==="imagery"
+  ?L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community'})
+  :L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+ elkAfoBaseLayer.addTo(elkAfoMap);
+ document.getElementById("elkAfoBasemapImagery").setAttribute("aria-pressed",String(elkAfoMapMode==="imagery"));
+ document.getElementById("elkAfoBasemapStandard").setAttribute("aria-pressed",String(elkAfoMapMode==="standard"));
+ renderElkAfoMap();
+}
+function initElkAfoMap(){
+ const target=document.getElementById("elkAfoMap");
+ if(!window.L){target.textContent="Kartbiblioteket kunde inte laddas.";return false;}
+ if(elkAfoMap)return true;
+ elkAfoMap=L.map(target,{preferCanvas:true,zoomSnap:.25}).setView([62.5,15.2],4.5);
+ setElkAfoBasemap("imagery");
+ document.getElementById("elkAfoBasemapImagery").addEventListener("click",()=>setElkAfoBasemap("imagery"));
+ document.getElementById("elkAfoBasemapStandard").addEventListener("click",()=>setElkAfoBasemap("standard"));
+ document.getElementById("elkAfoMetric").addEventListener("change",event=>{
+  elkAfoMetric=event.target.value==="utilization"?"utilization":"harvested";
+  renderElkAfoMap();
+ });
+ return true;
+}
+async function loadElkAfoMap(){
+ const status=document.getElementById("elkAfoMapStatus");
+ if(!initElkAfoMap())return;
+ if(!elkAfoMapPromise){
+  elkAfoMapPromise=(async()=>{
+   if(status)status.textContent="Hämtar nationella ÄFO-gränser och avskjutningsdata …";
+   const [geoResponse,dataResponse]=await Promise.all([
+    fetch(ELK_AFO_GEOJSON_URL,{cache:"no-store"}),
+    fetch(ELK_AFO_DASHBOARD_URL,{cache:"no-store"})
+   ]);
+   if(!geoResponse.ok)throw new Error("ÄFO-gränserna svarade HTTP "+geoResponse.status);
+   if(!dataResponse.ok)throw new Error("Nationell avskjutningsdata svarade HTTP "+dataResponse.status);
+   const [geo,data]=await Promise.all([geoResponse.json(),dataResponse.json()]);
+   if(geo.type!=="FeatureCollection"||!Array.isArray(geo.features)||!geo.features.length)throw new Error("ÄFO-tjänsten returnerade inget giltigt polygonlager");
+   if(!Array.isArray(data.areas)||!data.areas.length||!data.snapshot_date)throw new Error("Avskjutningsuttaget saknar komplett dashboardstruktur");
+   const geometryIds=new Set(geo.features.map(f=>String(f.properties?.afo_id||"")));
+   const statIds=new Set(data.areas.map(a=>String(a.afo_id||"")));
+   const missing=[...geometryIds].filter(id=>!statIds.has(id));
+   if(missing.length)throw new Error("Statistik saknas för "+missing.length+" ÄFO-gränser: "+missing.slice(0,5).join(", "));
+   elkAfoGeoJSON=geo;
+   elkAfoDashboard=data;
+   elkAfoGeoLayer=L.geoJSON(geo,{
+    style:elkAfoStyle,
+    onEachFeature:(feature,layer)=>layer.bindPopup(()=>elkAfoPopup(feature),{maxWidth:320})
+   }).addTo(elkAfoMap);
+   const bounds=elkAfoGeoLayer.getBounds();
+   if(bounds.isValid())elkAfoMap.fitBounds(bounds.pad(.04));
+   const subtitle=document.getElementById("elkAfoMapSubtitle");
+   if(subtitle)subtitle.textContent="Nationell avskjutning per älgförvaltningsområde · jaktår "+data.hunting_season+".";
+   renderElkAfoMap();
+  })().catch(error=>{
+   if(status)status.textContent="Kartan kunde inte hämtas: "+String(error.message||error)+". Försök igen senare.";
+   elkAfoMapPromise=null;
+  });
+ }
+ await elkAfoMapPromise;
+ window.setTimeout(()=>elkAfoMap?.invalidateSize(),100);
+}
 function renderMap(list){
  const summary=document.getElementById("mapSummary");
  if(!activityMap||!activityLayer){summary.textContent=list.length.toLocaleString("sv-SE")+" objekt";return;}
@@ -879,6 +1036,8 @@ function render(){
  document.querySelector(".map-card").hidden=isElk||isNvr;
  document.getElementById("storyLayout").classList.toggle("is-elk",isElk||isNvr);
  document.getElementById("storyProgress").hidden=isElk||isNvr;
+ document.getElementById("elkAfoMapCard").hidden=!isElk;
+ if(isElk)loadElkAfoMap();
  document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":isNvr?"Viltolyckor":"Senaste händelserna";
  document.querySelector(".feed-subtitle").textContent=isElk?"Jaktstatistik från Länsstyrelsernas Älgdata.":isNvr?"Individuella olyckshändelser från Nationella Viltolycksrådet.":"Nya och relevanta skogliga händelser. Välj en händelse för detaljer och geografisk kontext.";
  if(isNvr){
