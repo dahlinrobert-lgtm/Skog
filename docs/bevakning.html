@@ -260,22 +260,12 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .elkdata-controls select,.elkdata-controls input{width:100%;height:44px;padding:0 12px;border:1px solid #dce4db;border-radius:10px;background:#fff;color:#26372b;font:inherit}
 .elkdata-result{align-self:center;color:#728075;font-size:.8rem;text-align:right}
 .elkdata-table-wrap{overflow-x:auto;border:1px solid #e5ebe3;border-radius:13px}
-.elk-afo-map-card{margin:18px 0 22px;padding:14px;border:1px solid #e3eae1;border-radius:14px;background:#fff}
-.elk-afo-map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-.elk-afo-map-head h3{margin:0;color:#294333;font-size:1rem}
-.elk-afo-map-head p{margin:3px 0 0;color:#718076;font-size:.76rem}
-.elk-afo-map-switch{display:flex;gap:3px;padding:3px;border:1px solid #dce5db;border-radius:999px;background:#f4f7f2}
-.elk-afo-map-switch button{border:0;border-radius:999px;padding:6px 10px;background:transparent;color:#526557;font-size:.72rem;font-weight:750;cursor:pointer}
-.elk-afo-map-switch button[aria-pressed="true"]{background:#315d40;color:#fff}
-#elkAfoMap{height:440px;min-height:300px;border-radius:10px;background:#e8eee8;z-index:0}
-.elk-afo-map-foot{margin:9px 0 0;color:#78867b;font-size:.72rem}
-html[data-theme="dark"] .elk-afo-map-card{background:#202f25;border-color:#405444}
-html[data-theme="dark"] .elk-afo-map-head h3{color:#edf5ef}
-html[data-theme="dark"] .elk-afo-map-head p,html[data-theme="dark"] .elk-afo-map-foot{color:#b8c8bb}
-html[data-theme="dark"] .elk-afo-map-switch{background:#243329;border-color:#405746}
-html[data-theme="dark"] .elk-afo-map-switch button{color:#dce9df}
-html[data-theme="dark"] .elk-afo-map-switch button[aria-pressed="true"]{background:#376348;color:#fff}
-@media(max-width:620px){.elk-afo-map-head{align-items:flex-start;flex-direction:column}#elkAfoMap{height:340px}}
+.map-card.is-animal-map .map-layout{grid-template-columns:1fr}
+.map-card.is-animal-map .map-legend{display:none}
+.map-card.is-animal-map #activityMap{height:clamp(300px,48vh,470px)}
+.map-card.is-animal-map .case-preview{min-height:110px}
+.story-layout.is-elk>.map-card{display:block}
+
 
 .elkdata-table{width:100%;border-collapse:collapse;min-width:920px;font-size:.8rem}
 .elkdata-table th,.elkdata-table td{padding:11px 12px;border-bottom:1px solid #edf1eb;text-align:left;vertical-align:top;white-space:nowrap}
@@ -540,7 +530,7 @@ html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
         <div class="preview-empty">Välj en aktivitet i flödet för att se dess geografiska läge och ärendeuppgifter här.</div>
       </aside>
     </div>
-    <div class="map-legend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Satellitindikation / utförd</span><span><i class="samrad-dot"></i> Samråd</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
+    <div class="map-legend" id="mapLegend"><span><i class="planned-dot"></i> Planerad avverkning</span><span><i class="done-dot"></i> Satellitindikation / utförd</span><span><i class="samrad-dot"></i> Samråd</span><span>Markeringarna visar källans publicerade geometrier.</span></div>
   </section>
 
   
