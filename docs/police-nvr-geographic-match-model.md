@@ -169,6 +169,9 @@ The field-name matches are discovery hints only. After inspection, compare the a
 ## 11. Current implementation status
 
 - Existing `scripts/enrich_police_nvr_geography.py` provides review-only nearest-road, named-crossing and named-segment evidence.
+- New `scripts/match_points_to_nvdb_roads.py` provides a standalone, bbox-filtered nearest-road prototype for one or more county GeoPackages. It returns nearest road identity, distance and alternatives without changing temporal matching.
+- The new matcher treats failed source reads as partial evidence and an empty local search window as unknown coverage, not proof that no road exists.
+- The implementation accepts multiple GeoPackages, but national completeness, county-edge coverage, performance and product rights are not yet verified. It is not integrated into production or the existing temporal pipeline.
 - Existing segment construction uses the stated road number and named anchors, and flags multiple anchor-pair candidates.
 - Existing enrichment does not yet assign ramp/connector features an inherited major-road identity through verified network topology.
 - The 36-row local named-place distance export is review evidence only; it does not establish the network schema or topology.
