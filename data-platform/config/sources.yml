@@ -1859,9 +1859,9 @@ sources:
       evidence_checked_on: "2026-11-16"
       caveat: "129 current active polygons match the 129 active 2026/2027 AFO selector IDs after excluding two stale catalogue entries (one inactive, one unspecified). Metadata ID 6d4c42de-2b43-4b72-98ec-856d8adfaf29 could not be retrieved during the probe."
     compliance:
-      map_and_geodata_rights: pending_exact_dataset_metadata
-      third_party_rights: review_source_metadata_and_service_terms
-      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      map_and_geodata_rights: conditional_general_wms_terms_exact_metadata_followup
+      third_party_rights: retain_attribution_and_check_layer_specific_metadata
+      publication_gate: conditional_publication_with_attribution_and_no_raw_geometry_download
       assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
       evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md"
       reviewed_on: "2026-11-16"
