@@ -83,7 +83,6 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /map-card\.is-animal-map/);
   assert.match(productionHtml, /map-legend\[hidden\]/);
   assert.match(productionHtml, /Regional avskjutningsstatistik/);
-  assert.match(productionHtml, /Regional avskjutningsstatistik/);
   assert.match(productionHtml, /inte geografiskt kopplad till ÄFO-polygonerna/);
 });
 
