@@ -866,6 +866,7 @@ function render(){
  const mode=document.getElementById("animalMode").value;
  const isElk=mode==="hunting";
  const isNvr=mode==="collisions";
+ if(!isElk&&elkAfoMap){elkAfoMap.remove();elkAfoMap=null;elkAfoBoundaryLayer=null;elkAfoBaseLayer=null;}
  const list=(isElk||isNvr)?[]:filtered();
  document.getElementById("forestFilterGroup").hidden=false;
  document.getElementById("forestFilterGroup").classList.toggle("is-active",activeFilterCategory==="forest");
