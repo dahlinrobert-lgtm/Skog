@@ -1,6 +1,6 @@
 # Skogskoll – automatisk status för datakällor
 
-**Register kontrollerat:** 2026-11-14  
+**Register kontrollerat:** 2026-11-16  
 **Underlag:** data-platform/config/sources.yml
 
 > Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
@@ -11,7 +11,7 @@
 - Källor med operativ status: **11**
 - Källor som ännu inte har operativ status: **37**
 - Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 1, Teknisk probe: 1, Verifierad: 3
-- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 2, Metadatabevakning behöver repareras: 1, Månadsarkiv planerat/pilot: 1, Pilot: 5
+- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 2, Metadatabevakning behöver repareras: 1, Pilot: 6
 - Historik: Delvis historik: 5, Delvis historiskt arkiv: 1, Ej verifierad: 3, Endast metadataserie: 1, Ingen: 1
 - Kommersiellt: Inväntar produktvillkor: 1, Verifierad med källhänvisning: 1, Villkorad: 4, Villkorad per handling/post: 1, Villkorad per produkt: 4
 - Kundvisning: Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 1
@@ -23,7 +23,7 @@
 |---|---|---|---|---|---|---|---|
 | Skogsstyrelsen – avverkningsanmälningar | skogsstyrelsen.harvest_notifications | Verifierad | Pilot | Delvis historik | Villkorad | Inväntar lagerkontroll | 2026-11-15 |
 | Skogsstyrelsen – Samråd point, line and area layers | skogsstyrelsen.samrad | Verifierad | Pilot | Delvis historik | Villkorad | Inväntar lagerkontroll | 2026-11-14 |
-| Länsstyrelsen – offentliga diarier och ärendehandlingar | lansstyrelsen.public_diary | Delvis verifierad | Månadsarkiv planerat/pilot | Delvis historik | Villkorad per handling/post | Inväntar dokumentgranskning | 2026-11-14 |
+| Länsstyrelsen – offentliga diarier och ärendehandlingar | lansstyrelsen.public_diary | Delvis verifierad | Pilot | Delvis historik | Villkorad per handling/post | Inväntar dokumentgranskning | 2026-11-16 |
 | SLU Torvkarta 1.0 – klassad och kontinuerlig | slu.peat_map.v1 | Verifierad | Pilot | Endast metadataserie | Verifierad med källhänvisning | Villkorad av attribution/källomfattning | 2026-11-14 |
 | Skogliga grunddata – Ståndortsindex SIS (gran och tall) | skogsstyrelsen.standortsindex_sis | Delvis verifierad | Metadatabevakning behöver repareras | Ej verifierad | Villkorad | Inväntar produktbeskrivning | 2026-11-14 |
 | Trafikverket – öppna data | trafikverket.open_data | Ej verifierad | Inte startad | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
@@ -37,7 +37,7 @@
 
 - **Skogsstyrelsen – avverkningsanmälningar:** Verifiera komplett paginering och minst två kompletta jämförbara körningar; skilj nya anmälningar från äldre baslinje och bortfall.
 - **Skogsstyrelsen – Samråd point, line and area layers:** Verifiera fullständighet separat för punkt-, linje- och polygonlagren och fortsätt bevara dagliga snapshots.
-- **Länsstyrelsen – offentliga diarier och ärendehandlingar:** Verifiera månatliga arkivkörningar och dokumentera täckning per län; granska dokument/bilagor separat från metadata.
+- **Länsstyrelsen – offentliga diarier och ärendehandlingar:** Upprepa en avgränsad, manuell månadskörning för att verifiera reproducerbarhet; dokumentera läns-/frasomfattning och utred tekniska begränsningar innan återkommande drift. Granska dokument/bilagor separat från metadata.
 - **SLU Torvkarta 1.0 – klassad och kontinuerlig:** Fortsätt versions-/metadatasnapshots; spara SLU:s skriftliga besked och kontrollera den nya produktens licens vid publicering.
 - **Skogliga grunddata – Ståndortsindex SIS (gran och tall):** Felsök misslyckade metadataövervakningskörningar 13–14 november och verifiera rasterhämtning samt produktvillkor.
 - **Trafikverket – öppna data:** Använd de tre separata produktposterna nedan för faktisk åtkomst, snapshotstatus, historik och rättighetsbedömning; uppdatera denna post endast om Trafikverket inför en ny gemensam produkt eller tjänst.
