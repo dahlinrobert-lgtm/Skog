@@ -1,4 +1,3 @@
-import json
 import tempfile
 import unittest
 import zipfile
@@ -6,7 +5,9 @@ from pathlib import Path
 from unittest.mock import patch
 
 from scripts.inventory_nvdb_county_archives import (
+    EXPECTED_CRS,
     ROAD_FIELDS,
+    ROAD_LAYER,
     build_report,
     inspect_archive,
 )
@@ -20,24 +21,23 @@ class NvdbCountyArchiveInventoryTests(unittest.TestCase):
         return path
 
     @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_info")
-    @patch("scripts.inventory_nvdb_county_archives.pyogrio.list_layers")
-    def test_compatible_archive_is_inspected_without_extraction(
-        self, list_layers, read_info
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_dataframe")
+    def test_compatible_archive_uses_catalog_and_direct_layer_read(
+        self, read_dataframe, read_info
     ):
         with tempfile.TemporaryDirectory() as temp:
             archive = self.make_archive(Path(temp))
-            list_layers.return_value = [["NVDB_DK_O_111_Vagnummer", "Line String"]]
+            read_dataframe.return_value = {"table_name": [ROAD_LAYER]}
             read_info.return_value = {
+                "layer_name": ROAD_LAYER,
                 "fields": list(ROAD_FIELDS),
                 "features": 123,
-                "geometry_type": "Line String",
-                "crs": "EPSG:3006",
+                "geometry_type": "Unknown",
+                "crs": EXPECTED_CRS,
             }
 
             result = inspect_archive(archive)
 
-            # The source ZIP must remain present and byte-identical while the
-            # inspector reads its GeoPackage through GDAL's /vsizip/ handler.
             self.assertTrue(archive.exists())
             with zipfile.ZipFile(archive) as source_zip:
                 self.assertEqual(source_zip.namelist(), ["Norrbotten.gpkg"])
@@ -45,42 +45,44 @@ class NvdbCountyArchiveInventoryTests(unittest.TestCase):
                     source_zip.read("Norrbotten.gpkg"), b"metadata-probe-fixture"
                 )
 
-            self.assertEqual(result["status"], "compatible")
-            self.assertTrue(result["road_layer_found"])
-            self.assertEqual(result["layers"][0]["feature_count"], 123)
-            list_layers.assert_called_once()
-            self.assertTrue(list_layers.call_args.args[0].startswith("/vsizip/"))
+        self.assertEqual(result["status"], "compatible")
+        self.assertTrue(result["road_layer_found"])
+        self.assertEqual(result["layers"][0]["feature_count"], 123)
+        self.assertEqual(result["layers"][0]["geometry_type"], "Unknown")
+        self.assertTrue(result["road_layer_crs_matches_expected"])
+        read_dataframe.assert_called_once()
+        self.assertIn("gpkg_contents", read_dataframe.call_args.kwargs["sql"])
+        read_info.assert_called_once()
+        self.assertEqual(read_info.call_args.kwargs["layer"], ROAD_LAYER)
+        self.assertTrue(read_info.call_args.args[0].startswith("/vsizip/"))
 
     @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_info")
-    @patch("scripts.inventory_nvdb_county_archives.pyogrio.list_layers")
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_dataframe")
     def test_missing_road_layer_is_not_reported_as_compatible(
-        self, list_layers, read_info
+        self, read_dataframe, read_info
     ):
         with tempfile.TemporaryDirectory() as temp:
             archive = self.make_archive(Path(temp))
-            list_layers.return_value = [["Some_Other_Layer", "Point"]]
-            read_info.return_value = {
-                "fields": ["id"], "features": 1,
-                "geometry_type": "Point", "crs": "EPSG:3006",
-            }
+            read_dataframe.return_value = {"table_name": ["Some_Other_Layer"]}
             result = inspect_archive(archive)
 
         self.assertEqual(result["status"], "road_layer_missing")
         self.assertFalse(result["road_layer_found"])
+        read_info.assert_not_called()
 
     @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_info")
-    @patch("scripts.inventory_nvdb_county_archives.pyogrio.list_layers")
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_dataframe")
     def test_missing_required_fields_is_schema_mismatch(
-        self, list_layers, read_info
+        self, read_dataframe, read_info
     ):
         with tempfile.TemporaryDirectory() as temp:
             archive = self.make_archive(Path(temp))
-            list_layers.return_value = [["NVDB_DK_O_111_Vagnummer", "Line String"]]
+            read_dataframe.return_value = {"table_name": [ROAD_LAYER]}
             read_info.return_value = {
                 "fields": ["ELEMENT_ID", "Huvudnummer"],
                 "features": 2,
-                "geometry_type": "Line String",
-                "crs": "EPSG:3006",
+                "geometry_type": "Unknown",
+                "crs": EXPECTED_CRS,
             }
             result = inspect_archive(archive)
 
@@ -89,15 +91,46 @@ class NvdbCountyArchiveInventoryTests(unittest.TestCase):
             result["road_layer_missing_fields"], ["Europavag", "Lankroll"]
         )
 
-    @patch("scripts.inventory_nvdb_county_archives.pyogrio.list_layers",
-           side_effect=RuntimeError("GDAL read failed"))
-    def test_unreadable_layer_is_partial(self, _list_layers):
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_info")
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_dataframe")
+    def test_catalog_read_failure_is_partial(self, read_dataframe, _read_info):
+        read_dataframe.side_effect = RuntimeError("GDAL catalog read failed")
         with tempfile.TemporaryDirectory() as temp:
             archive = self.make_archive(Path(temp))
             result = inspect_archive(archive)
 
         self.assertEqual(result["status"], "partial")
-        self.assertIn("GDAL read failed", result["errors"][0])
+        self.assertIn("GDAL catalog read failed", result["errors"][0])
+
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_info")
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_dataframe")
+    def test_road_layer_read_failure_is_partial(self, read_dataframe, read_info):
+        read_dataframe.return_value = {"table_name": [ROAD_LAYER]}
+        read_info.side_effect = RuntimeError("GDAL road layer read failed")
+        with tempfile.TemporaryDirectory() as temp:
+            archive = self.make_archive(Path(temp))
+            result = inspect_archive(archive)
+
+        self.assertEqual(result["status"], "partial")
+        self.assertTrue(result["road_layer_found"])
+        self.assertIn("GDAL road layer read failed", result["errors"][0])
+
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_info")
+    @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_dataframe")
+    def test_wrong_crs_is_schema_mismatch(self, read_dataframe, read_info):
+        read_dataframe.return_value = {"table_name": [ROAD_LAYER]}
+        read_info.return_value = {
+            "fields": list(ROAD_FIELDS),
+            "features": 5,
+            "geometry_type": "Unknown",
+            "crs": "EPSG:4326",
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            archive = self.make_archive(Path(temp))
+            result = inspect_archive(archive)
+
+        self.assertEqual(result["status"], "schema_mismatch")
+        self.assertFalse(result["road_layer_crs_matches_expected"])
 
     def test_expected_archive_count_mismatch_makes_report_partial(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -111,6 +144,7 @@ class NvdbCountyArchiveInventoryTests(unittest.TestCase):
 
         self.assertEqual(report["status"], "partial")
         self.assertEqual(report["archive_count"], 1)
+        self.assertEqual(report["schema_version"], 2)
         self.assertFalse(report["source_archives_modified"])
         self.assertFalse(report["feature_geometries_scanned"])
 
