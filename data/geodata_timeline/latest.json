@@ -1,6 +1,6 @@
 {
-  "snapshot_id": "20261109T130640Z",
-  "observed_at_utc": "2026-11-09T13:06:40.545641+00:00",
+  "snapshot_id": "20261116T125756Z",
+  "observed_at_utc": "2026-11-16T12:57:56.395150+00:00",
   "purpose": "weekly information-flow change detection; not a map layer",
   "sample_area": {
     "name": "Gräsmyr, Nordmalings kommun",
@@ -58,7 +58,7 @@
         500
       ],
       "http_status": 200,
-      "sample_file": "data/geodata_timeline/samples/20261109T130640Z_torvkarta.npz",
+      "sample_file": "data/geodata_timeline/samples/20261116T125756Z_torvkarta.npz",
       "pixel_comparison": {
         "comparison_status": "compared",
         "bands": [
@@ -78,7 +78,7 @@
       },
       "pixel_content_changed": false,
       "change_status": "unchanged",
-      "previous_snapshot_id": "20261102T124112Z",
+      "previous_snapshot_id": "20261109T130640Z",
       "changes": [],
       "metadata_changed": false,
       "pixel_hash_changed": false,
@@ -124,7 +124,7 @@
         80
       ],
       "http_status": 200,
-      "sample_file": "data/geodata_timeline/samples/20261109T130640Z_sis.npz",
+      "sample_file": "data/geodata_timeline/samples/20261116T125756Z_sis.npz",
       "pixel_comparison": {
         "comparison_status": "compared",
         "bands": [
@@ -144,7 +144,7 @@
       },
       "pixel_content_changed": false,
       "change_status": "unchanged",
-      "previous_snapshot_id": "20261102T124112Z",
+      "previous_snapshot_id": "20261109T130640Z",
       "changes": [],
       "metadata_changed": false,
       "pixel_hash_changed": false,
