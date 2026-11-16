@@ -77,6 +77,8 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /feature\?\.properties\?\.afo_id/);
   assert.match(productionHtml, /fallda_totalt/);
   assert.match(productionHtml, /avskjutningsmal_totalt/);
+  assert.match(productionHtml, /item\.fallda_totalt===null\|\|item\.fallda_totalt===undefined/);
+  assert.match(productionHtml, /Källor: Länsstyrelsernas Älgdata och Länsstyrelsernas JaktAdm/);
   assert.match(productionHtml, /elkAfoMapCard"\)\.hidden=!isElk/);
   assert.match(productionHtml, /LST Älgförvaltningsområden|Länsstyrelsernas Älgdata/);
 });
