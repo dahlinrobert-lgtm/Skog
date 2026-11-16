@@ -599,3 +599,14 @@ En separat prototyp har lagts till i utvecklingsbranch `feat/national-nvdb-road-
 Detta är endast geografisk granskningsinformation. Ett tomt sökfönster bevisar inte att väg saknas; källans geografiska täckning måste vara verifierad. Om en eller flera källfiler inte kan läsas klassas resultatet som partiellt. Temporal matchning, kandidatlista, score, status och `geographic_match_used` ska inte påverkas.
 
 Prototypen är inte nationellt validerad eller produktionsintegrerad. Före nationell körning krävs inventering av Lastkajens faktiska filer och produktversion, verifiering av lager/CRS/täckning, länsgränser, prestanda, representativa manuellt bedömda testfall och separata användningsvillkor för lagring, bearbetning och kundvisning. Full nätverksrekonstruktion ska vara en undantagskontroll, inte standardmetod.
+
+
+## NVDB – inventering av nationella länsarkiv (2026-11-16)
+
+OneDrive-inventeringen omfattar 21 länsvisa GeoPackage-ZIP, totalt 10 677 114 317 byte. En första inspektionsmetod med `pyogrio.list_layers()` fallerade på samtliga arkiv med samma GDAL-fel för en geometriuppgift. Detta ska inte tolkas som att arkiven är skadade eller att vägdata saknas.
+
+En alternativ read-only-metod har verifierats på Gotland och Västerbotten: fråga `gpkg_contents` via Pyogrio/GDAL:s SQLite-dialekt och öppna därefter endast `NVDB_DK_O_111_Vagnummer` med `pyogrio.read_info()`. Båda testade arkiv hade EPSG:3006 och obligatoriska fält `ELEMENT_ID`, `Europavag`, `Huvudnummer` och `Lankroll`. Antalet objekt var 6 203 respektive 26 902. Båda rapporterade `geometry_type: Unknown`; faktisk geometriinnehållsvalidering återstår.
+
+Den read-only-inspektören i branch `fix/nvdb-direct-layer-inventory` har ändrats för att använda denna riktade metod, registrera CRS/geometriuppgift och markera katalog-/lagerläsfel som `partial`. Ändringen är ännu inte nationellt verifierad. Kör inventeringen mot samtliga 21 arkiv och granska resultatet innan nationell vägmatchning. Nationell matchning ska fortsatt vara review-only, och geografi får inte ändra temporal matchning, kandidatlista, score, status eller `geographic_match_used`.
+
+Teknisk åtkomst och metadata-inspektion innebär inte att kommersiell lagring, bearbetning, kundvisning eller vidare distribution är godkänd.
