@@ -260,6 +260,23 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .elkdata-controls select,.elkdata-controls input{width:100%;height:44px;padding:0 12px;border:1px solid #dce4db;border-radius:10px;background:#fff;color:#26372b;font:inherit}
 .elkdata-result{align-self:center;color:#728075;font-size:.8rem;text-align:right}
 .elkdata-table-wrap{overflow-x:auto;border:1px solid #e5ebe3;border-radius:13px}
+.elk-afo-map-card{margin:18px 0 22px;padding:14px;border:1px solid #e3eae1;border-radius:14px;background:#fff}
+.elk-afo-map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.elk-afo-map-head h3{margin:0;color:#294333;font-size:1rem}
+.elk-afo-map-head p{margin:3px 0 0;color:#718076;font-size:.76rem}
+.elk-afo-map-switch{display:flex;gap:3px;padding:3px;border:1px solid #dce5db;border-radius:999px;background:#f4f7f2}
+.elk-afo-map-switch button{border:0;border-radius:999px;padding:6px 10px;background:transparent;color:#526557;font-size:.72rem;font-weight:750;cursor:pointer}
+.elk-afo-map-switch button[aria-pressed="true"]{background:#315d40;color:#fff}
+#elkAfoMap{height:440px;min-height:300px;border-radius:10px;background:#e8eee8;z-index:0}
+.elk-afo-map-foot{margin:9px 0 0;color:#78867b;font-size:.72rem}
+html[data-theme="dark"] .elk-afo-map-card{background:#202f25;border-color:#405444}
+html[data-theme="dark"] .elk-afo-map-head h3{color:#edf5ef}
+html[data-theme="dark"] .elk-afo-map-head p,html[data-theme="dark"] .elk-afo-map-foot{color:#b8c8bb}
+html[data-theme="dark"] .elk-afo-map-switch{background:#243329;border-color:#405746}
+html[data-theme="dark"] .elk-afo-map-switch button{color:#dce9df}
+html[data-theme="dark"] .elk-afo-map-switch button[aria-pressed="true"]{background:#376348;color:#fff}
+@media(max-width:620px){.elk-afo-map-head{align-items:flex-start;flex-direction:column}#elkAfoMap{height:340px}}
+
 .elkdata-table{width:100%;border-collapse:collapse;min-width:920px;font-size:.8rem}
 .elkdata-table th,.elkdata-table td{padding:11px 12px;border-bottom:1px solid #edf1eb;text-align:left;vertical-align:top;white-space:nowrap}
 .elkdata-table th{background:#f6f9f4;color:#617166;font-size:.72rem;font-weight:800;letter-spacing:.03em}
@@ -552,6 +569,10 @@ let all=[];
 let elkAreas=[];
 let elkSnapshotDate=null;
 let elkLoadError=null;
+let elkAfoMap=null;
+let elkAfoBaseLayer=null;
+let elkAfoBoundaryLayer=null;
+let elkAfoBasemapMode="standard";
 let animalMode="all";
 let activeFilterCategory="forest";
 let sourceWarnings=[];
@@ -816,6 +837,31 @@ function selectActivity(item,zoom=true){
  const layer=activityLayers.get(selectedKey);
  if(zoom&&layer&&activityMap){const bounds=layer.getBounds();if(bounds.isValid())activityMap.fitBounds(bounds.pad(0.55),{maxZoom:14});}
 }
+function setElkAfoBasemap(mode){
+ if(!elkAfoMap||!window.L)return;
+ elkAfoBasemapMode=mode==="imagery"?"imagery":"standard";
+ if(elkAfoBaseLayer)elkAfoMap.removeLayer(elkAfoBaseLayer);
+ elkAfoBaseLayer=elkAfoBasemapMode==="imagery"
+  ?L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:'Tiles &copy; Esri — Sources: Esri, Maxar, Earthstar Geographics, and the GIS User Community'})
+  :L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+ elkAfoBaseLayer.addTo(elkAfoMap);
+ document.querySelectorAll("[data-elk-afo-basemap]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.elkAfoBasemap===elkAfoBasemapMode)));
+}
+function initElkAfoMap(){
+ const target=document.getElementById("elkAfoMap");
+ if(!target||!window.L)return;
+ if(elkAfoMap){elkAfoMap.remove();elkAfoMap=null;}
+ elkAfoMap=L.map(target,{preferCanvas:true,scrollWheelZoom:false}).setView([62.5,16.5],4);
+ setElkAfoBasemap("standard");
+ elkAfoBoundaryLayer=L.tileLayer.wms("https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer",{
+  layers:"1",format:"image/png",transparent:true,version:"1.3.0",opacity:.9,
+  attribution:'ÄFO-gränser: Länsstyrelserna — <a href="https://www.algdata.se/algforvaltningen/karta-over-algforvaltningsomraden-och-algjaktomraden-i-landet/" target="_blank" rel="noopener">Älgdata</a>'
+ }).addTo(elkAfoMap);
+ elkAfoBoundaryLayer.on("tileerror",()=>{const status=document.getElementById("elkAfoMapStatus");if(status)status.textContent="ÄFO-kartlagret kunde inte hämtas från Länsstyrelsernas karttjänst just nu.";});
+ document.querySelectorAll("[data-elk-afo-basemap]").forEach(button=>button.addEventListener("click",()=>setElkAfoBasemap(button.dataset.elkAfoBasemap)));
+ elkAfoMap.fitBounds([[55.0,10.0],[69.5,25.0]]);
+ setTimeout(()=>elkAfoMap&&elkAfoMap.invalidateSize(),80);
+}
 function render(){
  const mode=document.getElementById("animalMode").value;
  const isElk=mode==="hunting";
@@ -852,12 +898,14 @@ function render(){
    const deltaLabel=(delta>0?"+":"")+fmt(delta);
    return '<tr><td><strong>'+esc(areaName)+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(snapshot.total)+'</td><td class="elkdata-number '+deltaClass+'">'+deltaLabel+'</td><td>'+date(snapshot.date)+'</td></tr>';
   }).join("");
+  if(elkAfoMap){elkAfoMap.remove();elkAfoMap=null;elkAfoBoundaryLayer=null;elkAfoBaseLayer=null;}
   document.getElementById("feed").innerHTML=elkLoadError
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
-   : '<p class="elkdata-note">Regional avskjutningsstatistik för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="6" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
+   : '<section class="elk-afo-map-card" aria-labelledby="elkAfoMapTitle"><div class="elk-afo-map-head"><div><h3 id="elkAfoMapTitle">Älgförvaltningsområden – hela Sverige</h3><p>Aktuella beslutade ÄFO-gränser från Länsstyrelsernas nationella karttjänst.</p></div><div class="elk-afo-map-switch" role="group" aria-label="Välj kartbakgrund"><button type="button" data-elk-afo-basemap="standard" aria-pressed="true">Standard</button><button type="button" data-elk-afo-basemap="imagery" aria-pressed="false">Flygfoto</button></div></div><div id="elkAfoMap" role="region" aria-label="Nationell karta över älgförvaltningsområden"></div><p class="elk-afo-map-foot" id="elkAfoMapStatus">Kartgränserna visar aktuella ÄFO. Avskjutningsstatistiken nedan är ännu regional och är inte geografiskt kopplad till polygonerna.</p></section><p class="elkdata-note">Regional avskjutningsstatistik för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="6" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
   document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
-  document.getElementById("mapSummary").textContent="Ingen geometri i älgstatistiken";
+  document.getElementById("mapSummary").textContent="Nationella ÄFO-gränser";
   renderMap([]);
+  if(!elkLoadError)requestAnimationFrame(initElkAfoMap);
   return;
  }
  document.getElementById("feed").innerHTML=list.length?list.map(x=>{
