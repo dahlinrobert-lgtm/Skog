@@ -120,14 +120,24 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 
 
 
-## 8. Bevakningsflöde – experimentell scrollprototyp
+## 8. Bevakningsflöde och nationell älgavskjutningskarta
 
-- En separat testvy finns i `docs/bevakning-test.html`; den ordinarie `docs/bevakning.html` är oförändrad.
-- Prototypen har en vertikal händelsetidslinje, läsprogress, diskreta scrollövergångar och synkronisering mellan aktiv händelse och kart-/ärendepanel. På mobil staplas flöde och karta.
-- Kartan/ärendepanelen förhandsvisar automatiskt den händelseruta som läsaren stannar vid i 250 ms. Hela händelserutan är klickbar och fungerar även med Enter/mellanslag; länken ”Öppna kartan” är separat. Kartan använder Esri World Imagery och hämtar bilddatum samt källuppgift för kartans mittpunkt från Esris metadata när kartutsnittet ändras.
-- Prototypen använder befintlig datainläsning, filter och kartfunktioner. Animationer respekterar `prefers-reduced-motion`.
-- PR #370, #373, #374 och #378 är sammanslagna. PR #374 gör hela händelserutan klickbar och behåller ”Öppna kartan” som separat länk. PR #378 bytte till Esri World Imagery och visar bilddatum/källa från metadata för kartans mittpunkt. En efterföljande textfix tar bort parentesen ”(kartans mittpunkt)” från den synliga etiketten; datumfrågan hämtas fortfarande för kartans mittpunkt. Bilddatumetiketten reserverar höjd för två textrader så att kartsektionen inte hoppar när datum-/källtexten radbryts.
-- **Nästa steg:** granska testvyn manuellt avseende scrollkänsla, kartkoppling, mobil, tangentbordsnavigering och prestanda. Ersätt inte den officiella sidan innan användaren har godkänt resultatet.
+### Bevakningssidan
+- Den godkända scrollbaserade bevakningsupplevelsen är den ordinarie sidan `docs/bevakning.html`; `docs/bevakning-test.html` behålls som separat test-/referensvy.
+- Den ordinarie sidan har tidslinje, sticky-karta, aktivitetsförhandsvisning, skog-/djurfilter och växling mellan Flygfoto (Esri World Imagery) och Standard (OpenStreetMap).
+- Kartfärgerna anpassas efter bakgrunden. Skog- och Djur-kategoriernas aktiva markering hanteras separat; båda rubrikrutorna ska alltid vara synliga.
+
+### Älgavskjutning per ÄFO – pågående utveckling
+- Användaren har bett om en nationell karta för avskjutning med samma kartupplevelse som skogslagren.
+- Verifierad geometri: Länsstyrelsernas JaktAdm MapServer layer 1, 129 aktuella ÄFO-polygoner. WMS layer 0 är presentationslagret för ÄFO. REST GeoJSON från GitHub Pages-origin har testats med fungerande CORS.
+- Den nationella portal-katalogen har 131 väljarkombinationer för 2026/2027. Två är inaktiva/ospecificerade poster (`01-099`, `21-014`); de 129 aktiva ID:na matchar polygonlagrets sammansatta `afo_id`.
+- Älgdata rapport-ID 3 (`ÄFO`, current boundaries, `HuntingArea=0`) returnerar en `Summa:`-rad för alla registrerade jaktområden inom valt ÄFO. En provhämtning för Sydöstra ÄFO (`24-005`) gav fällda totalt `42 (2 408)` och avskjutningsmål `66 (3 394)` för jaktår 2026/2027. Råcellerna ska bevaras; parentesvärdenas innebörd är inte fastställd.
+- Ny insamlare och dagligt workflow har lagts till i arbetsgrenen `feat/national-afo-avskjutning-snapshots` i `dahlinrobert-lgtm/alg-grasmyr`. Enskild ÄFO-provkörning och fem parser-/arkivtester passerade. Full nationell 129/129-batch är ännu inte verifierad.
+- UI-arbete pågår i Skog-grenen `feat/elk-avskjutning-national-afo-map`: kartpanel i Djur → Jakt, join på `afo_id`, färgsättning efter fällda älgar eller beräknad andel av avskjutningsmål, flygfoto/standard och popup per ÄFO. Kartan använder nationell dashboard från alg-grasmyr och JaktAdm GeoJSON.
+- Rättighetsbegränsning: den exakta geodatakatalogposten (metadata-ID `6d4c42de-2b43-4b72-98ec-856d8adfaf29`) gav HTTP 502 vid kontroll. Teknisk åtkomst är verifierad, men exakta villkor för lagring, bearbetning, extern visning och kommersiell användning är inte. Källregister och rättighetsunderlag är uppdaterade i arbetsgrenen; extern publicering ska invänta metadata-/villkorskontroll.
+- Nationell ÄFO-karta och regionala ÄJO-förändringssnapshots är separata produkter. Tabellen får inte beskrivas som nationellt heltäckande när den endast visar regional pilotdata.
+
+**Nästa steg:** slutför 129/129 nationell snapshot, granska att alla AFO-ID:n matchar gränslagret, verifiera geodatavillkor och kör Skog-sidans regressionstester. Publicera inte kartan innan både datatäckning och publiceringsvillkor är godkända.
 
 ## 9. Hur en ny chatt ska arbeta vidare
 
