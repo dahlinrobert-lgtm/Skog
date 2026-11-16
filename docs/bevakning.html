@@ -898,7 +898,6 @@ function render(){
  const isElk=mode==="hunting";
  const isNvr=mode==="collisions";
  const list=(isElk||isNvr)?[]:filtered();
- setAfoLayerVisible(isElk);
  document.getElementById("forestFilterGroup").hidden=false;
  document.getElementById("forestFilterGroup").classList.toggle("is-active",activeFilterCategory==="forest");
  document.getElementById("animalFilterGroup").classList.toggle("is-active",activeFilterCategory==="animal");
@@ -913,6 +912,7 @@ function render(){
  document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":isNvr?"Viltolyckor":"Senaste händelserna";
  document.querySelector(".feed-subtitle").textContent=isElk?"Jaktstatistik från Länsstyrelsernas Älgdata.":isNvr?"Individuella olyckshändelser från Nationella Viltolycksrådet.":"Nya och relevanta skogliga händelser. Välj en händelse för detaljer och geografisk kontext.";
  if(isNvr){
+  setAfoLayerVisible(false);
   document.getElementById("feed").innerHTML='<div class="empty">NVR:s historiska arkiv finns i OneDrive, men någon publik läsendpoint för GitHub Pages är ännu inte konfigurerad. Händelser visas när en kontrollerad endpoint med manifest och fullständighetsstatus finns.</div>';
   document.getElementById("resultCount").textContent="NVR-arkiv ej publicerat";
   document.getElementById("mapSummary").textContent="NVR-arkiv ej publicerat";
@@ -921,6 +921,7 @@ function render(){
   return;
  }
  if(isElk){
+  setAfoLayerVisible(true);
   const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
   const matchingAreas=elkAreas.filter(area=>[area.display_name,area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query));
   const rows=matchingAreas.flatMap(area=>(area.snapshots||[])
@@ -977,6 +978,7 @@ function render(){
  document.getElementById("periodComparison").textContent="Jämför "+periodText(periods.currentStart,periods.currentEnd)+" med "+periodText(periods.previousStart,periods.previousEnd)+". Jämförelsen bygger på källans registrerade datum, inte ett verifierat fältdatum.";
  document.getElementById("coverage").textContent="Visar "+list.length.toLocaleString("sv-SE")+" aktiviteter av "+all.filter(x=>x.date&&x.date.getFullYear()===CURRENT_YEAR).length.toLocaleString("sv-SE")+" hämtade objekt för kalenderåret "+CURRENT_YEAR+". Sortering: senaste händelsedatum först.";
  if(sourceWarnings.length)document.getElementById("coverage").textContent+=" Databegränsning: "+sourceWarnings.join("; ")+".";
+ setAfoLayerVisible(false);
  document.getElementById("resultCount").textContent=list.length.toLocaleString("sv-SE")+" träffar";
  renderMap(list);
  setupScrollExperience(list);
