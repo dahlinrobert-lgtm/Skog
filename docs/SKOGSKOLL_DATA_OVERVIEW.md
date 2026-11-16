@@ -578,3 +578,12 @@ Den viktigaste återstående förflyttningen är från separata prober och pilot
 Polismyndigheten har bekräftat att NVR-materialet är offentlig information, att CSV-uttaget omfattar de djurposter myndigheten har tillgång till från 2015 och framåt och att återkommande hämtning/arkivering för egen geografisk analys och statistik är tillåten med källhänvisningen **Nationella viltolycksrådet**. Beskedet stödjer inte uttryckligen vidare distribution av rådata eller försäljning av en fristående rådatatjänst. Se [evidensanteckningen](source-rights-reviews/2026-11-15-nvr-public-information-attribution.md).
 
 I bevakningsprototypen ska NVR visas som individuella händelser, inte som Trafikverkets aggregerade vägsegmentfrekvenser. Synlig källtext: **Källa: Nationella viltolycksrådet (NVR)**. En kontrollerad, skrivskyddad publiceringsendpoint med manifest och fullständighetsstatus krävs innan GitHub Pages kan läsa arkivet från OneDrive.
+
+
+## Police–NVR – nationell NVDB-närmaste-väg-prototyp (2026-11-16)
+
+En separat prototyp har lagts till i utvecklingsbranch `feat/national-nvdb-road-proximity`: `scripts/match_points_to_nvdb_roads.py`. Den kan läsa flera länsvisa GeoPackage-filer och söka efter vägnummerobjekt i ett lokalt, meterbaserat sökfönster runt varje WGS84-händelsekoordinat. Resultatet innehåller närmaste vägnummerobjekt, avstånd och alternativa vägkandidater.
+
+Detta är endast geografisk granskningsinformation. Ett tomt sökfönster bevisar inte att väg saknas; källans geografiska täckning måste vara verifierad. Om en eller flera källfiler inte kan läsas klassas resultatet som partiellt. Temporal matchning, kandidatlista, score, status och `geographic_match_used` ska inte påverkas.
+
+Prototypen är inte nationellt validerad eller produktionsintegrerad. Före nationell körning krävs inventering av Lastkajens faktiska filer och produktversion, verifiering av lager/CRS/täckning, länsgränser, prestanda, representativa manuellt bedömda testfall och separata användningsvillkor för lagring, bearbetning och kundvisning. Full nätverksrekonstruktion ska vara en undantagskontroll, inte standardmetod.
