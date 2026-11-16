@@ -281,21 +281,33 @@ Dokumentera uttryckligt godkännande, kontakt, datum, ändamål, historisk åtko
 **Framtida användning**
 Faktiska olyckshändelser, djurslag, historiska mönster och geografisk matchning. NVR ska hållas åtskilt från Trafikverkets aggregerade vägsegmentdata.
 
-### 4.12 Viltdata – älgstatistik
+### 4.12 Länsstyrelsernas Älgdata – avskjutning per ÄFO
 
-**Prioritet:** Medelhög
+**Prioritet:** Hög
 
-**Nuvarande läge**
-Separat projekt `alg-grasmyr` har regionala pilotflöden och snapshots. Nationell insamling är ett framtida steg, inte något som ska beskrivas som färdig.
+**Källor**
+- Statistik: [Länsstyrelsernas Älgdata statistikportal](https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/)
+- Geometri: Länsstyrelsernas JaktAdm, [ÄFO feature layer 1](https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/1)
 
-**Historik**
-Målet är daterade snapshots och bevarade källvärden, definitioner och områdesindelningar.
+**Verifierat tekniskt läge 2026-11-16**
+- Den nationella väljarkatalogen har 131 ÄFO-kombinationer för 2026/2027. Två poster är inaktiva/ospecificerade och saknar aktuell polygon: Stockholms län `01-099` (”Äfo ej specificerat”, senaste år 2011/2012) och Gävleborgs län `21-014` (”Furuvik (Ej aktiv)”, senaste år 2024/2025).
+- JaktAdm feature layer 1 returnerar 129 aktuella ÄFO-polygoner. Deras sammansatta `afo_id` matchar de 129 aktiva portal-ID:na. WMS GetCapabilities och GeoJSON-fråga har svarat HTTP 200; GeoJSON-anrop från GitHub Pages-origin har verifierats med CORS.
+- Älgdata rapport-ID 3 (`ÄFO`, `ReportLevel=2`, `HuntingArea=0`) ger en sammanfattningsrad `Summa:` för de registrerade jaktområdena inom valt ÄFO.
+- Ett faktiskt uttag för Sydöstra älgförvaltningsområdet i Västerbottens län (`24-005`), jaktår 2026/2027, gav råcellerna `42 (2 408)` för fällda totalt och `66 (3 394)` för avskjutningsmål totalt. Hela råcellerna bevaras; endast det inledande värdet används som valt jaktårs tal. Parentesvärdenas innebörd tolkas inte utan ytterligare källdokumentation.
+- En separat insamlare för nationella ÄFO-summor har lagts till i projektet `alg-grasmyr`. En enskild ÄFO-provkörning och parser-/arkivtester har passerat. Full nationell 129/129-körning är under verifiering.
+
+**Historik och tolkning**
+- ÄFO-summan är kumulativ rapportering för ett valt jaktår, inte enskilda fälthändelser, exakta fältdatum eller geografiska positioner för fällda älgar.
+- Nationell ÄFO-statistik och den befintliga regionala ÄJO-förändringspiloten är skilda datamängder. Kartan visar ÄFO-totaler; den regionala tabellen visar förändringar per jaktområde. De får inte beskrivas som samma täckning.
+- En saknad eller ofullständig rapport får inte tolkas som noll avskjutning. En nationell batch ska bara publiceras om alla förväntade aktiva ÄFO har hämtats och validerats.
 
 **Rättigheter**
-Kontrollera villkor per leverantör och datamängd.
+- Länsstyrelsens officiella öppna data-information anger att Älgdata-statistiken kan användas fritt utan angivna villkor och att länsstyrelsernas WMS-data får kopieras, bearbetas och distribueras gratis med Länsstyrelsen som källa. Underlag: [Länsstyrelsen Västra Götaland – öppna data](https://www.lansstyrelsen.se/vastra-gotaland/om-oss/vara-tjanster/oppna-data.html).
+- Geodatakatalogen anger samtidigt att licenstypen framgår av metadata för varje datamängd. Den exakta JaktAdm-metadatareferensen kunde inte hämtas (HTTP 502). Kartan visar därför tydlig attribution och erbjuder inte rågeometri som separat nedladdning; kontrollera eventuella lagerunika villkor när metadata blir tillgänglig.
+- Källhänvisning: **Länsstyrelsernas Älgdata statistikportal** för statistik och **Länsstyrelserna – Älgförvaltningsområden (JaktAdm)** för gränser.
 
-**Framtida användning**
-Avskjutning, älgförvaltning och regionala jämförelser. Statistik ska inte framställas som enskilda observationer av djur.
+**Nästa steg**
+Slutför full nationell snapshot, verifiera 129/129 ID-kopplingar och granskningsbarhet, återställ metadataåtkomst för det exakta JaktAdm-lagret och godkänn därefter extern visning separat från kommersiell vidareanvändning.
 
 ### 4.13 Lantmäteriet – Fastighetsindelning Direkt (OAPIF)
 
@@ -441,7 +453,7 @@ Identifiera relevanta myndighetsärenden och beslut. Publicera inte automatiskt 
 | NVDB Viltolyckor | Verifiera frekvensdefinition, referensperiod och jämförbar historik | Kontrollera sju lager, produktmetadata och snapshots |
 | NVDB vägnät/Lastkajen | Verifiera produktversion, beställningsvillkor och återkommande uppdatering | Dokumentera lokal baslinje och bygg versionsstyrt uppdateringsflöde |
 | NVDB vägnät | Automatiskt uppdateringsflöde saknas | Planera versionsbaserad uppdatering |
-| Viltdata älg | Nationell täckning saknas | Utöka från regional pilot efter källinventering |
+| Älgdata/ÄFO | Full nationell 129/129-snapshot under verifiering; exakt geodatametadata och publiceringsvillkor kvarstår | Slutför nationell snapshot, kontrollera ID-koppling och rättigheter före extern publicering |
 | Naturvårdsverket | Exakta prioriterade lager och producentvillkor | Välj lager och dokumentera metadata |
 | Vindbrukskollen | Nationell historik och fullständighet | Verifiera återkommande snapshotflöde |
 | Länsstyrelsernas diarier | Dokument-/personuppgiftsbedömning och beständig arkivering | Fortsätt metadataflödet, avgränsa dokumenthantering |
