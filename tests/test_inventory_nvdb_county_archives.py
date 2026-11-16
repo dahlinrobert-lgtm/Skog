@@ -36,12 +36,20 @@ class NvdbCountyArchiveInventoryTests(unittest.TestCase):
 
             result = inspect_archive(archive)
 
-        self.assertEqual(result["status"], "compatible")
-        self.assertTrue(result["road_layer_found"])
-        self.assertEqual(result["layers"][0]["feature_count"], 123)
-        self.assertTrue(archive.exists())
-        list_layers.assert_called_once()
-        self.assertTrue(list_layers.call_args.args[0].startswith("/vsizip/"))
+            # The source ZIP must remain present and byte-identical while the
+            # inspector reads its GeoPackage through GDAL's /vsizip/ handler.
+            self.assertTrue(archive.exists())
+            with zipfile.ZipFile(archive) as source_zip:
+                self.assertEqual(source_zip.namelist(), ["Norrbotten.gpkg"])
+                self.assertEqual(
+                    source_zip.read("Norrbotten.gpkg"), b"metadata-probe-fixture"
+                )
+
+            self.assertEqual(result["status"], "compatible")
+            self.assertTrue(result["road_layer_found"])
+            self.assertEqual(result["layers"][0]["feature_count"], 123)
+            list_layers.assert_called_once()
+            self.assertTrue(list_layers.call_args.args[0].startswith("/vsizip/"))
 
     @patch("scripts.inventory_nvdb_county_archives.pyogrio.read_info")
     @patch("scripts.inventory_nvdb_county_archives.pyogrio.list_layers")
