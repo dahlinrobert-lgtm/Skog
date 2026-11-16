@@ -325,7 +325,8 @@ html[data-theme="dark"] .overview-card,
 html[data-theme="dark"] .filter-card,
 html[data-theme="dark"] .feed-card,
 html[data-theme="dark"] .map-card,
-html[data-theme="dark"] .elkdata-card{
+html[data-theme="dark"] .elkdata-card,
+html[data-theme="dark"] .elk-afo-map-card{
   background:#1b2921!important;color:#e4ece6!important;
   border-color:#34483a!important;box-shadow:0 18px 48px rgba(0,0,0,.22)!important;
 }
@@ -369,6 +370,8 @@ html[data-theme="dark"] .quick-switch button[aria-pressed="true"]{background:#37
 html[data-theme="dark"] .elkdata-caveat{background:#29372b!important;color:#e1e9dc!important;border-left-color:#d7ad67!important}
 html[data-theme="dark"] .elkdata-negative{color:#f0a5a0!important;font-weight:800}
 html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
+html[data-theme="dark"] .leaflet-popup-content-wrapper,html[data-theme="dark"] .leaflet-popup-tip{background:#1b2921!important;color:#e4ece6!important}
+html[data-theme="dark"] .elk-afo-popup .muted{color:#aebdb2!important}
 </style>
 <style id="skog-scroll-prototype-style">
 /* Berättande tidslinje med synkroniserad kartkontext */
@@ -545,7 +548,7 @@ html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
     </div>
     <div id="elkAfoMap" role="region" aria-label="Nationell karta över rapporterad älgavskjutning per älgförvaltningsområde"></div>
     <div class="elk-afo-map-legend" id="elkAfoMapLegend" aria-live="polite"></div>
-    <div class="elk-afo-map-status" id="elkAfoMapStatus" aria-live="polite">Hämtar ÄFO-gränser och avskjutningsstatistik …</div>
+    <div class="elk-afo-map-status" id="elkAfoMapStatus" aria-live="polite">Hämtar ÄFO-gränser och avskjutningsstatistik …</div><p class="elkdata-note">Kartan visar nationella totalsummor per ÄFO. Tabellen nedan visar separata regionala förändringssnapshots per jaktområde.</p>
   </section>
 
   <div class="story-layout" id="storyLayout">
@@ -856,7 +859,7 @@ function elkAfoStyle(feature){
   weight:elkAfoMapMode==="imagery"?1.25:1,
   opacity:.95,
   fillColor:typeof bucket==="number"?palette[bucket]:bucket,
-  fillOpacity:value===null?.22:(elkAfoMapMode==="imagery"?.72:.58)
+  fillOpacity:value===null?0.22:(elkAfoMapMode==="imagery"?0.72:0.58)
  };
 }
 function elkAfoPopup(feature){
@@ -872,7 +875,7 @@ function elkAfoPopup(feature){
   +'<div class="muted">'+esc(item?.county||props.forvaltare||"")+' · '+esc(id)+'</div>'
   +'<div class="value"><span>Fällda älgar</span><b>'+fmt(killed)+'</b></div>'
   +'<div class="value"><span>Avskjutningsmål</span><b>'+fmt(target)+'</b></div>'
-  +'<div class="value"><span>Nyttjandegrad</span><b>'+utilization+'</b></div>'
+  +'<div class="value"><span>Fällda / mål (beräknat)</span><b>'+utilization+'</b></div>'
   +'<div class="muted" style="margin-top:7px">Jaktår '+esc(item?.hunting_season||elkAfoDashboard?.hunting_season||"–")+'</div>'
   +'<div class="muted">Källa: Länsstyrelsernas Älgdata</div></div>';
 }
@@ -1064,7 +1067,7 @@ function render(){
   }).join("");
   document.getElementById("feed").innerHTML=elkLoadError
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
-   : '<p class="elkdata-note">Regional avskjutningsstatistik för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="6" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
+   : '<p class="elkdata-note">Regional pilotstatistik per jaktområde för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="6" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
   document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
   document.getElementById("mapSummary").textContent="Ingen geometri i älgstatistiken";
   renderMap([]);
