@@ -22,9 +22,15 @@ Nationella Älgdata-katalogen innehåller 131 aktuella väljarkombinationer för
 
 När dessa två inaktiva/ospecificerade poster utesluts återstår 129 aktiva ÄFO-ID:n. De matchar de 129 polygonernas sammansatta `afo_id` i JaktAdm-lagret. Kopplingen ska göras med detta ID, inte med visningsnamn.
 
-### Rättighetsbegränsning
+### Rättighetsbedömning – kompletterad med Länsstyrelsernas öppna data-villkor
 
-Geodatakatalogens metadatareferens `6d4c42de-2b43-4b72-98ec-856d8adfaf29` gick inte att hämta under kontrollen (HTTP 502). Därför är exakt licens, bearbetningsrätt, extern visning och kommersiell användning för just detta lager **inte verifierade**. Teknisk åtkomst eller en publik WMS-tjänst ska inte tolkas som en generell kommersiell licens. Extern publicering ska invänta kontroll av metadata och villkor.
+Två officiella informationssidor ger följande vägledning:
+- [Länsstyrelsernas geodatakatalog](https://gis.lansstyrelsen.se/geodata/geodatakatalogen/) anger att licenstypen för geodata framgår av metadata för varje datamängd.
+- [Länsstyrelsen Västra Götalands öppna data](https://www.lansstyrelsen.se/vastra-gotaland/om-oss/vara-tjanster/oppna-data.html) anger att WMS-tjänster från länsstyrelserna får kopieras, bearbetas och distribueras gratis med Länsstyrelsen som källa. Samma sida anger att Älgdata-databasen med statistik över fällda älgar kan användas helt fritt utan angivna villkor.
+
+Detta ger stöd för att använda Älgdata-statistiken och för att visa/bearbeta Länsstyrelsernas WMS-gränser med tydlig källhänvisning. Kartan hämtar GeoJSON från feature layer 1 i samma JaktAdm MapServer, inte via WMS-bildrutor. Eftersom geodatakatalogen anger att villkoren gäller per datamängd och metadatareferensen `6d4c42de-2b43-4b72-98ec-856d8adfaf29` fortfarande inte gick att hämta (HTTP 502), kvarstår en kontroll av eventuella lagerunika begränsningar. Ingen rå geometri ska erbjudas som separat nedladdning; källhänvisning till Länsstyrelserna ska finnas i kartan.
+
+**Operativ bedömning:** Statistikens återanvändning och härledda ÄFO-summor kan användas med källhänvisning enligt Länsstyrelsens öppna data-information. Kartvisning och bearbetning av gränser stöds av de generella WMS-villkoren, med attribution och kontroll av eventuella specifika metadatarestriktioner kvar som uppföljning. Kommersiell vidareanvändning av själva rågeometrin ska inte antas utan den exakta metadata-/villkorskontrollen.
 
 ## 2. Avskjutningsstatistik – Älgdata
 
