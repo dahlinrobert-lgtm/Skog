@@ -111,6 +111,9 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Källornas historik är ojämn; äldre nyheter/ärenden kan försvinna ur webbplatser och API:er.
 - Månatliga snapshots är därför viktiga.
 - Skilj metadata från dokument och bilagor; granska sekretess, personuppgifter, upphovsrätt och tredje mans rättigheter per handling.
+- PR #397 är sammanslagen i `main` (merge commit `d62e953fd79634d09453728195ed14ae039f8db9`). `scripts/collect_lansstyrelsen_monthly_snapshot.py` skickar nu både `seen` och `seen_diary_numbers` till `extract_grid`; dubbletthanteringen är därmed i linje med den aktuella fyrargumentsfunktionen.
+- Fixen är verifierad genom kod-/signaturkontroll och kontroll av merge-status. Ingen livekörning med Playwright eller månadsnapshot är ännu verifierad. Nästa steg är att installera/validera Playwright lokalt och köra en avgränsad testperiod; kontrollera källans träffantal, unika diarienummer, paginering och `reconciled` innan någon snapshot publiceras.
+- Behåll sökningen avgränsad till valda ämnesfraser och län; hämta inte hela diariet. Länsstyrelsens besked om tekniska begränsningar ska beaktas innan obevakad återkommande drift aktiveras.
 
 ## 6. Prioriterad arbetsordning
 
