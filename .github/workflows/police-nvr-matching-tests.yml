@@ -10,6 +10,7 @@ on:
       - 'scripts/inspect_ortnamn_geopackage.py'
       - 'scripts/inspect_nvdb_network_schema.py'
       - 'scripts/match_points_to_nvdb_roads.py'
+      - 'scripts/match_points_to_nvdb_roads.py'
       - 'tests/test_build_lulea_police_review.py'
       - 'tests/test_enrich_police_nvr_geography.py'
       - 'tests/test_extract_police_wildlife_incidents.py'
