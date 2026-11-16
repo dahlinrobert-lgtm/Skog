@@ -1813,12 +1813,12 @@ sources:
     geography: Sweden
     format: [JSON, HTML]
     rights:
-      licence: "Public statistics are accessible through Älgdata. Exact terms for recurring historical snapshots, derived products and commercial customer display have not yet been verified."
-      review_status: amber_source_terms_not_confirmed
-      commercial_use: pending_exact_source_terms
-      historical_storage: pending_exact_source_terms
-      derivatives: pending_exact_source_terms
-      redistribution: not_confirmed
+      licence: "Länsstyrelsen's official open-data information states that the Älgdata database can be used freely; no conditions are listed for the statistics. Skog keeps explicit source attribution and preserves source cells."
+      review_status: green_public_statistics_reuse_with_attribution
+      commercial_use: verified_with_attribution
+      historical_storage: yes_with_attribution_and_snapshot_metadata
+      derivatives: yes_with_attribution
+      redistribution: yes_with_attribution
       attribution: "Länsstyrelsernas Älgdata statistikportal"
       api_or_service_constraints: "Use report ID 3 (ÄFO) with current boundaries. The Summa row aggregates registered ÄJO values within each ÄFO. Preserve raw source cells; do not interpret the parenthetical comparison value as a daily event."
       evidence_checked_on: "2026-11-16"
@@ -1827,8 +1827,8 @@ sources:
       access_status: verified
       snapshot_status: pilot
       history_status: none
-      commercial_use_status: pending_product_terms
-      customer_display_status: pending_scope_confirmation
+      commercial_use_status: verified_with_attribution
+      customer_display_status: conditional_on_attribution_and_source_scope
       last_verified: "2026-11-16"
       next_action: "Complete and validate the first national 129-ÄFO snapshot; then confirm source terms for recurring storage, derived map display and commercial use separately."
       evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md; alg-grasmyr Actions run 43948854012 (single-ÄFO parser and portal probe)"
@@ -1848,12 +1848,12 @@ sources:
     geography: Sweden
     format: [GeoJSON, WMS]
     rights:
-      licence: "Public ArcGIS map service is accessible. The exact dataset metadata record was unavailable during review (HTTP 502); no licence or commercial reuse permission is inferred."
-      review_status: amber_exact_dataset_metadata_unavailable
-      commercial_use: pending_exact_layer_terms
-      historical_storage: pending_exact_layer_terms
-      derivatives: pending_exact_layer_terms
-      redistribution: pending_exact_layer_terms
+      licence: "Länsstyrelsen's official open-data information states that WMS services from the county administrative boards may be copied, processed and distributed free with source attribution. The exact dataset metadata record was unavailable during review (HTTP 502); verify whether it adds layer-specific restrictions. The map uses the feature query from the same JaktAdm MapServer and does not offer raw geometry downloads."
+      review_status: conditional_general_wms_terms_exact_layer_metadata_unavailable
+      commercial_use: conditional_on_attribution_and_source_scope
+      historical_storage: conditional_on_attribution_and_layer_terms
+      derivatives: conditional_on_attribution_and_source_scope
+      redistribution: conditional_on_attribution_and_source_scope
       attribution: "Länsstyrelserna – Älgförvaltningsområden"
       api_or_service_constraints: "JaktAdm MapServer layer 1 exposes current ÄFO polygons. Use current boundary mode and join only by the composite afo_id; do not join on display names."
       evidence_checked_on: "2026-11-16"
@@ -1870,10 +1870,10 @@ sources:
       access_status: verified
       snapshot_status: not_started
       history_status: none
-      commercial_use_status: pending_product_terms
-      customer_display_status: pending_layer_check
+      commercial_use_status: conditional_on_attribution_and_source_scope
+      customer_display_status: conditional_on_attribution_and_source_scope
       last_verified: "2026-11-16"
-      next_action: "Retrieve the exact geodata metadata record and verify display/derivative terms before public deployment; retain Länsstyrelsen attribution."
+      next_action: "Retrieve the exact geodata metadata record when available and check for layer-specific restrictions; keep Länsstyrelsen attribution and do not offer raw geometry downloads."
       evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md; JaktAdm MapServer layer 1 probe, 129 features, CORS verified from GitHub Pages"
     notes:
       - "Feature layer ID 1: https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/1"
