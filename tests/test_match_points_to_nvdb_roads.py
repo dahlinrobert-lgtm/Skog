@@ -6,7 +6,7 @@ import geopandas as gpd
 from pyproj import Transformer
 from shapely.geometry import LineString
 
-from scripts.match_points_to_nvdb_roads import search_event
+from scripts.match_points_to_nvdb_roads import road_number, search_event
 
 
 class NationalRoadProximityTests(unittest.TestCase):
