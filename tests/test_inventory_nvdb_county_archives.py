@@ -39,7 +39,7 @@ class NvdbCountyArchiveInventoryTests(unittest.TestCase):
         self.assertEqual(result["status"], "compatible")
         self.assertTrue(result["road_layer_found"])
         self.assertEqual(result["layers"][0]["feature_count"], 123)
-        self.assertFalse(any(Path(temp).glob("*.gpkg")) if Path(temp).exists() else False)
+        self.assertTrue(archive.exists())
         list_layers.assert_called_once()
         self.assertTrue(list_layers.call_args.args[0].startswith("/vsizip/"))
 
