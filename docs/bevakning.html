@@ -278,6 +278,34 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 @media(max-width:850px){.elkdata-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.elkdata-controls{grid-template-columns:1fr 1fr}.elkdata-result{grid-column:1/-1;text-align:left}}
 @media(max-width:620px){.elkdata-card{padding:18px 14px;border-radius:17px}.elkdata-stats{gap:8px}.elkdata-stat{padding:12px}.elkdata-stat strong{font-size:1.45rem}.elkdata-controls{grid-template-columns:1fr}.elkdata-result{grid-column:auto}}
 </style>
+<style id="elk-afo-map-style">
+.elk-afo-map-card{margin-top:18px;padding:22px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.elk-afo-map-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px}
+.elk-afo-map-head h2{margin:0;font-size:1.12rem;color:var(--ink)}
+.elk-afo-map-head p{margin:5px 0 0;color:var(--muted);font-size:.82rem}
+.elk-afo-map-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.elk-afo-map-actions select{height:38px;padding:0 10px;border:1px solid #dce4db;border-radius:9px;background:#fff;color:#26372b;font:inherit;font-size:.78rem}
+.elk-afo-map-base-switch{display:inline-flex;gap:3px;padding:3px;border:1px solid #dce5da;border-radius:10px;background:#f4f7f2}
+.elk-afo-map-base-switch button{border:0;border-radius:7px;padding:7px 10px;background:transparent;color:#53665a;font-size:.74rem;font-weight:780;cursor:pointer}
+.elk-afo-map-base-switch button[aria-pressed="true"]{background:#315f42;color:#fff}
+#elkAfoMap{height:530px;min-height:380px;border:1px solid #dce5da;border-radius:15px;overflow:hidden;background:#e9eee9}
+.elk-afo-map-legend{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;color:#657468;font-size:.75rem}
+.elk-afo-map-legend-item{display:inline-flex;align-items:center;gap:5px}
+.elk-afo-map-swatch{width:13px;height:13px;border:1px solid rgba(0,0,0,.16);border-radius:3px;display:inline-block}
+.elk-afo-map-status{margin-top:9px;color:var(--muted);font-size:.76rem}
+.elk-afo-popup{min-width:210px;font:13px/1.45 system-ui,sans-serif;color:#26372b}
+.elk-afo-popup strong{display:block;margin-bottom:4px;font-size:14px}
+.elk-afo-popup .muted{color:#68776d;font-size:11px}
+.elk-afo-popup .value{display:flex;justify-content:space-between;gap:16px;padding-top:4px}
+html[data-theme="dark"] .elk-afo-map-card{background:#1b2921!important;color:#e4ece6!important;border-color:#34483a!important}
+html[data-theme="dark"] .elk-afo-map-head h2{color:#edf5ef!important}
+html[data-theme="dark"] .elk-afo-map-head p,html[data-theme="dark"] .elk-afo-map-status,html[data-theme="dark"] .elk-afo-map-legend{color:#b8c8bb!important}
+html[data-theme="dark"] .elk-afo-map-actions select{background:#111c15!important;color:#e4ece6!important;border-color:#526557!important}
+html[data-theme="dark"] .elk-afo-map-base-switch{background:#243329;border-color:#405746}
+html[data-theme="dark"] .elk-afo-map-base-switch button{color:#dce9df}
+html[data-theme="dark"] .elk-afo-map-base-switch button[aria-pressed="true"]{background:#376348;color:#fff}
+@media(max-width:700px){.elk-afo-map-card{padding:17px 13px;border-radius:17px}.elk-afo-map-head{flex-direction:column}.elk-afo-map-actions{width:100%;justify-content:space-between}.elk-afo-map-actions select{flex:1;min-width:150px}#elkAfoMap{height:430px;min-height:350px}}
+</style>
 
 <script>try{const t=localStorage.getItem("skog.theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t;else if(matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <link rel="stylesheet" href="./skog-theme.css">
@@ -495,6 +523,29 @@ html[data-theme="dark"] .elkdata-positive{color:#91d5a3!important}
     </div>
     <div class="statusline" aria-live="polite"><span id="statusDot" class="dot"></span><span id="status">Hämtar data från Skogsstyrelsen …</span></div>
     <p id="coverage"></p>
+  </section>
+
+  <section class="elk-afo-map-card" id="elkAfoMapCard" aria-labelledby="elkAfoMapTitle" hidden>
+    <div class="elk-afo-map-head">
+      <div>
+        <p class="eyebrow">Nationell avskjutning</p>
+        <h2 id="elkAfoMapTitle">Avskjutning per älgförvaltningsområde</h2>
+        <p id="elkAfoMapSubtitle">Fällda älgar sammanställda per ÄFO för valt jaktår.</p>
+      </div>
+      <div class="elk-afo-map-actions">
+        <select id="elkAfoMetric" aria-label="Färgsätt kartan efter">
+          <option value="harvested">Fällda älgar</option>
+          <option value="utilization">Nyttjandegrad av mål</option>
+        </select>
+        <div class="elk-afo-map-base-switch" role="group" aria-label="Kartbakgrund">
+          <button type="button" id="elkAfoBasemapImagery" aria-pressed="true">Flygfoto</button>
+          <button type="button" id="elkAfoBasemapStandard" aria-pressed="false">Standard</button>
+        </div>
+      </div>
+    </div>
+    <div id="elkAfoMap" role="region" aria-label="Nationell karta över rapporterad älgavskjutning per älgförvaltningsområde"></div>
+    <div class="elk-afo-map-legend" id="elkAfoMapLegend" aria-live="polite"></div>
+    <div class="elk-afo-map-status" id="elkAfoMapStatus" aria-live="polite">Hämtar ÄFO-gränser och avskjutningsstatistik …</div>
   </section>
 
   <div class="story-layout" id="storyLayout">
