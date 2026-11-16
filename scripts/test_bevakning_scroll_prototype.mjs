@@ -83,7 +83,8 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /map-card\.is-animal-map/);
   assert.match(productionHtml, /map-legend\[hidden\]/);
   assert.match(productionHtml, /Regional avskjutningsstatistik/);
-  assert.match(productionHtml, /är inte geografiskt kopplad till polygonerna/);
+  assert.match(productionHtml, /Regionalt underlag/);
+  assert.match(productionHtml, /joinat till polygonerna|kopplad till polygonerna|ÄFO-polygonerna/);
 });
 
 test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händelseruta", () => {
