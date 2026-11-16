@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Read-only inventory of county NVDB GeoPackage ZIP archives.
 
-The script inspects ZIP metadata and GeoPackage layer metadata through GDAL's
-/vsizip/ virtual filesystem. It does not extract, rewrite, or modify source
-archives. A successful metadata probe is not a validation of all features or
-of the legal reuse conditions for the source product.
+The script inspects ZIP metadata and the target GeoPackage layer through
+GDAL's /vsizip/ virtual filesystem. It deliberately avoids listing every
+layer because unrelated layer metadata may not be understood by the installed
+GDAL/Pyogrio combination. It does not extract, rewrite, or modify source
+archives.
 """
 from __future__ import annotations
 
@@ -19,6 +20,7 @@ import pyogrio
 
 ROAD_LAYER = "NVDB_DK_O_111_Vagnummer"
 ROAD_FIELDS = ("ELEMENT_ID", "Europavag", "Huvudnummer", "Lankroll")
+EXPECTED_CRS = "EPSG:3006"
 
 
 def inspect_archive(archive: Path) -> dict:
@@ -30,6 +32,8 @@ def inspect_archive(archive: Path) -> dict:
         "layers": [],
         "road_layer_found": False,
         "road_layer_missing_fields": [],
+        "road_layer_crs": None,
+        "road_layer_crs_matches_expected": None,
         "status": "error",
         "errors": [],
     }
@@ -59,43 +63,76 @@ def inspect_archive(archive: Path) -> dict:
 
     for member in members:
         vsi_path = f"/vsizip/{archive.resolve().as_posix()}/{member.filename}"
+
+        # Query only the GeoPackage catalog. Do not enumerate or open unrelated
+        # feature layers: some may have geometry metadata unsupported by GDAL.
         try:
-            listed = pyogrio.list_layers(vsi_path)
-            layer_names = [str(row[0]) for row in listed]
-            for layer_name in layer_names:
-                try:
-                    info = pyogrio.read_info(vsi_path, layer=layer_name)
-                    fields = [str(field) for field in info.get("fields", [])]
-                    layer = {
-                        "member": member.filename,
-                        "layer": layer_name,
-                        "feature_count": info.get("features"),
-                        "geometry_type": info.get("geometry_type"),
-                        "crs": str(info.get("crs") or ""),
-                        "fields": fields,
-                        "field_count": len(fields),
-                        "status": "metadata_read",
-                    }
-                    if layer_name == ROAD_LAYER:
-                        missing = [field for field in ROAD_FIELDS if field not in fields]
-                        layer["required_fields_missing"] = missing
-                        result["road_layer_found"] = True
-                        result["road_layer_missing_fields"] = missing
-                        layer["status"] = "compatible" if not missing else "schema_mismatch"
-                    result["layers"].append(layer)
-                except Exception as exc:
-                    result["errors"].append(
-                        f"Layer metadata failed ({member.filename}::{layer_name}): {exc}"
-                    )
+            catalog = pyogrio.read_dataframe(
+                vsi_path,
+                sql="SELECT table_name FROM gpkg_contents WHERE data_type = 'features'",
+                sql_dialect="SQLITE",
+            )
+            layer_names = [str(name) for name in catalog["table_name"]]
         except Exception as exc:
-            result["errors"].append(f"Layer listing failed ({member.filename}): {exc}")
+            result["errors"].append(
+                f"GeoPackage catalog failed ({member.filename}): {exc}"
+            )
+            continue
+
+        if ROAD_LAYER not in layer_names:
+            continue
+
+        result["road_layer_found"] = True
+        try:
+            info = pyogrio.read_info(vsi_path, layer=ROAD_LAYER)
+        except Exception as exc:
+            result["errors"].append(
+                f"Road layer metadata failed ({member.filename}::{ROAD_LAYER}): {exc}"
+            )
+            continue
+
+        fields = [str(field) for field in info.get("fields", [])]
+        missing = [field for field in ROAD_FIELDS if field not in fields]
+        crs = str(info.get("crs") or "")
+        crs_matches = crs.upper() == EXPECTED_CRS
+
+        layer = {
+            "member": member.filename,
+            "layer": ROAD_LAYER,
+            "feature_count": info.get("features"),
+            "geometry_type": info.get("geometry_type"),
+            "crs": crs,
+            "crs_matches_expected": crs_matches,
+            "fields": fields,
+            "field_count": len(fields),
+            "required_fields_missing": missing,
+            "status": (
+                "compatible"
+                if not missing and crs_matches
+                else "schema_mismatch"
+            ),
+        }
+        result["layers"].append(layer)
+        result["road_layer_missing_fields"] = sorted(
+            set(result["road_layer_missing_fields"]) | set(missing)
+        )
+        result["road_layer_crs"] = crs
+        result["road_layer_crs_matches_expected"] = crs_matches
 
     if result["errors"]:
         result["status"] = "partial"
     elif not result["road_layer_found"]:
         result["status"] = "road_layer_missing"
-    elif result["road_layer_missing_fields"]:
+    elif result["road_layer_missing_fields"] or (
+        result["road_layer_crs_matches_expected"] is False
+    ):
         result["status"] = "schema_mismatch"
+    elif not result["layers"] or any(
+        layer["status"] != "compatible" for layer in result["layers"]
+    ):
+        # The catalog contained the target layer, but its metadata could not
+        # be validated into a compatible layer record.
+        result["status"] = "partial"
     else:
         result["status"] = "compatible"
     return result
@@ -117,7 +154,7 @@ def build_report(directory: Path, pattern: str, expected_archives: int | None) -
         errors.append("One or more archives are not fully compatible")
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": "completed" if not errors else "partial",
         "source_directory": str(directory.resolve()),
