@@ -260,6 +260,7 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .elkdata-controls select,.elkdata-controls input{width:100%;height:44px;padding:0 12px;border:1px solid #dce4db;border-radius:10px;background:#fff;color:#26372b;font:inherit}
 .elkdata-result{align-self:center;color:#728075;font-size:.8rem;text-align:right}
 .elkdata-table-wrap{overflow-x:auto;border:1px solid #e5ebe3;border-radius:13px}
+.map-legend[hidden]{display:none!important}
 .map-card.is-animal-map .map-layout{grid-template-columns:1fr}
 .map-card.is-animal-map .map-legend{display:none}
 .map-card.is-animal-map #activityMap{height:clamp(300px,48vh,470px)}
@@ -562,6 +563,7 @@ let elkLoadError=null;
 const AFO_LAYER_URL="https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/1/query";
 let afoBoundaryData=null;
 let afoBoundaryPromise=null;
+let afoBoundaryLoading=false;
 let afoBoundaryLayer=null;
 let animalMode="all";
 let activeFilterCategory="forest";
@@ -871,6 +873,8 @@ function setAfoLayerVisible(visible){
   if(!activityMap.hasLayer(afoBoundaryLayer))afoBoundaryLayer.addTo(activityMap);
   return;
  }
+ if(afoBoundaryLoading)return;
+ afoBoundaryLoading=true;
  document.getElementById("mapSummary").textContent="Hämtar ÄFO-gränser …";
  fetchAfoBoundaryData().then(data=>{
   if(document.getElementById("animalMode").value!=="hunting"||!activityMap)return;
@@ -891,7 +895,7 @@ function setAfoLayerVisible(visible){
  }).catch(error=>{
   document.getElementById("mapSummary").textContent="ÄFO-gränser kunde inte hämtas";
   document.getElementById("casePreview").innerHTML='<div class="preview-empty">Länsstyrelsens ÄFO-tjänst kunde inte läsas: '+esc(error.message||error)+'</div>';
- });
+ }).finally(()=>{afoBoundaryLoading=false;});
 }
 function render(){
  const mode=document.getElementById("animalMode").value;
