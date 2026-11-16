@@ -67,6 +67,15 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /html\[data-theme="dark"\] \.filter-group\.is-active \.filter-group-heading/);
   assert.match(productionHtml, /if\(baseMapMode!=="imagery"\|\|!activityMap\|\|!label\)return/);
   assert.match(productionHtml, /imageryDateRequest\+\+;label\.hidden=true/);
+  assert.match(productionHtml, /id="elkAfoMap"/);
+  assert.match(productionHtml, /Älgförvaltningsområden – hela Sverige/);
+  assert.match(productionHtml, /lst_jaktadm_visning\/MapServer\/WMSServer/);
+  assert.match(productionHtml, /layers:"1"/);
+  assert.match(productionHtml, /data-elk-afo-basemap="standard"/);
+  assert.match(productionHtml, /data-elk-afo-basemap="imagery"/);
+  assert.match(productionHtml, /Länsstyrelsernas karttjänst/);
+  assert.match(productionHtml, /elkAfoMap\.remove\(\)/);
+  assert.match(productionHtml, /statistiken nedan är ännu regional/);
 });
 
 test("scrollupplevelsen har fördröjd kartförhandsvisning och klickbar händelseruta", () => {

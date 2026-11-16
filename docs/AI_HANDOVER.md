@@ -37,6 +37,9 @@ GitHub Pages: https://dahlinrobert-lgtm.github.io/Skog/
 - Inga kundaviseringar ska aktiveras innan ingestion, baslinje, fullständighet, databas och rättighetsläge är verifierade.
 - Hemligheter, API-nycklar, lösenord och åtkomsttoken får aldrig läggas i Git eller källregistret.
 
+- Nationell karta över älgförvaltningsområden finns i Jakt-läget i `docs/bevakning.html`. Den använder Länsstyrelsernas publika JaktAdm WMS, lager 1 (`LST Älgförvaltningsområden`), som enligt tjänstemetadata är de senast beslutade ÄFO-polygonerna i EPSG:3006. Kartan har Standard/Flygfoto och nationell utbredning. Statistikunderlaget är fortfarande regionalt (30 jaktområden för 2026/2027) och är inte joinat till polygonerna; kartan ska därför inte färgsättas som avskjutningskarta ännu.
+- Källan är registrerad som `lansstyrelsen.elk_management_areas`. Åtkomsten via WMS är verifierad, men datasetsspecifika villkor för extraktion, cache, bearbetning, kommersiell användning och kundvisning är inte verifierade. Behåll attribution till Länsstyrelserna och behandla visning, lagring och vidareanvändning separat.
+
 ## 4. Källregister och automatisk rapport
 
 Maskinläsbart register: `data-platform/config/sources.yml`  

@@ -1946,3 +1946,44 @@ sources:
       - "Keep product versions immutable and compare only compatible network releases."
       - "Do not mark a road segment as removed until a complete, comparable network release has been processed."
 
+  - source_id: lansstyrelsen.elk_management_areas
+    name: "Länsstyrelserna – nationella älgförvaltningsområden (ÄFO)"
+    source_type: vector_boundaries
+    provider: Länsstyrelserna
+    access_method: arcgis_rest_wms
+    connector: public_wms
+    status: pilot
+    cadence: on_demand
+    geography: Sweden
+    format: [WMS, ArcGIS REST]
+    expected_crs: EPSG:3006
+    rights:
+      licence: unknown
+      licence_url: "https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/GetMetaDataById?id=93a41eff-e847-4db8-8c7e-154ddfdc34ad"
+      review_status: amber_rights_owner_and_project_terms
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "Recommended: Länsstyrelserna – nationella karttjänsten för beslutade älgförvaltningsområden."
+      api_or_service_constraints: "Use the published MapServer/WMS for map display; confirm service availability and dataset-specific reuse terms in metadata before caching, extracting, republishing or commercial use."
+      evidence_checked_on: "2026-11-16"
+      caveat: "The public MapServer metadata confirms current nationwide ÄFO polygons and WMS/Map Service access. Dataset-specific licence and rights for extraction, caching, derivatives and customer display have not yet been verified. WMS display in this prototype is not a conclusion about those rights."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: assess_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_attachments_and_embedded_material
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: "ArcGIS MapServer metadata and Länsstyrelsernas Geodatakatalog metadata record 93a41eff-e847-4db8-8c7e-154ddfdc34ad"
+      reviewed_on: "2026-11-16"
+      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
+    notes:
+      - "MapServer: https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer"
+      - "Layer 1 is named LST Älgförvaltningsområden and has polygon geometry in EPSG:3006."
+      - "Service description identifies the content as the latest decided ÄFO and states that a new decision becomes visible the following day."
+      - "Current boundary display is separate from the regional 2026/2027 hunting-statistics pilot; no statistical join to ÄFO polygons is implemented."
+      - "Do not use the Skogsstyrelsen ÄBIN layer as a substitute for the current national decision layer; its scope is inventory-related ÄFO."

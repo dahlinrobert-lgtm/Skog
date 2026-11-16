@@ -7,9 +7,9 @@
 
 ## Sammanfattning
 
-- Registrerade datakällor: **47**
+- Registrerade datakällor: **48**
 - Källor med operativ status: **11**
-- Källor som ännu inte har operativ status: **36**
+- Källor som ännu inte har operativ status: **37**
 - Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 1, Teknisk probe: 1, Verifierad: 3
 - Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 2, Metadatabevakning behöver repareras: 1, Månadsarkiv planerat/pilot: 1, Pilot: 5
 - Historik: Delvis historik: 5, Delvis historiskt arkiv: 1, Ej verifierad: 3, Endast metadataserie: 1, Ingen: 1
