@@ -39,14 +39,14 @@ def collect_interval(page, county_label, phrase, start, end):
   return {"from":start,"to":end,"source_total":0 if zero else total,
           "extracted_unique_ids":0,"pager_complete":zero,"reconciled":zero,
           "records":[],"pages_read":0,"error":None if zero else "No result grid and no explicit zero"}
- seen=set(); page_signatures=set(); records=[]; diagnostics=[]; pager_complete=False
+ seen=set(); seen_diary_numbers=set(); page_signatures=set(); records=[]; diagnostics=[]; pager_complete=False
  for page_no in range(1,101):
   grid.wait_for(state="visible",timeout=10000)
   ids=tuple(match for row in page.locator(f"{RESULT_GRID} tr").all()
             for match in re.findall(r"\b\d{1,6}-\d{4}\b",clean(row.inner_text())))
   if ids in page_signatures: raise RuntimeError(f"Repeated page signature at {page_no}")
   page_signatures.add(ids)
-  extracted,diag=extract_grid(page,page_no,seen)
+  extracted,diag=extract_grid(page,page_no,seen,seen_diary_numbers)
   records.extend(extracted); diagnostics.append(diag)
   body=clean(page.locator("body").inner_text(timeout=15000))
   if total is None: total=parse_total(body)
