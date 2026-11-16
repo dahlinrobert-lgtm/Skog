@@ -453,7 +453,7 @@ Identifiera relevanta myndighetsärenden och beslut. Publicera inte automatiskt 
 | Viltdata älg | Nationell täckning saknas | Utöka från regional pilot efter källinventering |
 | Naturvårdsverket | Exakta prioriterade lager och producentvillkor | Välj lager och dokumentera metadata |
 | Vindbrukskollen | Nationell historik och fullständighet | Verifiera återkommande snapshotflöde |
-| Länsstyrelsernas diarier | Första pilotbaslinjen är publicerad för Norrbotten, oktober 2026, kategori B; återstående är reproducerbarhet, täckning och tekniska begränsningar | Upprepa avgränsad manuell månadskörning; dokumentera län/fras-täckning och granska metadata separat från dokument/bilagor |
+| Länsstyrelsernas diarier | Dokument-/personuppgiftsbedömning och beständig arkivering | Fortsätt metadataflödet, avgränsa dokumenthantering |
 
 ## 6. Hur snapshots och historik ska fungera
 

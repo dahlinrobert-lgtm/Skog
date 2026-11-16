@@ -110,9 +110,6 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Teknisk probe är inte ett beviljat produktions- eller återanvändningstillstånd.
 
 ### Länsstyrelsernas diarier
-
-- Efter PR #400: källregistret ska nu markera Länsstyrelsen som `pilot`, inte planerat/pilot. Första verifierade pilotkörningen #16 är publicerad; operativ status är fortfarande delvis verifierad och rättighets-/kundvisningsstatus oförändrad.
-- Nästa Länsstyrelsen-steg: gör en andra avgränsad, manuell månadskörning för att testa reproducerbarhet och dokumentera täckning per län/fras. Aktivera inte återkommande schema innan myndighetens tekniska begränsningar har utretts. Granska de 15 unika pilotärendena för relevans och personuppgifts-/dokumentrisk, utan att hämta handlingar automatiskt.
 - Källornas historik är ojämn; äldre nyheter/ärenden kan försvinna ur webbplatser och API:er.
 - Månatliga snapshots är därför viktiga.
 - Skilj metadata från dokument och bilagor; granska sekretess, personuppgifter, upphovsrätt och tredje mans rättigheter per handling.
