@@ -1,4 +1,4 @@
-#requires -Version 5.1
+﻿#requires -Version 5.1
 [CmdletBinding()]
 param(
     [string]$OutputDirectory = (Join-Path $env:USERPROFILE "Desktop\Skogskoll_AFO_geometry"),
@@ -98,7 +98,7 @@ try {
     }
     if ($Seen.Count -ne $Ids.Count) { throw "Ofullständig totalexport: $($Seen.Count) av $($Ids.Count) unika objekt." }
     if (($AsoCount + $LicenseCount) -ne $ExpectedCount) { throw "Områdestyperna summerar till $($AsoCount + $LicenseCount), förväntade $ExpectedCount." }
-    if ($AsoCount -ne 832 -or $LicenseCount -ne 2095) { throw "Områdesfördelningen avviker: ÄSO=$AsoCount, licens=$LicenseCount. Kontrollera källförändring." }
+    if ($AsoCount -ne 832 -or $LicenseCount -ne 2095) { throw ("Area type counts differ from expected values. ASO=" + $AsoCount + ", license=" + $LicenseCount + ". Check for source changes.") }
     $AsoWriter.Write("]}")
     $LicenseWriter.Write("]}")
     $AsoWriter.Flush()
