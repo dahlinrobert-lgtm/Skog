@@ -43,11 +43,9 @@ Verifierad rapportkonfiguration:
 - Gränsläge: nuvarande gränser (`TypeAFO=G`).
 - Jaktår testat: `2026/2027`.
 
-En faktisk portalhämtning för Västerbottens län, Sydöstra älgförvaltningsområdet (`afo_id=24-005`) returnerade en tabell över de registrerade jaktområdena inom ÄFO:t och en sammanfattande `Summa:`-rad. Exempel från sammanfattningsraden:
-- Fällda totalt: `42 (2 408)`
-- Avskjutningsmål totalt: `66 (3 394)`
+En faktisk portalhämtning för Västerbottens län, Sydöstra älgförvaltningsområdet (`afo_id=24-005`) returnerade 107 registrerade jaktområdesrader (`TableDataFormatted`) och en sammanfattande HTML-rad. I de underliggande raderna summerar `ShotTotal` till **2 408** och `AssignedTotal` till **3 394** för jaktår 2026/2027. Dessa summor matchar parentesvärdena i portalens synliga `Summa:`-celler `42 (2 408)` respektive `66 (3 394)`.
 
-De inledande värdena läses som värden för det valda jaktåret 2026/2027. Hela celltexten sparas oförändrad. Betydelsen av parentesvärdena tolkas inte i den här implementationen.
+Den viktiga tolkningsregeln är att de inledande värdena `42` och `66` **inte** är antalet fällda djur eller avskjutningsmålet. Dashboardens mått ska beräknas genom att summera `ShotTotal` och `AssignedTotal` över samtliga underliggande ÄJO-rader. Den synliga HTML-`Summa:`-raden bevaras som kontrollunderlag, men dess första tal används inte som mått. Alla råa ÄJO-rader sparas i det oförändrade AFO-snapshotet.
 
 Rapportens API-svar och tabell kontrollerades. För den provade ÄFO-rapporten innehöll grafstrukturen 107 jaktområdeskolumner; sammanfattningsraden är därför lämplig som ÄFO-total utan att summera ett ofullständigt regionalt urval av ÄJO.
 
