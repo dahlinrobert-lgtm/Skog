@@ -1820,9 +1820,9 @@ sources:
       derivatives: yes_with_attribution
       redistribution: yes_with_attribution
       attribution: "Länsstyrelsernas Älgdata statistikportal"
-      api_or_service_constraints: "Use report ID 3 (ÄFO) with current boundaries. The Summa row aggregates registered ÄJO values within each ÄFO. Preserve raw source cells; do not interpret the parenthetical comparison value as a daily event."
+      api_or_service_constraints: "Use report ID 3 (ÄFO) with current boundaries. Derive each ÄFO total by summing ShotTotal and AssignedTotal across all TableDataFormatted ÄJO rows. The visible Summa cell is two-part (for example 42 (2 408)); its leading value is not the animal total. Preserve the raw rows and HTML Summa row."
       evidence_checked_on: "2026-11-16"
-      caveat: "The first verified sample is for Sydöstra älgförvaltningsområdet, hunting season 2026/2027. A national 129-ÄFO batch is under validation; no historical completeness claim is made."
+      caveat: "The verified sample for Sydöstra ÄFO (24-005) has 107 ÄJO rows; their ShotTotal sum is 2,408 and AssignedTotal sum is 3,394. A full 129-ÄFO batch is being rerun with the corrected row-sum parser; no historical completeness claim is made."
     operations:
       access_status: verified
       snapshot_status: pilot
@@ -1834,7 +1834,7 @@ sources:
       evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md; alg-grasmyr Actions run 43948854012 (single-ÄFO parser and portal probe)"
     notes:
       - "The report is cumulative reporting for a selected hunting season, not event-level kill locations or exact field dates."
-      - "AFO totals are derived from the portal's Summa row across the registered hunting areas belonging to that AFO."
+      - "AFO totals are derived by summing ShotTotal and AssignedTotal from every TableDataFormatted ÄJO row; preserve the visible Summa row as a cross-check, not as the parsed metric."
       - "The regional ÄJO pilot history and the national AFO summary are distinct products and must not be presented as the same coverage."
 
   - source_id: lansstyrelsen.elk_afo_boundaries
