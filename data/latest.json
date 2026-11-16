@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-15T23:31:22.718894Z",
+  "checked_at": "2026-11-16T13:37:55.859889Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27634,6 +27634,19 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1D_IW_GRDH_1SDV_20261116T050503_20261116T050528_005488_00A7CA_5E22_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-16T05:05:03.149631Z",
+        "published_at": "2026-11-16T05:14:23.288478Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          17.574986,
+          63.097355,
+          23.603937,
+          65.045937
+        ]
+      },
+      {
         "id": "S1C_IW_GRDH_1SDV_20261115T051321_20261115T051346_010343_014A8A_5600_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-11-15T05:13:21.282542Z",
@@ -30218,19 +30231,6 @@
           62.320339,
           25.199408,
           64.267853
-        ]
-      },
-      {
-        "id": "S1D_IW_GRDH_1SDV_20260620T045706_20260620T045731_003315_005CF4_BEEE_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-20T04:57:06.211677Z",
-        "published_at": "2026-06-20T04:21:19.118314Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          19.201406,
-          61.886173,
-          24.992191,
-          63.828476
         ]
       }
     ],
@@ -32848,7 +32848,21 @@
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [],
+  "new_scenes_since_previous_run": [
+    {
+      "id": "S1D_IW_GRDH_1SDV_20261116T050503_20261116T050528_005488_00A7CA_5E22_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-11-16T05:05:03.149631Z",
+      "published_at": "2026-11-16T05:14:23.288478Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        17.574986,
+        63.097355,
+        23.603937,
+        65.045937
+      ]
+    }
+  ],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
