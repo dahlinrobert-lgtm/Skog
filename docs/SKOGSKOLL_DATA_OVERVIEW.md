@@ -302,8 +302,8 @@ Faktiska olyckshändelser, djurslag, historiska mönster och geografisk matchnin
 - En saknad eller ofullständig rapport får inte tolkas som noll avskjutning. En nationell batch ska bara publiceras om alla förväntade aktiva ÄFO har hämtats och validerats.
 
 **Rättigheter**
-- Teknisk åtkomst är verifierad, men exakta villkor för återkommande historisk lagring, bearbetning, extern kartvisning och kommersiell användning ska bedömas separat.
-- Geodatakatalogens metadatareferens för JaktAdm kunde inte hämtas vid kontrollen (HTTP 502). Ingen generell kommersiell licens eller rätt till vidare distribution antas.
+- Länsstyrelsens officiella öppna data-information anger att Älgdata-statistiken kan användas fritt utan angivna villkor och att länsstyrelsernas WMS-data får kopieras, bearbetas och distribueras gratis med Länsstyrelsen som källa. Underlag: [Länsstyrelsen Västra Götaland – öppna data](https://www.lansstyrelsen.se/vastra-gotaland/om-oss/vara-tjanster/oppna-data.html).
+- Geodatakatalogen anger samtidigt att licenstypen framgår av metadata för varje datamängd. Den exakta JaktAdm-metadatareferensen kunde inte hämtas (HTTP 502). Kartan visar därför tydlig attribution och erbjuder inte rågeometri som separat nedladdning; kontrollera eventuella lagerunika villkor när metadata blir tillgänglig.
 - Källhänvisning: **Länsstyrelsernas Älgdata statistikportal** för statistik och **Länsstyrelserna – Älgförvaltningsområden (JaktAdm)** för gränser.
 
 **Nästa steg**
