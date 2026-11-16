@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-15T12:57:42.936721+00:00",
+  "updated_at": "2026-11-16T14:00:04.466599+00:00",
   "cases": {
     "länsstyrelsen i dalarnas län::1034-2026": {
       "case_key": "länsstyrelsen i dalarnas län::1034-2026",
@@ -54665,6 +54665,3870 @@
       "content_hash": "2eb34b020c3de884cf0254414d08b10aeba721abeceac8c711ab4c745355c538",
       "first_seen_at": "2026-11-15T12:57:42.936721+00:00",
       "last_seen_at": "2026-11-15T12:57:42.936721+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::10119-2026": {
+      "case_key": "länsstyrelsen i örebro län::10119-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5530932",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "10119-2026",
+        "registered_date": "2026-06-10",
+        "title": "Begäran om tillsyn av vattenverksamhet, ny brygga i Vättern, Askersunds kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Askersund"
+      },
+      "handlings": [
+        {
+          "handling_number": "10119-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, ny brygga i Vättern, Askersunds kommun",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-1"
+        },
+        {
+          "handling_number": "10119-2026-2",
+          "title": "Meddelande om brygga 10119-2026 (1/1)",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-2"
+        },
+        {
+          "handling_number": "10119-2026-3",
+          "title": "Meddelande om uppgifter",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-3"
+        },
+        {
+          "handling_number": "10119-2026-4",
+          "title": "Foton brygga",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-4"
+        },
+        {
+          "handling_number": "10119-2026-5",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-5"
+        },
+        {
+          "handling_number": "10119-2026-6",
+          "title": "Meddelande till flera myndigheter",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-6"
+        },
+        {
+          "handling_number": "10119-2026-7",
+          "title": "Bilagor till information 260824",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-7"
+        },
+        {
+          "handling_number": "10119-2026-8",
+          "title": "Begäran om uppgifter 10119-2026 (1/1)",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-8"
+        },
+        {
+          "handling_number": "10119-2026-9",
+          "title": "Yttrande ärende 13045-2026 mail 1 av 2",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-9"
+        },
+        {
+          "handling_number": "10119-2026-10",
+          "title": "Yttrande 13045-2026 bilagor",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-10"
+        },
+        {
+          "handling_number": "10119-2026-11",
+          "title": "Yttrande 13045 mail 2 av 2",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-11"
+        },
+        {
+          "handling_number": "10119-2026-12",
+          "title": "Yttrande 13045-2026 bilaga 5",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-12"
+        },
+        {
+          "handling_number": "10119-2026-13",
+          "title": "Kännedomskopia mail till Askersund (1/10)",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-13"
+        },
+        {
+          "handling_number": "10119-2026-14",
+          "title": "Fwd_ Handlingar ärende 10119-2026 (1/1)",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-14"
+        },
+        {
+          "handling_number": "10119-2026-15",
+          "title": "Re_ Begäran om uppgifter 10119-2026 (1/1)",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-15"
+        },
+        {
+          "handling_number": "10119-2026-16",
+          "title": "Kopia meddelande till kommun",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-16"
+        },
+        {
+          "handling_number": "10119-2026-17",
+          "title": "Kopia av meddelande till kommun",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10119-2026::10119-2026-17"
+        }
+      ],
+      "content_hash": "b7ab99c89aa0023c843871ff6f7f76c1f67729427d2bf77d0e80df9dabb576ca",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::10302-2026": {
+      "case_key": "länsstyrelsen i örebro län::10302-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5533001",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "10302-2026",
+        "registered_date": "2026-06-16",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av stolpe, Södra hörken, Ljusnarsberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-16",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ljusnarsberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "10302-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Södra hörken, Ljusnarsberg kommun",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-1"
+        },
+        {
+          "handling_number": "10302-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-2"
+        },
+        {
+          "handling_number": "10302-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-3"
+        },
+        {
+          "handling_number": "10302-2026-4",
+          "title": "Fullmakt",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-4"
+        },
+        {
+          "handling_number": "10302-2026-5",
+          "title": "Begäran om komplettering anmälan om vattenverksamhet_ 10302-2026",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-5"
+        },
+        {
+          "handling_number": "10302-2026-6",
+          "title": "Kopia för kännedom om anmälan om vattenverksamhet_ 10302-2026",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-6"
+        },
+        {
+          "handling_number": "10302-2026-7",
+          "title": "Sv_ Kopia för kännedom om anmälan om vattenverksamhet_ 10302-2026",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-7"
+        },
+        {
+          "handling_number": "10302-2026-8",
+          "title": "Sv_ Stolpar Hörken",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-8"
+        },
+        {
+          "handling_number": "10302-2026-9",
+          "title": "Komplettering",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-9"
+        },
+        {
+          "handling_number": "10302-2026-10",
+          "title": "Yttrande över anmälan om vattenverksamhet",
+          "date": "2026-07-08",
+          "sender_recipient": "Samhällsbyggnadsförvaltningen",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-10"
+        },
+        {
+          "handling_number": "10302-2026-11",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-11"
+        },
+        {
+          "handling_number": "10302-2026-12",
+          "title": "Begäran om delgivningsbekräftelse",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-12"
+        },
+        {
+          "handling_number": "10302-2026-13",
+          "title": "Bekräftelse om delgivning",
+          "date": "2026-07-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10302-2026::10302-2026-13"
+        }
+      ],
+      "content_hash": "696a95d8672ae3bf83f3e77f21f78d2c463463cc6e8336a9749e63f785a61be3",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::10375-2026": {
+      "case_key": "länsstyrelsen i örebro län::10375-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5533986",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "10375-2026",
+        "registered_date": "2026-06-16",
+        "title": "Tillsyn av vattenverksamhet Falkasjöns kraftverk mintappning, Örebro kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "10375-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet Falkasjöns kraftverk mintappning, Örebro kommun",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10375-2026::10375-2026-1"
+        },
+        {
+          "handling_number": "10375-2026-2",
+          "title": "Svar Falkasjöns kraftverk redovisning mintappning",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10375-2026::10375-2026-2"
+        },
+        {
+          "handling_number": "10375-2026-3",
+          "title": "Falkasjöns kraftverk mintappning",
+          "date": "2026-06-17",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i örebro län::10375-2026::10375-2026-3"
+        },
+        {
+          "handling_number": "10375-2026-4",
+          "title": "Redovisning åtgärder efter besök vid Falkasjöns kraftverk mintappning",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10375-2026::10375-2026-4"
+        },
+        {
+          "handling_number": "10375-2026-5",
+          "title": "Följdfrågor Falkasjöns kraftverk mintappning",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10375-2026::10375-2026-5"
+        },
+        {
+          "handling_number": "10375-2026-6",
+          "title": "Givare mintappning Falkasjöns kraftverk mintappning",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10375-2026::10375-2026-6"
+        },
+        {
+          "handling_number": "10375-2026-7",
+          "title": "Telefonsamtal",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10375-2026::10375-2026-7"
+        }
+      ],
+      "content_hash": "3b90e98742dd359cf542477654c4bafd88e71102ca82c3168f99bddc6765e98d",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::10681-2026": {
+      "case_key": "länsstyrelsen i örebro län::10681-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5540047",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "10681-2026",
+        "registered_date": "2026-06-17",
+        "title": "Tillsyn vattenverksamheter Röfors, Fördärvet, Nyhammaren och Lassånas kraftverk i Laxån",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "10681-2026-1",
+          "title": "Start av ärende tillsyn vattenverksamheter Röfors, Fördärvet, Nyhammaren och Lassånas kraftverk i Laxån",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-1"
+        },
+        {
+          "handling_number": "10681-2026-2",
+          "title": "Tjänsteanteckningar efter telefonsamtal 2026-06-17",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-2"
+        },
+        {
+          "handling_number": "10681-2026-3",
+          "title": "Besked om Länsstyrelsen beslut 2025-06-25",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-3"
+        },
+        {
+          "handling_number": "10681-2026-4",
+          "title": "Telefonsamtal",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-4"
+        },
+        {
+          "handling_number": "10681-2026-5",
+          "title": "Telefonsamtal uppsättande av peglar, avstämning",
+          "date": "2026-09-24",
+          "sender_recipient": "Tiveds Energi AB",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-5"
+        },
+        {
+          "handling_number": "10681-2026-6",
+          "title": "Telefonsamtal",
+          "date": "2026-09-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-6"
+        },
+        {
+          "handling_number": "10681-2026-7",
+          "title": "Telefonsamtal flytt av tillsynsbesök",
+          "date": "2026-10-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-7"
+        },
+        {
+          "handling_number": "10681-2026-8",
+          "title": "Inför tillsynsbesök 3/11-2026",
+          "date": "2026-10-19",
+          "sender_recipient": "Tiveds Energi AB",
+          "handling_key": "länsstyrelsen i örebro län::10681-2026::10681-2026-8"
+        }
+      ],
+      "content_hash": "f3f8dd5af1b892712db4d2b362129138948d772c46fe5458da7975e615961c6e",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::10829-2026": {
+      "case_key": "länsstyrelsen i örebro län::10829-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5542543",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "10829-2026",
+        "registered_date": "2026-06-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Svartån, se även bilaga. Nikolai 3:13 Nikolai 3:302 Nikolai 3:07, Örebro kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-13",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Örebro"
+      },
+      "handlings": [
+        {
+          "handling_number": "10829-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Svartån, se även bilaga. Nikolai 3:13 Nikolai 3:302 Nikolai 3:07, Örebro kommun",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-1"
+        },
+        {
+          "handling_number": "10829-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-2"
+        },
+        {
+          "handling_number": "10829-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-3"
+        },
+        {
+          "handling_number": "10829-2026-4",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-4"
+        },
+        {
+          "handling_number": "10829-2026-5",
+          "title": "Begäran om yttrande",
+          "date": "2026-06-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-5"
+        },
+        {
+          "handling_number": "10829-2026-6",
+          "title": "Bekräftelse av anmälan",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-6"
+        },
+        {
+          "handling_number": "10829-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-07-02",
+          "sender_recipient": "Bygg och Miljönämnden Örebro",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-7"
+        },
+        {
+          "handling_number": "10829-2026-8",
+          "title": "Meddelande om betald avgift",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-8"
+        },
+        {
+          "handling_number": "10829-2026-9",
+          "title": "Förfrågan",
+          "date": "2026-08-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-9"
+        },
+        {
+          "handling_number": "10829-2026-10",
+          "title": "Svar angående mötesanteckningar",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-10"
+        },
+        {
+          "handling_number": "10829-2026-11",
+          "title": "Mötesanteckningar för kontroll",
+          "date": "2026-08-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-11"
+        },
+        {
+          "handling_number": "10829-2026-12",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-08-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-12"
+        },
+        {
+          "handling_number": "10829-2026-13",
+          "title": "Beslut om bifall",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-13"
+        },
+        {
+          "handling_number": "10829-2026-14",
+          "title": "Meddelande om beslut",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-14"
+        },
+        {
+          "handling_number": "10829-2026-15",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::10829-2026::10829-2026-15"
+        }
+      ],
+      "content_hash": "1954830c086eae8dad584eb8582d28fdb4dad58c1576a91750638a4d0bfb1727",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::11234-2025": {
+      "case_key": "länsstyrelsen i örebro län::11234-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5192838",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "11234-2025",
+        "registered_date": "2025-06-16",
+        "title": "Tillsyn av vattenverksamhet, Rosendalsdammen, Dalkarlsberg, Nora kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "11234-2025-1",
+          "title": "Meddelande om vattennivåer och fråga om dammsäkerhetsrisker",
+          "date": "2025-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11234-2025::11234-2025-1"
+        },
+        {
+          "handling_number": "11234-2025-2",
+          "title": "Meddelande, svar och frågor",
+          "date": "2025-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11234-2025::11234-2025-2"
+        },
+        {
+          "handling_number": "11234-2025-3",
+          "title": "Tjänsteanteckning vid samtal den 27 juni",
+          "date": "2025-06-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11234-2025::11234-2025-3"
+        }
+      ],
+      "content_hash": "8dbb41ceedfb4950c777d8aa518f8acc1e4e938a518078fc267da66d451f0cad",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::11693-2026": {
+      "case_key": "länsstyrelsen i örebro län::11693-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5545740",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "11693-2026",
+        "registered_date": "2026-05-12",
+        "title": "Tillsyn av vattenverksamhet, låga nivåer i Viken, Älvlången, Åsbosjön i Nora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-26",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "11693-2026-1",
+          "title": "Tjänsteanteckning om låga vattennivåer",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11693-2026::11693-2026-1"
+        },
+        {
+          "handling_number": "11693-2026-2",
+          "title": "Begäran om uppgifter gällande vattennivåer",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11693-2026::11693-2026-2"
+        },
+        {
+          "handling_number": "11693-2026-3",
+          "title": "Redovisning av vattennivåer",
+          "date": "2026-05-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11693-2026::11693-2026-3"
+        },
+        {
+          "handling_number": "11693-2026-4",
+          "title": "Återkoppling",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11693-2026::11693-2026-4"
+        },
+        {
+          "handling_number": "11693-2026-5",
+          "title": "Ärendet avslutas",
+          "date": "2026-06-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::11693-2026::11693-2026-5"
+        }
+      ],
+      "content_hash": "8edae9113121dce50faf1bc63450cf235292e0426a79419217b8d41065397a66",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12354-2026": {
+      "case_key": "länsstyrelsen i örebro län::12354-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5553356",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12354-2026",
+        "registered_date": "2026-07-02",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kisstjärnsbäcken, Ljusnarsberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ljusnarsberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "12354-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kisstjärnsbäcken, Ljusnarsberg kommun",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-1"
+        },
+        {
+          "handling_number": "12354-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-2"
+        },
+        {
+          "handling_number": "12354-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-3"
+        },
+        {
+          "handling_number": "12354-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-4"
+        },
+        {
+          "handling_number": "12354-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-5"
+        },
+        {
+          "handling_number": "12354-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-6"
+        },
+        {
+          "handling_number": "12354-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-7"
+        },
+        {
+          "handling_number": "12354-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-8"
+        },
+        {
+          "handling_number": "12354-2026-9",
+          "title": "Kopia för kännedom om anmälan om vattenverksamhet 12354-2026",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-9"
+        },
+        {
+          "handling_number": "12354-2026-10",
+          "title": "Bekräftelse av anmälan",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-10"
+        },
+        {
+          "handling_number": "12354-2026-11",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-08-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-11"
+        },
+        {
+          "handling_number": "12354-2026-12",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-08-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12354-2026::12354-2026-12"
+        }
+      ],
+      "content_hash": "888f3b3f13993b953603e561333afacd01886506b16c1207509cabb3902c335a",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12388-2026": {
+      "case_key": "länsstyrelsen i örebro län::12388-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5554119",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12388-2026",
+        "registered_date": "2026-07-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Möckeln, Karlskoga kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-08",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskoga"
+      },
+      "handlings": [
+        {
+          "handling_number": "12388-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Möckeln, Karlskoga kommun",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-1"
+        },
+        {
+          "handling_number": "12388-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-2"
+        },
+        {
+          "handling_number": "12388-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-3"
+        },
+        {
+          "handling_number": "12388-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-4"
+        },
+        {
+          "handling_number": "12388-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-5"
+        },
+        {
+          "handling_number": "12388-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-6"
+        },
+        {
+          "handling_number": "12388-2026-7",
+          "title": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-7"
+        },
+        {
+          "handling_number": "12388-2026-8",
+          "title": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-8"
+        },
+        {
+          "handling_number": "12388-2026-9",
+          "title": "Yttrande",
+          "date": "2026-08-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-9"
+        },
+        {
+          "handling_number": "12388-2026-10",
+          "title": "Yttrande",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-10"
+        },
+        {
+          "handling_number": "12388-2026-11",
+          "title": "Beslut strandskyddsdispens samt föreläggande om försiktighetsmått(13299-2026-2) (0) (1/1)",
+          "date": "2026-09-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12388-2026::12388-2026-11"
+        }
+      ],
+      "content_hash": "5d227d6b1d74791b90cd4dd5c1eb714cef48b80644b4baab0609930ed62f3819",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12433-2026": {
+      "case_key": "länsstyrelsen i örebro län::12433-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5554776",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12433-2026",
+        "registered_date": "2026-07-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-12",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Ljusnarsberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "12433-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12433-2026::12433-2026-1"
+        },
+        {
+          "handling_number": "12433-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12433-2026::12433-2026-2"
+        },
+        {
+          "handling_number": "12433-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12433-2026::12433-2026-3"
+        },
+        {
+          "handling_number": "12433-2026-4",
+          "title": "Kopia för kännedom om anmälan om vattenverksamhet_ 12433-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12433-2026::12433-2026-4"
+        },
+        {
+          "handling_number": "12433-2026-5",
+          "title": "Remiss anmälan om vattenverksamhet i vattendrag i Ljusnarsberg kommun_ 12433-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12433-2026::12433-2026-5"
+        },
+        {
+          "handling_number": "12433-2026-6",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-08-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12433-2026::12433-2026-6"
+        }
+      ],
+      "content_hash": "ad157da333bdf7fb54ab472cbd88869b83177d56820cf8a574c77925a75e946e",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12434-2026": {
+      "case_key": "länsstyrelsen i örebro län::12434-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5554786",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12434-2026",
+        "registered_date": "2026-07-04",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-12",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Lindesberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "12434-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun",
+          "date": "2026-07-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-1"
+        },
+        {
+          "handling_number": "12434-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-2"
+        },
+        {
+          "handling_number": "12434-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-3"
+        },
+        {
+          "handling_number": "12434-2026-4",
+          "title": "Kopia för kännedom om anmälan om vattenverksamhet_ 12434-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-4"
+        },
+        {
+          "handling_number": "12434-2026-5",
+          "title": "Begäran om yttrande",
+          "date": "2026-07-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-5"
+        },
+        {
+          "handling_number": "12434-2026-6",
+          "title": "Information om korrekta kontaktuppgifter",
+          "date": "2026-07-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-6"
+        },
+        {
+          "handling_number": "12434-2026-7",
+          "title": "Tjänsteanteckning om utskick av remiss",
+          "date": "2026-08-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-7"
+        },
+        {
+          "handling_number": "12434-2026-8",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-08-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12434-2026::12434-2026-8"
+        }
+      ],
+      "content_hash": "f725dbe314d4a75e483d7eb50f4cbf3da0c42278b09f914de8434903a7eb078b",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12448-2026": {
+      "case_key": "länsstyrelsen i örebro län::12448-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5555047",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12448-2026",
+        "registered_date": "2026-07-03",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggande av nytt lucksystem och utbyte av säkerhetslucka vid Oppboga kraftverk, Lindesbergs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-22",
+        "sender_recipient": "Linde Energi Försäljning AB",
+        "municipality": "Lindesberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "12448-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggande av nytt lucksystem och utbyte av säkerhetslucka vid Oppboga kraftverk, Lindesbergs kommun",
+          "date": "2026-07-03",
+          "sender_recipient": "Linde Energi Försäljning AB",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-1"
+        },
+        {
+          "handling_number": "12448-2026-2",
+          "title": "Bekräftelse av anmälan och begäran o komplettering 12448-2026 (1/1)",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-2"
+        },
+        {
+          "handling_number": "12448-2026-3",
+          "title": "Remiss anmälan om vattenverksamhet i Arbogaån i Lindesbergs kommun (1/1)",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-3"
+        },
+        {
+          "handling_number": "12448-2026-4",
+          "title": "Komplettering",
+          "date": "2026-07-17",
+          "sender_recipient": "Vattenbyggnad i Sverige AB",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-4"
+        },
+        {
+          "handling_number": "12448-2026-5",
+          "title": "Yttrande",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-5"
+        },
+        {
+          "handling_number": "12448-2026-6",
+          "title": "Meddelande om ärendegång",
+          "date": "2026-08-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-6"
+        },
+        {
+          "handling_number": "12448-2026-7",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-7"
+        },
+        {
+          "handling_number": "12448-2026-8",
+          "title": "Förlängd handläggningstid och tillfälligt förbud",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-8"
+        },
+        {
+          "handling_number": "12448-2026-9",
+          "title": "Meddelande om delgivning",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-9"
+        },
+        {
+          "handling_number": "12448-2026-10",
+          "title": "Begäran om komplettering",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-10"
+        },
+        {
+          "handling_number": "12448-2026-11",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-11"
+        },
+        {
+          "handling_number": "12448-2026-12",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-12"
+        },
+        {
+          "handling_number": "12448-2026-13",
+          "title": "Komplettering",
+          "date": "2026-09-14",
+          "sender_recipient": "Vattenbyggnad i Sverige AB",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-13"
+        },
+        {
+          "handling_number": "12448-2026-14",
+          "title": "Föreläggade om försiktighetsmått",
+          "date": "2026-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-14"
+        },
+        {
+          "handling_number": "12448-2026-15",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12448-2026::12448-2026-15"
+        }
+      ],
+      "content_hash": "56101413b118162ad7cdb206f587a304029d23cf59db723b9fa09f25a67d6283",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12473-2026": {
+      "case_key": "länsstyrelsen i örebro län::12473-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5555377",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12473-2026",
+        "registered_date": "2026-07-05",
+        "title": "Begäran om tillsyn av vattenverksamhet, dåliga dammluckor, Dalkarsberg, Nora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-11-04",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Nora"
+      },
+      "handlings": [
+        {
+          "handling_number": "12473-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, dåliga dammluckor, Dalkarsberg, Nora kommun",
+          "date": "2026-07-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12473-2026::12473-2026-1"
+        },
+        {
+          "handling_number": "12473-2026-2",
+          "title": "Bekräftelse på mottagen anmälan 12473-2026",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12473-2026::12473-2026-2"
+        },
+        {
+          "handling_number": "12473-2026-3",
+          "title": "Damluckor Hovmanstorpasjön (1/2)",
+          "date": "2026-05-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12473-2026::12473-2026-3"
+        },
+        {
+          "handling_number": "12473-2026-4",
+          "title": "Information om ärendet samt påminnelse om underhållsskyldighet",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12473-2026::12473-2026-4"
+        },
+        {
+          "handling_number": "12473-2026-5",
+          "title": "Meddelande om ärendet",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12473-2026::12473-2026-5"
+        },
+        {
+          "handling_number": "12473-2026-6",
+          "title": "Svar",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12473-2026::12473-2026-6"
+        }
+      ],
+      "content_hash": "38fe19455dd885c15312aa7dd934d5a858da1c33f339142446f139a364cf58d5",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12832-2026": {
+      "case_key": "länsstyrelsen i örebro län::12832-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5561337",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12832-2026",
+        "registered_date": "2026-07-13",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-07",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Nora"
+      },
+      "handlings": [
+        {
+          "handling_number": "12832-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-1"
+        },
+        {
+          "handling_number": "12832-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-2"
+        },
+        {
+          "handling_number": "12832-2026-3",
+          "title": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-3"
+        },
+        {
+          "handling_number": "12832-2026-4",
+          "title": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-4"
+        },
+        {
+          "handling_number": "12832-2026-5",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-08-10",
+          "sender_recipient": "Samhällsbyggnadsförvaltningen Lindesberg",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-5"
+        },
+        {
+          "handling_number": "12832-2026-6",
+          "title": "Komplettering_ 12832-2026",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-6"
+        },
+        {
+          "handling_number": "12832-2026-7",
+          "title": "Sv_ Komplettering_ 12832-2026",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-7"
+        },
+        {
+          "handling_number": "12832-2026-8",
+          "title": "Platsbesök",
+          "date": "2026-08-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-8"
+        },
+        {
+          "handling_number": "12832-2026-9",
+          "title": "Ytterligare komplettering_ 12832-2026",
+          "date": "2026-08-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-9"
+        },
+        {
+          "handling_number": "12832-2026-10",
+          "title": "Sv_ Ytterligare komplettering_ 12832-2026",
+          "date": "2026-08-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-10"
+        },
+        {
+          "handling_number": "12832-2026-11",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-09-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12832-2026::12832-2026-11"
+        }
+      ],
+      "content_hash": "76d6fd38ad3696054787a8206d0bdbde545057c15bcc1b3e7b4709a9b0701441",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12900-2026": {
+      "case_key": "länsstyrelsen i örebro län::12900-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5562431",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12900-2026",
+        "registered_date": "2026-07-13",
+        "title": "Begäran om tillsyn av vattenverksamhet, nyligen anlagda nya diken och ner huggen skog, Rösjöbäcken/Dammbäcken",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "12900-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, nyligen anlagda nya diken och ner huggen skog, Rösjöbäcken/Dammbäcken",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12900-2026::12900-2026-1"
+        },
+        {
+          "handling_number": "12900-2026-2",
+          "title": "Bekräftelse på mottagen anmälan 12900-2026 (1/1)",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12900-2026::12900-2026-2"
+        },
+        {
+          "handling_number": "12900-2026-3",
+          "title": "Meddelande om åtgärder",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12900-2026::12900-2026-3"
+        },
+        {
+          "handling_number": "12900-2026-4",
+          "title": "Tjänsteanteckning",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12900-2026::12900-2026-4"
+        },
+        {
+          "handling_number": "12900-2026-5",
+          "title": "Begäran om information",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12900-2026::12900-2026-5"
+        },
+        {
+          "handling_number": "12900-2026-6",
+          "title": "Information",
+          "date": "2026-10-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12900-2026::12900-2026-6"
+        }
+      ],
+      "content_hash": "8bce5bf6c313c6055762acb317a6ee838e1cd95c741a7ddf2e6ea95935aacd84",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::1291-2024": {
+      "case_key": "länsstyrelsen i örebro län::1291-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4676685",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "1291-2024",
+        "registered_date": "2024-02-19",
+        "title": "Tillsyn av vattenverksamhet, Glihammarsdammen i Sverkestaån, Lindesbergs kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "1291-2024-1",
+          "title": "Start av ärende om Tillsyn av vattenverksamhet, Glihammarsdammen i Sverkestaån, Lindesbergs kommun",
+          "date": "2024-02-19",
+          "sender_recipient": "Länsstyrelsen i Örebro",
+          "handling_key": "länsstyrelsen i örebro län::1291-2024::1291-2024-1"
+        },
+        {
+          "handling_number": "1291-2024-2",
+          "title": "Meddelande med presentationen",
+          "date": "2024-02-19",
+          "sender_recipient": "Ramsbergs bruk",
+          "handling_key": "länsstyrelsen i örebro län::1291-2024::1291-2024-2"
+        },
+        {
+          "handling_number": "1291-2024-3",
+          "title": "Tjänsteanteckning efter möte 2 februari",
+          "date": "2024-04-22",
+          "sender_recipient": "Länsstyrelsen Örebro län",
+          "handling_key": "länsstyrelsen i örebro län::1291-2024::1291-2024-3"
+        },
+        {
+          "handling_number": "1291-2024-4",
+          "title": "Meddelande med anteckningar",
+          "date": "2024-04-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::1291-2024::1291-2024-4"
+        }
+      ],
+      "content_hash": "8c3caf8edcf8a7289aae44c64833e3515950aee5ad1e508f477ca8868161f39a",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12939-2026": {
+      "case_key": "länsstyrelsen i örebro län::12939-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5563106",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12939-2026",
+        "registered_date": "2026-07-14",
+        "title": "Begäran om tillsyn av vattenverksamhet, Haddeboån, Spångkärret, Hallsbergs kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Hallsberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "12939-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Haddeboån, Spångkärret, Hallsbergs kommun",
+          "date": "2026-07-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-1"
+        },
+        {
+          "handling_number": "12939-2026-2",
+          "title": "Bekräftelse av begäran om tillsyn 12939-2026 (1/1)",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-2"
+        },
+        {
+          "handling_number": "12939-2026-3",
+          "title": "Begäran om uppgifter 12939-2026 (1/1)",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-3"
+        },
+        {
+          "handling_number": "12939-2026-4",
+          "title": "Meddelande om vattenflödet",
+          "date": "2026-07-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-4"
+        },
+        {
+          "handling_number": "12939-2026-5",
+          "title": "Sv_ Bekräftelse av begäran om tillsyn 12939-2026 (1/1)",
+          "date": "2026-07-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-5"
+        },
+        {
+          "handling_number": "12939-2026-6",
+          "title": "Svar på begäran om uppgifter",
+          "date": "2026-07-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-6"
+        },
+        {
+          "handling_number": "12939-2026-7",
+          "title": "Uppgift om extremt låg vattennivå",
+          "date": "2026-07-26",
+          "sender_recipient": "Elisabeth Hemberg",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-7"
+        },
+        {
+          "handling_number": "12939-2026-8",
+          "title": "Platsbesök, kontroll av vattennivå i Hjärtasjön",
+          "date": "2026-07-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-8"
+        },
+        {
+          "handling_number": "12939-2026-9",
+          "title": "Information om vattennivå i Hjärtasjön",
+          "date": "2026-07-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-9"
+        },
+        {
+          "handling_number": "12939-2026-10",
+          "title": "Mailväxling om vattennivå i Hjärtasjön",
+          "date": "2026-07-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-10"
+        },
+        {
+          "handling_number": "12939-2026-11",
+          "title": "Re_ Vattennivå i Hjärtasjön (dnr 12939-2026) (1/1)",
+          "date": "2026-07-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-11"
+        },
+        {
+          "handling_number": "12939-2026-12",
+          "title": "Re_ Vattennivå i Hjärtasjön (dnr 12939-2026) (1/1)",
+          "date": "2026-07-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-12"
+        },
+        {
+          "handling_number": "12939-2026-13",
+          "title": "Information och frågor om vattennivå i Hjärtasjön",
+          "date": "2026-07-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-13"
+        },
+        {
+          "handling_number": "12939-2026-14",
+          "title": "Återkoppling Vattennivån i Hjärtasjön (dnr 12939-2026) (1/1)",
+          "date": "2026-07-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-14"
+        },
+        {
+          "handling_number": "12939-2026-15",
+          "title": "Återkoppling",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-15"
+        },
+        {
+          "handling_number": "12939-2026-16",
+          "title": "Meddelande",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-16"
+        },
+        {
+          "handling_number": "12939-2026-17",
+          "title": "Svar",
+          "date": "2026-08-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-17"
+        },
+        {
+          "handling_number": "12939-2026-18",
+          "title": "Meddelande med ytterligare frågor",
+          "date": "2026-08-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-18"
+        },
+        {
+          "handling_number": "12939-2026-19",
+          "title": "Ytterligare uppgifter Haddeboån",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-19"
+        },
+        {
+          "handling_number": "12939-2026-22",
+          "title": "Meddelande om ny handläggare",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-22"
+        },
+        {
+          "handling_number": "12939-2026-23",
+          "title": "Tjänsteanteckning om tolkning av tillstånd",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-23"
+        },
+        {
+          "handling_number": "12939-2026-24",
+          "title": "Mailväxling angående ärendegång",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-24"
+        },
+        {
+          "handling_number": "12939-2026-25",
+          "title": "Foton vid platsbesök",
+          "date": "2026-09-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-25"
+        },
+        {
+          "handling_number": "12939-2026-26",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-09-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-26"
+        },
+        {
+          "handling_number": "12939-2026-27",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-27"
+        },
+        {
+          "handling_number": "12939-2026-28",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-28"
+        },
+        {
+          "handling_number": "12939-2026-29",
+          "title": "Mailväxling ang inkomna uppgifter och frågor",
+          "date": "2026-09-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-29"
+        },
+        {
+          "handling_number": "12939-2026-30",
+          "title": "Information om tjänsteanteckningar",
+          "date": "2026-10-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-30"
+        },
+        {
+          "handling_number": "12939-2026-31",
+          "title": "Svar från EH, CW m.fl",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-31"
+        },
+        {
+          "handling_number": "12939-2026-32",
+          "title": "Mailväxling om ärendegång",
+          "date": "2026-11-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12939-2026::12939-2026-32"
+        }
+      ],
+      "content_hash": "e4bad32c70a1c6288e2d22270c5f7e9c5a5453a3a86ad8a65d467fbcada9d338",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::12944-2026": {
+      "case_key": "länsstyrelsen i örebro län::12944-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5563159",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "12944-2026",
+        "registered_date": "2026-07-14",
+        "title": "Begäran om tillsyn vattenverksamhet, Laxån, Röfors, Laxå kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "12944-2026-1",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12944-2026::12944-2026-1"
+        },
+        {
+          "handling_number": "12944-2026-2",
+          "title": "Meddelande om vattenflöde och bilder Röfors",
+          "date": "2026-07-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12944-2026::12944-2026-2"
+        },
+        {
+          "handling_number": "12944-2026-3",
+          "title": "Meddelande om låga vattennivåer",
+          "date": "2026-07-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12944-2026::12944-2026-3"
+        },
+        {
+          "handling_number": "12944-2026-4",
+          "title": "Meddelande om vattennivåer",
+          "date": "2026-07-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::12944-2026::12944-2026-4"
+        }
+      ],
+      "content_hash": "a8fd158299b32e18729dbb7e99d3eb5bd12f40888ae8d9915781c35882c40e9d",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13045-2026": {
+      "case_key": "länsstyrelsen i örebro län::13045-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5565442",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13045-2026",
+        "registered_date": "2026-07-18",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Forsaviken, Askersund kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Askersund"
+      },
+      "handlings": [
+        {
+          "handling_number": "13045-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Forsaviken, Askersund kommun",
+          "date": "2026-07-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-1"
+        },
+        {
+          "handling_number": "13045-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-07-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-2"
+        },
+        {
+          "handling_number": "13045-2026-3",
+          "title": "Remiss anmälan om vattenverksamhet",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-3"
+        },
+        {
+          "handling_number": "13045-2026-4",
+          "title": "Begäran om återkoppling",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-4"
+        },
+        {
+          "handling_number": "13045-2026-5",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-5"
+        },
+        {
+          "handling_number": "13045-2026-6",
+          "title": "Information från byggförvaltning",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-6"
+        },
+        {
+          "handling_number": "13045-2026-7",
+          "title": "Meddelande angående ärendegång",
+          "date": "2026-08-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-7"
+        },
+        {
+          "handling_number": "13045-2026-8",
+          "title": "Meddelande ärendegång",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-8"
+        },
+        {
+          "handling_number": "13045-2026-9",
+          "title": "Begäran om yttrande",
+          "date": "2026-08-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-9"
+        },
+        {
+          "handling_number": "13045-2026-10",
+          "title": "Yttrande",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-10"
+        },
+        {
+          "handling_number": "13045-2026-11",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-11"
+        },
+        {
+          "handling_number": "13045-2026-12",
+          "title": "Slutligt kompletterande yttrande – 13045-2026, 10119-2026 och 13600-2026 (1/9) mail 1 av 2",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-12"
+        },
+        {
+          "handling_number": "13045-2026-13",
+          "title": "Slutligt kompletterande yttrande_ mail 2 av 2 (1/3)",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-13"
+        },
+        {
+          "handling_number": "13045-2026-14",
+          "title": "Tjänsteanteckning om filhantering bilagor",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-14"
+        },
+        {
+          "handling_number": "13045-2026-15",
+          "title": "Meddelande framskjutet svarsdatum",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-15"
+        },
+        {
+          "handling_number": "13045-2026-16",
+          "title": "Fwd_ Handlingar ärende 10119-2026 (1/1)",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-16"
+        },
+        {
+          "handling_number": "13045-2026-17",
+          "title": "Avvisande - strandskyddsdispens samt anmälan om vattenverksamhet(13600-2026 och 13045-2026)",
+          "date": "2026-09-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-17"
+        },
+        {
+          "handling_number": "13045-2026-18",
+          "title": "Tjänsteanteckning om delgivning",
+          "date": "2026-09-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13045-2026::13045-2026-18"
+        }
+      ],
+      "content_hash": "f04124337468f8dcc8be1beed388bf7fee204cad0777ac4e6fc6b5617790577f",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13176-2026": {
+      "case_key": "länsstyrelsen i örebro län::13176-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5568043",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13176-2026",
+        "registered_date": "2026-07-22",
+        "title": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19",
+        "status": "Avslutat",
+        "decision_date": "2026-08-17",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "13176-2026-1",
+          "title": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19",
+          "date": "2026-07-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13176-2026::13176-2026-1"
+        },
+        {
+          "handling_number": "13176-2026-2",
+          "title": "Yttrande över underrättelse M 3572-26",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13176-2026::13176-2026-2"
+        }
+      ],
+      "content_hash": "cc18311c4734016ba1f12bd2a237d329e754bfde5969ab9b5dd8c6d964c11894",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13297-2026": {
+      "case_key": "länsstyrelsen i örebro län::13297-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5570254",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13297-2026",
+        "registered_date": "2026-07-27",
+        "title": "Begäran om tillsyn av vattenverksamhet, låg vattennivå, Östersjön-Hjärtasjön, Hallsbergs kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-05",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "13297-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, låg vattennivå, Östersjön-Hjärtasjön, Hallsbergs kommun",
+          "date": "2026-07-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13297-2026::13297-2026-1"
+        },
+        {
+          "handling_number": "13297-2026-2",
+          "title": "Vattennivå Hjärtasjön (dnr 13297-2026)",
+          "date": "2026-07-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13297-2026::13297-2026-2"
+        },
+        {
+          "handling_number": "13297-2026-3",
+          "title": "Komplettering med bilder",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13297-2026::13297-2026-3"
+        },
+        {
+          "handling_number": "13297-2026-4",
+          "title": "Återkoppling",
+          "date": "2026-08-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13297-2026::13297-2026-4"
+        }
+      ],
+      "content_hash": "6225a2faf71365605f276e162340aad7455bdd45563fc6ca0f650ca582f682de",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13335-2026": {
+      "case_key": "länsstyrelsen i örebro län::13335-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5571106",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13335-2026",
+        "registered_date": "2026-07-29",
+        "title": "Begäran om tillsyn av vattenverksamhet, vattenuttag, Örebro kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "13335-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, vattenuttag, Örebro kommun",
+          "date": "2026-07-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13335-2026::13335-2026-1"
+        },
+        {
+          "handling_number": "13335-2026-2",
+          "title": "Informationsförfrågan ang. vattenuttag i Svartån",
+          "date": "2026-08-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13335-2026::13335-2026-2"
+        }
+      ],
+      "content_hash": "f3953c4c89f6785faf48c032d0c59f92e82ac07b9ccaa96008225dd050f5a5e5",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13425-2026": {
+      "case_key": "länsstyrelsen i örebro län::13425-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5572344",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13425-2026",
+        "registered_date": "2026-08-02",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalgång genom Skråmmen 1:60, Karlskoga kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-21",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskoga"
+      },
+      "handlings": [
+        {
+          "handling_number": "13425-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalgång genom Skråmmen 1:60, Karlskoga kommun",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-1"
+        },
+        {
+          "handling_number": "13425-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-2"
+        },
+        {
+          "handling_number": "13425-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-3"
+        },
+        {
+          "handling_number": "13425-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-4"
+        },
+        {
+          "handling_number": "13425-2026-5",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-5"
+        },
+        {
+          "handling_number": "13425-2026-6",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-6"
+        },
+        {
+          "handling_number": "13425-2026-7",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-7"
+        },
+        {
+          "handling_number": "13425-2026-8",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-8"
+        },
+        {
+          "handling_number": "13425-2026-9",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-9"
+        },
+        {
+          "handling_number": "13425-2026-10",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-10"
+        },
+        {
+          "handling_number": "13425-2026-11",
+          "title": "Kopia för kännedom om anmälan om vattenverksamhet 13425-2026",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-11"
+        },
+        {
+          "handling_number": "13425-2026-12",
+          "title": "Bekräftelse av inkommet ärende",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-12"
+        },
+        {
+          "handling_number": "13425-2026-13",
+          "title": "Meddelande om tillträde",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-13"
+        },
+        {
+          "handling_number": "13425-2026-14",
+          "title": "Foton vid platsbesök",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-14"
+        },
+        {
+          "handling_number": "13425-2026-15",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-08-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-15"
+        },
+        {
+          "handling_number": "13425-2026-16",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-08-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-16"
+        },
+        {
+          "handling_number": "13425-2026-17",
+          "title": "Påminnelse om återkoppling",
+          "date": "2026-08-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-17"
+        },
+        {
+          "handling_number": "13425-2026-18",
+          "title": "Komplettering trumdimension",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-18"
+        },
+        {
+          "handling_number": "13425-2026-19",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-19"
+        },
+        {
+          "handling_number": "13425-2026-20",
+          "title": "Tjänsteanteckning om delgivning",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-20"
+        },
+        {
+          "handling_number": "13425-2026-21",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-08-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13425-2026::13425-2026-21"
+        }
+      ],
+      "content_hash": "2aaea1e62cc15c5bab460d3402ee538e2f444f29ac902169e8c7ce9635d89ad1",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13629-2026": {
+      "case_key": "länsstyrelsen i örebro län::13629-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5575800",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13629-2026",
+        "registered_date": "2026-08-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Långvattnet, Lindesberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-09-29",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Lindesberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "13629-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Långvattnet, Lindesberg kommun",
+          "date": "2026-08-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13629-2026::13629-2026-1"
+        },
+        {
+          "handling_number": "13629-2026-2",
+          "title": "Underrättelse om anmälan om vattenverksamhet.",
+          "date": "2026-08-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13629-2026::13629-2026-2"
+        },
+        {
+          "handling_number": "13629-2026-3",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-09-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13629-2026::13629-2026-3"
+        },
+        {
+          "handling_number": "13629-2026-4",
+          "title": "Begäran om delgivningsbekräftelse",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13629-2026::13629-2026-4"
+        },
+        {
+          "handling_number": "13629-2026-5",
+          "title": "Bekräftelse om delgivning",
+          "date": "2026-10-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13629-2026::13629-2026-5"
+        }
+      ],
+      "content_hash": "aee636daf124cfaa83e3cb50bd694abdd97224dd7a2f82b7d4e2064633afcaf1",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13971-2026": {
+      "case_key": "länsstyrelsen i örebro län::13971-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5582982",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13971-2026",
+        "registered_date": "2026-08-17",
+        "title": "Begäran om tillsyn av vattenverksamhet, uttag av vatten för kommersiellt bruk, Lekebergs kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "13971-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, uttag av vatten för kommersiellt bruk",
+          "date": "2026-08-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13971-2026::13971-2026-1"
+        },
+        {
+          "handling_number": "13971-2026-2",
+          "title": "Uttag av vatten från ett vattendrag_ dnr_ 13971-2026",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13971-2026::13971-2026-2"
+        }
+      ],
+      "content_hash": "452b93e25dcb0bffecb312b0bed83661ad58c44bcd9651d988e84961779d0616",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::13991-2026": {
+      "case_key": "länsstyrelsen i örebro län::13991-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5583318",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "13991-2026",
+        "registered_date": "2026-08-19",
+        "title": "Meddelande om anmälan av vattenverksamhet i Hjälmaren",
+        "status": "Avslutat",
+        "decision_date": "2026-09-10",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "13991-2026-1",
+          "title": "Start av ärende om anmälan av vattenverksamhet i Hjälmaren",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-1"
+        },
+        {
+          "handling_number": "13991-2026-2",
+          "title": "Ansökan muddring Almby 13_303 (1/1)",
+          "date": "2026-08-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-2"
+        },
+        {
+          "handling_number": "13991-2026-3",
+          "title": "Meddelande om hur ärendet ska handläggas",
+          "date": "2026-08-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-3"
+        },
+        {
+          "handling_number": "13991-2026-4",
+          "title": "Meddelande om handläggning",
+          "date": "2026-08-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-4"
+        },
+        {
+          "handling_number": "13991-2026-5",
+          "title": "Meddelande om handläggning",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-5"
+        },
+        {
+          "handling_number": "13991-2026-6",
+          "title": "Meddelande om avgift",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-6"
+        },
+        {
+          "handling_number": "13991-2026-7",
+          "title": "Meddelande om avgift",
+          "date": "2026-08-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-7"
+        },
+        {
+          "handling_number": "13991-2026-8",
+          "title": "Påminnelse om återkoppling",
+          "date": "2026-09-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-8"
+        },
+        {
+          "handling_number": "13991-2026-9",
+          "title": "Meddelande om anmälan",
+          "date": "2026-09-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-9"
+        },
+        {
+          "handling_number": "13991-2026-10",
+          "title": "Meddelande om att ärende avslutas och fortsatt handläggning",
+          "date": "2026-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::13991-2026::13991-2026-10"
+        }
+      ],
+      "content_hash": "8ff98b4e6503f1f162a5cce9f6bfe5b3bef96bd95a979c1fd0a6cb7a5efbbe7e",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14037-2026": {
+      "case_key": "länsstyrelsen i örebro län::14037-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5584440",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14037-2026",
+        "registered_date": "2026-08-20",
+        "title": "Anmälan om driftstörning vattenverksamhet, låga nivåer Sottern och Botaren, Örebro kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "14037-2026-1",
+          "title": "Anmälan om driftstörning vattenverksamhet, låga nivåer Sottern och Botaren, Örebro kommun",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-1"
+        },
+        {
+          "handling_number": "14037-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-2"
+        },
+        {
+          "handling_number": "14037-2026-3",
+          "title": "Meddelande med svar",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-3"
+        },
+        {
+          "handling_number": "14037-2026-4",
+          "title": "Meddelande med ytterligare frågor gällande pegeln",
+          "date": "2026-08-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-4"
+        },
+        {
+          "handling_number": "14037-2026-5",
+          "title": "Svar gällande pegeln",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-5"
+        },
+        {
+          "handling_number": "14037-2026-6",
+          "title": "Begäran om komplettering med markering av sänkningsgräns",
+          "date": "2026-08-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-6"
+        },
+        {
+          "handling_number": "14037-2026-7",
+          "title": "Begäran om komplettering",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-7"
+        },
+        {
+          "handling_number": "14037-2026-8",
+          "title": "Komplettering",
+          "date": "2026-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-8"
+        },
+        {
+          "handling_number": "14037-2026-9",
+          "title": "Begäran om kompletteringar",
+          "date": "2026-09-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-9"
+        },
+        {
+          "handling_number": "14037-2026-10",
+          "title": "Komplettering",
+          "date": "2026-10-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-10"
+        },
+        {
+          "handling_number": "14037-2026-11",
+          "title": "Sotterns vattenstånd",
+          "date": "2026-10-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-11"
+        },
+        {
+          "handling_number": "14037-2026-12",
+          "title": "Frågor gällande vattenhushållning_ ärenden 14037-2026 och 13140-2026 (1/1)",
+          "date": "2026-11-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-12"
+        },
+        {
+          "handling_number": "14037-2026-13",
+          "title": "Svar",
+          "date": "2026-11-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14037-2026::14037-2026-13"
+        }
+      ],
+      "content_hash": "67bb9eb70794397ca9721ab89cb307a882f549d3ba1b093acfdd84363209c4c6",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14149-2025": {
+      "case_key": "länsstyrelsen i örebro län::14149-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5246139",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14149-2025",
+        "registered_date": "2025-09-08",
+        "title": "Begäran om tillsyn av vattenverksamhet, reglering av vattennivån, Örebro kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Torbjörn Eriksson",
+        "municipality": "Örebro"
+      },
+      "handlings": [
+        {
+          "handling_number": "14149-2025-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, reglering av vattennivån, Örebro kommun",
+          "date": "2025-09-08",
+          "sender_recipient": "Torbjörn Eriksson",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-1"
+        },
+        {
+          "handling_number": "14149-2025-2",
+          "title": "Begäran om uppgifter gällande reglering av Tysslingen 14149-2025",
+          "date": "2025-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-2"
+        },
+        {
+          "handling_number": "14149-2025-3",
+          "title": "Bekräftelse av anmälan 14149-2025",
+          "date": "2025-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-3"
+        },
+        {
+          "handling_number": "14149-2025-4",
+          "title": "Information om förhållandena på platsen",
+          "date": "2025-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-4"
+        },
+        {
+          "handling_number": "14149-2025-5",
+          "title": "Begäran om uppgifter gällande reglering av Tysslingen 14149-2025 (1/1)",
+          "date": "2025-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-5"
+        },
+        {
+          "handling_number": "14149-2025-6",
+          "title": "_Påminnelse Begäran om uppgifter gällande reglering av Tysslingen 14149-2025 (1/1)",
+          "date": "2025-12-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-6"
+        },
+        {
+          "handling_number": "14149-2025-7",
+          "title": "Meddelande om regleringen",
+          "date": "2025-12-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-7"
+        },
+        {
+          "handling_number": "14149-2025-8",
+          "title": "Begäran om uppgifter gällande reglering av Tysslingen 14149-2025 (1/1)",
+          "date": "2026-02-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-8"
+        },
+        {
+          "handling_number": "14149-2025-9",
+          "title": "Meddelande om planerade åtgärd",
+          "date": "2026-03-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-9"
+        },
+        {
+          "handling_number": "14149-2025-10",
+          "title": "Uppdatering Tysslingen 14149-2025 (1/1)",
+          "date": "2026-09-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-10"
+        },
+        {
+          "handling_number": "14149-2025-11",
+          "title": "Meddelande om statusuppdatering",
+          "date": "2026-09-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14149-2025::14149-2025-11"
+        }
+      ],
+      "content_hash": "1fa94c507a769536c8a5273116c78fab509a564ff9f53eb639b6f1aaac85eebf",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14198-2026": {
+      "case_key": "länsstyrelsen i örebro län::14198-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588543",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14198-2026",
+        "registered_date": "2026-08-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-02",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Örebro"
+      },
+      "handlings": [
+        {
+          "handling_number": "14198-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14198-2026::14198-2026-1"
+        },
+        {
+          "handling_number": "14198-2026-2",
+          "title": "Begäran om yttrande i ärende 14198-2026",
+          "date": "2026-08-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14198-2026::14198-2026-2"
+        },
+        {
+          "handling_number": "14198-2026-3",
+          "title": "Yttrande",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14198-2026::14198-2026-3"
+        },
+        {
+          "handling_number": "14198-2026-4",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14198-2026::14198-2026-4"
+        },
+        {
+          "handling_number": "14198-2026-5",
+          "title": "Fotografier tagna vid fältbesök",
+          "date": "2026-09-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14198-2026::14198-2026-5"
+        },
+        {
+          "handling_number": "14198-2026-6",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-10-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14198-2026::14198-2026-6"
+        },
+        {
+          "handling_number": "14198-2026-7",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-10-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14198-2026::14198-2026-7"
+        }
+      ],
+      "content_hash": "3d86a343cbdfe3a44c79fffc292fcbd109299e6c98e50fd3a3bc92ab284bb257",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14200-2026": {
+      "case_key": "länsstyrelsen i örebro län::14200-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588575",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14200-2026",
+        "registered_date": "2026-08-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alkvettern, Karlskoga kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskoga"
+      },
+      "handlings": [
+        {
+          "handling_number": "14200-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alkvettern, Karlskoga kommun",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-1"
+        },
+        {
+          "handling_number": "14200-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-2"
+        },
+        {
+          "handling_number": "14200-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-3"
+        },
+        {
+          "handling_number": "14200-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-4"
+        },
+        {
+          "handling_number": "14200-2026-5",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-5"
+        },
+        {
+          "handling_number": "14200-2026-6",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-6"
+        },
+        {
+          "handling_number": "14200-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-7"
+        },
+        {
+          "handling_number": "14200-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-8"
+        },
+        {
+          "handling_number": "14200-2026-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-9"
+        },
+        {
+          "handling_number": "14200-2026-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-10"
+        },
+        {
+          "handling_number": "14200-2026-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-11"
+        },
+        {
+          "handling_number": "14200-2026-12",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-12"
+        },
+        {
+          "handling_number": "14200-2026-13",
+          "title": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-13"
+        },
+        {
+          "handling_number": "14200-2026-14",
+          "title": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14200-2026::14200-2026-14"
+        }
+      ],
+      "content_hash": "cc261fe2aaabab34e7548e4ebd6c21d499770658a3b05aa06b7c82a036e34c8a",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14205-2026": {
+      "case_key": "länsstyrelsen i örebro län::14205-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588631",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14205-2026",
+        "registered_date": "2026-08-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-02",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Örebro"
+      },
+      "handlings": [
+        {
+          "handling_number": "14205-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+          "date": "2026-08-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14205-2026::14205-2026-1"
+        },
+        {
+          "handling_number": "14205-2026-2",
+          "title": "Begäran om yttrande i ärende 14205-2026",
+          "date": "2026-08-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14205-2026::14205-2026-2"
+        },
+        {
+          "handling_number": "14205-2026-3",
+          "title": "Yttrande över remiss, M-2026-4693",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14205-2026::14205-2026-3"
+        },
+        {
+          "handling_number": "14205-2026-4",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-09-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14205-2026::14205-2026-4"
+        },
+        {
+          "handling_number": "14205-2026-5",
+          "title": "Fotografier tagna vid fältbesök",
+          "date": "2026-09-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14205-2026::14205-2026-5"
+        },
+        {
+          "handling_number": "14205-2026-6",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-10-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14205-2026::14205-2026-6"
+        },
+        {
+          "handling_number": "14205-2026-7",
+          "title": "Mottagningsbekräftelse",
+          "date": "2026-10-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14205-2026::14205-2026-7"
+        }
+      ],
+      "content_hash": "d810292de95d8879803bcb4ee5ae76895b5738237bc51d880bea335278fd5e68",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14223-2026": {
+      "case_key": "länsstyrelsen i örebro län::14223-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588858",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14223-2026",
+        "registered_date": "2026-08-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun.",
+        "status": "Avslutat",
+        "decision_date": "2026-10-15",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "14223-2026-2",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun.",
+          "date": "2026-08-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-2"
+        },
+        {
+          "handling_number": "14223-2026-3",
+          "title": "Kopia för kännedom om anmälan om vattenverksamhet_ 14223-2026",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-3"
+        },
+        {
+          "handling_number": "14223-2026-4",
+          "title": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-4"
+        },
+        {
+          "handling_number": "14223-2026-5",
+          "title": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026",
+          "date": "2026-09-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-5"
+        },
+        {
+          "handling_number": "14223-2026-6",
+          "title": "Yttrande över remiss",
+          "date": "2026-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-6"
+        },
+        {
+          "handling_number": "14223-2026-7",
+          "title": "Sv_ Status i ärende 14223-2026",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-7"
+        },
+        {
+          "handling_number": "14223-2026-8",
+          "title": "Anmälan om vattenverksamhet_ 14223-2026",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-8"
+        },
+        {
+          "handling_number": "14223-2026-9",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-9"
+        },
+        {
+          "handling_number": "14223-2026-10",
+          "title": "Bekräftelse av delgivning",
+          "date": "2026-10-16",
+          "sender_recipient": "Svea skog",
+          "handling_key": "länsstyrelsen i örebro län::14223-2026::14223-2026-10"
+        }
+      ],
+      "content_hash": "fcc046ec9db28c80061200c62148e91bdac1d09d980b2eaad2b5774334070c1b",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14266-2026": {
+      "case_key": "länsstyrelsen i örebro län::14266-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5589893",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14266-2026",
+        "registered_date": "2026-08-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Örebro kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Örebro"
+      },
+      "handlings": [
+        {
+          "handling_number": "14266-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Örebro kommun",
+          "date": "2026-08-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-1"
+        },
+        {
+          "handling_number": "14266-2026-2",
+          "title": "Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-2"
+        },
+        {
+          "handling_number": "14266-2026-3",
+          "title": "Sv_ Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-3"
+        },
+        {
+          "handling_number": "14266-2026-4",
+          "title": "Sv_ Ansökan om dispens",
+          "date": "2026-09-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-4"
+        },
+        {
+          "handling_number": "14266-2026-5",
+          "title": "Telefonsamtal med sökande",
+          "date": "2026-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-5"
+        },
+        {
+          "handling_number": "14266-2026-6",
+          "title": "Yttrande",
+          "date": "2026-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-6"
+        },
+        {
+          "handling_number": "14266-2026-7",
+          "title": "Komplettering_ 14266-2026",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-7"
+        },
+        {
+          "handling_number": "14266-2026-8",
+          "title": "Re_ Komplettering_ 14266-2026",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-8"
+        },
+        {
+          "handling_number": "14266-2026-9",
+          "title": "Sv_ Almby 13_303",
+          "date": "2026-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-9"
+        },
+        {
+          "handling_number": "14266-2026-10",
+          "title": "Re_ Almby 13_303",
+          "date": "2026-10-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-10"
+        },
+        {
+          "handling_number": "14266-2026-11",
+          "title": "Tjänsteanteckning",
+          "date": "2026-10-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14266-2026::14266-2026-11"
+        }
+      ],
+      "content_hash": "bd899564728ba3424aed5eba22d8d5a9b1d24d22f1c1af40706afe7efb4e6796",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14446-2026": {
+      "case_key": "länsstyrelsen i örebro län::14446-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5593945",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14446-2026",
+        "registered_date": "2026-09-01",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vättern, Askersund kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Askersund"
+      },
+      "handlings": [
+        {
+          "handling_number": "14446-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vättern, Askersund kommun",
+          "date": "2026-09-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-1"
+        },
+        {
+          "handling_number": "14446-2026-2",
+          "title": "Begäran om komplettering",
+          "date": "2026-09-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-2"
+        },
+        {
+          "handling_number": "14446-2026-3",
+          "title": "Komplettering",
+          "date": "2026-09-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-3"
+        },
+        {
+          "handling_number": "14446-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-4"
+        },
+        {
+          "handling_number": "14446-2026-5",
+          "title": "Paus av remiss",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-5"
+        },
+        {
+          "handling_number": "14446-2026-6",
+          "title": "Begäran om komplettering",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-6"
+        },
+        {
+          "handling_number": "14446-2026-7",
+          "title": "Kompletteringsbegäran mailad",
+          "date": "2026-09-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-7"
+        },
+        {
+          "handling_number": "14446-2026-8",
+          "title": "Sv_ Kompletteringsbegäran Tikanäs  (1/1)",
+          "date": "2026-09-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-8"
+        },
+        {
+          "handling_number": "14446-2026-9",
+          "title": "Remiss anmälan om vattenverksamhet i Vättern",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-9"
+        },
+        {
+          "handling_number": "14446-2026-11",
+          "title": "Begäran om yttrande",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-11"
+        },
+        {
+          "handling_number": "14446-2026-12",
+          "title": "Yttrande från berörd",
+          "date": "2026-10-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-12"
+        },
+        {
+          "handling_number": "14446-2026-13",
+          "title": "Ärende 2026-855 - Svar på remiss om vattenverksamhet på fastighet Tikanäs 2_25 (1/1)",
+          "date": "2026-10-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-13"
+        },
+        {
+          "handling_number": "14446-2026-14",
+          "title": "Beslut om avslag och förbud(15821-2026-3) (0) (1/1)",
+          "date": "2026-10-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-14"
+        },
+        {
+          "handling_number": "14446-2026-15",
+          "title": "Tjänsteanteckning om expediering",
+          "date": "2026-10-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-15"
+        },
+        {
+          "handling_number": "14446-2026-16",
+          "title": "Tjänsteanteckning om  ärendeavslut",
+          "date": "2026-11-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14446-2026::14446-2026-16"
+        }
+      ],
+      "content_hash": "88366c3053e611876be02809636a9a888250cd29d40d98b577b522346e825bce",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14610-2026": {
+      "case_key": "länsstyrelsen i örebro län::14610-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5598317",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14610-2026",
+        "registered_date": "2026-07-03",
+        "title": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11",
+        "status": "Avslutat",
+        "decision_date": "2026-09-10",
+        "sender_recipient": "VÄNERSBORGS TINGSRÄTT, Mark- och miljödomstolen",
+        "municipality": "Nora"
+      },
+      "handlings": [
+        {
+          "handling_number": "14610-2026-1",
+          "title": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11",
+          "date": "2026-07-03",
+          "sender_recipient": "VÄNERSBORGS TINGSRÄTT, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i örebro län::14610-2026::14610-2026-1"
+        },
+        {
+          "handling_number": "14610-2026-2",
+          "title": "Kompletteringsyttrande Västgöthyttefors kraftverk",
+          "date": "2026-09-10",
+          "sender_recipient": "VÄNERSBORGS TINGSRÄTT, Mark- och miljödomstolen",
+          "handling_key": "länsstyrelsen i örebro län::14610-2026::14610-2026-2"
+        }
+      ],
+      "content_hash": "0f07e9c249cbfbd1d2c954384a0ba8cc2b53b48b49613243b090409a9bcc024e",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14669-2026": {
+      "case_key": "länsstyrelsen i örebro län::14669-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5599817",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14669-2026",
+        "registered_date": "2026-09-04",
+        "title": "Begäran om tillsyn efter utförd naturvårdsbränning",
+        "status": "Avslutat",
+        "decision_date": "2026-09-18",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "14669-2026-1",
+          "title": "Start av ärende Begäran om tillsyn efter utförd naturvårdsbränning",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-1"
+        },
+        {
+          "handling_number": "14669-2026-2",
+          "title": "Tjänsteanteckning efter samtal",
+          "date": "2026-09-04",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-2"
+        },
+        {
+          "handling_number": "14669-2026-3",
+          "title": "Meddelande från Sveaskog om planerad bränning",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-3"
+        },
+        {
+          "handling_number": "14669-2026-4",
+          "title": "Uppgifter om effekter av bränningen",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-4"
+        },
+        {
+          "handling_number": "14669-2026-5",
+          "title": "Svar från Sveaskog på inskickat mejl",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-5"
+        },
+        {
+          "handling_number": "14669-2026-6",
+          "title": "Uppgifter",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-6"
+        },
+        {
+          "handling_number": "14669-2026-7",
+          "title": "Uppgifter, sammanställning",
+          "date": "2026-09-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-7"
+        },
+        {
+          "handling_number": "14669-2026-8",
+          "title": "Begäran om tillsyn enligt 26 kap. 22 § mb",
+          "date": "2026-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-8"
+        },
+        {
+          "handling_number": "14669-2026-9",
+          "title": "Tillägg till tidigare skrivning om begäran om tillsyn",
+          "date": "2026-09-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-9"
+        },
+        {
+          "handling_number": "14669-2026-10",
+          "title": "Svar inkommen tillsynsanmälan 14669-2026 (1/1)",
+          "date": "2026-09-18",
+          "sender_recipient": "Daniel Hellström",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-10"
+        },
+        {
+          "handling_number": "14669-2026-11",
+          "title": "Sv_ Begäran om bemötande av klagomål (1/1)",
+          "date": "2026-09-28",
+          "sender_recipient": "Lindesbergs kommun",
+          "handling_key": "länsstyrelsen i örebro län::14669-2026::14669-2026-11"
+        }
+      ],
+      "content_hash": "c57872e99611ec7624cc0618cb5fc87c87d6bb0440e943f9ed7693b794fb8f77",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14865-2026": {
+      "case_key": "länsstyrelsen i örebro län::14865-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5603892",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14865-2026",
+        "registered_date": "2026-09-03",
+        "title": "Begäran om tillsyn av vattenverksamhet, igenfylld branddamm, Örebro kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "14865-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, igenfylld branddamm, Örebro kommun",
+          "date": "2026-09-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14865-2026::14865-2026-1"
+        },
+        {
+          "handling_number": "14865-2026-2",
+          "title": "Meddelande om ärende och begäran om uppgifter",
+          "date": "2026-11-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14865-2026::14865-2026-2"
+        },
+        {
+          "handling_number": "14865-2026-3",
+          "title": "Komplettering med plats",
+          "date": "2026-11-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14865-2026::14865-2026-3"
+        }
+      ],
+      "content_hash": "73f631d0808e226f855a08d4923b19ddf4f218325ae9744ff1ab9f9b18cbbd60",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::14992-2025": {
+      "case_key": "länsstyrelsen i örebro län::14992-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5260824",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "14992-2025",
+        "registered_date": "2025-09-23",
+        "title": "Tillsyn av vattenverksamhet, Kärmen, Karlskoga kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "14992-2025-1",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn, Kärmen",
+          "date": "2025-09-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-1"
+        },
+        {
+          "handling_number": "14992-2025-2",
+          "title": "Fråga gällande reglering av Kärmen",
+          "date": "2025-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-2"
+        },
+        {
+          "handling_number": "14992-2025-3",
+          "title": "Förbud att bedriva vattenverksamhet, Kärmen, Karlskoga kommun",
+          "date": "2025-11-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-3"
+        },
+        {
+          "handling_number": "14992-2025-4",
+          "title": "Meddelande om anteckning i fastighetsregistret",
+          "date": "2025-11-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-4"
+        },
+        {
+          "handling_number": "14992-2025-5",
+          "title": "Anteckningsärende (1/3)",
+          "date": "2025-11-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-5"
+        },
+        {
+          "handling_number": "14992-2025-6",
+          "title": "Uppföljning av beslut",
+          "date": "2026-01-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-6"
+        },
+        {
+          "handling_number": "14992-2025-7",
+          "title": "Återkoppling gällande Länsstyrelsens beslut",
+          "date": "2026-01-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-7"
+        },
+        {
+          "handling_number": "14992-2025-8",
+          "title": "Tjänsteanteckning om att beslut skickats till FIHM",
+          "date": "2026-02-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::14992-2025::14992-2025-8"
+        }
+      ],
+      "content_hash": "550fc4fe09996e0716d55f0e33df5d9ce49f9a41e9a958a987c9c3b0d8659a10",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::15136-2026": {
+      "case_key": "länsstyrelsen i örebro län::15136-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5609660",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "15136-2026",
+        "registered_date": "2026-09-08",
+        "title": "Remiss om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Lindesberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "15136-2026-1",
+          "title": "Begäran om yttrande om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23",
+          "date": "2026-09-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15136-2026::15136-2026-1"
+        },
+        {
+          "handling_number": "15136-2026-3",
+          "title": "Underrättelse om tidsplan",
+          "date": "2026-09-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15136-2026::15136-2026-3"
+        },
+        {
+          "handling_number": "15136-2026-4",
+          "title": "Länsstyrelsens yttrande till Mark- och miljödomstolen",
+          "date": "2026-10-23",
+          "sender_recipient": "Nacka tingsrätt, mark-och miljödomstolen",
+          "handling_key": "länsstyrelsen i örebro län::15136-2026::15136-2026-4"
+        }
+      ],
+      "content_hash": "6907bbc60ab6a5587c0aed6846b05eaa16c6fa07c35ba0ae1da6fa4b7c8395b9",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::15513-2026": {
+      "case_key": "länsstyrelsen i örebro län::15513-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5617780",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "15513-2026",
+        "registered_date": "2026-09-15",
+        "title": "Ansökan om dispens från strandskydd för vattenverksamhet, ny brygga, Karlskoga kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "15513-2026-1",
+          "title": "Ansökan om dispens från strandskydd för vattenverksamhet, Karlskoga kommun",
+          "date": "2026-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15513-2026::15513-2026-1"
+        }
+      ],
+      "content_hash": "6ac320f622a64106212485b7fdb1c29c06d0b46f79bfde942392961e5fa1ede1",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::15863-2026": {
+      "case_key": "länsstyrelsen i örebro län::15863-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5625044",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "15863-2026",
+        "registered_date": "2026-09-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ralaån, Hallsberg kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-19",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Hallsberg"
+      },
+      "handlings": [
+        {
+          "handling_number": "15863-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ralaån, Hallsberg kommun",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-1"
+        },
+        {
+          "handling_number": "15863-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-2"
+        },
+        {
+          "handling_number": "15863-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-3"
+        },
+        {
+          "handling_number": "15863-2026-4",
+          "title": "Förfrågan om fakturering",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-4"
+        },
+        {
+          "handling_number": "15863-2026-5",
+          "title": "Remiss anmälan om vattenverksamhet i Ralaån",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-5"
+        },
+        {
+          "handling_number": "15863-2026-6",
+          "title": "Mottagningsbekräftelse samt svar på fakturafråga",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-6"
+        },
+        {
+          "handling_number": "15863-2026-7",
+          "title": "Yttrande",
+          "date": "2026-10-06",
+          "sender_recipient": "Hallsbergs kommun, miljöenheten",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-7"
+        },
+        {
+          "handling_number": "15863-2026-8",
+          "title": "Påminnelse avgift",
+          "date": "2026-10-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-8"
+        },
+        {
+          "handling_number": "15863-2026-9",
+          "title": "Svar avgift",
+          "date": "2026-10-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-9"
+        },
+        {
+          "handling_number": "15863-2026-10",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-10-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-10"
+        },
+        {
+          "handling_number": "15863-2026-11",
+          "title": "meddelande om beslut",
+          "date": "2026-10-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::15863-2026::15863-2026-11"
+        }
+      ],
+      "content_hash": "cadc156da958e236a7ee10977daa84f26b3dd65f63d89da9c21568323b663441",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::16095-2025": {
+      "case_key": "länsstyrelsen i örebro län::16095-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5285547",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "16095-2025",
+        "registered_date": "2025-10-17",
+        "title": "Tillsyn anmäld vattenverksamhet, trumma i Klockhammarsbäcken, Örebro kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-05-29",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "16095-2025-1",
+          "title": "Start av ärende om Tillsyn anmäld vattenverksamhet, trumma i Klockahammarsbäcken",
+          "date": "2025-10-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16095-2025::16095-2025-1"
+        },
+        {
+          "handling_number": "16095-2025-2",
+          "title": "Redovisning mottagen 4265-2024",
+          "date": "2025-10-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16095-2025::16095-2025-2"
+        },
+        {
+          "handling_number": "16095-2025-3",
+          "title": "Svar på förfrågan",
+          "date": "2025-10-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16095-2025::16095-2025-3"
+        },
+        {
+          "handling_number": "16095-2025-4",
+          "title": "Efter tillsyn",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16095-2025::16095-2025-4"
+        }
+      ],
+      "content_hash": "cfea6d2859151abbeeb412ff408685e787c09171b5f5d54afc09f9b72cf6997f",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::16202-2026": {
+      "case_key": "länsstyrelsen i örebro län::16202-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5631765",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "16202-2026",
+        "registered_date": "2026-09-24",
+        "title": "Remiss om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Vänersborgs tingsrätt Mark-och miljödomstolen",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "16202-2026-1",
+          "title": "Begäran om yttrande om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30",
+          "date": "2026-09-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16202-2026::16202-2026-1"
+        }
+      ],
+      "content_hash": "e0e5d2bee2993e4083774b6bf7b21747101e543a9eae66312e1d74e7db38eb22",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::16439-2026": {
+      "case_key": "länsstyrelsen i örebro län::16439-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5637589",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "16439-2026",
+        "registered_date": "2026-09-28",
+        "title": "Information om vattenverksamhet och restaureringsärenden i vattendrag där det finns mätstation",
+        "status": "Avslutat",
+        "decision_date": "2026-10-06",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "16439-2026-1",
+          "title": "Information om vattenverksamhet och restaureringsärenden i vattendrag där det finns mätstation",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16439-2026::16439-2026-1"
+        },
+        {
+          "handling_number": "16439-2026-2",
+          "title": "Komplettering med diarienummer SMHI23:1 2026/2124/3.1.1",
+          "date": "2026-09-28",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16439-2026::16439-2026-2"
+        }
+      ],
+      "content_hash": "6da6ef152db9279fe225810c412cfb0ed173e25d560967925739634b6d307b47",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::16580-2026": {
+      "case_key": "länsstyrelsen i örebro län::16580-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5639762",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "16580-2026",
+        "registered_date": "2026-09-30",
+        "title": "Tillsyn av vattenverksamhet, låga nivåer",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "16580-2026-1",
+          "title": "Meddelande om låg nivå i Våtsjön",
+          "date": "2026-09-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16580-2026::16580-2026-1"
+        },
+        {
+          "handling_number": "16580-2026-2",
+          "title": "Begäran om redovisning av vattennivåer",
+          "date": "2026-10-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16580-2026::16580-2026-2"
+        },
+        {
+          "handling_number": "16580-2026-3",
+          "title": "Redovisning av nivåer",
+          "date": "2026-10-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16580-2026::16580-2026-3"
+        },
+        {
+          "handling_number": "16580-2026-4",
+          "title": "Begäran om komplettering",
+          "date": "2026-11-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16580-2026::16580-2026-4"
+        }
+      ],
+      "content_hash": "d826febb1f0adc5d1a3eadca963514fcc322bf17cf17532c986d49d0ec3934d5",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::16929-2026": {
+      "case_key": "länsstyrelsen i örebro län::16929-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5647470",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "16929-2026",
+        "registered_date": "2026-10-05",
+        "title": "Begäran om tillsyn av vattenverksamhet, Storsjön, dammluckor vid Gryts Bruk",
+        "status": "Avslutat",
+        "decision_date": "2026-10-27",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "16929-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, Storsjön, dammluckor vid Gryts Bruk",
+          "date": "2026-10-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16929-2026::16929-2026-1"
+        },
+        {
+          "handling_number": "16929-2026-2",
+          "title": "Komplettering med bilder",
+          "date": "2026-10-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16929-2026::16929-2026-2"
+        },
+        {
+          "handling_number": "16929-2026-3",
+          "title": "Komplettering med bilder",
+          "date": "2026-10-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16929-2026::16929-2026-3"
+        },
+        {
+          "handling_number": "16929-2026-4",
+          "title": "Svar i ärende",
+          "date": "2026-10-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::16929-2026::16929-2026-4"
+        }
+      ],
+      "content_hash": "a537dd667de5774867158ac9d96467e4eaa74111bfbdd7f030deb6c8da023339",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::17055-2026": {
+      "case_key": "länsstyrelsen i örebro län::17055-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5650157",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "17055-2026",
+        "registered_date": "2026-10-13",
+        "title": "Tillsyn vattenverksamhet",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "17055-2026-1",
+          "title": "Inkomma med uppgifter",
+          "date": "2026-10-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17055-2026::17055-2026-1"
+        },
+        {
+          "handling_number": "17055-2026-2",
+          "title": "Information om vattenverksamheten",
+          "date": "2026-10-14",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17055-2026::17055-2026-2"
+        },
+        {
+          "handling_number": "17055-2026-3",
+          "title": "Angående anmälan om vattenverksamhet",
+          "date": "2026-10-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17055-2026::17055-2026-3"
+        },
+        {
+          "handling_number": "17055-2026-4",
+          "title": "Sv_ Angående anmälan om vattenverksamhet 13762-2025 (1/1)",
+          "date": "2026-10-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17055-2026::17055-2026-4"
+        }
+      ],
+      "content_hash": "bd683cea0adca7f199130140d7c52c5cc7660b74676c96b7fff9b66220c07ca7",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::17071-2026": {
+      "case_key": "länsstyrelsen i örebro län::17071-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5650670",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "17071-2026",
+        "registered_date": "2026-10-08",
+        "title": "Remiss  om indelningen i prövningsnivåer för vattenverksamheter, sista svarsdatum 2026-11-06",
+        "status": "Avslutat",
+        "decision_date": "2026-11-11",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "17071-2026-1",
+          "title": "Begäran om yttrande om indelningen i prövningsnivåer för vattenverksamheter, sista svarsdatum 2026-11-06",
+          "date": "2026-10-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17071-2026::17071-2026-1"
+        },
+        {
+          "handling_number": "17071-2026-2",
+          "title": "Länsstyrelsens yttrande",
+          "date": "2026-11-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17071-2026::17071-2026-2"
+        }
+      ],
+      "content_hash": "983b07523b0f05ed0ab037ed3a5390e65284490c4a3c901c315d8097e6160d4d",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::17083-2026": {
+      "case_key": "länsstyrelsen i örebro län::17083-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5650975",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "17083-2026",
+        "registered_date": "2026-10-09",
+        "title": "Begäran om tillsyn av vattenverksamhet, bortledande av vatten, pumpning, Örebro kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "17083-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, bortledande av vatten, pumpning, Örebro kommun",
+          "date": "2026-10-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17083-2026::17083-2026-1"
+        },
+        {
+          "handling_number": "17083-2026-2",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17083-2026::17083-2026-2"
+        },
+        {
+          "handling_number": "17083-2026-3",
+          "title": "foton",
+          "date": "2026-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17083-2026::17083-2026-3"
+        },
+        {
+          "handling_number": "17083-2026-4",
+          "title": "Begäran om uppgifter",
+          "date": "2026-10-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17083-2026::17083-2026-4"
+        },
+        {
+          "handling_number": "17083-2026-5",
+          "title": "Svar på begäran om uppgifter",
+          "date": "2026-11-06",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17083-2026::17083-2026-5"
+        },
+        {
+          "handling_number": "17083-2026-6",
+          "title": "Meddelande om avslut utan åtgärd",
+          "date": "2026-11-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17083-2026::17083-2026-6"
+        }
+      ],
+      "content_hash": "a933153a5358bff6017a02a55c5f8c8a6e610c1a5494e08663e4f07f62f65968",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i örebro län::17539-2026": {
+      "case_key": "länsstyrelsen i örebro län::17539-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5661484",
+      "observed_at": "2026-11-16T14:00:04.466599+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Örebro län",
+        "diary_number": "17539-2026",
+        "registered_date": "2026-10-16",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Karlskoga"
+      },
+      "handlings": [
+        {
+          "handling_number": "17539-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun",
+          "date": "2026-10-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17539-2026::17539-2026-1"
+        },
+        {
+          "handling_number": "17539-2026-2",
+          "title": "Underrättelse om anmälan om vattenverksamhet",
+          "date": "2026-11-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17539-2026::17539-2026-2"
+        },
+        {
+          "handling_number": "17539-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-11-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17539-2026::17539-2026-3"
+        },
+        {
+          "handling_number": "17539-2026-4",
+          "title": "Komplettering av anmälan",
+          "date": "2026-11-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i örebro län::17539-2026::17539-2026-4"
+        }
+      ],
+      "content_hash": "a4acf6fe9f4192c65677320e4d569041807a5d986d15badfcab673572ad6eb3f",
+      "first_seen_at": "2026-11-16T14:00:04.466599+00:00",
+      "last_seen_at": "2026-11-16T14:00:04.466599+00:00",
       "observation_count": 1
     }
   }

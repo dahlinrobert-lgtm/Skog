@@ -1,22 +1,22 @@
 {
   "schema_version": 1,
   "generated_from": "data/lansstyrelsen-diary/case-details.json",
-  "case_count": 702,
-  "lead_count": 624,
+  "case_count": 752,
+  "lead_count": 671,
   "category_counts": {
-    "A": 65,
-    "B": 624
+    "A": 69,
+    "B": 671
   },
   "action_type_counts": {
-    "water_activity_general": 624,
-    "excavation_or_groundwork": 18,
-    "watercourse_modification": 28,
-    "road_or_track": 29,
-    "drainage_or_ditch": 24,
+    "water_activity_general": 671,
+    "excavation_or_groundwork": 20,
+    "watercourse_modification": 29,
+    "road_or_track": 31,
+    "drainage_or_ditch": 26,
     "wetland_or_restoration": 8,
     "construction_or_facility": 10,
     "line_or_cable": 12,
-    "culvert_or_crossing": 24
+    "culvert_or_crossing": 27
   },
   "leads": [
     {
@@ -51306,6 +51306,3485 @@
           "text_kind": "handling_title",
           "date": "2026-02-08",
           "matched_text": "Samråd inför tillståndsansökan för Återvinning, bergtäkt och deponi och vattenverksamhet vid Nya Vedyxatippen i Uppsala kommun"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "10119-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, ny brygga i Vättern, Askersunds kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-06-10",
+      "decision_date": "",
+      "municipality": "Askersund",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5530932",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-06-10",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, ny brygga i Vättern, Askersunds kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-06-10",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, ny brygga i Vättern, Askersunds kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-01",
+          "matched_text": "Begäran om uppgifter 10119-2026 (1/1)"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Yttrande ärende 13045-2026 mail 1 av 2"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Yttrande 13045-2026 bilagor"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Yttrande 13045 mail 2 av 2"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Yttrande 13045-2026 bilaga 5"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-04",
+          "matched_text": "Re_ Begäran om uppgifter 10119-2026 (1/1)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "10302-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av stolpe, Södra hörken, Ljusnarsberg kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-06-16",
+      "decision_date": "2026-07-16",
+      "municipality": "Ljusnarsberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5533001",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-06-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av stolpe, Södra hörken, Ljusnarsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-06-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Södra hörken, Ljusnarsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-08",
+          "matched_text": "Yttrande över anmälan om vattenverksamhet",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-06-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av stolpe, Södra hörken, Ljusnarsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-06-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Södra hörken, Ljusnarsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-06-25",
+          "matched_text": "Begäran om komplettering anmälan om vattenverksamhet_ 10302-2026"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-06-25",
+          "matched_text": "Begäran om komplettering anmälan om vattenverksamhet_ 10302-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-06-25",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet_ 10302-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-06-26",
+          "matched_text": "Sv_ Kopia för kännedom om anmälan om vattenverksamhet_ 10302-2026"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-06-30",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-08",
+          "matched_text": "Yttrande över anmälan om vattenverksamhet"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-08",
+          "matched_text": "Yttrande över anmälan om vattenverksamhet"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "10375-2026",
+      "title": "Tillsyn av vattenverksamhet Falkasjöns kraftverk mintappning, Örebro kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-06-16",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5533986",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-06-16",
+          "matched_text": "Tillsyn av vattenverksamhet Falkasjöns kraftverk mintappning, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-06-16",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet Falkasjöns kraftverk mintappning, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "follow_up_or_aftercare",
+          "text_kind": "handling_title",
+          "date": "2026-06-17",
+          "matched_text": "Svar Falkasjöns kraftverk redovisning mintappning"
+        },
+        {
+          "stage": "follow_up_or_aftercare",
+          "text_kind": "handling_title",
+          "date": "2026-06-18",
+          "matched_text": "Redovisning åtgärder efter besök vid Falkasjöns kraftverk mintappning"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "10829-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Svartån, se även bilaga. Nikolai 3:13 Nikolai 3:302 Nikolai 3:07, Örebro kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-06-24",
+      "decision_date": "2026-08-13",
+      "municipality": "Örebro",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5542543",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-06-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Svartån, se även bilaga. Nikolai 3:13 Nikolai 3:302 Nikolai 3:07, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-06-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Svartån, se även bilaga. Nikolai 3:13 Nikolai 3:302 Nikolai 3:07, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-06-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Svartån, se även bilaga. Nikolai 3:13 Nikolai 3:302 Nikolai 3:07, Örebro kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-06-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Svartån, se även bilaga. Nikolai 3:13 Nikolai 3:302 Nikolai 3:07, Örebro kommun"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-06-25",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-06-26",
+          "matched_text": "Bekräftelse av anmälan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-02",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-08-13",
+          "matched_text": "Beslut om bifall"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-08-13",
+          "matched_text": "Meddelande om beslut"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "11234-2025",
+      "title": "Tillsyn av vattenverksamhet, Rosendalsdammen, Dalkarlsberg, Nora kommun",
+      "status": "Handläggning",
+      "registered_date": "2025-06-16",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5192838",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-06-16",
+          "matched_text": "Tillsyn av vattenverksamhet, Rosendalsdammen, Dalkarlsberg, Nora kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "11693-2026",
+      "title": "Tillsyn av vattenverksamhet, låga nivåer i Viken, Älvlången, Åsbosjön i Nora kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-05-12",
+      "decision_date": "2026-06-26",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5545740",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-05-12",
+          "matched_text": "Tillsyn av vattenverksamhet, låga nivåer i Viken, Älvlången, Åsbosjön i Nora kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-05-12",
+          "matched_text": "Begäran om uppgifter gällande vattennivåer"
+        },
+        {
+          "stage": "follow_up_or_aftercare",
+          "text_kind": "handling_title",
+          "date": "2026-05-13",
+          "matched_text": "Redovisning av vattennivåer"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12354-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kisstjärnsbäcken, Ljusnarsberg kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-02",
+      "decision_date": "2026-08-11",
+      "municipality": "Ljusnarsberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5553356",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kisstjärnsbäcken, Ljusnarsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kisstjärnsbäcken, Ljusnarsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet 12354-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kisstjärnsbäcken, Ljusnarsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Kisstjärnsbäcken, Ljusnarsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet 12354-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Bekräftelse av anmälan"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-08-11",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12388-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Möckeln, Karlskoga kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-03",
+      "decision_date": "2026-09-08",
+      "municipality": "Karlskoga",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5554119",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Möckeln, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Möckeln, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Möckeln, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Möckeln, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Möckeln i Karlskoga kommun_ 12388-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-03",
+          "matched_text": "Yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-13",
+          "matched_text": "Yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "Beslut strandskyddsdispens samt föreläggande om försiktighetsmått(13299-2026-2) (0) (1/1)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12433-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-03",
+      "decision_date": "2026-08-12",
+      "municipality": "Ljusnarsberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5554776",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "culvert_or_crossing",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "culvert_or_crossing",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i vattendrag i Ljusnarsberg kommun_ 12433-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag mellan Lilla Basttjärnen och Norra Hörken, Ljusnarsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet_ 12433-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i vattendrag i Ljusnarsberg kommun_ 12433-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i vattendrag i Ljusnarsberg kommun_ 12433-2026"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-08-12",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12434-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-04",
+      "decision_date": "2026-08-12",
+      "municipality": "Lindesberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5554786",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "culvert_or_crossing",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-04",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "culvert_or_crossing",
+          "text_kind": "case_title",
+          "date": "2026-07-04",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-04",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-04",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trumma, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-04",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Flöde vid Lindesberg Fanthyttan 4:23, Lindesberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet_ 12434-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-17",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-05",
+          "matched_text": "Tjänsteanteckning om utskick av remiss"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-08-12",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12448-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggande av nytt lucksystem och utbyte av säkerhetslucka vid Oppboga kraftverk, Lindesbergs kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-03",
+      "decision_date": "2026-09-22",
+      "municipality": "Lindesberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5555047",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggande av nytt lucksystem och utbyte av säkerhetslucka vid Oppboga kraftverk, Lindesbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggande av nytt lucksystem och utbyte av säkerhetslucka vid Oppboga kraftverk, Lindesbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Arbogaån i Lindesbergs kommun (1/1)",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggande av nytt lucksystem och utbyte av säkerhetslucka vid Oppboga kraftverk, Lindesbergs kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggande av nytt lucksystem och utbyte av säkerhetslucka vid Oppboga kraftverk, Lindesbergs kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Bekräftelse av anmälan och begäran o komplettering 12448-2026 (1/1)"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Bekräftelse av anmälan och begäran o komplettering 12448-2026 (1/1)"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Arbogaån i Lindesbergs kommun (1/1)"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Arbogaån i Lindesbergs kommun (1/1)"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-07-17",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-06",
+          "matched_text": "Yttrande"
+        },
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2026-08-28",
+          "matched_text": "Förlängd handläggningstid och tillfälligt förbud"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-01",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-22",
+          "matched_text": "Föreläggade om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12473-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, dåliga dammluckor, Dalkarsberg, Nora kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-05",
+      "decision_date": "2026-11-04",
+      "municipality": "Nora",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5555377",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-05",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, dåliga dammluckor, Dalkarsberg, Nora kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-05",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, dåliga dammluckor, Dalkarsberg, Nora kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-15",
+          "matched_text": "Bekräftelse på mottagen anmälan 12473-2026"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12832-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-13",
+      "decision_date": "2026-09-07",
+      "municipality": "Nora",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5561337",
+      "categories": [
+        "A",
+        "B"
+      ],
+      "action_types": [
+        "drainage_or_ditch",
+        "excavation_or_groundwork",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "A",
+          "action_type": "excavation_or_groundwork",
+          "text_kind": "case_title",
+          "date": "2026-07-13",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-13",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "case_title",
+          "date": "2026-07-13",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-13",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "handling_title",
+          "date": "2026-07-13",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-13",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-13",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Två gamla diken mellan Storgatan och Haga området i Nora, Nora kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i dike i Nora kommun_ 12832-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-10",
+          "matched_text": "Svar på remiss: tillstyrker"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-07",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12900-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, nyligen anlagda nya diken och ner huggen skog, Rösjöbäcken/Dammbäcken",
+      "status": "Handläggning",
+      "registered_date": "2026-07-13",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5562431",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "drainage_or_ditch",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-13",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, nyligen anlagda nya diken och ner huggen skog, Rösjöbäcken/Dammbäcken",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "case_title",
+          "date": "2026-07-13",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, nyligen anlagda nya diken och ner huggen skog, Rösjöbäcken/Dammbäcken",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-13",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, nyligen anlagda nya diken och ner huggen skog, Rösjöbäcken/Dammbäcken",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "handling_title",
+          "date": "2026-07-13",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, nyligen anlagda nya diken och ner huggen skog, Rösjöbäcken/Dammbäcken",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-15",
+          "matched_text": "Bekräftelse på mottagen anmälan 12900-2026 (1/1)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "1291-2024",
+      "title": "Tillsyn av vattenverksamhet, Glihammarsdammen i Sverkestaån, Lindesbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2024-02-19",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4676685",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2024-02-19",
+          "matched_text": "Tillsyn av vattenverksamhet, Glihammarsdammen i Sverkestaån, Lindesbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2024-02-19",
+          "matched_text": "Start av ärende om Tillsyn av vattenverksamhet, Glihammarsdammen i Sverkestaån, Lindesbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12939-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, Haddeboån, Spångkärret, Hallsbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-07-14",
+      "decision_date": "",
+      "municipality": "Hallsberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5563106",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-14",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, Haddeboån, Spångkärret, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-14",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, Haddeboån, Spångkärret, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-07-15",
+          "matched_text": "Begäran om uppgifter 12939-2026 (1/1)"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-07-17",
+          "matched_text": "Svar på begäran om uppgifter"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-18",
+          "matched_text": "Tjänsteanteckning om tolkning av tillstånd"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "12944-2026",
+      "title": "Begäran om tillsyn vattenverksamhet, Laxån, Röfors, Laxå kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-07-14",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5563159",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-14",
+          "matched_text": "Begäran om tillsyn vattenverksamhet, Laxån, Röfors, Laxå kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13045-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Forsaviken, Askersund kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-18",
+      "decision_date": "2026-09-11",
+      "municipality": "Askersund",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5565442",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-18",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Forsaviken, Askersund kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-18",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Forsaviken, Askersund kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-04",
+          "matched_text": "Remiss anmälan om vattenverksamhet",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-11",
+          "matched_text": "Avvisande - strandskyddsdispens samt anmälan om vattenverksamhet(13600-2026 och 13045-2026)",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-18",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Forsaviken, Askersund kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-18",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Forsaviken, Askersund kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-04",
+          "matched_text": "Remiss anmälan om vattenverksamhet"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-04",
+          "matched_text": "Remiss anmälan om vattenverksamhet"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-13",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-17",
+          "matched_text": "Yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Slutligt kompletterande yttrande – 13045-2026, 10119-2026 och 13600-2026 (1/9) mail 1 av 2"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-11",
+          "matched_text": "Avvisande - strandskyddsdispens samt anmälan om vattenverksamhet(13600-2026 och 13045-2026)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13176-2026",
+      "title": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19",
+      "status": "Avslutat",
+      "registered_date": "2026-07-22",
+      "decision_date": "2026-08-17",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5568043",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-22",
+          "matched_text": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-22",
+          "matched_text": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-22",
+          "matched_text": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "case_title",
+          "date": "2026-07-22",
+          "matched_text": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-22",
+          "matched_text": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-07-22",
+          "matched_text": "Underrättelse med möjlighet till yttrande, tillsyn av vattenverksamhet, målnummer M 3572-26, sista svarsdatum 2026-08-19"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-17",
+          "matched_text": "Yttrande över underrättelse M 3572-26"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-17",
+          "matched_text": "Yttrande över underrättelse M 3572-26"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13297-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, låg vattennivå, Östersjön-Hjärtasjön, Hallsbergs kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-07-27",
+      "decision_date": "2026-08-05",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5570254",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-27",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, låg vattennivå, Östersjön-Hjärtasjön, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-27",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, låg vattennivå, Östersjön-Hjärtasjön, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-08-02",
+          "matched_text": "Komplettering med bilder"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13335-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, vattenuttag, Örebro kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-07-29",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5571106",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-29",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, vattenuttag, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-29",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, vattenuttag, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13425-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalgång genom Skråmmen 1:60, Karlskoga kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-08-02",
+      "decision_date": "2026-08-21",
+      "municipality": "Karlskoga",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5572344",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalgång genom Skråmmen 1:60, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalgång genom Skråmmen 1:60, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-04",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet 13425-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalgång genom Skråmmen 1:60, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-02",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dalgång genom Skråmmen 1:60, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-04",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet 13425-2026"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-08-20",
+          "matched_text": "Komplettering trumdimension"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-08-21",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13629-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Långvattnet, Lindesberg kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-08-07",
+      "decision_date": "2026-09-29",
+      "municipality": "Lindesberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5575800",
+      "categories": [
+        "A",
+        "B"
+      ],
+      "action_types": [
+        "excavation_or_groundwork",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "A",
+          "action_type": "excavation_or_groundwork",
+          "text_kind": "case_title",
+          "date": "2026-08-07",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Långvattnet, Lindesberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-07",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Långvattnet, Lindesberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-07",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Långvattnet, Lindesberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-10",
+          "matched_text": "Underrättelse om anmälan om vattenverksamhet.",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-07",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning och grävning, Långvattnet, Lindesberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-07",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Långvattnet, Lindesberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-10",
+          "matched_text": "Underrättelse om anmälan om vattenverksamhet."
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-29",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13971-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, uttag av vatten för kommersiellt bruk, Lekebergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-08-17",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5582982",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-17",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, uttag av vatten för kommersiellt bruk, Lekebergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-17",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, uttag av vatten för kommersiellt bruk",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "13991-2026",
+      "title": "Meddelande om anmälan av vattenverksamhet i Hjälmaren",
+      "status": "Avslutat",
+      "registered_date": "2026-08-19",
+      "decision_date": "2026-09-10",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5583318",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general",
+        "watercourse_modification"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-19",
+          "matched_text": "Meddelande om anmälan av vattenverksamhet i Hjälmaren",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-19",
+          "matched_text": "Start av ärende om anmälan av vattenverksamhet i Hjälmaren",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "watercourse_modification",
+          "text_kind": "handling_title",
+          "date": "2026-08-18",
+          "matched_text": "Ansökan muddring Almby 13_303 (1/1)",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-19",
+          "matched_text": "Meddelande om anmälan av vattenverksamhet i Hjälmaren"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-19",
+          "matched_text": "Start av ärende om anmälan av vattenverksamhet i Hjälmaren"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-18",
+          "matched_text": "Ansökan muddring Almby 13_303 (1/1)"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-07",
+          "matched_text": "Meddelande om anmälan"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14037-2026",
+      "title": "Anmälan om driftstörning vattenverksamhet, låga nivåer Sottern och Botaren, Örebro kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-08-20",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5584440",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-20",
+          "matched_text": "Anmälan om driftstörning vattenverksamhet, låga nivåer Sottern och Botaren, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-20",
+          "matched_text": "Anmälan om driftstörning vattenverksamhet, låga nivåer Sottern och Botaren, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-20",
+          "matched_text": "Anmälan om driftstörning vattenverksamhet, låga nivåer Sottern och Botaren, Örebro kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-20",
+          "matched_text": "Anmälan om driftstörning vattenverksamhet, låga nivåer Sottern och Botaren, Örebro kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-08-20",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-08-21",
+          "matched_text": "Begäran om komplettering med markering av sänkningsgräns"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-01",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-22",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-10-09",
+          "matched_text": "Komplettering"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14149-2025",
+      "title": "Begäran om tillsyn av vattenverksamhet, reglering av vattennivån, Örebro kommun",
+      "status": "Handläggning",
+      "registered_date": "2025-09-08",
+      "decision_date": "",
+      "municipality": "Örebro",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5246139",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-09-08",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, reglering av vattennivån, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-09-08",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, reglering av vattennivån, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-10",
+          "matched_text": "Begäran om uppgifter gällande reglering av Tysslingen 14149-2025"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2025-09-10",
+          "matched_text": "Bekräftelse av anmälan 14149-2025"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-09-10",
+          "matched_text": "Begäran om uppgifter gällande reglering av Tysslingen 14149-2025 (1/1)"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2025-12-11",
+          "matched_text": "_Påminnelse Begäran om uppgifter gällande reglering av Tysslingen 14149-2025 (1/1)"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-02-26",
+          "matched_text": "Begäran om uppgifter gällande reglering av Tysslingen 14149-2025 (1/1)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14198-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-08-25",
+      "decision_date": "2026-10-02",
+      "municipality": "Örebro",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588543",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-31",
+          "matched_text": "Begäran om yttrande i ärende 14198-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-02",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14200-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alkvettern, Karlskoga kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-08-25",
+      "decision_date": "",
+      "municipality": "Karlskoga",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588575",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alkvettern, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alkvettern, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alkvettern, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alkvettern, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Alkvettern i Karlskoga kommun_ 14200-2026"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14205-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-08-25",
+      "decision_date": "2026-10-02",
+      "municipality": "Örebro",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588631",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-25",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sottern, Örebro kommun"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-08-31",
+          "matched_text": "Begäran om yttrande i ärende 14205-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Yttrande över remiss, M-2026-4693"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-02",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14223-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun.",
+      "status": "Avslutat",
+      "registered_date": "2026-08-24",
+      "decision_date": "2026-10-15",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5588858",
+      "categories": [
+        "A",
+        "B"
+      ],
+      "action_types": [
+        "road_or_track",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "A",
+          "action_type": "road_or_track",
+          "text_kind": "case_title",
+          "date": "2026-08-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun.",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun.",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "A",
+          "action_type": "road_or_track",
+          "text_kind": "handling_title",
+          "date": "2026-08-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun.",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun.",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun."
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer vid bro 688 i Åbylunda, Boda, Laxå kommun."
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Kopia för kännedom om anmälan om vattenverksamhet_ 14223-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-14",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Stavån i Laxå kommun_ 14223-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-22",
+          "matched_text": "Yttrande över remiss"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-30",
+          "matched_text": "Anmälan om vattenverksamhet_ 14223-2026"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-15",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14266-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Örebro kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-08-26",
+      "decision_date": "",
+      "municipality": "Örebro",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5589893",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-08-26",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-08-26",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Sv_ Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-08-26",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Örebro kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-08-26",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hjälmaren, Örebro kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Sv_ Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Sv_ Remiss anmälan om vattenverksamhet i Hjälmaren i Örebro kommun_ 14266-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-16",
+          "matched_text": "Sv_ Ansökan om dispens"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-22",
+          "matched_text": "Yttrande"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14446-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vättern, Askersund kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-09-01",
+      "decision_date": "2026-10-22",
+      "municipality": "Askersund",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5593945",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vättern, Askersund kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vättern, Askersund kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Vättern",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-12",
+          "matched_text": "Ärende 2026-855 - Svar på remiss om vattenverksamhet på fastighet Tikanäs 2_25 (1/1)",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-09-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vättern, Askersund kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-01",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vättern, Askersund kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-02",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-02",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Paus av remiss"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-18",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Vättern"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Vättern"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-30",
+          "matched_text": "Begäran om yttrande"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-10-06",
+          "matched_text": "Yttrande från berörd"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-10-12",
+          "matched_text": "Ärende 2026-855 - Svar på remiss om vattenverksamhet på fastighet Tikanäs 2_25 (1/1)"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-22",
+          "matched_text": "Beslut om avslag och förbud(15821-2026-3) (0) (1/1)"
+        },
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2026-10-22",
+          "matched_text": "Beslut om avslag och förbud(15821-2026-3) (0) (1/1)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14610-2026",
+      "title": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11",
+      "status": "Avslutat",
+      "registered_date": "2026-07-03",
+      "decision_date": "2026-09-10",
+      "municipality": "Nora",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5598317",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-07-03",
+          "matched_text": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-07-03",
+          "matched_text": "Föreläggande om ansökan om omprövning, samt ev kompletterande tillståndsprövning, vattenverksamhet i Svartälven M 3172-25, Nora kommun, sista svarsdatum 2026-09-11"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14865-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, igenfylld branddamm, Örebro kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-09-03",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5603892",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-03",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, igenfylld branddamm, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-03",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, igenfylld branddamm, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-11",
+          "matched_text": "Meddelande om ärende och begäran om uppgifter"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-11",
+          "matched_text": "Komplettering med plats"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "14992-2025",
+      "title": "Tillsyn av vattenverksamhet, Kärmen, Karlskoga kommun",
+      "status": "Handläggning",
+      "registered_date": "2025-09-23",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5260824",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-09-23",
+          "matched_text": "Tillsyn av vattenverksamhet, Kärmen, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-11-05",
+          "matched_text": "Förbud att bedriva vattenverksamhet, Kärmen, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "prohibition_or_rejection",
+          "text_kind": "handling_title",
+          "date": "2025-11-05",
+          "matched_text": "Förbud att bedriva vattenverksamhet, Kärmen, Karlskoga kommun"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-01-14",
+          "matched_text": "Uppföljning av beslut"
+        },
+        {
+          "stage": "follow_up_or_aftercare",
+          "text_kind": "handling_title",
+          "date": "2026-01-14",
+          "matched_text": "Uppföljning av beslut"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-01-28",
+          "matched_text": "Återkoppling gällande Länsstyrelsens beslut"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-02-27",
+          "matched_text": "Tjänsteanteckning om att beslut skickats till FIHM"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "15136-2026",
+      "title": "Remiss om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23",
+      "status": "Handläggning",
+      "registered_date": "2026-09-08",
+      "decision_date": "",
+      "municipality": "Lindesberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5609660",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-08",
+          "matched_text": "Remiss om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-09-08",
+          "matched_text": "Remiss om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "case_title",
+          "date": "2026-09-08",
+          "matched_text": "Remiss om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-09-08",
+          "matched_text": "Remiss om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd till täkt-och vattenverksamhet, Lindesbergs kommun, målnummer M 6145-26. Sista svarsdatum 2026-10-23"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-08",
+          "matched_text": "Underrättelse om tidsplan"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-10-23",
+          "matched_text": "Länsstyrelsens yttrande till Mark- och miljödomstolen"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "15513-2026",
+      "title": "Ansökan om dispens från strandskydd för vattenverksamhet, ny brygga, Karlskoga kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-09-15",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5617780",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-15",
+          "matched_text": "Ansökan om dispens från strandskydd för vattenverksamhet, ny brygga, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-15",
+          "matched_text": "Ansökan om dispens från strandskydd för vattenverksamhet, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-09-15",
+          "matched_text": "Ansökan om dispens från strandskydd för vattenverksamhet, ny brygga, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-15",
+          "matched_text": "Ansökan om dispens från strandskydd för vattenverksamhet, Karlskoga kommun"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "15863-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ralaån, Hallsberg kommun",
+      "status": "Avslutat",
+      "registered_date": "2026-09-24",
+      "decision_date": "2026-10-19",
+      "municipality": "Hallsberg",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5625044",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ralaån, Hallsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ralaån, Hallsberg kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Ralaån",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-09-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ralaån, Hallsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ralaån, Hallsberg kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Ralaån"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Ralaån"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-10-06",
+          "matched_text": "Yttrande"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-19",
+          "matched_text": "Föreläggande om försiktighetsmått"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-10-19",
+          "matched_text": "meddelande om beslut"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "16095-2025",
+      "title": "Tillsyn anmäld vattenverksamhet, trumma i Klockhammarsbäcken, Örebro kommun",
+      "status": "Avslutat",
+      "registered_date": "2025-10-17",
+      "decision_date": "2026-05-29",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5285547",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "culvert_or_crossing",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2025-10-17",
+          "matched_text": "Tillsyn anmäld vattenverksamhet, trumma i Klockhammarsbäcken, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "culvert_or_crossing",
+          "text_kind": "case_title",
+          "date": "2025-10-17",
+          "matched_text": "Tillsyn anmäld vattenverksamhet, trumma i Klockhammarsbäcken, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2025-10-17",
+          "matched_text": "Start av ärende om Tillsyn anmäld vattenverksamhet, trumma i Klockahammarsbäcken",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "culvert_or_crossing",
+          "text_kind": "handling_title",
+          "date": "2025-10-17",
+          "matched_text": "Start av ärende om Tillsyn anmäld vattenverksamhet, trumma i Klockahammarsbäcken",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "follow_up_or_aftercare",
+          "text_kind": "handling_title",
+          "date": "2025-10-24",
+          "matched_text": "Redovisning mottagen 4265-2024"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "16202-2026",
+      "title": "Remiss om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30",
+      "status": "Handläggning",
+      "registered_date": "2026-09-24",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5631765",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-24",
+          "matched_text": "Remiss om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-09-24",
+          "matched_text": "Remiss om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "case_title",
+          "date": "2026-09-24",
+          "matched_text": "Remiss om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "case_title",
+          "date": "2026-09-24",
+          "matched_text": "Remiss om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30"
+        },
+        {
+          "stage": "decision_or_conditions",
+          "text_kind": "handling_title",
+          "date": "2026-09-24",
+          "matched_text": "Begäran om yttrande om ansökan om tillstånd för vattenverksamhet, Nedre Dammen Västra Å Askersunds kommun, målnummer Mål nr M 2560-26. Sista svarsdatum 2026-10-30"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "16439-2026",
+      "title": "Information om vattenverksamhet och restaureringsärenden i vattendrag där det finns mätstation",
+      "status": "Avslutat",
+      "registered_date": "2026-09-28",
+      "decision_date": "2026-10-06",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5637589",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-28",
+          "matched_text": "Information om vattenverksamhet och restaureringsärenden i vattendrag där det finns mätstation",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Information om vattenverksamhet och restaureringsärenden i vattendrag där det finns mätstation",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-09-28",
+          "matched_text": "Komplettering med diarienummer SMHI23:1 2026/2124/3.1.1"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "16580-2026",
+      "title": "Tillsyn av vattenverksamhet, låga nivåer",
+      "status": "Handläggning",
+      "registered_date": "2026-09-30",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5639762",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-09-30",
+          "matched_text": "Tillsyn av vattenverksamhet, låga nivåer",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "follow_up_or_aftercare",
+          "text_kind": "handling_title",
+          "date": "2026-10-06",
+          "matched_text": "Begäran om redovisning av vattennivåer"
+        },
+        {
+          "stage": "follow_up_or_aftercare",
+          "text_kind": "handling_title",
+          "date": "2026-10-12",
+          "matched_text": "Redovisning av nivåer"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-03",
+          "matched_text": "Begäran om komplettering"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "16929-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, Storsjön, dammluckor vid Gryts Bruk",
+      "status": "Avslutat",
+      "registered_date": "2026-10-05",
+      "decision_date": "2026-10-27",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5647470",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-05",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, Storsjön, dammluckor vid Gryts Bruk",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-05",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, Storsjön, dammluckor vid Gryts Bruk",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-10-05",
+          "matched_text": "Komplettering med bilder"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-10-05",
+          "matched_text": "Komplettering med bilder"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "17055-2026",
+      "title": "Tillsyn vattenverksamhet",
+      "status": "Handläggning",
+      "registered_date": "2026-10-13",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5650157",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-13",
+          "matched_text": "Tillsyn vattenverksamhet",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-16",
+          "matched_text": "Angående anmälan om vattenverksamhet",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-19",
+          "matched_text": "Sv_ Angående anmälan om vattenverksamhet 13762-2025 (1/1)",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-16",
+          "matched_text": "Angående anmälan om vattenverksamhet"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-19",
+          "matched_text": "Sv_ Angående anmälan om vattenverksamhet 13762-2025 (1/1)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "17083-2026",
+      "title": "Begäran om tillsyn av vattenverksamhet, bortledande av vatten, pumpning, Örebro kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-10-09",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5650975",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-09",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, bortledande av vatten, pumpning, Örebro kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-09",
+          "matched_text": "Begäran om tillsyn av vattenverksamhet, bortledande av vatten, pumpning, Örebro kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-10-22",
+          "matched_text": "Begäran om uppgifter"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-06",
+          "matched_text": "Svar på begäran om uppgifter"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "17539-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-10-16",
+      "decision_date": "",
+      "municipality": "Karlskoga",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5661484",
+      "categories": [
+        "A",
+        "B"
+      ],
+      "action_types": [
+        "road_or_track",
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "A",
+          "action_type": "road_or_track",
+          "text_kind": "case_title",
+          "date": "2026-10-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-10-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "A",
+          "action_type": "road_or_track",
+          "text_kind": "handling_title",
+          "date": "2026-10-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-10-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Underrättelse om anmälan om vattenverksamhet",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-10-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-10-16",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, reparationer av bro 678, Lysingsbäcken, Karlskoga kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Underrättelse om anmälan om vattenverksamhet"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Komplettering av anmälan"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-02",
+          "matched_text": "Komplettering av anmälan"
         }
       ],
       "evidence_level": "title_and_handling_metadata_only",
