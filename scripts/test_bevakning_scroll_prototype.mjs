@@ -67,14 +67,21 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /html\[data-theme="dark"\] \.filter-group\.is-active \.filter-group-heading/);
   assert.match(productionHtml, /if\(baseMapMode!=="imagery"\|\|!activityMap\|\|!label\)return/);
   assert.match(productionHtml, /imageryDateRequest\+\+;label\.hidden=true/);
-  assert.match(productionHtml, /id="elkAfoMap"/);
   assert.match(productionHtml, /Älgförvaltningsområden – hela Sverige/);
-  assert.match(productionHtml, /lst_jaktadm_visning\/MapServer\/WMSServer/);
-  assert.match(productionHtml, /layers:"1"/);
-  assert.match(productionHtml, /data-elk-afo-basemap="standard"/);
-  assert.match(productionHtml, /data-elk-afo-basemap="imagery"/);
-  assert.match(productionHtml, /Länsstyrelsernas karttjänst/);
-  assert.match(productionHtml, /elkAfoMap\.remove\(\)/);
+  assert.match(productionHtml, /lst_jaktadm_visning\/MapServer\/1\/query/);
+  assert.match(productionHtml, /returnIdsOnly/);
+  assert.match(productionHtml, /objectIds/);
+  assert.match(productionHtml, /outSR.*4326/);
+  assert.match(productionHtml, /async function fetchAfoBoundaryData\(\)/);
+  assert.match(productionHtml, /function setAfoLayerVisible\(visible\)/);
+  assert.match(productionHtml, /L\.geoJSON\(data/);
+  assert.doesNotMatch(productionHtml, /tileLayer\.wms/);
+  assert.doesNotMatch(productionHtml, /elkAfoMap/);
+  assert.match(productionHtml, /setAfoLayerVisible\(true\)/);
+  assert.match(productionHtml, /setAfoLayerVisible\(false\)/);
+  assert.match(productionHtml, /document\.querySelector\("\.map-card"\)\.hidden=false/);
+  assert.match(productionHtml, /map-card\.is-animal-map/);
+  assert.match(productionHtml, /map-legend\[hidden\]/);
   assert.match(productionHtml, /statistiken nedan är ännu regional/);
 });
 
