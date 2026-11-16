@@ -823,9 +823,11 @@ function initMap(){
 function elkAfoMetricValue(item){
  if(!item)return null;
  if(elkAfoMetric==="utilization"){
+  if(item.fallda_totalt===null||item.fallda_totalt===undefined||item.fallda_totalt===""||item.avskjutningsmal_totalt===null||item.avskjutningsmal_totalt===undefined||item.avskjutningsmal_totalt==="")return null;
   const killed=Number(item.fallda_totalt),target=Number(item.avskjutningsmal_totalt);
   return Number.isFinite(killed)&&Number.isFinite(target)&&target>0?killed/target*100:null;
  }
+ if(item.fallda_totalt===null||item.fallda_totalt===undefined||item.fallda_totalt==="")return null;
  const value=Number(item.fallda_totalt);
  return Number.isFinite(value)?value:null;
 }
@@ -901,7 +903,7 @@ function renderElkAfoMap(){
  const areas=elkAfoDashboard.areas||[];
  const withData=areas.filter(item=>elkAfoMetricValue(item)!==null).length;
  const status=document.getElementById("elkAfoMapStatus");
- if(status)status.textContent=areas.length.toLocaleString("sv-SE")+" ÄFO i statistikuttaget · "+withData.toLocaleString("sv-SE")+" med värde · jaktår "+elkAfoDashboard.hunting_season+" · snapshot "+elkAfoDashboard.snapshot_date+". Klicka på ett område för detaljer.";
+ if(status)status.textContent=areas.length.toLocaleString("sv-SE")+" ÄFO i statistikuttaget · "+withData.toLocaleString("sv-SE")+" med värde · jaktår "+elkAfoDashboard.hunting_season+" · snapshot "+elkAfoDashboard.snapshot_date+". Källor: Länsstyrelsernas Älgdata och Länsstyrelsernas JaktAdm. Klicka på ett område för detaljer.";
 }
 function setElkAfoBasemap(mode){
  if(!elkAfoMap||!window.L)return;
