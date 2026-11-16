@@ -9,12 +9,14 @@ on:
       - 'scripts/match_police_nvr_temporal.py'
       - 'scripts/inspect_ortnamn_geopackage.py'
       - 'scripts/inspect_nvdb_network_schema.py'
+      - 'scripts/match_points_to_nvdb_roads.py'
       - 'tests/test_build_lulea_police_review.py'
       - 'tests/test_enrich_police_nvr_geography.py'
       - 'tests/test_extract_police_wildlife_incidents.py'
       - 'tests/test_match_police_nvr_temporal.py'
       - 'tests/test_inspect_ortnamn_geopackage.py'
       - 'tests/test_inspect_nvdb_network_schema.py'
+      - 'tests/test_match_points_to_nvdb_roads.py'
       - '.github/workflows/police-nvr-matching-tests.yml'
   push:
     branches: [main]
@@ -27,6 +29,7 @@ on:
       - 'tests/test_enrich_police_nvr_geography.py'
       - 'tests/test_extract_police_wildlife_incidents.py'
       - 'tests/test_match_police_nvr_temporal.py'
+      - 'tests/test_match_points_to_nvdb_roads.py'
       - '.github/workflows/police-nvr-matching-tests.yml'
   workflow_dispatch:
 
@@ -51,3 +54,4 @@ jobs:
           tests.test_extract_police_wildlife_incidents
           tests.test_match_police_nvr_temporal
           tests.test_inspect_nvdb_network_schema
+          tests.test_match_points_to_nvdb_roads
