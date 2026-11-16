@@ -71,22 +71,27 @@ try {
                 }
             }
             $Json = ConvertTo-Json -InputObject $Feature -Depth 100 -Compress
-            switch ($Props.objtyp) {
-                "Älgskötselområde" {
-                    if (-not $AsoFirst) { $AsoWriter.Write(",") }
-                    $AsoWriter.Write($Json)
-                    $AsoFirst = $false
-                    $AsoCount++
-                    $AsoCoordinates += $CoordinateCount
-                }
-                "Licensområde" {
-                    if (-not $LicenseFirst) { $LicenseWriter.Write(",") }
-                    $LicenseWriter.Write($Json)
-                    $LicenseFirst = $false
-                    $LicenseCount++
-                    $LicenseCoordinates += $CoordinateCount
-                }
-                default { throw "Okänd objtyp '$($Props.objtyp)' för OBJECTID $ObjectId." }
+            # Build Swedish source labels from Unicode code points. Windows PowerShell 5.1
+            # otherwise interprets UTF-8 scripts without a BOM using the active ANSI code page.
+            $AsoType = ([string][char]0x00C4) + "lgsk" + ([string][char]0x00F6) + "tselomr" + ([string][char]0x00E5) + "de"
+            $LicenseType = "Licensomr" + ([string][char]0x00E5) + "de"
+
+            if ($Props.objtyp -ceq $AsoType) {
+                if (-not $AsoFirst) { $AsoWriter.Write(",") }
+                $AsoWriter.Write($Json)
+                $AsoFirst = $false
+                $AsoCount++
+                $AsoCoordinates += $CoordinateCount
+            }
+            elseif ($Props.objtyp -ceq $LicenseType) {
+                if (-not $LicenseFirst) { $LicenseWriter.Write(",") }
+                $LicenseWriter.Write($Json)
+                $LicenseFirst = $false
+                $LicenseCount++
+                $LicenseCoordinates += $CoordinateCount
+            }
+            else {
+                throw ("Unknown objtyp for OBJECTID " + $ObjectId + ": " + $Props.objtyp)
             }
         }
         Write-Host "Batch $BatchNumber klar: $($Seen.Count) / $($Ids.Count)" -ForegroundColor Green
