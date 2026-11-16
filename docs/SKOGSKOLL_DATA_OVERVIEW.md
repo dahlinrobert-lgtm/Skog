@@ -43,6 +43,15 @@ Skogskoll ska:
 - låta användaren välja händelsetyper och aviseringskanaler,
 - skicka e-post och push när en verifierad, relevant ny händelse upptäcks.
 
+### Länsstyrelserna – nationella älgförvaltningsområden (ÄFO)
+
+- Källa: Länsstyrelsernas publika JaktAdm MapServer/WMS, tjänst `Jaktadm/lst_jaktadm_visning`.
+- Verifierad tjänstemetadata (2026-11-16): lager 1 heter **LST Älgförvaltningsområden**, är polygongeometri i SWEREF 99 TM (EPSG:3006) och beskrivs som de senast beslutade älgförvaltningsområdena. Tjänsten uppger att nya beslut blir synliga nästkommande dag.
+- Tjänsten erbjuder både Map Service/ArcGIS REST och WMS. Bevakningssidan använder WMS-lagret för en nationell kartvisning.
+- Källans metadata: [Geodatakatalogens metadata](https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/GetMetaDataById?id=93a41eff-e847-4db8-8c7e-154ddfdc34ad). MapServer: [tjänstmetadata](https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer).
+- Rättigheter för extraktion, lokal lagring, bearbetning, kommersiell användning och kundvisning är ännu inte verifierade på exakt datamängdsnivå. Publik WMS-åtkomst ska inte tolkas som ett generellt återanvändningstillstånd.
+- Statistikbegränsning: Älgdatas nuvarande 2026/2027-underlag i bevakningssidan omfattar 30 regionala jaktområden. Det har inte kopplats geografiskt till ÄFO-polygonerna. Kartan visar därför gränser, inte avskjutningsvärden eller färgklassning.
+
 ## 3. Teknisk nulägesbild
 
 Skogskoll-prototypen har lokal hantering av bevakningsområden i webbläsaren, med cirklar och GeoJSON Polygon/MultiPolygon. Den lokala prototypen är inte en produktionsdatabas och uppgifterna synkas inte mellan användare eller enheter.
