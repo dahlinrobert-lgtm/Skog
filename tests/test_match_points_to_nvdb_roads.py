@@ -98,9 +98,7 @@ class NationalRoadProximityTests(unittest.TestCase):
 
     def test_european_road_number_is_formatted(self):
         self.assertEqual(
-            search_event.__globals__["road_number"]({
-                "Europavag": "Ja", "Huvudnummer": 4
-            }),
+            road_number({"Europavag": "Ja", "Huvudnummer": 4}),
             "E4",
         )
 
