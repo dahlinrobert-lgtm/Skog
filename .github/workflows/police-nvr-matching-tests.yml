@@ -32,7 +32,9 @@ on:
       - 'tests/test_extract_police_wildlife_incidents.py'
       - 'tests/test_match_police_nvr_temporal.py'
       - 'tests/test_match_points_to_nvdb_roads.py'
+      - 'tests/test_build_nvdb_validation_report.py'
       - 'scripts/match_points_to_nvdb_roads.py'
+      - 'scripts/build_nvdb_validation_report.py'
       - '.github/workflows/police-nvr-matching-tests.yml'
   workflow_dispatch:
 
