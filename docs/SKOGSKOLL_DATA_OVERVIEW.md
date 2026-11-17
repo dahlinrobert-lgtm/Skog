@@ -629,17 +629,15 @@ Teknisk kompatibilitet innebär inte att kommersiell lagring, bearbetning, kundv
 
 ## NVDB – ZIP-baserad vägmatchningspilot (2026-11-17)
 
-Matcharen `scripts/match_points_to_nvdb_roads.py` har utökats i utvecklingsbranch `feat/nvdb-zip-road-matching` för att läsa länsvisa Lastkajen-arkiv direkt via GDAL:s `/vsizip/`-virtuella filsystem. ZIP-arkiv som anges med `--nvdb-gpkg` måste innehålla exakt en `.gpkg`-medlem; noll eller flera GeoPackage-medlemmar ger ett tydligt källfel. Vanliga fristående GeoPackage-filer stöds fortsatt. Inga arkiv extraheras eller ändras.
+Efter merge av PR #409 och PR #410 har ZIP-läsningen verifierats lokalt i Windows mot de faktiska Lastkajen-arkiven för Norrbotten och Västerbotten. Matcharen läste båda ZIP-arkiven direkt via GDAL `/vsizip/`; ingen extraktion behövdes.
 
-Första avgränsade testunderlaget är `OneDrive/Skogskoll/viltolycka_NVR/working/lulea-police-nvr/nvdb-nearest-road-review-v1.csv` (9 poster), tillsammans med Norrbottens och Västerbottens ZIP-arkiv. Den lokala filkontrollen bekräftade att samtliga tre filer fanns 2026-11-17. Själva ZIP-matchningskörningen och dess resultat är ännu inte verifierade.
+Pilotindata var `nvdb-nearest-road-review-v1.csv`. Den faktiska CSV-inläsningen och matcharkörningen omfattade **8 poster** (äldre arbetsanteckning om 9 poster var felaktig). Körningen rapporterade `status=completed`, 2 källor, 0 källinitialiseringsfel och 8 utdata. För samtliga poster rapporterades två lästa källor, noll misslyckade källor och `completed_with_candidates`.
 
-Matchningen är fortsatt review-only. Källfel ska ge `partial_source_read`, aldrig negativ evidens. Geografiska kolumner får inte ändra temporal kandidatlista, score, status eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.
+Närmaste vägavstånd låg mellan **1,01 och 464,91 meter**. Antalet deduplicerade kandidater före maxgränsen varierade mellan 1 och 26; högst 5 kandidater returneras i kandidatlistan per post. Detta är tekniskt lyckad matchning, inte ännu en manuell kvalitetsbedömning av att varje väg är rätt olycksplatsväg.
 
+Användaren jämförde 39 icke-geografiska fält rad för rad mellan indata och utdata: **0 skillnader**. Det bekräftar att matcharskriptet bevarade övriga indatafält. Det är inte ett separat test av en framtida temporal matchningspipeline.
 
-## NVDB – Windows-korrigering för ZIP-baserad vägmatchning (2026-11-17)
+Resultatet är fortsatt review-only. Källfel ska ge `partial_source_read`, aldrig negativ evidens. Geografiska kolumner får inte ändra temporal kandidatlista, score, status eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.
 
-PR #410 är sammanslagen i `main` (merge commit `d0d31d2b72972c6e77087349cc7d5f3baf2028b0`). Den första korrigeringsversionen gav ett dubbelt snedstreck (`/vsizip//C:/...`) och föll på regressionstest i CI. Den slutliga korrigeringen normaliserar Windows backslash till forward slash och behåller formen `/vsizip/C:/data/archive.zip/member.gpkg`. Regressionstestet simulerar en faktisk `PureWindowsPath`.
+**Nästa steg:** manuell kartgranskning av de åtta resultaten, särskilt fallet med längst avstånd; därefter fler manuellt bedömda testfall och fler län innan en bredare nationell pilot.
 
-Användaren har bekräftat att Snapshot storage tests #465 och Police–NVR matching tests #19 passerade efter korrigeringen. Den faktiska lokala pilotkörningen mot Norrbottens och Västerbottens arkiv är däremot ännu inte genomförd efter merge. Korrigeringen är CI-verifierad, men funktionen är inte slutligt verifierad mot de två verkliga ZIP-arkiven i användarens Windows-miljö.
-
-Matchningen är fortsatt review-only. Geografiska kolumner får inte påverka temporal kandidatlista, score, status eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.
