@@ -78,3 +78,10 @@ För stora nationella körningar kan upprepade bbox-läsningar per händelse bli
 5. Utöka därefter testurvalet geografiskt innan nationell användning övervägs.
 
 Ingen nationell produktionskörning eller kundvisning är aktiverad genom denna implementation.
+
+
+## 6. Nationell valideringsrapport och granskningsurval
+
+En fristående rapportbyggare utvecklas i `scripts/build_nvdb_validation_report.py`. Den tar matchnings-CSV som indata och skriver JSON-sammanfattning plus en CSV-kö för manuell granskning. Den tar med alla flaggade händelser och kompletterar med ett deterministiskt stickprov av övriga poster per källfil. Se [NVDB – nationell valideringsrapport och granskningsurval](nvdb-national-validation-report.md).
+
+Rapporten är ett första steg för skalbar kvalitetskontroll, inte ett bevis på träffsäkerhet. Den räknar avstånd och kandidater, men precision/recall kräver ett oberoende manuellt bedömt facit. Källfilernas förekomst bland kandidaterna bevisar inte länsvis täckning. Benchmark, representativa geografiska testfall, prestandamätning och kalibrering av trösklar återstår. Temporal matchning påverkas inte.
