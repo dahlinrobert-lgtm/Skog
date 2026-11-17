@@ -274,7 +274,7 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .elkdata-table td:first-child{white-space:normal;min-width:190px}
 .elkdata-table td strong{display:block;color:#294333}
 .elkdata-table td small{display:block;margin-top:3px;color:#89958c;font-size:.7rem}
-.elkdata-table tr:last-child td{border-bottom:0}
+.elkdata-table tr:last-child td{border-bottom:0}\n.elkdata-table tbody tr[data-elk-area-key]{cursor:pointer;transition:background .15s}\n.elkdata-table tbody tr[data-elk-area-key]:hover{background:#f0f6ef}\n.elkdata-table tbody tr.is-map-selected{background:#e4f0e4;outline:2px solid #6e9a73;outline-offset:-2px}\n.elkdata-table tbody tr[data-elk-area-key]:focus-visible{outline:3px solid #4d8b5a;outline-offset:-2px}\nhtml[data-theme="dark"] .elkdata-table tbody tr[data-elk-area-key]:hover{background:#2b4031}\nhtml[data-theme="dark"] .elkdata-table tbody tr.is-map-selected{background:#304c37}
 .elkdata-number{font-variant-numeric:tabular-nums;text-align:right!important}
 .elkdata-positive{color:#287344;font-weight:800}\n.elkdata-negative{color:#a33d35;font-weight:800}
 .elkdata-empty{padding:22px!important;text-align:center!important;color:#78857b!important;white-space:normal!important}
@@ -578,6 +578,9 @@ let huntingAreasControl=null;
 let huntingAreasRequest=0;
 let huntingAreasLayers={license:null,management:null};
 let huntingAreasSummary={license:0,management:0};
+let selectedHuntingAreaKey=null;
+let selectedHuntingAreaLayer=null;
+let selectedHuntingAreaRequest=0;
 let afoBoundaryData=null;
 let afoBoundaryPromise=null;
 let afoBoundaryLoading=false;
@@ -894,7 +897,7 @@ function setAfoLayerVisible(visible){
  afoBoundaryLoading=true;
  document.getElementById("mapSummary").textContent="Hämtar ÄFO-gränser …";
  fetchAfoBoundaryData().then(data=>{
-  if(document.getElementById("animalMode").value!=="hunting"||!activityMap)return;
+  if(document.getElementById("animalMode").value!=="hunting"||!activityMap||selectedHuntingAreaKey)return;
   afoBoundaryLayer=L.geoJSON(data,{
    style:{color:"#e4b95f",weight:2.2,opacity:.98,fillColor:"#79a987",fillOpacity:.13},
    onEachFeature:(feature,layer)=>{
@@ -972,6 +975,110 @@ async function fetchHuntingAreaType(type,bounds,requestId){
  if(features.length!==ids.length)throw new Error("Ofullständig hämtning för "+type.label+": "+features.length+" av "+ids.length);
  return {type:"FeatureCollection",features};
 }
+
+function clearSelectedHuntingArea(){
+ selectedHuntingAreaRequest++;
+ selectedHuntingAreaKey=null;
+ if(selectedHuntingAreaLayer&&activityMap&&activityMap.hasLayer(selectedHuntingAreaLayer))activityMap.removeLayer(selectedHuntingAreaLayer);
+ selectedHuntingAreaLayer=null;
+ document.querySelectorAll(".elkdata-table tbody tr.is-map-selected").forEach(row=>row.classList.remove("is-map-selected"));
+}
+function quoteArcGis(value){
+ return "'"+String(value??"").replace(/'/g,"''")+"'";
+}
+function normalizeHuntingAreaNumber(value){
+ return String(value??"").trim().toLocaleUpperCase("sv").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
+}
+async function fetchSingleElkArea(area,requestId){
+ const areaNumber=String(area.area_display_id||"").trim();
+ const areaName=String(area.area_name||area.display_name||"").trim();
+ const afoName=String(area.afo||"").trim();
+ const candidates=[];
+ if(areaNumber)candidates.push("omrnum = "+quoteArcGis(areaNumber));
+ if(areaName&&afoName)candidates.push("(namn_ajo = "+quoteArcGis(areaName)+" AND namn_afo = "+quoteArcGis(afoName)+")");
+ if(areaName)candidates.push("namn_ajo = "+quoteArcGis(areaName));
+ let lastError=null;
+ for(const where of candidates){
+  const idsUrl=new URL(HUNTING_AREAS_LAYER_URL);
+  idsUrl.searchParams.set("where",where);
+  idsUrl.searchParams.set("returnIdsOnly","true");
+  idsUrl.searchParams.set("f","json");
+  const idsResponse=await fetch(idsUrl);
+  if(!idsResponse.ok)throw new Error("HTTP "+idsResponse.status+" vid sökning efter jaktområdet");
+  const idsPayload=await idsResponse.json();
+  if(idsPayload.error)throw new Error(idsPayload.error.message||"JaktAdm kunde inte söka efter jaktområdet");
+  const ids=[...(idsPayload.objectIds||[])].sort((a,b)=>a-b);
+  if(!ids.length)continue;
+  const features=[];
+  for(let offset=0;offset<ids.length;offset+=10){
+   if(requestId!==selectedHuntingAreaRequest)return null;
+   const queryUrl=new URL(HUNTING_AREAS_LAYER_URL);
+   queryUrl.searchParams.set("objectIds",ids.slice(offset,offset+10).join(","));
+   queryUrl.searchParams.set("outFields","OBJECTID,objtyp,namn_ajo,namn_afo,omrnum,afo_id,bslarea_ha");
+   queryUrl.searchParams.set("returnGeometry","true");
+   queryUrl.searchParams.set("outSR","4326");
+   queryUrl.searchParams.set("f","geojson");
+   const response=await fetch(queryUrl);
+   if(!response.ok)throw new Error("HTTP "+response.status+" vid hämtning av jaktområdets geometri");
+   const payload=await response.json();
+   if(payload.error)throw new Error(payload.error.message||"JaktAdm kunde inte returnera jaktområdets geometri");
+   features.push(...(payload.features||[]));
+  }
+  if(requestId!==selectedHuntingAreaRequest)return null;
+  if(features.length!==ids.length)throw new Error("Ofullständig geometrihämtning: "+features.length+" av "+ids.length);
+  const exact=features.filter(feature=>normalizeHuntingAreaNumber(feature.properties?.omrnum)===normalizeHuntingAreaNumber(areaNumber));
+  const matches=exact.length?exact:features.filter(feature=>{
+   const p=feature.properties||{};
+   return areaName&&String(p.namn_ajo||"").trim().toLocaleLowerCase("sv")===areaName.toLocaleLowerCase("sv")
+    &&(!afoName||String(p.namn_afo||"").trim().toLocaleLowerCase("sv")===afoName.toLocaleLowerCase("sv"));
+  });
+  if(matches.length)return {type:"FeatureCollection",features:matches};
+ }
+ if(lastError)throw lastError;
+ throw new Error("Hittade ingen entydig geometri för jaktområde "+(areaNumber||areaName||"utan områdes-ID"));
+}
+async function selectElkAreaOnMap(area){
+ if(!activityMap||!area)return;
+ const key=String(area.area_key||area.area_display_id||area.area_id||"");
+ const requestId=++selectedHuntingAreaRequest;
+ selectedHuntingAreaKey=key;
+ document.querySelectorAll(".elkdata-table tbody tr").forEach(row=>row.classList.toggle("is-map-selected",row.dataset.elkAreaKey===key));
+ huntingAreasRequest++;
+ for(const type of HUNTING_AREA_TYPES){
+  const layer=huntingAreasLayers[type.key];
+  if(layer&&activityMap.hasLayer(layer))activityMap.removeLayer(layer);
+ }
+ if(afoBoundaryLayer&&activityMap.hasLayer(afoBoundaryLayer))activityMap.removeLayer(afoBoundaryLayer);
+ if(selectedHuntingAreaLayer&&activityMap.hasLayer(selectedHuntingAreaLayer))activityMap.removeLayer(selectedHuntingAreaLayer);
+ selectedHuntingAreaLayer=null;
+ removeHuntingAreaControl();
+ const title=area.area_name||area.display_name||area.area_display_id||"Valt jaktområde";
+ document.getElementById("mapSummary").textContent="Hämtar "+title+" …";
+ document.getElementById("casePreview").innerHTML='<div class="preview-empty">Hämtar geometri för '+esc(title)+' …</div>';
+ try{
+  const data=await fetchSingleElkArea(area,requestId);
+  if(!data||requestId!==selectedHuntingAreaRequest)return;
+  const layer=L.geoJSON(data,{
+   style:{color:"#ffcf55",weight:3,opacity:1,fillColor:"#d9a62f",fillOpacity:.28},
+   onEachFeature:(feature,child)=>{
+    const p=feature.properties||{};
+    const name=p.namn_ajo||p.omrnum||title;
+    child.bindPopup("<strong>"+esc(name)+"</strong><br>"+esc(p.objtyp||"Älgjaktsområde")+"<br>"+esc(p.namn_afo||area.afo||""));
+   }
+  }).addTo(activityMap);
+  selectedHuntingAreaLayer=layer;
+  const bounds=layer.getBounds();
+  if(bounds.isValid())activityMap.fitBounds(bounds.pad(.18),{maxZoom:13});
+  document.getElementById("mapSummary").textContent=title+" · "+data.features.length.toLocaleString("sv-SE")+" geometri(er)";
+  document.getElementById("casePreview").innerHTML='<div class="preview-empty"><strong>'+esc(title)+'</strong><br>'+esc(area.area_display_id||"")+' · '+esc(area.county||"")+'<br>ÄFO: '+esc(area.afo||"")+'<br>Endast det valda jaktområdet visas. Välj en annan tabellrad för att byta område.</div>';
+  window.setTimeout(()=>activityMap&&activityMap.invalidateSize(),80);
+ }catch(error){
+  if(requestId!==selectedHuntingAreaRequest)return;
+  document.getElementById("mapSummary").textContent="Områdets geometri kunde inte hämtas";
+  document.getElementById("casePreview").innerHTML='<div class="preview-empty">'+esc(error.message||error)+'</div>';
+ }
+}
+
 function addHuntingAreaControl(){
  if(!activityMap||huntingAreasControl)return;
  huntingAreasControl=L.control({position:"topright"});
@@ -996,14 +1103,19 @@ function setHuntingAreaLayersVisible(visible){
   for(const type of HUNTING_AREA_TYPES){
    if(huntingAreasLayers[type.key]&&activityMap.hasLayer(huntingAreasLayers[type.key]))activityMap.removeLayer(huntingAreasLayers[type.key]);
   }
+  if(selectedHuntingAreaLayer&&activityMap&&activityMap.hasLayer(selectedHuntingAreaLayer))activityMap.removeLayer(selectedHuntingAreaLayer);
+  selectedHuntingAreaLayer=null;
+  selectedHuntingAreaKey=null;
+  selectedHuntingAreaRequest++;
   removeHuntingAreaControl();
   return;
  }
+ if(selectedHuntingAreaKey){removeHuntingAreaControl();return;}
  addHuntingAreaControl();
  refreshHuntingAreaLayers();
 }
 async function refreshHuntingAreaLayers(){
- if(!huntingAreasEnabled||!activityMap||!huntingAreasControl)return;
+ if(!huntingAreasEnabled||!activityMap||!huntingAreasControl||selectedHuntingAreaKey)return;
  const licenseChecked=document.getElementById("showLicenseAreas")?.checked??false;
  const managementChecked=document.getElementById("showManagementAreas")?.checked??false;
  const requestId=++huntingAreasRequest;
@@ -1101,20 +1213,32 @@ function render(){
    .sort((a,b)=>String(b.snapshot.date||"").localeCompare(String(a.snapshot.date||""))||String(a.area.display_name||a.area.area_name||"").localeCompare(String(b.area.display_name||b.area.area_name||""),"sv"));
   const fmt=value=>value===null||value===undefined?"–":Number(value).toLocaleString("sv-SE",{maximumFractionDigits:1});
   const date=value=>value?new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"short",day:"numeric",timeZone:"UTC"}).format(new Date(value+"T12:00:00Z")):"Ej observerat";
+  if(selectedHuntingAreaKey&&!matchingAreas.some(area=>String(area.area_key||area.area_display_id||area.area_id||"")===selectedHuntingAreaKey))clearSelectedHuntingArea();
   const rowsHtml=rows.map(({area,snapshot,delta})=>{
    const areaName=area.display_name||("Jaktområde "+(area.area_display_id||area.area_key||"okänt ID"));
    const deltaClass=delta>0?"elkdata-positive":"elkdata-negative";
    const deltaLabel=(delta>0?"+":"")+fmt(delta);
-   return '<tr><td><strong>'+esc(areaName)+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(snapshot.total)+'</td><td class="elkdata-number '+deltaClass+'">'+deltaLabel+'</td><td>'+date(snapshot.date)+'</td></tr>';
+   const rowKey=String(area.area_key||area.area_display_id||area.area_id||"");
+   return '<tr data-elk-area-key="'+esc(rowKey)+'" tabindex="0" role="button" aria-label="Visa jaktområdet '+esc(areaName)+' på kartan" class="'+(selectedHuntingAreaKey===rowKey?'is-map-selected':'')+'"><td><strong>'+esc(areaName)+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(snapshot.total)+'</td><td class="elkdata-number '+deltaClass+'">'+deltaLabel+'</td><td>'+date(snapshot.date)+'</td></tr>';
   }).join("");
   document.getElementById("feed").innerHTML=elkLoadError
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
    : '<p class="elkdata-note">Regional avskjutningsstatistik (inte geografiskt kopplad till ÄFO-polygonerna) för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="6" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
   document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
+  document.querySelectorAll(".elkdata-table tbody tr[data-elk-area-key]").forEach(row=>{
+   const activate=()=>{const area=matchingAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===row.dataset.elkAreaKey);if(area)selectElkAreaOnMap(area);};
+   row.addEventListener("click",activate);
+   row.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();activate();}});
+  });
   document.getElementById("mapSummary").textContent="Nationella ÄFO-gränser";
   renderMap([]);
-  document.getElementById("mapSummary").textContent="Laddar nationella ÄFO-gränser";
-  setAfoLayerVisible(true);
+  if(selectedHuntingAreaKey){
+   const selectedArea=matchingAreas.find(area=>String(area.area_key||area.area_display_id||area.area_id||"")===selectedHuntingAreaKey);
+   if(selectedArea)selectElkAreaOnMap(selectedArea);else{clearSelectedHuntingArea();setAfoLayerVisible(true);}
+  }else{
+   document.getElementById("mapSummary").textContent="Laddar nationella ÄFO-gränser";
+   setAfoLayerVisible(true);
+  }
   return;
  }
  document.getElementById("feed").innerHTML=list.length?list.map(x=>{
