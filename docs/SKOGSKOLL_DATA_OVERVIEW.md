@@ -641,3 +641,10 @@ Resultatet är fortsatt review-only. Källfel ska ge `partial_source_read`, aldr
 
 **Nästa steg:** manuell kartgranskning av de åtta resultaten, särskilt fallet med längst avstånd; därefter fler manuellt bedömda testfall och fler län innan en bredare nationell pilot.
 
+
+
+## NVDB – GeoJSON-export för manuell väggranskning (2026-11-17)
+
+Den verifierade tvålänspiloten omfattade 8 händelser. För att möjliggöra manuell granskning av om närmaste väg och alternativa kandidater är geografiskt rimliga har matcharen i branch `feat/nvdb-road-review-geojson` fått ett valfritt argument `--geojson-output`. Det skapar en separat WGS84 GeoJSON FeatureCollection med händelsepunkter och valda NVDB-vägkandidaters faktiska linjegeometrier. Egenskaperna anger radnummer, kandidatordning, om kandidaten är närmast, vägnummer, vägroll, avstånd, NVDB-element-ID och källfil.
+
+CSV-utdata behåller sitt befintliga schema; geometrierna skrivs bara till den separata GeoJSON-filen. Indata och originalarkiv ändras inte. GeoJSON är lokalt granskningsunderlag och ska inte användas som automatisk bekräftelse av olycksväg eller som kundvisning. Ingen temporal matchningslogik ändras. Ändringen är ännu inte mergad och CI ska passera innan den lokala exporten körs.
