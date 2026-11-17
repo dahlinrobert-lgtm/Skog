@@ -612,3 +612,16 @@ En alternativ read-only-metod har verifierats på Gotland och Västerbotten: fr�
 Den read-only-inspektören i branch `fix/nvdb-direct-layer-inventory` har ändrats för att använda denna riktade metod, registrera CRS/geometriuppgift och markera katalog-/lagerläsfel som `partial`. Ändringen är ännu inte nationellt verifierad. Kör inventeringen mot samtliga 21 arkiv och granska resultatet innan nationell vägmatchning. Nationell matchning ska fortsatt vara review-only, och geografi får inte ändra temporal matchning, kandidatlista, score, status eller `geographic_match_used`.
 
 Teknisk åtkomst och metadata-inspektion innebär inte att kommersiell lagring, bearbetning, kundvisning eller vidare distribution är godkänd.
+
+
+## NVDB – nationell länsinventering och geometristickprov verifierade (2026-11-17)
+
+Den nationella read-only-inventeringen av Lastkajens 21 länsvisa GeoPackage-ZIP är genomförd. Arkiven omfattar 10 677 114 317 byte (cirka 9,94 GiB) och samtliga 21 har status `compatible` i metadata-/schema-kontrollen för lagret `NVDB_DK_O_111_Vagnummer`. Metadataantalet är totalt **456 444 features**. Obligatoriska fält är `ELEMENT_ID`, `Europavag`, `Huvudnummer` och `Lankroll`.
+
+Ett distribuerat geometristickprov om 500 features per län (totalt **10 500**) har därefter verifierats. Alla län hade CRS **EPSG:3006**, geometritypen **LineString**, 500/500 lästa stickprovsfeatures, 500 giltiga geometrier och noll null-, tomma eller ogiltiga geometrier samt noll stickprovsfel. Rapporten anger `completed`, 21 arkiv och 0 fel. Originalarkiven ändrades inte (`read_only=true`, `source_archives_modified=false`).
+
+**Tolkning och begränsningar:** 456 444 är metadataantal för lagerobjekt, inte antal unika vägar eller vägkilometer. Stickprovet bekräftar inte varje geometri i hela materialet, fullständig geografisk täckning, nätverkskontinuitet eller kvaliteten på alla länsgränsöverlappningar. Det verifierar inte heller att en senare NVDB-version är jämförbar med denna baslinje. Nationell vägmatchning är fortfarande en pilot och ska vara review-only; geografi får inte påverka temporal matchning, kandidatlista, score, status eller `geographic_match_used`.
+
+Teknisk kompatibilitet innebär inte att kommersiell lagring, bearbetning, kundvisning eller vidare distribution är godkänd. Dessa villkor ska bedömas separat för exakt produkt/lager och användning.
+
+**Nästa steg:** kör en avgränsad nationell vägmatchningspilot med manuellt bedömda positiva, negativa och tvetydiga testfall. Mät prestanda, kontrollera länsgränser och täckning samt kör temporal regression före/efter utan att ändra temporal logik.
