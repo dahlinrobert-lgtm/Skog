@@ -256,3 +256,14 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Detta är metadata-/schema-kompatibilitet och ett distribuerat geometristickprov, inte fullständig geometri-validering av samtliga 456 444 features, verifierad vägkilometer-/nätverkstäckning, sömlös länsgränsöverlappning eller bevis på att alla NVDB-produkter/versioner är jämförbara.
 - Kommersiell användning, historisk lagring, bearbetning, kundvisning och vidare distribution är fortsatt separata rättighetsfrågor och inte godkända genom denna tekniska kontroll.
 - Nästa steg: genomför en avgränsad nationell vägmatchningspilot med representativa positiva, negativa och tvetydiga testfall, mät prestanda och kontrollera länsgränser/täckning. Behåll strikt review-only: geografi får inte ändra temporal matchning, kandidatlista, score, status eller `geographic_match_used`. Kör temporal regression före/efter.
+
+
+### NVDB – ZIP-baserad vägmatchningspilot (2026-11-17)
+
+- Arbetsbranch: `feat/nvdb-zip-road-matching`, skapad från aktuell `main`.
+- `scripts/match_points_to_nvdb_roads.py` har utökats för att läsa ett ZIP-arkiv med exakt en `.gpkg`-medlem via GDAL `/vsizip/`. Vanliga GeoPackage-filer fungerar fortsatt. ZIP med noll eller flera GPKG-medlemmar ger ett tydligt källfel; originalarkiv extraheras eller ändras inte.
+- Riktade tester har lagts till för en GPKG-medlem, saknad medlem, flera medlemmar och metadataåtkomst via VSI-sökväg.
+- Verifierat lokalt av användaren: test-CSV (11 286 byte), Norrbottens ZIP (532 655 266 byte) och Västerbottens ZIP (640 385 324 byte) finns i OneDrive.
+- Nästa steg: kör riktade tester/hela relevanta testsamlingen via CI, granska PR och ge användaren PowerShell-kommando för pilotkörning mot Norrbotten + Västerbotten. Jämför temporal kolumnuppsättning och värden före/efter. Redovisa antal poster, statusar, kandidater, avstånd, källfel och körtid.
+- Håll resultatet review-only. Ingen geografisk evidens får påverka temporal kandidatgenerering, score, status, kandidatinkludering eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är godkänd.
+- `docs/STORAGE_INVENTORY.md` ändras inte i denna PR eftersom inga nya beständiga lagringsplatser eller dataset införs; pilotens indata ligger i redan inventerade arbetsytor.
