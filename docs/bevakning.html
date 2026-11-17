@@ -906,7 +906,8 @@ function setAfoLayerVisible(visible){
   }).addTo(activityMap);
   const bounds=afoBoundaryLayer.getBounds();
   if(bounds.isValid())activityMap.fitBounds(bounds.pad(.06),{maxZoom:7});
-  document.getElementById("mapSummary").textContent=data.features.length.toLocaleString("sv-SE")+" nationella ÄFO-gränser";
+  if(document.getElementById("animalMode").value==="hunting")updateHuntingAreaSummary();
+  else document.getElementById("mapSummary").textContent=data.features.length.toLocaleString("sv-SE")+" nationella ÄFO-gränser";
   document.getElementById("casePreview").innerHTML='<div class="preview-empty">Klicka på ett älgförvaltningsområde för att se dess namn och geografiska utbredning.</div>';
   window.setTimeout(()=>activityMap&&activityMap.invalidateSize(),80);
  }).catch(error=>{
