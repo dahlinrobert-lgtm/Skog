@@ -269,10 +269,10 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - `docs/STORAGE_INVENTORY.md` ändras inte i denna PR eftersom inga nya beständiga lagringsplatser eller dataset införs; pilotens indata ligger i redan inventerade arbetsytor.
 
 
-### NVDB ZIP-läsning – Windows VSI-sökvägsfel (2026-11-17)
-- PR #409 är sammanslagen och Snapshot storage tests #461 passerade enligt användarens bekräftelse.
-- Första lokala tvålänspiloten misslyckades i Windows vid initiering av båda ZIP-källorna. GDAL rapporterade att den genererade `/vsizip/C:\\...`-sökvägen inte var ett läsbart dataset.
-- Rotorsaken utreds i VSI-sökvägens Windows-normalisering. Första fixförsöket gav ett dubbelt snedstreck (`/vsizip//C:/...`) och föll på regressionstest i CI. Korrigeringen normaliserar nu backslash till forward slash och behåller formatet `/vsizip/C:/...`; regressionstestet simulerar en faktisk WindowsPath.
-- Nästa steg efter merge: uppdatera lokal `main`, kör riktade tester och upprepa Norrbotten/Västerbotten-piloten. Ändra inte temporal logik och behåll review-only. Registrera körresultat först efter faktisk lokal verifiering.
-
-- CI för första versionen av PR #410 körde 299 tester i den breda sviten och 69 riktade tester; båda föll endast på samma felaktiga förväntan i WindowsPath-regressionstestet (dubbelt snedstreck). Testet och normaliseringen har korrigerats i samma PR. Vänta på ny CI innan lokal omkörning.
+### NVDB ZIP-läsning – Windows VSI-sökvägsfel och korrigering (2026-11-17)
+- PR #409 är sammanslagen. Den första lokala tvålänspiloten misslyckades med GDAL:s `/vsizip/`-sökväg för Windows-drive.
+- PR #410 är nu sammanslagen i `main` (merge commit `d0d31d2b72972c6e77087349cc7d5f3baf2028b0`). Matcharen normaliserar Windows backslash till forward slash och använder formen `/vsizip/C:/...`; regressionstestet använder `PureWindowsPath`.
+- Användaren har bekräftat att Snapshot storage tests #465 och Police–NVR matching tests #19 passerade för PR #410.
+- Den faktiska Norrbotten/Västerbotten-piloten är fortfarande inte omkörd efter merge och ska köras lokalt från uppdaterad `main`.
+- Nästa steg: användaren uppdaterar lokal main och kör den avgränsade tvåarkivspiloten. Redovisa antal poster, statusar, kandidater, avstånd, källfel och körtid. Kontrollera dessutom temporal fältidentitet/värden mot indatan.
+- Behåll strikt review-only. Geografisk evidens får inte ändra temporal kandidatgenerering, score, status, kandidatinkludering eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.
