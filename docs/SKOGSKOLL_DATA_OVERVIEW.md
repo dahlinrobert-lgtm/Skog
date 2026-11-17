@@ -410,16 +410,18 @@ Befintliga och planerade vindkraftsprojekt i närheten av bevakade fastigheter.
 **Prioritet:** Medelhög
 
 **Nuvarande läge**
-API- och webbaserad åtkomst har undersökts. Projektet har testat kommun- och länsvisa ärendeflöden. Erfarenheten är att äldre nyheter/händelser inte alltid finns kvar i källan; månatliga snapshots har därför identifierats som viktiga.
+Den publika webbdiarievyn har testats med länsvisa och frasavgränsade sökningar. Två manuella pilotkörningar för Norrbotten, kategori B, har verifierats för september och oktober 2026. Samtliga sex frasintervall var kompletta och avstämda i respektive körning. Det visar reproducerbarhet i den avgränsade piloten, inte nationell täckning eller fullständig diarietäckning.
+
+En separat manuell discovery-workflow är under utveckling: sju grupper om tre län, en kategori per körning och högst 18 län/frasintervall. Den sparar endast diagnostikartefakter i 30 dagar och skriver inte snapshots eller manifest till repot. Den befintliga månadsworkflowen publicerar däremot kompletta snapshots direkt till `main` och ska inte användas för nationell discovery.
 
 **Historik**
-Bevara metadata, dokument-ID, källa och hämtningstid. Dokumentbilagor ska hanteras separat från metadata.
+Bevara metadata, dokument-ID, källa och hämtningstid. Månatliga snapshots kan bevara observationer som senare försvinner ur webbdiariet. Ofullständiga sökningar får inte behandlas som kompletta, och frånvaro är inte bevis för att ett ärende har tagits bort. Dokumentbilagor ska hanteras separat från metadata.
 
 **Rättigheter**
-Bedöm varje handling. Offentlighet innebär inte automatiskt fri kommersiell återpublicering. Sekretess, personuppgifter, upphovsrätt och tredje mans rättigheter måste kontrolleras.
+Bedöm varje handling. Offentlighet innebär inte automatiskt fri kommersiell återpublicering. Länsstyrelsens tekniska begränsningar måste beaktas innan obevakad eller återkommande hämtning. Sekretess, personuppgifter, upphovsrätt och tredje mans rättigheter måste kontrolleras. Kundvisning är fortsatt inte godkänd generellt.
 
 **Framtida användning**
-Identifiera relevanta myndighetsärenden och beslut. Publicera inte automatiskt fullständiga dokument eller personuppgifter i kundprodukten.
+Identifiera relevanta myndighetsärenden och beslut. Börja eventuell nationell täckningskontroll med en manuellt vald grupp i taget och utvärdera portalens belastning och felmönster. Aktivera inte schema och publicera inte automatiskt fullständiga dokument eller personuppgifter i kundprodukten.
 
 ### 4.18 Övriga identifierade källor
 
