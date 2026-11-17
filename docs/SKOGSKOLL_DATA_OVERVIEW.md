@@ -647,4 +647,11 @@ Resultatet är fortsatt review-only. Källfel ska ge `partial_source_read`, aldr
 
 Den verifierade tvålänspiloten omfattade 8 händelser. För att möjliggöra manuell granskning av om närmaste väg och alternativa kandidater är geografiskt rimliga har matcharen i branch `feat/nvdb-road-review-geojson` fått ett valfritt argument `--geojson-output`. Det skapar en separat WGS84 GeoJSON FeatureCollection med händelsepunkter och valda NVDB-vägkandidaters faktiska linjegeometrier. Egenskaperna anger radnummer, kandidatordning, om kandidaten är närmast, vägnummer, vägroll, avstånd, NVDB-element-ID och källfil.
 
-CSV-utdata behåller sitt befintliga schema; geometrierna skrivs bara till den separata GeoJSON-filen. Indata och originalarkiv ändras inte. GeoJSON är lokalt granskningsunderlag och ska inte användas som automatisk bekräftelse av olycksväg eller som kundvisning. Ingen temporal matchningslogik ändras. Ändringen är ännu inte mergad och CI ska passera innan den lokala exporten körs.
+CSV-utdata behåller sitt befintliga schema; geometrierna skrivs bara till den separata GeoJSON-filen. Indata och originalarkiv ändras inte. GeoJSON är lokalt granskningsunderlag och ska inte användas som automatisk bekräftelse av olycksväg eller som kundvisning. Ingen temporal matchningslogik ändras. PR #411 är sammanslagen i main. Den lokala exporten har därefter körts mot Norrbottens och Västerbottens ZIP-arkiv: 8 händelser och 43 GeoJSON-features. Resultatet är fortsatt review-only.
+
+
+### NVDB – nationell geografisk validering (2026-11-17)
+
+Den första ZIP-baserade vägmatchningspiloten omfattar åtta Luleåhändelser och två länsarkiv. Matcharen har nu en separat rapportbyggare under utveckling: `scripts/build_nvdb_validation_report.py`. Den skapar en JSON-sammanfattning och en deterministisk granskningskö med alla flaggade händelser samt ett stickprov av övriga händelser per källfil. Rapporten är avsedd att göra kvalitetssäkringen skalbar; den mäter ännu inte faktisk träffsäkerhet.
+
+Nationell kvalitetssäkring kräver ett oberoende manuellt bedömt referensurval, verifierad täckning för samtliga län, benchmark av körtid/minne och kalibrering av avstånds-/tvetydighetströsklar. Kandidatfilernas proveniens får inte användas som bevis för geografisk täckning. Geografisk evidens ska fortsatt hållas skild från temporal matchning och får inte automatiskt bekräfta olycksväg eller kundvisning.
