@@ -647,7 +647,7 @@ Resultatet är fortsatt review-only. Källfel ska ge `partial_source_read`, aldr
 
 Den verifierade tvålänspiloten omfattade 8 händelser. För att möjliggöra manuell granskning av om närmaste väg och alternativa kandidater är geografiskt rimliga har matcharen i branch `feat/nvdb-road-review-geojson` fått ett valfritt argument `--geojson-output`. Det skapar en separat WGS84 GeoJSON FeatureCollection med händelsepunkter och valda NVDB-vägkandidaters faktiska linjegeometrier. Egenskaperna anger radnummer, kandidatordning, om kandidaten är närmast, vägnummer, vägroll, avstånd, NVDB-element-ID och källfil.
 
-CSV-utdata behåller sitt befintliga schema; geometrierna skrivs bara till den separata GeoJSON-filen. Indata och originalarkiv ändras inte. GeoJSON är lokalt granskningsunderlag och ska inte användas som automatisk bekräftelse av olycksväg eller som kundvisning. Ingen temporal matchningslogik ändras. Ändringen är ännu inte mergad och CI ska passera innan den lokala exporten körs.
+CSV-utdata behåller sitt befintliga schema; geometrierna skrivs bara till den separata GeoJSON-filen. Indata och originalarkiv ändras inte. GeoJSON är lokalt granskningsunderlag och ska inte användas som automatisk bekräftelse av olycksväg eller som kundvisning. Ingen temporal matchningslogik ändras. PR #411 är sammanslagen i main. Den lokala exporten har därefter körts mot Norrbottens och Västerbottens ZIP-arkiv: 8 händelser och 43 GeoJSON-features. Resultatet är fortsatt review-only.
 
 
 ### NVDB – nationell geografisk validering (2026-11-17)
