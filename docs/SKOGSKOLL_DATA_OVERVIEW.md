@@ -48,6 +48,7 @@ Skogskoll ska:
 - Källa: JaktAdm MapServer Layer 0, **LST Älgjaktområden**, i samma tjänst som ÄFO-lagret. Exportinventeringen 2026-11-16 innehöll 2 927 objekt: 832 älgskötselområden och 2 095 licensområden.
 - Bevakningssidan använder två separata, valbara lager i Jakt-läget. Geometrier hämtas direkt från ArcGIS REST med geografisk avgränsning till aktuell kartvy och uppdelade objektID-anrop. Klienten begär EPSG:4326 för Leaflet men förenklar, klipper eller reparerar inte geometrierna.
 - För att undvika en nationell engångshämtning av den stora geodatamängden hämtas lagren först vid zoomnivå 8 eller närmare. Områdesnamn, typ, registreringsnummer och tillgängliga källattribut visas vid klick.
+- När användaren väljer en rad i älgstatistiktabellen isoleras motsvarande jaktområde: statistikens områdesnummer matchas i första hand mot JaktAdm-fältet `omrnum`, med namn och ÄFO som reserv. Övriga jaktområdeslager och ÄFO-lagret döljs, endast vald geometri visas och kartan zoomar till den. Framtida kronhjortsstöd kan använda samma urvalsmönster när artens geometritjänst och nyckelfält har verifierats; det stödet finns inte ännu.
 - Teknisk implementation finns i utvecklingsgrenen `feat/elk-hunting-area-boundaries`; detta är inte i sig ett juridiskt godkännande. Villkor för extraktion, cache, bearbetning, kommersiell användning och kundvisning är ännu inte verifierade på exakt lager-/produktnivå. Behåll attribution till Länsstyrelserna och behandla kundpublicering separat.
 
 ### Länsstyrelserna – nationella älgförvaltningsområden (ÄFO)
