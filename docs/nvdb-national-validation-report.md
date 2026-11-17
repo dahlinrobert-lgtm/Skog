@@ -1,9 +1,11 @@
 # NVDB – nationell valideringsrapport och granskningsurval
 
-**Status:** första fristående rapportbyggare i utvecklingsbranch; inte produktionssatt.  
+**Status:** första rapportbyggaren är sammanslagen i main och CI-verifierad; nationell validering återstår.  
 **Skript:** `scripts/build_nvdb_validation_report.py`  
 **Indata:** CSV-utdata från `scripts/match_points_to_nvdb_roads.py`.  
 **Utdata:** JSON-sammanfattning och separat CSV-kö för manuell granskning.
+
+PR #412 är sammanslagen: [Add scalable NVDB validation report and review queue](https://github.com/dahlinrobert-lgtm/Skog/pull/412). GitHub Actions-kontrollerna Police–NVR matching and geographic evidence tests #24 och Snapshot storage tests #470 avslutades med `success`.
 
 ## Syfte och avgränsning
 
@@ -31,17 +33,16 @@ python scripts/build_nvdb_validation_report.py `
 
 Om en stabil händelse-ID-kolumn finns kan den anges med `--event-id-field`. Trösklarna `--far-m`, `--very-far-m` och `--ambiguity-gap-m` är granskningsurval, inte automatiska kvalitetsgodkännanden.
 
-## Nationell uppskalning
+## Nästa steg för nationell uppskalning
 
-Innan nationell körning ska:
-1. samma NVDB-produktversion och kompatibel källtäckning verifieras för samtliga län;
-2. benchmark göras med representativa händelsevolymer och alla avsedda länsarkiv;
-3. körtid, minne, antal lästa features och källfel mätas;
-4. manuellt bedömda positiva, negativa och tvetydiga fall finnas i flera geografiska miljöer;
-5. granskningsbeslut kunna kopplas till stabil händelseidentitet och NVDB-element-ID, inte enbart radnummer;
-6. rapportens urvals- och avståndströsklar kalibreras mot det manuellt bedömda referensmaterialet.
+1. Kör rapportbyggaren mot den befintliga åttahändelsepiloten och granska utdata.
+2. Skapa manuellt bedömda positiva, negativa och tvetydiga fall i flera geografiska miljöer.
+3. Verifiera kompatibel NVDB-produktversion och källtäckning för samtliga län.
+4. Benchmarka representativa volymer; mät körtid, minne, antal lästa features och källfel.
+5. Koppla granskningsbeslut till stabil händelseidentitet och NVDB-element-ID, inte enbart radnummer.
+6. Kalibrera urvals- och avståndströsklar mot det manuellt bedömda referensmaterialet.
 
-Nuvarande rapport räknar avstånd och kandidater från matchnings-CSV. Den mäter inte precision/recall eller faktisk vägträffsäkerhet eftersom det kräver ett oberoende manuellt bedömt facit. Den härleder inte heller geografisk täckning från källfiler.
+Rapporten mäter inte precision/recall eller faktisk vägträffsäkerhet eftersom detta kräver ett oberoende manuellt bedömt facit. Den härleder inte heller geografisk täckning från källfiler.
 
 ## Säkerhetsregler
 
