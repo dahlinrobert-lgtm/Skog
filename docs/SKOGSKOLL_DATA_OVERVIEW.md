@@ -655,3 +655,10 @@ CSV-utdata behåller sitt befintliga schema; geometrierna skrivs bara till den s
 Den första ZIP-baserade vägmatchningspiloten omfattar åtta Luleåhändelser och två länsarkiv. Matcharen har nu en separat rapportbyggare under utveckling: `scripts/build_nvdb_validation_report.py`. Den skapar en JSON-sammanfattning och en deterministisk granskningskö med alla flaggade händelser samt ett stickprov av övriga händelser per källfil. Rapporten är avsedd att göra kvalitetssäkringen skalbar; den mäter ännu inte faktisk träffsäkerhet.
 
 Nationell kvalitetssäkring kräver ett oberoende manuellt bedömt referensurval, verifierad täckning för samtliga län, benchmark av körtid/minne och kalibrering av avstånds-/tvetydighetströsklar. Kandidatfilernas proveniens får inte användas som bevis för geografisk täckning. Geografisk evidens ska fortsatt hållas skild från temporal matchning och får inte automatiskt bekräfta olycksväg eller kundvisning.
+
+
+### NVDB – nationell geografisk validering (2026-11-17)
+
+PR #412 är sammanslagen i main och CI-verifierad (Police–NVR matching and geographic evidence tests #24 samt Snapshot storage tests #470, båda `success`). Rapportbyggaren `scripts/build_nvdb_validation_report.py` skapar JSON-sammanfattning och separat granskningskö från matchnings-CSV. Alla flaggade händelser behålls; övriga tas med genom deterministiskt stickprov per förekommande källfil.
+
+Nästa steg är lokal körning mot den befintliga åttahändelsepiloten och manuell granskning av utdata. Nationell validering kräver därefter oberoende manuellt bedömda testfall, verifierad källtäckning, prestandamätning och kalibrering. Rapporten mäter inte faktisk träffsäkerhet utan manuellt facit. Geografisk evidens ska fortsatt hållas skild från temporal matchning och får inte automatiskt bekräfta olycksväg eller kundvisning.
