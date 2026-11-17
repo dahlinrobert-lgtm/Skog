@@ -1051,6 +1051,7 @@ async function selectElkAreaOnMap(area){
  if(afoBoundaryLayer&&activityMap.hasLayer(afoBoundaryLayer))activityMap.removeLayer(afoBoundaryLayer);
  if(selectedHuntingAreaLayer&&activityMap.hasLayer(selectedHuntingAreaLayer))activityMap.removeLayer(selectedHuntingAreaLayer);
  selectedHuntingAreaLayer=null;
+ removeHuntingAreaControl();
  const title=area.area_name||area.display_name||area.area_display_id||"Valt jaktområde";
  document.getElementById("mapSummary").textContent="Hämtar "+title+" …";
  document.getElementById("casePreview").innerHTML='<div class="preview-empty">Hämtar geometri för '+esc(title)+' …</div>';
@@ -1102,9 +1103,14 @@ function setHuntingAreaLayersVisible(visible){
   for(const type of HUNTING_AREA_TYPES){
    if(huntingAreasLayers[type.key]&&activityMap.hasLayer(huntingAreasLayers[type.key]))activityMap.removeLayer(huntingAreasLayers[type.key]);
   }
+  if(selectedHuntingAreaLayer&&activityMap&&activityMap.hasLayer(selectedHuntingAreaLayer))activityMap.removeLayer(selectedHuntingAreaLayer);
+  selectedHuntingAreaLayer=null;
+  selectedHuntingAreaKey=null;
+  selectedHuntingAreaRequest++;
   removeHuntingAreaControl();
   return;
  }
+ if(selectedHuntingAreaKey){removeHuntingAreaControl();return;}
  addHuntingAreaControl();
  refreshHuntingAreaLayers();
 }
