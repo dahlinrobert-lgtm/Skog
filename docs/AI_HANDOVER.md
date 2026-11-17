@@ -269,3 +269,12 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Nästa steg: manuellt granska vägkandidaterna mot karta/ort och kontrollera särskilt den längsta distansen. Därefter bygg ut testunderlaget med manuellt bedömda positiva, negativa och tvetydiga fall och fler län. Mät körtid och kontrollera länsgränser/täckning innan nationell pilot.
 - Geografisk evidens får inte påverka temporal kandidatgenerering, kandidatlista, score, status eller `geographic_match_used`. Bevara originalarkiv och historik.
 
+
+
+### NVDB – GeoJSON för manuell väggranskning (2026-11-17)
+- Nästa steg efter den verifierade tvålänspiloten är manuell kartgranskning av 8 händelsepunkter och närmaste/alternativa vägkandidatlinjer.
+- Branch `feat/nvdb-road-review-geojson` lägger till valfri `--geojson-output` i `scripts/match_points_to_nvdb_roads.py`. Den separata WGS84 GeoJSON-filen innehåller händelsepunkter och de valda kandidatvägarnas faktiska geometrier, med egenskaper för radnummer, kandidatordning, närmaste kandidat, vägnummer, roll, avstånd, element-ID och källfil.
+- CSV-resultatets befintliga kandidatschema hålls oförändrat; geometri läggs endast i den separata GeoJSON-exporten. Indata ändras inte. Exporten är review-only och innehåller koordinater, så filen ska hanteras som lokal arbetsdata.
+- Riktat test verifierar att linjegeometri transformeras från EPSG:3006 till WGS84 och att geometri inte läggs till i CSV-kandidatfältet. CI inväntas.
+- Efter merge: uppdatera lokal main och kör om två län med `--geojson-output ...\nvdb-nearest-road-review-zip-pilot.geojson`. Öppna GeoJSON i QGIS och granska särskilt händelsen med 464,91 m avstånd samt närmaste och alternativa vägsegment. Ingen kandidat får bekräftas automatiskt.
+- Ingen ändring i temporal matchning, score, status eller `geographic_match_used`. Ingen ny beständig lagringsplats i repot; därför ingen ändring av `STORAGE_INVENTORY.md`.
