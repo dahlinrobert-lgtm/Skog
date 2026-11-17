@@ -31,7 +31,7 @@
 | GH-08 | Luleå-data 2 | GitHub | [dahlinrobert-lgtm/Lulea-data2](https://github.com/dahlinrobert-lgtm/Lulea-data2) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. |
 | GH-09 | Befolkningsanalys | GitHub | [dahlinrobert-lgtm/analys-befolkning](https://github.com/dahlinrobert-lgtm/analys-befolkning) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. |
 | GH-10 | Ny befolkningsanalys | GitHub | [dahlinrobert-lgtm/ny-analys-av-befolkning](https://github.com/dahlinrobert-lgtm/ny-analys-av-befolkning) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. Repo-storlek cirka 9 MB enligt GitHub-metadata. |
-| GH-11 | Länsstyrelsernas diarier – månadsvisa observationer | GitHub | `dahlinrobert-lgtm/Skog/data/lansstyrelsen-diary/` | Bekräftad | Första avgränsade pilotbaslinjen publicerad 2026-11-16: sex immutabla snapshots och sex manifestposter för Norrbotten, oktober 2026, kategori B. Råresultat och manifest ligger i repot; nollresultatsnapshots är 0-byte-filer med separata manifestposter. Se `docs/lansstyrelsen-monthly-snapshot-architecture.md`. Detta är inte nationell täckning eller ett godkännande för kundvisning. |
+| GH-11 | Länsstyrelsernas diarier – månadsvisa observationer | GitHub | `dahlinrobert-lgtm/Skog/data/lansstyrelsen-diary/` | Bekräftad | Två avgränsade Norrbottenpiloter publicerade 2026-11-16: oktober och september 2026, kategori B, totalt tolv immutabla snapshots och tolv manifestposter. Nollresultatsnapshots är 0-byte-filer med separata manifestposter. En separat nationell discovery-workflow utvecklas; den sparar endast diagnostikartefakter i 30 dagar och skriver inte till snapshotarkivet. Se `docs/lansstyrelsen-monthly-snapshot-architecture.md`. Fortfarande inte nationell täckning eller godkännande för kundvisning. |
 
 ### GitHub – lokal arbetskopia
 
@@ -185,3 +185,9 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 
 ---
 **Arbetsregel för framtida ändringar:** När vi i ett arbetsflöde skapar, flyttar, byter namn på, ersätter eller raderar en viktig fil-/dataplats ska vi samtidigt uppdatera `docs/STORAGE_INVENTORY.md` och ändringsloggen.
+
+## Ändringslogg
+
+| Datum | Ändring | Underlag |
+|---|---|---|
+| 2026-11-17 | GH-11 uppdaterad från en till två verifierade Norrbottenpiloter (12 snapshots/manifestposter). Dokumenterat separat nationell discovery-workflow som endast lagrar tillfälliga diagnostikartefakter och inte skriver till snapshotarkivet. | GitHub Actions #16 och #17; branch `feat/lansstyrelsen-national-diary-groups` |

@@ -43,13 +43,24 @@ Do not overwrite old snapshot rows. A repeated identical row in a later monthly 
 - Daily/weekly: optional narrow current-period check for urgent discovery, but never substitute it for the monthly full snapshot.
 - Case handling history: keep the existing rotating metadata collector as a separate process; it records changes to a case's handling table and is not a substitute for search-result snapshots.
 
-## Initial deployment
+## Verified pilot status (2026-11-17)
 
-- Begin with Norrbotten and Västerbotten A/B query terms as currently configured.
-- Run a validated pilot on a bounded month in each county.
-- Compare each monthly interval total against extracted unique IDs.
-- Only after the pilot passes, turn on the recurring monthly schedule.
-- Do not interpret pre-deployment absences as removals. The baseline begins at the first successful snapshot.
+- Two successful manual pilot runs are published for Norrbotten, category B: registration month October 2026 (workflow run #16) and September 2026 (workflow run #17).
+- Each run reconciled all six configured phrases. The two runs produced twelve immutable snapshot files and twelve manifest entries, including explicit zero-result snapshots.
+- These runs demonstrate repeatability for one county/category and two months only. They do not establish national coverage, completeness outside the configured phrases, or permission for unattended collection or customer display.
+
+## Controlled national discovery
+
+The separate workflow `.github/workflows/lansstyrelsen-national-diary-discovery.yml` is intended for manually controlled coverage discovery:
+
+- Seven fixed groups of three counties cover the 21 county diaries.
+- One category (A or B) is selected per run; each category has six phrases. A run therefore has at most 18 county/phrase intervals.
+- Run one group at a time and evaluate response times, failures, and source behaviour before proceeding to another group.
+- The workflow uploads diagnostics as a 30-day artifact only. It does not call `persist_lansstyrelsen_snapshots.py`, alter the append-only archive or manifest, or push to `main`.
+- It is a discovery/test facility, not an automated national archive. A successful group does not imply nationwide coverage.
+- Do not use the existing publishing workflow for national discovery: that workflow persists reconciled snapshots and pushes them to `main`.
+
+No recurring schedule is enabled or approved. Do not start a full national sequence until the source's technical limitations and applicable access conditions have been clarified. Do not interpret pre-deployment absences as removals.
 
 ## Quality gates
 
@@ -61,4 +72,4 @@ Do not overwrite old snapshot rows. A repeated identical row in a later monthly 
 
 ## Operational caution
 
-The date filter has been observed to affect search totals in one Norrbotten `vattenverksamhet` comparison (253 all-time vs 155 in 2026). The monthly coverage and reliable per-month paging have not yet been verified. Monthly partition diagnostics must pass before production snapshots are enabled.
+The date filter has been observed to affect search totals in one Norrbotten `vattenverksamhet` comparison (253 all-time vs 155 in 2026). Per-month paging has passed the six configured intervals in each of two Norrbotten pilot months. This does not validate all counties, all phrases, or nationwide reliability. National discovery remains manual and diagnostics-only until portal behaviour and technical limitations are assessed.
