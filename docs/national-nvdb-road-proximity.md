@@ -29,6 +29,7 @@ För varje koordinat:
 3. Beräkna exakt geometriskt avstånd för de inlästa kandidaterna.
 4. Behåll de närmaste vägobjekten och alternativa kandidaterna.
 5. Skriv ett nytt CSV-resultat; indatans temporalfil ändras inte.
+6. Om `--geojson-output` anges, skriv en separat WGS84 GeoJSON med händelsepunkter och de valda vägkandidaternas faktiska linjegeometrier. Händelser och vägkandidater märks med `feature_type`, radnummer, kandidatordning och granskningsstatus. GeoJSON-exporten ändrar inte CSV-indata eller temporal evidens.
 
 Exempel:
 ```powershell
@@ -37,6 +38,7 @@ python scripts/match_points_to_nvdb_roads.py `
   --nvdb-gpkg path\to\norrbotten.gpkg `
   --nvdb-gpkg path\to\vasterbotten.gpkg `
   --output path\to\road-review.csv `
+  --geojson-output path\to\road-review-map.geojson `
   --search-radius-m 1000 `
   --max-candidates 5
 ```
@@ -50,7 +52,7 @@ Skriptet kräver projicerade meterbaserade koordinatsystem. Det avvisar geografi
 - `partial_source_read`: minst en NVDB-källa kunde inte läsas. Resultatet är ofullständigt och får inte tolkas som negativ evidens.
 - `missing_or_invalid_coordinates`: koordinat saknas eller ligger utanför giltiga WGS84-intervall.
 
-Varje kandidat behåller källfil, `ELEMENT_ID`, vägnummer, `Lankroll` och avstånd. Dubbletter med samma element-ID/vägnummer/roll i överlappande länsuttag reduceras till den närmaste kopian.
+Varje kandidat behåller källfil, `ELEMENT_ID`, vägnummer, `Lankroll` och avstånd. GeoJSON-exporten innehåller endast händelsekoordinat och valda vägkandidatlinjer i WGS84; den är ett lokalt granskningsunderlag och inte en bekräftad olycksväg. Dubbletter med samma element-ID/vägnummer/roll i överlappande länsuttag reduceras till den närmaste kopian.
 
 Detta är närmaste-väg-evidens, inte bevis för att fordonet färdades på vägen. En närliggande parallellväg, planskild korsning, ramp eller lokal anslutning kan fortfarande skapa tvetydighet. Den första versionen gör ingen topologisk arvning av vägnummer till ramper och gör ingen nätverksruttning.
 
