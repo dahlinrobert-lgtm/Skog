@@ -1,4 +1,5 @@
 import unittest
+import json
 from pathlib import Path, PureWindowsPath
 import tempfile
 import zipfile
@@ -22,6 +23,7 @@ class NationalRoadProximityTests(unittest.TestCase):
             "path": Path("county-a.gpkg"),
             "crs": None,
             "transformer": self.transformer,
+            "to_wgs84": Transformer.from_crs("EPSG:3006", "EPSG:4326", always_xy=True),
         }]
 
     def frame(self, rows):
@@ -171,6 +173,34 @@ class NationalRoadProximityTests(unittest.TestCase):
                 resolved,
                 "/vsizip/C:/GIS/county.zip/nested/county.gpkg",
             )
+
+
+    def test_search_event_exports_event_and_candidate_geometry_for_geojson(self):
+        point_x, point_y = self.transformer.transform(20.0, 63.0)
+        frame = gpd.GeoDataFrame(
+            {
+                "ELEMENT_ID": ["road-near"],
+                "Europavag": ["Nej"],
+                "Huvudnummer": [97],
+                "Lankroll": ["Normal"],
+            },
+            geometry=[
+                LineString([(point_x - 10, point_y + 5), (point_x + 10, point_y + 5)])
+            ],
+            crs="EPSG:3006",
+        )
+        with patch(
+            "scripts.match_points_to_nvdb_roads.pyogrio.read_dataframe",
+            return_value=frame,
+        ):
+            result = search_event(63.0, 20.0, self.sources, 100, 5, include_geometry=True)
+
+        self.assertEqual(len(result["_geojson_candidates"]), 1)
+        self.assertEqual(result["_geojson_candidates"][0]["geometry"]["type"], "LineString")
+        self.assertNotIn("geometry", json.loads(result["geo_nvdb_candidates"])[0])
+        coordinates = result["_geojson_candidates"][0]["geometry"]["coordinates"]
+        self.assertAlmostEqual(coordinates[0][0], 20.0, places=3)
+        self.assertAlmostEqual(coordinates[0][1], 63.0, places=3)
 
 
 if __name__ == "__main__":
