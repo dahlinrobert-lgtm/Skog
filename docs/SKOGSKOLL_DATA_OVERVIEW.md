@@ -669,3 +669,10 @@ Nästa steg är lokal körning mot den befintliga åttahändelsepiloten och manu
 Arbetet prioriterar nu nationell datadriven egenskapsanalys framför manuell radgranskning av åttahändelsepiloten. En fristående extraktor i branch `feat/nvdb-national-feature-analysis` skapar händelse- och kandidatnivåtabeller samt JSON-sammanfattning. Den beskriver avståndsgap mellan närmaste kandidater, vägnummer, vägroll, kandidatantal, sökstatus och källproveniens. Den skapar inga rätt/fel-etiketter och ändrar inte temporal matchning. Se [NVDB – nationell egenskapsanalys](nvdb-national-feature-analysis.md).
 
 Nästa steg är CI-verifiering och körning mot pilotens CSV, därefter benchmarkad nationell matchning. Utan oberoende facit kan analysen identifiera samvariation och återkommande mönster men inte mäta faktisk träffsäkerhet. Källfel och partiella länsresultat ska redovisas separat.
+
+
+### NVDB – nationell egenskapsanalys PR #413 sammanslagen (2026-11-17)
+
+PR #413 är sammanslagen i main (merge commit `408b098bbfa405d8cfe58f8e4c40f3e2295a18f8`). Den nya `scripts/build_nvdb_candidate_features.py` skapar händelse- och kandidatnivåtabeller samt en JSON-sammanfattning från NVDB-matchningens CSV. Egenskaperna omfattar bland annat närmaste/näst närmaste avstånd, gap och kvot, vägnummer, vägroll, kandidatantal, element-ID, källproveniens och sökstatus. Tre riktade tester har lagts till och kopplats till Police–NVR-workflowen.
+
+Arbetsinriktningen är nationell statistisk egenskapsanalys i stället för manuell granskning av enskilda pilotrader. Extraktionen ger beskrivande variabler, inte facit eller automatiska matchningsbeslut. Nationell matchningskörning, prestandamätning och analys av återkommande mönster återstår. Ingen temporal matchningslogik ändras.
