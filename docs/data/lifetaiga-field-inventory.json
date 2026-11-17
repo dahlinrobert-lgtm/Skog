@@ -3,8 +3,8 @@
   "source_url": "https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13",
   "source_layer_id": 13,
   "source_layer_name": "WP_2_Restoration_measures",
-  "generated_at": "2026-11-16T16:09:43.019580+00:00",
-  "feature_count": 337,
+  "generated_at": "2026-11-17T16:17:59.492975+00:00",
+  "feature_count": 338,
   "field_count": 29,
   "date_or_action_field_candidates": [
     "area_ha",
@@ -88,9 +88,9 @@
     },
     {
       "field": "created_date",
-      "non_null_count": 337,
+      "non_null_count": 338,
       "value_types": {
-        "int": 337
+        "int": 338
       },
       "examples": [
         "1688389197000",
@@ -114,9 +114,9 @@
     },
     {
       "field": "last_edited_date",
-      "non_null_count": 337,
+      "non_null_count": 338,
       "value_types": {
-        "int": 337
+        "int": 338
       },
       "examples": [
         "1771319204484",
@@ -166,10 +166,10 @@
     },
     {
       "field": "SHAPE__Area",
-      "non_null_count": 337,
+      "non_null_count": 338,
       "value_types": {
         "int": 42,
-        "float": 295
+        "float": 296
       },
       "examples": [
         "151444",
@@ -206,9 +206,9 @@
     },
     {
       "field": "globalid",
-      "non_null_count": 337,
+      "non_null_count": 338,
       "value_types": {
-        "str": 337
+        "str": 338
       },
       "examples": [
         "{EFDDD905-29BB-44C3-8BE1-7D19B4A2FD0A}",
@@ -310,9 +310,9 @@
     },
     {
       "field": "objectid",
-      "non_null_count": 337,
+      "non_null_count": 338,
       "value_types": {
-        "int": 337
+        "int": 338
       },
       "examples": [
         "1",
@@ -336,9 +336,9 @@
     },
     {
       "field": "SHAPE__Length",
-      "non_null_count": 337,
+      "non_null_count": 338,
       "value_types": {
-        "float": 337
+        "float": 338
       },
       "examples": [
         "2219.2993134632043",
@@ -362,9 +362,9 @@
     },
     {
       "field": "symbology",
-      "non_null_count": 337,
+      "non_null_count": 338,
       "value_types": {
-        "str": 337
+        "str": 338
       },
       "examples": [
         "T2.4 Fire-mimicking measures",
