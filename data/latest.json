@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-16T23:11:10.421047Z",
+  "checked_at": "2026-11-17T14:22:41.846303Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27634,6 +27634,32 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1C_IW_GRDH_1SDV_20261117T045656_20261117T045721_010372_014B88_009F_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-17T04:56:56.814914Z",
+        "published_at": "2026-11-17T04:59:49.947240Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          19.204285,
+          61.885948,
+          24.996365,
+          63.828457
+        ]
+      },
+      {
+        "id": "S1C_IW_GRDH_1SDV_20261117T045631_20261117T045656_010372_014B88_76A3_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-17T04:56:31.813845Z",
+        "published_at": "2026-11-17T04:49:07.611202Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          19.721334,
+          63.362972,
+          25.837923,
+          65.315582
+        ]
+      },
+      {
         "id": "S1D_IW_GRDH_1SDV_20261116T162150_20261116T162215_005495_00A807_B321_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-11-16T16:21:50.772940Z",
@@ -30205,32 +30231,6 @@
           62.569546,
           21.239506,
           64.516197
-        ]
-      },
-      {
-        "id": "S1D_IW_GRDH_1SDV_20260620T161338_20260620T161403_003322_005D2F_AE41_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-20T16:13:38.058107Z",
-        "published_at": "2026-06-20T15:34:00.399671Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          16.913652,
-          62.88728,
-          22.935997,
-          64.840286
-        ]
-      },
-      {
-        "id": "S1A_IW_GRDH_1SDV_20260620T160620_20260620T160645_065055_083320_DCEE_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-20T16:06:20.999842Z",
-        "published_at": "2026-06-20T15:11:15.678740Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          18.446545,
-          63.796925,
-          24.677242,
-          65.755417
         ]
       }
     ],
@@ -32848,7 +32848,34 @@
     "pagination_cap_reached": false,
     "note": "Compact scene metadata. Cloud cover is scene-level and may not describe the Gräsmyr area itself."
   },
-  "new_scenes_since_previous_run": [],
+  "new_scenes_since_previous_run": [
+    {
+      "id": "S1C_IW_GRDH_1SDV_20261117T045656_20261117T045721_010372_014B88_009F_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-11-17T04:56:56.814914Z",
+      "published_at": "2026-11-17T04:59:49.947240Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        19.204285,
+        61.885948,
+        24.996365,
+        63.828457
+      ]
+    },
+    {
+      "id": "S1C_IW_GRDH_1SDV_20261117T045631_20261117T045656_010372_014B88_76A3_COG",
+      "collection": "sentinel-1-grd",
+      "acquired_at": "2026-11-17T04:56:31.813845Z",
+      "published_at": "2026-11-17T04:49:07.611202Z",
+      "cloud_cover_percent": null,
+      "bbox": [
+        19.721334,
+        63.362972,
+        25.837923,
+        65.315582
+      ]
+    }
+  ],
   "commercial_imagery": {
     "status": "manual_verification_required",
     "services": [
