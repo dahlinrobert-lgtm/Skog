@@ -662,3 +662,10 @@ Nationell kvalitetssäkring kräver ett oberoende manuellt bedömt referensurval
 PR #412 är sammanslagen i main och CI-verifierad (Police–NVR matching and geographic evidence tests #24 samt Snapshot storage tests #470, båda `success`). Rapportbyggaren `scripts/build_nvdb_validation_report.py` skapar JSON-sammanfattning och separat granskningskö från matchnings-CSV. Alla flaggade händelser behålls; övriga tas med genom deterministiskt stickprov per förekommande källfil.
 
 Nästa steg är lokal körning mot den befintliga åttahändelsepiloten och manuell granskning av utdata. Nationell validering kräver därefter oberoende manuellt bedömda testfall, verifierad källtäckning, prestandamätning och kalibrering. Rapporten mäter inte faktisk träffsäkerhet utan manuellt facit. Geografisk evidens ska fortsatt hållas skild från temporal matchning och får inte automatiskt bekräfta olycksväg eller kundvisning.
+
+
+### NVDB – nationell egenskapsanalys (2026-11-17)
+
+Arbetet prioriterar nu nationell datadriven egenskapsanalys framför manuell radgranskning av åttahändelsepiloten. En fristående extraktor i branch `feat/nvdb-national-feature-analysis` skapar händelse- och kandidatnivåtabeller samt JSON-sammanfattning. Den beskriver avståndsgap mellan närmaste kandidater, vägnummer, vägroll, kandidatantal, sökstatus och källproveniens. Den skapar inga rätt/fel-etiketter och ändrar inte temporal matchning. Se [NVDB – nationell egenskapsanalys](nvdb-national-feature-analysis.md).
+
+Nästa steg är CI-verifiering och körning mot pilotens CSV, därefter benchmarkad nationell matchning. Utan oberoende facit kan analysen identifiera samvariation och återkommande mönster men inte mäta faktisk träffsäkerhet. Källfel och partiella länsresultat ska redovisas separat.
