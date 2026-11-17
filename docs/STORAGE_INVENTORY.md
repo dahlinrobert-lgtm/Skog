@@ -191,3 +191,4 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 | Datum | Ändring | Underlag |
 |---|---|---|
 | 2026-11-17 | GH-11 uppdaterad från en till två verifierade Norrbottenpiloter (12 snapshots/manifestposter). Dokumenterat separat nationell discovery-workflow som endast lagrar tillfälliga diagnostikartefakter och inte skriver till snapshotarkivet. | GitHub Actions #16 och #17; PR #406 |
+| 2026-11-17 | PR #406 mergad: nationell discovery-workflow finns nu i `main`. Den är manuell och diagnostik-only med 30 dagars artifact-retention; ingen snapshot-/manifestpublicering eller schemaläggning. Livebeteende och länsvalidering återstår. | PR #406; `.github/workflows/lansstyrelsen-national-diary-discovery.yml` |
