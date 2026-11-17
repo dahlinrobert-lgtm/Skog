@@ -572,7 +572,7 @@ const HUNTING_AREA_TYPES=[
  {key:"license",label:"Licensområden",where:"objtyp = 'Licensområde'",color:"#d97732",fill:"#e99a55"},
  {key:"management",label:"Älgskötselområden",where:"objtyp = 'Älgskötselområde'",color:"#277a52",fill:"#70ad86"}
 ];
-const HUNTING_AREAS_MIN_ZOOM=6;
+const HUNTING_AREAS_MIN_ZOOM=8;
 let huntingAreasEnabled=false;
 let huntingAreasControl=null;
 let huntingAreasRequest=0;
@@ -948,19 +948,25 @@ async function fetchHuntingAreaType(type,bounds,requestId){
  if(idsPayload.error)throw new Error(idsPayload.error.message||"JaktAdm kunde inte lista jaktområden");
  const ids=[...(idsPayload.objectIds||[])].sort((a,b)=>a-b);
  const features=[];
- for(let offset=0;offset<ids.length;offset+=20){
+ const batches=[];
+ for(let offset=0;offset<ids.length;offset+=20)batches.push(ids.slice(offset,offset+20));
+ for(let offset=0;offset<batches.length;offset+=4){
   if(requestId!==huntingAreasRequest)return null;
-  const queryUrl=new URL(HUNTING_AREAS_LAYER_URL);
-  queryUrl.searchParams.set("objectIds",ids.slice(offset,offset+20).join(","));
-  queryUrl.searchParams.set("outFields","OBJECTID,objtyp,namn_ajo,namn_afo,omrnum,afo_id,bslarea_ha");
-  queryUrl.searchParams.set("returnGeometry","true");
-  queryUrl.searchParams.set("outSR","4326");
-  queryUrl.searchParams.set("f","geojson");
-  const response=await fetch(queryUrl);
-  if(!response.ok)throw new Error("HTTP "+response.status+" vid geometrihämtning");
-  const payload=await response.json();
-  if(payload.error)throw new Error(payload.error.message||"JaktAdm kunde inte returnera geometrier");
-  features.push(...(payload.features||[]));
+  const page=await Promise.all(batches.slice(offset,offset+4).map(async batch=>{
+   const queryUrl=new URL(HUNTING_AREAS_LAYER_URL);
+   queryUrl.searchParams.set("objectIds",batch.join(","));
+   queryUrl.searchParams.set("outFields","OBJECTID,objtyp,namn_ajo,namn_afo,omrnum,afo_id,bslarea_ha");
+   queryUrl.searchParams.set("returnGeometry","true");
+   queryUrl.searchParams.set("outSR","4326");
+   queryUrl.searchParams.set("f","geojson");
+   const response=await fetch(queryUrl);
+   if(!response.ok)throw new Error("HTTP "+response.status+" vid geometrihämtning");
+   const payload=await response.json();
+   if(payload.error)throw new Error(payload.error.message||"JaktAdm kunde inte returnera geometrier");
+   return payload.features||[];
+  }));
+  if(requestId!==huntingAreasRequest)return null;
+  for(const batchFeatures of page)features.push(...batchFeatures);
  }
  if(requestId!==huntingAreasRequest)return null;
  if(features.length!==ids.length)throw new Error("Ofullständig hämtning för "+type.label+": "+features.length+" av "+ids.length);
