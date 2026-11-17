@@ -272,5 +272,7 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 ### NVDB ZIP-läsning – Windows VSI-sökvägsfel (2026-11-17)
 - PR #409 är sammanslagen och Snapshot storage tests #461 passerade enligt användarens bekräftelse.
 - Första lokala tvålänspiloten misslyckades i Windows vid initiering av båda ZIP-källorna. GDAL rapporterade att den genererade `/vsizip/C:\\...`-sökvägen inte var ett läsbart dataset.
-- Rotorsaken är Windows-enhetssökvägens representation i VSI-strängen. GDAL:s form behöver `/vsizip/C:/...` med inledande snedstreck före enhetsbokstaven. Korrigering och regressionstest hanteras i `fix/nvdb-vsizip-windows-path`.
+- Rotorsaken utreds i VSI-sökvägens Windows-normalisering. Första fixförsöket gav ett dubbelt snedstreck (`/vsizip//C:/...`) och föll på regressionstest i CI. Korrigeringen normaliserar nu backslash till forward slash och behåller formatet `/vsizip/C:/...`; regressionstestet simulerar en faktisk WindowsPath.
 - Nästa steg efter merge: uppdatera lokal `main`, kör riktade tester och upprepa Norrbotten/Västerbotten-piloten. Ändra inte temporal logik och behåll review-only. Registrera körresultat först efter faktisk lokal verifiering.
+
+- CI för första versionen av PR #410 körde 299 tester i den breda sviten och 69 riktade tester; båda föll endast på samma felaktiga förväntan i WindowsPath-regressionstestet (dubbelt snedstreck). Testet och normaliseringen har korrigerats i samma PR. Vänta på ny CI innan lokal omkörning.
