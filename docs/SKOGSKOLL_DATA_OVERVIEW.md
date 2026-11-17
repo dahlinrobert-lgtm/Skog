@@ -625,3 +625,12 @@ Ett distribuerat geometristickprov om 500 features per län (totalt **10 500**) 
 Teknisk kompatibilitet innebär inte att kommersiell lagring, bearbetning, kundvisning eller vidare distribution är godkänd. Dessa villkor ska bedömas separat för exakt produkt/lager och användning.
 
 **Nästa steg:** kör en avgränsad nationell vägmatchningspilot med manuellt bedömda positiva, negativa och tvetydiga testfall. Mät prestanda, kontrollera länsgränser och täckning samt kör temporal regression före/efter utan att ändra temporal logik.
+
+
+## NVDB – ZIP-baserad vägmatchningspilot (2026-11-17)
+
+Matcharen `scripts/match_points_to_nvdb_roads.py` har utökats i utvecklingsbranch `feat/nvdb-zip-road-matching` för att läsa länsvisa Lastkajen-arkiv direkt via GDAL:s `/vsizip/`-virtuella filsystem. ZIP-arkiv som anges med `--nvdb-gpkg` måste innehålla exakt en `.gpkg`-medlem; noll eller flera GeoPackage-medlemmar ger ett tydligt källfel. Vanliga fristående GeoPackage-filer stöds fortsatt. Inga arkiv extraheras eller ändras.
+
+Första avgränsade testunderlaget är `OneDrive/Skogskoll/viltolycka_NVR/working/lulea-police-nvr/nvdb-nearest-road-review-v1.csv` (9 poster), tillsammans med Norrbottens och Västerbottens ZIP-arkiv. Den lokala filkontrollen bekräftade att samtliga tre filer fanns 2026-11-17. Själva ZIP-matchningskörningen och dess resultat är ännu inte verifierade.
+
+Matchningen är fortsatt review-only. Källfel ska ge `partial_source_read`, aldrig negativ evidens. Geografiska kolumner får inte ändra temporal kandidatlista, score, status eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.

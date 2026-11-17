@@ -1,12 +1,16 @@
 import unittest
 from pathlib import Path
+import tempfile
+import zipfile
 from unittest.mock import patch
 
 import geopandas as gpd
 from pyproj import Transformer
 from shapely.geometry import LineString
 
-from scripts.match_points_to_nvdb_roads import road_number, search_event
+from scripts.match_points_to_nvdb_roads import (
+    prepare_sources, resolve_dataset_path, road_number, search_event,
+)
 
 
 class NationalRoadProximityTests(unittest.TestCase):
@@ -101,6 +105,56 @@ class NationalRoadProximityTests(unittest.TestCase):
             road_number({"Europavag": "Ja", "Huvudnummer": 4}),
             "E4",
         )
+
+
+    def test_resolves_zip_with_one_gpkg_without_extracting(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = Path(directory) / "county.zip"
+            with zipfile.ZipFile(archive, "w") as zipped:
+                zipped.writestr("nested/county.gpkg", b"fixture")
+            resolved = resolve_dataset_path(archive)
+            self.assertEqual(
+                resolved,
+                f"/vsizip/{archive.resolve().as_posix()}/nested/county.gpkg",
+            )
+            self.assertEqual(archive.read_bytes()[:2], b"PK")
+
+    def test_zip_without_gpkg_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = Path(directory) / "empty.zip"
+            with zipfile.ZipFile(archive, "w") as zipped:
+                zipped.writestr("readme.txt", "not a geopackage")
+            with self.assertRaisesRegex(ValueError, "ingen .gpkg"):
+                resolve_dataset_path(archive)
+
+    def test_zip_with_multiple_gpkg_members_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = Path(directory) / "multiple.zip"
+            with zipfile.ZipFile(archive, "w") as zipped:
+                zipped.writestr("one.gpkg", b"one")
+                zipped.writestr("two.gpkg", b"two")
+            with self.assertRaisesRegex(ValueError, "exakt en"):
+                resolve_dataset_path(archive)
+
+    def test_prepare_sources_reads_metadata_from_vsi_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = Path(directory) / "county.zip"
+            with zipfile.ZipFile(archive, "w") as zipped:
+                zipped.writestr("county.gpkg", b"fixture")
+            expected_path = resolve_dataset_path(archive)
+            info = {
+                "crs": "EPSG:3006",
+                "fields": ["ELEMENT_ID", "Europavag", "Huvudnummer", "Lankroll"],
+            }
+            with patch(
+                "scripts.match_points_to_nvdb_roads.pyogrio.read_info",
+                return_value=info,
+            ) as read_info:
+                sources, errors = prepare_sources([archive])
+            self.assertEqual(errors, [])
+            self.assertEqual(len(sources), 1)
+            self.assertEqual(sources[0]["dataset_path"], expected_path)
+            read_info.assert_called_once_with(expected_path, layer="NVDB_DK_O_111_Vagnummer")
 
 
 if __name__ == "__main__":

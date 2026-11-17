@@ -13,6 +13,7 @@ import csv
 import json
 import math
 from pathlib import Path
+import zipfile
 
 import pyogrio
 from pyproj import CRS, Transformer
@@ -44,12 +45,43 @@ def road_number(row) -> str:
     return f"E{number}" if european and number else number
 
 
+def resolve_dataset_path(path: Path) -> str:
+    """Resolve a GeoPackage path or a ZIP containing exactly one GeoPackage.
+
+    ZIP archives are read through GDAL's /vsizip/ virtual filesystem. Source
+    archives are never extracted, rewritten, or modified.
+    """
+    if path.suffix.casefold() != ".zip":
+        return str(path)
+
+    try:
+        with zipfile.ZipFile(path) as zipped:
+            members = [
+                item for item in zipped.infolist()
+                if not item.is_dir() and item.filename.casefold().endswith(".gpkg")
+            ]
+    except (OSError, zipfile.BadZipFile) as exc:
+        raise ValueError(f"ZIP-arkivet kunde inte öppnas: {exc}") from exc
+
+    if not members:
+        raise ValueError("ZIP-arkivet innehåller ingen .gpkg-fil")
+    if len(members) != 1:
+        names = [item.filename for item in members]
+        raise ValueError(
+            f"ZIP-arkivet måste innehålla exakt en .gpkg-fil; hittade {len(members)}: {names}"
+        )
+
+    member = members[0]
+    return f"/vsizip/{path.resolve().as_posix()}/{member.filename}"
+
+
 def prepare_sources(paths: list[Path]):
     sources = []
     errors = []
     for path in paths:
         try:
-            info = pyogrio.read_info(path, layer=ROAD_LAYER)
+            dataset_path = resolve_dataset_path(path)
+            info = pyogrio.read_info(dataset_path, layer=ROAD_LAYER)
             crs_value = info.get("crs")
             if not crs_value:
                 raise ValueError("CRS saknas")
@@ -68,6 +100,7 @@ def prepare_sources(paths: list[Path]):
                 raise ValueError(f"Fält saknas: {missing}")
             sources.append({
                 "path": path,
+                "dataset_path": dataset_path,
                 "crs": crs,
                 "transformer": Transformer.from_crs("EPSG:4326", crs, always_xy=True),
             })
@@ -96,7 +129,7 @@ def search_event(lat, lon, sources, radius_m: float, max_candidates: int):
             x, y = source["transformer"].transform(lon, lat)
             bounds = (x - radius_m, y - radius_m, x + radius_m, y + radius_m)
             frame = pyogrio.read_dataframe(
-                path,
+                source.get("dataset_path", str(path)),
                 layer=ROAD_LAYER,
                 columns=ROAD_FIELDS,
                 bbox=bounds,
