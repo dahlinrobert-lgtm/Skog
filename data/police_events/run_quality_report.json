@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-16T13:07:48.401686+00:00",
+  "generated_at": "2026-11-17T13:50:07.228085+00:00",
   "scope": "Norrbottens län",
   "source": "Brottsplatskartan API; public Police event material",
   "interpretation": "Successful workflow and counts do not attest complete historical API coverage. Extracted wildlife rows are candidates, not confirmed collisions.",
@@ -11,17 +11,17 @@
     "publication_year_counts": {
       "2026": 500
     },
-    "oldest_publication_date": "2026-07-26",
-    "newest_publication_date": "2026-11-16",
+    "oldest_publication_date": "2026-07-27",
+    "newest_publication_date": "2026-11-17",
     "event_type_counts": {
       "Arbetsplatsolycka": 16,
       "Bedrägeri": 1,
       "Brand": 13,
       "Bråk": 2,
       "Farligt föremål,  misstänkt": 1,
-      "Fjällräddning": 11,
+      "Fjällräddning": 10,
       "Fylleri": 21,
-      "Försvunnen person": 7,
+      "Försvunnen person": 6,
       "Häleri": 1,
       "Inbrott": 4,
       "Knivlagen": 4,
@@ -42,12 +42,11 @@
       "Stöld/inbrott": 3,
       "Trafikbrott": 15,
       "Trafikhinder": 2,
-      "Trafikkontroll": 90,
-      "Trafikolycka": 67,
-      "Trafikolycka,  singel": 5,
+      "Trafikkontroll": 91,
+      "Trafikolycka": 68,
+      "Trafikolycka,  singel": 6,
       "Trafikolycka,  smitning från": 5,
       "Trafikolycka,  vilt": 19,
-      "Vapenlagen": 1,
       "Övrigt": 5
     }
   },
