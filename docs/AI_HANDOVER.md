@@ -259,20 +259,13 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 
 
 ### NVDB – ZIP-baserad vägmatchningspilot (2026-11-17)
+- PR #409 och PR #410 är sammanslagna. Windows/GDAL `/vsizip/`-fixen är CI-verifierad (Snapshot storage tests #465 och Police–NVR matching tests #19 enligt användaren).
+- Efter uppdatering av lokal `main` kördes `scripts/match_points_to_nvdb_roads.py` mot `nvdb-nearest-road-review-v1.csv` och Norrbottens + Västerbottens Lastkajen ZIP.
+- Faktiskt underlag: **8 indata-/utdataposter**. Äldre dokumentation nämnde 9; korrigera den uppgiften, eftersom lokal `Import-Csv` och matcharens rapport båda visar 8 poster.
+- Körstatus: `completed`; 2 källor; 0 källinitialiseringsfel; per post `geo_nvdb_sources_queried=2`, `geo_nvdb_sources_failed=0`; samtliga 8 har `completed_with_candidates`.
+- Närmaste vägavstånd: 1,01–464,91 m. `geo_nvdb_candidate_count` varierade mellan 1 och 26 (totalt antal deduplicerade kandidater före begränsning till högst 5 returnerade kandidater).
+- Temporal-/icke-geografisk regression: användaren jämförde samtliga 39 icke-`geo_*`-fält rad för rad mellan indata och utdata; **0 skillnader**. Detta verifierar att matcharskriptet bevarade indatans övriga fält i utdata, men ersätter inte separat regression av en eventuell senare temporal matchningspipeline.
+- Resultatet är fortsatt endast review-only. Ingen nationell produktionskörning eller kundvisning är aktiverad.
+- Nästa steg: manuellt granska vägkandidaterna mot karta/ort och kontrollera särskilt den längsta distansen. Därefter bygg ut testunderlaget med manuellt bedömda positiva, negativa och tvetydiga fall och fler län. Mät körtid och kontrollera länsgränser/täckning innan nationell pilot.
+- Geografisk evidens får inte påverka temporal kandidatgenerering, kandidatlista, score, status eller `geographic_match_used`. Bevara originalarkiv och historik.
 
-- Arbetsbranch: `feat/nvdb-zip-road-matching`, skapad från aktuell `main`.
-- `scripts/match_points_to_nvdb_roads.py` har utökats för att läsa ett ZIP-arkiv med exakt en `.gpkg`-medlem via GDAL `/vsizip/`. Vanliga GeoPackage-filer fungerar fortsatt. ZIP med noll eller flera GPKG-medlemmar ger ett tydligt källfel; originalarkiv extraheras eller ändras inte.
-- Riktade tester har lagts till för en GPKG-medlem, saknad medlem, flera medlemmar och metadataåtkomst via VSI-sökväg.
-- Verifierat lokalt av användaren: test-CSV (11 286 byte), Norrbottens ZIP (532 655 266 byte) och Västerbottens ZIP (640 385 324 byte) finns i OneDrive.
-- Nästa steg: kör riktade tester/hela relevanta testsamlingen via CI, granska PR och ge användaren PowerShell-kommando för pilotkörning mot Norrbotten + Västerbotten. Jämför temporal kolumnuppsättning och värden före/efter. Redovisa antal poster, statusar, kandidater, avstånd, källfel och körtid.
-- Håll resultatet review-only. Ingen geografisk evidens får påverka temporal kandidatgenerering, score, status, kandidatinkludering eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är godkänd.
-- `docs/STORAGE_INVENTORY.md` ändras inte i denna PR eftersom inga nya beständiga lagringsplatser eller dataset införs; pilotens indata ligger i redan inventerade arbetsytor.
-
-
-### NVDB ZIP-läsning – Windows VSI-sökvägsfel och korrigering (2026-11-17)
-- PR #409 är sammanslagen. Den första lokala tvålänspiloten misslyckades med GDAL:s `/vsizip/`-sökväg för Windows-drive.
-- PR #410 är nu sammanslagen i `main` (merge commit `d0d31d2b72972c6e77087349cc7d5f3baf2028b0`). Matcharen normaliserar Windows backslash till forward slash och använder formen `/vsizip/C:/...`; regressionstestet använder `PureWindowsPath`.
-- Användaren har bekräftat att Snapshot storage tests #465 och Police–NVR matching tests #19 passerade för PR #410.
-- Den faktiska Norrbotten/Västerbotten-piloten är fortfarande inte omkörd efter merge och ska köras lokalt från uppdaterad `main`.
-- Nästa steg: användaren uppdaterar lokal main och kör den avgränsade tvåarkivspiloten. Redovisa antal poster, statusar, kandidater, avstånd, källfel och körtid. Kontrollera dessutom temporal fältidentitet/värden mot indatan.
-- Behåll strikt review-only. Geografisk evidens får inte ändra temporal kandidatgenerering, score, status, kandidatinkludering eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.
