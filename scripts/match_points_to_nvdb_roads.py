@@ -17,7 +17,8 @@ import zipfile
 
 import pyogrio
 from pyproj import CRS, Transformer
-from shapely.geometry import Point
+from shapely.geometry import Point, mapping
+from shapely.ops import transform as transform_geometry
 
 
 ROAD_LAYER = "NVDB_DK_O_111_Vagnummer"
@@ -107,13 +108,17 @@ def prepare_sources(paths: list[Path]):
                 "dataset_path": dataset_path,
                 "crs": crs,
                 "transformer": Transformer.from_crs("EPSG:4326", crs, always_xy=True),
+                "to_wgs84": Transformer.from_crs(crs, "EPSG:4326", always_xy=True),
             })
         except Exception as exc:
             errors.append({"source": path.name, "error": str(exc)})
     return sources, errors
 
 
-def search_event(lat, lon, sources, radius_m: float, max_candidates: int):
+def search_event(
+    lat, lon, sources, radius_m: float, max_candidates: int,
+    include_geometry: bool = False,
+):
     if lat is None or lon is None or not (-90 <= lat <= 90) or not (-180 <= lon <= 180):
         return {
             "geo_nvdb_search_status": "missing_or_invalid_coordinates",
@@ -121,6 +126,7 @@ def search_event(lat, lon, sources, radius_m: float, max_candidates: int):
             "geo_nvdb_candidates": "[]",
             "geo_nvdb_sources_queried": "0",
             "geo_nvdb_sources_failed": "0",
+            "_geojson_candidates": [],
         }
 
     candidates = []
@@ -149,13 +155,19 @@ def search_event(lat, lon, sources, radius_m: float, max_candidates: int):
                 distance = float(geometry.distance(Point(x, y)))
                 if distance > radius_m:
                     continue
-                candidates.append({
+                candidate = {
                     "source_file": path.name,
                     "element_id": clean(feature.get("ELEMENT_ID")),
                     "road_number": road_number(feature),
                     "road_role": clean(feature.get("Lankroll")),
                     "distance_m": round(distance, 2),
-                })
+                }
+                if include_geometry:
+                    wgs84_geometry = transform_geometry(
+                        source["to_wgs84"].transform, geometry
+                    )
+                    candidate["geometry"] = mapping(wgs84_geometry)
+                candidates.append(candidate)
         except Exception as exc:
             source_errors.append({"source": path.name, "error": str(exc)})
 
@@ -184,7 +196,15 @@ def search_event(lat, lon, sources, radius_m: float, max_candidates: int):
         status = "completed_no_candidate_in_search_window"
 
     nearest = selected[0] if selected else {}
+    geojson_candidates = [
+        item for item in selected if "geometry" in item
+    ]
+    csv_candidates = [
+        {key: value for key, value in item.items() if key != "geometry"}
+        for item in selected
+    ]
     return {
+        "_geojson_candidates": geojson_candidates,
         "geo_nvdb_search_status": status,
         "geo_nvdb_candidate_count": str(len(ordered)),
         "geo_nvdb_nearest_road_number": nearest.get("road_number", ""),
@@ -193,7 +213,7 @@ def search_event(lat, lon, sources, radius_m: float, max_candidates: int):
         "geo_nvdb_nearest_road_distance_m": (
             str(nearest["distance_m"]) if nearest else ""
         ),
-        "geo_nvdb_candidates": json.dumps(selected, ensure_ascii=False, sort_keys=True),
+        "geo_nvdb_candidates": json.dumps(csv_candidates, ensure_ascii=False, sort_keys=True),
         "geo_nvdb_sources_queried": str(queried),
         "geo_nvdb_sources_failed": str(len(source_errors)),
         "geo_nvdb_source_errors": json.dumps(source_errors, ensure_ascii=False),
@@ -214,6 +234,10 @@ def main():
     parser.add_argument("--longitude-field", default="nvr_longitude_wgs84")
     parser.add_argument("--search-radius-m", type=float, default=1000)
     parser.add_argument("--max-candidates", type=int, default=5)
+    parser.add_argument(
+        "--geojson-output", type=Path,
+        help="Optional WGS84 GeoJSON with event points and selected NVDB road geometries.",
+    )
     args = parser.parse_args()
 
     if args.search_radius_m <= 0 or args.max_candidates < 1:
@@ -237,12 +261,50 @@ def main():
         parser.error(f"Inga NVDB-källor kunde läsas: {source_init_errors}")
 
     enriched = []
-    for row in rows:
+    geojson_features = []
+    for row_index, row in enumerate(rows, start=1):
+        latitude = safe_float(row.get(args.latitude_field))
+        longitude = safe_float(row.get(args.longitude_field))
         result = search_event(
-            safe_float(row.get(args.latitude_field)),
-            safe_float(row.get(args.longitude_field)),
+            latitude, longitude,
             sources, args.search_radius_m, args.max_candidates,
+            include_geometry=bool(args.geojson_output),
         )
+        if args.geojson_output and latitude is not None and longitude is not None:
+            if -90 <= latitude <= 90 and -180 <= longitude <= 180:
+                geojson_features.append({
+                    "type": "Feature",
+                    "geometry": {"type": "Point", "coordinates": [longitude, latitude]},
+                    "properties": {
+                        "feature_type": "event",
+                        "row_number": row_index,
+                        "nearest_road_number": result.get("geo_nvdb_nearest_road_number", ""),
+                        "nearest_road_distance_m": result.get("geo_nvdb_nearest_road_distance_m", ""),
+                        "review_status": "review_only_not_confirmed",
+                    },
+                })
+        if args.geojson_output:
+            for rank, candidate in enumerate(result.pop("_geojson_candidates", []), start=1):
+                geometry = candidate.get("geometry")
+                if geometry:
+                    geojson_features.append({
+                        "type": "Feature",
+                        "geometry": geometry,
+                        "properties": {
+                            "feature_type": "road_candidate",
+                            "row_number": row_index,
+                            "candidate_rank": rank,
+                            "nearest": rank == 1,
+                            "road_number": candidate["road_number"],
+                            "road_role": candidate["road_role"],
+                            "distance_m": candidate["distance_m"],
+                            "element_id": candidate["element_id"],
+                            "source_file": candidate["source_file"],
+                            "review_status": "review_only_not_confirmed",
+                        },
+                    })
+        else:
+            result.pop("_geojson_candidates", None)
         if source_init_errors:
             if result["geo_nvdb_search_status"] != "missing_or_invalid_coordinates":
                 result["geo_nvdb_search_status"] = "partial_source_read"
@@ -262,6 +324,19 @@ def main():
         writer.writeheader()
         writer.writerows(enriched)
 
+    if args.geojson_output:
+        args.geojson_output.parent.mkdir(parents=True, exist_ok=True)
+        geojson = {
+            "type": "FeatureCollection",
+            "name": "NVDB road proximity review",
+            "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
+            "features": geojson_features,
+        }
+        args.geojson_output.write_text(
+            json.dumps(geojson, ensure_ascii=False, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
+
     counts = {}
     for row in enriched:
         status = row["geo_nvdb_search_status"]
@@ -275,6 +350,8 @@ def main():
         "row_status_counts": counts,
         "review_only": True,
         "output": str(args.output),
+        "geojson_output": str(args.geojson_output) if args.geojson_output else None,
+        "geojson_features": len(geojson_features) if args.geojson_output else 0,
     }, ensure_ascii=False, indent=2))
 
 
