@@ -76,7 +76,7 @@ jobs:
           GROUP_INPUT: ${{ inputs.county_group }}
           CATEGORY_INPUT: ${{ inputs.category }}
         run: |
-          set -uo pipefail
+          set -euo pipefail
           python - "$YEAR_INPUT" "$MONTH_INPUT" <<'PY'
           import calendar, sys
           year, month = map(int, sys.argv[1:])
@@ -91,7 +91,7 @@ jobs:
             group_03) counties=("Länsstyrelsen i Värmlands län" "Länsstyrelsen i Örebro län" "Länsstyrelsen i Västmanlands län") ;;
             group_04) counties=("Länsstyrelsen i Uppsala län" "Länsstyrelsen i Stockholms län" "Länsstyrelsen i Södermanlands län") ;;
             group_05) counties=("Länsstyrelsen i Östergötlands län" "Länsstyrelsen i Jönköpings län" "Länsstyrelsen i Kronobergs län") ;;
-            group_06) counties=("Länsstyrelsen i Kalmar län" "Länsstyrelsen på Gotland" "Länsstyrelsen i Blekinge län") ;;
+            group_06) counties=("Länsstyrelsen i Kalmar län" "Länsstyrelsen i Gotlands län" "Länsstyrelsen i Blekinge län") ;;
             group_07) counties=("Länsstyrelsen i Skåne län" "Länsstyrelsen i Hallands län" "Länsstyrelsen i Västra Götalands län") ;;
             *) echo "Invalid county group" >&2; exit 2 ;;
           esac
