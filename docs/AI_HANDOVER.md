@@ -278,3 +278,18 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Riktat test verifierar att linjegeometri transformeras från EPSG:3006 till WGS84 och att geometri inte läggs till i CSV-kandidatfältet. CI inväntas.
 - Efter merge: uppdatera lokal main och kör om två län med `--geojson-output ...\nvdb-nearest-road-review-zip-pilot.geojson`. Öppna GeoJSON i QGIS och granska särskilt händelsen med 464,91 m avstånd samt närmaste och alternativa vägsegment. Ingen kandidat får bekräftas automatiskt.
 - Ingen ändring i temporal matchning, score, status eller `geographic_match_used`. Ingen ny beständig lagringsplats i repot; därför ingen ändring av `STORAGE_INVENTORY.md`.
+
+
+
+## NVDB – nationell valideringsrapport (2026-11-17)
+
+En första fristående, standardbiblioteksbaserad rapportbyggare har lagts till i utvecklingsbranch `feat/nvdb-national-validation-report`:
+- `scripts/build_nvdb_validation_report.py` läser matchningsskriptets CSV-utdata och skriver en JSON-kvalitetssammanfattning samt en separat CSV-kö för manuell granskning.
+- Alla flaggade poster behålls. Icke-flaggade poster tas dessutom ut med ett deterministiskt stickprov per förekommande `source_file`.
+- Rapporten innehåller sökstatusar, källäsningsfel, avståndsfördelning, kandidatantal och urvalsparametrar. Flaggor omfattar icke-standardstatus, långa avstånd och nära alternativa kandidater.
+- Testfil: `tests/test_build_nvdb_validation_report.py`.
+- Dokumentation: `docs/nvdb-national-validation-report.md`.
+
+Viktiga begränsningar: källfilernas förekomst i kandidatlistor bevisar inte geografisk täckning; rapporten mäter inte precision/recall eller faktisk vägträffsäkerhet utan manuellt facit. Radnummer är endast körningslokal referens. En stabil händelse-ID-kolumn bör anges när sådan finns. Trösklarna är granskningsurval, inte automatiska kvalitetsbesked. Ingen temporal logik, kandidatlista, score/status eller `geographic_match_used` ändras.
+
+**Verifiering återstår:** kör riktade tester och rapportbyggaren lokalt mot den befintliga åttahändelsepiloten. Därefter benchmarka med representativa urval från flera län och kalibrera urvalsreglerna mot manuellt bedömda fall. Nationell drift är inte godkänd eller aktiverad.
