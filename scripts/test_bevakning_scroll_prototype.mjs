@@ -67,7 +67,7 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /html\[data-theme="dark"\] \.filter-group\.is-active \.filter-group-heading/);
   assert.match(productionHtml, /if\(baseMapMode!=="imagery"\|\|!activityMap\|\|!label\)return/);
   assert.match(productionHtml, /imageryDateRequest\+\+;label\.hidden=true/);
-  assert.match(productionHtml, /Älgförvaltningsområden – hela Sverige/);
+  assert.match(productionHtml, /Valt jaktområde/);
   assert.match(productionHtml, /lst_jaktadm_visning\/MapServer\/1\/query/);
   assert.match(productionHtml, /returnIdsOnly/);
   assert.match(productionHtml, /objectIds/);
