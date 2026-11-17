@@ -285,6 +285,12 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .elkdata-source a{color:#326345;font-weight:700}
 @media(max-width:850px){.elkdata-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.elkdata-controls{grid-template-columns:1fr 1fr}.elkdata-result{grid-column:1/-1;text-align:left}}
 @media(max-width:620px){.elkdata-card{padding:18px 14px;border-radius:17px}.elkdata-stats{gap:8px}.elkdata-stat{padding:12px}.elkdata-stat strong{font-size:1.45rem}.elkdata-controls{grid-template-columns:1fr}.elkdata-result{grid-column:auto}}
+
+.hunting-area-control{background:var(--surface,#fff);color:var(--ink,#26372b);padding:10px 12px;border:1px solid var(--line,#dfe7de);border-radius:11px;box-shadow:0 2px 12px rgba(0,0,0,.16);font:13px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;min-width:190px}
+.hunting-area-control strong{display:block;margin-bottom:6px;font-size:12px}
+.hunting-area-control label{display:flex;align-items:center;gap:7px;margin:5px 0;cursor:pointer}
+.hunting-area-control input{accent-color:#376348}
+.hunting-area-control .hunting-area-status{margin-top:7px;color:var(--muted,#68766d);font-size:11px;max-width:220px}
 </style>
 
 <script>try{const t=localStorage.getItem("skog.theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t;else if(matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.dataset.theme="dark"}catch(e){}</script>
@@ -561,6 +567,17 @@ let elkAreas=[];
 let elkSnapshotDate=null;
 let elkLoadError=null;
 const AFO_LAYER_URL="https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/1/query";
+const HUNTING_AREAS_LAYER_URL="https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/0/query";
+const HUNTING_AREA_TYPES=[
+ {key:"license",label:"Licensområden",where:"objtyp = 'Licensområde'",color:"#d97732",fill:"#e99a55"},
+ {key:"management",label:"Älgskötselområden",where:"objtyp = 'Älgskötselområde'",color:"#277a52",fill:"#70ad86"}
+];
+const HUNTING_AREAS_MIN_ZOOM=6;
+let huntingAreasEnabled=false;
+let huntingAreasControl=null;
+let huntingAreasRequest=0;
+let huntingAreasLayers={license:null,management:null};
+let huntingAreasSummary={license:0,management:0};
 let afoBoundaryData=null;
 let afoBoundaryPromise=null;
 let afoBoundaryLoading=false;
@@ -765,7 +782,7 @@ function initMap(){
  activityMap=L.map(target,{preferCanvas:true,zoomSnap:0.25}).setView([63.55,19.5],8);
  activityLayer=L.featureGroup().addTo(activityMap);
  setBasemap("imagery");
- activityMap.on("moveend",()=>{if(baseMapMode==="imagery")scheduleImageryDateUpdate();});
+ activityMap.on("moveend",()=>{if(baseMapMode==="imagery")scheduleImageryDateUpdate();if(huntingAreasEnabled)refreshHuntingAreaLayers();});
  document.getElementById("basemapImagery").addEventListener("click",()=>setBasemap("imagery"));
  document.getElementById("basemapStandard").addEventListener("click",()=>setBasemap("standard"));
 }
@@ -897,6 +914,147 @@ function setAfoLayerVisible(visible){
   document.getElementById("casePreview").innerHTML='<div class="preview-empty">Länsstyrelsens ÄFO-tjänst kunde inte läsas: '+esc(error.message||error)+'</div>';
  }).finally(()=>{afoBoundaryLoading=false;});
 }
+
+function huntingAreaFeatureStyle(type){
+ return {color:type.color,weight:1.15,opacity:.9,fillColor:type.fill,fillOpacity:.12};
+}
+function setHuntingAreaStatus(message){
+ const el=document.getElementById("huntingAreaStatus");
+ if(el)el.textContent=message;
+}
+function updateHuntingAreaSummary(){
+ const total=huntingAreasSummary.license+huntingAreasSummary.management;
+ const summary=document.getElementById("mapSummary");
+ if(summary&&document.getElementById("animalMode").value==="hunting"){
+  summary.textContent=total.toLocaleString("sv-SE")+" jaktområden · "+huntingAreasSummary.license.toLocaleString("sv-SE")+" licens · "+huntingAreasSummary.management.toLocaleString("sv-SE")+" ÄSO";
+ }
+}
+async function fetchHuntingAreaType(type,bounds,requestId){
+ const idsUrl=new URL(HUNTING_AREAS_LAYER_URL);
+ idsUrl.searchParams.set("where",type.where);
+ idsUrl.searchParams.set("returnIdsOnly","true");
+ idsUrl.searchParams.set("geometry",JSON.stringify({
+  xmin:bounds.getWest(),ymin:bounds.getSouth(),xmax:bounds.getEast(),ymax:bounds.getNorth(),
+  spatialReference:{wkid:4326}
+ }));
+ idsUrl.searchParams.set("geometryType","esriGeometryEnvelope");
+ idsUrl.searchParams.set("inSR","4326");
+ idsUrl.searchParams.set("spatialRel","esriSpatialRelIntersects");
+ idsUrl.searchParams.set("f","json");
+ const idsResponse=await fetch(idsUrl);
+ if(!idsResponse.ok)throw new Error("HTTP "+idsResponse.status+" vid ID-sökning");
+ const idsPayload=await idsResponse.json();
+ if(idsPayload.error)throw new Error(idsPayload.error.message||"JaktAdm kunde inte lista jaktområden");
+ const ids=[...(idsPayload.objectIds||[])].sort((a,b)=>a-b);
+ const features=[];
+ for(let offset=0;offset<ids.length;offset+=20){
+  if(requestId!==huntingAreasRequest)return null;
+  const queryUrl=new URL(HUNTING_AREAS_LAYER_URL);
+  queryUrl.searchParams.set("objectIds",ids.slice(offset,offset+20).join(","));
+  queryUrl.searchParams.set("outFields","OBJECTID,objtyp,namn_ajo,namn_afo,omrnum,afo_id,bslarea_ha");
+  queryUrl.searchParams.set("returnGeometry","true");
+  queryUrl.searchParams.set("outSR","4326");
+  queryUrl.searchParams.set("f","geojson");
+  const response=await fetch(queryUrl);
+  if(!response.ok)throw new Error("HTTP "+response.status+" vid geometrihämtning");
+  const payload=await response.json();
+  if(payload.error)throw new Error(payload.error.message||"JaktAdm kunde inte returnera geometrier");
+  features.push(...(payload.features||[]));
+ }
+ if(requestId!==huntingAreasRequest)return null;
+ if(features.length!==ids.length)throw new Error("Ofullständig hämtning för "+type.label+": "+features.length+" av "+ids.length);
+ return {type:"FeatureCollection",features};
+}
+function addHuntingAreaControl(){
+ if(!activityMap||huntingAreasControl)return;
+ huntingAreasControl=L.control({position:"topright"});
+ huntingAreasControl.onAdd=()=>{
+  const div=L.DomUtil.create("div","hunting-area-control");
+  div.innerHTML='<strong>Älgjaktsområden</strong><label><input type="checkbox" id="showLicenseAreas" checked> Licensområden</label><label><input type="checkbox" id="showManagementAreas" checked> Älgskötselområden</label><div class="hunting-area-status" id="huntingAreaStatus">Zooma in för att hämta originalgränserna.</div>';
+  L.DomEvent.disableClickPropagation(div);
+  L.DomEvent.disableScrollPropagation(div);
+  return div;
+ };
+ huntingAreasControl.addTo(activityMap);
+ document.getElementById("showLicenseAreas").addEventListener("change",refreshHuntingAreaLayers);
+ document.getElementById("showManagementAreas").addEventListener("change",refreshHuntingAreaLayers);
+}
+function removeHuntingAreaControl(){
+ if(huntingAreasControl&&activityMap){activityMap.removeControl(huntingAreasControl);huntingAreasControl=null;}
+}
+function setHuntingAreaLayersVisible(visible){
+ huntingAreasEnabled=visible;
+ if(!visible){
+  huntingAreasRequest++;
+  for(const type of HUNTING_AREA_TYPES){
+   if(huntingAreasLayers[type.key]&&activityMap.hasLayer(huntingAreasLayers[type.key]))activityMap.removeLayer(huntingAreasLayers[type.key]);
+  }
+  removeHuntingAreaControl();
+  return;
+ }
+ addHuntingAreaControl();
+ refreshHuntingAreaLayers();
+}
+async function refreshHuntingAreaLayers(){
+ if(!huntingAreasEnabled||!activityMap||!huntingAreasControl)return;
+ const licenseChecked=document.getElementById("showLicenseAreas")?.checked??false;
+ const managementChecked=document.getElementById("showManagementAreas")?.checked??false;
+ const requestId=++huntingAreasRequest;
+ for(const type of HUNTING_AREA_TYPES){
+  const layer=huntingAreasLayers[type.key];
+  if(!((type.key==="license"&&licenseChecked)||(type.key==="management"&&managementChecked))){
+   if(layer&&activityMap.hasLayer(layer))activityMap.removeLayer(layer);
+  }
+ }
+ if(!licenseChecked&&!managementChecked){
+  setHuntingAreaStatus("Välj minst ett lager.");
+  return;
+ }
+ if(activityMap.getZoom()<HUNTING_AREAS_MIN_ZOOM){
+  for(const type of HUNTING_AREA_TYPES){
+   const layer=huntingAreasLayers[type.key];
+   if(layer&&activityMap.hasLayer(layer))activityMap.removeLayer(layer);
+  }
+  setHuntingAreaStatus("Zooma in till nivå "+HUNTING_AREAS_MIN_ZOOM+" eller närmare. Originalgeometrier hämtas bara inom kartvyn.");
+  return;
+ }
+ setHuntingAreaStatus("Hämtar originalgeometrier inom kartvyn …");
+ const bounds=activityMap.getBounds();
+ try{
+  const requested=HUNTING_AREA_TYPES.filter(type=>
+   (type.key==="license"&&licenseChecked)||(type.key==="management"&&managementChecked)
+  );
+  const results=await Promise.all(requested.map(async type=>({type,data:await fetchHuntingAreaType(type,bounds,requestId)})));
+  if(requestId!==huntingAreasRequest)return;
+  for(const {type,data} of results){
+   if(!data)continue;
+   const old=huntingAreasLayers[type.key];
+   if(old&&activityMap.hasLayer(old))activityMap.removeLayer(old);
+   const layer=L.geoJSON(data,{
+    style:()=>huntingAreaFeatureStyle(type),
+    onEachFeature:(feature,child)=>{
+     const p=feature.properties||{};
+     const name=p.namn_ajo||p.omrnum||type.label;
+     const fields=[["Område",name],["Typ",p.objtyp],["Registreringsnummer",p.omrnum],["ÄFO",p.namn_afo],["Områdes-ID",p.afo_id],["Källans areal",p.bslarea_ha==null?"":Number(p.bslarea_ha).toLocaleString("sv-SE")+" ha"]];
+     child.bindPopup("<strong>"+esc(name)+"</strong><br>"+fields.slice(1).filter(x=>x[1]!==null&&x[1]!==undefined&&x[1]!=="").map(x=>"<br>"+esc(x[0])+": "+esc(x[1])).join(""));
+    }
+   });
+   huntingAreasLayers[type.key]=layer;
+   layer.addTo(activityMap);
+   huntingAreasSummary[type.key]=data.features.length;
+  }
+  for(const type of HUNTING_AREA_TYPES){
+   const checked=type.key==="license"?licenseChecked:managementChecked;
+   if(!checked)huntingAreasSummary[type.key]=0;
+  }
+  updateHuntingAreaSummary();
+  setHuntingAreaStatus("Visar "+(huntingAreasSummary.license+huntingAreasSummary.management).toLocaleString("sv-SE")+" jaktområden i kartvyn. Originalgeometrier, ingen förenkling.");
+ }catch(error){
+  if(requestId!==huntingAreasRequest)return;
+  setHuntingAreaStatus("Jaktområden kunde inte hämtas: "+(error.message||error));
+ }
+}
+
 function render(){
  const mode=document.getElementById("animalMode").value;
  const isElk=mode==="hunting";
@@ -916,6 +1074,7 @@ function render(){
  document.getElementById("feed-title").textContent=isElk?"Älgstatistik per jaktområde":isNvr?"Viltolyckor":"Senaste händelserna";
  document.querySelector(".feed-subtitle").textContent=isElk?"Jaktstatistik från Länsstyrelsernas Älgdata.":isNvr?"Individuella olyckshändelser från Nationella Viltolycksrådet.":"Nya och relevanta skogliga händelser. Välj en händelse för detaljer och geografisk kontext.";
  if(isNvr){
+  setHuntingAreaLayersVisible(false);
   setAfoLayerVisible(false);
   document.getElementById("feed").innerHTML='<div class="empty">NVR:s historiska arkiv finns i OneDrive, men någon publik läsendpoint för GitHub Pages är ännu inte konfigurerad. Händelser visas när en kontrollerad endpoint med manifest och fullständighetsstatus finns.</div>';
   document.getElementById("resultCount").textContent="NVR-arkiv ej publicerat";
@@ -925,6 +1084,7 @@ function render(){
   return;
  }
  if(isElk){
+  setHuntingAreaLayersVisible(true);
   setAfoLayerVisible(true);
   const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
   const matchingAreas=elkAreas.filter(area=>[area.display_name,area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query));
@@ -982,6 +1142,7 @@ function render(){
  document.getElementById("periodComparison").textContent="Jämför "+periodText(periods.currentStart,periods.currentEnd)+" med "+periodText(periods.previousStart,periods.previousEnd)+". Jämförelsen bygger på källans registrerade datum, inte ett verifierat fältdatum.";
  document.getElementById("coverage").textContent="Visar "+list.length.toLocaleString("sv-SE")+" aktiviteter av "+all.filter(x=>x.date&&x.date.getFullYear()===CURRENT_YEAR).length.toLocaleString("sv-SE")+" hämtade objekt för kalenderåret "+CURRENT_YEAR+". Sortering: senaste händelsedatum först.";
  if(sourceWarnings.length)document.getElementById("coverage").textContent+=" Databegränsning: "+sourceWarnings.join("; ")+".";
+ setHuntingAreaLayersVisible(false);
  setAfoLayerVisible(false);
  document.getElementById("resultCount").textContent=list.length.toLocaleString("sv-SE")+" träffar";
  renderMap(list);
