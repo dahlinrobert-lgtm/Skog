@@ -72,11 +72,9 @@ def resolve_dataset_path(path: Path) -> str:
         )
 
     member = members[0]
-    # GDAL VSI paths use POSIX separators. On Windows, add a leading slash
-    # before the drive letter: /vsizip/C:/path/archive.zip/member.gpkg.
-    archive_path = path.resolve().as_posix()
-    if len(archive_path) >= 2 and archive_path[1] == ":":
-        archive_path = f"/{archive_path}"
+    # Normalize Windows backslashes explicitly. Keep the drive prefix as
+    # C:/... after /vsizip/; adding another slash would produce /vsizip//C:/...
+    archive_path = str(path.resolve()).replace("\\", "/")
     member_path = PurePosixPath(member.filename).as_posix()
     return f"/vsizip/{archive_path}/{member_path}"
 
