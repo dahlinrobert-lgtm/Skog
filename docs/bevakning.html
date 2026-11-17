@@ -897,7 +897,7 @@ function setAfoLayerVisible(visible){
  afoBoundaryLoading=true;
  document.getElementById("mapSummary").textContent="Hämtar ÄFO-gränser …";
  fetchAfoBoundaryData().then(data=>{
-  if(document.getElementById("animalMode").value!=="hunting"||!activityMap)return;
+  if(document.getElementById("animalMode").value!=="hunting"||!activityMap||selectedHuntingAreaKey)return;
   afoBoundaryLayer=L.geoJSON(data,{
    style:{color:"#e4b95f",weight:2.2,opacity:.98,fillColor:"#79a987",fillOpacity:.13},
    onEachFeature:(feature,layer)=>{
@@ -986,6 +986,9 @@ function clearSelectedHuntingArea(){
 function quoteArcGis(value){
  return "'"+String(value??"").replace(/'/g,"''")+"'";
 }
+function normalizeHuntingAreaNumber(value){
+ return String(value??"").trim().toLocaleUpperCase("sv").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
+}
 async function fetchSingleElkArea(area,requestId){
  const areaNumber=String(area.area_display_id||"").trim();
  const areaName=String(area.area_name||area.display_name||"").trim();
@@ -1023,7 +1026,7 @@ async function fetchSingleElkArea(area,requestId){
   }
   if(requestId!==selectedHuntingAreaRequest)return null;
   if(features.length!==ids.length)throw new Error("Ofullständig geometrihämtning: "+features.length+" av "+ids.length);
-  const exact=features.filter(feature=>String(feature.properties?.omrnum||"").trim().toLocaleLowerCase("sv")===areaNumber.toLocaleLowerCase("sv"));
+  const exact=features.filter(feature=>normalizeHuntingAreaNumber(feature.properties?.omrnum)===normalizeHuntingAreaNumber(areaNumber));
   const matches=exact.length?exact:features.filter(feature=>{
    const p=feature.properties||{};
    return areaName&&String(p.namn_ajo||"").trim().toLocaleLowerCase("sv")===areaName.toLocaleLowerCase("sv")
@@ -1106,7 +1109,7 @@ function setHuntingAreaLayersVisible(visible){
  refreshHuntingAreaLayers();
 }
 async function refreshHuntingAreaLayers(){
- if(!huntingAreasEnabled||!activityMap||!huntingAreasControl)return;
+ if(!huntingAreasEnabled||!activityMap||!huntingAreasControl||selectedHuntingAreaKey)return;
  const licenseChecked=document.getElementById("showLicenseAreas")?.checked??false;
  const managementChecked=document.getElementById("showManagementAreas")?.checked??false;
  const requestId=++huntingAreasRequest;
