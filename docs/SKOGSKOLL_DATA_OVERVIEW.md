@@ -638,6 +638,8 @@ Matchningen är fortsatt review-only. Källfel ska ge `partial_source_read`, ald
 
 ## NVDB – Windows-korrigering för ZIP-baserad vägmatchning (2026-11-17)
 
-Den första lokala körningen efter merge av PR #409 kunde inte initiera Norrbottens eller Västerbottens ZIP-källa i Windows. GDAL rapporterade att den genererade `/vsizip/C:\\...`-sökvägen inte var ett läsbart dataset. Felet är isolerat till Windows-enhetssökvägens representation i VSI-strängen; arkiven fanns lokalt och metadata-/geometristickprovet av arkiven var tidigare verifierat.
+PR #410 är sammanslagen i `main` (merge commit `d0d31d2b72972c6e77087349cc7d5f3baf2028b0`). Den första korrigeringsversionen gav ett dubbelt snedstreck (`/vsizip//C:/...`) och föll på regressionstest i CI. Den slutliga korrigeringen normaliserar Windows backslash till forward slash och behåller formen `/vsizip/C:/data/archive.zip/member.gpkg`. Regressionstestet simulerar en faktisk `PureWindowsPath`.
 
-Första korrigeringsförsöket lade till ett extra snedstreck och gav `/vsizip//C:/...`; båda CI-flödena föll på detta regressionstest (299 respektive 69 tester kördes, med ett identiskt testfel). Uppdateringen i branchen `fix/nvdb-vsizip-windows-path` normaliserar i stället Windows backslash till forward slash och behåller formatet `/vsizip/C:/data/archive.zip/member.gpkg`. Testet simulerar nu en faktisk WindowsPath. Korrigeringen är ännu inte mergad eller verifierad mot användarens faktiska arkiv. Ingen matchningspilot har ännu slutförts. Review-only och temporal isolering gäller fortsatt.
+Användaren har bekräftat att Snapshot storage tests #465 och Police–NVR matching tests #19 passerade efter korrigeringen. Den faktiska lokala pilotkörningen mot Norrbottens och Västerbottens arkiv är däremot ännu inte genomförd efter merge. Korrigeringen är CI-verifierad, men funktionen är inte slutligt verifierad mot de två verkliga ZIP-arkiven i användarens Windows-miljö.
+
+Matchningen är fortsatt review-only. Geografiska kolumner får inte påverka temporal kandidatlista, score, status eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.
