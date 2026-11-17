@@ -1,6 +1,6 @@
 # Lagringsregister – vad finns var?
 
-**Senast inventerat:** 2026-11-15  
+**Senast inventerat:** 2026-11-17  
 **Status:** Första samlade inventering. Poster märkta *bekräftad* bygger på känd sökväg eller verifierad projekt-/molnkonfiguration. *Delvis känd* betyder att projektet eller lagringen är känd men exakt sökväg/container ännu inte är dokumenterad. *Ej inventerad* betyder att platsen måste kontrolleras.
 
 > **Syfte:** Detta är huvudregistret för var projekt, originaldata, historik, säkerhetskopior och arbetskopior lagras. Det ersätter inte källregistret i `data-platform/config/sources.yml` eller datakälledokumentationen i `docs/SKOGSKOLL_DATA_OVERVIEW.md`.
@@ -31,7 +31,7 @@
 | GH-08 | Luleå-data 2 | GitHub | [dahlinrobert-lgtm/Lulea-data2](https://github.com/dahlinrobert-lgtm/Lulea-data2) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. |
 | GH-09 | Befolkningsanalys | GitHub | [dahlinrobert-lgtm/analys-befolkning](https://github.com/dahlinrobert-lgtm/analys-befolkning) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. |
 | GH-10 | Ny befolkningsanalys | GitHub | [dahlinrobert-lgtm/ny-analys-av-befolkning](https://github.com/dahlinrobert-lgtm/ny-analys-av-befolkning) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. Repo-storlek cirka 9 MB enligt GitHub-metadata. |
-| GH-11 | Länsstyrelsernas diarier – månadsvisa observationer | GitHub | `dahlinrobert-lgtm/Skog/data/lansstyrelsen-diary/` | Bekräftad | Två avgränsade Norrbottenpiloter publicerade 2026-11-16: oktober och september 2026, kategori B, totalt tolv immutabla snapshots och tolv manifestposter. Nollresultatsnapshots är 0-byte-filer med separata manifestposter. En separat nationell discovery-workflow utvecklas; den sparar endast diagnostikartefakter i 30 dagar och skriver inte till snapshotarkivet. Se `docs/lansstyrelsen-monthly-snapshot-architecture.md`. Fortfarande inte nationell täckning eller godkännande för kundvisning. |
+| GH-11 | Länsstyrelsernas diarier – månadsvisa observationer | GitHub | `dahlinrobert-lgtm/Skog/data/lansstyrelsen-diary/` | Bekräftad | Två avgränsade Norrbottenpiloter publicerade 2026-11-16: oktober och september 2026, kategori B, totalt tolv immutabla snapshots och tolv manifestposter. Nollresultatsnapshots är 0-byte-filer med separata manifestposter. En separat nationell discovery-workflow finns i `main` efter merge av PR #406; den sparar endast diagnostikartefakter i 30 dagar och skriver inte till snapshotarkivet. Workflowen är ännu inte live-testad. Se `docs/lansstyrelsen-monthly-snapshot-architecture.md`. Fortfarande inte nationell täckning eller godkännande för kundvisning. |
 
 ### GitHub – lokal arbetskopia
 
@@ -190,4 +190,5 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 
 | Datum | Ändring | Underlag |
 |---|---|---|
-| 2026-11-17 | GH-11 uppdaterad från en till två verifierade Norrbottenpiloter (12 snapshots/manifestposter). Dokumenterat separat nationell discovery-workflow som endast lagrar tillfälliga diagnostikartefakter och inte skriver till snapshotarkivet. | GitHub Actions #16 och #17; branch `feat/lansstyrelsen-national-diary-groups` |
+| 2026-11-17 | GH-11 uppdaterad från en till två verifierade Norrbottenpiloter (12 snapshots/manifestposter). Dokumenterat separat nationell discovery-workflow som endast lagrar tillfälliga diagnostikartefakter och inte skriver till snapshotarkivet. | GitHub Actions #16 och #17; PR #406 |
+| 2026-11-17 | PR #406 mergad: nationell discovery-workflow finns nu i `main`. Den är manuell och diagnostik-only med 30 dagars artifact-retention; ingen snapshot-/manifestpublicering eller schemaläggning. Livebeteende och länsvalidering återstår. | PR #406; `.github/workflows/lansstyrelsen-national-diary-discovery.yml` |
