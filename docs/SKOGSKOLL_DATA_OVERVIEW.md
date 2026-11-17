@@ -634,3 +634,10 @@ Matcharen `scripts/match_points_to_nvdb_roads.py` har utökats i utvecklingsbran
 Första avgränsade testunderlaget är `OneDrive/Skogskoll/viltolycka_NVR/working/lulea-police-nvr/nvdb-nearest-road-review-v1.csv` (9 poster), tillsammans med Norrbottens och Västerbottens ZIP-arkiv. Den lokala filkontrollen bekräftade att samtliga tre filer fanns 2026-11-17. Själva ZIP-matchningskörningen och dess resultat är ännu inte verifierade.
 
 Matchningen är fortsatt review-only. Källfel ska ge `partial_source_read`, aldrig negativ evidens. Geografiska kolumner får inte ändra temporal kandidatlista, score, status eller `geographic_match_used`. Ingen nationell produktionskörning eller kundvisning är aktiverad.
+
+
+## NVDB – Windows-korrigering för ZIP-baserad vägmatchning (2026-11-17)
+
+Den första lokala körningen efter merge av PR #409 kunde inte initiera Norrbottens eller Västerbottens ZIP-källa i Windows. GDAL rapporterade att den genererade `/vsizip/C:\\...`-sökvägen inte var ett läsbart dataset. Felet är isolerat till Windows-enhetssökvägens representation i VSI-strängen; arkiven fanns lokalt och metadata-/geometristickprovet av arkiven var tidigare verifierat.
+
+Första korrigeringsförsöket lade till ett extra snedstreck och gav `/vsizip//C:/...`; båda CI-flödena föll på detta regressionstest (299 respektive 69 tester kördes, med ett identiskt testfel). Uppdateringen i branchen `fix/nvdb-vsizip-windows-path` normaliserar i stället Windows backslash till forward slash och behåller formatet `/vsizip/C:/data/archive.zip/member.gpkg`. Testet simulerar nu en faktisk WindowsPath. Korrigeringen är ännu inte mergad eller verifierad mot användarens faktiska arkiv. Ingen matchningspilot har ännu slutförts. Review-only och temporal isolering gäller fortsatt.

@@ -12,7 +12,7 @@ import argparse
 import csv
 import json
 import math
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import zipfile
 
 import pyogrio
@@ -72,7 +72,11 @@ def resolve_dataset_path(path: Path) -> str:
         )
 
     member = members[0]
-    return f"/vsizip/{path.resolve().as_posix()}/{member.filename}"
+    # Normalize Windows backslashes explicitly. Keep the drive prefix as
+    # C:/... after /vsizip/; adding another slash would produce /vsizip//C:/...
+    archive_path = str(path.resolve()).replace("\\", "/")
+    member_path = PurePosixPath(member.filename).as_posix()
+    return f"/vsizip/{archive_path}/{member_path}"
 
 
 def prepare_sources(paths: list[Path]):

@@ -1,5 +1,5 @@
 import unittest
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import tempfile
 import zipfile
 from unittest.mock import patch
@@ -155,6 +155,22 @@ class NationalRoadProximityTests(unittest.TestCase):
             self.assertEqual(len(sources), 1)
             self.assertEqual(sources[0]["dataset_path"], expected_path)
             read_info.assert_called_once_with(expected_path, layer="NVDB_DK_O_111_Vagnummer")
+
+
+    def test_resolves_zip_with_windows_drive_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = Path(directory) / "county.zip"
+            with zipfile.ZipFile(archive, "w") as zipped:
+                zipped.writestr("nested/county.gpkg", b"fixture")
+            with patch(
+                "scripts.match_points_to_nvdb_roads.Path.resolve",
+                return_value=PureWindowsPath(r"C:\GIS\county.zip"),
+            ):
+                resolved = resolve_dataset_path(archive)
+            self.assertEqual(
+                resolved,
+                "/vsizip/C:/GIS/county.zip/nested/county.gpkg",
+            )
 
 
 if __name__ == "__main__":
