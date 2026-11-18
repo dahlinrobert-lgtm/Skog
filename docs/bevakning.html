@@ -263,7 +263,7 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .map-legend[hidden]{display:none!important}
 .map-card.is-animal-map .map-layout{grid-template-columns:1fr}
 .map-card.is-animal-map .case-preview{display:none!important}
-.map-card.is-animal-map .map-legend{display:none}
+.map-card.is-animal-map .map-legend{display:none}\n.map-card.is-animal-map #mapSummary[hidden]{display:none!important}
 .map-card.is-animal-map #activityMap{height:clamp(300px,48vh,470px)}
 .map-card.is-animal-map .case-preview{min-height:110px}
 .story-layout.is-elk>.map-card{display:block}
@@ -1034,7 +1034,7 @@ async function fetchSingleElkArea(area,requestId){
  const areaName=String(area.area_name||area.display_name||"").trim();
  const afoName=String(area.afo||"").trim();
  const candidates=[];
- if(areaNumber)candidates.push({where:"UPPER(omrnum) = "+quoteArcGis(areaNumber.toLocaleUpperCase("sv")),match:"number"});
+ if(areaNumber)candidates.push({where:"omrnum = "+quoteArcGis(areaNumber),match:"number"});
  if(areaName&&afoName)candidates.push({where:"namn_ajo = "+quoteArcGis(areaName)+" AND namn_afo = "+quoteArcGis(afoName),match:"name-afo"});
  if(areaName)candidates.push({where:"namn_ajo = "+quoteArcGis(areaName),match:"name"});
  for(const candidate of candidates){
@@ -1092,6 +1092,7 @@ async function selectElkAreaOnMap(area){
  removeHuntingAreaControl();
  const title=area.area_name||area.display_name||area.area_display_id||"Valt jaktområde";
  document.getElementById("mapSummary").textContent="";
+ document.getElementById("imageryDate").textContent="Hämtar geometri för "+title+" …";
 
  try{
   const data=await fetchSingleElkArea(area,requestId);
@@ -1106,14 +1107,16 @@ async function selectElkAreaOnMap(area){
   }).addTo(activityMap);
   selectedHuntingAreaLayer=layer;
   const bounds=layer.getBounds();
-  if(bounds.isValid())activityMap.fitBounds(bounds.pad(.18),{maxZoom:13});
-  document.getElementById("mapSummary").textContent=title+" · "+data.features.length.toLocaleString("sv-SE")+" geometri(er)";
-
-  window.setTimeout(()=>activityMap&&activityMap.invalidateSize(),80);
+  window.setTimeout(()=>{
+   if(!activityMap||requestId!==selectedHuntingAreaRequest)return;
+   activityMap.invalidateSize();
+   if(bounds.isValid())activityMap.fitBounds(bounds.pad(.18),{maxZoom:13});
+  },100);
+  document.getElementById("imageryDate").textContent=title+" · "+data.features.length.toLocaleString("sv-SE")+" geometri(er)";
  }catch(error){
   if(requestId!==selectedHuntingAreaRequest)return;
   console.error("Skogskoll: geometri för valt jaktområde kunde inte hämtas",error);
-  document.getElementById("mapSummary").textContent="";
+  document.getElementById("imageryDate").textContent="Kunde inte hämta geometri för "+title+". Försök igen senare.";
 
  }
 }
@@ -1276,11 +1279,6 @@ function render(){
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
    : '<p class="elkdata-note">Regional avskjutningsstatistik (inte geografiskt kopplad till ÄFO-polygonerna) för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th><th>Föregående rapporteringsdag</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="5" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
   document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
-  document.querySelectorAll(".elkdata-table tbody tr[data-elk-area-key]").forEach(row=>{
-   const activate=()=>{const area=matchingAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===row.dataset.elkAreaKey);if(area)selectElkAreaOnMap(area);};
-   row.addEventListener("click",activate);
-   row.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();activate();}});
-  });
   document.getElementById("mapSummary").textContent="";
   renderMap([]);
   if(selectedHuntingAreaKey){
@@ -1468,11 +1466,29 @@ function bindControls(){
   selectActivity(item,true);
  };
  document.getElementById("feed").addEventListener("click",event=>{
+  const elkRow=event.target.closest(".elkdata-table tbody tr[data-elk-area-key]");
+  if(elkRow){
+   const mode=document.getElementById("animalMode").value;
+   if(mode==="hunting"){
+    const key=elkRow.dataset.elkAreaKey;
+    const area=elkAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===key);
+    if(area)selectElkAreaOnMap(area);
+   }
+   return;
+  }
   if(event.target.closest("a"))return;
   const card=event.target.closest(".activity[data-key]");
   if(card)activateCard(card);
  });
  document.getElementById("feed").addEventListener("keydown",event=>{
+  const elkRow=event.target.closest(".elkdata-table tbody tr[data-elk-area-key]");
+  if(elkRow&&(event.key==="Enter"||event.key===" ")){
+   event.preventDefault();
+   const key=elkRow.dataset.elkAreaKey;
+   const area=elkAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===key);
+   if(area&&document.getElementById("animalMode").value==="hunting")selectElkAreaOnMap(area);
+   return;
+  }
   const card=event.target.closest(".activity[data-key]");
   if(!card||event.target!==card||!(event.key==="Enter"||event.key===" "))return;
   event.preventDefault();
