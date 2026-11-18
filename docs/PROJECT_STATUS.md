@@ -1,0 +1,54 @@
+# Skog/Skogskoll – projektstatus
+
+**Baslinjedatum:** 2026-11-18  
+**Källa:** GitHub `main` och projektets tre obligatoriska nulägesdokument.  
+**Status:** Första projektledarbaslinje – inte en fullständig kodrevision.
+
+## Samlad bedömning
+
+Skog har en etablerad dataplattform med flera fungerande insamlings-, snapshot-, analys- och valideringsflöden. Skogskoll som kundprodukt är däremot ännu inte produktionssatt. Den centrala förflyttningen är att gå från separata pilotflöden till en komplett, kvalitetssäkrad, rättighetsbedömd och driftbar plattform med användarbevakning och aviseringar.
+
+## Verifierat i dokumentationen
+
+- Källregistret `data-platform/config/sources.yml` innehåller 49 källposter; 12 har operativa statusblock och 37 saknar ännu sådan status.
+- Den genererade källstatusrapporten anger 0 källor uttryckligen godkända för kundvisning.
+- Skogskoll-prototypen har lokal bevakningsområdeshantering; den är inte en produktionsdatabas och synkar inte användardata mellan enheter.
+- Ingestion-kärna, databasstruktur, historikmodell, scan-sessioner, atomisk sidcommit och PostGIS-matchnings-RPC har utvecklats och har teststöd. Liveinstallation i produktionsprojekt är inte verifierad.
+- Kundaviseringar ska inte aktiveras innan ingestion, baslinje, historik, databas och källbeteende verifierats.
+- Viltdata nationella manuella snapshot 2026-11-18 är dokumenterad som 49 arter, 21 län och 550/550 lyckade statistikförfrågningar. Azure-arkivverktyg finns i main; rättighetsbedömning och livearkivering av original återstår.
+- NVR-material 2015–2026 har hämtats och arkiverats i arbetsflöde; ett 30-dagars dagligt observationstest pågår. Fullständighet/jämförbarhet måste fortsatt bedömas.
+- Rovbase originaluttag och första geografiska validering finns dokumenterade. Korrigerad full körning, kvarvarande avvikelsegranskning, koordinatsystembekräftelse och rättighetsbedömning återstår.
+- NVDB nationella metadata-/geometristickprov är genomfört för 21 län, men nationell matchningskvalitet och täckning är inte bevisad.
+- Lantmäteriets Fastighetsindelning Direkt är en viktig extern beroendepunkt; faktiska beslut och villkor för ärendena LM2026/171963 och LM2026/171968 behöver granskas.
+- SIS metadataövervakning hade dokumenterade misslyckade körningar 13–14 november och behöver felsökas.
+
+## Kända öppna GitHub-issues vid baslinjen
+
+Följande öppna issues returnerades av GitHub-sökningen 2026-11-18. De är kandidater till backloggen; kontrollera alltid aktuell status innan arbete startas.
+
+| Issue | Ämne | Första bedömning |
+|---|---|---|
+| [#363](https://github.com/dahlinrobert-lgtm/Skog/issues/363) | Viltdata snapshot-pilot | Följ upp status och nästa steg efter manuell snapshot/Azure-smoketest. |
+| [#177](https://github.com/dahlinrobert-lgtm/Skog/issues/177) | SCA inkrementell geometri- och metadataövervakning | Fortsätt endast efter kontroll av beroenden och källvillkor. |
+| [#173](https://github.com/dahlinrobert-lgtm/Skog/issues/173) | SCA partiella överlapp och inneslutna relationer | Teknisk analys; kontrollera om senare arbete redan löst delar. |
+| [#171](https://github.com/dahlinrobert-lgtm/Skog/issues/171) | SCA kandidatgrupper och attribut-QA | Issue-texten beskriver genomförda ändringar; kontrollera om den bör stängas/uppdateras. |
+| [#170](https://github.com/dahlinrobert-lgtm/Skog/issues/170) | SCA regressionstest och tomma grupper | Issue-texten beskriver verifierad körning och uppföljningshärdning; kontrollera kvarvarande kriterier. |
+| [#132](https://github.com/dahlinrobert-lgtm/Skog/issues/132) | Nationell täckningsprobe för Skogsdatalabbet | Blockerad av Stage 1 med två jämförbara veckosnapshots för båda tjänsterna. |
+| [#119](https://github.com/dahlinrobert-lgtm/Skog/issues/119) | Skogsindustriernas Skyddad skog | Käll- och rättighetsutredning; ingen schemalagd insamling före klartecken. |
+| [#110](https://github.com/dahlinrobert-lgtm/Skog/issues/110) | Sveaskog geodata | Käll- och rättighetsutredning; ingen veckosnapshot före klartecken. |
+
+## Viktiga osäkerheter
+
+- Denna baslinje är dokument- och issuebaserad; ingen fullständig kod-/workflowinventering har ännu genomförts av projektledaren.
+- Sökresultat för öppna issues kan ändras efter baslinjedatumet.
+- Öppna PR-sökningen gav äldre PR-poster som inte säkert kunde klassas som öppna i denna connectorvy. Ingen PR-status ska därför härledas från den sökningen.
+- Exakta aktuella resultat för alla schemalagda workflows behöver hämtas vid nästa inventeringskörning.
+- Kommersiella rättigheter och kundvisning är inte automatiskt godkända genom teknisk åtkomst eller genomförda tester.
+
+## Rekommenderad ordning
+
+1. Skapa en komplett read-only inventering av issues, PR, workflows och dokumenterade nästa steg.
+2. Kontrollera blockerande externa rättigheter och driftproblem.
+3. Slutför datakvalitet och historik för befintliga prioriterade källor.
+4. Fortsätt produktionsarkitektur och integration först när källornas krav och baslinjer är klara.
+5. Förbered kundproduktens flöden men håll användarlarm avstängda tills samtliga skyddsvillkor passerar.
