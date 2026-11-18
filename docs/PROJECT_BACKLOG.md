@@ -8,8 +8,8 @@
 
 | ID | Uppgift | Prioritet | Status | Beroenden / nästa steg |
 |---|---|---|---|---|
-| PM-001 | Bygg read-only projektinventering av issues, PR, workflows och dokumentstatus | P1 | Planerad | Definiera datamodell och samla paginerade GitHub-resultat; ingen skrivåtkomst. |
-| PM-002 | Etablera veckovis projektledarrapport och beslutslista | P1 | Planerad | Kräver PM-001 och godkänd rapportmall. |
+| PM-001 | Bygg read-only projektinventering av issues, PR, workflows och dokumentstatus | P1 | Implementation v1 i branch | Agentkod, manuell workflow och fyra tester tillagda; invänta CI och livekörning. Därefter förbättra pagination och historisk jämförelse. |
+| PM-002 | Etablera AI-baserad projektledarrapport och beslutslista | P1 | Planerad | Kräver fungerande PM-001, separat beslut om modell/API-secret/kostnad och godkännande innan eventuell schedule. |
 | PM-003 | Utred och verifiera Lantmäteriets beslut/villkor för Fastighetsindelning Direkt | P1 | Öppen | Ärenden LM2026/171963 och LM2026/171968; rättighets- och produktomfattning måste dokumenteras. |
 | PM-004 | Felsök Skogsstyrelsens SIS metadataövervakning | P1 | Öppen | Kontrollera misslyckade körningar 13–14 november, rasterhämtning och produktvillkor. |
 | PM-005 | Följ upp NVR:s 30-dagars observationstest och fullständighetsmodell | P1 | Pågående | Kontrollera dagliga körningar, snapshots, manifest och jämförbarhet; partial får inte ge borttagningsslutsatser. |

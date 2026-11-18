@@ -1,0 +1,41 @@
+# Skogskoll AI-projektledare – agent v1
+
+## Arkitektur
+Fristående Python-komponent i Skog-repot:
+- Entrypoint: `scripts/project_manager_agent.py`
+- Tester: `tests/test_project_manager_agent.py`
+- GitHub Actions: `.github/workflows/project-manager.yml`
+- Resultat: `inventory.json` och `report.md` som tidsbegränsad Actions-artifact.
+
+## Vad v1 gör
+Read-only inventering med repository-scopad `GITHUB_TOKEN` av issues (separerade från PR), pull requests inklusive merge-status, workflows och 50 senaste workflow-körningarna, senaste commits samt förekomst/blob-SHA för projektets styr- och överlämningsdokument. Rapporten visar öppna uppgifter, öppna PR, misslyckade körningar och saknade styrdokument. Insamlingsfönster och begränsningar redovisas.
+
+## Säkerhetsgränser
+- Token har endast `contents: read`, `issues: read`, `pull-requests: read` och `actions: read`.
+- Inga POST/PATCH/DELETE-anrop görs.
+- Ingen fil, issue, PR, branch, secret eller produktionsresurs ändras av agenten.
+- Ingen schemaläggning; inventering körs endast vid manuell `workflow_dispatch`.
+- Artifact behålls i 14 dagar.
+- Issue-body, secrets och tokens skrivs inte till rapporten.
+- Misslyckade körningar är granskningssignaler, inte bevis på källfel.
+
+## Begränsningar i v1
+Detta är en deterministisk inventerings- och rapportmotor, ännu inte en språkmodellbaserad AI-analys. Modell/API, secret, kostnadsgräns och återkommande körning kräver separat beslut.
+
+## Körning
+GitHub: Actions → Skogskoll AI project manager → Run workflow på `main`. Hämta artifact `skogskoll-project-manager-report`.
+
+Lokal körning kräver en read-only GitHub-token i miljövariabeln `GITHUB_TOKEN`:
+```powershell
+$env:GITHUB_TOKEN = "github_pat_..."
+$env:GITHUB_REPOSITORY = "dahlinrobert-lgtm/Skog"
+python scripts/project_manager_agent.py --output-dir project-manager-output
+```
+Skriv aldrig token i skript, filer, kommandologgar eller issues.
+
+## Nästa steg
+1. Kör workflowen manuellt och granska artifacten.
+2. Jämför mot föregående rapport för nya/stängda uppgifter och regressionssignaler, utan att tolka saknade data som borttagning.
+3. Bygg LLM-provideradapter efter beslut om modell, API-secret, kostnadsgräns och datahantering.
+4. Lägg till veckovis schedule först efter separat godkännande.
+5. Behåll alla förslag som utkast; inga automatiska issue-/PR- eller kodändringar.

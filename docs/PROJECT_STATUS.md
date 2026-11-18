@@ -22,6 +22,15 @@ Skog har en etablerad dataplattform med flera fungerande insamlings-, snapshot-,
 - Lantmäteriets Fastighetsindelning Direkt är en viktig extern beroendepunkt; faktiska beslut och villkor för ärendena LM2026/171963 och LM2026/171968 behöver granskas.
 - SIS metadataövervakning hade dokumenterade misslyckade körningar 13–14 november och behöver felsökas.
 
+## AI-projektledare – implementation v1 (2026-11-18)
+
+- PR #431 är mergad i `main` (merge commit `257777d1cd9b1201ff0c8892e50fe22fab209db8`); styrdokumenten finns nu i huvudgrenen.
+- En första körbar, read-only GitHub-inventeringsagent har lagts till i utvecklingsbranch `feature/ai-project-manager-agent-v1`: `scripts/project_manager_agent.py`.
+- Agenten samlar issues, PR, workflows, 50 senaste workflow-körningarna, senaste commits och förekomst/blob-SHA för nio styrdokument. Den skriver `inventory.json` och `report.md` som artifact via en manuell workflow.
+- Workflow `.github/workflows/project-manager.yml` har endast read-behörigheter (`contents`, `issues`, `pull-requests`, `actions`). Ingen schedule, ingen LLM/API och inga GitHub-skrivoperationer ingår.
+- Fyra riktade enhetstester finns i `tests/test_project_manager_agent.py`. CI-verifiering via PR återstår; ingen liveinventering är ännu verifierad.
+- Detta är agentens insamlings-/rapportgrund, inte ännu språkmodellbaserad analys eller autonom projektplanering.
+
 ## Kända öppna GitHub-issues vid baslinjen
 
 Följande öppna issues returnerades av GitHub-sökningen 2026-11-18. De är kandidater till backloggen; kontrollera alltid aktuell status innan arbete startas.
