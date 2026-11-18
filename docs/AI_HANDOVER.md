@@ -56,7 +56,7 @@ Validerare: `data-platform/scripts/validate_source_registry.py`
 Rapportgenerator: `data-platform/scripts/build_source_status_report.py`  
 Rapport: `docs/SKOGSKOLL_SOURCE_STATUS.md`
 
-Registret har 48 källposter och 11 poster med ett operativt `operations`-block vid senaste dokumenterade kontrollen. Övriga källor saknar ännu operativ status; det betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
+Registret har 49 källposter och 12 poster med ett operativt `operations`-block vid senaste dokumenterade kontrollen. Övriga källor saknar ännu operativ status; det betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 Rapporten visar åtkomst, snapshots, historik, kommersiell användning, kundvisning och nästa åtgärd. Den ska uppdateras automatiskt när källregistret ändras via workflowet för källregistervalidering. Om rapporten blir inaktuell kan den byggas lokalt:
 
@@ -135,10 +135,12 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Båda snapshots hade 49 arter, 21 län, 550/550 lyckade statistikförfrågningar och noll fel. De omfattade 73 255 observationer vardera.
 - Diffen mellan körningarna identifierade sju `value_changed` för 2026 (älg och vildsvin), 73 248 oförändrade observationer och inga nya/saknade observationer.
 - Riktade tester kördes lokalt 2026-11-18: 10/10 godkända för snapshot och diff, inklusive skydd mot ofullständiga snapshots, täckningsskillnader och sammanblandning av null/noll.
-- Ny manuell workflow och kördokumentation har lagts till på branch `feat/viltdata-manual-snapshot-workflow`: `.github/workflows/viltdata-kill-statistics-manual.yml` och `docs/viltdata-kill-statistics-workflow.md`. Workflowen kör full insamling, kontrollerar manifest och SHA-256 för råfiler och laddar upp endast en 30-dagars artifact. Den har `workflow_dispatch`, `contents: read`, ingen schedule, ingen commit och ingen Azure-skrivning.
-- Workflowen är ännu inte live-körd eller verifierad i GitHub Actions. Artifacten är endast temporärt testunderlag, inte permanent historik.
-- Viltdata saknas fortfarande i `data-platform/config/sources.yml`. Rättigheter för permanent historisk lagring, kommersiell användning, bearbetning, kundvisning och vidare distribution är inte bedömda. Registrera inte källan som godkänd utifrån teknisk åtkomst.
-- Nästa steg: öppna/granska PR, kör workflowen manuellt, granska fullständigt manifest och artifact. Därefter verifiera Azure-lagring och återläsning innan daglig schemaläggning eller permanent historik.
+- PR #422 är sammanslagen i `main`. Den manuella workflowen `.github/workflows/viltdata-kill-statistics-manual.yml` har live-verifierats i GitHub Actions: [körning #44394070179](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44394070179), commit `d38698dad4c79d6adfd2499ca0371cd48f27351d`.
+- Körningen skapade snapshot `20261118T204420Z`: 49 arter, 21 län, 550/550 lyckade statistikförfrågningar och noll insamlingsfel. Manifestet var `status=complete` och `complete=true`.
+- CI kompilerade båda skripten och körde 10/10 riktade tester. Workflowens efterföljande integritetskontroll verifierade 552 rå-/metadatafiler mot manifestets byteantal och SHA-256. Artifact `viltdata-kill-statistics-44394070179` (ID `14470426808`) laddades upp; storlek 423 726 byte, SHA-256 `e7c4076bc5b62a0e05b58df6803b416e57e38b255a34b273efdc3e2678a2f069`, retention till 2026-12-18.
+- Artifacten är återhämtad och granskad separat. Den är fortfarande endast ett tidsbegränsat granskningsunderlag, inte permanent historik eller backup. Workflowen har `workflow_dispatch`, `contents: read`, ingen schedule, ingen commit och ingen Azure-skrivning.
+- Viltdata är nu registrerad i `data-platform/config/sources.yml` som pilot med verifierad teknisk åtkomst och manuell snapshot, men ej verifierad historik. Rättigheter för permanent lagring, kommersiell användning, bearbetning, kundvisning och vidare distribution är fortsatt okända/ej bedömda. Ingen kundvisning eller schemaläggning är godkänd.
+- Nästa steg: utred exakta produktvillkor och rättigheter; därefter verifiera Azure Blob Storage-skrivning, integritet och återläsning. Först efter dessa steg bedöms återkommande schemaläggning.
 
 ## 6. Prioriterad arbetsordning
 
