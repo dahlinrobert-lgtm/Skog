@@ -1,6 +1,6 @@
 # Viltdata – Azure Blob Storage
 
-**Status:** Förberedd för isolerat syntetiskt test; Azure-skrivning och återläsning för Viltdata är ännu inte live-verifierade.
+**Status:** Syntetiskt Azure Blob write/readback-test live-verifierat 2026-11-18. Permanent arkivering av Viltdata-original är inte implementerad eller godkänd.
 
 ## Befintlig Azure-miljö
 
@@ -9,12 +9,12 @@ Skog använder redan GitHub Actions OIDC mot Azure Storage-kontot stskogkolldata
 Befintliga arkiv ligger i separata containrar. Viltdata ska få en egen container för att inte blanda avskjutningsstatistiken med Kungjort eller polisdata:
 
 - Konto: stskogkolldata
-- Region: Sweden Central (enligt befintligt lagringsregister)
+- Azure-loginens CLI-utdata visade `westus2` (behöver stämmas av mot resursens faktiska `location` i Azure; lagringsregistrets Sweden Central-uppgift är ännu inte bekräftad).
 - Avsedd container: viltdata-kill-statistics
 - Prefix för syntetiska åtkomsttester: smoke-tests/github-actions/<run-id>/attempt-<attempt>/
 - Avsett framtida prefix för data: snapshots/<snapshot-id>/
 
-Container och prefix är målkonfiguration, inte bevis på att containern redan finns eller att behörighet är tilldelad.
+Container `viltdata-kill-statistics` skapades framgångsrikt av workflow #1. Den använda GitHub OIDC-identiteten hade i den körningen tillräcklig behörighet att skapa container samt skriva, läsa och hämta metadata för testblobbar. Exakt RBAC-roll och scope har inte inspekterats separat i Azure Portal.
 
 ## Syntetiskt smoke test
 
@@ -33,6 +33,19 @@ Workflowen är endast manuell (workflow_dispatch) och använder GitHub OIDC. Den
 
 Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testobjekten bevaras under sitt unika körningsprefix för spårbarhet; inget befintligt objekt skrivs över eller raderas.
 
+### Live-verifiering 2026-11-18
+
+- Workflow run #1: [44401688469](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44401688469), `completed/success`, event `workflow_dispatch`, head commit `0c6d93da4796257cfed7783c8015b8bb89739a4b`.
+- Alla steg passerade: checkout, Python setup, Azure SDK installation, GitHub OIDC login, syntetiskt write/readback, artifact upload.
+- `container_created=true`, `payload_created=true`, `manifest_created=true`.
+- Container: `viltdata-kill-statistics` i konto `stskogkolldata`.
+- Payload: `smoke-tests/github-actions/44401688469/attempt-1/synthetic-payload.json`, 235 bytes.
+- Manifest: `smoke-tests/github-actions/44401688469/attempt-1/manifest.json`.
+- Payload SHA-256 och readback SHA-256 matchade: `3e5aaf7b3ce1607252a07b3bf1b7959d0c556f805aff3847666aa29a4a325063`; readback omfattade exakt 235 bytes.
+- Båda blobbarna lästes tillbaka; manifestet validerades mot payloadens hash, byteantal och blobnamn.
+- GitHub Actions-report artifact ID `14474565285`, 467 bytes, SHA-256 `6a44de686d0a1812ff52a71fccb14411f90e902404c1993fe821b7c5338b7530`, retention till 2026-12-18. Artifacten har laddats ned och dess JSON-innehåll granskats.
+- Azure CLI-login skrev ut `Region: westus2`. Detta är inte tillräckligt för att fastställa Storage Account-resursens Azure `location`; kontrollera resursens faktiska region innan lagringsregistret ändras.
+
 ## Säkerhets- och befordringsgränser
 
 - Ingen schemaläggning är aktiverad.
@@ -44,8 +57,8 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 
 ## Nästa steg
 
-1. PR #424 är sammanslagen i main efter godkänd CI (313 tester).
-2. Starta workflowen manuellt och granska Azure-login, container creation/existence, write/readback, metadata och SHA-256.
-3. Kontrollera faktisk region, containerinställningar och RBAC-scope i Azure Portal.
-4. Bygg därefter separat permanent snapshotarkivering med återläsning och backup/retention.
-5. Bedöm rättighetsfrågorna separat innan historisk arkivering eller kundanvändning.
+1. Kontrollera Storage Account-resursens faktiska `location`, containerns inställningar och den använda identitetens RBAC-roll/scope i Azure Portal.
+2. Bygg separat snapshot-upload med enbart kompletta snapshots, oförändrade rå-JSON-filer och manifest; använd unikt snapshotprefix och create-only/immutability-skydd.
+3. Lägg till audit och restore-test som verifierar både råfiler och manifest från Azure.
+4. Bedöm historisk lagring, kommersiell användning, bearbetning, kundvisning och vidare distribution separat innan riktiga snapshots laddas upp.
+5. Första kompletta snapshot ska etableras som tyst baslinje; ingen historisk avisering. Ingen schemaläggning innan upload, audit, restore och rättighetsbedömning är klara.
