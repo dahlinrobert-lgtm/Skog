@@ -2017,7 +2017,7 @@ sources:
       customer_display_status: not_assessed
       last_verified: "2026-11-18"
       next_action: "Fortsätt manuella kompletta snapshots med tidsbegränsad GitHub Actions-artifact. Invänta skriftligt besked om historisk lagring/arkivering av exakt avskjutningsstatistikprodukt och avsedda användningar. Azure-region är verifierad som swedencentral; GitHub OIDC-identiteten har Storage Blob Data Contributor på Storage Account-scope. Efter dokumenterat rättighetsbesked: besluta om arkivering och eventuell separat least-privilege-identitet, kör därefter upload, audit och restore live. Ingen schemaläggning eller kundvisning före separat bedömning."
-      evidence_reference: "GitHub Actions run 44394070179; snapshot 20261118T204420Z; artifact 14470426808; docs/viltdata-kill-statistics-workflow.md"
+      evidence_reference: "GitHub Actions runs 44394070179 and 44408345762; snapshots 20261118T204420Z and 20261118T220720Z; artifacts 14470426808 and 14475804318; latest ZIP SHA-256 31ef0b6ac7c16fa524adaa9f1e5ed9037f19bd3a9cb714bdea16e6ad8264e0b2; docs/viltdata-kill-statistics-workflow.md"
     notes:
       - "This is reported hunting-bag/kill statistics, not NVR wildlife-collision incidents and not a population inventory."
       - "Manifest complete=true means technical request and file completeness; it does not mean all reporting years are final."
