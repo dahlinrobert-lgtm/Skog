@@ -2016,7 +2016,7 @@ sources:
       commercial_use_status: unknown
       customer_display_status: not_assessed
       last_verified: "2026-11-18"
-      next_action: "Utred skriftliga produktvillkor och rättigheter för exakt avskjutningsstatistikprodukt. Därefter etablera Azure Blob Storage med verifierad skrivning, SHA-256/integritetskontroll och återläsning innan historik eller schemaläggning aktiveras."
+      next_action: "Inhämta skriftligt besked om historisk lagring/arkivering av exakt avskjutningsstatistikprodukt och avsedda användningar. Därefter kontrollera Azure Storage Account-region och RBAC-roll/scope; först efter dokumenterat rättighetsbesked får den manuella upload-workflowens rights_approved bekräftas och upload, audit och restore live-verifieras. Ingen schemaläggning eller kundvisning före separat bedömning."
       evidence_reference: "GitHub Actions run 44394070179; snapshot 20261118T204420Z; artifact 14470426808; docs/viltdata-kill-statistics-workflow.md"
     notes:
       - "This is reported hunting-bag/kill statistics, not NVR wildlife-collision incidents and not a population inventory."
