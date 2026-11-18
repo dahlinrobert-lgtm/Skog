@@ -1,0 +1,127 @@
+name: Viltdata full kill statistics snapshot (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: viltdata-kill-statistics-manual
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile Viltdata scripts
+        run: |
+          python -m py_compile scripts/viltdata_kill_statistics_snapshot.py
+          python -m py_compile scripts/viltdata_kill_statistics_diff.py
+
+      - name: Run Viltdata snapshot and diff tests
+        run: python -m unittest discover -s tests -p "test_viltdata_kill_statistics_*.py" -v
+
+      - name: Download full Viltdata kill-statistics snapshot
+        id: collect
+        shell: bash
+        run: |
+          set +e
+          output_root="$RUNNER_TEMP/viltdata-kill-statistics"
+          mkdir -p "$output_root"
+
+          python scripts/viltdata_kill_statistics_snapshot.py \
+            --output "$output_root" \
+            --delay 1.0 \
+            --species-batch-size 2 \
+            > "$RUNNER_TEMP/viltdata-snapshot-result.json"
+          collector_exit=$?
+
+          if [ -s "$RUNNER_TEMP/viltdata-snapshot-result.json" ]; then
+            cat "$RUNNER_TEMP/viltdata-snapshot-result.json"
+            run_dir="$(python -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["run_dir"])' "$RUNNER_TEMP/viltdata-snapshot-result.json")"
+            echo "run_dir=$run_dir" >> "$GITHUB_OUTPUT"
+          else
+            echo "Collector did not produce a result document."
+          fi
+
+          if [ "$collector_exit" -ne 0 ]; then
+            echo "Snapshot collector returned exit code $collector_exit; this run must not be used as a baseline."
+            exit "$collector_exit"
+          fi
+
+      - name: Verify complete manifest and raw-file checksums
+        if: steps.collect.outcome == 'success'
+        env:
+          SNAPSHOT_DIR: ${{ steps.collect.outputs.run_dir }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["SNAPSHOT_DIR"])
+          manifest_path = root / "manifest.json"
+          if not manifest_path.is_file():
+              raise SystemExit(f"Missing manifest: {manifest_path}")
+
+          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+          if manifest.get("status") != "complete" or manifest.get("complete") is not True:
+              raise SystemExit("Snapshot manifest is not complete; refusing promotion.")
+
+          expected = manifest.get("statistics_requests_expected")
+          successful = manifest.get("statistics_requests_ok")
+          if not isinstance(expected, int) or expected <= 0 or successful != expected:
+              raise SystemExit(f"Statistics request mismatch: {successful}/{expected}")
+
+          statistics = [
+              item for item in manifest.get("requests", [])
+              if item.get("kind") == "statistics"
+          ]
+          if len(statistics) != expected or any(item.get("status") != "ok" for item in statistics):
+              raise SystemExit("Statistics request inventory is incomplete.")
+
+          checked_files = 0
+          for request in manifest.get("requests", []):
+              relative = request.get("file")
+              if not relative:
+                  continue
+              path = root / relative
+              if not path.is_file():
+                  raise SystemExit(f"Missing raw file: {relative}")
+              body = path.read_bytes()
+              if len(body) != request.get("bytes"):
+                  raise SystemExit(f"Byte-count mismatch: {relative}")
+              digest = hashlib.sha256(body).hexdigest()
+              if digest != request.get("sha256"):
+                  raise SystemExit(f"SHA-256 mismatch: {relative}")
+              checked_files += 1
+
+          if checked_files < expected + 2:
+              raise SystemExit(f"Unexpectedly few raw files verified: {checked_files}")
+
+          print(
+              f"Verified complete snapshot {manifest['run_id']}: "
+              f"{manifest['species_count']} species, {manifest['county_count']} counties, "
+              f"{successful}/{expected} statistics requests, {checked_files} SHA-256 files."
+          )
+          PY
+
+      - name: Upload snapshot artifact for manual inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viltdata-kill-statistics-${{ github.run_id }}
+          path: ${{ runner.temp }}/viltdata-kill-statistics/
+          if-no-files-found: warn
+          retention-days: 30
