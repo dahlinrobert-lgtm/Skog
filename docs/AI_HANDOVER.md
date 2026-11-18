@@ -1,6 +1,6 @@
 # Skog / Skogskoll – överlämning för fortsatt arbete
 
-**Senast uppdaterad:** 2026-11-16  
+**Senast uppdaterad:** 2026-11-18  
 **Syfte:** Detta dokument är en kompakt startpunkt för fortsatt utveckling, även när arbetet fortsätter i en ny ChatGPT-chatt.
 
 > Läs detta dokument först i en ny chatt. Läs därefter den automatiska källstatusrapporten och den fullständiga datakälleöversikten. Kontrollera alltid aktuella filer och GitHub Actions innan du påstår att en körning eller status fortfarande gäller.
@@ -56,7 +56,7 @@ Validerare: `data-platform/scripts/validate_source_registry.py`
 Rapportgenerator: `data-platform/scripts/build_source_status_report.py`  
 Rapport: `docs/SKOGSKOLL_SOURCE_STATUS.md`
 
-Registret har 47 källposter och 11 poster med ett operativt `operations`-block vid senaste dokumenterade kontrollen. Övriga källor saknar ännu operativ status; det betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
+Registret har 48 källposter och 11 poster med ett operativt `operations`-block vid senaste dokumenterade kontrollen. Övriga källor saknar ännu operativ status; det betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 Rapporten visar åtkomst, snapshots, historik, kommersiell användning, kundvisning och nästa åtgärd. Den ska uppdateras automatiskt när källregistret ändras via workflowet för källregistervalidering. Om rapporten blir inaktuell kan den byggas lokalt:
 
@@ -128,6 +128,17 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Den befintliga `.github/workflows/lansstyrelsen-monthly-snapshots.yml` publicerar fortfarande godkända snapshots direkt till `main`. Använd inte den för nationella gruppförsök. Ingen återkommande schemaläggning ska aktiveras.
 - Källornas historik är ojämn; äldre ärenden kan försvinna ur webbdiariet. Bevara metadata, skilj dokument/bilagor från metadata och granska sekretess, personuppgifter, upphovsrätt och tredje mans rättigheter per handling.
 - Länsstyrelsens tidigare besked om tekniska begränsningar kvarstår. Teknisk åtkomst är inte ett godkännande för obevakad insamling, kommersiell användning eller kundvisning. Frånvaro i ett senare sökresultat får aldrig tolkas som att ett ärende har tagits bort.
+
+## Viltdata – nationell avskjutningsstatistik (2026-11-18)
+
+- Befintliga skript i `scripts/viltdata_kill_statistics_snapshot.py` och `scripts/viltdata_kill_statistics_diff.py` har verifierats mot två kompletta lokala snapshots: `20261113T170433Z` och `20261113T180017Z`.
+- Båda snapshots hade 49 arter, 21 län, 550/550 lyckade statistikförfrågningar och noll fel. De omfattade 73 255 observationer vardera.
+- Diffen mellan körningarna identifierade sju `value_changed` för 2026 (älg och vildsvin), 73 248 oförändrade observationer och inga nya/saknade observationer.
+- Riktade tester kördes lokalt 2026-11-18: 10/10 godkända för snapshot och diff, inklusive skydd mot ofullständiga snapshots, täckningsskillnader och sammanblandning av null/noll.
+- Ny manuell workflow och kördokumentation har lagts till på branch `feat/viltdata-manual-snapshot-workflow`: `.github/workflows/viltdata-kill-statistics-manual.yml` och `docs/viltdata-kill-statistics-workflow.md`. Workflowen kör full insamling, kontrollerar manifest och SHA-256 för råfiler och laddar upp endast en 30-dagars artifact. Den har `workflow_dispatch`, `contents: read`, ingen schedule, ingen commit och ingen Azure-skrivning.
+- Workflowen är ännu inte live-körd eller verifierad i GitHub Actions. Artifacten är endast temporärt testunderlag, inte permanent historik.
+- Viltdata saknas fortfarande i `data-platform/config/sources.yml`. Rättigheter för permanent historisk lagring, kommersiell användning, bearbetning, kundvisning och vidare distribution är inte bedömda. Registrera inte källan som godkänd utifrån teknisk åtkomst.
+- Nästa steg: öppna/granska PR, kör workflowen manuellt, granska fullständigt manifest och artifact. Därefter verifiera Azure-lagring och återläsning innan daglig schemaläggning eller permanent historik.
 
 ## 6. Prioriterad arbetsordning
 
