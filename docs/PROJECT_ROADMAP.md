@@ -10,7 +10,7 @@
 - [x] Skapa projektledarregler och första status/backlogg/roadmap.
 - [x] Bygg första read-only GitHub-inventering (PR #432 mergad; Actions #44413951767 verifierad med test- och inventory-jobb success samt artifact).
 - [ ] Lägg till LLM-baserad analys och rapportutkast efter separat modell-/kostnadsbeslut.
-- [ ] Förbättra pagination och historisk jämförelse; behåll misslyckade körningar som granskningssignaler, inte automatiska felbeslut.
+- [ ] Genomför v2a pagination och täckningsmetadata enligt [v2-planen](PROJECT_MANAGER_AGENT_V2.md).\n- [ ] Besluta separat om append-only-baslinjelagring innan historisk jämförelse implementeras.
 
 ## Fas 1 – Stabil dataplattform
 
