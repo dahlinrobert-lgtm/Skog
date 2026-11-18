@@ -15,6 +15,11 @@ on:
         description: Required for restore (for example 20261118T204420Z)
         required: false
         type: string
+      rights_approved:
+        description: Confirm written rights review permits archival of this exact Viltdata product
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -48,6 +53,11 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Require documented rights approval before any source-data retrieval or upload
+        if: inputs.rights_approved != true
+        run: |
+          echo "Upload blocked: rights_approved must be explicitly checked after written rights review." >&2
+          exit 1
       - name: Create a complete Viltdata snapshot
         run: |
           python scripts/viltdata_kill_statistics_snapshot.py \
