@@ -44,7 +44,7 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 
 ## Nästa steg
 
-1. Merg:a smoke-testförslaget efter kod- och CI-granskning.
+1. PR #424 är sammanslagen i main efter godkänd CI (313 tester).
 2. Starta workflowen manuellt och granska Azure-login, container creation/existence, write/readback, metadata och SHA-256.
 3. Kontrollera faktisk region, containerinställningar och RBAC-scope i Azure Portal.
 4. Bygg därefter separat permanent snapshotarkivering med återläsning och backup/retention.
