@@ -1093,6 +1093,7 @@ async function selectElkAreaOnMap(area){
  const title=area.area_name||area.display_name||area.area_display_id||"Valt jaktområde";
  document.getElementById("mapSummary").textContent="";
  document.getElementById("imageryDate").textContent="Hämtar geometri för "+title+" …";
+ activityMap.closePopup();
 
  try{
   const data=await fetchSingleElkArea(area,requestId);
@@ -1107,12 +1108,14 @@ async function selectElkAreaOnMap(area){
   }).addTo(activityMap);
   selectedHuntingAreaLayer=layer;
   const bounds=layer.getBounds();
-  window.setTimeout(()=>{
+  if(!bounds.isValid())throw new Error("JaktAdm returnerade geometri utan giltiga kartgränser");
+  const fitSelectedArea=()=>{
    if(!activityMap||requestId!==selectedHuntingAreaRequest)return;
-   activityMap.invalidateSize();
-   if(bounds.isValid())activityMap.fitBounds(bounds.pad(.18),{maxZoom:13});
-  },100);
-  document.getElementById("imageryDate").textContent=title+" · "+data.features.length.toLocaleString("sv-SE")+" geometri(er)";
+   activityMap.invalidateSize({pan:false});
+   activityMap.fitBounds(bounds.pad(.12),{maxZoom:14,animate:false});
+  };
+  requestAnimationFrame(()=>window.setTimeout(fitSelectedArea,180));
+  document.getElementById("imageryDate").textContent="Visar "+title+" · "+data.features.length.toLocaleString("sv-SE")+" geometri(er)";
  }catch(error){
   if(requestId!==selectedHuntingAreaRequest)return;
   console.error("Skogskoll: geometri för valt jaktområde kunde inte hämtas",error);
@@ -1216,6 +1219,25 @@ async function refreshHuntingAreaLayers(){
  }
 }
 
+function bindElkAreaRowInteractions(matchingAreas){
+ const rows=document.querySelectorAll("#feed .elkdata-table tbody tr[data-elk-area-key]");
+ rows.forEach(row=>{
+  const activate=event=>{
+   if(event){event.preventDefault();event.stopPropagation();}
+   const key=row.dataset.elkAreaKey;
+   const area=matchingAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===key);
+   if(!area){
+    console.error("Skogskoll: kunde inte koppla tabellraden till jaktområdets datarad",key);
+    return;
+   }
+   selectElkAreaOnMap(area);
+  };
+  row.addEventListener("click",activate);
+  row.addEventListener("keydown",event=>{
+   if(event.key==="Enter"||event.key===" "){activate(event);}
+  });
+ });
+}
 function render(){
  const mode=document.getElementById("animalMode").value;
  const isElk=mode==="hunting";
@@ -1278,6 +1300,7 @@ function render(){
   document.getElementById("feed").innerHTML=elkLoadError
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
    : '<p class="elkdata-note">Regional avskjutningsstatistik (inte geografiskt kopplad till ÄFO-polygonerna) för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th><th>Föregående rapporteringsdag</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="5" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
+  if(!elkLoadError)bindElkAreaRowInteractions(matchingAreas);
   document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
   document.getElementById("mapSummary").textContent="";
   renderMap([]);
@@ -1466,29 +1489,11 @@ function bindControls(){
   selectActivity(item,true);
  };
  document.getElementById("feed").addEventListener("click",event=>{
-  const elkRow=event.target.closest(".elkdata-table tbody tr[data-elk-area-key]");
-  if(elkRow){
-   const mode=document.getElementById("animalMode").value;
-   if(mode==="hunting"){
-    const key=elkRow.dataset.elkAreaKey;
-    const area=elkAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===key);
-    if(area)selectElkAreaOnMap(area);
-   }
-   return;
-  }
   if(event.target.closest("a"))return;
   const card=event.target.closest(".activity[data-key]");
   if(card)activateCard(card);
  });
  document.getElementById("feed").addEventListener("keydown",event=>{
-  const elkRow=event.target.closest(".elkdata-table tbody tr[data-elk-area-key]");
-  if(elkRow&&(event.key==="Enter"||event.key===" ")){
-   event.preventDefault();
-   const key=elkRow.dataset.elkAreaKey;
-   const area=elkAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===key);
-   if(area&&document.getElementById("animalMode").value==="hunting")selectElkAreaOnMap(area);
-   return;
-  }
   const card=event.target.closest(".activity[data-key]");
   if(!card||event.target!==card||!(event.key==="Enter"||event.key===" "))return;
   event.preventDefault();

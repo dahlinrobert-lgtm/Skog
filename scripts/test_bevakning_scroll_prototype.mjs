@@ -97,8 +97,12 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.ok(productionHtml.includes('where:"omrnum = "+quoteArcGis(areaNumber)'));
   assert.ok(productionHtml.includes('resultRecordCount","100"'));
   assert.ok(productionHtml.includes('removeHuntingAreaControl();\n  setAfoLayerVisible(false);'));
-  assert.ok(productionHtml.includes('const elkRow=event.target.closest(".elkdata-table tbody tr[data-elk-area-key]")'));
-  assert.ok(productionHtml.includes('if(elkRow&&(event.key==="Enter"||event.key===" "))'));
+  assert.ok(productionHtml.includes("function bindElkAreaRowInteractions(matchingAreas)"));
+  assert.ok(productionHtml.includes('row.addEventListener("click",activate)'));
+  assert.ok(productionHtml.includes('row.addEventListener("keydown"'));
+  assert.ok(productionHtml.includes("bindElkAreaRowInteractions(matchingAreas)"));
+  assert.ok(productionHtml.includes("activityMap.fitBounds(bounds.pad(.12),{maxZoom:14,animate:false})"));
+  assert.ok(productionHtml.includes("requestAnimationFrame(()=>window.setTimeout(fitSelectedArea,180))"));
   assert.ok(productionHtml.includes('.map-card.is-animal-map #mapSummary[hidden]{display:none!important}'));
   assert.ok(productionHtml.includes('Hämtar geometri för "+title+" …'));
 
