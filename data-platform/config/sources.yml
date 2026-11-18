@@ -10,7 +10,7 @@
 # Validate structure and provenance fields with data-platform/scripts/validate_source_registry.py.
 
 schema_version: 2
-registry_checked_on: "2026-11-16"
+registry_checked_on: "2026-11-18"
 default_rule: "Apply binding law and the legal hierarchy first. Silence or unknown source metadata is not by itself a prohibition or permission; assess the concrete use under general law and valid applicable licences/contracts, and restrict only the affected element where a specific obstacle is established."
 
 sources:
@@ -1987,3 +1987,39 @@ sources:
       - "Service description identifies the content as the latest decided ÄFO and states that a new decision becomes visible the following day."
       - "Current boundary display is separate from the regional 2026/2027 hunting-statistics pilot; no statistical join to ÄFO polygons is implemented."
       - "Do not use the Skogsstyrelsen ÄBIN layer as a substitute for the current national decision layer; its scope is inventory-related ÄFO."
+
+  - source_id: viltdata.kill_statistics
+    name: "Viltdata.se – nationell avskjutningsstatistik"
+    source_type: reported_hunting_bag_statistics
+    provider: "Svenska Jägareförbundet (Viltdata.se)"
+    access_method: public_api
+    connector: viltdata_statistics_api
+    status: pilot
+    cadence: manual_on_demand
+    geography: Sweden
+    format: [JSON]
+    rights:
+      licence: unknown
+      review_status: not_assessed
+      commercial_use: unknown
+      historical_storage: unknown
+      derivatives: unknown
+      redistribution: unknown
+      attribution: "Not yet established from reviewed product-specific terms; verify Viltdata.se attribution requirements."
+      api_or_service_constraints: "Use the public StatisticsApi report type kill; respect service behaviour and request pacing. Technical access does not establish permission for permanent archiving, commercial use, derivatives, customer display or redistribution."
+      evidence_checked_on: "2026-11-18"
+      caveat: "A complete manual technical snapshot has been verified, but dataset-specific licence terms and permissions for historical storage, commercial use, processing, customer display and redistribution have not been assessed."
+    operations:
+      access_status: verified
+      snapshot_status: pilot
+      history_status: not_verified
+      commercial_use_status: unknown
+      customer_display_status: not_assessed
+      last_verified: "2026-11-18"
+      next_action: "Utred skriftliga produktvillkor och rättigheter för exakt avskjutningsstatistikprodukt. Därefter etablera Azure Blob Storage med verifierad skrivning, SHA-256/integritetskontroll och återläsning innan historik eller schemaläggning aktiveras."
+      evidence_reference: "GitHub Actions run 44394070179; snapshot 20261118T204420Z; artifact 14470426808; docs/viltdata-kill-statistics-workflow.md"
+    notes:
+      - "This is reported hunting-bag/kill statistics, not NVR wildlife-collision incidents and not a population inventory."
+      - "Manifest complete=true means technical request and file completeness; it does not mean all reporting years are final."
+      - "The first complete snapshot must be treated as a baseline and must not generate historical alerts."
+      - "Incomplete snapshots must never be used as evidence of missing observations or as diff/baseline input."
