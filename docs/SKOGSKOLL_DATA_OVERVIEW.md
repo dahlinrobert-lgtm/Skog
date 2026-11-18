@@ -702,3 +702,12 @@ Initial kvalitetskontroll finns i OneDrive `Skogskoll/Rovbase/quality/`: Markdow
 Befintliga administrativa gränser har identifierats i OneDrive och ska återanvändas: Lantmäteriets `kommun-lan-rike_2025.gpkg` (lager `kommun`, `lan`, `rike`, EPSG:3006; 290 kommunpolygoner) samt SCB:s årsvisa `Kommun_2016.gml`–`Kommun_2026.gml`. Polygonkontrollen är ännu inte körd. 35 RT90-poster skiljer mer än 10 meter mellan en oberoende transformation med antagandet EPSG:3021 och leverantörens SWEREF99-kolumner; avvikelsen är en granskningssignal, inte ett fastställt koordinatfel.
 
 **Begränsning:** Rovbase är ännu inte registrerad i `data-platform/config/sources.yml`. Tekniskt mottaget uttag innebär inte att kommersiell användning, historisk lagring, bearbetning, kundvisning eller vidare distribution är godkänd. Nästa steg är att köra `validate_rovbase_geography.py` lokalt mot befintlig OneDrive-GPKG, granska avvikelserna och inhämta källägarens förtydliganden innan produktionsflöde eller kundanvändning planeras.
+
+
+## Rovbase – geografisk validering (2026-11-18)
+
+Den första lokala polygonkörningen mot Lantmäteriets befintliga `kommun-lan-rike_2025.gpkg` slutfördes för 15 561 unika Rovbase-poster. Samtliga transformerade ursprungskoordinater och levererade SWEREF99-koordinater träffade exakt en kommunpolygon och exakt en länspolygon. Körningen gav 9 396 granskningsrader, men merparten berodde på en systematisk normaliseringsmiss: Rovbase-namn som `Filipstad` jämfördes med polygonlagrets `Filipstads kommun`. Det tidigare skriptet tog bort suffixet `kommun` men inte genitiv-s, vilket gav 9 379 kommunnamnsflaggor. Dessa är inte bekräftade geografiska avvikelser.
+
+Valideringsskriptet i OneDrive har korrigerats för en begränsad genitiv-s-ekvivalens och sex riktade namnmatchningstester passerade. En ny full körning återstår. 35 koordinatpar har mer än 10 meters skillnad mellan oberoende transformation och leverantörens SWEREF99-koordinat; antagandet RT90 = EPSG:3021 måste bekräftas med Rovbase. Tre länsnamnsavvikelser och kvarvarande kommunavvikelser ska granskas efter omkörningen. Valideringen använder 2025 års administrativa gränser och fastställer inte historisk kommunindelning för äldre händelser.
+
+Resultatet är fortsatt intern datakvalitetskontroll. Rovbase är inte registrerad i `data-platform/config/sources.yml`, och teknisk åtkomst/lagring är inte godkännande för kommersiell bearbetning, kundvisning eller vidare distribution. Ingen produktionsimport ska göras innan den korrigerade körningen och rättighetsbedömningen är klara.
