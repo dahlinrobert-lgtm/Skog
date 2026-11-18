@@ -4,6 +4,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from project_manager_agent import build_report, collect_inventory
 
 class FakeClient:
+    repository = "acme/skog"
     def get_json(self, path):
         if path == "/repos/acme/skog":
             return {"full_name":"acme/skog","default_branch":"main","html_url":"https://github.com/acme/skog","private":True}
