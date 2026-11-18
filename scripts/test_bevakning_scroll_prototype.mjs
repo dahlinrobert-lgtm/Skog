@@ -88,6 +88,15 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /document\.querySelector\("\.map-card"\)\.hidden=false/);
   assert.match(productionHtml, /map-card\.is-animal-map/);
   assert.match(productionHtml, /map-legend\[hidden\]/);
+  assert.match(productionHtml, /<th>Föregående rapporteringsdag<\\/th>/);
+  assert.match(productionHtml, /previousReportingDate\(area,snapshot\)/);
+  assert.match(productionHtml, /ordered\[index-1\]\.date/);
+  assert.match(productionHtml, /mapSummary"\)\.hidden=isElk/);
+  assert.match(productionHtml, /console\.error\("Skogskoll: geometri för valt jaktområde kunde inte hämtas"/);
+  assert.doesNotMatch(productionHtml, /mapSummary"\)\.textContent="Områdets geometri kunde inte hämtas"/);
+  assert.match(productionHtml, /UPPER\(omrnum\) = /);
+  assert.match(productionHtml, /resultRecordCount","100"/);
+  assert.match(productionHtml, /removeHuntingAreaControl\(\);[\s\S]*?setAfoLayerVisible\(false\)/);
   assert.match(productionHtml, /Regional avskjutningsstatistik/);
   assert.match(productionHtml, /inte geografiskt kopplad till ÄFO-polygonerna/);
 });
