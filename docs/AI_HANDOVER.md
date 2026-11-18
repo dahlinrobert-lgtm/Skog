@@ -437,3 +437,18 @@ Fortsättningsinstruktion:
 2. Bygg read-only GitHub-inventering med tester och minsta behörighet.
 3. Lägg inte till schedule eller AI-modell/API innan användaren godkänt kostnad, frekvens och secret-/behörighetsmodell.
 4. Uppdatera denna överlämning när PR-status och nästa implementation är verifierade.
+
+
+## AI-projektledare – agent v1 under implementation (2026-11-18)
+
+PR #431 är mergad i main med merge commit `257777d1cd9b1201ff0c8892e50fe22fab209db8`. Projektledarens sex styrdokument finns nu i huvudgrenen.
+
+En första körbar read-only-agent utvecklas i branch `feature/ai-project-manager-agent-v1`:
+- `scripts/project_manager_agent.py` – GitHub REST-inventering av issues, PR, workflows, 50 senaste workflow-körningar, commits och nio styrdokument.
+- `tests/test_project_manager_agent.py` – fyra riktade tester.
+- `.github/workflows/project-manager.yml` – tester på PR/push och manuell inventering via `workflow_dispatch`.
+- `docs/PROJECT_MANAGER_AGENT.md` – arkitektur, säkerhetsgränser och körinstruktioner.
+
+Workflowens GITHUB_TOKEN har endast read-behörigheter för contents, issues, pull requests och Actions. Ingen schedule, LLM/API eller GitHub-skrivoperation ingår. Rapporten blir `inventory.json` och `report.md` som 14-dagars Actions-artifact. Ingen livekörning eller CI-verifiering är ännu bekräftad; invänta PR-checks och kör därefter workflowen manuellt.
+
+**Nästa steg:** verifiera test/CI och en manuell liveinventering. Först därefter utvärderas pagination, rapporthistorik och LLM-adapter. Modell, API-secret, dataskydd, kostnadstak och eventuell veckoschedule kräver separat beslut. Agenten får aldrig merge:a, ändra källstatus, starta insamling eller skriva produktionsdata utan uttryckligt godkännande.

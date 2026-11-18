@@ -8,8 +8,8 @@
 - [x] Fastställ omfattning: hela Skog/Skogskoll.
 - [x] Fastställ mandat: föreslå och planera; användaren godkänner åtgärder.
 - [x] Skapa projektledarregler och första status/backlogg/roadmap.
-- [ ] Bygg read-only GitHub-inventering.
-- [ ] Skapa återkommande rapportutkast och beslutslista.
+- [x] Bygg första read-only GitHub-inventering (PR under granskning; CI/livekörning återstår).
+- [ ] Lägg till LLM-baserad analys och rapportutkast efter separat modell-/kostnadsbeslut.
 - [ ] Lägg till tester för statusklassning och skydd mot falska slutsatser.
 
 ## Fas 1 – Stabil dataplattform
