@@ -44,7 +44,7 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 - Payload SHA-256 och readback SHA-256 matchade: `3e5aaf7b3ce1607252a07b3bf1b7959d0c556f805aff3847666aa29a4a325063`; readback omfattade exakt 235 bytes.
 - Båda blobbarna lästes tillbaka; manifestet validerades mot payloadens hash, byteantal och blobnamn.
 - GitHub Actions-report artifact ID `14474565285`, 467 bytes, SHA-256 `6a44de686d0a1812ff52a71fccb14411f90e902404c1993fe821b7c5338b7530`, retention till 2026-12-18. Artifacten har laddats ned och dess JSON-innehåll granskats.
-- Azure CLI-login skrev ut `Region: westus2`. Detta är inte tillräckligt för att fastställa Storage Account-resursens Azure `location`; kontrollera resursens faktiska region innan lagringsregistret ändras.
+- Azure Portal → Storage Account `stskogkolldata` → Overview visar `Location: swedencentral` (Sweden Central), verifierat via användarens skärmbild 2026-11-18. Azure CLI-loginens `Region: westus2` avsåg inte Storage Account-resursens location och ska inte användas som regionuppgift.
 
 ## Säkerhets- och befordringsgränser
 
@@ -52,6 +52,7 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 - Ingen Viltdata-snapshot laddas upp av smoke-testet.
 - Inga källregisterstatusar höjs av att autentisering eller en syntetisk skrivning fungerar.
 - En lyckad körning visar teknisk åtkomst för just den testade identiteten, containern och operationerna; den bevisar inte juridisk rätt till historisk lagring, kommersiell användning, bearbetning, kundvisning eller vidare distribution.
+- Azure Portal → Storage Account → Access control (IAM) → Role assignments visar tjänstens huvudnamn `skogskoll-github-actions` med rollen `Storage Blob Data Contributor` på scope `This resource` (Storage Account-nivå), verifierat via användarens skärmbild 2026-11-18. Rollen ger därmed blobdataåtkomst på kontonivå, inte endast till Viltdata-containern. Samma OIDC-identitet används av flera befintliga Skog-workflows och arkiv (bland annat Kungjort och polisdata); begränsa eller byt inte dess scope utan separat konsekvensanalys. För framtida least-privilege bör en separat identitet eller containeravgränsad roll övervägas.
 - Om container creation nekas ska vi inte återanvända en annan källas container. Då behöver container skapas separat eller Azure RBAC justeras av administratören.
 - Efter godkänt test ska ett separat, uttryckligen avgränsat snapshot-upload/restore-flöde byggas och verifieras. Första kompletta snapshot ska fortfarande etableras som tyst baslinje utan historiska larm.
 
