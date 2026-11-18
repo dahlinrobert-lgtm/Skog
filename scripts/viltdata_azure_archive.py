@@ -41,7 +41,7 @@ def digest_file(path: Path) -> tuple[str, int]:
 
 def _safe_relative(value: str) -> str:
     path = PurePosixPath(value)
-    if path.is_absolute() or not value or any(part in ("", ".", "..") for part in path.parts):
+    if path.is_absolute() or not value or "\\" in value or any(part in ("", ".", "..") for part in path.parts):
         raise ValueError(f"Unsafe manifest file path: {value!r}")
     return path.as_posix()
 
@@ -111,6 +111,45 @@ def validate_snapshot(snapshot_dir: Path) -> tuple[dict, bytes, dict[str, Path]]
         )
     return manifest, manifest_bytes, files
 
+
+
+def validate_manifest_inventory(manifest: dict) -> dict[str, dict]:
+    requests = manifest.get("requests")
+    if not isinstance(requests, list) or not requests:
+        raise RuntimeError("Manifest request inventory is missing")
+    inventory = {}
+    kinds = set()
+    statistics = []
+    for item in requests:
+        if not isinstance(item, dict):
+            raise RuntimeError("Invalid request inventory entry")
+        kind = item.get("kind")
+        if kind not in ("statistics_model", "counties", "statistics"):
+            raise RuntimeError(f"Unexpected request kind: {kind!r}")
+        if item.get("status", "ok") not in ("ok", "complete"):
+            raise RuntimeError("Manifest contains a failed or pending request")
+        if kind == "statistics" and item.get("status") != "ok":
+            raise RuntimeError("Statistics request is not marked successful")
+        relative = _safe_relative(str(item.get("file") or ""))
+        if relative == "manifest.json" or relative in inventory:
+            raise RuntimeError(f"Duplicate or reserved manifest path: {relative}")
+        if not isinstance(item.get("bytes"), int) or item["bytes"] < 0:
+            raise RuntimeError(f"Invalid byte count for {relative}")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(item.get("sha256") or "")):
+            raise RuntimeError(f"Invalid SHA-256 for {relative}")
+        inventory[relative] = item
+        kinds.add(kind)
+        if kind == "statistics":
+            statistics.append(item)
+    expected = manifest.get("statistics_requests_expected")
+    successful = manifest.get("statistics_requests_ok")
+    if kinds != {"statistics_model", "counties", "statistics"}:
+        raise RuntimeError("Manifest must include model, counties and statistics requests")
+    if not isinstance(expected, int) or expected <= 0 or successful != expected or len(statistics) != expected:
+        raise RuntimeError("Statistics request inventory is incomplete")
+    if manifest.get("errors"):
+        raise RuntimeError("Manifest contains errors")
+    return inventory
 
 def upload_immutable(blob, payload: bytes, metadata: dict[str, str], content_type: str) -> bool:
     try:
@@ -183,8 +222,14 @@ def upload_snapshot(snapshot_dir: Path) -> dict:
             if sha != expected_sha or size != expected_size or props.size != expected_size:
                 raise RuntimeError(f"Azure readback verification failed: {relative}")
         saved_manifest = container.download_blob(manifest_name).readall()
-        if saved_manifest != manifest_bytes:
-            raise RuntimeError("Azure manifest readback differs from source manifest")
+        manifest_props = container.get_blob_client(manifest_name).get_blob_properties()
+        if (
+            saved_manifest != manifest_bytes
+            or manifest_props.size != len(manifest_bytes)
+            or (manifest_props.metadata or {}).get("sha256") != manifest_sha
+            or (manifest_props.metadata or {}).get("snapshot_id") != snapshot_id
+        ):
+            raise RuntimeError("Azure manifest readback or metadata verification failed")
         return {
             "status": "verified", "snapshot_id": snapshot_id,
             "container": CONTAINER, "raw_file_count": len(files),
@@ -217,20 +262,7 @@ def audit_archive() -> dict:
             if manifest.get("run_id") != snapshot_id or manifest.get("complete") is not True or manifest.get("status") != "complete":
                 raise RuntimeError(f"Archived manifest is not a complete matching snapshot: {manifest_name}")
             # Reuse the exact manifest inventory checks without creating local files.
-            request_files = {}
-            for item in manifest.get("requests", []):
-                relative = _safe_relative(str(item.get("file") or ""))
-                if relative in request_files:
-                    raise RuntimeError(f"Duplicate file in {manifest_name}: {relative}")
-                request_files[relative] = item
-            stats = [x for x in manifest.get("requests", []) if x.get("kind") == "statistics" and x.get("status") == "ok"]
-            if (
-                len(stats) != manifest.get("statistics_requests_expected")
-                or manifest.get("statistics_requests_ok") != manifest.get("statistics_requests_expected")
-                or manifest.get("errors")
-                or not {"statistics_model", "counties"}.issubset({x.get("kind") for x in manifest.get("requests", [])})
-            ):
-                raise RuntimeError(f"Incomplete request inventory in {manifest_name}")
+            request_files = validate_manifest_inventory(manifest)
             expected_names = {manifest_name}
             for relative, item in request_files.items():
                 name = f"snapshots/{snapshot_id}/{relative}"
@@ -247,7 +279,13 @@ def audit_archive() -> dict:
                 total_bytes += len(body)
             mblob = container.get_blob_client(manifest_name)
             mprops = mblob.get_blob_properties()
-            if mprops.size != len(raw_manifest) or (mprops.metadata or {}).get("sha256") != digest_bytes(raw_manifest):
+            mmeta = mprops.metadata or {}
+            if (
+                mprops.size != len(raw_manifest)
+                or mmeta.get("sha256") != digest_bytes(raw_manifest)
+                or mmeta.get("snapshot_id") != snapshot_id
+                or mmeta.get("object_type") != "source_manifest"
+            ):
                 raise RuntimeError(f"Manifest blob metadata/size mismatch: {manifest_name}")
             referenced.update(expected_names)
             checked += 1
@@ -277,12 +315,9 @@ def restore_snapshot(snapshot_id: str, output_dir: Path) -> dict:
         manifest = json.loads(manifest_bytes.decode("utf-8-sig"))
         if manifest.get("run_id") != snapshot_id or manifest.get("status") != "complete" or manifest.get("complete") is not True:
             raise RuntimeError("Archived snapshot manifest is not a complete matching baseline")
-        entries = manifest.get("requests")
-        if not isinstance(entries, list):
-            raise RuntimeError("Manifest request inventory is invalid")
+        entries = validate_manifest_inventory(manifest)
         payloads = {}
-        for item in entries:
-            relative = _safe_relative(str(item.get("file") or ""))
+        for relative, item in entries.items():
             name = f"{prefix}/{relative}"
             body = container.download_blob(name).readall()
             if digest_bytes(body) != item.get("sha256") or len(body) != item.get("bytes"):
