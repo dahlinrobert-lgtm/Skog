@@ -94,9 +94,14 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.ok(productionHtml.includes('getElementById("mapSummary").hidden=isElk'));
   assert.ok(productionHtml.includes('console.error("Skogskoll: geometri för valt jaktområde kunde inte hämtas"'));
   assert.ok(!productionHtml.includes('mapSummary").textContent="Områdets geometri kunde inte hämtas"'));
-  assert.ok(productionHtml.includes('UPPER(omrnum) = '));
+  assert.ok(productionHtml.includes('where:"omrnum = "+quoteArcGis(areaNumber)'));
   assert.ok(productionHtml.includes('resultRecordCount","100"'));
   assert.ok(productionHtml.includes('removeHuntingAreaControl();\n  setAfoLayerVisible(false);'));
+  assert.ok(productionHtml.includes('const elkRow=event.target.closest(".elkdata-table tbody tr[data-elk-area-key]")'));
+  assert.ok(productionHtml.includes('if(elkRow&&(event.key==="Enter"||event.key===" "))'));
+  assert.ok(productionHtml.includes('.map-card.is-animal-map #mapSummary[hidden]{display:none!important}'));
+  assert.ok(productionHtml.includes('Hämtar geometri för "+title+" …'));
+
   assert.match(productionHtml, /Regional avskjutningsstatistik/);
   assert.match(productionHtml, /inte geografiskt kopplad till ÄFO-polygonerna/);
 });
