@@ -448,6 +448,7 @@ Identifiera relevanta myndighetsärenden och beslut. Börja eventuell nationell 
 | Life2Taiga | Gul; producent och licens för specifikt lager behöver klarläggas | Naturvårdsåtgärder |
 | Sveaskog och SCA | Kräver uttryckliga rättigheter/avtal för aktuell användning | Eventuella datapartnerskap |
 | Skogsindustrierna | Villkor måste klarläggas per tjänst/lager | Bransch- och skoglig kontext |
+| Rovbase – historiskt uttag av döda rovdjur | Teknisk export mottagen och preliminärt kvalitetsgranskad 2026-11-18. Kommersiell användning, historisk lagring, bearbetning och kundvisning är inte bedömda; datakällan är ännu inte registrerad i `sources.yml`. | Intern analys och geografisk kvalitetssäkring efter rättighets- och källvillkorsgranskning |
 
 ## 5. Samlad väntelista och nästa åtgärd
 
@@ -468,6 +469,7 @@ Identifiera relevanta myndighetsärenden och beslut. Börja eventuell nationell 
 | Naturvårdsverket | Exakta prioriterade lager och producentvillkor | Välj lager och dokumentera metadata |
 | Vindbrukskollen | Nationell historik och fullständighet | Verifiera återkommande snapshotflöde |
 | Länsstyrelsernas diarier | Första pilotbaslinjen är publicerad för Norrbotten, oktober 2026, kategori B; återstående är reproducerbarhet, täckning och tekniska begränsningar | Upprepa avgränsad manuell månadskörning; dokumentera län/fras-täckning och granska metadata separat från dokument/bilagor |
+| Rovbase | Fullständig kvalitetsrapport och administrativ koordinatvalidering återstår; 35 RT90-avvikelser och 32 poster med skyddsjakt enskilds initiativ behöver utredas. Rättighets-/användningsvillkor saknas i projektunderlaget. | Kör geografisk validering mot befintligt Lantmäteriet-GPKG; begär källförtydligande och bedöm lagring, analys och kundvisning separat. |
 
 ## 6. Hur snapshots och historik ska fungera
 
@@ -688,3 +690,14 @@ Nästa steg är CI-verifiering och körning mot pilotens CSV, därefter benchmar
 PR #413 är sammanslagen i main (merge commit `408b098bbfa405d8cfe58f8e4c40f3e2295a18f8`). Den nya `scripts/build_nvdb_candidate_features.py` skapar händelse- och kandidatnivåtabeller samt en JSON-sammanfattning från NVDB-matchningens CSV. Egenskaperna omfattar bland annat närmaste/näst närmaste avstånd, gap och kvot, vägnummer, vägroll, kandidatantal, element-ID, källproveniens och sökstatus. Tre riktade tester har lagts till och kopplats till Police–NVR-workflowen.
 
 Arbetsinriktningen är nationell statistisk egenskapsanalys i stället för manuell granskning av enskilda pilotrader. Extraktionen ger beskrivande variabler, inte facit eller automatiska matchningsbeslut. Nationell matchningskörning, prestandamätning och analys av återkommande mönster återstår. Ingen temporal matchningslogik ändras.
+
+
+## Rovbase – första dataintag och kvalitetskontroll (2026-11-18)
+
+Ett originaluttag från Rovbase mottogs och arkiverades oförändrat i OneDrive under `Skogskoll/Rovbase/raw/rovbase_originaluttag_2026-11-18.zip`. Arkivet är 65 735 567 byte och SHA-256 är `81be641c5c5bb18f396cd0a14240533f6b012e7f06941a91ed7115e9dc3556eb`. Fyra artfiler innehåller totalt 15 561 unika `RovbaseID`: björn 9 620, lodjur 4 652, varg 855 och järv 434.
+
+Initial kvalitetskontroll finns i OneDrive `Skogskoll/Rovbase/quality/`: Markdown- och JSON-rapport, art-/årstabell med antal och andelar (162 art-årsrader), koordinatavvikelsefil för 35 RT90-rader samt ett Python-skript för geografisk kontroll. Kontrollrapporten identifierar 866 osäkra dödsdatum, 6 189 saknade individ-ID, 50 saknade kön och 5 904 saknade verifierade åldersvärden. 32 poster har dödsorsaken `Skyddsjakt enskilds initiativ`, vilket behöver stämmas av mot tidigare uppgift från källägaren.
+
+Befintliga administrativa gränser har identifierats i OneDrive och ska återanvändas: Lantmäteriets `kommun-lan-rike_2025.gpkg` (lager `kommun`, `lan`, `rike`, EPSG:3006; 290 kommunpolygoner) samt SCB:s årsvisa `Kommun_2016.gml`–`Kommun_2026.gml`. Polygonkontrollen är ännu inte körd. 35 RT90-poster skiljer mer än 10 meter mellan en oberoende transformation med antagandet EPSG:3021 och leverantörens SWEREF99-kolumner; avvikelsen är en granskningssignal, inte ett fastställt koordinatfel.
+
+**Begränsning:** Rovbase är ännu inte registrerad i `data-platform/config/sources.yml`. Tekniskt mottaget uttag innebär inte att kommersiell användning, historisk lagring, bearbetning, kundvisning eller vidare distribution är godkänd. Nästa steg är att köra `validate_rovbase_geography.py` lokalt mot befintlig OneDrive-GPKG, granska avvikelserna och inhämta källägarens förtydliganden innan produktionsflöde eller kundanvändning planeras.
