@@ -73,6 +73,12 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /objectIds/);
   assert.match(productionHtml, /outSR.*4326/);
   assert.match(productionHtml, /async function fetchAfoBoundaryData\(\)/);
+  assert.match(productionHtml, /function requestArcGisJsonp\(url,requestId\)/);
+  assert.match(productionHtml, /url\.searchParams\.set\("callback",callbackName\)/);
+  assert.match(productionHtml, /geometry:arcgisGeometryToGeoJSON\(feature\.geometry\)/);
+  assert.match(productionHtml, /casePreview"\)\.hidden=isNvr\|\|isElk/);
+  assert.match(productionHtml, /\.map-card\.is-animal-map \.case-preview\{display:none!important\}/);
+  assert.doesNotMatch(productionHtml, /document\.getElementById\("casePreview"\)\.innerHTML=.*geometri kunde inte hämtas/i);
   assert.match(productionHtml, /function setAfoLayerVisible\(visible\)/);
   assert.match(productionHtml, /L\.geoJSON\(data/);
   assert.doesNotMatch(productionHtml, /tileLayer\.wms/);
