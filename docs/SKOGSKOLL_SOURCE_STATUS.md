@@ -47,7 +47,7 @@
 - **Trafikverket – Miljöwebb Landskap:** Verifiera vilka lager som ingår i Gräsmyr-piloten, kontrollera antal/geografisk täckning och spara senaste två kompletta snapshots med manifest och kontrollsummor.
 - **Trafikverket – NVDB Viltolyckor:** Verifiera produktens exakta definition, referensperiod, geografiska täckning och uppdateringsdatum; spara jämförbara snapshots och dokumentera om värdena är frekvenser, antal eller klassningar.
 - **Trafikverket – NVDB vägnät och Lastkajen:** Dokumentera vilken NVDB-produktversion som finns lokalt, kontrollera Lastkajens beställnings- och licensvillkor och bygg ett versionsstyrt uppdateringsflöde innan vägnätsförändringar används i kundhistorik.
-- **Viltdata.se – nationell avskjutningsstatistik:** Utred skriftliga produktvillkor och rättigheter för exakt avskjutningsstatistikprodukt. Därefter etablera Azure Blob Storage med verifierad skrivning, SHA-256/integritetskontroll och återläsning innan historik eller schemaläggning aktiveras.
+- **Viltdata.se – nationell avskjutningsstatistik:** Inhämta skriftligt besked om historisk lagring/arkivering av exakt avskjutningsstatistikprodukt och avsedda användningar. Därefter kontrollera Azure Storage Account-region och RBAC-roll/scope; först efter dokumenterat rättighetsbesked får den manuella upload-workflowens rights_approved bekräftas och upload, audit och restore live-verifieras. Ingen schemaläggning eller kundvisning före separat bedömning.
 
 ## Tolkning och begränsningar
 
