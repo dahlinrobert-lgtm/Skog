@@ -439,16 +439,16 @@ Fortsättningsinstruktion:
 4. Uppdatera denna överlämning när PR-status och nästa implementation är verifierade.
 
 
-## AI-projektledare – agent v1 under implementation (2026-11-18)
+## AI-projektledare – agent v1 liveverifierad (2026-11-18)
 
-PR #431 är mergad i main med merge commit `257777d1cd9b1201ff0c8892e50fe22fab209db8`. Projektledarens sex styrdokument finns nu i huvudgrenen.
+PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a293c`). Agentens kod, tester och manuella workflow finns i huvudgrenen.
 
-En första körbar read-only-agent utvecklas i branch `feature/ai-project-manager-agent-v1`:
-- `scripts/project_manager_agent.py` – GitHub REST-inventering av issues, PR, workflows, 50 senaste workflow-körningar, commits och nio styrdokument.
-- `tests/test_project_manager_agent.py` – fyra riktade tester.
-- `.github/workflows/project-manager.yml` – tester på PR/push och manuell inventering via `workflow_dispatch`.
-- `docs/PROJECT_MANAGER_AGENT.md` – arkitektur, säkerhetsgränser och körinstruktioner.
+- **Manuell livekörning #5:** [GitHub Actions #44413951767](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44413951767), körd på `main` vid commit `9c8be18276396f3c53ff30d0dbe91c57e69a293c`.
+- Jobben `tests` och `inventory` avslutades båda med `success`. Steget för read-only inventering och artifact-uppladdningen passerade.
+- Artifact `skogskoll-project-manager-report`, ID `14479221503`, innehåller `inventory.json` och `report.md`. Storlek 31 063 byte; SHA-256 från Actions-artifactmetadata: `e8376f26d807a961b801e177f756fb3a4b4018bc46ec7d62299a92514d4cce33`. Retention till 2026-12-02 22:42:32 UTC.
+- Rapporten redovisar 6 issues i insamlingsfönstret (5 öppna), 300 PR-poster (5 öppna, 292 mergade), 100 workflows, 50 senaste workflowkörningar och 14 misslyckade/avbrutna körningar. Samtliga nio projektledardokument hittades.
+- **Viktig begränsning:** issues och PR hämtas med högst tre sidor vardera och workflowhistoriken omfattar 50 körningar. Rapporten är därför en avgränsad nulägesinventering, inte en fullständig inventering av GitHub-historiken eller alla öppna objekt om fler sidor finns.
+- Misslyckade/avbrutna körningar är granskningssignaler, inte automatiskt bevis på källfel. Den tidigare misslyckade agentkörningen #44411646613 finns kvar som historisk signal trots att körning #5 lyckades.
+- Agent v1 är deterministisk och read-only. Ingen LLM/API, ingen schedule och inga GitHub-skrivoperationer. Agenten ändrar inte backlogg, issues, PR eller källstatus.
 
-Workflowens GITHUB_TOKEN har endast read-behörigheter för contents, issues, pull requests och Actions. Ingen schedule, LLM/API eller GitHub-skrivoperation ingår. Rapporten blir `inventory.json` och `report.md` som 14-dagars Actions-artifact. Ingen livekörning eller CI-verifiering är ännu bekräftad; invänta PR-checks och kör därefter workflowen manuellt.
-
-**Nästa steg:** verifiera test/CI och en manuell liveinventering. Först därefter utvärderas pagination, rapporthistorik och LLM-adapter. Modell, API-secret, dataskydd, kostnadstak och eventuell veckoschedule kräver separat beslut. Agenten får aldrig merge:a, ändra källstatus, starta insamling eller skriva produktionsdata utan uttryckligt godkännande.
+**Nästa steg:** granska inventeringens avgränsningar, förbättra pagination och lägg till jämförelse mot föregående inventering med tydlig historik/proveniens. Separat modell-/kostnads-/databehandlingsbeslut krävs innan LLM eller schedule övervägs.

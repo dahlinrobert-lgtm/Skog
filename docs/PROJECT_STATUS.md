@@ -24,12 +24,11 @@ Skog har en etablerad dataplattform med flera fungerande insamlings-, snapshot-,
 
 ## AI-projektledare – implementation v1 (2026-11-18)
 
-- PR #431 är mergad i `main` (merge commit `257777d1cd9b1201ff0c8892e50fe22fab209db8`); styrdokumenten finns nu i huvudgrenen.
-- En första körbar, read-only GitHub-inventeringsagent har lagts till i utvecklingsbranch `feature/ai-project-manager-agent-v1`: `scripts/project_manager_agent.py`.
-- Agenten samlar issues, PR, workflows, 50 senaste workflow-körningarna, senaste commits och förekomst/blob-SHA för nio styrdokument. Den skriver `inventory.json` och `report.md` som artifact via en manuell workflow.
-- Workflow `.github/workflows/project-manager.yml` har endast read-behörigheter (`contents`, `issues`, `pull-requests`, `actions`). Ingen schedule, ingen LLM/API och inga GitHub-skrivoperationer ingår.
-- Fyra riktade enhetstester finns i `tests/test_project_manager_agent.py`. CI-verifiering via PR återstår; ingen liveinventering är ännu verifierad.
-- Detta är agentens insamlings-/rapportgrund, inte ännu språkmodellbaserad analys eller autonom projektplanering.
+- PR #431 (styrdokument) och PR #432 (agent v1) är mergade i `main`; agentens merge commit är `9c8be18276396f3c53ff30d0dbe91c57e69a293c`.
+- Manuell livekörning #5, [Actions #44413951767](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44413951767), kördes på `main`; test- och inventory-jobben avslutades med `success`.
+- Artifact #14479221503 innehåller `inventory.json` och `report.md`. Första rapporten visar 6 issues i insamlingsfönstret (5 öppna), 300 PR-poster (5 öppna, 292 mergade), 100 workflows och 50 workflowkörningar; 14 körningar markerades failed/cancelled.
+- Samtliga nio projektledardokument hittades. Inventeringen är begränsad till högst tre sidor issues/PR och 50 workflowkörningar.
+- Agenten har read-only-behörighet. Ingen schedule, LLM/API eller GitHub-skrivoperation ingår. Detta är en deterministisk inventerings-/rapportagent, inte ännu språkmodellbaserad analys eller autonom projektplanering.
 
 ## Kända öppna GitHub-issues vid baslinjen
 
