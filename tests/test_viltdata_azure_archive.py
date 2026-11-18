@@ -33,6 +33,8 @@ def make_snapshot(root: pathlib.Path):
         "schema_version": 2, "run_id": root.name, "status": "complete", "complete": True,
         "requests": requests, "statistics_requests_ok": 1,
         "statistics_requests_expected": 1, "errors": [],
+        "species_count": 1, "species_batch_count": 1, "county_count": 0,
+        "species": [{"id": 1, "name": "Test species"}],
     }
     (root / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     return contents
