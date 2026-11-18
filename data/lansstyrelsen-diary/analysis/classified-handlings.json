@@ -38260,131 +38260,6 @@
     "classification_version": "1.0.0"
   },
   {
-    "diary_number": "1050-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1050-2026-1",
-    "title": "Kungörelse om ansökan om tillstånd till vattenverksamhet enligt 11 kap. miljöbalken",
-    "date": "2026-03-09",
-    "sender_recipient": "Nacka tingsrätt",
-    "classes": [
-      "permit"
-    ],
-    "matched_rules": [
-      "permit"
-    ],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1050-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1050-2026-2",
-    "title": "Begäran om anstånd",
-    "date": "2026-03-30",
-    "sender_recipient": "Personuppgift",
-    "classes": [
-      "other"
-    ],
-    "matched_rules": [],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1050-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1050-2026-3",
-    "title": "Underrättelse om anstånd till den 15 maj 2026",
-    "date": "2026-03-30",
-    "sender_recipient": "Nacka tingsrätt - avdelning 3",
-    "classes": [
-      "other"
-    ],
-    "matched_rules": [],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1050-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1050-2026-4",
-    "title": "Länsstyrelsens yttrande över ansökan",
-    "date": "2026-05-12",
-    "sender_recipient": "Personuppgift",
-    "classes": [
-      "opinion"
-    ],
-    "matched_rules": [
-      "opinion"
-    ],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1055-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1055-2026-1",
-    "title": "Kungörelse om ansökan om tillstånd till vattenverksamhet enligt 11 kap. miljöbalken",
-    "date": "2026-03-10",
-    "sender_recipient": "Personuppgift",
-    "classes": [
-      "permit"
-    ],
-    "matched_rules": [
-      "permit"
-    ],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1055-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1055-2026-2",
-    "title": "Begäran om anstånd",
-    "date": "2026-03-30",
-    "sender_recipient": "Personuppgift",
-    "classes": [
-      "other"
-    ],
-    "matched_rules": [],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1055-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1055-2026-3",
-    "title": "Underrättelse om anstånd till den 15 maj 2026",
-    "date": "2026-03-30",
-    "sender_recipient": "Nacka tingsrätt - avdelning 3",
-    "classes": [
-      "other"
-    ],
-    "matched_rules": [],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1055-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1055-2026-4",
-    "title": "Underrättelse för kännedom",
-    "date": "2026-04-02",
-    "sender_recipient": "Nacka tingsrätt - avdelning 3",
-    "classes": [
-      "other"
-    ],
-    "matched_rules": [],
-    "classification_version": "1.0.0"
-  },
-  {
-    "diary_number": "1055-2026",
-    "diary": "Länsstyrelsen i Gotlands län",
-    "handling_number": "1055-2026-5",
-    "title": "Länsstyrelsens yttrande över ansökan Killingmyr",
-    "date": "2026-05-12",
-    "sender_recipient": "Personuppgift",
-    "classes": [
-      "opinion"
-    ],
-    "matched_rules": [
-      "opinion"
-    ],
-    "classification_version": "1.0.0"
-  },
-  {
     "diary_number": "1696-2026",
     "diary": "Länsstyrelsen i Gotlands län",
     "handling_number": "1696-2026-1",
@@ -38608,6 +38483,19 @@
     "matched_rules": [
       "administrative"
     ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "1739-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "1739-2026-10",
+    "title": "Sv_ Samsyn kring villkor i beslut med dnr 1739-2026 (1/1)",
+    "date": "2026-11-16",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
     "classification_version": "1.0.0"
   },
   {
@@ -40537,6 +40425,34 @@
     "classification_version": "1.0.0"
   },
   {
+    "diary_number": "3617-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "3617-2026-15",
+    "title": "Yttrande över remiss",
+    "date": "2026-11-16",
+    "sender_recipient": "Försvarsmakten",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "3617-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "3617-2026-16",
+    "title": "Komplettering",
+    "date": "2026-11-12",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
     "diary_number": "3878-2026",
     "diary": "Länsstyrelsen i Gotlands län",
     "handling_number": "3878-2026-1",
@@ -40623,6 +40539,47 @@
     "title": "Begäran om komplettering",
     "date": "2026-11-09",
     "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4021-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4021-2026-8",
+    "title": "Komplettering",
+    "date": "2026-11-11",
+    "sender_recipient": "Region Gotland",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4021-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4021-2026-9",
+    "title": "Yttrande över remiss",
+    "date": "2026-11-12",
+    "sender_recipient": "Sjöfartsverket",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4021-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4021-2026-10",
+    "title": "Sekretessmarkerad",
+    "date": "2026-11-16",
+    "sender_recipient": "Sekretessmarkerad",
     "classes": [
       "other"
     ],
@@ -40826,11 +40783,43 @@
     "classification_version": "1.0.0"
   },
   {
+    "diary_number": "4325-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4325-2026-2",
+    "title": "Yttrande över ansökan",
+    "date": "2026-11-11",
+    "sender_recipient": "Nacka tingsrätt",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
     "diary_number": "4326-2026",
     "diary": "Länsstyrelsen i Gotlands län",
     "handling_number": "4326-2026-1",
     "title": "Begäran om yttrande över tillstånd till vattenverksamhet enligt miljöbalken 11 kap",
     "date": "2026-10-22",
+    "sender_recipient": "Nacka tingsrätt",
+    "classes": [
+      "permit",
+      "opinion"
+    ],
+    "matched_rules": [
+      "permit",
+      "opinion"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4326-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4326-2026-2",
+    "title": "Yttrande över tillståndsansökan",
+    "date": "2026-11-11",
     "sender_recipient": "Nacka tingsrätt",
     "classes": [
       "permit",
@@ -40963,6 +40952,21 @@
       "other"
     ],
     "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "903-2025",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "903-2025-2",
+    "title": "Avslutande av ärendet",
+    "date": "2026-11-17",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "administrative"
+    ],
+    "matched_rules": [
+      "administrative"
+    ],
     "classification_version": "1.0.0"
   },
   {
@@ -54627,6 +54631,21 @@
     "classification_version": "1.0.0"
   },
   {
+    "diary_number": "4672-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4672-2026-3",
+    "title": "Anbudsförfrågan",
+    "date": "2026-11-12",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "procurement"
+    ],
+    "matched_rules": [
+      "procurement"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
     "diary_number": "4712-2026",
     "diary": "Länsstyrelsen i Gotlands län",
     "handling_number": "4712-2026-1",
@@ -54761,6 +54780,19 @@
     "handling_number": "5000-2026-9",
     "title": "Meddelande med delgivning av beslut",
     "date": "2026-10-15",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "5000-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "5000-2026-10",
+    "title": "Meddelande om mottaget delbeslut",
+    "date": "2026-11-03",
     "sender_recipient": "Personuppgift",
     "classes": [
       "other"
@@ -90901,6 +90933,49 @@
     "matched_rules": [
       "opinion"
     ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "4753-2026",
+    "diary": "Länsstyrelsen i Gotlands län",
+    "handling_number": "4753-2026-1",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet",
+    "date": "2026-11-11",
+    "sender_recipient": "Gotlands Elnät AB",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6841-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6841-2026-1",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vinbäcken, bäck som går via Kolbäck ut i Kolbäcksån. Närmsta vattendrag är Kolbäcksån (WA65627249), Hallstahammar kommun",
+    "date": "2026-11-13",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "6841-2026",
+    "diary": "Länsstyrelsen i Västmanlands län",
+    "handling_number": "6841-2026-2",
+    "title": "Uppgifter om verksamhet och miljöpåverkan",
+    "date": "2026-11-13",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
     "classification_version": "1.0.0"
   }
 ]
