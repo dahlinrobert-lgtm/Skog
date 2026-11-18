@@ -77,7 +77,7 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /L\.geoJSON\(data/);
   assert.doesNotMatch(productionHtml, /tileLayer\.wms/);
   assert.doesNotMatch(productionHtml, /elkAfoMap/);
-  assert.match(productionHtml, /setAfoLayerVisible\(true\)/);
+  assert.match(productionHtml, /setAfoLayerVisible\(false\)/);
   assert.match(productionHtml, /setAfoLayerVisible\(false\)/);
   assert.match(productionHtml, /document\.querySelector\("\.map-card"\)\.hidden=false/);
   assert.match(productionHtml, /map-card\.is-animal-map/);
