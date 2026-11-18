@@ -1105,7 +1105,7 @@ async function selectElkAreaOnMap(area){
   const bounds=layer.getBounds();
   if(bounds.isValid())activityMap.fitBounds(bounds.pad(.18),{maxZoom:13});
   document.getElementById("mapSummary").textContent=title+" · "+data.features.length.toLocaleString("sv-SE")+" geometri(er)";
-' · '+esc(area.county||"")+'<br>ÄFO: '+esc(area.afo||"")+'<br>Endast det valda jaktområdet visas. Välj en annan tabellrad för att byta område.</div>';
+
   window.setTimeout(()=>activityMap&&activityMap.invalidateSize(),80);
  }catch(error){
   if(requestId!==selectedHuntingAreaRequest)return;
