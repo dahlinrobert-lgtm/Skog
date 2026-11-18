@@ -145,7 +145,21 @@ def validate_manifest_inventory(manifest: dict) -> dict[str, dict]:
     successful = manifest.get("statistics_requests_ok")
     if kinds != {"statistics_model", "counties", "statistics"}:
         raise RuntimeError("Manifest must include model, counties and statistics requests")
-    if not isinstance(expected, int) or expected <= 0 or successful != expected or len(statistics) != expected:
+    species_count = manifest.get("species_count")
+    batch_count = manifest.get("species_batch_count")
+    county_count = manifest.get("county_count")
+    species = manifest.get("species")
+    if (
+        not isinstance(species_count, int) or species_count <= 0
+        or not isinstance(batch_count, int) or batch_count <= 0
+        or not isinstance(county_count, int) or county_count < 0
+        or not isinstance(species, list) or len(species) != species_count
+    ):
+        raise RuntimeError("Manifest species/county inventory totals are invalid")
+    if (
+        not isinstance(expected, int) or expected <= 0 or successful != expected
+        or len(statistics) != expected or expected != (1 + county_count) * batch_count
+    ):
         raise RuntimeError("Statistics request inventory is incomplete")
     if manifest.get("errors"):
         raise RuntimeError("Manifest contains errors")
@@ -219,7 +233,13 @@ def upload_snapshot(snapshot_dir: Path) -> dict:
             sha, size = digest_bytes(body), len(body)
             expected_sha, expected_size = digest_file(path)
             props = blob.get_blob_properties()
-            if sha != expected_sha or size != expected_size or props.size != expected_size:
+            metadata = props.metadata or {}
+            if (
+                sha != expected_sha or size != expected_size or props.size != expected_size
+                or metadata.get("sha256") != expected_sha
+                or metadata.get("snapshot_id") != snapshot_id
+                or metadata.get("object_type") != "raw_source_json"
+            ):
                 raise RuntimeError(f"Azure readback verification failed: {relative}")
         saved_manifest = container.download_blob(manifest_name).readall()
         manifest_props = container.get_blob_client(manifest_name).get_blob_properties()
