@@ -13,7 +13,7 @@
 | Viltdata historisk lagring och användningsvillkor | Azure-arkiv och statistikprodukt | Blockerad | Skriftligt besked för exakt statistikprodukt och användning. | Inga riktiga snapshots till Azure eller kundvisning. |
 | Oberoende facit och nationell täckning för NVDB-matchning | Vägmatchning av viltolyckor | Ej verifierat | Manuellt bedömda positiva, negativa och tvetydiga fall; benchmark och täckningskontroll. | Resultat förblir review-only. |
 | Produktionsprojekt för Supabase/PostGIS och liveverifiering | Kundprodukt | Ej verifierat | Separat testprojekt, auth/RLS, transaktioner, backup/restore och ingestion. | Ingen kunddrift eller avisering. |
-| GitHub read-only inventeringsagent | AI-projektledare | Implementerad i feature-branch; CI/livekörning återstår | Mergad/CI-verifierad kod, manuell workflowkörning, därefter pagination/freshness-härdning. | Agentens statusunderlag är inte ännu liveverifierat. |
+| GitHub read-only inventeringsagent | AI-projektledare | v1 mergad och liveverifierad 2026-11-18 | PR #432 och manuell Actions #44413951767 passerade tester och inventering; artifact #14479221503 finns. Nästa beroende är bättre pagination/freshness och historisk jämförelse. | Inventeringen är begränsad till 3 sidor issues/PR och 50 workflowkörningar; den är inte en fullständig historisk inventering. |
 | LLM/API och eventuell schedule | AI-syntes och återkommande rapport | Väntar på beslut | Välj modell, API-secret, datahantering, kostnadstak och frekvens; håll skrivmandat avstängt. | Agenten förblir deterministisk och manuell tills godkännande. |
 
 ## Hanteringsregler
