@@ -1,6 +1,6 @@
 # Viltdata – Azure Blob Storage
 
-**Status:** Syntetiskt Azure Blob write/readback-test live-verifierat 2026-11-18. Permanent arkivering av Viltdata-original är inte implementerad eller godkänd.
+**Status:** Syntetiskt Azure Blob write/readback-test live-verifierat 2026-11-18. Arkivfunktionerna upload/audit/restore är mergade i `main` via PR #427, men ingen riktig Viltdata-snapshot har ännu laddats upp. Rättighetsbedömning saknas fortfarande.
 
 ## Befintlig Azure-miljö
 
@@ -55,9 +55,9 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 - Om container creation nekas ska vi inte återanvända en annan källas container. Då behöver container skapas separat eller Azure RBAC justeras av administratören.
 - Efter godkänt test ska ett separat, uttryckligen avgränsat snapshot-upload/restore-flöde byggas och verifieras. Första kompletta snapshot ska fortfarande etableras som tyst baslinje utan historiska larm.
 
-## Snapshotarkiv – implementation i separat branch
+## Snapshotarkiv – implementation i main (PR #427)
 
-Branch `feat/viltdata-azure-snapshot-archive` innehåller nu ett samlat verktyg `scripts/viltdata_azure_archive.py` med tre kommandon:
+`main` innehåller nu ett samlat verktyg `scripts/viltdata_azure_archive.py` med tre kommandon:
 
 - `upload`: kräver `status=complete`, `complete=true`, fullständigt request-antal, modell-/länsinventering, samtliga råfiler, exakt filinventering och matchande byteantal/SHA-256. Råfiler och ursprungligt `manifest.json` laddas upp byte för byte under `snapshots/<snapshot-id>/...` med create-only-semantik. En befintlig blob accepteras endast om metadata och bytes överensstämmer.
 - `audit`: inventerar samtliga snapshotprefix, läser manifest och varje råblob, kontrollerar manifestreferenser, storlek, SHA-256, Blob-metadata samt orphan-/saknade objekt.
@@ -67,8 +67,7 @@ Workflow `.github/workflows/viltdata-azure-archive.yml` är manuell och har oper
 
 ## Nästa steg
 
-1. Granska PR #427 och dess CI-resultat; 322 tester passerade (8 nya arkivtester).
+1. Inhämta skriftligt besked från Svenska Jägareförbundet/Viltdata om historisk lagring/arkivering av exakt `kill`-statistikprodukt samt avsedda användningar. `rights_approved` ska inte aktiveras före dokumenterat besked.
 2. Kontrollera Storage Account-resursens faktiska `location` och den använda identitetens RBAC-roll/scope i Azure Portal.
-3. Inhämta skriftligt besked om historisk lagring/arkivering av exakt Viltdata-produkt. `rights_approved` ska inte aktiveras före detta.
-4. Efter rättighetsbesked: kör en manuell upload, därefter djup audit och restore till en ny katalog. Jämför återställd snapshot med ursprungsartefakten.
-5. Första kompletta snapshot ska etableras som tyst baslinje; ingen historisk avisering. Ingen schemaläggning innan upload, audit, restore och rättighetsbedömning är verifierade.
+3. När rättighetsbeskedet finns: kör manuell `upload` med `rights_approved=true`, därefter `audit` och `restore` till en ny katalog. Jämför återställd snapshot byte för byte/SHA-256 med ursprungsartefakten.
+4. Dokumentera första arkiverade kompletta snapshot som tyst baslinje; skapa inga historiska aviseringar. Ingen schemaläggning innan upload, audit, restore, region/RBAC och rättigheter är verifierade.
