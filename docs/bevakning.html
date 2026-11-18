@@ -262,6 +262,7 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .elkdata-table-wrap{overflow-x:auto;border:1px solid #e5ebe3;border-radius:13px}
 .map-legend[hidden]{display:none!important}
 .map-card.is-animal-map .map-layout{grid-template-columns:1fr}
+.map-card.is-animal-map .case-preview{display:none!important}
 .map-card.is-animal-map .map-legend{display:none}
 .map-card.is-animal-map #activityMap{height:clamp(300px,48vh,470px)}
 .map-card.is-animal-map .case-preview{min-height:110px}
@@ -585,6 +586,7 @@ let huntingAreasSummary={license:0,management:0};
 let selectedHuntingAreaKey=null;
 let selectedHuntingAreaLayer=null;
 let selectedHuntingAreaRequest=0;
+let arcGisJsonpSequence=0;
 let afoBoundaryData=null;
 let afoBoundaryPromise=null;
 let afoBoundaryLoading=false;
@@ -993,6 +995,39 @@ function quoteArcGis(value){
 function normalizeHuntingAreaNumber(value){
  return String(value??"").trim().toLocaleUpperCase("sv").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
 }
+function requestArcGisJsonp(url,requestId){
+ return new Promise((resolve,reject)=>{
+  const callbackName="__skogArcGisJsonp"+(++arcGisJsonpSequence);
+  const script=document.createElement("script");
+  let settled=false;
+  const cleanup=()=>{
+   if(settled)return;
+   settled=true;
+   window.clearTimeout(timer);
+   script.remove();
+   try{delete window[callbackName];}catch{window[callbackName]=undefined;}
+  };
+  const timer=window.setTimeout(()=>{
+   cleanup();
+   reject(new Error("Tidsgränsen överskreds vid kontakt med Länsstyrelsens karttjänst"));
+  },30000);
+  window[callbackName]=payload=>{
+   cleanup();
+   if(requestId!==selectedHuntingAreaRequest){resolve(null);return;}
+   if(payload?.error)reject(new Error(payload.error.message||"JaktAdm returnerade ett fel"));
+   else resolve(payload);
+  };
+  script.onerror=()=>{
+   cleanup();
+   reject(new Error("Länsstyrelsens karttjänst kunde inte nås från webbläsaren"));
+  };
+  url.searchParams.set("f","json");
+  url.searchParams.set("callback",callbackName);
+  script.src=url.toString();
+  script.async=true;
+  document.head.appendChild(script);
+ });
+}
 async function fetchSingleElkArea(area,requestId){
  const areaNumber=String(area.area_display_id||"").trim();
  const areaName=String(area.area_name||area.display_name||"").trim();
@@ -1001,35 +1036,32 @@ async function fetchSingleElkArea(area,requestId){
  if(areaNumber)candidates.push("omrnum = "+quoteArcGis(areaNumber));
  if(areaName&&afoName)candidates.push("(namn_ajo = "+quoteArcGis(areaName)+" AND namn_afo = "+quoteArcGis(afoName)+")");
  if(areaName)candidates.push("namn_ajo = "+quoteArcGis(areaName));
- let lastError=null;
  for(const where of candidates){
   const idsUrl=new URL(HUNTING_AREAS_LAYER_URL);
   idsUrl.searchParams.set("where",where);
   idsUrl.searchParams.set("returnIdsOnly","true");
-  idsUrl.searchParams.set("f","json");
-  const idsResponse=await fetch(idsUrl);
-  if(!idsResponse.ok)throw new Error("HTTP "+idsResponse.status+" vid sökning efter jaktområdet");
-  const idsPayload=await idsResponse.json();
-  if(idsPayload.error)throw new Error(idsPayload.error.message||"JaktAdm kunde inte söka efter jaktområdet");
+  const idsPayload=await requestArcGisJsonp(idsUrl,requestId);
+  if(!idsPayload||requestId!==selectedHuntingAreaRequest)return null;
   const ids=[...(idsPayload.objectIds||[])].sort((a,b)=>a-b);
   if(!ids.length)continue;
   const features=[];
-  for(let offset=0;offset<ids.length;offset+=10){
+  for(let offset=0;offset<ids.length;offset+=5){
    if(requestId!==selectedHuntingAreaRequest)return null;
    const queryUrl=new URL(HUNTING_AREAS_LAYER_URL);
-   queryUrl.searchParams.set("objectIds",ids.slice(offset,offset+10).join(","));
+   queryUrl.searchParams.set("objectIds",ids.slice(offset,offset+5).join(","));
    queryUrl.searchParams.set("outFields","OBJECTID,objtyp,namn_ajo,namn_afo,omrnum,afo_id,bslarea_ha");
    queryUrl.searchParams.set("returnGeometry","true");
    queryUrl.searchParams.set("outSR","4326");
-   queryUrl.searchParams.set("f","geojson");
-   const response=await fetch(queryUrl);
-   if(!response.ok)throw new Error("HTTP "+response.status+" vid hämtning av jaktområdets geometri");
-   const payload=await response.json();
-   if(payload.error)throw new Error(payload.error.message||"JaktAdm kunde inte returnera jaktområdets geometri");
-   features.push(...(payload.features||[]));
+   const payload=await requestArcGisJsonp(queryUrl,requestId);
+   if(!payload||requestId!==selectedHuntingAreaRequest)return null;
+   features.push(...(payload.features||[]).map(feature=>({
+    type:"Feature",
+    id:feature.attributes?.OBJECTID,
+    properties:feature.attributes||{},
+    geometry:arcgisGeometryToGeoJSON(feature.geometry)
+   })).filter(feature=>feature.geometry));
   }
   if(requestId!==selectedHuntingAreaRequest)return null;
-  if(features.length!==ids.length)throw new Error("Ofullständig geometrihämtning: "+features.length+" av "+ids.length);
   const exact=features.filter(feature=>normalizeHuntingAreaNumber(feature.properties?.omrnum)===normalizeHuntingAreaNumber(areaNumber));
   const matches=exact.length?exact:features.filter(feature=>{
    const p=feature.properties||{};
@@ -1038,8 +1070,7 @@ async function fetchSingleElkArea(area,requestId){
   });
   if(matches.length)return {type:"FeatureCollection",features:matches};
  }
- if(lastError)throw lastError;
- throw new Error("Hittade ingen entydig geometri för jaktområde "+(areaNumber||areaName||"utan områdes-ID"));
+ throw new Error("Hittade ingen geometri för jaktområde "+(areaNumber||areaName||"utan områdes-ID"));
 }
 async function selectElkAreaOnMap(area){
  if(!activityMap||!area)return;
@@ -1058,7 +1089,7 @@ async function selectElkAreaOnMap(area){
  removeHuntingAreaControl();
  const title=area.area_name||area.display_name||area.area_display_id||"Valt jaktområde";
  document.getElementById("mapSummary").textContent="Hämtar "+title+" …";
- document.getElementById("casePreview").innerHTML='<div class="preview-empty">Hämtar geometri för '+esc(title)+' …</div>';
+
  try{
   const data=await fetchSingleElkArea(area,requestId);
   if(!data||requestId!==selectedHuntingAreaRequest)return;
@@ -1074,12 +1105,12 @@ async function selectElkAreaOnMap(area){
   const bounds=layer.getBounds();
   if(bounds.isValid())activityMap.fitBounds(bounds.pad(.18),{maxZoom:13});
   document.getElementById("mapSummary").textContent=title+" · "+data.features.length.toLocaleString("sv-SE")+" geometri(er)";
-  document.getElementById("casePreview").innerHTML='<div class="preview-empty"><strong>'+esc(title)+'</strong><br>'+esc(area.area_display_id||"")+' · '+esc(area.county||"")+'<br>ÄFO: '+esc(area.afo||"")+'<br>Endast det valda jaktområdet visas. Välj en annan tabellrad för att byta område.</div>';
+' · '+esc(area.county||"")+'<br>ÄFO: '+esc(area.afo||"")+'<br>Endast det valda jaktområdet visas. Välj en annan tabellrad för att byta område.</div>';
   window.setTimeout(()=>activityMap&&activityMap.invalidateSize(),80);
  }catch(error){
   if(requestId!==selectedHuntingAreaRequest)return;
   document.getElementById("mapSummary").textContent="Områdets geometri kunde inte hämtas";
-  document.getElementById("casePreview").innerHTML='<div class="preview-empty">'+esc(error.message||error)+'</div>';
+
  }
 }
 
@@ -1190,7 +1221,7 @@ function render(){
  document.querySelector(".map-card").hidden=false;
  document.getElementById("map-title").textContent=isElk?"Älgförvaltningsområden – hela Sverige":isNvr?"Viltolyckor – karta":"Se händelserna på kartan";
  document.getElementById("mapLegend").hidden=isElk||isNvr;
- document.getElementById("casePreview").hidden=isNvr;
+ document.getElementById("casePreview").hidden=isNvr||isElk;
  document.querySelector(".map-card").classList.toggle("is-animal-map",isElk||isNvr);
  document.getElementById("storyLayout").classList.toggle("is-elk",isElk||isNvr);
  document.getElementById("storyProgress").hidden=isElk||isNvr;
