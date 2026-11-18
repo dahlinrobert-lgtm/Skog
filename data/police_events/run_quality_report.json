@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-17T13:50:07.228085+00:00",
+  "generated_at": "2026-11-18T13:25:16.228699+00:00",
   "scope": "Norrbottens län",
   "source": "Brottsplatskartan API; public Police event material",
   "interpretation": "Successful workflow and counts do not attest complete historical API coverage. Extracted wildlife rows are candidates, not confirmed collisions.",
@@ -11,15 +11,15 @@
     "publication_year_counts": {
       "2026": 500
     },
-    "oldest_publication_date": "2026-07-27",
-    "newest_publication_date": "2026-11-17",
+    "oldest_publication_date": "2026-07-29",
+    "newest_publication_date": "2026-11-18",
     "event_type_counts": {
-      "Arbetsplatsolycka": 16,
+      "Arbetsplatsolycka": 15,
       "Bedrägeri": 1,
       "Brand": 13,
       "Bråk": 2,
       "Farligt föremål,  misstänkt": 1,
-      "Fjällräddning": 10,
+      "Fjällräddning": 9,
       "Fylleri": 21,
       "Försvunnen person": 6,
       "Häleri": 1,
@@ -27,9 +27,10 @@
       "Knivlagen": 4,
       "Misshandel": 14,
       "Mord/dråp": 2,
+      "Mord/dråp,  försök": 1,
       "Motorfordon,  anträffat stulet": 1,
       "Motorfordon,  stöld": 1,
-      "Narkotikabrott": 9,
+      "Narkotikabrott": 8,
       "Ofredande/förargelse": 2,
       "Olaga hot": 4,
       "Olaga intrång": 3,
@@ -43,7 +44,7 @@
       "Trafikbrott": 15,
       "Trafikhinder": 2,
       "Trafikkontroll": 91,
-      "Trafikolycka": 68,
+      "Trafikolycka": 70,
       "Trafikolycka,  singel": 6,
       "Trafikolycka,  smitning från": 5,
       "Trafikolycka,  vilt": 19,
@@ -51,24 +52,24 @@
     }
   },
   "wildlife_text": {
-    "broad_candidate_count": 62,
-    "individual_incident_candidate_count": 103,
+    "broad_candidate_count": 63,
+    "individual_incident_candidate_count": 104,
     "candidate_year_counts": {
-      "2026": 22
+      "2026": 23
     },
     "candidate_missing_occurrence_date_count": 81,
     "extraction_method_counts": {
       "explicit_count_v1": 33,
       "wildlife_text_line_v1": 46,
-      "wildlife_time_segment_v2": 24
+      "wildlife_time_segment_v2": 25
     },
     "confidence_counts": {
       "low": 33,
-      "review": 70
+      "review": 71
     },
     "species_mentions": {
       "(missing)": 66,
-      "ren": 15,
+      "ren": 16,
       "rådjur": 9,
       "älg": 13
     }
