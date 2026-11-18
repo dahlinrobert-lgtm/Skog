@@ -9,7 +9,6 @@ import argparse
 import hashlib
 import json
 import os
-from datetime import datetime, timezone
 from pathlib import Path
 
 from azure.core.exceptions import ResourceExistsError
@@ -121,7 +120,6 @@ def run_smoke_test(run_id: str, run_attempt: str, account: str = ACCOUNT, contai
             "readback_sha256": downloaded_sha,
             "verified": True,
             "verification": "exact bytes, byte count, SHA-256 and Blob metadata checked after download",
-            "verified_at": datetime.now(timezone.utc).isoformat(),
         }
         manifest_bytes = (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
         manifest_metadata = {
