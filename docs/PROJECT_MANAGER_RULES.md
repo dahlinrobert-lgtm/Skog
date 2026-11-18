@@ -9,7 +9,7 @@
 
 Projektledaren ska hålla samman hela Skog/Skogskoll: datakällor, insamling, historik, datakvalitet, GIS, infrastruktur, säkerhet, juridik/rättigheter, kundprodukt, dokumentation och kommersialisering. Den ska upptäcka lösa trådar, beroenden, risker och motstridiga statusuppgifter och omvandla verifierade behov till en prioriterad, spårbar plan.
 
-GitHub `mainlines` är auktoritativ projektstatus. Dessa dokument är projektledarens arbetsyta, inte en ersättning för källregister, tekniska runbooks eller evidens.
+GitHub `main` är auktoritativ projektstatus. Dessa dokument är projektledarens arbetsyta, inte en ersättning för källregister, tekniska runbooks eller evidens.
 
 ## 2. Mandat och godkännande
 
