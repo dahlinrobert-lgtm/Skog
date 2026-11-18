@@ -314,13 +314,13 @@ Faktiska olyckshändelser, djurslag, historiska mönster och geografisk matchnin
 - Två lokala fullständiga snapshots från 2026-11-13 har verifierats: vardera 49 arter, 21 län och 550/550 lyckade statistikförfrågningar. Båda innehöll 73 255 observationer.
 - `scripts/viltdata_kill_statistics_diff.py` jämför endast kompletta snapshots med samma observationstäckning. Jämförelsen mellan dessa två körningar identifierade sju ändrade 2026-värden, samtliga `value_changed`; inga observationer blev nya eller saknade.
 - Tio riktade tester för snapshot och diff passerade 2026-11-18.
-- En manuell GitHub Actions-workflow har lagts till på arbetsbranch `feat/viltdata-manual-snapshot-workflow`. Den har ännu inte körts i GitHub Actions. Se [Viltdata – manuell nationell snapshot-workflow](viltdata-kill-statistics-workflow.md).
+- PR #422 är sammanslagen i `main`. Den manuella GitHub Actions-workflowen har live-verifierats i körning [#44394070179](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44394070179): snapshot `20261118T204420Z`, 49 arter, 21 län, 550/550 lyckade statistikförfrågningar och noll fel. CI körde 10/10 riktade tester och verifierade 552 filer mot manifestets byteantal och SHA-256. Se [Viltdata – manuell nationell snapshot-workflow](viltdata-kill-statistics-workflow.md).
 
 **Historik**
 Bevara daterade snapshots, originalvärden, definitioner, artidentiteter och geografisk omfattning. Ofullständiga körningar får inte användas som baslinje eller diffunderlag. Första kompletta baslinjen ska inte skapa historiska larm. Manifestets `complete` anger teknisk insamlingsfullständighet, inte att alla rapporteringsår är slutrapporterade.
 
 **Lagring**
-Den nya workflowen använder endast en tidsbegränsad GitHub Actions-artifact (30 dagar) för manuell granskning. Den är inte ett historiskt arkiv. Azure Blob Storage och återläsning är ännu inte verifierade för Viltdata; permanent lagring och schemaläggning inväntar detta.
+Workflowen använder endast en tidsbegränsad GitHub Actions-artifact (30 dagar) för manuell granskning. Den verifierade artifacten från 2026-11-18 har ID `14470426808` och retention till 2026-12-18. Den är inte ett historiskt arkiv. Azure Blob Storage och återläsning är ännu inte verifierade för Viltdata; permanent lagring och schemaläggning inväntar detta.
 
 **Rättigheter**
 Teknisk åtkomst till den publika API-tjänsten är inte ett godkännande för permanent historisk lagring, kommersiell användning, bearbetning, kundvisning eller vidare distribution. Villkor ska kontrolleras för den exakta statistikprodukten och varje avsedd användning.

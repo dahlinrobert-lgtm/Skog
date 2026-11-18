@@ -1,20 +1,20 @@
 # Skogskoll – automatisk status för datakällor
 
-**Register kontrollerat:** 2026-11-16  
+**Register kontrollerat:** 2026-11-18  
 **Underlag:** data-platform/config/sources.yml
 
 > Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 ## Sammanfattning
 
-- Registrerade datakällor: **48**
-- Källor med operativ status: **11**
+- Registrerade datakällor: **49**
+- Källor med operativ status: **12**
 - Källor som ännu inte har operativ status: **37**
-- Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 1, Teknisk probe: 1, Verifierad: 3
-- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 2, Metadatabevakning behöver repareras: 1, Pilot: 6
-- Historik: Delvis historik: 5, Delvis historiskt arkiv: 1, Ej verifierad: 3, Endast metadataserie: 1, Ingen: 1
-- Kommersiellt: Inväntar produktvillkor: 1, Verifierad med källhänvisning: 1, Villkorad: 4, Villkorad per handling/post: 1, Villkorad per produkt: 4
-- Kundvisning: Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 1
+- Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 1, Teknisk probe: 1, Verifierad: 4
+- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 2, Metadatabevakning behöver repareras: 1, Pilot: 7
+- Historik: Delvis historik: 5, Delvis historiskt arkiv: 1, Ej verifierad: 4, Endast metadataserie: 1, Ingen: 1
+- Kommersiellt: Inväntar produktvillkor: 1, Okänd: 1, Verifierad med källhänvisning: 1, Villkorad: 4, Villkorad per handling/post: 1, Villkorad per produkt: 4
+- Kundvisning: Ej bedömd: 1, Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 1
 - Uttryckligen godkända för kundvisning i registret: **0**
 
 ## Operativ status per datakälla
@@ -32,6 +32,7 @@
 | Trafikverket – Miljöwebb Landskap | trafikverket.miljoweb_landskap | Delvis verifierad | Pilot | Delvis historik | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Trafikverket – NVDB Viltolyckor | trafikverket.nvdb.wildlife_collision_frequency | Delvis verifierad | Pilot | Delvis historik | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Trafikverket – NVDB vägnät och Lastkajen | trafikverket.nvdb.road_network_lastkajen | Delvis verifierad | Endast baslinje | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
+| Viltdata.se – nationell avskjutningsstatistik | viltdata.kill_statistics | Verifierad | Pilot | Ej verifierad | Okänd | Ej bedömd | 2026-11-18 |
 
 ## Nästa åtgärd
 
@@ -46,6 +47,7 @@
 - **Trafikverket – Miljöwebb Landskap:** Verifiera vilka lager som ingår i Gräsmyr-piloten, kontrollera antal/geografisk täckning och spara senaste två kompletta snapshots med manifest och kontrollsummor.
 - **Trafikverket – NVDB Viltolyckor:** Verifiera produktens exakta definition, referensperiod, geografiska täckning och uppdateringsdatum; spara jämförbara snapshots och dokumentera om värdena är frekvenser, antal eller klassningar.
 - **Trafikverket – NVDB vägnät och Lastkajen:** Dokumentera vilken NVDB-produktversion som finns lokalt, kontrollera Lastkajens beställnings- och licensvillkor och bygg ett versionsstyrt uppdateringsflöde innan vägnätsförändringar används i kundhistorik.
+- **Viltdata.se – nationell avskjutningsstatistik:** Utred produktvillkor och rättigheter för permanent historisk lagring, kommersiell användning, bearbetning, kundvisning och vidare distribution. Verifiera därefter Azure Blob Storage med skrivning, integritetskontroll och återläsning innan schemaläggning.
 
 ## Tolkning och begränsningar
 
