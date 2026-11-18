@@ -10,6 +10,8 @@ Detta register innehåller uttryckliga projektledningsbeslut. Tekniska beslut oc
 | 2026-11-18 | Projektledarens första implementation ska vara read-only och byggas stegvis. | AI-automatisering får inte få skrivmandat till produktionsresurser. |
 | 2026-11-18 | Ingen källstatus eller uppgiftsstatus får höjas enbart på grund av teknisk åtkomst, lyckad enstaka körning eller merge. | Kräver verifierad evidens och acceptanskriterier. |
 
+| 2026-11-18 | Agent v1 ska börja med read-only GitHub-inventering och manuell workflow; ingen schedule eller språkmodell/API aktiveras i första steget. | Begränsar behörighet och kostnad tills rapportkvalitet och modellval har beslutats. |
+
 ## Beslut som väntar på användaren
 
 Inga ytterligare produktions- eller arkitekturbeslut tas i denna baslinje. Förslag till framtida automatisering, modell/API-val, kostnadsram och körfrekvens ska presenteras separat innan implementation.
