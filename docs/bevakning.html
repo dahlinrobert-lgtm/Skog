@@ -268,10 +268,14 @@ html[data-theme="dark"] .map-base-switch button[aria-pressed="true"]{background:
 .story-layout.is-elk>.map-card{display:block}
 
 
-.elkdata-table{width:100%;border-collapse:collapse;min-width:920px;font-size:.8rem}
-.elkdata-table th,.elkdata-table td{padding:11px 12px;border-bottom:1px solid #edf1eb;text-align:left;vertical-align:top;white-space:nowrap}
-.elkdata-table th{background:#f6f9f4;color:#617166;font-size:.72rem;font-weight:800;letter-spacing:.03em}
-.elkdata-table td:first-child{white-space:normal;min-width:190px}
+.elkdata-table{width:100%;table-layout:fixed;border-collapse:collapse;min-width:0;font-size:.8rem}
+.elkdata-table th,.elkdata-table td{padding:11px 10px;border-bottom:1px solid #edf1eb;text-align:left;vertical-align:top;white-space:normal;overflow-wrap:anywhere}
+.elkdata-table th{padding:18px 10px;background:#f6f9f4;color:#617166;font-size:.72rem;font-weight:800;letter-spacing:.03em;line-height:1.35;vertical-align:middle}
+.elkdata-table th:nth-child(1){width:24%}
+.elkdata-table th:nth-child(2){width:28%}
+.elkdata-table th:nth-child(3){width:16%}
+.elkdata-table th:nth-child(4){width:32%}
+.elkdata-table td.elkdata-number{text-align:right!important;font-variant-numeric:tabular-nums;overflow-wrap:normal}
 .elkdata-table td strong{display:block;color:#294333}
 .elkdata-table td small{display:block;margin-top:3px;color:#89958c;font-size:.7rem}
 .elkdata-table tr:last-child td{border-bottom:0}\n.elkdata-table tbody tr[data-elk-area-key]{cursor:pointer;transition:background .15s}\n.elkdata-table tbody tr[data-elk-area-key]:hover{background:#f0f6ef}\n.elkdata-table tbody tr.is-map-selected{background:#e4f0e4;outline:2px solid #6e9a73;outline-offset:-2px}\n.elkdata-table tbody tr[data-elk-area-key]:focus-visible{outline:3px solid #4d8b5a;outline-offset:-2px}\nhtml[data-theme="dark"] .elkdata-table tbody tr[data-elk-area-key]:hover{background:#2b4031}\nhtml[data-theme="dark"] .elkdata-table tbody tr.is-map-selected{background:#304c37}
@@ -1204,7 +1208,7 @@ function render(){
  }
  if(isElk){
   setHuntingAreaLayersVisible(true);
-  setAfoLayerVisible(true);
+  setAfoLayerVisible(false);
   const query=document.getElementById("search").value.trim().toLocaleLowerCase("sv");
   const matchingAreas=elkAreas.filter(area=>[area.display_name,area.area_name,area.area_display_id,area.county,area.afo].join(" ").toLocaleLowerCase("sv").includes(query));
   const rows=matchingAreas.flatMap(area=>(area.snapshots||[])
@@ -1219,25 +1223,25 @@ function render(){
    const deltaClass=delta>0?"elkdata-positive":"elkdata-negative";
    const deltaLabel=(delta>0?"+":"")+fmt(delta);
    const rowKey=String(area.area_key||area.area_display_id||area.area_id||"");
-   return '<tr data-elk-area-key="'+esc(rowKey)+'" tabindex="0" role="button" aria-label="Visa jaktområdet '+esc(areaName)+' på kartan" class="'+(selectedHuntingAreaKey===rowKey?'is-map-selected':'')+'"><td><strong>'+esc(areaName)+'</strong><small>'+esc(area.area_display_id||area.area_key||"")+'</small></td><td>'+esc(area.county||"–")+'</td><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(snapshot.total)+'</td><td class="elkdata-number '+deltaClass+'">'+deltaLabel+'</td><td>'+date(snapshot.date)+'</td></tr>';
+   return '<tr data-elk-area-key="'+esc(rowKey)+'" tabindex="0" role="button" aria-label="Visa jaktområdet '+esc(areaName)+' ('+esc(area.area_display_id||area.area_key||"")+') på kartan" title="Visa '+esc(areaName)+' på kartan" class="'+(selectedHuntingAreaKey===rowKey?'is-map-selected':'')+'"><td>'+esc(area.afo||"–")+'</td><td class="elkdata-number">'+fmt(snapshot.total)+'</td><td class="elkdata-number '+deltaClass+'">'+deltaLabel+'</td><td>'+date(snapshot.date)+'</td></tr>';
   }).join("");
   document.getElementById("feed").innerHTML=elkLoadError
    ? '<div class="empty error">Älgstatistiken kunde inte hämtas: '+esc(elkLoadError)+'. Försök uppdatera data senare.</div>'
-   : '<p class="elkdata-note">Regional avskjutningsstatistik (inte geografiskt kopplad till ÄFO-polygonerna) för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>Jaktområde</th><th>Län</th><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="6" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
+   : '<p class="elkdata-note">Regional avskjutningsstatistik (inte geografiskt kopplad till ÄFO-polygonerna) för jaktåret '+esc(elkAreas[0]?.hunting_season||"")+'. Tabellen visar varje observerad förändring mellan tillgängliga snapshots – inte säkert fältdatum.</p><div class="elkdata-table-wrap"><table class="elkdata-table"><thead><tr><th>ÄFO</th><th>Fällda totalt vid snapshot</th><th>Förändring</th><th>Rapporterad förändring observerad</th></tr></thead><tbody>'+(rowsHtml||'<tr><td colspan="4" class="elkdata-empty">Inga ökningar eller minskningar har observerats i tillgängliga snapshots för sökningen.</td></tr>')+'</tbody></table></div><div class="elkdata-status">Senaste uttag: '+date(elkSnapshotDate)+' · '+rows.length.toLocaleString("sv-SE")+' förändringar visas från '+matchingAreas.length.toLocaleString("sv-SE")+' matchande jaktområden.</div><p class="elkdata-caveat">Förändringen är skillnaden mellan två tillgängliga snapshots. En minskning kan bero på rättelse eller ändrad rapportering och är inte i sig bevis för att tidigare registrerade fällda djur har tagits bort. Saknade snapshots ger ingen beräknad dagsförändring. Datumet är observationsdatum, inte säkert fältdatum.</p><p class="elkdata-source">Källa: <a href="https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/" target="_blank" rel="noopener">Länsstyrelsernas Älgdata statistikportal</a>.</p>';
   document.getElementById("resultCount").textContent=rows.length.toLocaleString("sv-SE")+" jaktområden";
   document.querySelectorAll(".elkdata-table tbody tr[data-elk-area-key]").forEach(row=>{
    const activate=()=>{const area=matchingAreas.find(candidate=>String(candidate.area_key||candidate.area_display_id||candidate.area_id||"")===row.dataset.elkAreaKey);if(area)selectElkAreaOnMap(area);};
    row.addEventListener("click",activate);
    row.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();activate();}});
   });
-  document.getElementById("mapSummary").textContent="Nationella ÄFO-gränser";
+  document.getElementById("mapSummary").textContent="Välj en rad för att visa jaktområdet";
   renderMap([]);
   if(selectedHuntingAreaKey){
    const selectedArea=matchingAreas.find(area=>String(area.area_key||area.area_display_id||area.area_id||"")===selectedHuntingAreaKey);
-   if(selectedArea)selectElkAreaOnMap(selectedArea);else{clearSelectedHuntingArea();setAfoLayerVisible(true);}
+   if(selectedArea)selectElkAreaOnMap(selectedArea);else{clearSelectedHuntingArea();setAfoLayerVisible(false);}
   }else{
-   document.getElementById("mapSummary").textContent="Laddar nationella ÄFO-gränser";
-   setAfoLayerVisible(true);
+   document.getElementById("mapSummary").textContent="Välj en rad i statistiken för att visa ett jaktområde";
+   setAfoLayerVisible(false);
   }
   return;
  }
