@@ -304,18 +304,26 @@ Dokumentera uttryckligt godkännande, kontakt, datum, ändamål, historisk åtko
 **Framtida användning**
 Faktiska olyckshändelser, djurslag, historiska mönster och geografisk matchning. NVR ska hållas åtskilt från Trafikverkets aggregerade vägsegmentdata.
 
-### 4.12 Viltdata – älgstatistik
+### 4.12 Viltdata – avskjutningsstatistik
 
 **Prioritet:** Medelhög
 
-**Nuvarande läge**
-Separat projekt `alg-grasmyr` har regionala pilotflöden och snapshots. Nationell insamling är ett framtida steg, inte något som ska beskrivas som färdig.
+**Nuvarande tekniskt läge**
+- Källan är Viltdata.se:s publika `StatisticsApi`, rapporttyp `kill`. Det gäller rapporterad avskjutningsstatistik, inte NVR-viltolyckor eller en populationsinventering.
+- `scripts/viltdata_kill_statistics_snapshot.py` hämtar arter som källmodellen markerar för avskjutning, län och nationella/länsvisa årsserier. Original-JSON bevaras med manifest och SHA-256.
+- Två lokala fullständiga snapshots från 2026-11-13 har verifierats: vardera 49 arter, 21 län och 550/550 lyckade statistikförfrågningar. Båda innehöll 73 255 observationer.
+- `scripts/viltdata_kill_statistics_diff.py` jämför endast kompletta snapshots med samma observationstäckning. Jämförelsen mellan dessa två körningar identifierade sju ändrade 2026-värden, samtliga `value_changed`; inga observationer blev nya eller saknade.
+- Tio riktade tester för snapshot och diff passerade 2026-11-18.
+- En manuell GitHub Actions-workflow har lagts till på arbetsbranch `feat/viltdata-manual-snapshot-workflow`. Den har ännu inte körts i GitHub Actions. Se [Viltdata – manuell nationell snapshot-workflow](viltdata-kill-statistics-workflow.md).
 
 **Historik**
-Målet är daterade snapshots och bevarade källvärden, definitioner och områdesindelningar.
+Bevara daterade snapshots, originalvärden, definitioner, artidentiteter och geografisk omfattning. Ofullständiga körningar får inte användas som baslinje eller diffunderlag. Första kompletta baslinjen ska inte skapa historiska larm. Manifestets `complete` anger teknisk insamlingsfullständighet, inte att alla rapporteringsår är slutrapporterade.
+
+**Lagring**
+Den nya workflowen använder endast en tidsbegränsad GitHub Actions-artifact (30 dagar) för manuell granskning. Den är inte ett historiskt arkiv. Azure Blob Storage och återläsning är ännu inte verifierade för Viltdata; permanent lagring och schemaläggning inväntar detta.
 
 **Rättigheter**
-Kontrollera villkor per leverantör och datamängd.
+Teknisk åtkomst till den publika API-tjänsten är inte ett godkännande för permanent historisk lagring, kommersiell användning, bearbetning, kundvisning eller vidare distribution. Villkor ska kontrolleras för den exakta statistikprodukten och varje avsedd användning.
 
 **Framtida användning**
 Avskjutning, älgförvaltning och regionala jämförelser. Statistik ska inte framställas som enskilda observationer av djur.
