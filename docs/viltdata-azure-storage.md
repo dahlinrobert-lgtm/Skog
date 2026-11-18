@@ -63,7 +63,7 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 - `audit`: inventerar samtliga snapshotprefix, läser manifest och varje råblob, kontrollerar manifestreferenser, storlek, SHA-256, Blob-metadata samt orphan-/saknade objekt.
 - `restore`: hämtar ett angivet snapshot och skriver originalfilernas relativa sökvägar samt manifest till en ny katalog. Befintlig målkatalog skrivs aldrig över.
 
-Workflow `.github/workflows/viltdata-azure-archive.yml` är manuell och har operationerna `upload`, `audit` och `restore`. Upload skapar ett nytt komplett snapshot och har en separat `rights_approved`-spärr som måste kryssas i efter skriftlig rättighetsbedömning. Ingen schemaläggning finns. PR #427:s breda Snapshot storage tests-workflow [#476](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44404345303) passerade 2026-11-18: 322 tester totalt, inklusive 8 nya arkivtester. Det verifierar lokal valideringslogik, inte Azure upload/audit/restore live; verktyget ligger fortfarande i PR-branch och är inte produktionsverifierat.
+Workflow `.github/workflows/viltdata-azure-archive.yml` är mergad i `main`, manuell (`workflow_dispatch`) och har operationerna `upload`, `audit` och `restore`. Upload skapar ett nytt komplett snapshot och har en separat `rights_approved`-spärr (default false) som endast får bekräftas efter skriftlig rättighetsbedömning. Ingen schemaläggning finns. PR-CI [#476](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44404345303) och main-CI [#483](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44405429416) passerade båda med 322 tester, inklusive 8 arkivtester. CI verifierar lokal logik, inte Azure upload/audit/restore live.
 
 ## Nästa steg
 
