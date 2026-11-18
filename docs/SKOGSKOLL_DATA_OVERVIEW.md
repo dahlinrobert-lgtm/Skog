@@ -320,7 +320,7 @@ Faktiska olyckshändelser, djurslag, historiska mönster och geografisk matchnin
 Bevara daterade snapshots, originalvärden, definitioner, artidentiteter och geografisk omfattning. Ofullständiga körningar får inte användas som baslinje eller diffunderlag. Första kompletta baslinjen ska inte skapa historiska larm. Manifestets `complete` anger teknisk insamlingsfullständighet, inte att alla rapporteringsår är slutrapporterade.
 
 **Lagring**
-Workflowen använder endast en tidsbegränsad GitHub Actions-artifact (30 dagar) för manuell granskning. Den verifierade artifacten från 2026-11-18 har ID `14470426808` och retention till 2026-12-18. Den är inte ett historiskt arkiv. Azure Blob Storage och återläsning är ännu inte verifierade för Viltdata; permanent lagring och schemaläggning inväntar detta.
+Workflowen använder endast en tidsbegränsad GitHub Actions-artifact (30 dagar) för manuell granskning. Den verifierade artifacten från 2026-11-18 har ID `14470426808` och retention till 2026-12-18. Den är inte ett historiskt arkiv. Azure Blob Storage och återläsning är ännu inte verifierade för Viltdata. Ett separat syntetiskt OIDC-smoketest och en egen avsedd container (`viltdata-kill-statistics`) förbereds i branch `feat/viltdata-azure-storage-smoke-test`; containern är ännu inte verifierad eller bekräftad skapad. Ingen Viltdata-data skrivs till Azure av detta test.
 
 **Rättigheter**
 Teknisk åtkomst till den publika API-tjänsten är inte ett godkännande för permanent historisk lagring, kommersiell användning, bearbetning, kundvisning eller vidare distribution. Villkor ska kontrolleras för den exakta statistikprodukten och varje avsedd användning.
