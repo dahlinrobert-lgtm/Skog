@@ -1,6 +1,6 @@
 # Viltdata – Azure Blob Storage
 
-**Status:** Syntetiskt Azure Blob write/readback-test live-verifierat 2026-11-18. Arkivfunktionerna upload/audit/restore är mergade i `main` via PR #427, men ingen riktig Viltdata-snapshot har ännu laddats upp. Rättighetsbedömning saknas fortfarande.
+**Status:** Syntetiskt Azure Blob write/readback-test live-verifierat 2026-11-18. Arkivfunktionerna upload/audit/restore är mergade i `main` via PR #427, men ingen riktig Viltdata-snapshot har ännu laddats upp. Två separata kompletta GitHub Actions-snapshots finns för tillfällig granskning. Rättighetsbedömning saknas fortfarande.
 
 ## Befintlig Azure-miljö
 
@@ -65,6 +65,14 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 - `restore`: hämtar ett angivet snapshot och skriver originalfilernas relativa sökvägar samt manifest till en ny katalog. Befintlig målkatalog skrivs aldrig över.
 
 Workflow `.github/workflows/viltdata-azure-archive.yml` är mergad i `main`, manuell (`workflow_dispatch`) och har operationerna `upload`, `audit` och `restore`. Upload skapar ett nytt komplett snapshot och har en separat `rights_approved`-spärr (default false) som endast får bekräftas efter skriftlig rättighetsbedömning. Ingen schemaläggning finns. PR-CI [#476](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44404345303) och main-CI [#483](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44405429416) passerade båda med 322 tester, inklusive 8 arkivtester. CI verifierar lokal logik, inte Azure upload/audit/restore live.
+
+## Senaste kompletta GitHub Actions-snapshot (2026-11-18)
+
+- Run [#44408345762](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44408345762), snapshot `20261118T220720Z`, 49 arter, 21 län, 550/550 lyckade statistikförfrågningar, `status=complete`, `complete=true`, `errors=[]`.
+- 552 manifeststyrda rå-/metadatafiler verifierades mot byteantal och SHA-256; hela artifact-ZIP innehåller 553 poster inklusive manifest.
+- 73 255 datapunkter summerade över de 550 statistikfilerna.
+- Artifact `14475804318`, 423 705 byte, ZIP-SHA-256 `${snapshot.zipSha}`, manifest-SHA-256 `${snapshot.manifestSha}`, expires 2026-12-18 22:24:19 UTC.
+- De 10 riktade snapshot/diff-testerna passerade. Artifacten har hämtats ned och manifestet granskats separat. Detta är fortfarande temporär GitHub-lagring; inga Viltdata-original har laddats upp till Azure.
 
 ## Nästa steg
 
