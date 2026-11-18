@@ -14,7 +14,7 @@
 - Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 2, Metadatabevakning behöver repareras: 1, Pilot: 7
 - Historik: Delvis historik: 5, Delvis historiskt arkiv: 1, Ej verifierad: 4, Endast metadataserie: 1, Ingen: 1
 - Kommersiellt: Inväntar produktvillkor: 1, Okänd: 1, Verifierad med källhänvisning: 1, Villkorad: 4, Villkorad per handling/post: 1, Villkorad per produkt: 4
-- Kundvisning: Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 1
+- Kundvisning: Ej bedömd: 1, Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 1
 - Uttryckligen godkända för kundvisning i registret: **0**
 
 ## Operativ status per datakälla
