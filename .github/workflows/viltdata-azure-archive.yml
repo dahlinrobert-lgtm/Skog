@@ -1,0 +1,140 @@
+name: Viltdata Azure snapshot archive (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Archive a new complete snapshot, audit the archive, or restore one snapshot
+        required: true
+        type: choice
+        options:
+          - upload
+          - audit
+          - restore
+      snapshot_id:
+        description: Required for restore (for example 20261118T204420Z)
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: viltdata-azure-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    if: inputs.operation == 'upload'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Azure storage dependencies
+        run: python -m pip install --disable-pip-version-check "azure-identity>=1.17,<2" "azure-storage-blob>=12.20,<13"
+      - name: Validate archive tooling
+        run: |
+          python -m py_compile scripts/viltdata_kill_statistics_snapshot.py scripts/viltdata_azure_archive.py
+          python -m unittest discover -s tests -p "test_viltdata_azure_archive.py" -v
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Create a complete Viltdata snapshot
+        run: |
+          python scripts/viltdata_kill_statistics_snapshot.py \
+            --output "$RUNNER_TEMP/viltdata-snapshots" \
+            --max-counties 0 --max-species 0
+      - name: Upload immutable snapshot and verify Azure readback
+        run: |
+          SNAPSHOT_DIR="$(find "$RUNNER_TEMP/viltdata-snapshots" -mindepth 1 -maxdepth 1 -type d -print -quit)"
+          test -n "$SNAPSHOT_DIR"
+          python scripts/viltdata_azure_archive.py upload --snapshot-dir "$SNAPSHOT_DIR" \
+            | tee "$RUNNER_TEMP/viltdata-archive-report.json"
+      - name: Upload operation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viltdata-azure-archive-${{ github.run_id }}
+          path: ${{ runner.temp }}/viltdata-archive-report.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  audit:
+    if: inputs.operation == 'audit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Azure storage dependencies
+        run: python -m pip install --disable-pip-version-check "azure-identity>=1.17,<2" "azure-storage-blob>=12.20,<13"
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Deep audit all Viltdata snapshots
+        run: python scripts/viltdata_azure_archive.py audit | tee "$RUNNER_TEMP/viltdata-archive-audit.json"
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viltdata-azure-audit-${{ github.run_id }}
+          path: ${{ runner.temp }}/viltdata-archive-audit.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  restore:
+    if: inputs.operation == 'restore'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate restore input
+        env:
+          SNAPSHOT_ID: ${{ inputs.snapshot_id }}
+        run: |
+          if [[ ! "$SNAPSHOT_ID" =~ ^[0-9]{8}T[0-9]{6}Z$ ]]; then
+            echo "snapshot_id must use YYYYMMDDTHHMMSSZ" >&2
+            exit 2
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Azure storage dependencies
+        run: python -m pip install --disable-pip-version-check "azure-identity>=1.17,<2" "azure-storage-blob>=12.20,<13"
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Restore exact snapshot files and verify hashes
+        env:
+          SNAPSHOT_ID: ${{ inputs.snapshot_id }}
+        run: |
+          python scripts/viltdata_azure_archive.py restore \
+            --snapshot-id "$SNAPSHOT_ID" \
+            --output-dir "$RUNNER_TEMP/viltdata-restored-$SNAPSHOT_ID" \
+            | tee "$RUNNER_TEMP/viltdata-restore-report.json"
+      - name: Upload restored snapshot and report
+        uses: actions/upload-artifact@v4
+        with:
+          name: viltdata-restore-${{ inputs.snapshot_id }}-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/viltdata-restored-${{ inputs.snapshot_id }}
+            ${{ runner.temp }}/viltdata-restore-report.json
+          if-no-files-found: error
+          retention-days: 30
