@@ -63,11 +63,11 @@ Branch `feat/viltdata-azure-snapshot-archive` innehåller nu ett samlat verktyg 
 - `audit`: inventerar samtliga snapshotprefix, läser manifest och varje råblob, kontrollerar manifestreferenser, storlek, SHA-256, Blob-metadata samt orphan-/saknade objekt.
 - `restore`: hämtar ett angivet snapshot och skriver originalfilernas relativa sökvägar samt manifest till en ny katalog. Befintlig målkatalog skrivs aldrig över.
 
-Workflow `.github/workflows/viltdata-azure-archive.yml` är manuell och har operationerna `upload`, `audit` och `restore`. Upload skapar ett nytt komplett snapshot och har en separat `rights_approved`-spärr som måste kryssas i efter skriftlig rättighetsbedömning. Ingen schemaläggning finns. Ingen livekörning av dessa tre operationer är ännu gjord; verktyget ligger i PR-branch och får inte betraktas som produktionsverifierat.
+Workflow `.github/workflows/viltdata-azure-archive.yml` är manuell och har operationerna `upload`, `audit` och `restore`. Upload skapar ett nytt komplett snapshot och har en separat `rights_approved`-spärr som måste kryssas i efter skriftlig rättighetsbedömning. Ingen schemaläggning finns. PR #427:s breda Snapshot storage tests-workflow [#476](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44404345303) passerade 2026-11-18: 322 tester totalt, inklusive 8 nya arkivtester. Det verifierar lokal valideringslogik, inte Azure upload/audit/restore live; verktyget ligger fortfarande i PR-branch och är inte produktionsverifierat.
 
 ## Nästa steg
 
-1. Granska PR:ens tester och CI; korrigera eventuella fel innan merge.
+1. Granska PR #427 och dess CI-resultat; 322 tester passerade (8 nya arkivtester).
 2. Kontrollera Storage Account-resursens faktiska `location` och den använda identitetens RBAC-roll/scope i Azure Portal.
 3. Inhämta skriftligt besked om historisk lagring/arkivering av exakt Viltdata-produkt. `rights_approved` ska inte aktiveras före detta.
 4. Efter rättighetsbesked: kör en manuell upload, därefter djup audit och restore till en ny katalog. Jämför återställd snapshot med ursprungsartefakten.
