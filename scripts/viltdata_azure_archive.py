@@ -57,6 +57,7 @@ def validate_snapshot(snapshot_dir: Path) -> tuple[dict, bytes, dict[str, Path]]
         raise RuntimeError("Snapshot manifest must be a JSON object")
     if manifest.get("status") != "complete" or manifest.get("complete") is not True:
         raise RuntimeError("Refusing to archive a snapshot that is not explicitly complete")
+    validate_manifest_inventory(manifest)
     snapshot_id = str(manifest.get("run_id") or snapshot_dir.name)
     if not SNAPSHOT_RE.fullmatch(snapshot_id) or snapshot_id != snapshot_dir.name:
         raise RuntimeError("Snapshot directory name must match manifest run_id (YYYYMMDDTHHMMSSZ)")
