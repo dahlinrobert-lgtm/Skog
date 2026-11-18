@@ -32,6 +32,7 @@
 | GH-09 | Befolkningsanalys | GitHub | [dahlinrobert-lgtm/analys-befolkning](https://github.com/dahlinrobert-lgtm/analys-befolkning) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. |
 | GH-10 | Ny befolkningsanalys | GitHub | [dahlinrobert-lgtm/ny-analys-av-befolkning](https://github.com/dahlinrobert-lgtm/ny-analys-av-befolkning) | Bekräftad | Repo finns; innehåll och aktiv status behöver inventeras. Repo-storlek cirka 9 MB enligt GitHub-metadata. |
 | GH-11 | Länsstyrelsernas diarier – månadsvisa observationer | GitHub | `dahlinrobert-lgtm/Skog/data/lansstyrelsen-diary/` | Bekräftad | Två avgränsade Norrbottenpiloter publicerade 2026-11-16: oktober och september 2026, kategori B, totalt tolv immutabla snapshots och tolv manifestposter. Nollresultatsnapshots är 0-byte-filer med separata manifestposter. En separat nationell discovery-workflow finns i `main` efter merge av PR #406; den sparar endast diagnostikartefakter i 30 dagar och skriver inte till snapshotarkivet. Workflowen är ännu inte live-testad. Se `docs/lansstyrelsen-monthly-snapshot-architecture.md`. Fortfarande inte nationell täckning eller godkännande för kundvisning. |
+| GH-12 | Viltdata – manuell snapshotverifiering | GitHub Actions artifact | Workflow `.github/workflows/viltdata-kill-statistics-manual.yml` i Skog-repot | Implementerad på arbetsbranch, ej live-verifierad | Temporär artifact med 30 dagars retention för en enskild manuell körning. Inte permanent historik eller backup; Azure-lagring återstår att verifiera. |
 
 ### GitHub – lokal arbetskopia
 
@@ -177,6 +178,7 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 
 | Datum | Ändring |
 |---|---|
+| 2026-11-18 | Viltdata: dokumenterat temporärt GitHub Actions-artifact för manuell snapshotverifiering (30 dagars retention) på arbetsbranch. Det är inte permanent arkiv; Azure-lagring och återläsning återstår att verifiera. |
 | 2026-11-15 | Första samlade inventeringen skapad. Kända GitHub-repon, NVR-mappar i OneDrive, Kungjort-containrar i Azure samt känd lokal Skog-sökväg registrerade. |
 | 2026-11-15 | OneDrive inventerat via Microsoft Graph: Skogskoll-roten, NVR, historik/arbetsytor, Omdrev 1–3, Lastkajen, OpenStreetMap och Lantmäteriet dokumenterade med rapporterade storlekar. Read-only PowerShell-skript med förändringsdetektion och installerare för daglig lokal/USB-inventering tillagda. OneDrive-mappen `_inventory` skapad. |
 | 2026-11-16 | NVDB/Lastkajen: OneDrive-mappen `Lastkajen/Länsfiler NVDB data` inventerad via Microsoft Graph; 21 länsvisa GeoPackage-ZIP, 10 677 114 317 byte. Lager-/schema-/CRS-kontroll är ännu inte genomförd. Separat uppladdad Norrbotten-GPKG dokumenterad som oavstämd kopia. |
