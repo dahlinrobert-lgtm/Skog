@@ -9,7 +9,7 @@ from unittest.mock import Mock
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from viltdata_azure_archive import validate_snapshot, upload_immutable, _safe_relative
+from viltdata_azure_archive import validate_snapshot, validate_manifest_inventory, upload_immutable, _safe_relative
 
 
 def make_snapshot(root: pathlib.Path):
@@ -89,8 +89,20 @@ class ViltdataAzureArchiveTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "inventory mismatch"):
                 validate_snapshot(root)
 
+    def test_validates_manifest_request_inventory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp) / "20261118T204420Z"
+            root.mkdir()
+            make_snapshot(root)
+            manifest = json.loads((root / "manifest.json").read_text())
+            inventory = validate_manifest_inventory(manifest)
+            self.assertEqual(len(inventory), 3)
+            manifest["statistics_requests_ok"] = 0
+            with self.assertRaisesRegex(RuntimeError, "incomplete"):
+                validate_manifest_inventory(manifest)
+
     def test_rejects_path_traversal(self):
-        for value in ("../secret.json", "/absolute.json", "raw/../../secret"):
+        for value in ("../secret.json", "/absolute.json", "raw/../../secret", r"raw\\..\\secret.json"):
             with self.assertRaises(ValueError):
                 _safe_relative(value)
 
