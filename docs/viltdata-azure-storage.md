@@ -55,10 +55,20 @@ Testet skriver inga Viltdata-original eller andra källdata. De syntetiska testo
 - Om container creation nekas ska vi inte återanvända en annan källas container. Då behöver container skapas separat eller Azure RBAC justeras av administratören.
 - Efter godkänt test ska ett separat, uttryckligen avgränsat snapshot-upload/restore-flöde byggas och verifieras. Första kompletta snapshot ska fortfarande etableras som tyst baslinje utan historiska larm.
 
+## Snapshotarkiv – implementation i separat branch
+
+Branch `feat/viltdata-azure-snapshot-archive` innehåller nu ett samlat verktyg `scripts/viltdata_azure_archive.py` med tre kommandon:
+
+- `upload`: kräver `status=complete`, `complete=true`, fullständigt request-antal, modell-/länsinventering, samtliga råfiler, exakt filinventering och matchande byteantal/SHA-256. Råfiler och ursprungligt `manifest.json` laddas upp byte för byte under `snapshots/<snapshot-id>/...` med create-only-semantik. En befintlig blob accepteras endast om metadata och bytes överensstämmer.
+- `audit`: inventerar samtliga snapshotprefix, läser manifest och varje råblob, kontrollerar manifestreferenser, storlek, SHA-256, Blob-metadata samt orphan-/saknade objekt.
+- `restore`: hämtar ett angivet snapshot och skriver originalfilernas relativa sökvägar samt manifest till en ny katalog. Befintlig målkatalog skrivs aldrig över.
+
+Workflow `.github/workflows/viltdata-azure-archive.yml` är manuell och har operationerna `upload`, `audit` och `restore`. Upload skapar ett nytt komplett snapshot och har en separat `rights_approved`-spärr som måste kryssas i efter skriftlig rättighetsbedömning. Ingen schemaläggning finns. PR #427:s breda Snapshot storage tests-workflow [#476](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44404345303) passerade 2026-11-18: 322 tester totalt, inklusive 8 nya arkivtester. Det verifierar lokal valideringslogik, inte Azure upload/audit/restore live; verktyget ligger fortfarande i PR-branch och är inte produktionsverifierat.
+
 ## Nästa steg
 
-1. Kontrollera Storage Account-resursens faktiska `location`, containerns inställningar och den använda identitetens RBAC-roll/scope i Azure Portal.
-2. Bygg separat snapshot-upload med enbart kompletta snapshots, oförändrade rå-JSON-filer och manifest; använd unikt snapshotprefix och create-only/immutability-skydd.
-3. Lägg till audit och restore-test som verifierar både råfiler och manifest från Azure.
-4. Bedöm historisk lagring, kommersiell användning, bearbetning, kundvisning och vidare distribution separat innan riktiga snapshots laddas upp.
-5. Första kompletta snapshot ska etableras som tyst baslinje; ingen historisk avisering. Ingen schemaläggning innan upload, audit, restore och rättighetsbedömning är klara.
+1. Granska PR #427 och dess CI-resultat; 322 tester passerade (8 nya arkivtester).
+2. Kontrollera Storage Account-resursens faktiska `location` och den använda identitetens RBAC-roll/scope i Azure Portal.
+3. Inhämta skriftligt besked om historisk lagring/arkivering av exakt Viltdata-produkt. `rights_approved` ska inte aktiveras före detta.
+4. Efter rättighetsbesked: kör en manuell upload, därefter djup audit och restore till en ny katalog. Jämför återställd snapshot med ursprungsartefakten.
+5. Första kompletta snapshot ska etableras som tyst baslinje; ingen historisk avisering. Ingen schemaläggning innan upload, audit, restore och rättighetsbedömning är verifierade.
