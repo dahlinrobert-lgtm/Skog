@@ -1,0 +1,56 @@
+name: Viltdata Azure Blob storage smoke test (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: viltdata-azure-storage-smoke-test
+  cancel-in-progress: false
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Azure storage dependencies
+        run: python -m pip install --disable-pip-version-check "azure-identity>=1.17,<2" "azure-storage-blob>=12.20,<13"
+
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Run isolated synthetic Azure write/readback test
+        env:
+          AZURE_STORAGE_ACCOUNT: stskogkolldata
+          VILTDATA_ARCHIVE_CONTAINER: viltdata-kill-statistics
+        run: |
+          python -m py_compile scripts/viltdata_azure_storage_smoke_test.py
+          python -m unittest discover -s tests -p "test_viltdata_azure_storage_smoke_test.py" -v
+          python scripts/viltdata_azure_storage_smoke_test.py \
+            --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --report "$RUNNER_TEMP/viltdata-azure-smoke-report.json"
+
+      - name: Upload smoke-test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viltdata-azure-smoke-${{ github.run_id }}
+          path: ${{ runner.temp }}/viltdata-azure-smoke-report.json
+          if-no-files-found: warn
+          retention-days: 30
