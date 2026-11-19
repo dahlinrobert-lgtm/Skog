@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Read-only GitHub inventory and project-manager report for Skog/Skogskoll."""
 from __future__ import annotations
-import argparse, json, os, sys, urllib.error, urllib.parse, urllib.request
+import argparse, json, os, re, sys, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 API_ROOT = "https://api.github.com"
+PAGE_SIZE = 100
+MAX_LIST_PAGES = 10
 DEFAULT_DOCS = (
     "docs/AI_HANDOVER.md", "docs/SKOGSKOLL_SOURCE_STATUS.md",
     "docs/SKOGSKOLL_DATA_OVERVIEW.md", "docs/PROJECT_MANAGER_RULES.md",
@@ -23,33 +25,69 @@ class GitHubClient:
         self.repository, self.token = repository, token
         self.opener = opener or urllib.request.urlopen
 
-    def get_json(self, path: str) -> Any:
+    def get_json_with_headers(self, path: str) -> tuple[Any, dict[str, str]]:
         url = path if path.startswith("https://") else f"{API_ROOT}{path}"
         req = urllib.request.Request(url, headers={
             "Accept": "application/vnd.github+json",
             "Authorization": f"Bearer {self.token}",
             "X-GitHub-Api-Version": "2022-11-28",
-            "User-Agent": "skogskoll-project-manager/0.1",
+            "User-Agent": "skogskoll-project-manager/0.2",
         })
         try:
             with self.opener(req, timeout=30) as response:
-                import json
-                return json.loads(response.read().decode("utf-8"))
+                payload = json.loads(response.read().decode("utf-8"))
+                headers = {str(k).lower(): str(v) for k, v in response.headers.items()}
+                return payload, headers
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")[:500]
             raise GitHubAPIError(f"GitHub API returned HTTP {exc.code}: {detail}") from exc
         except urllib.error.URLError as exc:
             raise GitHubAPIError(f"GitHub API connection failed: {exc.reason}") from exc
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise GitHubAPIError(f"GitHub API returned invalid JSON/UTF-8 for {path}") from exc
 
-    def paged(self, endpoint: str, max_pages: int = 3) -> list[dict[str, Any]]:
-        rows = []
+    def get_json(self, path: str) -> Any:
+        return self.get_json_with_headers(path)[0]
+
+    @staticmethod
+    def _has_next_page(link_header: str) -> bool:
+        for part in link_header.split(","):
+            if re.search(r';\s*rel="?next"?', part, flags=re.I):
+                return True
+        return False
+
+    def paged_with_coverage(self, endpoint: str, max_pages: int = MAX_LIST_PAGES) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+        if max_pages < 1:
+            raise ValueError("max_pages must be at least 1")
+        rows: list[dict[str, Any]] = []
+        pages_fetched = 0
+        has_next = False
         for page in range(1, max_pages + 1):
             sep = "&" if "?" in endpoint else "?"
-            batch = self.get_json(f"{endpoint}{sep}per_page=100&page={page}")
-            if not isinstance(batch, list): raise GitHubAPIError(f"Expected a list from {endpoint}")
-            rows.extend(x for x in batch if isinstance(x, dict))
-            if len(batch) < 100: break
-        return rows
+            payload, headers = self.get_json_with_headers(
+                f"{endpoint}{sep}per_page={PAGE_SIZE}&page={page}"
+            )
+            if not isinstance(payload, list):
+                raise GitHubAPIError(f"Expected a list from {endpoint}")
+            pages_fetched += 1
+            rows.extend(x for x in payload if isinstance(x, dict))
+            has_next = self._has_next_page(headers.get("link", ""))
+            if not has_next:
+                break
+        truncated = has_next and pages_fetched >= max_pages
+        return rows, {
+            "status": "truncated" if truncated else "complete",
+            "pages_fetched": pages_fetched,
+            "items_fetched": len(rows),
+            "page_size": PAGE_SIZE,
+            "max_pages": max_pages,
+            "max_items": PAGE_SIZE * max_pages,
+            "truncated": truncated,
+            "next_page_available": has_next,
+        }
+
+    def paged(self, endpoint: str, max_pages: int = 3) -> list[dict[str, Any]]:
+        return self.paged_with_coverage(endpoint, max_pages=max_pages)[0]
 
     def file_metadata(self, path: str) -> dict[str, Any]:
         encoded = urllib.parse.quote(path, safe="/")
@@ -74,9 +112,11 @@ def _pull_summary(item):
 
 def collect_inventory(client: GitHubClient, generated_at: str | None = None) -> dict[str, Any]:
     repo = client.get_json(f"/repos/{client.repository}")
-    raw_issues = client.paged(f"/repos/{client.repository}/issues?state=all&sort=updated&direction=desc")
+    raw_issues, issue_coverage = client.paged_with_coverage(
+        f"/repos/{client.repository}/issues?state=all&sort=updated&direction=desc")
     issues = [_issue_summary(x) for x in raw_issues if "pull_request" not in x]
-    raw_pulls = client.paged(f"/repos/{client.repository}/pulls?state=all&sort=updated&direction=desc")
+    raw_pulls, pull_coverage = client.paged_with_coverage(
+        f"/repos/{client.repository}/pulls?state=all&sort=updated&direction=desc")
     pulls = [_pull_summary(x) for x in raw_pulls]
     wf_payload = client.get_json(f"/repos/{client.repository}/actions/workflows?per_page=100")
     workflows = wf_payload.get("workflows", []) if isinstance(wf_payload, dict) else []
@@ -88,14 +128,14 @@ def collect_inventory(client: GitHubClient, generated_at: str | None = None) -> 
         try: docs.append(client.file_metadata(path))
         except GitHubAPIError as exc: docs.append({"path": path, "exists": False, "error": str(exc)})
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": generated_at or datetime.now(timezone.utc).isoformat(),
         "repository": {"full_name": repo.get("full_name", client.repository),
             "default_branch": repo.get("default_branch"), "html_url": repo.get("html_url"),
             "private": repo.get("private"), "archived": repo.get("archived")},
-        "collection_limits": {"issues_pages": 3, "pull_request_pages": 3,
+        "collection_limits": {"issues": issue_coverage, "pull_requests": pull_coverage,
             "recent_commits": 100, "workflow_runs": 50,
-            "note": "Lists are bounded; inspect pagination and totals before treating them as exhaustive."},
+            "note": "Issues and pull requests follow GitHub Link pagination up to the hard safety limit. Workflow runs and commits remain separately bounded."},
         "issues": issues, "pull_requests": pulls,
         "workflows": [{"id": w.get("id"), "name": w.get("name"), "path": w.get("path"),
             "state": w.get("state"), "url": w.get("html_url")} for w in workflows],
@@ -114,6 +154,8 @@ def collect_inventory(client: GitHubClient, generated_at: str | None = None) -> 
 def build_report(data: dict[str, Any]) -> str:
     issues, prs, runs, workflows, docs = (data[k] for k in
         ("issues", "pull_requests", "workflow_runs", "workflows", "documents"))
+    coverage = data.get("collection_limits", {})
+    issue_cov, pr_cov = coverage.get("issues", {}), coverage.get("pull_requests", {})
     open_issues = [x for x in issues if x.get("state") == "open"]
     open_prs = [x for x in prs if x.get("state") == "open"]
     merged = [x for x in prs if x.get("merged_at")]
@@ -131,23 +173,32 @@ def build_report(data: dict[str, Any]) -> str:
         f"- Workflows: {len(workflows)}",
         f"- Senaste workflow-körningar insamlade: {len(runs)}",
         f"- Misslyckade/avbrutna senaste körningar: {len(failed)}",
-        f"- Projektledardokument som saknas: {len(missing)}", "", "## Kräver uppmärksamhet", ""]
+        f"- Projektledardokument som saknas: {len(missing)}", "",
+        "## Täckning och fullständighet", ""]
+    for label, meta in (("Issues", issue_cov), ("Pull requests", pr_cov)):
+        status = meta.get("status", "unknown")
+        lines.append(f"- **{label}:** {status}; {meta.get('items_fetched', 0)} poster på {meta.get('pages_fetched', 0)} sidor (sidstorlek {meta.get('page_size', PAGE_SIZE)}, max {meta.get('max_pages', MAX_LIST_PAGES)} sidor).")
+        if meta.get("truncated"):
+            lines.append(f"  - Säkerhetsgränsen nåddes; minst en ytterligare sida finns. Uttaget är trunkerat och får inte användas för frånvarobaserade slutsatser.")
+    lines.extend(["", "## Kräver uppmärksamhet", ""])
     if failed:
         lines.extend(f"- **{x.get('name')}** – `{x.get('conclusion')}` / `{x.get('status')}` ({x.get('updated_at')}); [körning]({x.get('url')})" for x in failed[:20])
     else: lines.append("- Inga misslyckade/avbrutna körningar identifierades bland de 50 senaste returnerade körningarna.")
     if missing: lines.extend(["", "Saknade dokument:"] + [f"- `{x['path']}`" for x in missing])
     lines.extend(["", "## Öppna issues", ""])
-    lines.extend([f"- [#{x['number']} – {x['title']}]({x.get('url')}) (uppdaterad {x.get('updated_at')})" for x in open_issues[:50]] or ["- Inga öppna issues i insamlingsfönstret."])
+    lines.extend([f"- [#{x['number']} – {x['title']}]({x.get('url')}) (uppdaterad {x.get('updated_at')})" for x in open_issues[:50]] or ["- Inga öppna issues i det insamlade materialet."])
     lines.extend(["", "## Öppna pull requests", ""])
-    lines.extend([f"- [#{x['number']} – {x['title']}]({x.get('url')}) (`{x.get('head')}` → `{x.get('base')}`)" for x in open_prs[:50]] or ["- Inga öppna pull requests i insamlingsfönstret."])
+    lines.extend([f"- [#{x['number']} – {x['title']}]({x.get('url')}) (`{x.get('head')}` → `{x.get('base')}`)" for x in open_prs[:50]] or ["- Inga öppna pull requests i det insamlade materialet."])
     lines.extend(["", "## Projektledardokument", ""])
     lines.extend(f"- `{x['path']}`: {'finns' if x.get('exists') else 'SAKNAS'}" +
         (f" (blob `{x.get('sha')}`)" if x.get("sha") else "") for x in docs)
     lines.extend(["", "## Begränsningar", "",
-        "- GitHub-listorna är begränsade till högst tre sidor per issues-/PR-lista och 50 workflow-körningar. Rapporten får inte beskrivas som fullständig om fler sidor finns.",
+        f"- Issues och pull requests hämtas med GitHubs Link-pagination, högst {MAX_LIST_PAGES} sidor (1 000 poster) per lista. Status `truncated` betyder att fler sidor finns; listan är då inte fullständig.",
+        "- Ett API-fel avbryter inventeringen. Ett misslyckat anrop presenteras inte som en tom eller komplett lista.",
+        "- Workflow-listan, workflow-körningar och senaste commits är fortfarande separat begränsade; de är inte fullständiga historiska inventeringar.",
         "- En misslyckad workflow är en granskningssignal, inte automatiskt bevis för att en datakälla eller produktfunktion är trasig.",
         "- Agenten gör ingen juridisk bedömning och ändrar inte källstatus, backlogg, issues, PR, kod eller produktionsflöden.",
-        "- Ingen språkmodell används i denna första version. AI-syntes kräver separat beslut om modell, API-secret och kostnadsgräns.", ""])
+        "- Ingen språkmodell används. AI-syntes kräver separat beslut om modell, API-secret och kostnadsgräns.", ""])
     return "\n".join(lines)
 
 def main(argv=None) -> int:
