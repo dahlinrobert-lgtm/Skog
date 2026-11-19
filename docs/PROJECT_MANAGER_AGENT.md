@@ -45,3 +45,8 @@ Implementerad och sammanslagen via PR #436 (merge commit `fffad6fd9ccb9af356c89e
 ## v2b – Git-historik beslutad, persistens ej aktiverad
 
 Användaren har valt separat skyddad Git-branch och indefinite retention (ingen automatisk gallring). Nuvarande Actions-artifact med 14 dagars retention behålls som transport-/granskningsartifact. Inventeringsjobbet förblir read-only; endast separat persistence-jobb kan efter separat godkännande få begränsad `contents: write` till historikbranchen. Före aktivering krävs verifierade syntetiska tester, branchskydd, permissions-isolering, SHA-256, readback och restore. Se [v2b-beslutsunderlaget](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md). Ingen historikjämförelse eller schedule ingår ännu.
+
+
+## v2b – teknisk design
+
+Beslutet om Git-historikbranch och indefinite retention är mergat via PR #438. Teknisk design/testmatris finns i [PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md](PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md). Första implementationen ska vara ren Python-logik med syntetiska tester och utan GitHub-skrivning. Persistensworkflow och skrivbehörighet hålls utanför tills verifiering och separat godkännande.
