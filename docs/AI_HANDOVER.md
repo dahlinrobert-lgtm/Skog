@@ -1,6 +1,6 @@
 # Skog / Skogskoll – överlämning för fortsatt arbete
 
-**Senast uppdaterad:** 2026-11-18  
+**Senast uppdaterad:** 2026-11-19  
 **Syfte:** Detta dokument är en kompakt startpunkt för fortsatt utveckling, även när arbetet fortsätter i en ny ChatGPT-chatt.
 
 > Läs detta dokument först i en ny chatt. Läs därefter den automatiska källstatusrapporten och den fullständiga datakälleöversikten. Kontrollera alltid aktuella filer och GitHub Actions innan du påstår att en körning eller status fortfarande gäller.
@@ -464,3 +464,8 @@ PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a2
 
 
 **Nästa konkreta steg:** verifiera v2a-tester och CI, granska PR-diffen och genomför en manuell read-only workflowkörning efter merge. Uppdatera därefter status utifrån faktisk artifact.
+
+
+## AI-projektledare v2b – beslut fattat, implementation spärrad (2026-11-19)
+
+Användaren har valt separat skyddad Git-historikbranch och indefinite retention (bevara tills vidare utan automatisk gallring). Beslutet gäller målbild och planering, inte aktivering. Inventeringsjobbet ska fortsatt vara read-only. Eventuell `contents: write` ska endast finnas i separat persistence-jobb och begränsas till historikbranchen. Före aktivering krävs syntetiska tester, verifierat branchskydd, verifierad behörighetsisolering, checksumme-/readback-/restore-test samt ett separat uttryckligt godkännande efter granskning. Ingen persistens, skrivbehörighet eller schedule har ännu införts. Se [v2b-beslutsunderlaget](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md).

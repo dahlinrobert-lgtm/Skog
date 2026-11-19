@@ -8,7 +8,7 @@
 
 | ID | Uppgift | Prioritet | Status | Beroenden / nästa steg |
 |---|---|---|---|---|
-| PM-001 | Bygg read-only projektinventering av issues, PR, workflows och dokumentstatus | P1 | v1 mergad och liveverifierad | PR #432 och Actions #44413951767 verifierade. v2a: klar, PR #436 mergad och CI/liveverifierad; v2b är separat beslut om append-only-baslinjelagring enligt [v2-planen](PROJECT_MANAGER_AGENT_V2.md). |
+| PM-001 | Bygg read-only projektinventering av issues, PR, workflows och dokumentstatus | P1 | v1/v2a verifierade; v2b Git + indefinite beslutat, design/implementation återstår | Användaren har valt separat skyddad Git-branch och indefinite retention. Nästa steg: manifest-/katalogdesign, syntetiska tester, branchskydd och permissions-verifiering. Persistens aktiveras först efter separat godkännande. Ingen v2c ännu. |
 | PM-002 | Etablera AI-baserad projektledarrapport och beslutslista | P1 | Väntar på separat beslut | LLM/API, datahantering, secret, kostnadsram och eventuell schedule kräver uttryckligt beslut. v2 ska först förbli deterministisk och read-only. |
 | PM-003 | Utred och verifiera Lantmäteriets beslut/villkor för Fastighetsindelning Direkt | P1 | Öppen | Ärenden LM2026/171963 och LM2026/171968; rättighets- och produktomfattning måste dokumenteras. |
 | PM-004 | Felsök Skogsstyrelsens SIS metadataövervakning | P1 | Öppen | Kontrollera misslyckade körningar 13–14 november, rasterhämtning och produktvillkor. |

@@ -222,3 +222,12 @@ Detta dokument är den centrala manuella katalogen. Följande automatisering kan
 
 | 2026-11-18 | Viltdata: andra kompletta nationella snapshotet verifierat. Snapshot `20261118T220720Z`, 49 arter, 21 län, 550/550 statistikförfrågningar, 552 rå-/metadatafiler SHA-256-verifierade och 73 255 datapunkter. Artifact ID `14475804318`, 423 705 byte, ZIP-SHA-256 `31ef0b6ac7c16fa524adaa9f1e5ed9037f19bd3a9cb714bdea16e6ad8264e0b2`, retention till 2026-12-18 22:24:19 UTC. | GitHub Actions #44408345762; manifest SHA-256 `ed7937c8f83657b51af98f88566cce675555d0a4d017111f3fb7a24ecdc72088` |
 | 2026-11-18 | AI-projektledarens agent v1 mergad och liveverifierad: read-only inventering, tester och manuell artifactkörning #5. Artifact #14479221503, 31 063 byte; ingen ny extern datalagring utöver tidsbegränsat Actions-artifact. | PR #432; Actions #44413951767 |
+
+
+## Planerad lagring – AI-projektledare v2b (ej aktiv)
+
+| ID | Innehåll | Planerad plats | Beslut | Status |
+|---|---|---|---|---|
+| GH-16 | Projektledaragentens inventeringshistorik | Privat Skog-repo, separat branch `project-manager-history`, kataloger per `run_id` | Användaren har valt Git-branch och indefinite retention 2026-11-19 | **Planerad, ej skapad/aktiverad.** Ingen historikdata finns sparad där. Kräver separat persistence-jobb, begränsad skrivbehörighet, branchskydd, syntetisk verifiering och separat godkännande före aktivering. |
+
+Indefinite retention betyder att ingen automatisk gallring eller tidsbaserad radering ska byggas in. Årlig manuell översyn rekommenderas, men innebär inte automatisk radering. Denna planerade post får inte beskrivas som aktiv lagring förrän branch, skydd och readback/restore har verifierats.
