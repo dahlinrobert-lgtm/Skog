@@ -70,3 +70,10 @@ Efter administratörens konfiguration verifierades rulesetet direkt via GitHub R
 - Merge-metoder: merge, squash, rebase.
 
 Detta undanröjer den tidigare blockeraren för main-skydd. Skyddet kräver PR och blockerar radering/force push, men kräver inte mänsklig approval. Nästa blockerare är att utforma och verifiera separat skydd för historikbranchen samt en skrivmodell som inte kan kringgå `main`-regeln. Nuvarande inventeringsworkflow är fortsatt read-only. Ingen persistens eller `contents: write` har aktiverats.
+
+
+## 8. Föreslagen skrividentitet och kvarvarande risk (2026-11-19)
+
+Detaljerad modell finns i [PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md](PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md). GitHub App installerad endast på Skog, med Contents read/write och obligatorisk Metadata read, är bättre avgränsad än en användar-PAT eller bred token. Men dess behörighet är repository-scoped, inte branch-scoped. `Protect main` ger PR-grind och tom bypass-lista; Appen får inte Administration, Pull requests-write eller bypass. Historikbranchens ruleset kan blockera deletion och force-push men måste tillåta fast-forward-uppdatering. Det ger inte immutabilitet på filnivå: äldre run-kataloger måste skyddas av append-only-kod och negativa tester. Om repository-scope inte är tillräckligt ska separat repo eller annan branch-/container-scope-lagring väljas.
+
+**Status:** designförslag endast. Ingen GitHub App, installation, privat nyckel, secret, historikbranch, persistence-workflow eller skrivbehörighet har skapats. Inventeringsworkflowet förblir read-only.
