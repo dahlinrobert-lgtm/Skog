@@ -64,3 +64,9 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 - [ ] Utred om branchskydd och tokenmodell kan garantera att separat persistence-jobb inte kan skriva till `main`; annars ompröva Git-lagringsalternativet.
 - [ ] Genomför syntetisk livepilot först efter verifiering och separat uttryckligt godkännande.
 - [ ] v2c historisk jämförelse först efter minst två verifierade kompletta arkivkörningar.
+
+
+- [x] Ta fram design för separat GitHub App-identitet med minsta permissions och hotmodell (dokumentations-PR under granskning).
+- [ ] Besluta om repository-scoped Contents write med verifierat main-ruleset är tillräckligt; annars välj separat repo/lagring med snävare scope.
+- [ ] Syntetisk implementation och negativa tester utan GitHub-skrivning.
+- [ ] Först efter separat godkännande: skapa App/secret, historikbranch och ruleset samt verifiera negativa GitHub-operationer.
