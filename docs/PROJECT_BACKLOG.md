@@ -8,7 +8,7 @@
 
 | ID | Uppgift | Prioritet | Status | Beroenden / nästa steg |
 |---|---|---|---|---|
-| PM-001 | Bygg read-only projektinventering av issues, PR, workflows och dokumentstatus | P1 | v1/v2a verifierade; v2b Git + indefinite beslutat, design/implementation återstår | Användaren har valt separat skyddad Git-branch och indefinite retention. Nästa steg: manifest-/katalogdesign, syntetiska tester, branchskydd och permissions-verifiering. Persistens aktiveras först efter separat godkännande. Ingen v2c ännu. |
+| PM-001 | Bygg read-only projektinventering av issues, PR, workflows och dokumentstatus | P1 | v1/v2a verifierade; v2b Git + indefinite beslutat, design/implementation återstår | Användaren har valt separat skyddad Git-branch och indefinite retention. Teknisk design dokumenterad i `PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md`. Nästa steg: implementera ren Python-modul och syntetiska tester utan GitHub-skrivning eller persistensworkflow. Därefter separat granskning av branchskydd och permissions. Persistens aktiveras först efter verifiering och separat godkännande. Ingen v2c ännu. |
 | PM-002 | Etablera AI-baserad projektledarrapport och beslutslista | P1 | Väntar på separat beslut | LLM/API, datahantering, secret, kostnadsram och eventuell schedule kräver uttryckligt beslut. v2 ska först förbli deterministisk och read-only. |
 | PM-003 | Utred och verifiera Lantmäteriets beslut/villkor för Fastighetsindelning Direkt | P1 | Öppen | Ärenden LM2026/171963 och LM2026/171968; rättighets- och produktomfattning måste dokumenteras. |
 | PM-004 | Felsök Skogsstyrelsens SIS metadataövervakning | P1 | Öppen | Kontrollera misslyckade körningar 13–14 november, rasterhämtning och produktvillkor. |

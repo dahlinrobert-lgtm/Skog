@@ -463,7 +463,7 @@ PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a2
 - v2b (append-only-baslinjelagring) kräver fortfarande separat beslut. Ingen historisk jämförelse, schedule, LLM/API eller skrivbehörighet införs i v2a.
 
 
-**Nästa konkreta steg:** verifiera v2a-tester och CI, granska PR-diffen och genomför en manuell read-only workflowkörning efter merge. Uppdatera därefter status utifrån faktisk artifact.
+**Nästa konkreta steg:** v2b-beslutet är mergat i PR #438. Teknisk design för Git-historik finns i [PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md](PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md). Nästa steg är en ren Python-modul och syntetiska tester för manifest, SHA-256, append-only, idempotens och restore. Ingen workflow eller skrivbehörighet införs i detta steg.
 
 
 ## AI-projektledare v2b – beslut fattat, implementation spärrad (2026-11-19)
