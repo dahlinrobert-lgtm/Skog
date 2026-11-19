@@ -469,3 +469,10 @@ PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a2
 ## AI-projektledare v2b – beslut fattat, implementation spärrad (2026-11-19)
 
 Användaren har valt separat skyddad Git-historikbranch och indefinite retention (bevara tills vidare utan automatisk gallring). Beslutet gäller målbild och planering, inte aktivering. Inventeringsjobbet ska fortsatt vara read-only. Eventuell `contents: write` ska endast finnas i separat persistence-jobb och begränsas till historikbranchen. Före aktivering krävs syntetiska tester, verifierat branchskydd, verifierad behörighetsisolering, checksumme-/readback-/restore-test samt ett separat uttryckligt godkännande efter granskning. Ingen persistens, skrivbehörighet eller schedule har ännu införts. Se [v2b-beslutsunderlaget](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md).
+
+
+## AI-projektledare v2b – säkerhetsgranskning (2026-11-19)
+
+PR #441 är mergad och dess CI-checkar passerade. Därefter genomfördes read-only granskning av GitHub-lagringsskydd. Repository rulesets-endpointen returnerade `[]`. Klassisk branch protection för `main` kunde inte läsas: GitHub-integrationen returnerade HTTP 403 (`Resource not accessible by integration`). Historikbranchen `project-manager-history` finns inte (404), vilket är avsiktligt före aktivering. Nuvarande project-manager-workflow har fortsatt endast `contents: read`, `issues: read`, `pull-requests: read`, `actions: read`; inget persistensjobb eller `contents: write` finns.
+
+**Slutsats:** skyddet av `main` och branchspecifik skrivisolering är inte verifierade. Persistens får inte aktiveras. Administrativ kontroll i GitHub Settings krävs. Se [säkerhetsgranskningen](PROJECT_MANAGER_AGENT_V2B_SECURITY_AUDIT.md). En mindre CI-korrigering läggs också till så att ändringar i `project_manager_history.py` och dess tester triggar testworkflow vid push till main.
