@@ -1,4 +1,4 @@
-# Skogskoll AI-projektledare – agent v1
+# Skogskoll AI-projektledare – agent v1 och v2-plan
 
 ## Arkitektur
 Fristående Python-komponent i Skog-repot:
@@ -34,8 +34,4 @@ python scripts/project_manager_agent.py --output-dir project-manager-output
 Skriv aldrig token i skript, filer, kommandologgar eller issues.
 
 ## Nästa steg
-1. Kör workflowen manuellt och granska artifacten.
-2. Jämför mot föregående rapport för nya/stängda uppgifter och regressionssignaler, utan att tolka saknade data som borttagning.
-3. Bygg LLM-provideradapter efter beslut om modell, API-secret, kostnadsgräns och datahantering.
-4. Lägg till veckovis schedule först efter separat godkännande.
-5. Behåll alla förslag som utkast; inga automatiska issue-/PR- eller kodändringar.
+Se [v2-plan och acceptanskriterier](PROJECT_MANAGER_AGENT_V2.md). Arbetet delas upp i pagination (v2a), separat beslut om append-only-baslinjelagring (v2b), historisk jämförelse (v2c) och rapportförbättring (v2d). LLM/API och schedule kräver separata beslut. Alla förslag förblir utkast; inga automatiska issue-/PR- eller kodändringar.

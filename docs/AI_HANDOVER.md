@@ -452,3 +452,11 @@ PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a2
 - Agent v1 är deterministisk och read-only. Ingen LLM/API, ingen schedule och inga GitHub-skrivoperationer. Agenten ändrar inte backlogg, issues, PR eller källstatus.
 
 **Nästa steg:** granska inventeringens avgränsningar, förbättra pagination och lägg till jämförelse mot föregående inventering med tydlig historik/proveniens. Separat modell-/kostnads-/databehandlingsbeslut krävs innan LLM eller schedule övervägs.
+
+
+## AI-projektledare – v2 planerad (2026-11-18)
+
+- PR #434 är mergad i `main`; merge commit `57453875cff3f1e7d5e0597deed1ae2cc0bdb3a7` dokumenterar liveverifierad v1.
+- v2-plan och acceptanskriterier finns i `docs/PROJECT_MANAGER_AGENT_V2.md` på arbetsbranch `feature/project-manager-agent-v2-pagination`.
+- Föreslagen ordning: v2a pagination/täckningsmetadata; därefter separat beslut om append-only-baslinjelagring innan historisk jämförelse implementeras.
+- Ingen kodändring av agenten, behörighetsändring, schedule, LLM/API eller beständig lagring har ännu införts i v2-branchen.
