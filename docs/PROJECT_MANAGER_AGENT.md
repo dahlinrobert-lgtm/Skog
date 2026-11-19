@@ -40,3 +40,8 @@ Se [v2-plan och acceptanskriterier](PROJECT_MANAGER_AGENT_V2.md). Arbetet delas 
 ## v2a – pagination och täckning
 
 Implementerad och sammanslagen via PR #436 (merge commit `fffad6fd9ccb9af356c89e7c486bdbac7ee53ce5`). Issues och pull requests följer GitHubs `Link`-header tills ingen `rel=next` återstår, med hård gräns 10 sidor à 100 poster per lista. Inventeringen redovisar status, hämtade sidor/poster, sidstorlek, maxgräns och trunkering separat för respektive lista. Om fler sidor finns vid säkerhetsgränsen markeras uttaget `truncated`; API-fel avbryter körningen. Workflow runs och commits är fortsatt separat begränsade. Manuell livekörning #10 passerade 2026-11-19; artifact innehåller `inventory.json` och `report.md`. Se [körningen](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44456582601). Ingen historiklagring eller jämförelse ingår.
+
+
+## v2b – beslut krävs före implementation
+
+Se [beslutsunderlag för append-only-historik](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md). Nuvarande Actions-artifact har 14 dagars retention och är endast tillfällig granskning. Beständig lagring kräver separat persistensgräns; inventeringsjobbet ska behålla read-only-behörighet. Ingen historikjämförelse eller schedule ingår ännu.
