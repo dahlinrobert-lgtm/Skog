@@ -56,3 +56,17 @@ Skärmbilder/export av inställningarna eller administrativt åtkomlig API-verif
 2. godkänd separat permissionsmodell;
 3. syntetiska tester och readback/restore;
 4. användarens uttryckliga separata godkännande.
+
+
+## 7. Uppföljning – `Protect main` verifierat (2026-11-19)
+
+Efter administratörens konfiguration verifierades rulesetet direkt via GitHub Rulesets API:
+
+- ID: `27619735`, namn: `Protect main`, enforcement `active`.
+- Target: `~DEFAULT_BRANCH` (main).
+- Bypass actors: tom lista; `current_user_can_bypass: never`.
+- Regler: `pull_request` före merge, `deletion` och `non_fast_forward`.
+- Pull request: 0 obligatoriska approvals; Code Owner review, senaste push approval och conversation resolution krävs inte.
+- Merge-metoder: merge, squash, rebase.
+
+Detta undanröjer den tidigare blockeraren för main-skydd. Skyddet kräver PR och blockerar radering/force push, men kräver inte mänsklig approval. Nästa blockerare är att utforma och verifiera separat skydd för historikbranchen samt en skrivmodell som inte kan kringgå `main`-regeln. Nuvarande inventeringsworkflow är fortsatt read-only. Ingen persistens eller `contents: write` har aktiverats.
