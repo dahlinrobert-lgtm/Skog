@@ -481,3 +481,8 @@ PR #441 är mergad och dess CI-checkar passerade. Därefter genomfördes read-on
 ## Verifierat skydd för main (2026-11-19)
 
 Repository ruleset `Protect main` är nu verifierat via GitHub Rulesets API, ID `27619735`, `enforcement: active`, target `~DEFAULT_BRANCH` (main), tom bypass-lista och `current_user_can_bypass: never`. Aktiva regler: `pull_request` före merge (0 obligatoriska approvals; inga krav på Code Owners, senaste push eller trådlösning), `deletion` blockerad och `non_fast_forward` blockerad. Tillåtna merge-metoder: merge, squash och rebase. Regeln kräver alltså PR men inte mänskligt godkännande; det är avsiktligt i nuläget. Inventeringsworkflowet har fortsatt endast read-permissions och ingen persistens. Nästa blockerare är separat skydd och verifierad skrivmodell för historikbranchen; inget `contents: write` har lagts till.
+
+
+## v2b – skrividentitetens säkerhetsdesign (2026-11-19)
+
+Ny design finns i [PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md](PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md). Rekommendationen är en separat GitHub App installerad endast på Skog, med endast Contents read/write och obligatorisk Metadata read. Detta är fortfarande repository-scope, inte branch-scope. `Protect main` med PR-krav, tom bypass-lista och blockering av deletion/force-push är verifierat; Appen ska inte ha bypass, Administration eller Pull requests-write. Historikbranchens ruleset ska rikta sig endast mot exakt branch, blockera deletion/force-push och tillåta fast-forward append. Innehållsmässig append-only måste säkras i kod och tester. Ingen App, secret, branch, persistence-workflow eller `contents: write` har skapats/aktiverats. Nästa steg: granska designen och implementera syntetiska tester utan livepersistens.
