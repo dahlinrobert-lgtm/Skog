@@ -56,5 +56,7 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 
 
 - [x] Besluta v2b-lagring: separat skyddad Git-branch och indefinite retention (2026-11-19).
-- [ ] Designa och verifiera separat persistence-jobb, branchskydd, append-only/idempotens, SHA-256 och restore med syntetiska data. Ingen aktivering före separat användargodkännande.
+- [x] Dokumentera teknisk design och testmatris för v2b (PR under arbete).
+- [ ] Implementera ren Python-modul och syntetiska tester för manifest, SHA-256, append-only, idempotens, coverage-gate och restore. Ingen GitHub-skrivning eller workflow i detta steg.
+- [ ] Granska branchskydd och tokenisolering; genomför syntetisk livepilot först efter separat godkännande.
 - [ ] v2c historisk jämförelse först efter minst två verifierade kompletta arkivkörningar.
