@@ -135,3 +135,8 @@ Föreslagen leveransordning efter beslut:
 4. Användaren har granskat diff och uttryckligen godkänt aktivering för riktiga inventeringar.
 
 Till dess är v2b **beslutad på designnivå men inte implementerad eller aktiverad**.
+
+
+## 8. Teknisk design
+
+Den tekniska designen är dokumenterad i [PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md](PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md). Nästa leverans är endast lokal/ren Python-logik och syntetiska tester. Ingen GitHub-skrivning, historikbranch eller persistensworkflow ska skapas i den leveransen. Branchskydd och tokenisolering ska granskas innan en senare separat livepilot.
