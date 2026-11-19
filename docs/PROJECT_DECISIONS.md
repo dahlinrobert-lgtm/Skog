@@ -15,3 +15,6 @@ Detta register innehåller uttryckliga projektledningsbeslut. Tekniska beslut oc
 ## Beslut som väntar på användaren
 
 Inga ytterligare produktions- eller arkitekturbeslut tas i denna baslinje. Förslag till framtida automatisering, modell/API-val, kostnadsram och körfrekvens ska presenteras separat innan implementation.
+
+
+| 2026-11-19 | AI-projektledare v2b: användaren valde separat skyddad Git-historikbranch och indefinite retention (bevara tills vidare utan automatisk gallring). Beslutet gäller målbild; persistens är spärrad tills syntetiska tester, branchskydd, separata skrivbehörigheter, checksumma/readback/restore är verifierade och användaren godkänt aktivering separat. | [v2b-beslutsunderlag](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md) |
