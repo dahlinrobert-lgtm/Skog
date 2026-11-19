@@ -124,7 +124,9 @@ Testerna ska använda syntetiska fixtures och en temporär lokal Git-repository 
 
 ## 9. Acceptanskriterier
 
-- [ ] Manifest är deterministiskt och innehåller run-/repo-/commit-/coverage-metadata.
+- [x] Offline-modul för manifest och coverage-validering implementerad på PR-branch; CI-verifiering inväntas.
+- [x] Syntetiska tester för SHA-256, determinism, trunkering, saknad/okänd coverage, felaktig JSON, repository mismatch, run metadata, timestamp och append-only-konflikter tillagda.
+- [ ] Manifest är deterministiskt och innehåller run-/repo-/commit-/coverage-metadata (ska slutverifieras i CI).
 - [ ] SHA-256 beräknas över exakta filbyte och verifieras efter återläsning.
 - [ ] Inga existerande körningsfiler kan skrivas över.
 - [ ] Dubblettkörningar hanteras utan att skapa divergerande historik.
@@ -136,3 +138,8 @@ Testerna ska använda syntetiska fixtures och en temporär lokal Git-repository 
 - [ ] Användaren har separat godkänt aktivering.
 
 **Nuvarande status:** endast design dokumenterad. Ingen kod för persistens, ingen ny workflow, ingen historikbranch, ingen skrivbehörighet och inga arkiverade inventeringar.
+
+
+## 10. Första offline-implementationen
+
+PR-branch innehåller `scripts/project_manager_history.py` och `tests/test_project_manager_history.py`. Modulen validerar JSON/repository/run metadata/tidsstämplar/coverage, bygger deterministiskt manifest med SHA-256 över exakta byte och jämför befintlig körningskatalog utan att skriva över. Den utför inga filskrivningar, Git-operationer, API-anrop eller nätverksåtkomst. CI körs via det befintliga read-only project-manager-workflowet. Resultat inväntas.

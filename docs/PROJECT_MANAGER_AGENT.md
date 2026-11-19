@@ -50,3 +50,8 @@ Användaren har valt separat skyddad Git-branch och indefinite retention (ingen 
 ## v2b – teknisk design
 
 Beslutet om Git-historikbranch och indefinite retention är mergat via PR #438. Teknisk design/testmatris finns i [PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md](PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md). Första implementationen ska vara ren Python-logik med syntetiska tester och utan GitHub-skrivning. Persistensworkflow och skrivbehörighet hålls utanför tills verifiering och separat godkännande.
+
+
+## v2b – offline manifestmodul under verifiering
+
+PR-branch för första kodsteget innehåller `scripts/project_manager_history.py` (validering, deterministiskt manifest, SHA-256 och read-only append-only-kontroll) samt `tests/test_project_manager_history.py`. Befintligt workflow utökat för att köra testerna, med oförändrade read-only-behörigheter. Ingen persistens, GitHub-skrivning, ny branch eller workflow för arkivering ingår.
