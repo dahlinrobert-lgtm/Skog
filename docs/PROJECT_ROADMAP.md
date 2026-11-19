@@ -53,3 +53,6 @@
 ## Planeringsprincip
 
 Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huvuduppgifter. Blockerade uppgifter ska inte presenteras som om de vore genomförbara. Om en ny blockerare uppstår ska ordningsföljden revideras och beslut som krävs från användaren lyftas separat.
+
+
+- [ ] Fatta separat beslut om v2b: beständig append-only-lagring, retention och persistensbehörighet. Se [beslutsunderlag](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md). Ingen implementation före beslut.
