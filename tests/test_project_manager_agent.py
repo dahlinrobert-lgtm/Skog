@@ -82,11 +82,11 @@ class FakeClient:
         raise AssertionError(path)
     def paged_with_coverage(self, endpoint, max_pages=10):
         if "/issues?" in endpoint:
-            return [
+            return ([
                 {"number":1,"title":"Open task","state":"open","updated_at":"2026-11-18","html_url":"https://github.com/acme/skog/issues/1","labels":[{"name":"P1"}]},
                 {"number":2,"title":"Closed task","state":"closed","updated_at":"2026-11-17","html_url":"https://github.com/acme/skog/issues/2","labels":[]},
                 {"number":3,"title":"PR is not an issue","state":"open","pull_request":{"url":"x"},"labels":[]}],
-                {"status":"complete","pages_fetched":1,"items_fetched":3,"page_size":100,"max_pages":10,"max_items":1000,"truncated":False}
+                {"status":"complete","pages_fetched":1,"items_fetched":3,"page_size":100,"max_pages":10,"max_items":1000,"truncated":False})
         if "/pulls?" in endpoint:
             return [{"number":9,"title":"Merged work","state":"closed","merged_at":"2026-11-18","updated_at":"2026-11-18","html_url":"https://github.com/acme/skog/pull/9","base":{"ref":"main"},"head":{"ref":"feature"}}], \
                 {"status":"complete","pages_fetched":1,"items_fetched":1,"page_size":100,"max_pages":10,"max_items":1000,"truncated":False}
