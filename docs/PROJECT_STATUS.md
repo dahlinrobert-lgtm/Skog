@@ -60,3 +60,8 @@ Följande öppna issues returnerades av GitHub-sökningen 2026-11-18. De är kan
 3. Slutför datakvalitet och historik för befintliga prioriterade källor.
 4. Fortsätt produktionsarkitektur och integration först när källornas krav och baslinjer är klara.
 5. Förbered kundproduktens flöden men håll användarlarm avstängda tills samtliga skyddsvillkor passerar.
+
+
+## AI-projektledare – v2a under implementation (2026-11-19)
+
+PR #435 (v2-plan) är sammanslagen i `main` med merge commit `eb32aebbac949390998a9b2ab5c6901cf905709a`. v2a utvecklas på separat branch `feature/project-manager-agent-v2a-pagination`. Ändringen omfattar Link-baserad pagination för issues/PR, max 10 sidor à 100 poster per lista, täckningsmetadata och tydlig trunkeringsrapportering. Riktade tester är tillagda men CI och manuell liveinventering återstår. Ingen historisk baslinjelagring, jämförelse, schedule, LLM/API eller skrivbehörighet införs.
