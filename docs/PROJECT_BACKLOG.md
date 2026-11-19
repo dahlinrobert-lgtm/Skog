@@ -49,3 +49,6 @@ Varje ny uppgift ska innehålla:
 - rättighets-/dataskyddsbedömning där relevant.
 
 Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskriterier och faktisk drift/verifiering.
+
+
+| PM-017 | V2b skrividentitet och branchisolering | P1 | Designförslag | Granska `PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md`; bekräfta acceptans av repository-scoped GitHub App, historikbranch-regler och negativa tester innan någon App/secret/branch/persistence-workflow skapas. Ingen livepersistens. |
