@@ -58,5 +58,8 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 - [x] Besluta v2b-lagring: separat skyddad Git-branch och indefinite retention (2026-11-19).
 - [x] Dokumentera teknisk design och testmatris för v2b (PR under arbete).
 - [ ] Implementera ren Python-modul och syntetiska tester för manifest, SHA-256, append-only, idempotens, coverage-gate och restore. Ingen GitHub-skrivning eller workflow i detta steg.
-- [ ] Granska branchskydd och tokenisolering; genomför syntetisk livepilot först efter separat godkännande.
+- [x] Genomför read-only API-granskning: inga repository rulesets returnerades; klassiskt main-skydd kunde inte läsas (403); historikbranch finns inte. Se `PROJECT_MANAGER_AGENT_V2B_SECURITY_AUDIT.md`.
+- [ ] Be repository-administratör verifiera `main`-skydd, Actions-bypass och historikbranchens regler i GitHub Settings. Detta är blockerande.
+- [ ] Utred om branchskydd och tokenmodell kan garantera att separat persistence-jobb inte kan skriva till `main`; annars ompröva Git-lagringsalternativet.
+- [ ] Genomför syntetisk livepilot först efter verifiering och separat uttryckligt godkännande.
 - [ ] v2c historisk jämförelse först efter minst två verifierade kompletta arkivkörningar.
