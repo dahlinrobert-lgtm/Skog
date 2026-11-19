@@ -35,3 +35,8 @@ Skriv aldrig token i skript, filer, kommandologgar eller issues.
 
 ## Nästa steg
 Se [v2-plan och acceptanskriterier](PROJECT_MANAGER_AGENT_V2.md). Arbetet delas upp i pagination (v2a), separat beslut om append-only-baslinjelagring (v2b), historisk jämförelse (v2c) och rapportförbättring (v2d). LLM/API och schedule kräver separata beslut. Alla förslag förblir utkast; inga automatiska issue-/PR- eller kodändringar.
+
+
+## v2a – pagination och täckning
+
+Pågående implementation på branch `feature/project-manager-agent-v2a-pagination` efter merge av planerings-PR #435. Issues och pull requests följer GitHubs `Link`-header tills ingen `rel=next` återstår, med hård gräns 10 sidor à 100 poster per lista. Inventeringen redovisar status, hämtade sidor/poster, sidstorlek, maxgräns och trunkering separat för respektive lista. Om fler sidor finns vid säkerhetsgränsen markeras uttaget `truncated`; API-fel avbryter körningen. Workflow runs och commits är fortsatt separat begränsade. Ingen historiklagring eller jämförelse ingår.

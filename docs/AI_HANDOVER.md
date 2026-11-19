@@ -457,6 +457,10 @@ PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a2
 ## AI-projektledare – v2 planerad (2026-11-18)
 
 - PR #434 är mergad i `main`; merge commit `57453875cff3f1e7d5e0597deed1ae2cc0bdb3a7` dokumenterar liveverifierad v1.
-- v2-plan och acceptanskriterier finns i `docs/PROJECT_MANAGER_AGENT_V2.md` på arbetsbranch `feature/project-manager-agent-v2-pagination`.
-- Föreslagen ordning: v2a pagination/täckningsmetadata; därefter separat beslut om append-only-baslinjelagring innan historisk jämförelse implementeras.
-- Ingen kodändring av agenten, behörighetsändring, schedule, LLM/API eller beständig lagring har ännu införts i v2-branchen.
+- PR #435 är sammanslagen i `main` (merge commit `eb32aebbac949390998a9b2ab5c6901cf905709a`); den fastställde v2-planen.
+- v2a implementeras på separat branch `feature/project-manager-agent-v2a-pagination`: GitHub Link-pagination för issues/PR, hård gräns 10 sidor/1 000 poster per lista och täckningsmetadata.
+- API-fel ska avbryta inventeringen; trunkerade listor redovisas och får inte användas för frånvarobaserade slutsatser.
+- v2b (append-only-baslinjelagring) kräver fortfarande separat beslut. Ingen historisk jämförelse, schedule, LLM/API eller skrivbehörighet införs i v2a.
+
+
+**Nästa konkreta steg:** verifiera v2a-tester och CI, granska PR-diffen och genomför en manuell read-only workflowkörning efter merge. Uppdatera därefter status utifrån faktisk artifact.
