@@ -123,7 +123,7 @@ class ProjectManagerAgentTests(unittest.TestCase):
         data=collect_inventory(FakeClient(),generated_at="2026-11-18T12:00:00Z")
         data["collection_limits"]["issues"].update(status="truncated",truncated=True)
         report=build_report(data)
-        self.assertIn("trunkerad",report)
+        self.assertIn("trunkerat",report)
         self.assertIn("frånvarobaserade slutsatser",report)
     def test_inventory_does_not_export_issue_bodies_or_token(self):
         data=collect_inventory(FakeClient(),generated_at="2026-11-18T12:00:00Z")
