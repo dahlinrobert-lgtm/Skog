@@ -55,3 +55,8 @@ Beslutet om Git-historikbranch och indefinite retention är mergat via PR #438. 
 ## v2b – offline manifestmodul under verifiering
 
 PR-branch för första kodsteget innehåller `scripts/project_manager_history.py` (validering, deterministiskt manifest, SHA-256 och read-only append-only-kontroll) samt `tests/test_project_manager_history.py`. Befintligt workflow utökat för att köra testerna, med oförändrade read-only-behörigheter. Ingen persistens, GitHub-skrivning, ny branch eller workflow för arkivering ingår.
+
+
+## v2b – lokal restore-verifiering
+
+Efter verifierad merge av offline manifestmodulen i PR #440 byggs nästa isolerade steg: lokal återställning från manifest och två bytepayloads med kontroll av schema, filuppsättning, filnamn, storlek och SHA-256 före och efter readback. Målkatalog får inte finnas sedan tidigare. Ingen Git/GitHub-åtkomst eller produktionspersistens införs.
