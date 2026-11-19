@@ -464,3 +464,8 @@ PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a2
 
 
 **Nästa konkreta steg:** verifiera v2a-tester och CI, granska PR-diffen och genomför en manuell read-only workflowkörning efter merge. Uppdatera därefter status utifrån faktisk artifact.
+
+
+## AI-projektledare v2b – lagringsbeslut återstår (2026-11-19)
+
+v2a är mergad och liveverifierad. Nästa steg är v2b, men ingen beständig historiklagring är godkänd eller implementerad. Beslutsunderlaget finns i [PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md). Det jämför separat skyddad Git-branch, Azure Blob och fortsatt tidsbegränsade Actions-artifacts. Rekommenderad första pilot är en skyddad Git-branch för små metadatauttag, under förutsättning att persistence får separat write-jobb och branch ruleset. Azure är alternativet för större/långlivad historik, men befintlig OIDC-identitet har bred Storage Account-scope och ska inte återanvändas utan separat least-privilege-lösning. Retention (5 år är endast diskussionsförslag), lagringsval och hantering av trunkerade inventeringar kräver användarens uttryckliga beslut. Ingen skrivbehörighet, persistensworkflow eller schemaläggning har införts.
