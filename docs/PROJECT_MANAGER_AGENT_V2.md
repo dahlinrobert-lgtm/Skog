@@ -1,6 +1,6 @@
 # Skogskoll AI-projektledare – v2 plan och acceptanskriterier
 
-**Status:** Föreslagen implementation, ej produktionssatt  
+**Status:** v2a under implementation på separat branch; ej produktionssatt  
 **Utgångspunkt:** Agent v1 är mergad och liveverifierad via Actions #44413951767.  
 **Mandat:** Fortsatt read-only. Användaren godkänner alla projektåtgärder.
 
@@ -65,3 +65,7 @@ Göra inventeringen mer fullständig och ge ett tillförlitligt underlag för f�
 - Ska jämförelsen köras manuellt med vald baslinje eller automatiskt efter separat godkännande?
 
 Inga av dessa beslut är fattade genom denna plan.
+
+## Genomförandestatus v2a (2026-11-19)
+
+Implementation pågår på `feature/project-manager-agent-v2a-pagination`. Issues och pull requests får GitHub Link-baserad pagination med säkerhetsgräns 10 sidor/1 000 poster per lista. Inventeringen får separat täckningsmetadata och rapportsektion. Tester täcker tom lista, en sida, flera sidor, säkerhetsgräns med nästa sida samt felaktigt API-svar. CI och livekörning är ännu inte verifierade. Övriga v2-delar är inte implementerade.
