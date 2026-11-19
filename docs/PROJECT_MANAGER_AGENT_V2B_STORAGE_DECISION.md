@@ -1,6 +1,6 @@
 # AI-projektledare v2b – beslutsunderlag för historiklagring
 
-**Status:** Beslutsunderlag – inget lagringsval är godkänt eller implementerat  
+**Status:** Användarbeslut fattat 2026-11-19 – Git-branch och indefinite retention. Implementation ej påbörjad; persistens spärrad tills verifiering och separat godkännande.  
 **Datum:** 2026-11-19  
 **Omfattning:** Endast projektledaragentens inventeringsmetadata (inte Skogs källdata eller kunddata)
 
@@ -25,7 +25,7 @@ Kortvariga Actions-artifacts är användbara för felsökning och manuell gransk
 7. **Ingen automatisk borttagning:** saknade objekt mellan körningar är endast en förändringssignal. De ska inte markeras som borttagna/inaktiva utan komplett jämförbar täckning och separat regel.
 8. **Sekretess:** lagra inte issue-/PR-body, kommentarer, personuppgifter, hemligheter eller token. Begränsa åtkomst till projektets behöriga underhållare.
 9. **Återställbarhet:** verifiera att en arkiverad körning kan hämtas, avkodas och checksummeverifieras.
-10. **Spårbar retention:** retention ska vara uttrycklig och dokumenterad; ingen automatisk rensning får införas innan retention är beslutad.
+10. **Indefinite retention:** användarens beslut är att inventeringar bevaras tills vidare utan automatisk utgång eller gallring. Ingen automatisk rensning får införas. Årlig översyn av lagringsbehov, integritet, åtkomst och repo-storlek rekommenderas; översyn innebär inte automatisk radering.
 
 ## 3. Alternativ
 
@@ -80,26 +80,28 @@ Kortvariga Actions-artifacts är användbara för felsökning och manuell gransk
 
 **Rekommendation för beslut:** välj alternativ A för en första, avgränsad historikpilot om målet är att komma vidare med minsta möjliga nya infrastruktur. Det ger en lättgranskad lösning för små mängder projektmetadata. Alternativ B är lämpligare om historiken ska bli långlivad, växa eller få formella retention-/immutabilitykrav; då ska Azure väljas först efter att en separat container-scope-identitet har etablerats.
 
-Rekommendationen är inte ett godkännande. Ingen branch, skrivbehörighet, persistence-workflow eller historikdata ska skapas innan användaren har valt alternativ och godkänt retention.
+**Beslut fattat av användaren 2026-11-19:** alternativ A – separat skyddad Git-branch – är valt. Retention är indefinite (bevaras tills vidare, utan automatisk gallring). Detta godkänner planering och teknisk design, men inte aktivering av persistens eller utdelning av skrivbehörighet. Branch, workflow och historikdata ska inte skapas/aktiveras förrän designen är granskad, tester passerat och användaren uttryckligen godkänt aktiveringssteget.
 
 Föreslagen leveransordning efter beslut:
-1. Besluta lagringsplats och åtkomstmodell.
-2. Besluta retention och om körningar ska sparas även när en lista är trunkerad (rekommendation: ja, men uttryckligen märkta `incomplete` och spärrade från jämförelse).
-3. Implementera separat persistensgräns; read-only-inventeringen ska inte få skrivbehörighet.
-4. Testa append-only, idempotens, felhantering, checksumma, kompletthetsgrind och restore med syntetiska inventeringar.
-5. Genomför en manuell livepilot och verifiera artifact/arkivobjekt.
-6. Först därefter utforma v2c jämförelseregler.
+1. **Design (nästa steg):** specificera branchlayout, manifest-schema, run-ID, commitstrategi, skyddsregler och exakt workflow-gräns. Ingen skrivtoken eller workflow aktiveras.
+2. **Testdesign:** bygg syntetiska tester för append-only, idempotens/dubblettkörning, branch-head race, befintligt run-ID, checksummefel, API-fel, trunkerad inventering, saknade filer och restore.
+3. **Behörighetsgranskning:** inventeringsjobbet behåller endast `contents: read`, `issues: read`, `pull-requests: read`, `actions: read`. Skrivbehörighet ska vara job-scopad till ett separat persistence-jobb och endast riktas mot historikbranchen. Ingen generell repo-write i insamlingsjobbet.
+4. **Förhandsverifiering:** branch ruleset ska hindra force-push och branch deletion; verifiera att reglerna faktiskt gäller och att workflow-identiteten inte kan skriva till `main`.
+5. **Manuell syntetisk pilot:** kör mot testpayload utan verklig inventeringshistorik; verifiera commit, manifest, SHA-256, readback och restore.
+6. **Aktiveringsgrind:** presentera verifieringsresultat och exakt diff för användaren. Först efter separat uttryckligt godkännande får persistens aktiveras för riktiga inventeringar.
+7. **v2c:** historisk jämförelse planeras först efter minst två verifierade, kompletta, jämförbara arkiverade inventeringar. Frånvaro ska benämnas ej observerad, aldrig automatiskt borttagen.
 
 ## 5. Beslut som behövs
 
 | Beslut | Rekommenderat utgångsläge | Kräver godkännande |
 |---|---|---|
-| Lagringsplats | A: separat skyddad Git-branch för första pilot | Ja |
-| Retention | 5 år som diskussionsförslag; inte implementerat | Ja |
-| Trunkerade inventeringar | Arkivera med `incomplete`-markering, aldrig jämförbara | Ja |
-| Skrivbehörighet | Separat persistence-jobb; ingen write i read-only-jobbet | Ja |
-| WORM/immutability | Avstå i pilot; utred senare vid behov | Ja |
-| Körfrekvens | Fortsatt manuell workflow; ingen schedule | Ja, separat beslut |
+| Lagringsplats | **A: separat skyddad Git-branch** | Beslut fattat 2026-11-19 |
+| Retention | **Indefinite – bevara tills vidare, utan automatisk gallring** | Beslut fattat 2026-11-19 |
+| Trunkerade inventeringar | Arkivera som `incomplete`, aldrig jämförbara | Ingår i teknisk design; ska testas |
+| Skrivbehörighet | Separat persistence-jobb; ingen write i read-only-jobbet | Princip beslutad; aktivering inväntar verifiering och separat godkännande |
+| Branchskydd | Förhindra force-push och branch deletion | Ska konfigureras/verifieras före aktivering |
+| WORM/immutability | Avstå i första pilot | Föreslaget; inget separat WORM-lager |
+| Körfrekvens | Fortsatt manuell workflow; ingen schedule | Oförändrat; separat beslut krävs för framtida schedule |
 
 ## 6. Utanför omfattningen
 
@@ -108,4 +110,28 @@ Föreslagen leveransordning efter beslut:
 - Ingen issue-/PR-/kodändring av agenten.
 - Ingen automatisk slutsats om borttagning, inaktivitet eller avslut.
 - Ingen koppling till Skogskolls kunddata eller kundaviseringar.
-- Ingen Azure- eller GitHub-skrivning i detta beslutsunderlag.
+- Ingen Azure- eller GitHub-skrivning till historikarkivet i detta beslutsunderlag.
+
+## 7. Beslutad målbild och implementationens grindar
+
+### Beslutad målbild
+- Historikbranchen: `project-manager-history` (namnförslag; ska kontrolleras innan den skapas).
+- En katalog per unik `run_id`, exempelvis `runs/YYYY/MM/DD/<run_id>/`.
+- Filer: `inventory.json`, `report.md`, `manifest.json`.
+- Manifestet ska innehålla schema-version, run-ID, UTC-tid, repository, branch, commit-SHA, artifact/run-referens, filstorlekar, SHA-256 samt coverage-status för issues och PR.
+- Indefinite retention: ingen tidsbaserad automatisk radering. Årlig manuell översyn rekommenderas.
+- Trunkerade inventeringar kan bevaras som historiska körningsobservationer med `incomplete`-status, men spärras från v2c jämförelse.
+
+### Säkerhetsgräns
+- Nuvarande inventeringsjobb fortsätter med read-only-behörigheter.
+- Ett separat persistence-jobb/workflow är enda komponenten som kan få `contents: write`, och skrivningen ska begränsas till historikbranchen så långt GitHub-behörighetsmodellen medger.
+- Ingen skrivbehörighet till `main`, inga issue-/PR-ändringar, inga force-push och ingen branch deletion från automationen.
+- Om branchskydd eller tillräckligt snäv tokenbegränsning inte kan verifieras ska persistens inte aktiveras.
+
+### Aktiveringskriterier
+1. Alla syntetiska tester för append-only, idempotens, felhantering, coverage-gate, SHA-256 och restore passerar.
+2. Branchskydd och job-scopad skrivbehörighet är verifierade i GitHub.
+3. Syntetisk manuell körning har skrivits, lästs tillbaka och checksummeverifierats utan att `main` kan ändras.
+4. Användaren har granskat diff och uttryckligen godkänt aktivering för riktiga inventeringar.
+
+Till dess är v2b **beslutad på designnivå men inte implementerad eller aktiverad**.
