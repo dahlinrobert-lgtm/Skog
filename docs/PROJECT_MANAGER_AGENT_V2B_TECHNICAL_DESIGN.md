@@ -82,6 +82,12 @@ Manifestets checksummor beräknas över exakta byte av de två filer som arkiver
 
 ## 6. Branchskydd och behörighetskontroller
 
+### Read-only kontroll 2026-11-19
+
+Resultatet är dokumenterat i [PROJECT_MANAGER_AGENT_V2B_SECURITY_AUDIT.md](PROJECT_MANAGER_AGENT_V2B_SECURITY_AUDIT.md): repository rulesets API returnerade `[]`; endpointen för klassisk branch protection på `main` returnerade HTTP 403 `Resource not accessible by integration`; `project-manager-history` returnerade 404 eftersom den ännu inte skapats. Nuvarande workflow YAML bekräftar endast read permissions och inget persistence-jobb. Därför är skyddet av `main` inte verifierat och livepersistens är blockerad.
+
+
+
 Före någon skrivaktivering måste följande verifieras i GitHub:
 - ruleset för `main` kräver PR och blockerar direkt push från Actions-identiteten;
 - historikbranchen skyddas mot force-push och deletion;
@@ -147,4 +153,9 @@ PR-branch innehåller `scripts/project_manager_history.py` och `tests/test_proje
 
 ## 11. Restore-/round-trip-steg
 
-PR under arbete kompletterar offline-modulen med `restore_run_files`: den verifierar manifestversion, exakt filuppsättning, tillåtna relativa filnamn, byteantal och SHA-256 innan återställning till en ny lokal katalog. Den vägrar skriva över en befintlig målkatalog och verifierar SHA-256 efter lokal readback. Detta är en lokal återställningshjälpare, inte Git-/GitHub-persistens och inte ett produktionsflöde. Syntetiska tester omfattar lyckad round-trip, manipulerade byte, befintlig målkatalog och path traversal.
+PR #441 har mergats och CI passerat; offline-modulen kompletterar med `restore_run_files`: den verifierar manifestversion, exakt filuppsättning, tillåtna relativa filnamn, byteantal och SHA-256 innan återställning till en ny lokal katalog. Den vägrar skriva över en befintlig målkatalog och verifierar SHA-256 efter lokal readback. Detta är en lokal återställningshjälpare, inte Git-/GitHub-persistens och inte ett produktionsflöde. Syntetiska tester omfattar lyckad round-trip, manipulerade byte, befintlig målkatalog och path traversal.
+
+
+## 12. Säkerhetsgranskning 2026-11-19
+
+Read-only granskning av GitHub settings/API finns i [PROJECT_MANAGER_AGENT_V2B_SECURITY_AUDIT.md](PROJECT_MANAGER_AGENT_V2B_SECURITY_AUDIT.md). Ingen repository ruleset returnerades. Klassisk branch protection för `main` gav 403 från GitHub-integrationen och kunde inte verifieras. Den planerade historikbranchen finns inte. Nuvarande workflow har endast read permissions. **Ingen livepersistens får byggas/aktiveras förrän repository-administratören verifierat main-skydd, Actions-bypass och avsedd historikbranchregel.**
