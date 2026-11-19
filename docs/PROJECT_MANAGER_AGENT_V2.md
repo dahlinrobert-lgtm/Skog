@@ -60,11 +60,8 @@ Göra inventeringen mer fullständig och ge ett tillförlitligt underlag för f�
 
 ## Öppna beslut
 
-- Hur länge ska inventeringar bevaras?
-- Ska historiken ligga som Actions-artifacts eller i en separat, skyddad GitHub-lagringsgren?
-- Ska jämförelsen köras manuellt med vald baslinje eller automatiskt efter separat godkännande?
-
-Inga av dessa beslut är fattade genom denna plan.
+- v2b lagringsplats och retention är beslutade 2026-11-19: separat skyddad Git-branch och indefinite retention. Se [v2b-beslutsunderlaget](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md).
+- Hur ska jämförelsen i v2c initieras: manuellt med vald baslinje eller automatiskt efter separat godkännande? Detta är fortfarande öppet.
 
 ## Genomförandestatus v2a (2026-11-19)
 
@@ -74,3 +71,8 @@ PR #436 är sammanslagen i `main` (merge commit `fffad6fd9ccb9af356c89e7c486bdba
 ## v2b – beslutsunderlag
 
 Lagringsalternativ, integritetskrav, retention, åtkomst och rekommenderad stegvis pilot beskrivs i [v2b-beslutsunderlaget](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md). Inget alternativ är godkänt och ingen beständig lagring är implementerad. v2c får inte starta före uttryckligt lagringsbeslut och verifierad persistens.
+
+
+## v2b – användarbeslut 2026-11-19
+
+Valt: separat skyddad Git-branch med indefinite retention (ingen automatisk gallring). Beslutet godkänner inte aktivering av persistens. Implementationsplanen är: (1) specificera katalog- och manifestformat, (2) bygga syntetiska tester för append-only/idempotens/fel/coverage/checksumma/restore, (3) verifiera branch ruleset och att write-behörighet endast finns i separat persistence-jobb och inte kan skriva till `main`, (4) genomföra syntetisk readback/restore-pilot, (5) presentera evidens och diff för separat godkännande. Först därefter får riktiga inventeringar arkiveras. Trunkerade körningar får lagras märkta `incomplete`, aldrig jämföras.
