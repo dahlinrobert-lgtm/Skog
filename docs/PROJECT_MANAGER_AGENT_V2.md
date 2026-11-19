@@ -69,3 +69,8 @@ Inga av dessa beslut är fattade genom denna plan.
 ## Genomförandestatus v2a (2026-11-19)
 
 PR #436 är sammanslagen i `main` (merge commit `fffad6fd9ccb9af356c89e7c486bdbac7ee53ce5`). Riktade tester och bred Snapshot storage tests passerade efter merge. Manuell workflowkörning #10 passerade och producerade artifact med `inventory.json` och `report.md`. Issues-endpointen gav 436 poster på 5 sidor; efter filtrering av pull-requestposter återstod 11 issues. PR-endpointen gav 425 poster på 5 sidor. Båda uttagen markerades `complete`, utan trunkering. Artifact SHA-256 `de613fbcc54d2f1567f5c8f5bab75b65a09b1e4a797d9dfb0e4a30cfa85c6dbb`, retention till 2026-12-03 04:12:41 UTC. Övriga v2-delar är inte implementerade.
+
+
+## v2b – beslutsunderlag
+
+Lagringsalternativ, integritetskrav, retention, åtkomst och rekommenderad stegvis pilot beskrivs i [v2b-beslutsunderlaget](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md). Inget alternativ är godkänt och ingen beständig lagring är implementerad. v2c får inte starta före uttryckligt lagringsbeslut och verifierad persistens.
