@@ -143,3 +143,8 @@ Testerna ska använda syntetiska fixtures och en temporär lokal Git-repository 
 ## 10. Första offline-implementationen
 
 PR-branch innehåller `scripts/project_manager_history.py` och `tests/test_project_manager_history.py`. Modulen validerar JSON/repository/run metadata/tidsstämplar/coverage, bygger deterministiskt manifest med SHA-256 över exakta byte och jämför befintlig körningskatalog utan att skriva över. Den utför inga filskrivningar, Git-operationer, API-anrop eller nätverksåtkomst. CI körs via det befintliga read-only project-manager-workflowet. Resultat inväntas.
+
+
+## 11. Restore-/round-trip-steg
+
+PR under arbete kompletterar offline-modulen med `restore_run_files`: den verifierar manifestversion, exakt filuppsättning, tillåtna relativa filnamn, byteantal och SHA-256 innan återställning till en ny lokal katalog. Den vägrar skriva över en befintlig målkatalog och verifierar SHA-256 efter lokal readback. Detta är en lokal återställningshjälpare, inte Git-/GitHub-persistens och inte ett produktionsflöde. Syntetiska tester omfattar lyckad round-trip, manipulerade byte, befintlig målkatalog och path traversal.

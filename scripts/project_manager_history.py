@@ -151,3 +151,57 @@ def check_append_only(existing_dir: Path, expected_files: Mapping[str, bytes]) -
     if actual_names != set(expected_files):
         raise ExistingRunConflict("Existing run contains missing or unexpected files")
     return False
+
+
+def restore_run_files(
+    manifest_bytes: bytes,
+    source_files: Mapping[str, bytes],
+    destination: Path,
+) -> dict[str, str]:
+    """Restore a verified run into a new local directory (never overwrite).
+
+    This is an offline recovery primitive only. It does not access Git or GitHub
+    and must not be wired to production persistence without separate approval.
+    """
+    try:
+        manifest = json.loads(manifest_bytes.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise HistoryValidationError("manifest.json is not valid UTF-8 JSON") from exc
+    if not isinstance(manifest, dict) or manifest.get("manifest_schema_version") != MANIFEST_SCHEMA_VERSION:
+        raise HistoryValidationError("Unsupported or invalid manifest schema")
+    expected = manifest.get("files")
+    if not isinstance(expected, dict) or set(expected) != {"inventory_json", "report_md"}:
+        raise HistoryValidationError("Manifest must describe exactly inventory.json and report.md")
+    if set(source_files) != {"inventory.json", "report.md"}:
+        raise HistoryValidationError("Restore input must contain exactly inventory.json and report.md")
+    verified: dict[str, str] = {}
+    for key, filename in (("inventory_json", "inventory.json"), ("report_md", "report.md")):
+        metadata = expected.get(key)
+        payload = source_files[filename]
+        if not isinstance(metadata, dict) or not isinstance(payload, bytes):
+            raise HistoryValidationError(f"Invalid restore metadata or bytes for {filename}")
+        if metadata.get("path") != filename:
+            raise HistoryValidationError(f"Unexpected manifest path for {filename}")
+        if metadata.get("size_bytes") != len(payload):
+            raise HistoryValidationError(f"Size mismatch for {filename}")
+        digest = hashlib.sha256(payload).hexdigest()
+        if metadata.get("sha256") != digest:
+            raise HistoryValidationError(f"SHA-256 mismatch for {filename}")
+        verified[filename] = digest
+
+    if destination.exists():
+        raise ExistingRunConflict("Restore destination already exists; refusing to overwrite")
+    destination.mkdir(parents=True, exist_ok=False)
+    try:
+        for filename, payload in source_files.items():
+            (destination / filename).write_bytes(payload)
+        for filename, digest in verified.items():
+            restored = (destination / filename).read_bytes()
+            if hashlib.sha256(restored).hexdigest() != digest:
+                raise HistoryValidationError(f"Readback SHA-256 mismatch for {filename}")
+    except Exception:
+        # Do not leave a partially restored directory that could look complete.
+        import shutil
+        shutil.rmtree(destination, ignore_errors=True)
+        raise
+    return verified

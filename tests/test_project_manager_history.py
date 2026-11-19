@@ -11,6 +11,7 @@ from project_manager_history import (
     HistoryValidationError,
     build_manifest,
     check_append_only,
+    restore_run_files,
 )
 
 REPOSITORY = "dahlinrobert-lgtm/Skog"
