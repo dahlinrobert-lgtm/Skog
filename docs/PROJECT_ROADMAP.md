@@ -55,4 +55,6 @@
 Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huvuduppgifter. Blockerade uppgifter ska inte presenteras som om de vore genomförbara. Om en ny blockerare uppstår ska ordningsföljden revideras och beslut som krävs från användaren lyftas separat.
 
 
-- [ ] Fatta separat beslut om v2b: beständig append-only-lagring, retention och persistensbehörighet. Se [beslutsunderlag](PROJECT_MANAGER_AGENT_V2B_STORAGE_DECISION.md). Ingen implementation före beslut.
+- [x] Besluta v2b-lagring: separat skyddad Git-branch och indefinite retention (2026-11-19).
+- [ ] Designa och verifiera separat persistence-jobb, branchskydd, append-only/idempotens, SHA-256 och restore med syntetiska data. Ingen aktivering före separat användargodkännande.
+- [ ] v2c historisk jämförelse först efter minst två verifierade kompletta arkivkörningar.
