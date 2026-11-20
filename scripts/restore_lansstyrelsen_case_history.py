@@ -58,7 +58,7 @@ def main() -> int:
         current_cases[key] = merged
 
     args.details.write_text(
-        json.dumps(current, ensure_ascii=False, indent=2) + "\\n",
+        json.dumps(current, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     print(json.dumps({
