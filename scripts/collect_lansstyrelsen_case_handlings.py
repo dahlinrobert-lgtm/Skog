@@ -60,6 +60,47 @@ def stable_hash(value: object) -> str:
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
+
+def merge_case_record(old: dict | None, parsed: dict) -> dict:
+    """Merge a fresh observation without erasing previously captured history.
+
+    Public diary pages can temporarily render incomplete tables. Empty fields or
+    missing handling rows in one observation must not delete previously observed
+    metadata. Non-empty fresh values may update the prior values.
+    """
+    if not old:
+        merged = dict(parsed)
+        merged_case = dict(parsed.get("case") or {})
+        merged_handlings = list(parsed.get("handlings") or [])
+    else:
+        merged_case = dict(old.get("case") or {})
+        for key, value in (parsed.get("case") or {}).items():
+            if value is not None and str(value).strip():
+                merged_case[key] = value
+
+        handling_map = {}
+        for handling in old.get("handlings") or []:
+            key = handling.get("handling_key") or handling.get("handling_number")
+            if key:
+                handling_map[key] = dict(handling)
+        for handling in parsed.get("handlings") or []:
+            key = handling.get("handling_key") or handling.get("handling_number")
+            if not key:
+                continue
+            previous = handling_map.get(key, {})
+            combined = dict(previous)
+            for field, value in handling.items():
+                if value is not None and str(value).strip():
+                    combined[field] = value
+            handling_map[key] = combined
+        merged_handlings = list(handling_map.values())
+        merged = {**old, **parsed}
+
+    merged["case"] = merged_case
+    merged["handlings"] = merged_handlings
+    merged["content_hash"] = stable_hash({"case": merged_case, "handlings": merged_handlings})
+    return merged
+
 def rows_to_dict(rows: list[list[str]]) -> dict[str, str]:
     result = {}
     for row in rows:
@@ -283,6 +324,9 @@ def main() -> int:
                                 "before": previous,
                                 "after": handling,
                             })
+                    if old and (old.get("handlings") or []) and not parsed["handlings"]:
+                        item["warning"] = "No handling rows extracted; previous handling history retained."
+                    parsed = merge_case_record(old, parsed)
                     parsed["first_seen_at"] = (old or {}).get("first_seen_at", observed_at)
                     parsed["last_seen_at"] = observed_at
                     parsed["observation_count"] = int((old or {}).get("observation_count", 0)) + 1
