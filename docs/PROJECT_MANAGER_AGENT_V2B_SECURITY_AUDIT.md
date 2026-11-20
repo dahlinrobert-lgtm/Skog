@@ -124,3 +124,22 @@ PR #458 är sammanslagen och ersätter branchalternativet i denna tidigare grans
 **Nästa blockerare:** administrativt konfigurera och verifiera ruleset för historikrepots `main` (active, block deletion, block non-fast-forward/force push, ingen bypass för framtida App-identitet). Därefter krävs extern backup/restore-verifiering och syntetiska negativa tester.
 
 **Säkerhetsgräns:** ingen App, installation, privat nyckel, Actions-secret, Contents-write, schemaläggning eller persistensworkflow har skapats. Inventeringsworkflowet i Skog är fortsatt read-only. Persistens får inte aktiveras utan separat uttryckligt godkännande.
+
+
+## 11. Verifierat ruleset i separat privat historikrepo (2026-11-20)
+
+Read-only GitHub Rulesets API för `skogskoll-project-manager-history` returnerar ruleset:
+`Protect history main`, ID `27761134`.
+
+| Kontroll | Verifierat värde |
+|---|---|
+| Enforcement | `active` |
+| Target | Endast `refs/heads/main` |
+| Deletion | Blockerad |
+| Non-fast-forward / force push | Blockerad |
+| Bypass actors | Tom lista |
+| Aktuell användares bypass | `never` |
+
+Ruleset-detaljendpointen bekräftar hela konfigurationen. Klassisk branch protection endpoint returnerar fortfarande 403 för integrationen; detta påverkar inte läsningen av ruleset-detaljerna. Inga negativa push-/delete-operationer har utförts, så konfigurationen är verifierad men dess beteende har ännu inte provats med en separat syntetisk identitet.
+
+**Nästa steg:** extern backup och restore-test, följt av syntetiska tester av append-only-acceptanslogik. Ingen App, secret, Contents-write, persistence-workflow eller produktionshistorik är aktiverad.
