@@ -74,3 +74,8 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 - [x] Syntetiskt lokalt Git-append-test mergat via PR #445 och CI verifierad (project-manager tests success; Snapshot storage full unittest success).
 - [ ] Utforma och verifiera historikbranchens ruleset och negativa operationer; skilj lokal Git-simulering från faktisk GitHub-säkerhetsverifiering.
 - [ ] Fortsätt hålla GitHub App, secret, contents: write och persistensworkflow avstängda tills verifiering och separat godkännande.
+
+- [x] Verifiera att `Protect main` är enda ruleset i Skog (read-only listning 2026-11-20); inget ruleset för `project-manager-history` finns.
+- [ ] Förbered separat ruleset för exakt `project-manager-history` enligt testmatrisen; administrativ konfiguration och negativtest återstår.
+- [ ] Verifiera att dedikerad identitet kan append:a syntetisk körning men nekas direktuppdatering av main, force push och branch deletion.
+- [ ] Om repository-scoped Contents-write inte ger tillräcklig isolering, välj separat repo/lagring innan App eller secret skapas.

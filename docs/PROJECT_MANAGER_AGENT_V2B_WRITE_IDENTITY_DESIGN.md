@@ -82,3 +82,27 @@ Om kravet är tekniskt garanterad branch-scopad credential snarare än repositor
 ## 7. Aktiveringsstatus
 
 **Inte aktiverat.** Detta dokument ger inte tillstånd att skapa App, secret, historikbranch, persistence-workflow eller skriva data. Nästa steg är granskning av designen och därefter en separat, syntetisk implementation utan produktionspersistens.
+
+## 8. Historikbranchens ruleset – verifieringsmatris (2026-11-20)
+
+Föreslagen konfiguration för `project-manager-history` (inte skapad):
+- Target endast exakt branch `project-manager-history`; verifiera att rulesetet omfattar exakt en branch och inte `main` eller feature-branches.
+- Enforcement `active`.
+- Blockera deletion och non-fast-forward (force push).
+- Ingen bypass-aktör; `current_user_can_bypass` ska vara `never` där API:t redovisar detta.
+- Kräv inte PR för historikbranchen om ett framtida, separat append-jobb ska göra direkt fast-forward-commit. Tillåt vanlig fast-forward push.
+- Aktivera inte `Restrict updates`: det skulle stoppa avsedd append och kan skapa behov av bred bypass.
+
+**Verifieringsmatris – först med syntetiska data och separat identitet:**
+1. Read-only: lista rulesets och hämta rulesetdetaljer; bekräfta target, enforcement, regler och bypass.
+2. Tillåten operation: skapa en ny syntetisk run-katalog på historikbranchen med vanlig fast-forward push; läs tillbaka commit och filer och verifiera SHA-256.
+3. Negativ main-test: samma identitet försöker uppdatera `main` direkt; operationen måste nekas av PR-kravet. Ingen PR skapas eller mergeas i testet.
+4. Negativ force-push-test: försök flytta historikbranchens ref bakåt/icke-fast-forward; måste nekas.
+5. Negativ deletion-test: försök radera historikbranchen; måste nekas.
+6. Filnivå: försök återanvända ett run-ID med identiska byte (idempotent no-op) respektive avvikande byte (hard fail utan overwrite).
+7. Omfattning: försök skapa/uppdatera en annan branch; dokumentera utfallet. GitHub App Contents-write är repository-scoped och kan inte i sig begränsas till en enda branch.
+8. Readback/restore: återläs manifest och payloads, verifiera exakt filuppsättning, storlek och SHA-256; genomför lokal restore till ny tom katalog.
+
+**Säkerhetsgrind:** ingen App, private key, secret, `contents: write`, branch eller persistensworkflow skapas innan administrativt ruleset är granskat och användaren separat godkänt pilotkonfigurationen. Negativa liveoperationer får endast utföras med en dedikerad syntetisk identitet, syntetiskt innehåll och isolerad testgren; aldrig mot riktig data eller genom destruktiva operationer på `main`.
+
+**Kvarvarande arkitekturrisk:** repository-scoped Contents-write ger inte branch-scope. Om kravet är att credential tekniskt bara ska kunna skriva till historikbranchen är separat repository eller lagring med container-/repo-scopad identitet säkrare än GitHub App i samma repo.
