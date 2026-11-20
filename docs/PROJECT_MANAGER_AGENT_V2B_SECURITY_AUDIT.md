@@ -85,3 +85,22 @@ PR #445:s lokala Git-test är verifierat i CI, men det verifierar inte GitHub ru
 Historikbranchens ruleset ska utformas enligt verifieringsmatrisen i `PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md`. Kritiska tester är: exakt target, aktiv enforcement, ingen bypass, tillåten vanlig fast-forward append, nekad force push, nekad deletion och nekad direktuppdatering av main med samma dedikerade identitet. En GitHub App med Contents-write i Skog är repository-scoped; ruleset ger skydd men inte en teknisk branch-scopad credential. Om branchscope är ett absolut krav måste separat repo eller annan lagring utredas.
 
 Ingen historikbranch, App, private key, secret, write permission eller persistensworkflow skapas i detta steg. Persistens förblir spärrad.
+
+## Beslut: separat privat historikrepository för v2b (2026-11-20)
+
+Efter avvägning väljs ett separat privat Git-repository för projektledaragentens persistenta historik, i stället för en historikbranch i det publika Skog-repot.
+
+Skäl:
+- Skog-repot är publikt. En branch i samma repository ärver både repositoryns synlighet och dess befintliga Git-objekthistorik; att lägga till en ny branch ger inte en fristående/orphan-historik.
+- En separat privat repository ger separat synlighet, separat ruleset och en GitHub App-installation vars Contents-write kan begränsas till just historikrepot. Det ger en starkare teknisk gräns än branchregler i Skog.
+- Git behåller append-commits, SHA-1 objektidentitet och full historik; indefinite retention blir naturligt så länge repot och dess backup bevaras.
+
+Nackdelar och hantering:
+- Ytterligare repository att administrera, övervaka och säkerhetskopiera.
+- Historik och inventeringskod blir två separata resurser; persistensjobbet måste verifiera artifact-proveniens och skriva endast till historikrepot.
+- Git är inte i sig WORM/immutability: en administratör kan ändra rulesets eller radera repot. Kräv aktivt ruleset, ingen bypass för Appen, deletion/force-push-skydd, extern backup/restore-test och audit av administratörsåtgärder.
+- Repositorynamn föreslås `skogskoll-project-manager-history`; skapa som Private. Indefinite retention är ett verksamhetsbeslut, inte en garanti mot kontoförlust eller administrativ radering.
+
+Alternativet branch i Skog avvisas eftersom Skog är publikt och innehåller redan befintlig kod-/dataprojektshistorik. Separat privat repo ger bättre sekretess och credential-isolering. Azure Blob med container-scope-identitet är ett möjligt framtida alternativ om krav på objektlås/WORM eller kostnad/tillväxt gör Git olämpligt, men väljs inte i detta steg.
+
+**Aktiveringsgräns:** Detta är ett arkitekturbeslut, inte tillstånd att skapa repo, App, nyckel, secret eller persistence-workflow. Nästa steg är att skapa det privata tomma historikrepot först efter uttryckligt godkännande av själva repo-skapandet; därefter ruleset och syntetiska tester med separat identitet. Ingen historik skrivs före verifiering och separat godkännande.
