@@ -70,3 +70,7 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 - [ ] Besluta om repository-scoped Contents write med verifierat main-ruleset är tillräckligt; annars välj separat repo/lagring med snävare scope.
 - [ ] Syntetisk implementation och negativa tester utan GitHub-skrivning.
 - [ ] Först efter separat godkännande: skapa App/secret, historikbranch och ruleset samt verifiera negativa GitHub-operationer.
+
+- [x] Syntetiskt lokalt Git-append-test mergat via PR #445 och CI verifierad (project-manager tests success; Snapshot storage full unittest success).
+- [ ] Utforma och verifiera historikbranchens ruleset och negativa operationer; skilj lokal Git-simulering från faktisk GitHub-säkerhetsverifiering.
+- [ ] Fortsätt hålla GitHub App, secret, contents: write och persistensworkflow avstängda tills verifiering och separat godkännande.
