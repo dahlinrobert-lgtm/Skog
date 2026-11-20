@@ -79,3 +79,7 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 - [ ] Förbered separat ruleset för exakt `project-manager-history` enligt testmatrisen; administrativ konfiguration och negativtest återstår.
 - [ ] Verifiera att dedikerad identitet kan append:a syntetisk körning men nekas direktuppdatering av main, force push och branch deletion.
 - [ ] Om repository-scoped Contents-write inte ger tillräcklig isolering, välj separat repo/lagring innan App eller secret skapas.
+
+- [x] Avväg Git-historikbranch i Skog mot separat privat repo; välj separat privat repo `skogskoll-project-manager-history` för sekretess och credential-isolering.
+- [ ] Skapa privat historikrepo efter separat uttryckligt godkännande.
+- [ ] Sätt ruleset, App-identitet och syntetiska negativa tester i det separata repot; ingen persistens före verifiering och separat godkännande.
