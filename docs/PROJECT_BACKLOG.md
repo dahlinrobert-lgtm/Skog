@@ -54,3 +54,5 @@ Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskrit
 | PM-017 | V2b skrividentitet och branchisolering | P1 | Designförslag | Granska `PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md`; bekräfta acceptans av repository-scoped GitHub App, historikbranch-regler och negativa tester innan någon App/secret/branch/persistence-workflow skapas. Ingen livepersistens. |
 
 - [ ] Kör och verifiera PR-CI för syntetiskt Git-append-test i feature/project-manager-v2b-synthetic-git-append. Testet ska visa isolerad lokal historikbranch, oförändrad main, exakt filinnehåll, idempotens och konflikt utan overwrite. Detta ersätter inte GitHub ruleset-/tokenverifiering.
+
+| PM-018 | Verifiera GitHub-skrivisolering för v2b | P1 | Pågår ej / blockerad före live | PR #445 CI verifierad: project-manager tests och Snapshot storage tests passerade. Nästa: syntetiska negativa tester för main/branchregler och utforma historikbranchens ruleset. Ingen App, secret eller livepersistens innan separat godkännande. |
