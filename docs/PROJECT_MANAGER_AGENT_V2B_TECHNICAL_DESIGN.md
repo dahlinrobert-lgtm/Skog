@@ -169,3 +169,7 @@ Se [PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md](PROJECT_MANAGER_AGENT_V2
 Nästa teststeg använder en temporär lokal Git-repository skapad i testets tempkatalog. Testet initierar main, skapar en separat project-manager-history-branch och committar endast en syntetisk run-katalog med inventory.json, report.md och manifest.json. Det verifierar att main behåller sin ursprungliga HEAD, att historikcommiten har rätt parent och endast innehåller de tre körningsfilerna, att identiska run-byte ger idempotent no-op och att avvikande byte ger konflikt utan ny commit.
 
 Testet använder Git CLI lokalt men ingen remote, GitHub API, credential, secret eller verklig historikbranch. Det är en simulering av commit-/branchlayouten, inte en verifiering av GitHubs ruleset eller skrivbehörighetsisolering. Den delen är fortsatt blockerad och kräver separat verifiering/godkännande.
+
+## 15. PR #445 – verifierat CI-resultat (2026-11-20)
+
+PR #445 mergades till main (merge-commit e3a3ff72c3867043a4a91e2a24dfd96c534fe9b4). Project-manager CI run 44615910647: tests-job success; inventory-job skipped. Snapshot storage tests run 44615910611: test-job success, inklusive `python -m unittest discover -s tests -v`. Detta bekräftar att det syntetiska Git-testet passerar i CI tillsammans med befintlig testsvit. Omfattningen är lokal temporär Git-repository utan remote eller credentials. GitHub ruleset, App-tokenens permissions och verklig skrivisolering är inte testade. Ingen livepersistens är aktiverad.

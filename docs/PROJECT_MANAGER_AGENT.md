@@ -64,3 +64,7 @@ Efter verifierad merge av offline manifestmodulen i PR #440 byggs nästa isolera
 ## v2b – syntetiskt Git-branch-/commit-test
 
 En ny testgren lägger till ett lokalt Git-test i temporär repository. Det verifierar separat historikbranch, append-commit med endast körningsfiler, oförändrad main, idempotent dubblett och konflikt vid avvikande innehåll. Testet använder ingen remote eller GitHub-skrivning. PR-CI ska verifiera testet; detta är inte ett godkännande eller aktivering av livepersistens.
+
+## v2b – syntetiskt Git-test verifierat
+
+PR #445 är mergad och PR-CI passerade: project-manager tests-job success och Snapshot storage tests-job success (full unittest discovery). Testet validerar en lokal temporär Git-repository, inte GitHub rulesets eller credential-scope. Ingen GitHub-skrivning eller livepersistens ingår.
