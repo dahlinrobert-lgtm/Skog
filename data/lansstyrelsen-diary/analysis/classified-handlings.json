@@ -83938,6 +83938,32 @@
     "classification_version": "1.0.0"
   },
   {
+    "diary_number": "16580-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "16580-2026-5",
+    "title": "Komplettering",
+    "date": "2026-11-16",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "16580-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "16580-2026-6",
+    "title": "Ärendet avslutas",
+    "date": "2026-11-17",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
     "diary_number": "16929-2026",
     "diary": "Länsstyrelsen i Örebro län",
     "handling_number": "16929-2026-1",
@@ -91031,6 +91057,120 @@
     ],
     "matched_rules": [
       "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18564-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18564-2026-1",
+    "title": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+    "date": "2026-11-04",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18564-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18564-2026-2",
+    "title": "All handläggning och diarieföring sker i ärende 18335-2026.",
+    "date": "2026-11-10",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18654-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18654-2026-1",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun",
+    "date": "2026-11-12",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18654-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18654-2026-2",
+    "title": "Uppgifter om verksamhet och miljöpåverkan",
+    "date": "2026-11-12",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18654-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18654-2026-3",
+    "title": "Komplettering",
+    "date": "2026-11-16",
+    "sender_recipient": "Trafikverket",
+    "classes": [
+      "other"
+    ],
+    "matched_rules": [],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18654-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18654-2026-4",
+    "title": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026",
+    "date": "2026-11-18",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18654-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18654-2026-5",
+    "title": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026",
+    "date": "2026-11-18",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "notification"
+    ],
+    "matched_rules": [
+      "notification"
+    ],
+    "classification_version": "1.0.0"
+  },
+  {
+    "diary_number": "18654-2026",
+    "diary": "Länsstyrelsen i Örebro län",
+    "handling_number": "18654-2026-6",
+    "title": "Begäran om yttrande",
+    "date": "2026-11-18",
+    "sender_recipient": "Personuppgift",
+    "classes": [
+      "opinion"
+    ],
+    "matched_rules": [
+      "opinion"
     ],
     "classification_version": "1.0.0"
   }

@@ -6056,13 +6056,13 @@
   {
     "diary": "Länsstyrelsen i Örebro län",
     "diary_number": "16580-2026",
-    "title": "Tillsyn av vattenverksamhet, låga nivåer",
-    "status": "Handläggning",
+    "title": "Tillsyn av vattenverksamhet, låga nivåer i Våtsjön, Karlskoga kommun",
+    "status": "Avslutat",
     "registered_date": "2026-09-30",
-    "decision_date": "",
+    "decision_date": "2026-11-17",
     "municipality": "",
     "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5639762",
-    "handling_count": 4,
+    "handling_count": 6,
     "evidence_score": 6,
     "priority": "follow_up_lead",
     "reasons": [
@@ -6111,6 +6111,28 @@
         "handling_number": "16580-2026-4",
         "title": "Begäran om komplettering",
         "date": "2026-11-03",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "16580-2026-5",
+        "title": "Komplettering",
+        "date": "2026-11-16",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "16580-2026-6",
+        "title": "Ärendet avslutas",
+        "date": "2026-11-17",
         "sender_recipient": "Personuppgift",
         "classes": [
           "other"
@@ -20872,6 +20894,96 @@
   },
   {
     "diary": "Länsstyrelsen i Örebro län",
+    "diary_number": "18654-2026",
+    "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-11-12",
+    "decision_date": "",
+    "municipality": "Laxå",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5685489",
+    "handling_count": 6,
+    "evidence_score": 3,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "18654-2026-1",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun",
+        "date": "2026-11-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "18654-2026-2",
+        "title": "Uppgifter om verksamhet och miljöpåverkan",
+        "date": "2026-11-12",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "18654-2026-3",
+        "title": "Komplettering",
+        "date": "2026-11-16",
+        "sender_recipient": "Trafikverket",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "18654-2026-4",
+        "title": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026",
+        "date": "2026-11-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "18654-2026-5",
+        "title": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026",
+        "date": "2026-11-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "18654-2026-6",
+        "title": "Begäran om yttrande",
+        "date": "2026-11-18",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "opinion"
+        ],
+        "matched_rules": [
+          "opinion"
+        ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Örebro län",
     "diary_number": "2447-2026",
     "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, De dagvattendammar i området Stensnäs där arbetet kommer utföras., Nora kommun",
     "status": "Avslutat",
@@ -35055,9 +35167,9 @@
     "diary": "Länsstyrelsen i Örebro län",
     "diary_number": "17055-2026",
     "title": "Tillsyn vattenverksamhet",
-    "status": "Handläggning",
+    "status": "Avslutat",
     "registered_date": "2026-10-13",
-    "decision_date": "",
+    "decision_date": "2026-10-19",
     "municipality": "",
     "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5650157",
     "handling_count": 4,
@@ -66981,6 +67093,46 @@
         "matched_rules": [
           "administrative"
         ],
+        "classification_version": "1.0.0"
+      }
+    ]
+  },
+  {
+    "diary": "Länsstyrelsen i Örebro län",
+    "diary_number": "18564-2026",
+    "title": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+    "status": "Handläggning",
+    "registered_date": "2026-11-04",
+    "decision_date": "",
+    "municipality": "",
+    "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5683301",
+    "handling_count": 2,
+    "evidence_score": 1,
+    "priority": "planning_or_procurement",
+    "reasons": [],
+    "handlings": [
+      {
+        "handling_number": "18564-2026-1",
+        "title": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+        "date": "2026-11-04",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "notification"
+        ],
+        "matched_rules": [
+          "notification"
+        ],
+        "classification_version": "1.0.0"
+      },
+      {
+        "handling_number": "18564-2026-2",
+        "title": "All handläggning och diarieföring sker i ärende 18335-2026.",
+        "date": "2026-11-10",
+        "sender_recipient": "Personuppgift",
+        "classes": [
+          "other"
+        ],
+        "matched_rules": [],
         "classification_version": "1.0.0"
       }
     ]

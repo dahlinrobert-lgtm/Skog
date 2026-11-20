@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
   "generated_from": "data/lansstyrelsen-diary/case-details.json",
-  "case_count": 801,
-  "lead_count": 710,
+  "case_count": 803,
+  "lead_count": 712,
   "category_counts": {
     "A": 74,
-    "B": 710
+    "B": 712
   },
   "action_type_counts": {
-    "water_activity_general": 708,
+    "water_activity_general": 710,
     "excavation_or_groundwork": 23,
     "watercourse_modification": 30,
     "road_or_track": 32,
-    "drainage_or_ditch": 27,
-    "wetland_or_restoration": 11,
+    "drainage_or_ditch": 28,
+    "wetland_or_restoration": 12,
     "construction_or_facility": 10,
     "line_or_cable": 13,
     "culvert_or_crossing": 29
@@ -54445,10 +54445,10 @@
       "classification_version": "1.0.0",
       "diary": "Länsstyrelsen i Örebro län",
       "diary_number": "16580-2026",
-      "title": "Tillsyn av vattenverksamhet, låga nivåer",
-      "status": "Handläggning",
+      "title": "Tillsyn av vattenverksamhet, låga nivåer i Våtsjön, Karlskoga kommun",
+      "status": "Avslutat",
       "registered_date": "2026-09-30",
-      "decision_date": "",
+      "decision_date": "2026-11-17",
       "municipality": "",
       "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5639762",
       "categories": [
@@ -54463,7 +54463,7 @@
           "action_type": "water_activity_general",
           "text_kind": "case_title",
           "date": "2026-09-30",
-          "matched_text": "Tillsyn av vattenverksamhet, låga nivåer",
+          "matched_text": "Tillsyn av vattenverksamhet, låga nivåer i Våtsjön, Karlskoga kommun",
           "rule_version": "1.0.0"
         }
       ],
@@ -54485,6 +54485,12 @@
           "text_kind": "handling_title",
           "date": "2026-11-03",
           "matched_text": "Begäran om komplettering"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-16",
+          "matched_text": "Komplettering"
         }
       ],
       "evidence_level": "title_and_handling_metadata_only",
@@ -54548,9 +54554,9 @@
       "diary": "Länsstyrelsen i Örebro län",
       "diary_number": "17055-2026",
       "title": "Tillsyn vattenverksamhet",
-      "status": "Handläggning",
+      "status": "Avslutat",
       "registered_date": "2026-10-13",
-      "decision_date": "",
+      "decision_date": "2026-10-19",
       "municipality": "",
       "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5650157",
       "categories": [
@@ -58218,6 +58224,196 @@
           "text_kind": "handling_title",
           "date": "2026-11-17",
           "matched_text": "Remiss_ anmälan om vattenverksamhet_ dnr 9027-2026 (1/1)"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "18564-2026",
+      "title": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-11-04",
+      "decision_date": "",
+      "municipality": "",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5683301",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "drainage_or_ditch",
+        "water_activity_general",
+        "wetland_or_restoration"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "case_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "wetland_or_restoration",
+          "text_kind": "case_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "drainage_or_ditch",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "wetland_or_restoration",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-11-04",
+          "matched_text": "Anmälan om vattenverksamhet, igenläggning av dike, Hallsbergs kommun"
+        }
+      ],
+      "evidence_level": "title_and_handling_metadata_only",
+      "interpretation": "Discovery lead only. A keyword match does not establish legal applicability, a granted permit, a precise location, or completed physical work."
+    },
+    {
+      "schema_version": 1,
+      "classification_version": "1.0.0",
+      "diary": "Länsstyrelsen i Örebro län",
+      "diary_number": "18654-2026",
+      "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun",
+      "status": "Handläggning",
+      "registered_date": "2026-11-12",
+      "decision_date": "",
+      "municipality": "Laxå",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5685489",
+      "categories": [
+        "B"
+      ],
+      "action_types": [
+        "water_activity_general"
+      ],
+      "evidence": [
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "case_title",
+          "date": "2026-11-12",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-12",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-18",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026",
+          "rule_version": "1.0.0"
+        },
+        {
+          "category": "B",
+          "action_type": "water_activity_general",
+          "text_kind": "handling_title",
+          "date": "2026-11-18",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026",
+          "rule_version": "1.0.0"
+        }
+      ],
+      "administrative_stages": [
+        {
+          "stage": "application_or_notification",
+          "text_kind": "case_title",
+          "date": "2026-11-12",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-11-12",
+          "matched_text": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Orrkullebäcken, Laxå kommun"
+        },
+        {
+          "stage": "request_for_complement",
+          "text_kind": "handling_title",
+          "date": "2026-11-16",
+          "matched_text": "Komplettering"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-11-18",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-11-18",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026"
+        },
+        {
+          "stage": "application_or_notification",
+          "text_kind": "handling_title",
+          "date": "2026-11-18",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-11-18",
+          "matched_text": "Remiss anmälan om vattenverksamhet i Orrkullebäcken i Laxå kommun_ 18654-2026"
+        },
+        {
+          "stage": "opinion_or_consultation",
+          "text_kind": "handling_title",
+          "date": "2026-11-18",
+          "matched_text": "Begäran om yttrande"
         }
       ],
       "evidence_level": "title_and_handling_metadata_only",
