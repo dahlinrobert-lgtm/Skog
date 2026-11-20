@@ -40,6 +40,7 @@ jobs:
           python scripts/collect_lansstyrelsen_case_handlings.py --limit "$limit"
       - name: Restore historical fields and handling rows from pre-regression baseline
         run: |
+          git fetch --no-tags --depth=1 origin e5e10effd88ce693e6f008ad1ea543166331dffe
           python scripts/restore_lansstyrelsen_case_history.py \
             --baseline-ref e5e10effd88ce693e6f008ad1ea543166331dffe
       - name: Test collection retry behavior
