@@ -7,6 +7,7 @@ from scripts.collect_lansstyrelsen_case_handlings import (
     build_coverage_summary,
     goto_with_retries,
     prioritize_targets_by_county,
+    merge_case_record,
 )
 
 
@@ -29,6 +30,52 @@ class FakePage:
 
 
 class RetryTests(unittest.TestCase):
+    def test_merge_preserves_old_case_fields_and_handlings_when_fresh_page_is_incomplete(self):
+        old = {
+            "case_key": "county::1-2026",
+            "case": {
+                "diary": "County", "diary_number": "1-2026",
+                "registered_date": "2026-03-23", "status": "Avslutat",
+                "decision_date": "2026-05-18", "municipality": "Uppsala",
+                "title": "Existing title",
+            },
+            "handlings": [
+                {"handling_number": "1-2026-1", "handling_key": "county::1-2026::1-2026-1",
+                 "title": "Anmälan", "date": "2026-03-23", "sender_recipient": "Personuppgift"},
+                {"handling_number": "1-2026-2", "handling_key": "county::1-2026::1-2026-2",
+                 "title": "Beslut", "date": "2026-05-18", "sender_recipient": "Personuppgift"},
+            ],
+            "first_seen_at": "2026-03-23T00:00:00+00:00",
+            "observation_count": 4,
+        }
+        parsed = {
+            "case_key": "county::1-2026",
+            "case": {
+                "diary": "County", "diary_number": "1-2026",
+                "registered_date": "", "status": "", "decision_date": "",
+                "municipality": "", "title": "Existing title",
+            },
+            "handlings": [],
+        }
+        merged = merge_case_record(old, parsed)
+        self.assertEqual(merged["case"]["status"], "Avslutat")
+        self.assertEqual(merged["case"]["registered_date"], "2026-03-23")
+        self.assertEqual(merged["case"]["decision_date"], "2026-05-18")
+        self.assertEqual(merged["case"]["municipality"], "Uppsala")
+        self.assertEqual(len(merged["handlings"]), 2)
+        self.assertEqual(merged["handlings"][1]["title"], "Beslut")
+
+    def test_merge_adds_new_handlings_without_dropping_existing(self):
+        old = {"case": {"status": "Handläggning"}, "handlings": [
+            {"handling_number": "1", "handling_key": "k::1", "title": "Old", "date": "2026-01-01"}
+        ]}
+        parsed = {"case": {"status": "Avslutat"}, "handlings": [
+            {"handling_number": "2", "handling_key": "k::2", "title": "New", "date": "2026-02-01"}
+        ]}
+        merged = merge_case_record(old, parsed)
+        self.assertEqual(merged["case"]["status"], "Avslutat")
+        self.assertEqual({h["handling_number"] for h in merged["handlings"]}, {"1", "2"})
+
     def test_coverage_summary_reports_national_and_county_progress(self):
         targets = [
             {"diary": "Länsstyrelsen i Norrbottens län", "diary_number": "1-2026"},
