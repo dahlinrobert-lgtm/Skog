@@ -543,3 +543,17 @@ PR #458 är sammanslagen. Arkitekturbeslutet är separat privat Git-repository, 
 **Nästa konkreta steg:** konfigurera ett aktivt repository ruleset på historikrepots `main` som blockerar deletion och non-fast-forward/force push, utan bypass för framtida automationsidentitet. Verifiera exakt target och effektiv policy via API/UI. Därefter planera backup/restore-test och negativa tester. Först efter dessa kontroller kan separat skrividentitet diskuteras; livepersistens kräver ytterligare uttryckligt godkännande.
 
 De tidigare daterade avsnitten nedan om historikbranch i Skog beskriver historiska designsteg och ska inte användas som aktuell målarkitektur. Det separata privata repot enligt PR #458 ersätter dem.
+
+
+## AI-projektledare v2b – historikrepots main-ruleset verifierat (2026-11-20)
+
+Användaren har konfigurerat rulesetet `Protect history main` i det privata historikrepot. GitHub Rulesets API verifierar:
+- Ruleset ID: `27761134`
+- Enforcement: `active`
+- Target: exakt `refs/heads/main`
+- Regler: `deletion` och `non_fast_forward`
+- Bypass actors: tom lista; `current_user_can_bypass: never`
+
+Detta är verifierad ruleset-konfiguration, inte ett utfört negativt push-/delete-test. Klassisk branch-protection endpoint ger fortfarande 403 för integrationen, men repository ruleset-detaljerna är läsbara och bekräftar ovanstående policy.
+
+**Nästa steg:** planera extern backup och ett återställningstest till tom katalog. Därefter syntetiska tester av acceptanslogik och Git-operationer. Ingen App, credential, Actions-secret, skrivbehörighet, persistensworkflow eller produktionshistorik är skapad/aktiverad. Persistens kräver separat uttryckligt godkännande.

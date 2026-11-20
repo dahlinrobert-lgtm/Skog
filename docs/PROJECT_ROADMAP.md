@@ -97,3 +97,15 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 - [ ] Först efter ytterligare uttryckligt godkännande och samtliga säkerhetsgrindar: aktivera historikpersistens.
 
 Verifierad status 2026-11-20: repository rulesets API returnerar `[]`. Klassisk branch protection för `main` kunde inte läsas av integrationen (403), därför är effektivt branchskydd ännu inte verifierat. Ingen App, secret, skrivbehörighet, workflow eller produktionshistorik finns.
+
+
+### Uppdatering 2026-11-20 – ruleset för privat historikrepo
+
+- [x] Skapa och aktivera `Protect history main` (ID 27761134).
+- [x] Verifiera via GitHub Rulesets API: target exakt `refs/heads/main`; deletion och non_fast_forward blockerade; bypass-lista tom; `current_user_can_bypass: never`.
+- [ ] Extern backup med manifest/checksummor.
+- [ ] Restore-test till ny tom katalog och verifiera samtliga SHA-256.
+- [ ] Syntetiska positiva/negativa tester av append-only-logiken och Git-skyddet.
+- [ ] Separat godkännande innan App, credentials, writer workflow eller persistens skapas.
+
+Konfigurationen är verifierad; faktisk negativ push-/delete-testning är ännu inte utförd. Ingen produktionshistorik är skriven.
