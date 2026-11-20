@@ -3,7 +3,7 @@
   "classification_version": "1.0.0",
   "source_updated_at": "2026-11-20T17:26:58.567111+00:00",
   "case_count": 801,
-  "handling_count": 6536,
+  "handling_count": 6607,
   "county_case_counts": {
     "Länsstyrelsen i Blekinge län": 139,
     "Länsstyrelsen i Dalarnas län": 178,
@@ -19,10 +19,10 @@
     "Länsstyrelsen i Örebro län": 96
   },
   "missing_case_fields": {
-    "decision_date": 346,
-    "municipality": 323,
-    "registered_date": 35,
-    "status": 35
+    "decision_date": 339,
+    "municipality": 317,
+    "registered_date": 28,
+    "status": 28
   },
   "missing_handling_fields": {},
   "handling_class_counts": {
@@ -30,10 +30,10 @@
     "procurement": 55,
     "aftercare": 11,
     "permit": 123,
-    "notification": 689,
-    "opinion": 1107,
+    "notification": 697,
+    "opinion": 1124,
     "contract": 22,
-    "other": 4182,
+    "other": 4229,
     "award": 10,
     "follow_up": 114,
     "burn_execution": 9,
