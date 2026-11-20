@@ -525,3 +525,21 @@ Alternativet branch i Skog avvisas eftersom Skog är publikt och innehåller red
 ## Nästa steg
 
 Förbered separat privat repository `skogskoll-project-manager-history`. Ingen branch i Skog ska skapas. Invända på separat godkännande innan repo skapas; inventeringsworkflow förblir read-only.
+
+
+## AI-projektledare v2b – privat historikrepo skapat (2026-11-20)
+
+PR #458 är sammanslagen. Arkitekturbeslutet är separat privat Git-repository, inte historikbranch i det publika Skog-repot. Användaren har skapat `dahlinrobert-lgtm/skogskoll-project-manager-history`.
+
+**Verifierat via GitHub API 2026-11-20:**
+- Repository-ID `1465873025`, visibility `private`, default branch `main`.
+- `README.md`, `docs/HISTORY_FORMAT.md` och `docs/SECURITY_AND_OPERATIONS.md` finns i repot. De två sistnämnda beskriver schema/append-only-regler respektive säkerhets- och driftkrav.
+- Repository rulesets-endpointen för det privata repot returnerar `[]`: inget ruleset är konfigurerat.
+- Klassisk branch protection för `main` kunde inte läsas av integrationen (HTTP 403 `Resource not accessible by integration`). Detta är okänt, inte bevis på att skydd saknas eller finns.
+- Repot innehåller endast bootstrap-dokumentation. Ingen produktionshistorik har skrivits.
+
+**Säkerhetsgräns:** Ingen GitHub App, installation, privat nyckel, Actions-secret, skrivbehörighet eller persistensworkflow har skapats/aktiverats. Inventeringsworkflowet i Skog förblir read-only.
+
+**Nästa konkreta steg:** konfigurera ett aktivt repository ruleset på historikrepots `main` som blockerar deletion och non-fast-forward/force push, utan bypass för framtida automationsidentitet. Verifiera exakt target och effektiv policy via API/UI. Därefter planera backup/restore-test och negativa tester. Först efter dessa kontroller kan separat skrividentitet diskuteras; livepersistens kräver ytterligare uttryckligt godkännande.
+
+De tidigare daterade avsnitten nedan om historikbranch i Skog beskriver historiska designsteg och ska inte användas som aktuell målarkitektur. Det separata privata repot enligt PR #458 ersätter dem.

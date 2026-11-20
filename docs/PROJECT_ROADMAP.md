@@ -83,3 +83,17 @@ Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huv
 - [x] Avväg Git-historikbranch i Skog mot separat privat repo; välj separat privat repo `skogskoll-project-manager-history` för sekretess och credential-isolering.
 - [ ] Skapa privat historikrepo efter separat uttryckligt godkännande.
 - [ ] Sätt ruleset, App-identitet och syntetiska negativa tester i det separata repot; ingen persistens före verifiering och separat godkännande.
+
+
+## AI-projektledare v2b – privat historikrepo (uppdaterat 2026-11-20)
+
+- [x] Besluta separat privat Git-repository i stället för historikbranch i publika Skog (PR #458).
+- [x] Skapa `skogskoll-project-manager-history` som privat repo; verifiera visibility och default branch.
+- [x] Lägga till README, historikformat och säkerhets-/driftdokumentation.
+- [ ] Konfigurera och verifiera aktivt ruleset på `main`: blockera deletion och non-fast-forward/force push; ingen bypass för framtida App-identitet.
+- [ ] Genomföra extern backup och återställningstest.
+- [ ] Köra syntetiska positiva och negativa GitHub-tester utan produktionsdata.
+- [ ] Först efter separat godkännande: skapa skrividentitet/secret och separat persistensflöde.
+- [ ] Först efter ytterligare uttryckligt godkännande och samtliga säkerhetsgrindar: aktivera historikpersistens.
+
+Verifierad status 2026-11-20: repository rulesets API returnerar `[]`. Klassisk branch protection för `main` kunde inte läsas av integrationen (403), därför är effektivt branchskydd ännu inte verifierat. Ingen App, secret, skrivbehörighet, workflow eller produktionshistorik finns.

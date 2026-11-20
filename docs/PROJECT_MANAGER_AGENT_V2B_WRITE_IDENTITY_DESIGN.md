@@ -1,7 +1,7 @@
 # AI-projektledare v2b – design för separat skrividentitet
 
-**Status:** Förslag för granskning; ingen GitHub App skapad, ingen token eller secret skapad, ingen skrivbehörighet aktiverad.  
-**Beslutad lagringsmålbild:** separat Git-branch `project-manager-history`, indefinite retention.  
+**Status:** Historikrepository skapat och privat verifierat 2026-11-20. Ingen GitHub App, token, secret, skrivbehörighet eller persistens aktiverad.  
+**Beslutad lagringsmålbild:** separat privat Git-repository `dahlinrobert-lgtm/skogskoll-project-manager-history`, indefinite retention.  
 **Säkerhetskrav:** inventeringsjobbet förblir read-only; persistens aktiveras först efter verifiering och separat uttryckligt godkännande.
 
 ## 1. Rekommenderad modell
@@ -125,3 +125,24 @@ Nackdelar och hantering:
 Alternativet branch i Skog avvisas eftersom Skog är publikt och innehåller redan befintlig kod-/dataprojektshistorik. Separat privat repo ger bättre sekretess och credential-isolering. Azure Blob med container-scope-identitet är ett möjligt framtida alternativ om krav på objektlås/WORM eller kostnad/tillväxt gör Git olämpligt, men väljs inte i detta steg.
 
 **Aktiveringsgräns:** Detta är ett arkitekturbeslut, inte tillstånd att skapa repo, App, nyckel, secret eller persistence-workflow. Nästa steg är att skapa det privata tomma historikrepot först efter uttryckligt godkännande av själva repo-skapandet; därefter ruleset och syntetiska tester med separat identitet. Ingen historik skrivs före verifiering och separat godkännande.
+
+
+## 10. Aktuell målarkitektur och verifierad bootstrap (2026-11-20)
+
+PR #458 är sammanslagen. Den tidigare branchmodellen i detta dokument är historisk och ersätts av ett separat privat repository: `dahlinrobert-lgtm/skogskoll-project-manager-history`.
+
+Verifierat:
+- Repository-ID `1465873025`; visibility `private`; default branch `main`.
+- Bootstrapfiler: `README.md`, `docs/HISTORY_FORMAT.md`, `docs/SECURITY_AND_OPERATIONS.md`.
+- Repository rulesets API returnerar `[]`; inget ruleset är konfigurerat.
+- Klassisk branch protection för `main` kunde inte läsas av integrationen (403); status är därför okänd.
+- Inga produktionsdata eller inventeringssnapshots finns i repot.
+
+Nästa steg:
+1. Konfigurera ruleset för `main`: active, block deletion och non-fast-forward, ingen bypass för framtida App-identitet.
+2. Verifiera target, regler och bypass via API samt administrativ UI-kontroll.
+3. Etablera extern backup och dokumenterat restore-test.
+4. Utforma syntetiska positiva/negativa tester mot GitHub utan produktionsdata.
+5. Separat godkännande krävs innan App, credentials, writer workflow eller persistens skapas/aktiveras.
+
+Git är inte WORM. Ruleset skyddar inte mot alla administrativa åtgärder eller kontoförlust; extern backup och audit behövs.

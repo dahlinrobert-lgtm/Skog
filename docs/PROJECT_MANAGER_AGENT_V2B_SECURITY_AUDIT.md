@@ -104,3 +104,23 @@ Nackdelar och hantering:
 Alternativet branch i Skog avvisas eftersom Skog är publikt och innehåller redan befintlig kod-/dataprojektshistorik. Separat privat repo ger bättre sekretess och credential-isolering. Azure Blob med container-scope-identitet är ett möjligt framtida alternativ om krav på objektlås/WORM eller kostnad/tillväxt gör Git olämpligt, men väljs inte i detta steg.
 
 **Aktiveringsgräns:** Detta är ett arkitekturbeslut, inte tillstånd att skapa repo, App, nyckel, secret eller persistence-workflow. Nästa steg är att skapa det privata tomma historikrepot först efter uttryckligt godkännande av själva repo-skapandet; därefter ruleset och syntetiska tester med separat identitet. Ingen historik skrivs före verifiering och separat godkännande.
+
+
+## 10. Aktuell verifiering – separat privat historikrepository (2026-11-20)
+
+PR #458 är sammanslagen och ersätter branchalternativet i denna tidigare granskning.
+
+| Kontroll | Resultat | Betydelse |
+|---|---|---|
+| Historikrepository | `dahlinrobert-lgtm/skogskoll-project-manager-history`, ID `1465873025` | Verifierat |
+| Visibility | `private` | Verifierat via repository metadata |
+| Default branch | `main` | Verifierat |
+| Bootstrap | README samt `docs/HISTORY_FORMAT.md` och `docs/SECURITY_AND_OPERATIONS.md` | Verifierat |
+| Repository rulesets | API returnerar `[]` | Inget ruleset konfigurerat |
+| Klassisk branch protection för main | API svarar 403 för integrationen | Okänt; kräver administrativ kontroll |
+| Produktionshistorik | Endast dokumentation | Ingen persistens |
+| Writer identity/secret/workflow | Inte skapade | Ingen skrivväg aktiverad |
+
+**Nästa blockerare:** administrativt konfigurera och verifiera ruleset för historikrepots `main` (active, block deletion, block non-fast-forward/force push, ingen bypass för framtida App-identitet). Därefter krävs extern backup/restore-verifiering och syntetiska negativa tester.
+
+**Säkerhetsgräns:** ingen App, installation, privat nyckel, Actions-secret, Contents-write, schemaläggning eller persistensworkflow har skapats. Inventeringsworkflowet i Skog är fortsatt read-only. Persistens får inte aktiveras utan separat uttryckligt godkännande.
