@@ -146,3 +146,17 @@ Nästa steg:
 5. Separat godkännande krävs innan App, credentials, writer workflow eller persistens skapas/aktiveras.
 
 Git är inte WORM. Ruleset skyddar inte mot alla administrativa åtgärder eller kontoförlust; extern backup och audit behövs.
+
+
+## 11. Verifierat repository ruleset på privat historikrepo (2026-11-20)
+
+GitHub Rulesets API bekräftar för `dahlinrobert-lgtm/skogskoll-project-manager-history`:
+- `Protect history main`, ID `27761134`
+- Enforcement `active`
+- Exakt target `refs/heads/main`
+- Regler: `deletion` och `non_fast_forward`
+- `bypass_actors: []`; `current_user_can_bypass: never`
+
+Detta uppfyller konfigurationskraven för att skydda main mot radering och force push. Det bevisar inte att samtliga operationer har testats i praktiken, och rulesetet hindrar inte en vanlig fast-forward-commit från att ändra befintliga filer. Append-only måste fortfarande säkras av valideringslogik och tester.
+
+Kvar: extern backup/restore, syntetiska positiva och negativa tester, därefter separat bedömning av writer identity. Ingen persistens eller credentials.
