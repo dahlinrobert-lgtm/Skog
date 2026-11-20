@@ -11,6 +11,14 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
+import sys
+
+# When this file is executed directly, Python puts scripts/ (not the repository
+# root) on sys.path. Add the repository root so the shared collector module can
+# be imported consistently in GitHub Actions and local runs.
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+if str(REPOSITORY_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from scripts.collect_lansstyrelsen_case_handlings import merge_case_record
 
