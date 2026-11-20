@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Restore missing historical Länsstyrelsen case metadata from a trusted Git baseline.
 
-This is intentionally conservative: baseline values fill gaps and restore missing
-handling rows, while non-empty current observations remain authoritative.
+Baseline values fill gaps and restore missing handling rows. Non-empty current
+observations remain authoritative. A machine-readable report is written so the
+restoration can be reviewed before the resulting PR is merged.
 """
 from __future__ import annotations
 
@@ -17,7 +18,16 @@ from scripts.collect_lansstyrelsen_case_handlings import merge_case_record
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--baseline-ref", required=True)
-    parser.add_argument("--details", type=Path, default=Path("data/lansstyrelsen-diary/case-details.json"))
+    parser.add_argument(
+        "--details",
+        type=Path,
+        default=Path("data/lansstyrelsen-diary/case-details.json"),
+    )
+    parser.add_argument(
+        "--report",
+        type=Path,
+        default=Path("lansstyrelsen-history-restoration-report.json"),
+    )
     args = parser.parse_args()
 
     relative = args.details.as_posix()
@@ -38,6 +48,10 @@ def main() -> int:
             current_cases[key] = old_record
             restored_cases += 1
             restored_handlings += len(old_record.get("handlings") or [])
+            restored_fields += sum(
+                1 for value in (old_record.get("case") or {}).values()
+                if value is not None and str(value).strip()
+            )
             continue
 
         before_handlings = {
@@ -53,7 +67,8 @@ def main() -> int:
         restored_handlings += len(after_handlings - before_handlings)
         restored_fields += sum(
             1 for field, value in (old_record.get("case") or {}).items()
-            if value and not before_case.get(field)
+            if value is not None and str(value).strip()
+            and not (before_case.get(field) is not None and str(before_case.get(field)).strip())
         )
         current_cases[key] = merged
 
@@ -61,13 +76,21 @@ def main() -> int:
         json.dumps(current, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(json.dumps({
+    report = {
+        "schema_version": "1.0",
+        "baseline_ref": args.baseline_ref,
         "baseline_case_count": len(baseline_cases),
         "current_case_count": len(current_cases),
         "restored_cases": restored_cases,
         "restored_handling_rows": restored_handlings,
         "restored_case_fields": restored_fields,
-    }, ensure_ascii=False))
+        "status": "completed",
+    }
+    args.report.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
 

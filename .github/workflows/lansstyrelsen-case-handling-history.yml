@@ -3,8 +3,13 @@ name: Collect Länsstyrelsen case handling metadata
 on:
   workflow_dispatch:
     inputs:
+      restore_only:
+        description: Restore historical data and rebuild analysis without scraping new cases
+        required: true
+        default: true
+        type: boolean
       limit:
-        description: Maximum cases per run (0 = all eligible cases)
+        description: Maximum cases per run (0 = all eligible cases; use 50 for routine runs)
         required: true
         default: "50"
         type: string
@@ -33,17 +38,20 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install playwright
           python -m playwright install --with-deps chromium
+      - name: Fetch trusted pre-regression baseline
+        run: git fetch --no-tags --depth=1 origin e5e10effd88ce693e6f008ad1ea543166331dffe
+      - name: Restore historical fields and handling rows before collection
+        run: |
+          python scripts/restore_lansstyrelsen_case_history.py \
+            --baseline-ref e5e10effd88ce693e6f008ad1ea543166331dffe \
+            --report lansstyrelsen-history-restoration-report.json
       - name: Collect case and handling metadata
+        if: ${{ inputs.restore_only != true }}
         run: |
           limit="${{ inputs.limit }}"
           if [ -z "$limit" ]; then limit="50"; fi
           python scripts/collect_lansstyrelsen_case_handlings.py --limit "$limit"
-      - name: Restore historical fields and handling rows from pre-regression baseline
-        run: |
-          git fetch --no-tags --depth=1 origin e5e10effd88ce693e6f008ad1ea543166331dffe
-          python scripts/restore_lansstyrelsen_case_history.py \
-            --baseline-ref e5e10effd88ce693e6f008ad1ea543166331dffe
-      - name: Test collection retry behavior
+      - name: Test collection retry and history preservation
         run: python -m unittest discover -s tests -p 'test_lansstyrelsen_case_collection.py'
       - name: Analyze quality, handling classes and execution leads
         run: |
@@ -62,25 +70,28 @@ jobs:
             data/lansstyrelsen-diary/case-details.json
             data/lansstyrelsen-diary/handling-events.jsonl
             data/lansstyrelsen-diary/analysis/
-          commit-message: "Update Länsstyrelsen case handling history and analysis"
-          title: "Update Länsstyrelsen case handling history"
+            lansstyrelsen-history-restoration-report.json
+          commit-message: "Restore and update Länsstyrelsen case handling history"
+          title: "Restore and update Länsstyrelsen case handling history"
           body: |
             ## Automated Länsstyrelsen case-handling history update
 
-            This PR contains newly collected case and handling metadata, plus refreshed analysis and execution-lead classifications.
+            This PR contains conservatively restored historical case metadata, plus refreshed analysis and (unless restore-only mode was selected) newly collected metadata.
 
+            - Historical restoration runs before optional scraping.
             - Collection and validation tests run before publishing.
             - Changes are proposed for review instead of pushing directly to `main`.
             - The stable automation branch is updated on subsequent scheduled runs.
 
-            Please review the data and analysis before merging.
-      - name: Upload collection and analysis reports
+            Please review the restoration report and data changes before merging.
+      - name: Upload collection, restoration, and analysis reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lansstyrelsen-case-handling-analysis
+          name: lansstyrelsen-case-handling-restoration
           path: |
             case-handling-run.json
+            lansstyrelsen-history-restoration-report.json
             data/lansstyrelsen-diary/analysis/
           if-no-files-found: warn
           retention-days: 30
