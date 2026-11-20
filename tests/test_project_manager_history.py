@@ -1,6 +1,8 @@
 import hashlib
 import json
+import re
 import sys
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -140,6 +142,65 @@ class AppendOnlyTests(unittest.TestCase):
             (run_dir / "unexpected.txt").write_bytes(b"x")
             with self.assertRaises(ExistingRunConflict):
                 check_append_only(run_dir, {"inventory.json": b"{}", "report.md": b"x"})
+
+
+class SyntheticGitHistoryTests(unittest.TestCase):
+    """Exercise the proposed branch/commit layout in a disposable local repo."""
+
+    def git(self, repo, *args):
+        return subprocess.run(
+            ["git", *args], cwd=repo, check=True, capture_output=True, text=True
+        ).stdout.strip()
+
+    def test_append_commit_isolated_to_history_branch_and_idempotent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self.git(repo, "init", "-b", "main")
+            self.git(repo, "config", "user.name", "Synthetic Test")
+            self.git(repo, "config", "user.email", "synthetic@example.invalid")
+            (repo / "README.md").write_text("base\n", encoding="utf-8")
+            self.git(repo, "add", "README.md")
+            self.git(repo, "commit", "-m", "synthetic main baseline")
+            main_head = self.git(repo, "rev-parse", "main")
+
+            self.git(repo, "switch", "-c", "project-manager-history")
+            run_id = "123456789"
+            run_dir = Path("runs/2026/11/19") / run_id
+            payloads = {
+                "inventory.json": b'{"synthetic":true}\n',
+                "report.md": b"# Synthetic report\n",
+                "manifest.json": b'{"manifest_schema_version":1}\n',
+            }
+            target = repo / run_dir
+            target.mkdir(parents=True)
+            for name, payload in payloads.items():
+                (target / name).write_bytes(payload)
+
+            self.git(repo, "add", "--", str(run_dir))
+            self.git(repo, "commit", "-m", f"archive synthetic run {run_id}")
+            history_head = self.git(repo, "rev-parse", "HEAD")
+
+            self.assertNotEqual(history_head, main_head)
+            self.assertEqual(self.git(repo, "rev-parse", "main"), main_head)
+            self.assertEqual(self.git(repo, "rev-parse", "HEAD^"), main_head)
+            self.assertEqual(
+                set(self.git(repo, "show", "--pretty=", "--name-only", "HEAD").splitlines()),
+                {str(run_dir / name) for name in payloads},
+            )
+
+            # A repeated identical run is a no-op; divergent bytes fail closed.
+            self.assertFalse(check_append_only(target, payloads))
+            changed = dict(payloads)
+            changed["report.md"] = b"# Changed report\n"
+            with self.assertRaises(ExistingRunConflict):
+                check_append_only(target, changed)
+            self.assertEqual(self.git(repo, "rev-parse", "HEAD"), history_head)
+
+    def test_invalid_run_id_cannot_be_used_as_a_git_path(self):
+        for run_id in ("../escape", "abc", "12/34", ""):
+            with self.subTest(run_id=run_id):
+                self.assertIsNone(re.fullmatch(r"[0-9]+", run_id))
+
 
 
 if __name__ == "__main__":

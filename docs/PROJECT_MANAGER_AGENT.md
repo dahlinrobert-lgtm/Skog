@@ -60,3 +60,7 @@ PR-branch för första kodsteget innehåller `scripts/project_manager_history.py
 ## v2b – lokal restore-verifiering
 
 Efter verifierad merge av offline manifestmodulen i PR #440 byggs nästa isolerade steg: lokal återställning från manifest och två bytepayloads med kontroll av schema, filuppsättning, filnamn, storlek och SHA-256 före och efter readback. Målkatalog får inte finnas sedan tidigare. Ingen Git/GitHub-åtkomst eller produktionspersistens införs.
+
+## v2b – syntetiskt Git-branch-/commit-test
+
+En ny testgren lägger till ett lokalt Git-test i temporär repository. Det verifierar separat historikbranch, append-commit med endast körningsfiler, oförändrad main, idempotent dubblett och konflikt vid avvikande innehåll. Testet använder ingen remote eller GitHub-skrivning. PR-CI ska verifiera testet; detta är inte ett godkännande eller aktivering av livepersistens.

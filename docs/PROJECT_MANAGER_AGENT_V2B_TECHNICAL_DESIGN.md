@@ -163,3 +163,9 @@ Read-only granskning av GitHub settings/API finns i [PROJECT_MANAGER_AGENT_V2B_S
 ## 13. Separat skrividentitet – designförslag (2026-11-19)
 
 Se [PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md](PROJECT_MANAGER_AGENT_V2B_WRITE_IDENTITY_DESIGN.md). Föreslagen modell är en GitHub App installerad endast på Skog, med Contents read/write och endast obligatorisk Metadata read. Tokenen är fortfarande repository-scoped, inte branch-scoped. `Protect main` kräver PR och saknar bypass; Appen ska inte ha Administration eller Pull requests-write och ska inte finnas i bypass-listan. Historikbranchens ruleset ska blockera deletion och non-fast-forward men tillåta vanlig fast-forward append. `Restrict updates` ska inte användas eftersom det skulle stoppa append-commits eller kräva en bred bypass. Append-only på filnivå måste upprätthållas av deterministisk arkiveringskod och negativa tester. Inga credentials eller skrivjobb har skapats. Liveaktivering kräver separata negativa GitHub-tester och uttryckligt godkännande.
+
+## 14. Syntetiskt Git-append-test (2026-11-19)
+
+Nästa teststeg använder en temporär lokal Git-repository skapad i testets tempkatalog. Testet initierar main, skapar en separat project-manager-history-branch och committar endast en syntetisk run-katalog med inventory.json, report.md och manifest.json. Det verifierar att main behåller sin ursprungliga HEAD, att historikcommiten har rätt parent och endast innehåller de tre körningsfilerna, att identiska run-byte ger idempotent no-op och att avvikande byte ger konflikt utan ny commit.
+
+Testet använder Git CLI lokalt men ingen remote, GitHub API, credential, secret eller verklig historikbranch. Det är en simulering av commit-/branchlayouten, inte en verifiering av GitHubs ruleset eller skrivbehörighetsisolering. Den delen är fortsatt blockerad och kräver separat verifiering/godkännande.
