@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "docs/*.html"
+      - "docs/project-manager/**"
       - "tests/test_web_javascript_syntax.py"
       - ".github/workflows/website-javascript-syntax.yml"
   push:
