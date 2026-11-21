@@ -67,6 +67,13 @@ def test_inline_javascript_syntax():
                 f.flush()
                 subprocess.run(["node", "--check", f.name], check=True, capture_output=True, text=True)
 
+def test_project_manager_msal_dependency_is_pinned_and_integrity_checked():
+    html = (ROOT / "docs/project-manager/index.html").read_text(encoding="utf-8")
+    assert "https://alcdn.msftauth.net/browser/2.35.0/js/msal-browser.min.js" in html
+    assert "integrity=\"sha384-PARf28kmic36Ve+O3DnUerRXFtOQ7ZDqRDGpLcbljly5/N39T2OV3kt3QsWOKeAX\"" in html
+    assert "crossorigin=\"anonymous\"" in html
+    assert "browser/2.39.0/" not in html
+
 def test_project_manager_external_javascript_syntax():
     for relative in ("docs/project-manager/app.js", "docs/project-manager/auth-config.js"):
         subprocess.run(["node", "--check", str(ROOT / relative)], check=True, capture_output=True, text=True)
@@ -74,5 +81,6 @@ def test_project_manager_external_javascript_syntax():
 if __name__ == "__main__":
     test_map_layer_selection_and_legend_colors()
     test_inline_javascript_syntax()
+    test_project_manager_msal_dependency_is_pinned_and_integrity_checked()
     test_project_manager_external_javascript_syntax()
     print("Website and project manager JavaScript syntax checks passed.")
