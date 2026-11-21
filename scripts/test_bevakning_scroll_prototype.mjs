@@ -96,10 +96,10 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /function setAfoLayerVisible\(visible\)/);
   assert.match(productionHtml, /L\.geoJSON\(data/);
   assert.doesNotMatch(productionHtml, /tileLayer\.wms/);
-  assert.doesNotMatch(productionHtml, /elkAfoMap/);
+  assert.match(productionHtml, /id="elkAfoMap"/);
   assert.match(productionHtml, /setAfoLayerVisible\(false\)/);
   assert.match(productionHtml, /setAfoLayerVisible\(false\)/);
-  assert.match(productionHtml, /document\.querySelector\("\.map-card"\)\.hidden=false/);
+  assert.match(productionHtml, /document\.querySelector\("\.map-card"\)\.hidden=isElk/);
   assert.match(productionHtml, /map-card\.is-animal-map/);
   assert.match(productionHtml, /map-legend\[hidden\]/);
   assert.ok(productionHtml.includes("<th>Föregående rapporteringsdag</th>"));
