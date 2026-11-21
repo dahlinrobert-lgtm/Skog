@@ -74,3 +74,8 @@ Generera lokalt med:
 Kontrollera att rapporten är aktuell med:
 
     python data-platform/scripts/build_source_status_report.py --check
+
+
+## Nationell älgavskjutning per ÄFO – 2026-11-21
+
+Korrigerad batch från alg-grasmyr run #43952789564 verifierad: 129/129 aktuella ÄFO, 129 snapshots, 3 237 råa ÄJO-rader och noll avvikelser vid omräkning av `ShotTotal` och `AssignedTotal` samt kontroll mot HTML-Summa. Det äldre uttaget med felaktig tolkning av Summa-cellens första tal är ogiltigt. PR #79 i alg-grasmyr återbygger insamlare och daglig snapshotprocess på aktuell main. Skog-kartan byggs om från aktuell main i separat PR; publicering inväntar färsk snapshot på alg-grasmyr main och slutlig kontroll av JaktAdm-lagrets metadata.

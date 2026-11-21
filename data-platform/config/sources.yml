@@ -1802,6 +1802,84 @@ sources:
       - "Do not interpret an incomplete export as evidence that previously observed incidents disappeared."
       - "Keep NVR individual incidents separate from Trafikverket's aggregated NVDB wildlife-collision frequency layers."
 
+  - source_id: lansstyrelsen.elk_harvest_statistics
+    name: "Länsstyrelsernas Älgdata – avskjutning per älgförvaltningsområde"
+    source_type: official_hunting_statistics
+    provider: Länsstyrelserna
+    access_method: public_statistics_portal
+    connector: algdata_portal
+    status: pilot
+    cadence: daily_snapshot
+    geography: Sweden
+    format: [JSON, HTML]
+    rights:
+      licence: "Länsstyrelsen's official open-data information states that the Älgdata database can be used freely; no conditions are listed for the statistics. Skog keeps explicit source attribution and preserves source cells."
+      review_status: green_public_statistics_reuse_with_attribution
+      commercial_use: verified_with_attribution
+      historical_storage: yes_with_attribution_and_snapshot_metadata
+      derivatives: yes_with_attribution
+      redistribution: yes_with_attribution
+      attribution: "Länsstyrelsernas Älgdata statistikportal"
+      api_or_service_constraints: "Use report ID 3 (ÄFO) with current boundaries. Derive each ÄFO total by summing ShotTotal and AssignedTotal across all TableDataFormatted ÄJO rows. The visible Summa cell is two-part (for example 42 (2 408)); its leading value is not the animal total. Preserve the raw rows and HTML Summa row."
+      evidence_checked_on: "2026-11-16"
+      caveat: "The verified sample for Sydöstra ÄFO (24-005) has 107 ÄJO rows; their ShotTotal sum is 2,408 and AssignedTotal sum is 3,394. A full 129-ÄFO batch is being rerun with the corrected row-sum parser; no historical completeness claim is made."
+    operations:
+      access_status: verified
+      snapshot_status: pilot
+      history_status: none
+      commercial_use_status: verified_with_attribution
+      customer_display_status: conditional_on_attribution_and_source_scope
+      last_verified: "2026-11-16"
+      next_action: "Complete a new national 129-ÄFO snapshot using sums of underlying ShotTotal and AssignedTotal ÄJO rows; the first 129/129 batch used the leading Summa values and is invalid for animal totals."
+      evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md; alg-grasmyr Actions run 43948854012 (single-ÄFO parser and portal probe)"
+    notes:
+      - "The report is cumulative reporting for a selected hunting season, not event-level kill locations or exact field dates."
+      - "AFO totals are derived by summing ShotTotal and AssignedTotal from every TableDataFormatted ÄJO row; preserve the visible Summa row as a cross-check, not as the parsed metric."
+      - "The regional ÄJO pilot history and the national AFO summary are distinct products and must not be presented as the same coverage."
+
+  - source_id: lansstyrelsen.elk_afo_boundaries
+    name: "Länsstyrelserna – nationella älgförvaltningsområden (JaktAdm)"
+    source_type: administrative_boundary
+    provider: Länsstyrelserna
+    access_method: arcgis_feature_service
+    connector: lansstyrelsen_jaktadm
+    status: pilot
+    cadence: on_demand_with_metadata_review
+    geography: Sweden
+    format: [GeoJSON, WMS]
+    rights:
+      licence: "Länsstyrelsen's official open-data information states that WMS services from the county administrative boards may be copied, processed and distributed free with source attribution. The exact dataset metadata record was unavailable during review (HTTP 502); verify whether it adds layer-specific restrictions. The map uses the feature query from the same JaktAdm MapServer and does not offer raw geometry downloads."
+      review_status: conditional_general_wms_terms_exact_layer_metadata_unavailable
+      commercial_use: conditional_on_attribution_and_source_scope
+      historical_storage: conditional_on_attribution_and_layer_terms
+      derivatives: conditional_on_attribution_and_source_scope
+      redistribution: conditional_on_attribution_and_source_scope
+      attribution: "Länsstyrelserna – Älgförvaltningsområden"
+      api_or_service_constraints: "JaktAdm MapServer layer 1 exposes current ÄFO polygons. Use current boundary mode and join only by the composite afo_id; do not join on display names."
+      evidence_checked_on: "2026-11-16"
+      caveat: "129 current active polygons match the 129 active 2026/2027 AFO selector IDs after excluding two stale catalogue entries (one inactive, one unspecified). Metadata ID 6d4c42de-2b43-4b72-98ec-856d8adfaf29 could not be retrieved during the probe."
+    compliance:
+      map_and_geodata_rights: conditional_general_wms_terms_exact_metadata_followup
+      third_party_rights: retain_attribution_and_check_layer_specific_metadata
+      publication_gate: conditional_publication_with_attribution_and_no_raw_geometry_download
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md"
+      reviewed_on: "2026-11-16"
+      next_review: "When the metadata record becomes available and before external/commercial display"
+    operations:
+      access_status: verified
+      snapshot_status: not_started
+      history_status: none
+      commercial_use_status: conditional_on_attribution_and_source_scope
+      customer_display_status: conditional_on_attribution_and_source_scope
+      last_verified: "2026-11-16"
+      next_action: "Retrieve the exact geodata metadata record when available and check for layer-specific restrictions; keep Länsstyrelsen attribution and do not offer raw geometry downloads."
+      evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md; JaktAdm MapServer layer 1 probe, 129 features, CORS verified from GitHub Pages"
+    notes:
+      - "Feature layer ID 1: https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/1"
+      - "WMS layer 0 is the ÄFO presentation layer; the matching REST feature layer ID is 1."
+      - "The 129-feature set was cross-checked against current portal IDs. Historical and inactive selector entries are excluded."
+
   - source_id: trafikverket.miljoweb_landskap
     name: "Trafikverket – Miljöwebb Landskap"
     source_type: environmental_and_landscape_geodata
