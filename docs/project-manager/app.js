@@ -109,6 +109,19 @@
         conclusion, failed ? "blocked" : (run.conclusion === "success" ? "done" : "next"), run.html_url);
     });
 
+    const failedRunsEl = byId("failed-runs-list");
+    failedRunsEl.replaceChildren();
+    failedRuns.sort((a,b) => String(b.created_at || "").localeCompare(String(a.created_at || "")));
+    if (!failedRuns.length) {
+      empty("failed-runs-list", "Inga avvikande avslut bland de senaste 20 körningarna per repo.");
+    } else {
+      failedRuns.forEach((run) => {
+        renderItem(failedRunsEl, run.project.project_name + " · " + (run.name || "Workflow"),
+          "#" + run.run_number + " · " + (run.head_branch || "okänd branch") + " · " + formatDate(run.created_at),
+          run.conclusion || "okänd slutsats", "blocked", run.html_url);
+      });
+    }
+
     const projectsEl = byId("projects-list");
     projectsEl.replaceChildren();
     projects.forEach((project) => {
