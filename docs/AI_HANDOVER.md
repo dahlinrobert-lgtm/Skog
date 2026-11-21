@@ -573,3 +573,15 @@ Detta är verifierad ruleset-konfiguration, inte ett utfört negativt push-/dele
 Projektledargränssnittet utvecklas i det separata privata repot `dahlinrobert-lgtm/skogskoll-project-manager-history`. MSAL-baserad autentisering och läsning av en fast run-scoped snapshot är implementerad och mergad där i PR #37; dess CI passerade. Den publika Pages-skalfilen finns nu i detta repo under `docs/project-manager/`, mergad via PR #472 den 2026-11-21. GitHub Pages build och deploy för merge-commit `dd461eeff66bb77aa1eda7722f624f067ae7954a` slutfördes med success i run `44961792629`. Skalet innehåller endast klient-ID/tenant/offentlig konfiguration; ingen snapshot eller hemlighet publiceras.
 
 Användaren har uppgett att Blob service CORS har konfigurerats för GitHub Pages-origin. Exakta portalvärden och faktisk browser-preflight är ännu inte oberoende verifierade. Publicera inte eller betrakta läsvägen som verifierad förrän PR-granskning/CI passerat och live-test visar: ingen data före inloggning, lyckad Entra-token och Blob-läsning för behörig användare samt nekad anonym/obehörig åtkomst. Den nuvarande klienten läser endast `snapshots/44958916377/dashboard-data.json`; den har ingen latest-snapshot-upptäckt. Schemalagd publicering, kundvisning och historik är fortsatt avstängda.
+
+
+## Projektledardashboard – korrigerad MSAL CDN-referens (2026-11-22)
+
+- Live-testet i användarens webbläsare visade att MSAL-biblioteket inte laddades; gränssnittet visade därför att inloggningsbiblioteket eller appkonfigurationen saknades.
+- Den tidigare HTML-filen pekade på alcdn.msauth.net/browser/2.39.0. Den ersätts med Microsoft Learn-dokumentationens CDN-exempel för MSAL Browser v2.35.0 på Europe North-domänen alcdn.msftauth.net.
+- Script-taggen versionslåses och använder Microsofts publicerade SRI-hash för den minifierade 2.35.0-builden samt crossorigin=anonymous.
+- Ändringen påverkar inte MSAL v2-API, Entra-konfiguration, Blob-scope, Blob-URL eller RBAC.
+- En testkontroll verifierar version, URL, SRI och CORS-attribut. CI och live-webbläsartest återstår efter PR-merge.
+- Lokal hosting av MSAL är fortsatt ett alternativ men behövs inte för denna korrigering. Ingen token eller hemlighet läggs i Git.
+
+Nästa steg: verifiera CI, invänta Pages-deploy och testa i webbläsaren att MSAL laddas, Microsoft-inloggningen fungerar och behörig användare kan läsa den privata Blob-snapshoten. Bekräfta separat att anonym/obehörig läsning nekas.
