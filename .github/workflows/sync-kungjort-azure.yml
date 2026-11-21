@@ -208,7 +208,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m py_compile scripts/kungjort_organization_value_audit.py scripts/kungjort_selection_inventory.py
-          python scripts/kungjort_organization_value_audit.py --max-batches "${{ steps.mode.outputs.selection_max_batches }}"
+          python -m scripts.kungjort_organization_value_audit --max-batches "${{ steps.mode.outputs.selection_max_batches }}"
       - name: Upload aggregate organizational value summary
         if: github.event_name != 'pull_request' && steps.mode.outputs.mode == 'organization-report'
         uses: actions/upload-artifact@v4
