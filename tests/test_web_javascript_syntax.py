@@ -67,7 +67,12 @@ def test_inline_javascript_syntax():
                 f.flush()
                 subprocess.run(["node", "--check", f.name], check=True, capture_output=True, text=True)
 
+def test_project_manager_external_javascript_syntax():
+    for relative in ("docs/project-manager/app.js", "docs/project-manager/auth-config.js"):
+        subprocess.run(["node", "--check", str(ROOT / relative)], check=True, capture_output=True, text=True)
+
 if __name__ == "__main__":
     test_map_layer_selection_and_legend_colors()
     test_inline_javascript_syntax()
-    print("Inline JavaScript syntax checks passed.")
+    test_project_manager_external_javascript_syntax()
+    print("Website and project manager JavaScript syntax checks passed.")
