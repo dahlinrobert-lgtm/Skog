@@ -723,3 +723,8 @@ Den första lokala polygonkörningen mot Lantmäteriets befintliga `kommun-lan-r
 Valideringsskriptet i OneDrive har korrigerats för en begränsad genitiv-s-ekvivalens och sex riktade namnmatchningstester passerade. En ny full körning återstår. 35 koordinatpar har mer än 10 meters skillnad mellan oberoende transformation och leverantörens SWEREF99-koordinat; antagandet RT90 = EPSG:3021 måste bekräftas med Rovbase. Tre länsnamnsavvikelser och kvarvarande kommunavvikelser ska granskas efter omkörningen. Valideringen använder 2025 års administrativa gränser och fastställer inte historisk kommunindelning för äldre händelser.
 
 Resultatet är fortsatt intern datakvalitetskontroll. Rovbase är inte registrerad i `data-platform/config/sources.yml`, och teknisk åtkomst/lagring är inte godkännande för kommersiell bearbetning, kundvisning eller vidare distribution. Ingen produktionsimport ska göras innan den korrigerade körningen och rättighetsbedömningen är klara.
+
+
+## Nationell ÄFO-avskjutning
+
+Nationella totalsummor per ÄFO är en separat produkt från regionala ÄJO-förändringssnapshots. Fällda älgar beräknas genom att summera `ShotTotal` över alla underliggande ÄJO-rader; avskjutningsmål genom att summera `AssignedTotal`. Portalens tvådelade HTML-Summa används endast som kontroll. Saknade värden får aldrig behandlas som noll. ÄFO-geometri matchas med sammansatt `afo_id`.
