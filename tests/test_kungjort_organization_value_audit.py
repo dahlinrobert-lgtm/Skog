@@ -18,6 +18,8 @@ class KungjortOrganizationValueAuditTests(unittest.TestCase):
         self.assertEqual(classify_organization("Kommunfullmäktige"), "municipal_assembly_candidate")
         self.assertEqual(classify_organization("Luleå kommun"), "municipality_level_publisher")
         self.assertEqual(classify_organization("Länsstyrelsen i Västerbotten"), "other_public_authority")
+        self.assertEqual(classify_organization("Region Västerbotten"), "other_public_authority")
+        self.assertEqual(classify_organization("Domstolsverket"), "unclassified_organ")
         self.assertEqual(classify_organization("Okänt organ"), "unclassified_organ")
 
     def test_private_audit_groups_values_but_aggregate_never_exposes_them(self):
