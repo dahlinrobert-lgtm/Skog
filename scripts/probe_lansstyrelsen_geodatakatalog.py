@@ -152,7 +152,8 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
                 "records_examined": 0,
                 "pages": 0,
                 "truncated_at_cap": False,
-                "error": "Skipped: catalogue gateway circuit breaker opened after repeated 502/503/504 responses",
+                "error": None,
+                "skip_reason": "Catalogue gateway circuit breaker opened after repeated 502/503/504 responses",
                 "complete": False,
                 "skipped": True,
             })
@@ -212,7 +213,9 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
 
     records = sorted(merged.values(), key=lambda item: ((item.get("title") or "").casefold(), item["metadata_uuid"]))
     title_counts = Counter("title available" if item["title"] else "title missing" for item in records)
-    failed_terms = [item["term"] for item in term_reports if item["error"]]
+    failed_terms = [item["term"] for item in term_reports if item["error"] and not item.get("skipped")]
+    completed_terms = sum(1 for item in term_reports if item["complete"])
+    complete = not failed_terms and not skipped_terms
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "catalogue": CATALOG_API,
@@ -221,12 +224,12 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
         "unique_metadata_records": len(records),
         "title_quality": dict(title_counts),
         "term_results": term_reports,
-        "completed_terms": len(term_reports) - len(failed_terms),
+        "completed_terms": completed_terms,
         "failed_terms": failed_terms,
         "skipped_terms": skipped_terms,
         "circuit_breaker_open": circuit_open,
-        "complete": not failed_terms,
-        "status": "complete" if not failed_terms else "partial",
+        "complete": complete,
+        "status": "complete" if complete else "partial",
         "records": records,
         "interpretation": (
             "Metadata discovery only. A matching record is a candidate source, not proof of "
