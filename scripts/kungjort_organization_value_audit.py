@@ -41,7 +41,7 @@ def classify_organization(value: str) -> str:
         return "municipal_assembly_candidate"
     if re.search(r"kommun$", normalized):
         return "municipality_level_publisher"
-    if re.search(r"(?:lansstyrelsen|region|myndighet|domstol)$", normalized):
+    if re.search(r"^(?:lansstyrelsen(?: i .+)?|region(?: .+)?|myndighet(?: .+)?|domstol(?: .+)?)$", normalized):
         return "other_public_authority"
     return "unclassified_organ"
 
