@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-20T19:07:24.604797+00:00",
+  "updated_at": "2026-11-21T13:42:19.261843+00:00",
   "cases": {
     "länsstyrelsen i dalarnas län::1034-2026": {
       "case_key": "länsstyrelsen i dalarnas län::1034-2026",
@@ -63152,6 +63152,3642 @@
       "content_hash": "77e09d9c24a3365aed4eea9f1a37b839384dd002c70c092cf7ea974bf0954a01",
       "first_seen_at": "2026-11-20T19:07:24.604797+00:00",
       "last_seen_at": "2026-11-20T19:07:24.604797+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::207-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::207-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5364280",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "207-2026",
+        "registered_date": "2026-01-13",
+        "title": "Förfrågan om tillstånd för vattenverksamhet, Krokoms kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "207-2026-2",
+          "title": "Uppföljning av föreläggande om tillståndsansökan \nför vattenverksamhet",
+          "date": "2026-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::207-2026::207-2026-2"
+        },
+        {
+          "handling_number": "207-2026-3",
+          "title": "Uppföljning av föreläggande om tillståndsansökan \nför vattenverksamhet",
+          "date": "2026-01-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::207-2026::207-2026-3"
+        },
+        {
+          "handling_number": "207-2026-4",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-02-06",
+          "sender_recipient": "Länsstyrelsen Jämtlands län",
+          "handling_key": "länsstyrelsen i jämtlands län::207-2026::207-2026-4"
+        }
+      ],
+      "content_hash": "59a77be0feb7ef3873a600f3da6c07a86f8499e3f50ba933314b379b6b4c3bc7",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2301-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2301-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5445283",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2301-2026",
+        "registered_date": "2026-03-26",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggning av dricks- och spillvattenledning, Ramundberget – Kåvan, Etapp 2 Bruksvallarna, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-10",
+        "sender_recipient": "Vatten & Miljöresurs Mitt AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "2301-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, anläggning av dricks- och spillvattenledning, Ramundberget – Kåvan, Etapp 2 Bruksvallarna, Härjedalens kommun",
+          "date": "2026-03-26",
+          "sender_recipient": "Vatten & miljöresurs",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-1"
+        },
+        {
+          "handling_number": "2301-2026-2",
+          "title": "Meddelande om avgift",
+          "date": "2026-04-16",
+          "sender_recipient": "Vatten & Miljöresurs Mitt AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-2"
+        },
+        {
+          "handling_number": "2301-2026-3",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-16",
+          "sender_recipient": "Berg och Härjedalens miljö- och byggnämnd",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-3"
+        },
+        {
+          "handling_number": "2301-2026-4",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-16",
+          "sender_recipient": "Bruksvallarnas KFO",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-4"
+        },
+        {
+          "handling_number": "2301-2026-5",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-04-23",
+          "sender_recipient": "Berg och Härjedalens miljö- och byggnämnd",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-5"
+        },
+        {
+          "handling_number": "2301-2026-6",
+          "title": "Begäran om komplettering avseende tidplan",
+          "date": "2026-04-23",
+          "sender_recipient": "Vatten & Miljöresurs Mitt AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-6"
+        },
+        {
+          "handling_number": "2301-2026-7",
+          "title": "Komplettering med tidplan",
+          "date": "2026-04-24",
+          "sender_recipient": "Vatten & Miljöresurs Mitt AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-7"
+        },
+        {
+          "handling_number": "2301-2026-8",
+          "title": "Delbeslut om förlängd handläggningstid",
+          "date": "2026-04-24",
+          "sender_recipient": "Vatten & Miljöresurs Mitt AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-8"
+        },
+        {
+          "handling_number": "2301-2026-9",
+          "title": "Beslut om strandskyddsdispens och föreläggande om försiktighetsåtgärder vid anläggning av ledning",
+          "date": "2026-06-10",
+          "sender_recipient": "Vatten & Miljöresurs Mitt AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2301-2026::2301-2026-9"
+        }
+      ],
+      "content_hash": "5838414939245cf0f6959bfc12f043b070f4d5dea84a682d8994446364d9fde4",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2337-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2337-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5446804",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2337-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bålbäcken, Strömsunds kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "74470afa1889d055639f173b91207816e07afbd24fe7dc0b27689944c4cb9ca4",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2483-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2483-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5451020",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2483-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Strömsunds kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "090c4b0d270d09a97f12e9be71ae392798bf73ac1362a48bed482d12412caea2",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2541-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2541-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5454336",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2541-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Härjedalens kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "4144a6c3c7091d0ba61c3a91cf2777da026fd9f584d793a9dd50dad0ea2b0c7d",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2559-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2559-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5455394",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2559-2026",
+        "registered_date": "2026-04-07",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning, pålning samt förstärkning av fast brygga och stenpir i Storsjön, Åre kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-01",
+        "sender_recipient": "Föreningen Vällvikens brygga",
+        "municipality": "Åre"
+      },
+      "handlings": [
+        {
+          "handling_number": "2559-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Storsjön, Åre kommun, Åre kommun",
+          "date": "2026-04-07",
+          "sender_recipient": "Föreningen Vällvikens brygga",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-1"
+        },
+        {
+          "handling_number": "2559-2026-2",
+          "title": "Begäran om komplettering av anmälan om vattenverksamhet",
+          "date": "2026-04-08",
+          "sender_recipient": "Föreningen Vällvikens brygga",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-2"
+        },
+        {
+          "handling_number": "2559-2026-3",
+          "title": "Påminnelse om kompletteringsbegäran",
+          "date": "2026-04-21",
+          "sender_recipient": "Föreningen Vällvikens brygga",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-3"
+        },
+        {
+          "handling_number": "2559-2026-4",
+          "title": "Kompletterande handlingar",
+          "date": "2026-04-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-4"
+        },
+        {
+          "handling_number": "2559-2026-5",
+          "title": "Yttrande",
+          "date": "2026-04-26",
+          "sender_recipient": "Katarina Bixo Jacobsson",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-5"
+        },
+        {
+          "handling_number": "2559-2026-6",
+          "title": "Komplettering med bilder",
+          "date": "2026-04-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-6"
+        },
+        {
+          "handling_number": "2559-2026-7",
+          "title": "Remiss om anmäld vattenverksamhet",
+          "date": "2026-04-29",
+          "sender_recipient": "Åre kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-7"
+        },
+        {
+          "handling_number": "2559-2026-8",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-05-05",
+          "sender_recipient": "Åre kommun Miljöavdelningen",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-8"
+        },
+        {
+          "handling_number": "2559-2026-9",
+          "title": "Meddelande till sökande om bemötande av yttrande",
+          "date": "2026-05-25",
+          "sender_recipient": "Föreningen Vällvikens brygga",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-9"
+        },
+        {
+          "handling_number": "2559-2026-10",
+          "title": "Remiss om yttrande i ärende brygga vattenverksamhet",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-10"
+        },
+        {
+          "handling_number": "2559-2026-11",
+          "title": "Förfrågan om ärendestatus",
+          "date": "2026-06-28",
+          "sender_recipient": "Föreningen Vällvikens brygga",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-11"
+        },
+        {
+          "handling_number": "2559-2026-12",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-30",
+          "sender_recipient": "Åre kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-12"
+        },
+        {
+          "handling_number": "2559-2026-13",
+          "title": "Meddelande om invänta på yttrande",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-13"
+        },
+        {
+          "handling_number": "2559-2026-14",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-07-01",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2559-2026::2559-2026-14"
+        }
+      ],
+      "content_hash": "86ec526df36a877e509995114996b382ad309aacb85697837867c58ca0359247",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2586-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2586-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5455956",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2586-2026",
+        "registered_date": "2026-04-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av trummor inom Gimåns vattensystem, Bräcke kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-05",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Bräcke"
+      },
+      "handlings": [
+        {
+          "handling_number": "2586-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Sösjöbäcken, Åsjöbäcken, Djupdalsbäcken, Vitbergsbäcken, Bodtjärnsbäcken, Endalsbäcken, Bräcke kommun",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-1"
+        },
+        {
+          "handling_number": "2586-2026-2",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-2"
+        },
+        {
+          "handling_number": "2586-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-3"
+        },
+        {
+          "handling_number": "2586-2026-4",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-4"
+        },
+        {
+          "handling_number": "2586-2026-5",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-5"
+        },
+        {
+          "handling_number": "2586-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-6"
+        },
+        {
+          "handling_number": "2586-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-7"
+        },
+        {
+          "handling_number": "2586-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-8"
+        },
+        {
+          "handling_number": "2586-2026-9",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-9"
+        },
+        {
+          "handling_number": "2586-2026-10",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-10"
+        },
+        {
+          "handling_number": "2586-2026-11",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-11"
+        },
+        {
+          "handling_number": "2586-2026-12",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-12"
+        },
+        {
+          "handling_number": "2586-2026-13",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-13"
+        },
+        {
+          "handling_number": "2586-2026-14",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-14"
+        },
+        {
+          "handling_number": "2586-2026-15",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-15"
+        },
+        {
+          "handling_number": "2586-2026-16",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-16"
+        },
+        {
+          "handling_number": "2586-2026-17",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-17"
+        },
+        {
+          "handling_number": "2586-2026-18",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-18"
+        },
+        {
+          "handling_number": "2586-2026-19",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-19"
+        },
+        {
+          "handling_number": "2586-2026-20",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-04-08",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-20"
+        },
+        {
+          "handling_number": "2586-2026-21",
+          "title": "Begäran om komplettering",
+          "date": "2026-04-14",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-21"
+        },
+        {
+          "handling_number": "2586-2026-22",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Bräcke kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-22"
+        },
+        {
+          "handling_number": "2586-2026-23",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Bodsjöns fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-23"
+        },
+        {
+          "handling_number": "2586-2026-24",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Revsundssjöns södra fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-24"
+        },
+        {
+          "handling_number": "2586-2026-25",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Grimnäs-Landsomfjärdens fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-25"
+        },
+        {
+          "handling_number": "2586-2026-26",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Sösjön-Hemsjön-Gåssjöns fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-26"
+        },
+        {
+          "handling_number": "2586-2026-27",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Bensjö fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-27"
+        },
+        {
+          "handling_number": "2586-2026-28",
+          "title": "Begäran om yttrande",
+          "date": "2026-04-14",
+          "sender_recipient": "Storåsen-Albackens fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-28"
+        },
+        {
+          "handling_number": "2586-2026-29",
+          "title": "Tjänsteanteckning vid samtal om yttrande, ingen erinran",
+          "date": "2026-04-14",
+          "sender_recipient": "Bensjö Energi och Recycling AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-29"
+        },
+        {
+          "handling_number": "2586-2026-30",
+          "title": "Yttrande över ansökan, ingen erinran",
+          "date": "2026-04-16",
+          "sender_recipient": "Sösjö/Hemsjö/Gråssjö Fiskevårdsområde",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-30"
+        },
+        {
+          "handling_number": "2586-2026-31",
+          "title": "Yttrande över remiss",
+          "date": "2026-04-20",
+          "sender_recipient": "Bensjö fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-31"
+        },
+        {
+          "handling_number": "2586-2026-32",
+          "title": "Komplettering med uppgifter till anmälan",
+          "date": "2026-04-17",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-32"
+        },
+        {
+          "handling_number": "2586-2026-33",
+          "title": "Yttrande över anmälan, ingen erinran [MH-2026-261]",
+          "date": "2026-04-24",
+          "sender_recipient": "Bräcke kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-33"
+        },
+        {
+          "handling_number": "2586-2026-34",
+          "title": "Meddelande om möjlighet till bemötande av yttrande",
+          "date": "2026-04-24",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-34"
+        },
+        {
+          "handling_number": "2586-2026-35",
+          "title": "Bemötande av yttrande",
+          "date": "2026-04-25",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-35"
+        },
+        {
+          "handling_number": "2586-2026-36",
+          "title": "Meddelande om inventering av flodpärlmussla",
+          "date": "2026-04-29",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-36"
+        },
+        {
+          "handling_number": "2586-2026-37",
+          "title": "Information om tillstånd till inventering och flytt av musslor",
+          "date": "2026-05-20",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-37"
+        },
+        {
+          "handling_number": "2586-2026-38",
+          "title": "Meddelande till sökande om Länsstyrelsens nuvarande ställningstagande rörande artskydd",
+          "date": "2026-05-21",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-38"
+        },
+        {
+          "handling_number": "2586-2026-39",
+          "title": "Föreläggande om att vidta försiktighetsåtgärder i samband med trumbyten inom Gimåns vattensystem, Bräcke kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::2586-2026::2586-2026-39"
+        }
+      ],
+      "content_hash": "7b4de7d89b2b9a3981d0816d4d2e48643b48e0336c7a3f58399e53cb999ae96d",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2623-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2623-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5457261",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2623-2026",
+        "registered_date": "",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av trumma inom Stensundets naturreservat, Indalsälven, Östersunds kommun",
+        "status": "",
+        "decision_date": "",
+        "sender_recipient": "",
+        "municipality": ""
+      },
+      "handlings": [],
+      "content_hash": "ab24798f916b626cc6a06c0eff1fdca467bd0e7b47601e8e046413c9efe7e18f",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2675-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2675-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5460657",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2675-2026",
+        "registered_date": "2026-04-13",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, fyllning eller pålning, Ljusnan, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-24",
+        "sender_recipient": "GRK Sverige AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "2675-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Ljusnan, Härjedalens kommun",
+          "date": "2026-04-13",
+          "sender_recipient": "GRK Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-1"
+        },
+        {
+          "handling_number": "2675-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-13",
+          "sender_recipient": "GRK Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-2"
+        },
+        {
+          "handling_number": "2675-2026-3",
+          "title": "Remiss om yttrande",
+          "date": "2026-05-04",
+          "sender_recipient": "Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-3"
+        },
+        {
+          "handling_number": "2675-2026-4",
+          "title": "Yttrande över remiss om vattenverksamhet",
+          "date": "2026-05-25",
+          "sender_recipient": "Långå Fiskevårdsområdes Förening",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-4"
+        },
+        {
+          "handling_number": "2675-2026-5",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-05-26",
+          "sender_recipient": "Berg och Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-5"
+        },
+        {
+          "handling_number": "2675-2026-6",
+          "title": "Komplettering med anledning av Långå FVOF:s yttrande",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-6"
+        },
+        {
+          "handling_number": "2675-2026-7",
+          "title": "Bemötande av fiskevårdsområdets yttrande",
+          "date": "2026-06-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-7"
+        },
+        {
+          "handling_number": "2675-2026-8",
+          "title": "Beslut om bifall med villkor",
+          "date": "2026-06-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2675-2026::2675-2026-8"
+        }
+      ],
+      "content_hash": "980486bba6e72f898bc8a4b1ef4b844c7b5466e8030cb1c21797539e4131639e",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2774-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2774-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5464533",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2774-2026",
+        "registered_date": "2026-04-15",
+        "title": "Tillsyn av dammsäkerhet och vattenverksamhet vid Åflo kvarns dammanläggning i Krokoms kommun",
+        "status": "Beslutat",
+        "decision_date": "2026-07-20",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "2774-2026-2",
+          "title": "Tjänsteanteckning efter tillsyn av dammsäkerhet och vattenverksamhet vid Åflo kvarns dammanläggning i Krokoms kommun",
+          "date": "2026-04-21",
+          "sender_recipient": "Länsstyrelsen Jämtlands län",
+          "handling_key": "länsstyrelsen i jämtlands län::2774-2026::2774-2026-2"
+        },
+        {
+          "handling_number": "2774-2026-3",
+          "title": "Föreläggande om att inkomma med en konsekvensutredning för Åflodammen, Krokoms kommun",
+          "date": "2026-07-20",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2774-2026::2774-2026-3"
+        },
+        {
+          "handling_number": "2774-2026-4",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-07-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::2774-2026::2774-2026-4"
+        }
+      ],
+      "content_hash": "9db6c99027179d1b242faea17b39a4df6686b3779ce6a123dfe2cb2b7da974bf",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::2912-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::2912-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5470875",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "2912-2026",
+        "registered_date": "2026-04-21",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, nedläggning av kablar i bäckar kring Orrmosjön, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-10",
+        "sender_recipient": "Härjeåns Nät AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "2912-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Surbrynnsbäcken, Härjedalen kommun",
+          "date": "2026-04-21",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-1"
+        },
+        {
+          "handling_number": "2912-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-04-21",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-2"
+        },
+        {
+          "handling_number": "2912-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-04-21",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-3"
+        },
+        {
+          "handling_number": "2912-2026-4",
+          "title": "Information om grumlingsskydd",
+          "date": "2026-04-21",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-4"
+        },
+        {
+          "handling_number": "2912-2026-5",
+          "title": "Ritning på rördimensioner",
+          "date": "2026-04-21",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-5"
+        },
+        {
+          "handling_number": "2912-2026-6",
+          "title": "Information om övrigt och berörda fastighetsägare",
+          "date": "2026-04-21",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-6"
+        },
+        {
+          "handling_number": "2912-2026-7",
+          "title": "Fullmakt för ombud",
+          "date": "2026-04-21",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-7"
+        },
+        {
+          "handling_number": "2912-2026-8",
+          "title": "Remiss om anmäld vattenverksamhet",
+          "date": "2026-04-24",
+          "sender_recipient": "Berg och Härjedalens miljö- och byggnämnd",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-8"
+        },
+        {
+          "handling_number": "2912-2026-9",
+          "title": "Remiss om anmäld vattenverksamhet, korrigerat utskick",
+          "date": "2026-04-24",
+          "sender_recipient": "Berg och Härjedalens miljö- och byggnämnd",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-9"
+        },
+        {
+          "handling_number": "2912-2026-10",
+          "title": "Yttrande över remiss, ingen erinran",
+          "date": "2026-05-18",
+          "sender_recipient": "Berg och Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-10"
+        },
+        {
+          "handling_number": "2912-2026-11",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-06-09",
+          "sender_recipient": "Härjeåns Nät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::2912-2026::2912-2026-11"
+        }
+      ],
+      "content_hash": "aac0758249063d30674c0d558e8144362d555ec6c0dd304f9b68063d2ec8e974",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3011-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3011-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5475043",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3011-2026",
+        "registered_date": "2026-04-24",
+        "title": "Förberedande samråd inför tillståndsansökan vattenverksamhet, vattendragsrestaurering i Gammelkvarnbäcken, Bräcke kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Länsstyrelsen Jämtlands län",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3011-2026-1",
+          "title": "Förberedande samråd inför tillståndsansökan vattenverksamhet, vattendragsrestaurering",
+          "date": "2026-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-1"
+        },
+        {
+          "handling_number": "3011-2026-3",
+          "title": "Samrådsunderlag",
+          "date": "2026-10-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-3"
+        },
+        {
+          "handling_number": "3011-2026-4",
+          "title": "Annons om kungörelse för införande 2026-11-21",
+          "date": "2026-11-18",
+          "sender_recipient": "Länstidningen",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-4"
+        },
+        {
+          "handling_number": "3011-2026-6",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-6"
+        },
+        {
+          "handling_number": "3011-2026-7",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-7"
+        },
+        {
+          "handling_number": "3011-2026-8",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-8"
+        },
+        {
+          "handling_number": "3011-2026-9",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-9"
+        },
+        {
+          "handling_number": "3011-2026-10",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-10"
+        },
+        {
+          "handling_number": "3011-2026-11",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-11"
+        },
+        {
+          "handling_number": "3011-2026-12",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-12"
+        },
+        {
+          "handling_number": "3011-2026-13",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-13"
+        },
+        {
+          "handling_number": "3011-2026-14",
+          "title": "Samråd",
+          "date": "2026-11-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3011-2026::3011-2026-14"
+        }
+      ],
+      "content_hash": "a696c00868cbfa27883b6a7581a7d4d2c27622beb23fc1702ab20d381541aa61",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3025-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3025-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5475261",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3025-2026",
+        "registered_date": "2026-04-24",
+        "title": "Begäran om tillsyn av vattenverksamhet, fällning av träd, grävning mot sjö m.m., Östersunds kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Östersunds kommun",
+        "municipality": "Östersund"
+      },
+      "handlings": [
+        {
+          "handling_number": "3025-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, fällning av träd, grävning mot sjö m.m., Östersunds kommun",
+          "date": "2026-04-24",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3025-2026::3025-2026-1"
+        }
+      ],
+      "content_hash": "c9508cd994fda6e8ab0c1e99e6ef3c4fc58ffe55c51b28c7684e1fd00d4bb9b2",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3164-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3164-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5480709",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3164-2026",
+        "registered_date": "2026-04-30",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av trumma i bäck från Ålviktjärnen, Krokoms kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-12",
+        "sender_recipient": "Lövhöjdens VSF",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "3164-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Liten bäck som rinner ut i Ålvikstjärnen, Krokom kommun",
+          "date": "2026-04-30",
+          "sender_recipient": "Lövhöjdens VSF",
+          "handling_key": "länsstyrelsen i jämtlands län::3164-2026::3164-2026-1"
+        },
+        {
+          "handling_number": "3164-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Lövhöjdens VSF",
+          "handling_key": "länsstyrelsen i jämtlands län::3164-2026::3164-2026-2"
+        },
+        {
+          "handling_number": "3164-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Lövhöjdens VSF",
+          "handling_key": "länsstyrelsen i jämtlands län::3164-2026::3164-2026-3"
+        },
+        {
+          "handling_number": "3164-2026-4",
+          "title": "Remiss om anmäld vattenverksamhet",
+          "date": "2026-05-05",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3164-2026::3164-2026-4"
+        },
+        {
+          "handling_number": "3164-2026-5",
+          "title": "Svar på remiss",
+          "date": "2026-05-27",
+          "sender_recipient": "Bygg- och miljöavdelningen Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3164-2026::3164-2026-5"
+        },
+        {
+          "handling_number": "3164-2026-6",
+          "title": "Föreläggande om försiktighetsåtgärder",
+          "date": "2026-06-12",
+          "sender_recipient": "Lövhöjdens VSF",
+          "handling_key": "länsstyrelsen i jämtlands län::3164-2026::3164-2026-6"
+        }
+      ],
+      "content_hash": "f1f030dbef9a1aa947beb7081f8bae8b4391850e45a9267795916d481178c4b0",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3173-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3173-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5481075",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3173-2026",
+        "registered_date": "2026-04-30",
+        "title": "Samråd inför tillståndsansökan för övrig vattenverksamhet, anläggande av skogsbilväg,  Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-09",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "3173-2026-1",
+          "title": "Samråd inför tillståndsansökan för övrig vattenverksamhet i Härjedalens kommun",
+          "date": "2026-04-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3173-2026::3173-2026-1"
+        },
+        {
+          "handling_number": "3173-2026-2",
+          "title": "Beslut 2026-02-23 skogsstyrelsen. Beslut att tillfälligt förbjuda anmäld skogsbruksåtgärd",
+          "date": "2026-06-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3173-2026::3173-2026-2"
+        },
+        {
+          "handling_number": "3173-2026-3",
+          "title": "Beslut om avskrivning av ärende",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3173-2026::3173-2026-3"
+        }
+      ],
+      "content_hash": "cc6a6db932435b5f1972cb04dce3c918943d0d855e64138f88a032add91ef4d2",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3185-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3185-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5481349",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3185-2026",
+        "registered_date": "2026-04-30",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hittar inget namn på detta vattendrag, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-04",
+        "sender_recipient": "Axavia Sverige AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "3185-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Hittar inget namn på detta vattendrag, Härjedalen kommun",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-1"
+        },
+        {
+          "handling_number": "3185-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-2"
+        },
+        {
+          "handling_number": "3185-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-3"
+        },
+        {
+          "handling_number": "3185-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-4"
+        },
+        {
+          "handling_number": "3185-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-5"
+        },
+        {
+          "handling_number": "3185-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-6"
+        },
+        {
+          "handling_number": "3185-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-7"
+        },
+        {
+          "handling_number": "3185-2026-8",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-04-30",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-8"
+        },
+        {
+          "handling_number": "3185-2026-9",
+          "title": "Remiss om yttrande",
+          "date": "2026-05-04",
+          "sender_recipient": "Härjedalen kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-9"
+        },
+        {
+          "handling_number": "3185-2026-10",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-08",
+          "sender_recipient": "Sveg-Herrö Fvo",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-10"
+        },
+        {
+          "handling_number": "3185-2026-11",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-05-26",
+          "sender_recipient": "Berg och Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-11"
+        },
+        {
+          "handling_number": "3185-2026-12",
+          "title": "Föreläggande om försiktighetsåtgärder",
+          "date": "2026-06-04",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3185-2026::3185-2026-12"
+        }
+      ],
+      "content_hash": "a52dff5a4f0f4c0091ed7389388ae43eaf28317cf5a41cb6bdb733e17578fac8",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3207-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3207-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5482096",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3207-2026",
+        "registered_date": "2026-05-04",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, nedläggning av kabel, rör eller ledning, Revsundssjön, Bräcke kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-05",
+        "sender_recipient": "Vatten och miljöresurs",
+        "municipality": "Bräcke"
+      },
+      "handlings": [
+        {
+          "handling_number": "3207-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Revsundssjön, Bräcke kommun",
+          "date": "2026-05-04",
+          "sender_recipient": "Vatten och miljöresurs",
+          "handling_key": "länsstyrelsen i jämtlands län::3207-2026::3207-2026-1"
+        },
+        {
+          "handling_number": "3207-2026-2",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-05-06",
+          "sender_recipient": "Vatten och miljöresurs",
+          "handling_key": "länsstyrelsen i jämtlands län::3207-2026::3207-2026-2"
+        },
+        {
+          "handling_number": "3207-2026-3",
+          "title": "Remiss om yttrande",
+          "date": "2026-05-07",
+          "sender_recipient": "Bräcke kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3207-2026::3207-2026-3"
+        },
+        {
+          "handling_number": "3207-2026-4",
+          "title": "Remiss om yttrande",
+          "date": "2026-05-19",
+          "sender_recipient": "Anviksjöns fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::3207-2026::3207-2026-4"
+        },
+        {
+          "handling_number": "3207-2026-5",
+          "title": "Yttrande över remiss",
+          "date": "2026-05-21",
+          "sender_recipient": "Bräcke kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3207-2026::3207-2026-5"
+        },
+        {
+          "handling_number": "3207-2026-6",
+          "title": "Föreläggande om försiktighetsåtgärder",
+          "date": "2026-06-05",
+          "sender_recipient": "Vatten och miljöresurs",
+          "handling_key": "länsstyrelsen i jämtlands län::3207-2026::3207-2026-6"
+        }
+      ],
+      "content_hash": "276ff15bf1ecb3b9a6c4a855bf309022584f7ae02a349caf2a537f255d82ca73",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3262-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3262-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5484638",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3262-2026",
+        "registered_date": "2026-05-05",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, nedläggning av trumma, Natura 2000-område, Åre kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-03",
+        "sender_recipient": "Jämtkraft AB",
+        "municipality": "Åre"
+      },
+      "handlings": [
+        {
+          "handling_number": "3262-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendraget saknar namn, är inte identifierat i VISS, Åre kommun",
+          "date": "2026-05-05",
+          "sender_recipient": "Jämtkraft AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-1"
+        },
+        {
+          "handling_number": "3262-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-05",
+          "sender_recipient": "Jämtkraft AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-2"
+        },
+        {
+          "handling_number": "3262-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-05",
+          "sender_recipient": "Jämtkraft AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-3"
+        },
+        {
+          "handling_number": "3262-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-05",
+          "sender_recipient": "Jämtkraft AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-4"
+        },
+        {
+          "handling_number": "3262-2026-5",
+          "title": "Remiss till Åre kommun om byte av trumma vid Duveds kraftverk",
+          "date": "2026-05-08",
+          "sender_recipient": "Åre kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-5"
+        },
+        {
+          "handling_number": "3262-2026-6",
+          "title": "Remiss till Duveds fiskevårdsområdesförening om byte av trumma vid Duveds kraftverk",
+          "date": "2026-05-08",
+          "sender_recipient": "Duveds fiskevårdsområdesförening",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-6"
+        },
+        {
+          "handling_number": "3262-2026-7",
+          "title": "Meddelande om avgift för handläggning av anmälan om vattenverksamhet",
+          "date": "2026-05-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-7"
+        },
+        {
+          "handling_number": "3262-2026-8",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-05-22",
+          "sender_recipient": "Åre kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-8"
+        },
+        {
+          "handling_number": "3262-2026-9",
+          "title": "Komplettering",
+          "date": "2026-06-01",
+          "sender_recipient": "Jämtkraft AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-9"
+        },
+        {
+          "handling_number": "3262-2026-10",
+          "title": "Meddelande med önskemål om skyndsam handläggning",
+          "date": "2026-06-01",
+          "sender_recipient": "Jämtkraft AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-10"
+        },
+        {
+          "handling_number": "3262-2026-11",
+          "title": "Föreläggande om försiktighetsåtgärder",
+          "date": "2026-06-03",
+          "sender_recipient": "Jämtkraft AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3262-2026::3262-2026-11"
+        }
+      ],
+      "content_hash": "c77fe87a20747d95629acfc184802025ec39d651427fd5a3f2c590edc0d488df",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3356-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3356-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5488911",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3356-2026",
+        "registered_date": "2026-05-07",
+        "title": "Samråd inför tillståndsansökan för täkt av torv samt vattenverksamhet, Rössjeflyet och Digerflon, inbjudan , Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-02",
+        "sender_recipient": "Härjedalens miljöbränsle AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "3356-2026-1",
+          "title": "Samråd inför tillståndsansökan för täkt av torv samt vattenverksamhet, Rössjeflyet och Digerflon, inbjudan , Härjedalens kommun",
+          "date": "2026-05-07",
+          "sender_recipient": "Härjedalens miljöbränsle AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3356-2026::3356-2026-1"
+        },
+        {
+          "handling_number": "3356-2026-2",
+          "title": "Protokoll från sammanträde 2026-06-02",
+          "date": "2026-06-25",
+          "sender_recipient": "Envigo AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3356-2026::3356-2026-2"
+        },
+        {
+          "handling_number": "3356-2026-3",
+          "title": "Meddelande om fokusområden",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3356-2026::3356-2026-3"
+        },
+        {
+          "handling_number": "3356-2026-4",
+          "title": "Samråd inför tillståndsansökan",
+          "date": "2026-10-13",
+          "sender_recipient": "Envigo AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3356-2026::3356-2026-4"
+        }
+      ],
+      "content_hash": "d260b673a1ecd949c2b5fad7e78514e1e9175dbd84d1ef0a348e479d77b88c5d",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3366-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3366-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5489414",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3366-2026",
+        "registered_date": "2026-05-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, grävning och nedläggning av kabel i vattendrag, Krokoms kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-09",
+        "sender_recipient": "Jämtkraft Elnät",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "3366-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, grävning och nedläggning av kabel i bäck, Krokoms kommun",
+          "date": "2026-05-08",
+          "sender_recipient": "Jämtkraft Elnät",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-1"
+        },
+        {
+          "handling_number": "3366-2026-2",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-08",
+          "sender_recipient": "Jämtkraft Elnät",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-2"
+        },
+        {
+          "handling_number": "3366-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-08",
+          "sender_recipient": "Jämtkraft Elnät",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-3"
+        },
+        {
+          "handling_number": "3366-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-08",
+          "sender_recipient": "Jämtkraft Elnät",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-4"
+        },
+        {
+          "handling_number": "3366-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-08",
+          "sender_recipient": "Jämtkraft Elnät",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-5"
+        },
+        {
+          "handling_number": "3366-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-08",
+          "sender_recipient": "Jämtkraft Elnät",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-6"
+        },
+        {
+          "handling_number": "3366-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-08",
+          "sender_recipient": "Jämtkraft Elnät",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-7"
+        },
+        {
+          "handling_number": "3366-2026-8",
+          "title": "Remiss om anmäld vattenverksamhet",
+          "date": "2026-05-12",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-8"
+        },
+        {
+          "handling_number": "3366-2026-9",
+          "title": "Yttrande över remiss, inget att erinra [Ecos-2026-676]",
+          "date": "2026-05-25",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-9"
+        },
+        {
+          "handling_number": "3366-2026-10",
+          "title": "Beslut om bifall",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3366-2026::3366-2026-10"
+        }
+      ],
+      "content_hash": "2dff04c8de192a11b1330859c5359083a77b3d9d5678475eba3871d24910789e",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3465-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3465-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5493708",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3465-2026",
+        "registered_date": "2026-05-12",
+        "title": "Begäran om tillsyn av vattenverksamhet, dikesrensning, Östersund",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3465-2026-1",
+          "title": "Begäran om tillsyn av vattenverksamhet, dikesrensning, Östersund",
+          "date": "2026-05-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-1"
+        },
+        {
+          "handling_number": "3465-2026-2",
+          "title": "Begäran om bemötande av inkommen klagan",
+          "date": "2026-05-13",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-2"
+        },
+        {
+          "handling_number": "3465-2026-3",
+          "title": "Meddelande om rättelse",
+          "date": "2026-05-19",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-3"
+        },
+        {
+          "handling_number": "3465-2026-4",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-4"
+        },
+        {
+          "handling_number": "3465-2026-5",
+          "title": "Meddelande till sökande avseende återkoppling på fråga",
+          "date": "2026-05-25",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-5"
+        },
+        {
+          "handling_number": "3465-2026-6",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-05-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-6"
+        },
+        {
+          "handling_number": "3465-2026-7",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-05-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-7"
+        },
+        {
+          "handling_number": "3465-2026-8",
+          "title": "Yttrande",
+          "date": "2026-06-05",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-8"
+        },
+        {
+          "handling_number": "3465-2026-9",
+          "title": "Meddelande efter bemötande från Östersunds kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Östersunds kommun, Sektor tillväxt",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-9"
+        },
+        {
+          "handling_number": "3465-2026-10",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-10"
+        },
+        {
+          "handling_number": "3465-2026-11",
+          "title": "Meddelande om återkoppling",
+          "date": "2026-06-05",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-11"
+        },
+        {
+          "handling_number": "3465-2026-12",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-06-18",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-12"
+        },
+        {
+          "handling_number": "3465-2026-13",
+          "title": "Tjänsteanteckning vid besiktning/tillsyn",
+          "date": "2026-07-02",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-13"
+        },
+        {
+          "handling_number": "3465-2026-14",
+          "title": "Meddelande om ej utfört åtgärd",
+          "date": "2026-07-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-14"
+        },
+        {
+          "handling_number": "3465-2026-15",
+          "title": "Yttrande",
+          "date": "2026-08-18",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-15"
+        },
+        {
+          "handling_number": "3465-2026-16",
+          "title": "Begäran om bemötande i ärende 3465-2026 (1/1)",
+          "date": "2026-09-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-16"
+        },
+        {
+          "handling_number": "3465-2026-17",
+          "title": "Yttrande",
+          "date": "2026-09-15",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-17"
+        },
+        {
+          "handling_number": "3465-2026-18",
+          "title": "Tjänsteanteckning från platsbesök",
+          "date": "2026-09-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-18"
+        },
+        {
+          "handling_number": "3465-2026-19",
+          "title": "Förslag på föreläggande om dikesrensning för kommunikation",
+          "date": "2026-11-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3465-2026::3465-2026-19"
+        }
+      ],
+      "content_hash": "5afa19c05fcadfb0d3b9f0752ecda8de1277b40267d42f5216edf23f02254d33",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3533-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3533-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5496839",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3533-2026",
+        "registered_date": "2026-05-18",
+        "title": "Anmälan om eventuell olovlig vattenverksamhet, Bergs kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Bergs kommun",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3533-2026-1",
+          "title": "Anmälan om eventuell olovlig vattenverksamhet, Härjedalens kommun",
+          "date": "2026-05-18",
+          "sender_recipient": "Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3533-2026::3533-2026-1"
+        },
+        {
+          "handling_number": "3533-2026-2",
+          "title": "Begäran om uppgifter ang. vattenverksamhet på fastighet",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3533-2026::3533-2026-2"
+        },
+        {
+          "handling_number": "3533-2026-3",
+          "title": "Telefonsamtal med fastighetsägare Lofsdalen 6:2",
+          "date": "2026-07-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3533-2026::3533-2026-3"
+        }
+      ],
+      "content_hash": "0c71c18400a28f623f6d75ab87ec509c5865be9f1c42627fb4f81aeb4fced489",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3569-2024": {
+      "case_key": "länsstyrelsen i jämtlands län::3569-2024",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=4751549",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3569-2024",
+        "registered_date": "2024-04-24",
+        "title": "Information om vattenverksamhet, Åre kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3569-2024-2",
+          "title": "Bilder från platsbesök",
+          "date": "2024-04-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-2"
+        },
+        {
+          "handling_number": "3569-2024-3",
+          "title": "Begäran om förklaring avseende damm",
+          "date": "2024-09-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-3"
+        },
+        {
+          "handling_number": "3569-2024-4",
+          "title": "Påminnelse om att skicka in begärda uppgifter",
+          "date": "2024-10-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-4"
+        },
+        {
+          "handling_number": "3569-2024-5",
+          "title": "Påminnelse om att skicka in begärda uppgifter",
+          "date": "2024-10-31",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-5"
+        },
+        {
+          "handling_number": "3569-2024-6",
+          "title": "Föreläggande om att inkomma med uppgifter",
+          "date": "2024-11-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-6"
+        },
+        {
+          "handling_number": "3569-2024-7",
+          "title": "Komplettering med uppgifter",
+          "date": "2024-12-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-7"
+        },
+        {
+          "handling_number": "3569-2024-8",
+          "title": "Tjänsteanteckning efter platsbesök",
+          "date": "2025-06-10",
+          "sender_recipient": "Länsstyrelsen Jämtlands län",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-8"
+        },
+        {
+          "handling_number": "3569-2024-9",
+          "title": "Meddelande efter tillsyn",
+          "date": "2025-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-9"
+        },
+        {
+          "handling_number": "3569-2024-10",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2025-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-10"
+        },
+        {
+          "handling_number": "3569-2024-11",
+          "title": "Meddelande med fråga",
+          "date": "2025-08-07",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-11"
+        },
+        {
+          "handling_number": "3569-2024-12",
+          "title": "Tjänsteanteckning efter möte",
+          "date": "2025-08-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-12"
+        },
+        {
+          "handling_number": "3569-2024-13",
+          "title": "Meddelande om uppföljning",
+          "date": "2025-09-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-13"
+        },
+        {
+          "handling_number": "3569-2024-14",
+          "title": "Meddelande om möte",
+          "date": "2025-09-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-14"
+        },
+        {
+          "handling_number": "3569-2024-15",
+          "title": "Information om tillståndsprocessen",
+          "date": "2025-09-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-15"
+        },
+        {
+          "handling_number": "3569-2024-16",
+          "title": "Meddelande om uppföljning efter möte",
+          "date": "2025-09-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-16"
+        },
+        {
+          "handling_number": "3569-2024-17",
+          "title": "Meddelande till sökande",
+          "date": "2026-01-19",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-17"
+        },
+        {
+          "handling_number": "3569-2024-18",
+          "title": "Meddelande till sökande",
+          "date": "2026-01-26",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-18"
+        },
+        {
+          "handling_number": "3569-2024-19",
+          "title": "Föreläggande om att söka tillstånd för vattenverksamhet, Åre kommun",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-19"
+        },
+        {
+          "handling_number": "3569-2024-20",
+          "title": "Begäran om stämningsmannadelgivning",
+          "date": "2026-10-08",
+          "sender_recipient": "Polismyndigheten",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-20"
+        },
+        {
+          "handling_number": "3569-2024-21",
+          "title": "Meddelande om delgivning",
+          "date": "2026-10-16",
+          "sender_recipient": "Polismyndigheten",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-21"
+        },
+        {
+          "handling_number": "3569-2024-22",
+          "title": "Meddelande om delgivning",
+          "date": "2026-10-16",
+          "sender_recipient": "Polismyndigheten",
+          "handling_key": "länsstyrelsen i jämtlands län::3569-2024::3569-2024-22"
+        }
+      ],
+      "content_hash": "710b5edff69d7967a2bf27f9f208d8bf61f61f9700cbd76e2ff2c59f03bf83b6",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3628-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3628-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5501742",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3628-2026",
+        "registered_date": "2026-05-21",
+        "title": "Anmälan om vattenverksamhet enligt 11 kap. 9a§ Miljöbalken",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Östersunds kommun",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3628-2026-1",
+          "title": "Anmälan om vattenverksamhet enligt 11 kap. 9a§ Miljöbalken",
+          "date": "2026-05-21",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3628-2026::3628-2026-1"
+        },
+        {
+          "handling_number": "3628-2026-2",
+          "title": "Dom M382-23",
+          "date": "2026-05-21",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3628-2026::3628-2026-2"
+        },
+        {
+          "handling_number": "3628-2026-3",
+          "title": "Bilaga C - Tekniskt PM Ismunden",
+          "date": "2026-05-21",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3628-2026::3628-2026-3"
+        },
+        {
+          "handling_number": "3628-2026-4",
+          "title": "Beslut i ärende gällande vattenverksamhet, schaktning i samband med förstärkningsarbeten av bro vid Ismunden, Östersunds kommun [2026-1227]",
+          "date": "2026-07-16",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3628-2026::3628-2026-4"
+        }
+      ],
+      "content_hash": "e7a4f26b3b8c7ecb136571f05b3258199fc502088ad14420aa0ba829ae6bbf28",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3638-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3638-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5501996",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3638-2026",
+        "registered_date": "2026-05-21",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumbyte, Östersunds kommun [FIHM2026-734]",
+        "status": "Avslutat",
+        "decision_date": "2026-06-01",
+        "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+        "municipality": "Östersund"
+      },
+      "handlings": [
+        {
+          "handling_number": "3638-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumbyte, Östersund, svar senast 4 juni 2026, [FIHM2026-734]",
+          "date": "2026-05-21",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3638-2026::3638-2026-1"
+        },
+        {
+          "handling_number": "3638-2026-2",
+          "title": "Yttrande över remiss avseende trummbyte",
+          "date": "2026-06-01",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3638-2026::3638-2026-2"
+        },
+        {
+          "handling_number": "3638-2026-3",
+          "title": "Beslut om vattenverksamhet för byte av vägtrumma, Östersund Lund 1:81 [FIHM2026-892-9]",
+          "date": "2026-06-24",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3638-2026::3638-2026-3"
+        }
+      ],
+      "content_hash": "3344eb33b65f2996bddeeec4b4305169acf16ef635937ba9764ef2ddbe2d07bb",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3639-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3639-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5502000",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3639-2026",
+        "registered_date": "2026-05-21",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumbyte, Östersunds kommun [FIHM2026-733]",
+        "status": "Avslutat",
+        "decision_date": "2026-06-01",
+        "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3639-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumbyte, Östersunds kommun [FIHM2026-733]",
+          "date": "2026-05-21",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3639-2026::3639-2026-1"
+        },
+        {
+          "handling_number": "3639-2026-2",
+          "title": "Yttrande över remiss avseende trummbyte Östersunds kommun",
+          "date": "2026-06-01",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3639-2026::3639-2026-2"
+        },
+        {
+          "handling_number": "3639-2026-3",
+          "title": "Beslut om vattenverksamhet för byte av vägtrumma, Grytan 4:58, Östersunds kommun [FIHM2026-733-9]",
+          "date": "2026-06-24",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3639-2026::3639-2026-3"
+        }
+      ],
+      "content_hash": "deeb4a8be2dc4945db76cfa91d9b10c4f3d8d38a2c050581289f54f693902b71",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3641-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3641-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5502035",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3641-2026",
+        "registered_date": "2026-05-21",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumbyte, Östersund, svar senast 4 juni 2026, [FIHM2026-735]",
+        "status": "Avslutat",
+        "decision_date": "2026-06-01",
+        "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3641-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, trumbyte, Östersund, svar senast 4 juni 2026, [FIHM2026-735]",
+          "date": "2026-05-21",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3641-2026::3641-2026-1"
+        },
+        {
+          "handling_number": "3641-2026-2",
+          "title": "Yttrande över remiss avseende trummbyte Östersunds kommun",
+          "date": "2026-06-01",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3641-2026::3641-2026-2"
+        },
+        {
+          "handling_number": "3641-2026-3",
+          "title": "Beslut om vattenverksamhet för byte av vägtrumma, Östersund Åkre 1:34, [FIHM2026-735-9]",
+          "date": "2026-06-24",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3641-2026::3641-2026-3"
+        }
+      ],
+      "content_hash": "620d5816e4aa9cfa427f41d35a455f47699962d562679aa38f4803a432e2eb3a",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3721-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3721-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5505660",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3721-2026",
+        "registered_date": "2026-05-25",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, nedläggning/byte av trumma, Vattendrag från Millestjärnen efter Västansjövägen i Ytterhogdal, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-24",
+        "sender_recipient": "Axavia Sverige AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "3721-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag från Millestjärnen efter Västansjövägen i Ytterhogdal, Härjedalen kommun",
+          "date": "2026-05-25",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-1"
+        },
+        {
+          "handling_number": "3721-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-25",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-2"
+        },
+        {
+          "handling_number": "3721-2026-3",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-03",
+          "sender_recipient": "Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-3"
+        },
+        {
+          "handling_number": "3721-2026-4",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-03",
+          "sender_recipient": "Skogsfastigheter i Härjedalen AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-4"
+        },
+        {
+          "handling_number": "3721-2026-5",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-03",
+          "sender_recipient": "Ytterhogdals fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-5"
+        },
+        {
+          "handling_number": "3721-2026-6",
+          "title": "Komplettering",
+          "date": "2026-06-08",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-6"
+        },
+        {
+          "handling_number": "3721-2026-7",
+          "title": "Yttrande över remiss [m-2026-713]",
+          "date": "2026-06-11",
+          "sender_recipient": "Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-7"
+        },
+        {
+          "handling_number": "3721-2026-8",
+          "title": "Komplettering",
+          "date": "2026-06-22",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-8"
+        },
+        {
+          "handling_number": "3721-2026-9",
+          "title": "Föreläggande om försiktighetsåtgärder",
+          "date": "2026-06-24",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3721-2026::3721-2026-9"
+        }
+      ],
+      "content_hash": "e9580d6eec8bc0d015cdacea1d9e1cd19be4f3948497c9b672c836f9fa5db84b",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3773-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3773-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5508368",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3773-2026",
+        "registered_date": "2026-05-27",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Indalsälven, Ragunda kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-30",
+        "sender_recipient": "Vattenfall Kraftgården AB",
+        "municipality": "Ragunda"
+      },
+      "handlings": [
+        {
+          "handling_number": "3773-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Indalsälven, Ragunda kommun",
+          "date": "2026-05-27",
+          "sender_recipient": "Vattenfall Kraftgården AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3773-2026::3773-2026-1"
+        },
+        {
+          "handling_number": "3773-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-05-27",
+          "sender_recipient": "Vattenfall Kraftgården AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3773-2026::3773-2026-2"
+        },
+        {
+          "handling_number": "3773-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-05-27",
+          "sender_recipient": "Vattenfall Kraftgården AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3773-2026::3773-2026-3"
+        },
+        {
+          "handling_number": "3773-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-27",
+          "sender_recipient": "Vattenfall Kraftgården AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3773-2026::3773-2026-4"
+        },
+        {
+          "handling_number": "3773-2026-5",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3773-2026::3773-2026-5"
+        },
+        {
+          "handling_number": "3773-2026-6",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3773-2026::3773-2026-6"
+        },
+        {
+          "handling_number": "3773-2026-7",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3773-2026::3773-2026-7"
+        }
+      ],
+      "content_hash": "06b04b9a6f03b6812edaab71398a624ee98e49e728d1e876d0c8b53ec8eec858",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3824-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3824-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5511500",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3824-2026",
+        "registered_date": "2026-05-29",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag mellan Tevsjön och Ljusnan i Ljusnedal efter Golfbanevägen., Härjedalen kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-02",
+        "sender_recipient": "Axavia Sverige AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "3824-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattendrag mellan Tevsjön och Ljusnan i Ljusnedal efter Golfbanevägen., Härjedalen kommun",
+          "date": "2026-05-29",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-1"
+        },
+        {
+          "handling_number": "3824-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-05-29",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-2"
+        },
+        {
+          "handling_number": "3824-2026-3",
+          "title": "Remiss om yttrande i ärende 3824-2026",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-3"
+        },
+        {
+          "handling_number": "3824-2026-4",
+          "title": "Remiss om yttrande i ärende 3824-2026",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-4"
+        },
+        {
+          "handling_number": "3824-2026-5",
+          "title": "Remiss om yttrande i ärende 3824-2026",
+          "date": "2026-06-04",
+          "sender_recipient": "Statens fastighetsverk",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-5"
+        },
+        {
+          "handling_number": "3824-2026-6",
+          "title": "Meddelande om att kortfiskeområdet avstår yttrande",
+          "date": "2026-06-04",
+          "sender_recipient": "Ljusnedals Kortfiskeområde",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-6"
+        },
+        {
+          "handling_number": "3824-2026-7",
+          "title": "Komplettering",
+          "date": "2026-06-22",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-7"
+        },
+        {
+          "handling_number": "3824-2026-8",
+          "title": "Yttrande över remiss [2611/26]",
+          "date": "2026-06-22",
+          "sender_recipient": "Statens fastighetsverk",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-8"
+        },
+        {
+          "handling_number": "3824-2026-9",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-06-25",
+          "sender_recipient": "Berg och Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-9"
+        },
+        {
+          "handling_number": "3824-2026-10",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-07-02",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3824-2026::3824-2026-10"
+        }
+      ],
+      "content_hash": "2954cd933ad706bf7c51f299aae4ec61ce1f9c71a2e0a8f84b834967c4e1a7ae",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3916-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3916-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5514083",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3916-2026",
+        "registered_date": "2026-06-01",
+        "title": "Förfrågan om pågående vattenverksamhet, spärrdamm i Hårkan, Krokoms kommun",
+        "status": "Handläggning",
+        "decision_date": "",
+        "sender_recipient": "Länsstyrelsen Jämtlands län",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3916-2026-2",
+          "title": "Förfrågan om dammanläggning i Hårkan, Krokoms kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Sandvikssjön-Edsforsens fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::3916-2026::3916-2026-2"
+        },
+        {
+          "handling_number": "3916-2026-3",
+          "title": "Komplettering med svar på förfrågan",
+          "date": "2026-06-07",
+          "sender_recipient": "Sandvikssjön-Edsforsens fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::3916-2026::3916-2026-3"
+        }
+      ],
+      "content_hash": "924b7de012fb1b887614636d42754b57fd031c9f811b25a13030ff77d6e42982",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3956-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3956-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5516626",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3956-2026",
+        "registered_date": "2026-06-02",
+        "title": "Begäran om yttrande över anmälan om vattenverksamhet, byte av vägtrumma, Östersunds kommun, [FIHM2026-892], svar senast 2026-06-16",
+        "status": "Avslutat",
+        "decision_date": "2026-06-10",
+        "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+        "municipality": "Östersund"
+      },
+      "handlings": [
+        {
+          "handling_number": "3956-2026-1",
+          "title": "Begäran om yttrande över anmälan om vattenverksamhet, byte av vägtrumma, Östersunds kommun, [FIHM2026-892], svar senast 2026-06-16",
+          "date": "2026-06-02",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3956-2026::3956-2026-1"
+        },
+        {
+          "handling_number": "3956-2026-2",
+          "title": "Yttrande över remiss avseende trumbyte",
+          "date": "2026-06-10",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3956-2026::3956-2026-2"
+        },
+        {
+          "handling_number": "3956-2026-3",
+          "title": "Beslut om vattenverksamhet för byte av vägtrumma, Östersund Lund 1:82, [FIHM2026-892-9]",
+          "date": "2026-06-24",
+          "sender_recipient": "Försvarsinspektören för hälsa och miljö",
+          "handling_key": "länsstyrelsen i jämtlands län::3956-2026::3956-2026-3"
+        }
+      ],
+      "content_hash": "11858c0502d8fb195587eacbece2c34540ceaf4fac9812cef29ca3c0341bc4d3",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::3975-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::3975-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5518366",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "3975-2026",
+        "registered_date": "2026-06-03",
+        "title": "Meddelande om eventuell olovlig vattenverksamhet, Strömsunds kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-29",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "3975-2026-1",
+          "title": "Meddelande om eventuell olovlig vattenverksamhet, Strömsunds kommun",
+          "date": "2026-06-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3975-2026::3975-2026-1"
+        },
+        {
+          "handling_number": "3975-2026-3",
+          "title": "Bemötande på klagomål avseende ledningsdragning Strömsunds kommun",
+          "date": "2026-06-22",
+          "sender_recipient": "Open infra",
+          "handling_key": "länsstyrelsen i jämtlands län::3975-2026::3975-2026-3"
+        },
+        {
+          "handling_number": "3975-2026-4",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-07-24",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3975-2026::3975-2026-4"
+        },
+        {
+          "handling_number": "3975-2026-5",
+          "title": "Förfrågan om mer information ang. önskad åtgärd",
+          "date": "2026-07-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3975-2026::3975-2026-5"
+        },
+        {
+          "handling_number": "3975-2026-6",
+          "title": "Telefonsamtal ang. rensning av dike",
+          "date": "2026-07-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::3975-2026::3975-2026-6"
+        }
+      ],
+      "content_hash": "7b8e63f9ef5a5c1e372a42febb1cb58308fcc9018f9ab4069f832af047c6ba22",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4008-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4008-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5519752",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4008-2026",
+        "registered_date": "2026-06-04",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Åskottsån, Krokom kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-29",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "4008-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Åskottsån, Krokom kommun",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4008-2026::4008-2026-1"
+        },
+        {
+          "handling_number": "4008-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-04",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4008-2026::4008-2026-2"
+        },
+        {
+          "handling_number": "4008-2026-3",
+          "title": "Begäran om yttrande byte av trumma ärende 4008-2026",
+          "date": "2026-06-11",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4008-2026::4008-2026-3"
+        },
+        {
+          "handling_number": "4008-2026-4",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-06-22",
+          "sender_recipient": "Krokoms kommun, bygg- och miljönämnden",
+          "handling_key": "länsstyrelsen i jämtlands län::4008-2026::4008-2026-4"
+        },
+        {
+          "handling_number": "4008-2026-5",
+          "title": "Föreläggande om försiktighetsmått",
+          "date": "2026-06-29",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4008-2026::4008-2026-5"
+        }
+      ],
+      "content_hash": "fd3820b1364ffbf44866139ef53aa612195adb48504361c7289f7d28c424e1ed",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4021-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4021-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5520465",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4021-2026",
+        "registered_date": "2026-06-05",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Gåstjärnbäcken, Krokom kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "4021-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Gåstjärnbäcken, Krokom kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-1"
+        },
+        {
+          "handling_number": "4021-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-2"
+        },
+        {
+          "handling_number": "4021-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-3"
+        },
+        {
+          "handling_number": "4021-2026-4",
+          "title": "Remiss om yttrande gällande anmälan om vattenverksamhet i Gåstjärnbäcken (1/1)",
+          "date": "2026-06-15",
+          "sender_recipient": "Föllinge-Kyrkslätts fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-4"
+        },
+        {
+          "handling_number": "4021-2026-5",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-06-22",
+          "sender_recipient": "Krokoms kommun, bygg- och miljönämnden",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-5"
+        },
+        {
+          "handling_number": "4021-2026-6",
+          "title": "Ändring av anmälan och begäran om komplettering under telefonsamtal",
+          "date": "2026-07-17",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-6"
+        },
+        {
+          "handling_number": "4021-2026-7",
+          "title": "Ändring av storlek på trumma",
+          "date": "2026-07-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-7"
+        },
+        {
+          "handling_number": "4021-2026-8",
+          "title": "Kommunikation gällande trumstorlek",
+          "date": "2026-07-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-8"
+        },
+        {
+          "handling_number": "4021-2026-9",
+          "title": "Föreläggande om försiktighetsåtgärder  i samband med nedläggning av trumma i Gåstjärnbäcken, Krokoms kommun",
+          "date": "2026-07-22",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-9"
+        },
+        {
+          "handling_number": "4021-2026-10",
+          "title": "Yttrande - klart",
+          "date": "2026-07-06",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4021-2026::4021-2026-10"
+        }
+      ],
+      "content_hash": "927c5feac4936fe8f65dc58a4e92539f50732c1ea6cb9e2393bdfb27ffa7df88",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4023-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4023-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5520560",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4023-2026",
+        "registered_date": "2026-06-04",
+        "title": "Begäran om ändring av villkor i beslut rörande vattenverksamhet, byte av vägtrumma, Åre kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Jämtkraft Elnät AB",
+        "municipality": "Åre"
+      },
+      "handlings": [
+        {
+          "handling_number": "4023-2026-1",
+          "title": "Begäran om ändring av villkor i beslut rörande vattenverksamhet, byte av vägtrumma, Åre kommun",
+          "date": "2026-06-04",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4023-2026::4023-2026-1"
+        },
+        {
+          "handling_number": "4023-2026-3",
+          "title": "Beslut om ändring av Länsstyrelsens beslut 2022-12-16 i ärende 8480-2022",
+          "date": "2026-06-25",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4023-2026::4023-2026-3"
+        }
+      ],
+      "content_hash": "33f2becef54066d4a2bb523ec0c842d29cb67d05a6fa4839d56608cbe7ab861a",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4027-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4027-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5520713",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4027-2026",
+        "registered_date": "2026-06-05",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Halån, Krokoms kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-13",
+        "sender_recipient": "Trafikverket",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "4027-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Halån, Krokoms kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-1"
+        },
+        {
+          "handling_number": "4027-2026-2",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-2"
+        },
+        {
+          "handling_number": "4027-2026-3",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-10",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-3"
+        },
+        {
+          "handling_number": "4027-2026-4",
+          "title": "Komplettering",
+          "date": "2026-06-16",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-4"
+        },
+        {
+          "handling_number": "4027-2026-5",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-22",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-5"
+        },
+        {
+          "handling_number": "4027-2026-6",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-06-25",
+          "sender_recipient": "Granboforsens fvo",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-6"
+        },
+        {
+          "handling_number": "4027-2026-7",
+          "title": "Meddelande om att Skogsstyrelsen avstår från att yttra sig [2026/2050]",
+          "date": "2026-07-06",
+          "sender_recipient": "Skogsstyrelsen",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-7"
+        },
+        {
+          "handling_number": "4027-2026-8",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-07-07",
+          "sender_recipient": "Bygg- och miljöavdelningen, Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-8"
+        },
+        {
+          "handling_number": "4027-2026-9",
+          "title": "Föreläggande om försiktighetsåtgärder",
+          "date": "2026-07-13",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::4027-2026::4027-2026-9"
+        }
+      ],
+      "content_hash": "d714819d747de758ff478416ad23a1824d645d980c88033670078fe9463d92f5",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4031-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4031-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5520820",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4031-2026",
+        "registered_date": "2026-06-05",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trättjärnbäcken, Krokom kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-22",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "4031-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Trättjärnbäcken, Krokom kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-1"
+        },
+        {
+          "handling_number": "4031-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-2"
+        },
+        {
+          "handling_number": "4031-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-05",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-3"
+        },
+        {
+          "handling_number": "4031-2026-5",
+          "title": "Remiss om yttrande gällande anmälan om vattenverksamhet i Trättjärnbäcken (1/1)",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-5"
+        },
+        {
+          "handling_number": "4031-2026-6",
+          "title": "Svar på remiss: inga synpunkter",
+          "date": "2026-06-22",
+          "sender_recipient": "Krokoms kommun, bygg- och miljönämnden",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-6"
+        },
+        {
+          "handling_number": "4031-2026-7",
+          "title": "Förfrågan om yttrande avseende anmälan om vattenverksamhet i Trättjärnbäcken_ Krokom kommun (1/1)",
+          "date": "2026-07-10",
+          "sender_recipient": "Föllinge-Kyrkslätts fvo",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-7"
+        },
+        {
+          "handling_number": "4031-2026-8",
+          "title": "Begäran om komplettering",
+          "date": "2026-07-17",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-8"
+        },
+        {
+          "handling_number": "4031-2026-9",
+          "title": "Motivering till storlek på trumma och bilder",
+          "date": "2026-07-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-9"
+        },
+        {
+          "handling_number": "4031-2026-10",
+          "title": "Föreläggande om försiktighetsåtgärder i samband med byte av vägtrumma i Trättjärnbäcken, Krokoms kommun",
+          "date": "2026-07-22",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4031-2026::4031-2026-10"
+        }
+      ],
+      "content_hash": "041e4e93b9802cfee5dc00d0811a67e5be5c0aebdeb9b338239abdec5f6ef51d",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4074-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4074-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5522481",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4074-2026",
+        "registered_date": "2026-06-08",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Stampbäcken, tjärn vid väg övergång., Härjedalen kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-08",
+        "sender_recipient": "Axavia Sverige AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "4074-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Stampbäcken, tjärn vid väg övergång., Härjedalen kommun",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-1"
+        },
+        {
+          "handling_number": "4074-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-2"
+        },
+        {
+          "handling_number": "4074-2026-3",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-3"
+        },
+        {
+          "handling_number": "4074-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-4"
+        },
+        {
+          "handling_number": "4074-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-5"
+        },
+        {
+          "handling_number": "4074-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-6"
+        },
+        {
+          "handling_number": "4074-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-08",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-7"
+        },
+        {
+          "handling_number": "4074-2026-8",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-10",
+          "sender_recipient": "Ytterhogdal fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-8"
+        },
+        {
+          "handling_number": "4074-2026-9",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-10",
+          "sender_recipient": "Bergslagets Egendomar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-9"
+        },
+        {
+          "handling_number": "4074-2026-10",
+          "title": "Remiss om yttrande",
+          "date": "2026-06-10",
+          "sender_recipient": "Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-10"
+        },
+        {
+          "handling_number": "4074-2026-11",
+          "title": "Komplettering",
+          "date": "2026-06-22",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-11"
+        },
+        {
+          "handling_number": "4074-2026-12",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-06-25",
+          "sender_recipient": "Berg och Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-12"
+        },
+        {
+          "handling_number": "4074-2026-13",
+          "title": "Föreläggande om försiktighetsåtgärder",
+          "date": "2026-07-08",
+          "sender_recipient": "Axavia Sverige AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4074-2026::4074-2026-13"
+        }
+      ],
+      "content_hash": "e659984547c77e4c44fee31bc0ba1c621eb30a435e3deedeb1bb2624ac7c5278",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4088-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4088-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5522871",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4088-2026",
+        "registered_date": "2026-06-05",
+        "title": "Inbjudan till avgränsningssamråd Flobomyren torvtäkt och vattenverksamhet, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-22",
+        "sender_recipient": "Envigo AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "4088-2026-1",
+          "title": "Inbjudan till avgränsningssamråd Flobomyren torvtäkt och vattenverksamhet, Härjedalens kommun",
+          "date": "2026-06-05",
+          "sender_recipient": "Envigo AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4088-2026::4088-2026-1"
+        },
+        {
+          "handling_number": "4088-2026-2",
+          "title": "Tjänsteanteckning om avgränsningssamråd",
+          "date": "2026-06-22",
+          "sender_recipient": "Länsstyrelsen",
+          "handling_key": "länsstyrelsen i jämtlands län::4088-2026::4088-2026-2"
+        }
+      ],
+      "content_hash": "312af04a8543f0cb8de3447583f534d46404f9f633fb253448afc582f031f22c",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4101-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4101-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5523636",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4101-2026",
+        "registered_date": "2026-06-09",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike, Åre kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-08-12",
+        "sender_recipient": "Jämtkraft Elnät AB",
+        "municipality": "Åre"
+      },
+      "handlings": [
+        {
+          "handling_number": "4101-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Dike, Åre kommun",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4101-2026::4101-2026-1"
+        },
+        {
+          "handling_number": "4101-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4101-2026::4101-2026-2"
+        },
+        {
+          "handling_number": "4101-2026-3",
+          "title": "Fullmakt",
+          "date": "2026-06-09",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4101-2026::4101-2026-3"
+        },
+        {
+          "handling_number": "4101-2026-5",
+          "title": "Remiss om yttrande gällande anmälan om vattenverksamhet (dnr 4101-2026) (1/1)",
+          "date": "2026-06-15",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4101-2026::4101-2026-5"
+        },
+        {
+          "handling_number": "4101-2026-6",
+          "title": "Begäran om yttrande(36404026) (0) (1/1)",
+          "date": "2026-06-23",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4101-2026::4101-2026-6"
+        },
+        {
+          "handling_number": "4101-2026-7",
+          "title": "Yttrande över remiss",
+          "date": "2026-06-23",
+          "sender_recipient": "Åre kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4101-2026::4101-2026-7"
+        },
+        {
+          "handling_number": "4101-2026-8",
+          "title": "Förläggande om att vidta försiktighetsåtgärder i samband med utförande av grävning och nedläggning av Kabel, Åre kommun",
+          "date": "2026-08-12",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4101-2026::4101-2026-8"
+        }
+      ],
+      "content_hash": "2d9bb055efbc442ab0da7ead4b8a6e56dd971f3294967bf92221c6592d7e5646",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4118-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4118-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5524614",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4118-2026",
+        "registered_date": "2026-06-09",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skalsbäcken, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-13",
+        "sender_recipient": "Skistar AB",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "4118-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Skalsbäcken, Härjedalens kommun",
+          "date": "2026-06-09",
+          "sender_recipient": "Skistar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4118-2026::4118-2026-1"
+        },
+        {
+          "handling_number": "4118-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-09",
+          "sender_recipient": "Skistar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4118-2026::4118-2026-2"
+        },
+        {
+          "handling_number": "4118-2026-3",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-09",
+          "sender_recipient": "Skistar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4118-2026::4118-2026-3"
+        },
+        {
+          "handling_number": "4118-2026-4",
+          "title": "Begäran om yttrande (1/1)",
+          "date": "2026-06-16",
+          "sender_recipient": "Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4118-2026::4118-2026-4"
+        },
+        {
+          "handling_number": "4118-2026-5",
+          "title": "Begäran om yttrande (1/1)",
+          "date": "2026-06-16",
+          "sender_recipient": "Hån-Vemdalens fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::4118-2026::4118-2026-5"
+        },
+        {
+          "handling_number": "4118-2026-6",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-06-25",
+          "sender_recipient": "Berg och Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4118-2026::4118-2026-6"
+        },
+        {
+          "handling_number": "4118-2026-7",
+          "title": "Föreläggande om att vidta försiktighetsmått i samband med omgrävning av vattendrag samt byten av två trummor i Skalsbäcken, Härjedalens kommun",
+          "date": "2026-07-13",
+          "sender_recipient": "Skistar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4118-2026::4118-2026-7"
+        }
+      ],
+      "content_hash": "d999615b37a78355551abeccb47c93c0feaa13af715a9b9dfb64b2f40e4c02db",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4135-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4135-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5525730",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4135-2026",
+        "registered_date": "2026-06-10",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av vägtrummor i bäck mellan Gåsflon och Pålstjärnen, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-15",
+        "sender_recipient": "Minne Vägsamfällighet",
+        "municipality": "Härjedalen"
+      },
+      "handlings": [
+        {
+          "handling_number": "4135-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Bäck mellan Gåsflon och Pålstjärnen, Härjedalen kommun",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-1"
+        },
+        {
+          "handling_number": "4135-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-2"
+        },
+        {
+          "handling_number": "4135-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-3"
+        },
+        {
+          "handling_number": "4135-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-4"
+        },
+        {
+          "handling_number": "4135-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-5"
+        },
+        {
+          "handling_number": "4135-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-6"
+        },
+        {
+          "handling_number": "4135-2026-7",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-10",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-7"
+        },
+        {
+          "handling_number": "4135-2026-8",
+          "title": "Remiss om yttrande gällande anmälan om vattenverksamhet(dnr 4135-2026) (1/1)",
+          "date": "2026-06-16",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-8"
+        },
+        {
+          "handling_number": "4135-2026-9",
+          "title": "Svar på remiss: tillstyrker",
+          "date": "2026-06-29",
+          "sender_recipient": "Berg och Härjedalens kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-9"
+        },
+        {
+          "handling_number": "4135-2026-10",
+          "title": "Meddelande via e-tjänst",
+          "date": "2026-07-03",
+          "sender_recipient": "Minne Vägsamfällighet",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-10"
+        },
+        {
+          "handling_number": "4135-2026-11",
+          "title": "Föreläggande om att vidta försiktighetsmått i samband med trumbyten mellan Gåsflon och Busjön, Härjedalens kommun",
+          "date": "2026-07-15",
+          "sender_recipient": "Minne Vägsamfällighet",
+          "handling_key": "länsstyrelsen i jämtlands län::4135-2026::4135-2026-11"
+        }
+      ],
+      "content_hash": "0dda7b540865a3342ce84545af2ad7014877fbb905536382456ef610f523e2df",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4179-2025": {
+      "case_key": "länsstyrelsen i jämtlands län::4179-2025",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5158556",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4179-2025",
+        "registered_date": "2025-05-28",
+        "title": "Samråd inför tillståndsansökan om vattenverksamhet avseende uttag av vatten för konstsnötillverkning, Härjedalens kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-10-19",
+        "sender_recipient": "Lofsdalens Fjällanläggningar AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4179-2025-1",
+          "title": "Samråd inför tillståndsansökan om vattenverksamhet avseende uttag av vatten för konstsnötillverkning, Härjedalens kommun",
+          "date": "2025-05-28",
+          "sender_recipient": "Lofsdalens Fjällanläggningar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-1"
+        },
+        {
+          "handling_number": "4179-2025-2",
+          "title": "Meddelande om minnesanteckningar samrådsmöte",
+          "date": "2025-07-04",
+          "sender_recipient": "AFRY",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-2"
+        },
+        {
+          "handling_number": "4179-2025-3",
+          "title": "Meddelande till sökande",
+          "date": "2025-07-01",
+          "sender_recipient": "Lofsdalens Fjällanläggningar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-3"
+        },
+        {
+          "handling_number": "4179-2025-4",
+          "title": "Begäran om yttrande över samrådsunderlag för vattenuttag Lofssjön, svar senast 2025-09-08",
+          "date": "2025-08-19",
+          "sender_recipient": "Lofsdalens Fjällanläggningar AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-4"
+        },
+        {
+          "handling_number": "4179-2025-5",
+          "title": "Komplettering med samrådsredogörelse med bilagor",
+          "date": "2025-10-03",
+          "sender_recipient": "AFRY",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-5"
+        },
+        {
+          "handling_number": "4179-2025-6",
+          "title": "Komplettering med förtydligande",
+          "date": "2025-11-19",
+          "sender_recipient": "AFRY",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-6"
+        },
+        {
+          "handling_number": "4179-2025-7",
+          "title": "Komplettering med period för vattenuttag",
+          "date": "2025-11-20",
+          "sender_recipient": "AFRY",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-7"
+        },
+        {
+          "handling_number": "4179-2025-8",
+          "title": "Begäran om att avvakta med beslut om betydande miljöpåverkan",
+          "date": "2025-12-01",
+          "sender_recipient": "AFRY",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-8"
+        },
+        {
+          "handling_number": "4179-2025-9",
+          "title": "Begäran om avvakta med beslutet",
+          "date": "2025-12-01",
+          "sender_recipient": "AFRY",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-9"
+        },
+        {
+          "handling_number": "4179-2025-10",
+          "title": "Tjänsteanteckning om avslut av ärende",
+          "date": "2026-10-19",
+          "sender_recipient": "Länsstyrelsen Jämtlands län",
+          "handling_key": "länsstyrelsen i jämtlands län::4179-2025::4179-2025-10"
+        }
+      ],
+      "content_hash": "62a2747b70cdfc434e490308176aeff18627c733185e2348d5270000534cfccd",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4201-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4201-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5528192",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4201-2026",
+        "registered_date": "2026-06-11",
+        "title": "Tillsyn av vattenverksamhet, klagomål om luckor och vattenstånd i Hållstasjön, Östersunds kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-03",
+        "sender_recipient": "Personuppgift",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4201-2026-1",
+          "title": "Tjänsteanteckning vid samtal",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4201-2026::4201-2026-1"
+        },
+        {
+          "handling_number": "4201-2026-2",
+          "title": "Information till klagande om dammen och Länsstyrelsens hantering",
+          "date": "2026-06-11",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4201-2026::4201-2026-2"
+        },
+        {
+          "handling_number": "4201-2026-3",
+          "title": "Fotografier på dammanläggningen, tagna av klagande",
+          "date": "2026-06-13",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4201-2026::4201-2026-3"
+        },
+        {
+          "handling_number": "4201-2026-4",
+          "title": "Meddelande om att ärendet avslutas utan ytterligare tillsynsåtgärder",
+          "date": "2026-07-03",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4201-2026::4201-2026-4"
+        }
+      ],
+      "content_hash": "e4df426e4838e6832e551dd53b83cf0029534711ec973853600fbfed994d66fe",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4207-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4207-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5528379",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4207-2026",
+        "registered_date": "2026-06-12",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, byte av trumma, Alsensjön, Krokoms kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-22",
+        "sender_recipient": "Persson Invest Skog AB",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "4207-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Alsensjön, Krokom kommun",
+          "date": "2026-06-12",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-1"
+        },
+        {
+          "handling_number": "4207-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-12",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-2"
+        },
+        {
+          "handling_number": "4207-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-12",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-3"
+        },
+        {
+          "handling_number": "4207-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-4"
+        },
+        {
+          "handling_number": "4207-2026-5",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-5"
+        },
+        {
+          "handling_number": "4207-2026-6",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-6"
+        },
+        {
+          "handling_number": "4207-2026-7",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-12",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-7"
+        },
+        {
+          "handling_number": "4207-2026-8",
+          "title": "Begäran om yttrande avseende vattenverksamhet invid Alsensjön (1/1)",
+          "date": "2026-06-26",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-8"
+        },
+        {
+          "handling_number": "4207-2026-9",
+          "title": "Tjänsteanteckning efter samtal med fvof",
+          "date": "2026-06-29",
+          "sender_recipient": "Alsensjöns fvof",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-9"
+        },
+        {
+          "handling_number": "4207-2026-10",
+          "title": "Yttrande över remiss",
+          "date": "2026-07-08",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-10"
+        },
+        {
+          "handling_number": "4207-2026-11",
+          "title": "Telefonsamtal ang. ändring av trumstorlek",
+          "date": "2026-07-17",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-11"
+        },
+        {
+          "handling_number": "4207-2026-12",
+          "title": "Ändring av trumstorlek",
+          "date": "2026-07-21",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-12"
+        },
+        {
+          "handling_number": "4207-2026-13",
+          "title": "Föreläggande om försiktighetsåtgärder i samband med trumbyte invid Alsensjön, Krokoms kommun",
+          "date": "2026-07-22",
+          "sender_recipient": "Persson Invest Skog AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4207-2026::4207-2026-13"
+        }
+      ],
+      "content_hash": "73a2817473aebd4a07fbfdb7a4ee7266257fc770cbaefc62b6bef7d62706fd8a",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4335-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4335-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5534877",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4335-2026",
+        "registered_date": "2026-06-17",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Fyllning eller pålning, Storsjön, jämtland, Krokoms kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-27",
+        "sender_recipient": "Personuppgift",
+        "municipality": "Krokom"
+      },
+      "handlings": [
+        {
+          "handling_number": "4335-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Storsjön, jämtland, Krokoms kommun., Krokom kommun",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4335-2026::4335-2026-1"
+        },
+        {
+          "handling_number": "4335-2026-2",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-17",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4335-2026::4335-2026-2"
+        },
+        {
+          "handling_number": "4335-2026-3",
+          "title": "Komplettering",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4335-2026::4335-2026-3"
+        },
+        {
+          "handling_number": "4335-2026-4",
+          "title": "Begäran om yttrande avseende vattenverksamhet invid Storsjön (1/1)",
+          "date": "2026-06-26",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4335-2026::4335-2026-4"
+        },
+        {
+          "handling_number": "4335-2026-5",
+          "title": "Svar på remiss: avstår från yttrande",
+          "date": "2026-07-20",
+          "sender_recipient": "Krokoms kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4335-2026::4335-2026-5"
+        },
+        {
+          "handling_number": "4335-2026-6",
+          "title": "Beslut om bifall med villkor i samband med fyllning av stenstrand invid Storsjön, Krokoms kommun",
+          "date": "2026-07-27",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4335-2026::4335-2026-6"
+        }
+      ],
+      "content_hash": "73abd7927020f2a891ab7d2fce1296626a84e8621424c5cb8eb11fdd2afb8558",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4356-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4356-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5536656",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4356-2026",
+        "registered_date": "2026-06-18",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattenskyddsområde Backe och Rossön, Strömsund kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-07-22",
+        "sender_recipient": "Eltel Networks Infranet AB",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4356-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Vattenskyddsområde Backe och Rossön, Strömsund kommun",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-1"
+        },
+        {
+          "handling_number": "4356-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-2"
+        },
+        {
+          "handling_number": "4356-2026-3",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-3"
+        },
+        {
+          "handling_number": "4356-2026-4",
+          "title": "Detaljkarta i ändamålsenlig skala (1:5 000  – 1:10 000)",
+          "date": "2026-06-18",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-4"
+        },
+        {
+          "handling_number": "4356-2026-5",
+          "title": "Begäran om komplettering",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-5"
+        },
+        {
+          "handling_number": "4356-2026-6",
+          "title": "Svar_ Begäran om komplettering i ärende 4356-2026",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-6"
+        },
+        {
+          "handling_number": "4356-2026-7",
+          "title": "Meddelande om komplettering i ärende",
+          "date": "2026-06-30",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-7"
+        },
+        {
+          "handling_number": "4356-2026-9",
+          "title": "Beslut om avskrivning",
+          "date": "2026-07-22",
+          "sender_recipient": "Personuppgift",
+          "handling_key": "länsstyrelsen i jämtlands län::4356-2026::4356-2026-9"
+        }
+      ],
+      "content_hash": "4497e17a57aaddf5987bede49046538a6283743ad13128f84afcc428535f6ef2",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4406-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4406-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5538801",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4406-2026",
+        "registered_date": "2026-06-12",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, justerinng av beslutet för att utföra arbeten i Vitbergsbäcken under oktober 2026",
+        "status": "Avslutat",
+        "decision_date": "2026-06-25",
+        "sender_recipient": "Trafikverket",
+        "municipality": ""
+      },
+      "handlings": [
+        {
+          "handling_number": "4406-2026-1",
+          "title": "Begäran om justering av beslutet för att utföra arbeten i Vitbergsbäcken under oktober 2026, vattenverksamhet, nedläggning/byte av trummor",
+          "date": "2026-06-12",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::4406-2026::4406-2026-1"
+        },
+        {
+          "handling_number": "4406-2026-2",
+          "title": "Beslut om ändring av Länsstyrelsens beslut 2026-06-05 i ärende 2586-2026",
+          "date": "2026-06-25",
+          "sender_recipient": "Trafikverket",
+          "handling_key": "länsstyrelsen i jämtlands län::4406-2026::4406-2026-2"
+        }
+      ],
+      "content_hash": "284528a9ebfa247c8e528f65a8bf537e4915ceac1b657faf23bceb224a5e5158",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "observation_count": 1
+    },
+    "länsstyrelsen i jämtlands län::4485-2026": {
+      "case_key": "länsstyrelsen i jämtlands län::4485-2026",
+      "source_url": "https://diarium.lansstyrelsen.se/Case/CaseInfo.aspx?caseID=5541342",
+      "observed_at": "2026-11-21T13:42:19.261843+00:00",
+      "case": {
+        "diary": "Länsstyrelsen i Jämtlands län",
+        "diary_number": "4485-2026",
+        "registered_date": "2026-06-24",
+        "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Nilsvallen, Östersund kommun",
+        "status": "Avslutat",
+        "decision_date": "2026-06-30",
+        "sender_recipient": "Jämtkraft Elnät AB",
+        "municipality": "Östersund"
+      },
+      "handlings": [
+        {
+          "handling_number": "4485-2026-1",
+          "title": "Anmälan enligt 11 kap 9 a § Miljöbalken om vattenverksamhet, Nilsvallen, Östersund kommun",
+          "date": "2026-06-24",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-1"
+        },
+        {
+          "handling_number": "4485-2026-2",
+          "title": "Översiktkarta",
+          "date": "2026-06-24",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-2"
+        },
+        {
+          "handling_number": "4485-2026-3",
+          "title": "Ritning (ange skalan och norrpil på ritning)",
+          "date": "2026-06-24",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-3"
+        },
+        {
+          "handling_number": "4485-2026-4",
+          "title": "Foton/bilder från platsen",
+          "date": "2026-06-24",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-4"
+        },
+        {
+          "handling_number": "4485-2026-5",
+          "title": "Lista fastighet och fastighetsägare (markägare)",
+          "date": "2026-06-24",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-5"
+        },
+        {
+          "handling_number": "4485-2026-6",
+          "title": "Yttranden grannfastigheter och nyttjanderättsinnehavare",
+          "date": "2026-06-24",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-6"
+        },
+        {
+          "handling_number": "4485-2026-7",
+          "title": "Uppgifter om verksamhet och miljöpåverkan",
+          "date": "2026-06-24",
+          "sender_recipient": "Jämtkraft Elnät AB",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-7"
+        },
+        {
+          "handling_number": "4485-2026-8",
+          "title": "Överlämnande av anmälan om vattenverksamhet",
+          "date": "2026-06-29",
+          "sender_recipient": "Östersunds kommun",
+          "handling_key": "länsstyrelsen i jämtlands län::4485-2026::4485-2026-8"
+        }
+      ],
+      "content_hash": "44987ef2b4ed2c23b8fbefcbab0a29894b97e03d529e44558c3bdda3161086b2",
+      "first_seen_at": "2026-11-21T13:42:19.261843+00:00",
+      "last_seen_at": "2026-11-21T13:42:19.261843+00:00",
       "observation_count": 1
     }
   }
