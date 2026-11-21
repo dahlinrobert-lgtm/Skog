@@ -67,6 +67,20 @@ test("produktionssidan använder den godkända prototypen utan testmarkering", (
   assert.match(productionHtml, /html\[data-theme="dark"\] \.filter-group\.is-active \.filter-group-heading/);
   assert.match(productionHtml, /if\(baseMapMode!=="imagery"\|\|!activityMap\|\|!label\)return/);
   assert.match(productionHtml, /imageryDateRequest\+\+;label\.hidden=true/);
+  for (const id of ["elkAfoMapCard", "elkAfoMap", "elkAfoMetric", "elkAfoBasemapImagery", "elkAfoBasemapStandard", "elkAfoMapLegend", "elkAfoMapStatus"]) {
+    assert.match(productionHtml, new RegExp('id="' + id + '"'));
+  }
+  assert.match(productionHtml, /data\/national_afo_dashboard\.json/);
+  assert.match(productionHtml, /lst_jaktadm_visning\/MapServer\/1\/query/);
+  assert.match(productionHtml, /function loadElkAfoMap\(\)/);
+  assert.match(productionHtml, /function renderElkAfoMap\(\)/);
+  assert.match(productionHtml, /feature\?\.properties\?\.afo_id/);
+  assert.match(productionHtml, /fallda_totalt/);
+  assert.match(productionHtml, /avskjutningsmal_totalt/);
+  assert.match(productionHtml, /item\.fallda_totalt===null\|\|item\.fallda_totalt===undefined/);
+  assert.match(productionHtml, /Källor: Länsstyrelsernas Älgdata och Länsstyrelsernas JaktAdm/);
+  assert.match(productionHtml, /elkAfoMapCard"\)\.hidden=!isElk/);
+  assert.match(productionHtml, /Länsstyrelsernas Älgdata/);
   assert.match(productionHtml, /Älgförvaltningsområden – hela Sverige/);
   assert.match(productionHtml, /lst_jaktadm_visning\/MapServer\/1\/query/);
   assert.match(productionHtml, /returnIdsOnly/);
