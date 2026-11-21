@@ -585,3 +585,15 @@ Användaren har uppgett att Blob service CORS har konfigurerats för GitHub Page
 - Lokal hosting av MSAL är fortsatt ett alternativ men behövs inte för denna korrigering. Ingen token eller hemlighet läggs i Git.
 
 Nästa steg: verifiera CI, invänta Pages-deploy och testa i webbläsaren att MSAL laddas, Microsoft-inloggningen fungerar och behörig användare kan läsa den privata Blob-snapshoten. Bekräfta separat att anonym/obehörig läsning nekas.
+
+
+## Projektledardashboard – MSAL CDN-fix sammanslagen och CI verifierad (2026-11-22)
+
+- PR #474 är sammanslagen i Skog main. Merge commit: 46eaeb19a88579ee3450bc09b68b76805c1af9ec.
+- PR #39 är sammanslagen i det privata history-repot. Merge commit: 5fb467d852189bca85515303506c5437f4500ecd.
+- Skog JavaScript-kontroll passerade i Actions run 44962834896; hela Snapshot storage tests passerade i run 44962834889.
+- History-repots Project manager tests passerade i run 44962844181; Synthetic append-only tests passerade i run 44962844143.
+- Verifierat i båda repornas main att dashboardens HTML använder MSAL Browser v2.35.0 på alcdn.msftauth.net med SRI och crossorigin=anonymous.
+- CI verifierar kod/tester och metadata. Den bevisar inte att GitHub Pages-deployen är klar eller att MSAL kan ladda i den aktuella webbläsaren.
+
+**Nästa konkreta steg:** verifiera Pages-deploy för Skog main och testa därefter den publicerade projektledarsidan i privat webbläsarsession: MSAL ska laddas, Entra-inloggningen ska lyckas och den behöriga användaren ska kunna läsa den privata Blob-snapshoten. Testa separat att anonym/obehörig läsning nekas. Ändra inte Azure RBAC eller slå på schemalagd publicering som del av detta test.
