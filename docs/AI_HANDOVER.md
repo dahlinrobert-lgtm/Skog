@@ -557,3 +557,12 @@ Användaren har konfigurerat rulesetet `Protect history main` i det privata hist
 Detta är verifierad ruleset-konfiguration, inte ett utfört negativt push-/delete-test. Klassisk branch-protection endpoint ger fortfarande 403 för integrationen, men repository ruleset-detaljerna är läsbara och bekräftar ovanstående policy.
 
 **Nästa steg:** planera extern backup och ett återställningstest till tom katalog. Därefter syntetiska tester av acceptanslogik och Git-operationer. Ingen App, credential, Actions-secret, skrivbehörighet, persistensworkflow eller produktionshistorik är skapad/aktiverad. Persistens kräver separat uttryckligt godkännande.
+
+
+## Nationell älgavskjutningskarta per ÄFO – återuppbyggnad 2026-11-21
+
+- Original PR #393 var 448 commits bakom aktuell `main` och byggs därför om separat; den gamla grenen ska inte mergas.
+- Korrigerad nationell ÄFO-batch från alg-grasmyr run #43952789564 verifierades med 129/129 AFO, 129 snapshots och 3 237 råa ÄJO-rader. Oberoende kontroll gav noll avvikelser mellan dashboard och råsummor för `ShotTotal`/`AssignedTotal`, samt noll avvikelser mot parentesvärdena i HTML-Summa.
+- Alg-grasmyr PR #79 återinför insamlare och dagligt snapshotflöde på aktuell main. En ny full körning från main krävs innan kartan publiceras.
+- Skog-kartan använder nationella dashboarden och JaktAdm layer 1, matchar exakt på sammansatt `afo_id`, visar separat nationell ÄFO-statistik och regional ÄJO-pilot, och skiljer noll från saknade värden.
+- Rättighetsbedömningen för JaktAdm-lagret är fortfarande villkorad tills exakt metadata kan granskas. Kartan ska ha attribution och ingen rågeometri-nedladdning.
