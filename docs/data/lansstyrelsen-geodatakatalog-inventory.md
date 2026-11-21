@@ -100,3 +100,10 @@ Om ett sökord fortfarande misslyckas fortsätter övriga sökord. Rapporten spa
 - feltext, antal lyckade sidor och antal hämtade poster per sökord
 
 En partiell inventering sparas och laddas upp som artifact tillsammans med metadata-only-proben för skyddsvärda träd. Den får aldrig tolkas som en komplett kataloginventering. Ett lyckat workflow betyder i detta fall att körningen och rapporteringen genomfördes; kontrollera alltid rapportens `status` innan resultatet används.
+
+
+### Skydd mot långvariga gatewayfel
+
+För att undvika att skicka upprepade serier av anrop till en otillgänglig kataloggateway öppnas en circuit breaker efter två sökord i följd som misslyckats med HTTP 502, 503 eller 504. Återstående sökord markeras som `skipped` i rapporten och listas i `skipped_terms`. De räknas inte som lyckade sökningar och inventeringen får fortsatt status `partial`.
+
+Ett lyckat sökord nollställer räknaren för sammanhängande gatewayfel. Därmed kan enstaka fel fortfarande följas av fortsatt inventering, medan en tydlig tjänsteomfattande störning inte leder till upprepade onödiga anrop.

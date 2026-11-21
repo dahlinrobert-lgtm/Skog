@@ -56,6 +56,21 @@ class CatalogueProbeTests(unittest.TestCase):
         self.assertEqual(module._retry_wait(error, 1), 12)
         self.assertEqual(module._retry_wait(RuntimeError("temporary"), 2), 4)
 
+    def test_repeated_gateway_failures_open_circuit_and_skip_remaining_terms(self):
+        with patch.object(module, "SEARCH_TERMS", ("first", "second", "third", "fourth")):
+            with patch.object(module, "request_json", side_effect=[
+                RuntimeError("HTTP Error 502: Bad Gateway"),
+                RuntimeError("HTTP Error 502: Bad Gateway"),
+            ]) as request:
+                result = module.run_probe(size=1, max_records_per_term=1, delay=0)
+        self.assertEqual(request.call_count, 2)
+        self.assertEqual(result["status"], "partial")
+        self.assertFalse(result["complete"])
+        self.assertTrue(result["circuit_breaker_open"])
+        self.assertEqual(result["failed_terms"], ["first", "second"])
+        self.assertEqual(result["skipped_terms"], ["third", "fourth"])
+        self.assertTrue(result["term_results"][2]["skipped"])
+
     def test_failed_term_does_not_discard_other_results(self):
         good_payload = {"hits": {"total": 1, "hits": [
             {"_id": "record-1", "_source": {"title": "Utförd åtgärd"}}

@@ -102,6 +102,13 @@ def request_json(url: str, body: dict, retries: int = 5) -> dict:
     raise RuntimeError(f"Catalogue request failed after {retries} attempts: {last_error}")
 
 
+def _is_gateway_failure(error: str | None) -> bool:
+    if not error:
+        return False
+    normalized = error.casefold()
+    return any(token in normalized for token in ("http error 502", "http error 503", "http error 504", "bad gateway", "service unavailable", "gateway timeout"))
+
+
 def response_hits(payload: dict) -> tuple[int, list[dict]]:
     hits_container = payload.get("hits") or {}
     total_value = hits_container.get("total", 0)
@@ -132,8 +139,25 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
         raise ValueError("max_records_per_term must be size..1000")
     merged: dict[str, dict] = {}
     term_reports = []
+    consecutive_gateway_failures = 0
+    circuit_open = False
+    skipped_terms = []
 
     for term in SEARCH_TERMS:
+        if circuit_open:
+            skipped_terms.append(term)
+            term_reports.append({
+                "term": term,
+                "catalogue_total": 0,
+                "records_examined": 0,
+                "pages": 0,
+                "truncated_at_cap": False,
+                "error": None,
+                "skip_reason": "Catalogue gateway circuit breaker opened after repeated 502/503/504 responses",
+                "complete": False,
+                "skipped": True,
+            })
+            continue
         offset = 0
         total = 0
         fetched = 0
@@ -168,6 +192,12 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
                     time.sleep(delay)
         except Exception as exc:
             error = str(exc)
+        if _is_gateway_failure(error):
+            consecutive_gateway_failures += 1
+        elif error is None:
+            consecutive_gateway_failures = 0
+        if consecutive_gateway_failures >= 2:
+            circuit_open = True
         term_reports.append({
             "term": term,
             "catalogue_total": total,
@@ -176,13 +206,16 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
             "truncated_at_cap": total > fetched and fetched >= max_records_per_term,
             "error": error,
             "complete": error is None,
+            "skipped": False,
         })
         if delay:
             time.sleep(delay)
 
     records = sorted(merged.values(), key=lambda item: ((item.get("title") or "").casefold(), item["metadata_uuid"]))
     title_counts = Counter("title available" if item["title"] else "title missing" for item in records)
-    failed_terms = [item["term"] for item in term_reports if item["error"]]
+    failed_terms = [item["term"] for item in term_reports if item["error"] and not item.get("skipped")]
+    completed_terms = sum(1 for item in term_reports if item["complete"])
+    complete = not failed_terms and not skipped_terms
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "catalogue": CATALOG_API,
@@ -191,10 +224,12 @@ def run_probe(*, size: int = 100, max_records_per_term: int = 200, delay: float 
         "unique_metadata_records": len(records),
         "title_quality": dict(title_counts),
         "term_results": term_reports,
-        "completed_terms": len(term_reports) - len(failed_terms),
+        "completed_terms": completed_terms,
         "failed_terms": failed_terms,
-        "complete": not failed_terms,
-        "status": "complete" if not failed_terms else "partial",
+        "skipped_terms": skipped_terms,
+        "circuit_breaker_open": circuit_open,
+        "complete": complete,
+        "status": "complete" if complete else "partial",
         "records": records,
         "interpretation": (
             "Metadata discovery only. A matching record is a candidate source, not proof of "
