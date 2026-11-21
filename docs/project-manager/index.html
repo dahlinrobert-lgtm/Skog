@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="sv"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Privat projektledaröversikt med verifierade GitHub-källor."><meta name="robots" content="noindex,nofollow">
+<title>Project Manager · Skogskoll</title>
+<style>
+:root{color-scheme:dark;--bg:#0d1117;--panel:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--blue:#58a6ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{border-bottom:1px solid var(--line);padding:20px max(18px,calc((100% - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:16px;background:#10161e}
+.brand{font-weight:750;font-size:17px}.brand span{color:var(--blue)}.tag,.status{font-size:12px;border:1px solid var(--line);border-radius:20px;padding:5px 10px;color:var(--muted)}
+main{max-width:1120px;margin:32px auto;padding:0 18px}.eyebrow{color:var(--blue);text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:750}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.1;margin:8px 0}.sub{color:var(--muted);margin:0 0 22px}
+.account-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.account-actions button{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:#1f6feb;color:white;font:inherit;cursor:pointer}.account-actions button.secondary{background:var(--panel);color:var(--text)}[hidden]{display:none!important}.notice{border:1px solid #7d5d19;background:#211b10;color:#eacb82;padding:12px 15px;border-radius:10px;margin:18px 0}.notice.good{border-color:#236b3b;background:#102318;color:#9be9a8}.notice.bad{border-color:#8b3030;background:#2b1518;color:#ffb3b3}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}.metric{font-size:27px;font-weight:750}.label{color:var(--muted);font-size:13px}
+.section{margin-top:26px}.section h2{font-size:19px;margin:0 0 12px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.item{padding:13px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}.item:first-of-type{border-top:0}.item strong{display:block}.meta{color:var(--muted);font-size:12px;margin-top:3px}
+.pill{display:inline-block;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;margin-top:6px;background:#202b3a;color:#9ccaff}.pill.done{background:#12281b;color:#7ee787}.pill.next{background:#2b2110;color:#eacb82}.pill.blocked{background:#321b1e;color:#ff9b9b}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.empty{color:var(--muted);padding:14px 0}
+footer{max-width:1120px;margin:32px auto;padding:16px 18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}}
+</style></head><body>
+<header><div class="brand">▦ <span>SKOGSKOLL</span> / PROJECT MANAGER</div><div class="account-actions"><span class="tag" id="access-state">Inte inloggad</span><button id="login-button" type="button">Logga in</button><button id="logout-button" class="secondary" type="button" hidden>Logga ut</button></div></header>
+<main><section id="auth-panel" class="card"><h1>Privat projektledaröversikt</h1><p class="sub">Logga in med ditt Microsoft-konto för att läsa den privata projektögonblicksbilden. Ingen projektdata hämtas före autentisering.</p><p id="auth-message" role="status">Du behöver logga in för att fortsätta.</p></section><div id="dashboard-content" hidden><div class="eyebrow">Projektledning · samlad vy</div><h1>Arbetsöversikt</h1>
+<p class="sub">Planerat, öppet arbete, genomförda körningar och avvikelser – med spårbara GitHub-källor.</p>
+<div id="data-notice" class="notice" role="status">Läser projektdata …</div>
+<div class="grid" aria-label="Sammanfattning">
+<div class="card"><div class="metric" id="metric-projects">—</div><div class="label">Projekt hämtade</div></div>
+<div class="card"><div class="metric" id="metric-work">—</div><div class="label">Öppna PR:er och ärenden</div></div>
+<div class="card"><div class="metric" id="metric-failed">—</div><div class="label">Misslyckade senaste körningar</div></div>
+<div class="card"><div class="metric" id="metric-success">—</div><div class="label">Lyckade senaste körningar</div></div></div>
+<div class="cols">
+<section class="section card"><h2>Öppet arbete</h2><div id="work-list" class="empty">Inväntar verifierad data.</div></section>
+<section class="section card"><h2>Senaste workflow-körningar</h2><div id="runs-list" class="empty">Inväntar verifierad data.</div></section></div>
+<section class="section card"><h2>Projektöversikt</h2><div id="projects-list" class="empty">Inväntar verifierad data.</div></section>
+<div class="cols">
+<section class="section card"><h2>Planerat / kommande</h2>
+<div class="item"><strong>1. Välj och verifiera privat hosting</strong><div class="meta">Autentisering och nekad åtkomst för obehöriga måste testas före publicering.</div><span class="pill next">Planerat</span></div>
+<div class="item"><strong>2. Koppla schemalagd insamling</strong><div class="meta">Behåll read-only-behörighet och publicera endast sanerad data till skyddad miljö.</div><span class="pill next">Planerat</span></div>
+<div class="item"><strong>3. Inför historik först efter säkerhetsgrindar</strong><div class="meta">Append-only, manifest, SHA-256, read-back och återställning.</div><span class="pill next">Planerat</span></div></section>
+<section class="section card"><h2>Arbetsprinciper</h2>
+<div class="item"><strong>Utfört kräver evidens</strong><div class="meta">PR, commit, workflow-körning eller verifierat dataunderlag.</div></div>
+<div class="item"><strong>Planerat är inte pågående</strong><div class="meta">Planerade aktiviteter visas separat och markeras inte som utförda.</div></div>
+<div class="item"><strong>Fel och osäkerhet synliggörs</strong><div class="meta">Partiella insamlingar, gammal data och misslyckade körningar döljs aldrig.</div></div></section></div></div></main>
+<footer>Project Manager · Read-only GitHub read model · Data timestamp and source links are shown when available. This page does not perform GitHub writes.</footer>
+<script src="https://alcdn.msauth.net/browser/2.39.0/js/msal-browser.min.js" defer></script><script src="./auth-config.js" defer></script><script src="./app.js" defer></script></body></html>
