@@ -192,3 +192,12 @@ Skogskolls primära kundupplevelse är ett **kronologiskt förändringsflöde by
 ### UI-steg
 
 Första UI-steget etablerar flödet som startsidans primära yta, datumval och tydliga snapshot-/fullständighetsstatusar. Det får inte visa syntetiska eller obekräftade poster som riktiga händelser. Den riktiga dag-för-dag-tidslinjen kopplas in först när godkända och verifierade snapshotkontrakt finns tillgängliga. Källstatusrapporten som granskades 2026-11-18 anger noll källor uttryckligen godkända för kundvisning; detta måste kontrolleras på nytt innan någon datakälla exponeras.
+
+
+## 9. Snapshot- och change-feed-kontrakt (2026-11-22)
+
+PR #483 har etablerat kundskalet med dag-för-dag-flöde. Nästa lager har nu fått ett separat domänkontrakt i [SKOGSKOLL_CHANGE_FEED_CONTRACT.md](SKOGSKOLL_CHANGE_FEED_CONTRACT.md) och en ren valideringsfunktion i `skogskoll/src/change-feed-contract.mjs`.
+
+Kontraktet kräver kompletta snapshots med identisk källa, produkt, lager, täckningsnyckel, schema- och identitetsversion. Snapshot-/run-ID måste skilja sig och aktuell snapshot måste vara senare. Första baslinjen är tyst. Efter baslinjen kan nya och ändrade poster bli händelser, men endast med explicit godkänd kundvisning och referens till rättighetsunderlag. Frånvaro ger aldrig automatiskt borttagningshändelse. Händelsens upptäcktsdatum hålls skilt från källans händelse- och publiceringsdatum.
+
+Detta är ännu inte ett API, en persistensimplementation eller en produktionskoppling. Den befintliga worker-/databasmodellen för Skogsstyrelsen ändras inte. Nästa steg är CI-verifiering och jämförelse mot befintliga manifest och historiktabeller innan ett separat API-/persistensförslag.
