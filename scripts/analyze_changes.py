@@ -18,9 +18,9 @@ from shapely.ops import transform, unary_union
 from pyproj import Transformer
 
 try:
-    from scripts.completed_snapshot_store import read_completed_archives
+    from scripts.completed_snapshot_store import iter_completed_archive_transitions, read_latest_completed_archive
 except ModuleNotFoundError:  # Direct execution as `python scripts/analyze_changes.py`.
-    from completed_snapshot_store import read_completed_archives
+    from completed_snapshot_store import iter_completed_archive_transitions, read_latest_completed_archive
 
 try:
     from scripts.snapshot_store import read_snapshot_rows
@@ -74,113 +74,67 @@ def parse_epoch_ms(value):
         return None
 
 
-def completed_archive_rows():
-    """Return reconstructed full completed-layer states in chronological order."""
-    rows = []
-    for filename, value in read_completed_archives(SNAPSHOTS):
-        features_by_id = {}
-        for feature in value.get("features", []):
-            oid = feature_id(feature)
-            if oid:
-                features_by_id[oid] = feature
-        rows.append({
-            "filename": filename,
-            "checked_at": value.get("checked_at"),
-            "query_scope_sha256": value.get("query_scope_sha256"),
-            "features_by_id": features_by_id,
-        })
-    return rows
-
-
 def evidence_transition_events(planned_map, planned_history):
-    """Compare each current plan with consecutive comparable completed-layer snapshots.
+    """Compare streamed completed-layer transitions with current planned polygons.
 
-    This records only newly observed or materially changed completed polygons that
-    have a meaningful, temporally plausible overlap with a current planned polygon.
-    A newly appearing layer feature is evidence to review, not proof of felling.
+    Only added/changed completed features are spatially tested. Historical archive
+    states are reconstructed one at a time; missing chains and scope changes are
+    excluded rather than interpreted as deletions.
     """
-    archives = completed_archive_rows()
     events = []
-    if len(archives) < 2:
-        return {
-            "snapshot_count": len(archives),
-            "comparable_pairs": 0,
-            "events": [],
-            "note": "At least two completed-layer archives are required to detect transitions.",
-        }
-
-    # Only compare archives with the same known query fingerprint. Older archives
-    # without scope metadata are deliberately treated as incomparable to avoid
-    # converting a search-area change into apparent source additions/removals.
+    snapshot_count = 0
     comparable_pairs = 0
     skipped_scope_pairs = []
-    for before, after in zip(archives, archives[1:]):
-        if before.get("checked_at") == after.get("checked_at"):
-            continue
-        before_scope = before.get("query_scope_sha256")
-        after_scope = after.get("query_scope_sha256")
-        if not before_scope or not after_scope or before_scope != after_scope:
-            skipped_scope_pairs.append({
-                "before_snapshot": before["filename"],
-                "after_snapshot": after["filename"],
-                "before_scope_sha256": before_scope,
-                "after_scope_sha256": after_scope,
-                "reason": "Completed-layer query scope is missing or changed; source differences are not interpreted as evidence transitions.",
-            })
-            continue
+    planned_geometries = {}
+    for planned_id, planned_feature in planned_map.items():
+        geom = valid_geometry(planned_feature)
+        props = planned_feature.get("properties") or {}
+        received_dt = parse_epoch_ms(props.get("Inkomdatum"))
+        if geom is not None and geom.area > 0 and received_dt is not None:
+            planned_geometries[planned_id] = (planned_feature, geom, received_dt)
+
+    for transition in iter_completed_archive_transitions(SNAPSHOTS):
+        snapshot_count += 1
         comparable_pairs += 1
-        before_ids = set(before["features_by_id"])
-        after_ids = set(after["features_by_id"])
-        added_ids = after_ids - before_ids
-        changed_ids = {
-            oid for oid in before_ids & after_ids
-            if canonical_feature_hash(before["features_by_id"][oid]) !=
-               canonical_feature_hash(after["features_by_id"][oid])
-        }
-
-        if not added_ids and not changed_ids:
-            continue
-
-        for planned_id, planned_feature in planned_map.items():
-            planned_geom = valid_geometry(planned_feature)
-            if planned_geom is None or planned_geom.area <= 0:
+        for oid, done_feature in transition["after_features"].items():
+            done_geom = valid_geometry(done_feature)
+            if done_geom is None or done_geom.area <= 0:
                 continue
-            props = planned_feature.get("properties") or {}
-            received_dt = parse_epoch_ms(props.get("Inkomdatum"))
-            if received_dt is None:
+            done_props = done_feature.get("properties") or {}
+            completed_dt = parse_epoch_ms(done_props.get("Avvdatum"))
+            if completed_dt is None:
                 continue
-
-            for oid in sorted(added_ids | changed_ids):
-                done_feature = after["features_by_id"][oid]
-                done_props = done_feature.get("properties") or {}
-                done_geom = valid_geometry(done_feature)
-                if done_geom is None or not planned_geom.intersects(done_geom):
+            for planned_id, (planned_feature, planned_geom, received_dt) in planned_geometries.items():
+                if completed_dt < received_dt or completed_dt > received_dt + timedelta(days=3 * 365 + 1):
+                    continue
+                if not planned_geom.intersects(done_geom):
                     continue
                 inter = planned_geom.intersection(done_geom).area
                 if inter <= 0:
                     continue
                 planned_share = inter / planned_geom.area
-                done_share = inter / done_geom.area if done_geom.area > 0 else 0
+                done_share = inter / done_geom.area
                 meaningful = inter >= 0.02 * 10000 and max(planned_share, done_share) >= 0.15
-                completed_dt = parse_epoch_ms(done_props.get("Avvdatum"))
-                in_window = bool(
-                    completed_dt and received_dt <= completed_dt <= received_dt + timedelta(days=3 * 365 + 1)
-                )
-                if not meaningful or not in_window:
+                if not meaningful:
                     continue
 
-                previous_feature = before["features_by_id"].get(oid)
-                event_type = "new_completed_detection_overlap" if oid in added_ids else "completed_detection_changed_overlap"
+                previous_feature = transition["before_features"].get(oid)
+                event_type = (
+                    "new_completed_detection_overlap"
+                    if previous_feature is None
+                    else "completed_detection_changed_overlap"
+                )
+                props = planned_feature.get("properties") or {}
                 events.append({
                     "event_type": event_type,
                     "planned_object_id": planned_id,
                     "case_number": props.get("Beteckn"),
                     "municipality": props.get("Kommun"),
                     "completed_object_id": oid,
-                    "before_snapshot": before["filename"],
-                    "after_snapshot": after["filename"],
-                    "before_checked_at": before.get("checked_at"),
-                    "after_checked_at": after.get("checked_at"),
+                    "before_snapshot": transition["before_snapshot"],
+                    "after_snapshot": transition["after_snapshot"],
+                    "before_checked_at": transition["before_checked_at"],
+                    "after_checked_at": transition["after_checked_at"],
                     "planned_area_ha": props.get("AnmaldHa"),
                     "intersection_ha": round(inter / 10000, 3),
                     "planned_overlap_pct": round(planned_share * 100, 1),
@@ -194,13 +148,11 @@ def evidence_transition_events(planned_map, planned_history):
                     "attributes_changed": bool(
                         previous_feature is not None and
                         canonical_feature_hash(previous_feature.get("properties")) !=
-                        canonical_feature_hash(done_feature.get("properties"))
+                        canonical_feature_hash(done_props)
                     ),
                     "meaning": "New or changed satellite-based completed-harvest layer evidence; manually review, not proof of execution.",
                 })
 
-    # Identical records can be seen in multiple archives only if they were new or
-    # changed each time. Keep one event for each plan/detection/observation transition.
     unique = {}
     for event in events:
         key = (
@@ -214,13 +166,12 @@ def evidence_transition_events(planned_map, planned_history):
         str(e.get("completed_object_id") or ""),
     ))
     return {
-        "snapshot_count": len(archives),
+        "snapshot_count": snapshot_count,
         "comparable_pairs": comparable_pairs,
         "skipped_scope_pairs": skipped_scope_pairs,
         "events": ordered,
-        "note": "Only archives with matching, known query-scope fingerprints are compared. Transitions require meaningful spatial overlap and completed date within three years of notification. The source is satellite-based guidance, not ground truth.",
+        "note": "Only consecutive complete archives with matching known query-scope fingerprints are compared. Only added or changed completed features are spatially tested. Transitions require meaningful spatial overlap and completed date within three years of notification. The source is satellite-based guidance, not ground truth.",
     }
-
 
 def canonical_feature_hash(feature):
     """Deterministic representation used to detect any archived feature change."""
@@ -308,8 +259,11 @@ def main():
         # Full geometry comes from latest compressed archive, loaded below.
         if not geometry_hash:
             skipped_completed += 1
-    archive_rows = completed_archive_rows()
-    latest_archive = archive_rows[-1] if archive_rows else None
+    latest_archive = read_latest_completed_archive(SNAPSHOTS)
+    latest_archive = {"filename": latest_archive[0], "features_by_id": {
+        feature_id(feature): feature for feature in latest_archive[1].get("features", [])
+        if feature_id(feature)
+    }} if latest_archive else None
     if latest_archive:
         for feature in latest_archive.get("features_by_id", {}).values():
             oid = feature_id(feature)
