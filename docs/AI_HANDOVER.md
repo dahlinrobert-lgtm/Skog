@@ -732,3 +732,11 @@ Huvudfynd:
 - Samråd har redan ett separat dagligt pilotflöde. Månadskontrollen är en extra avstämning, inte ersättning för daglig insamling.
 - Månatlig kontroll får inte tolka saknade ID som borttagning/avbokning/utförd åtgärd. Jämför endast samma källa/lager/scope och bevara originaldata.
 - Nästa steg efter PR: verifiera workflow manuellt och kontrollera samtliga steg/artifact/commits; därefter granska metadata för edit tracking och bygg full paginerad snapshot för planerade anmälningar om kapacitet och fält stöder det. Skala inte nationellt innan pilotens fullständighet är verifierad.
+
+## Skogsstyrelsen monthly audit – publiceringsfel och korrigering (2026-11-22)
+
+- Första manuella run #4: https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45031069869
+- Alla tester och tre insamlingssteg lyckades: Samråd point/line/polygon, completed-harvest snapshot och planned-harvest read-only probe. Probe-rapporten laddades upp som artifact.
+- Publiceringssteget skapade lokalt fyra ändrade filer (bl.a. Samråd snapshot `samrad_20261122T140801Z.json.gz` och utförd-avverkning snapshot `completed_20261122T140801Z.geojson.gz`) men push till main blockerades fem gånger av GH013 eftersom main kräver PR. Dessa snapshotfiler publicerades alltså inte till main.
+- Korrigerings-PR skapas på branch `fix/skogsstyrelsen-snapshot-pull-request`: ersätt direktpush med `peter-evans/create-pull-request@v7`, automation branch `automation/skogsstyrelsen-monthly-source-audit`, och rättigheten `pull-requests: write`. Snapshot-PR ska granskas och mergas manuellt; ingen auto-merge.
+- **Nästa steg:** merge korrigerings-PR, kör månadsaudit manuellt igen, verifiera att snapshot-PR skapas och granska innehåll/manifest innan den mergas.
