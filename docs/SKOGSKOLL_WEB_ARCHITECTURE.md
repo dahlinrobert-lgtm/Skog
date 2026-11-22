@@ -201,3 +201,10 @@ PR #483 har etablerat kundskalet med dag-för-dag-flöde. Nästa lager har nu f�
 Kontraktet kräver kompletta snapshots med identisk källa, produkt, lager, täckningsnyckel, schema- och identitetsversion. Snapshot-/run-ID måste skilja sig och aktuell snapshot måste vara senare. Första baslinjen är tyst. Efter baslinjen kan nya och ändrade poster bli händelser, men endast med explicit godkänd kundvisning och referens till rättighetsunderlag. Frånvaro ger aldrig automatiskt borttagningshändelse. Händelsens upptäcktsdatum hålls skilt från källans händelse- och publiceringsdatum.
 
 Detta är ännu inte ett API, en persistensimplementation eller en produktionskoppling. Den befintliga worker-/databasmodellen för Skogsstyrelsen ändras inte. Nästa steg är CI-verifiering och jämförelse mot befintliga manifest och historiktabeller innan ett separat API-/persistensförslag.
+
+
+## 10. Change-feed-kontrakt mergat (2026-11-22)
+
+PR #484 är mergad till `main` (merge commit `8f44a442e3e0eafb8055b03769e3d2877b05f725`). Kontrakt, ren domänkärna och tester finns i repot. CI för hela Node-testsviten och source probe passerade. Testworkflowens path-filter är utökat så att framtida ändringar i `skogskoll/src/**` och `skogskoll/tests/**` kör testsviten även vid push till main.
+
+Detta är fortsatt en domän-/valideringsimplementation, inte ett produktions-API eller en kundfeed. Nästa steg är en evidensbaserad inventering av befintliga snapshotmanifest och historikfält innan någon persistens- eller API-mappning utformas. Källornas kundvisningsgrind är fortsatt stängd enligt källstatusrapporten.
