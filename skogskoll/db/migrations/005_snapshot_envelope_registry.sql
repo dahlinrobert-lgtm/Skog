@@ -86,6 +86,29 @@ create table if not exists public.snapshot_envelopes (
 alter table public.snapshot_envelopes enable row level security;
 alter table public.scan_sessions
   add column if not exists snapshot_registered_at timestamptz;
+
+-- Snapshot identity is fixed at scan allocation. Later diagnostics may be merged,
+-- but the metadata object itself cannot be replaced or removed.
+create or replace function public.guard_skogskoll_snapshot_metadata_immutable()
+returns trigger language plpgsql as $
+begin
+  if old.diagnostics->'snapshot_metadata' is distinct from new.diagnostics->'snapshot_metadata' then
+    raise exception 'Skogskoll snapshot metadata is immutable after scan start';
+  end if;
+  return new;
+end;
+$;
+
+drop trigger if exists trg_guard_scan_snapshot_metadata_immutable on public.scan_sessions;
+create trigger trg_guard_scan_snapshot_metadata_immutable
+before update on public.scan_sessions
+for each row execute function public.guard_skogskoll_snapshot_metadata_immutable();
+
+drop trigger if exists trg_guard_run_snapshot_metadata_immutable on public.poll_runs;
+create trigger trg_guard_run_snapshot_metadata_immutable
+before update on public.poll_runs
+for each row execute function public.guard_skogskoll_snapshot_metadata_immutable();
+
 -- Only the security-definer registration RPC may insert. No API role can mutate the register directly.
 revoke all on table public.snapshot_envelopes from public, anon, authenticated, service_role;
 
