@@ -796,3 +796,12 @@ Huvudfynd:
 - Efterföljande körningar #45037391885 (Samråd) och #45037447855 (Life2Taiga) var push-utlösta av workflow-fixarnas merge och skapade PR #496/#497. De är inte bevis på senare cron-körning.
 - PR #498 dokumenterar publiceringsfixarna och är fortfarande öppen; dess kund-UI-test passerade.
 - **Nästa steg:** verifiera nästa verkliga schemalagda körning för Samråd och Life2Taiga. Granska därefter resultat, manifest, täckning och PR-diff. Fullständig planerad-avverkning-paginering är fortsatt separat kvarstående arbete.
+
+
+## Statuskorrigering efter merge av PR #498 (2026-11-22)
+
+- Dokumentations-PR [#498](https://github.com/dahlinrobert-lgtm/Skog/pull/498) är mergad till `main` kl. 15:26:24 UTC med merge commit `21cfa30af358588eb6889d27f78b4e8bffc1fa9a`.
+- Kundgränssnittstesterna passerade efter merge: [run 45038321932](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45038321932).
+- Samråd-data-PR #496 och Life2Taiga-data-PR #497 är båda mergade. Deras snapshot-/datasetinnehåll finns beständigt i `main`.
+- Samråd- och Life2Taiga-workflowfixarna (#494/#495) har verifierats med push-utlösta körningar som skapade data-PR:erna #496/#497. Det finns ännu ingen senare cron-utlöst lyckad körning efter dessa ändringar i den kontrollerade Actions-historiken.
+- Nästa steg är att granska kommande schemalagda körningar och kontrollera att de skapar eller uppdaterar PR #496/#497-flödena utan direktpush. Därefter fortsätter arbetet med fullständig paginering av planerade avverkningsanmälningar.
