@@ -185,7 +185,7 @@ def build_report(data: dict[str, Any]) -> str:
         "## Arkitekturpassning – obligatorisk kontroll före ny lösning",
         "",
         "- Kontrollera aktuell main efter befintliga komponenter, scripts, workflows, schemaläggningar, register, datakontrakt, rapporter och lagringsflöden som redan löser hela eller delar av behovet.",
-        "- Klassificera föreslagen väg som återanvänd, utökad, ersatt eller ny separat. Ny parallell lösning kräver evidensbaserad motivering.",
+        "- Klassificera föreslagen väg som återanvänd, utökad, ersatt eller ny separat. En ny parallell lösning kräver evidensbaserad motivering och ska inte väljas när befintlig förmåga kan återanvändas eller utökas.",
         "- Redovisa överlapp, dubbla sanningskällor, säkerhets-/driftgränser, auktoritativ datakälla, integrationspunkt och eventuell avvecklingsplan.",
         "- Länka granskade filer och workflow-/PR-evidens. Om analysen inte är gjord ska den anges som ej undersökt; frånvaro av evidens är inte bevis för att befintlig förmåga saknas.",
         "- Denna deterministiska inventeringsrapport utför inte självständig arkitekturgranskning. Kontrollen är en obligatorisk del av projektledarens analys före rekommendation eller implementation.",
