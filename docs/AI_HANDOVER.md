@@ -608,3 +608,21 @@ History-repots PR #40 är sammanslagen (merge commit `d65618c107b5dbfe61f8e7f859
 Skog Pages-kopian under `docs/project-manager/` ska hållas synkroniserad med det privata history-repots `dashboard/`-filer. Den här uppdateringen kopierar den granskade UI-ändringen; autentisering, Blob-URL, RBAC och publiceringsflöde ändras inte.
 
 **Nästa steg:** verifiera GitHub Pages build/deploy och öppna dashboarden igen. Kontrollera att den nya sektionen visar avvikande körningar och att länkarna leder till rätt Actions-run. Därefter kan insamlaren utökas med en separat, tidsavgränsad fellista så att fel inte försvinner bara för att fler än 20 senare körningar tillkommer.
+
+
+## Projektledardashboard – prioritering av schemalagda körningar (2026-11-22)
+
+History-repots PR #41 är sammanslagen (commit `043f42bd168f9756fda3f4b6e79226a5a8194189`). Insamlaren bevarar nu workflow-ID, workflow-sökväg, trigger-event och faktisk starttid. Dashboarden har separata sektioner för pågående schemalagda körningar och schemalagda fel utan senare lyckad körning, samt återhämtade fel där en senare lyckad körning av samma workflow finns i det insamlade urvalet. Återhämtade fel visas separat och räknas inte som olösta avvikelser.
+
+Jämförelsen är begränsad till de 20 senaste körningarna per repository. Ett fel kan därför felklassificeras som olöst om den senare lyckade körningen fallit utanför urvalet. GitHub-mejlen är fortsatt snabb separat notifiering.
+
+**Geografisk testnivå:** GitHub Actions run-metadata ger inte i sig en tillförlitlig standardiserad uppgift om körningens geografiska omfattning. Dashboarden visar körningens display title/workflow-sökväg som ledtråd, men ska inte gissa liten geografi eller nationell omfattning. Nästa utvecklingssteg är en verifierad metadata-/workflowkatalog som kopplar utvalda workflows till testnivå (lokal/regional/nationell), avsedd uppskalningsnivå och om körningen är ett pilot-/förtest eller produktionsflöde.
+
+Skog Pages-kopian under `docs/project-manager/` synkroniseras med history-repots granskade dashboardfiler. Ingen workflow-schedule, Azure-behörighet, insamlingsfrekvens eller publiceringsfrekvens har ändrats.
+
+
+### Projektledardashboard – geografisk testnivå (2026-11-22)
+
+PR #477 innehåller dashboardsektioner för pågående/olösta schemalagda körningar och återhämtade fel. Dubblering av schemalagda fel i den generella fellistan har tagits bort och felaktiga bokstavliga \\n-sekvenser i HTML har korrigerats. History-repots PR #42 lägger till en explicit katalog som mappar exakta workflow-sökvägar till granskad geografisk nivå och utvecklingsfas; oregistrerade workflows får värdet unknown. Katalogen innehåller verifierade poster för Gräsmyr, Norrbotten och nationell insamling. PR #42 är ännu inte verifierad/mergad; efter merge ska collector-data och dashboard synkroniseras och testas tillsammans.
+
+Ingen schedule, insamlingsfrekvens, geografi, Azure-behörighet eller kundpublicering har ändrats.

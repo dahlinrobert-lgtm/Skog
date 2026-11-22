@@ -26,12 +26,12 @@ footer{max-width:1120px;margin:32px auto;padding:16px 18px;border-top:1px solid 
 <div class="grid" aria-label="Sammanfattning">
 <div class="card"><div class="metric" id="metric-projects">—</div><div class="label">Projekt hämtade</div></div>
 <div class="card"><div class="metric" id="metric-work">—</div><div class="label">Öppna PR:er och ärenden</div></div>
-<div class="card"><div class="metric" id="metric-failed">—</div><div class="label">Avvikande senaste körningar</div></div>
+<div class="card"><div class="metric" id="metric-failed">—</div><div class="label">Olösta avvikelser</div></div>
 <div class="card"><div class="metric" id="metric-success">—</div><div class="label">Lyckade senaste körningar</div></div></div>
 <div class="cols">
 <section class="section card"><h2>Öppet arbete</h2><div id="work-list" class="empty">Inväntar verifierad data.</div></section>
 <section class="section card"><h2>Senaste workflow-körningar</h2><div id="runs-list" class="empty">Inväntar verifierad data.</div></section></div>
-<section class="section card"><h2>Workflow-körningar att följa upp</h2><p class="meta">Misslyckade eller på annat sätt avvikande avslut bland de 20 senaste körningarna per aktivt repo. Öppna länken för detaljer och fellogg i GitHub.</p><div id="failed-runs-list" class="empty">Inväntar verifierad data.</div></section>
+<section class="section card"><h2>Schemalagda körningar – högsta prioritet</h2><p class="meta">Pågående schemalagda körningar och schemalagda fel utan senare lyckad körning. Geografisk nivå och utvecklingsfas visas från den granskade workflow-katalogen. Okända flöden markeras som ej registrerade; geografi gissas aldrig från namn.</p><div id="scheduled-runs-list" class="empty">Inväntar verifierad data.</div></section>\n<section class="section card"><h2>Återhämtade körningar</h2><p class="meta">Tidigare fel där en senare lyckad körning av samma workflow finns i snapshoten. Behålls synliga men prioriteras lägre.</p><div id="recovered-runs-list" class="empty">Inväntar verifierad data.</div></section>\n<section class="section card"><h2>Övriga workflow-körningar att följa upp</h2><p class="meta">Misslyckade eller på annat sätt avvikande avslut bland de 20 senaste körningarna per aktivt repo. Öppna länken för detaljer och fellogg i GitHub.</p><div id="failed-runs-list" class="empty">Inväntar verifierad data.</div></section>
 <section class="section card"><h2>Projektöversikt</h2><div id="projects-list" class="empty">Inväntar verifierad data.</div></section>
 <div class="cols">
 <section class="section card"><h2>Planerat / kommande</h2>
