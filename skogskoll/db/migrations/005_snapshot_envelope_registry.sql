@@ -192,6 +192,10 @@ begin
   if coalesce(length(trim(p_envelope->>'comparability_key')), 0) = 0 then
     raise exception 'snapshot comparability key is required';
   end if;
+  if (p_envelope->>'captured_at')::timestamptz is distinct from
+     coalesce(v_scan.completed_at, v_run.finished_at) then
+    raise exception 'snapshot captured_at does not match terminal run timestamps';
+  end if;
   if v_scan.status = 'complete' then
     select count(*) into v_seen_count
     from public.scan_seen_ids where scan_id = p_scan_id;
