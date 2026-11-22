@@ -231,3 +231,15 @@ På branchen `feat/skogskoll-arcgis-snapshot-metadata` utökas befintlig `create
 - identitetsversion från ArcGIS OID-fältet och aktuell GeoJSON-ID-normalisering.
 
 Källans metadata cachelagras per adapterinstans. Saknat fältschema, geometri-typ, OID-fält eller explicit lagernummer stoppar metadataframtagningen. Kundvisning är fortsatt `not_assessed`. Funktionen är ännu inte kopplad till snapshot-envelope eller persistens; inga migrationer eller livekörningar har gjorts. PR #537:s customer UI-test passerade 78/78 tester (run 45078075239). Read-only source-probe passerade (run 45078075046): 300/300 unika ID:n, noll dubbletter/saknade ID:n, men avsiktligt inte komplett. Liveanrop av den nya metadatafunktionen och fullständig scan återstår.
+
+### PM-022 implementation update 2026-11-23 – worker integration and snapshot registry
+
+PR #537 är mergad (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a). Integrationsarbetet fortsätter i PR på branchen feat/skogskoll-worker-snapshot-envelope-integration.
+
+- Worker hämtar och fail-closed-validerar metadata före scan-start.
+- Samma metadata sparas i run- och scan-sessionens diagnostics. Återupptagning kräver identisk kanoniserad metadata; metadata-/schema-/querydrift får inte blandas in i en befintlig scan.
+- Ny migration 005 inför worker-only snapshot_envelopes med unik scan-session och oföränderlig envelope. Registrerings-RPC kontrollerar terminala statusar, kopplade run-/scan-ID:n, metadataöverensstämmelse och att complete endast kan registreras för fullständigt avslutad scan.
+- Store mappar terminala poster genom befintlig snapshot-envelope-adapter och registrerar dem idempotent. Misslyckad registrering kan återförsökas genom ny finish/fail-hantering utan att skriva om en befintlig envelope.
+- CI-utökning applicerar migration 005 och SQL-smoketestet täcker registrering. Inga live DB-/ArcGIS-anrop, produktionsmigrationer, alerts eller kundvisning ingår.
+
+**Status:** implementation på PR-branch; CI och SQL-verifiering inväntas. Källstatus och rättighetsgrindar är oförändrade. Nästa steg är att granska och verifiera PR-checkarna innan merge.
