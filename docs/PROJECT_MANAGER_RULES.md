@@ -64,6 +64,22 @@ Följ alltid projektets etablerade principer:
 - Geografiska granskningssignaler får inte omärkligt ändra oberoende temporal logik eller matchningsbeslut.
 - Ändra inte etablerad arkitektur utan konsekvensanalys och användarens godkännande.
 
+## 4A. Arkitekturanpassning och återanvändning – obligatorisk kontroll
+
+Före varje ny funktion, integration, workflow, datalagring, agent eller process ska projektledaren göra en dokumenterad **återanvändnings- och arkitekturpassning** mot aktuell `main`. Syftet är att lösa behovet i den befintliga arkitekturen i första hand och undvika parallella arbetsflöden, dubbla sanningskällor och onödig drift.
+
+Kontrollen ska minst omfatta:
+1. **Befintlig förmåga:** sök efter befintliga komponenter, scripts, workflows, schemaläggningar, datakontrakt, register, rapporter, lagringsytor och pågående PR/issues som redan helt eller delvis löser behovet.
+2. **Återanvändningsval:** ange om lösningen ska (a) återanvända befintligt, (b) utöka befintligt, (c) ersätta/avveckla befintligt eller (d) skapa nytt separat. Alternativ (d) kräver en uttrycklig motivering till varför befintligt inte räcker.
+3. **Överlapp och dubblering:** identifiera dubbla dataflöden, scheman, register, rapporter, secrets/identiteter, lagringsplatser, schemaläggningar och operativa ägarskap.
+4. **Konsekvenser:** redovisa påverkan på arkitektur, säkerhet/behörigheter, historik, drift, kostnad, datakvalitet, rättigheter och kundgränser.
+5. **Övergång:** om en ny komponent behövs, ange systemgräns, auktoritativ datakälla, integrationspunkt, ägare, vad som inte ska dupliceras samt eventuell avvecklings-/migreringsplan.
+6. **Evidens:** länka till aktuella filer, workflows, PR/issues och relevanta körningar. Saknat underlag ska anges som okänt; gissa inte att en komponent finns eller fungerar.
+
+Projektledaren ska prioritera minsta sammanhängande ändring i etablerad arkitektur framför en ny parallell lösning. En ny lösning får föreslås när den befintliga saknar nödvändig förmåga, har en olämplig säkerhets-/driftgräns eller när en separat komponent ger verifierbar isolering. Motiveringen ska då finnas i beslutsunderlaget och användaren godkänner arkitekturförändringar enligt mandatet.
+
+Detta är en obligatorisk beslutsgrind, inte ett förbud mot nya komponenter. Om analysen inte kan genomföras ska arbetet markeras som ofullständigt och inga arkitekturförändringar rekommenderas som om återanvändning hade uteslutits.
+
 ## 5. Prioriteringsmodell
 
 Poängsätt varje uppgift 1–5 för:
@@ -83,7 +99,7 @@ Använd vägledande prioritet: `(2×P + 2×B + U + E) / I`. Poängen är besluts
 4. Lägg till eller uppdatera uppgifter med källa/evidens, acceptanskriterier, beroenden, risk och nästa konkreta steg.
 5. Föreslå veckoplan och beslutspunkter.
 6. Redovisa vad som är verifierat, rapporterat, planerat och okänt.
-7. Vänta på användarens godkännande innan åtgärder som kräver mandat.
+8. Vänta på användarens godkännande innan åtgärder som kräver mandat.
 
 ## 7. Uppdateringskrav
 
