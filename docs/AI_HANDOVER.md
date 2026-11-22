@@ -724,3 +724,11 @@ Huvudfynd:
 - Källstatusrapporten från 2026-11-18 anger noll källor uttryckligen godkända för kundvisning.
 
 **Nästa steg:** bygg och testa en ren adapter-mappning för Skogsstyrelsens nuvarande `poll_runs` + `scan_sessions` + observationshistorik till snapshot-envelope. Kräv verifierad komplett scan, stabilt coverage key och rättighetsevidens. Ingen migration, livefeed eller kundvisning innan adapterkontraktet är granskat och testat.
+
+## Skogsstyrelsen – månatlig källkontroll (2026-11-22)
+- Ny PR-branch `feat/skogsstyrelsen-monthly-source-audit` etablerar `.github/workflows/skogsstyrelsen-monthly-source-audit.yml` och `docs/SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md`.
+- Månatligt workflow: första dagen i månaden kl. 07:17 UTC. Det kör tester, hämtar fullständiga Samråd point/line/polygon inom befintligt Gräsmyr-pilotscope, tar snapshot av utförda avverkningar inom samma scope och kör read-only-proben för planerade avverkningsanmälningar.
+- Viktig avgränsning: planerade avverkningsanmälningar har i denna första version endast en begränsad probe (högst tre sidor), inte en fullständig månadssnapshot. Befintlig probe är schemalagd var sjätte timme. Nationell täckning är inte etablerad.
+- Samråd har redan ett separat dagligt pilotflöde. Månadskontrollen är en extra avstämning, inte ersättning för daglig insamling.
+- Månatlig kontroll får inte tolka saknade ID som borttagning/avbokning/utförd åtgärd. Jämför endast samma källa/lager/scope och bevara originaldata.
+- Nästa steg efter PR: verifiera workflow manuellt och kontrollera samtliga steg/artifact/commits; därefter granska metadata för edit tracking och bygg full paginerad snapshot för planerade anmälningar om kapacitet och fält stöder det. Skala inte nationellt innan pilotens fullständighet är verifierad.

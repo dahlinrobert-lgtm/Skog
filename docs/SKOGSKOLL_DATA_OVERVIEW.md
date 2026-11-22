@@ -728,3 +728,15 @@ Resultatet är fortsatt intern datakvalitetskontroll. Rovbase är inte registrer
 ## Nationell ÄFO-avskjutning
 
 Nationella totalsummor per ÄFO är en separat produkt från regionala ÄJO-förändringssnapshots. Fällda älgar beräknas genom att summera `ShotTotal` över alla underliggande ÄJO-rader; avskjutningsmål genom att summera `AssignedTotal`. Portalens tvådelade HTML-Summa används endast som kontroll. Saknade värden får aldrig behandlas som noll. ÄFO-geometri matchas med sammansatt `afo_id`.
+
+
+## Skogsstyrelsen – ärendebaserad förändringskontroll och månadssnapshot
+
+En särskild arbetsmodell och första månatliga kontroll finns dokumenterad i [SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md](SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md). Den täcker planerade avverkningsanmälningar, Samråd (punkt/linje/polygon) och utförda avverkningar, men den första implementationen är avgränsad till Gräsmyr-piloten med 10 km radie.
+
+- Samråd: dagligt pilotflöde med paginering och tre separata lager; månadskontrollen gör en extra fullständig avstämning inom samma scope.
+- Utförda avverkningar: befintlig full-/deltaarkivering återanvänds för en månatlig snapshot inom samma scope.
+- Planerade avverkningsanmälningar: den befintliga sex­timmarsproben är begränsad till metadata och högst tre sidor. Månadskontrollen upprepar proben men är ännu inte en fullständig snapshot.
+- Inget av dessa flöden får tolka frånvaro i en senare körning som bevis på borttagning, avbokning eller utförd avverkning.
+- `Inkomdatum` är ett inkomstdatum, inte verifierat ändringsdatum. Editor tracking och eventuella editDate/lastEditDate-fält måste kontrolleras separat.
+- Nationell täckning, fullständiga planned-harvest snapshots och kundvisning är inte etablerade av denna kontroll.

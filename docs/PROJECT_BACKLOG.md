@@ -75,3 +75,18 @@ Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskrit
 | Acceptanskriterier | Kundnavigationen länkar inte till interna Skog-sidor; relativa länkar fungerar; testläge förblir tydligt; befintliga Skog-sidor och tester påverkas inte |
 | Nästa steg | Separat UI-PR för app-shell, navigation och grundläggande design tokens samt länk-/sökvägstester |
 | Rättighets-/driftgrind | Ingen källa eller datatyp blir kundsynlig utan verifierat godkännande; ingen auth, ingestion eller avisering aktiveras i UI-steget |
+
+
+## PM-023 – Skogsstyrelsens ärendebaserade förändringskontroll
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 |
+| Status | Första månatliga pilotkontroll etablerad i PR; driftverifiering återstår |
+| Mål | Fånga nya/ändrade ärenden löpande och kontrollera historikens fullständighet med periodiska snapshots för planerade avverkningar, Samråd och utförda avverkningar |
+| Evidens | [SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md](SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md); workflow [skogsstyrelsen-monthly-source-audit.yml](../.github/workflows/skogsstyrelsen-monthly-source-audit.yml) |
+| Scope | Gräsmyr pilotområde, 10 km radie. Planerade avverkningsanmälningar är endast bounded probe i första versionen. |
+| Acceptanskriterier | Månatligt workflow lyckas; Samråd tre lager hämtas komplett; utförda avverkningar arkiveras med scope-hash; probe för planerade anmälningar sparas; fel/partial ger ingen giltig kontrollpunkt eller borttagningsslutsats |
+| Beroenden | ArcGIS metadata/edit tracking-verifiering; full paginerad planned-harvest snapshot; jämförbara månadssnapshots |
+| Nästa steg | Kör workflow manuellt efter merge, granska loggar/artifact och därefter verifiera editDate/lastEditDate och fullständig paginering för planerade anmälningar |
+| Rättigheter/drift | Endast teknisk pilotkontroll; ingen kundvisning eller kundavisering aktiveras |
