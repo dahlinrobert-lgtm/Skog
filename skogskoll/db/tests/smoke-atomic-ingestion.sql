@@ -179,11 +179,19 @@ begin
   if v_snapshot_id <> v_envelope->>'snapshot_id' then
     raise exception 'snapshot registration returned unexpected identity';
   end if;
+  -- A retry with identical content returns the same immutable row.
+  if public.skogskoll_register_snapshot(v_scan3, v_envelope) <> v_snapshot_id then
+    raise exception 'idempotent snapshot registration returned a different ID';
+  end if;
   if not exists (
     select 1 from public.snapshot_envelopes
     where scan_session_id = v_scan3 and status = 'complete'
       and customer_visibility = 'not_assessed'
   ) then raise exception 'complete snapshot envelope was not persisted'; end if;
+  if not exists (
+    select 1 from public.scan_sessions
+    where id = v_scan3 and snapshot_registered_at is not null
+  ) then raise exception 'snapshot registration timestamp was not recorded'; end if;
 
   -- Recovery should mark an intentionally stale running session failed.
   select scan_id, poll_run_id into v_scan, v_run
