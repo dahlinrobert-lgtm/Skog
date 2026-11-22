@@ -86,8 +86,10 @@ class CompletedSnapshotStoreTests(unittest.TestCase):
                 prefer_delta=True,
             )
             transitions = list(iter_completed_archive_transitions(directory))
-            self.assertEqual(len(transitions), 1)
-            transition = transitions[0]
+            self.assertEqual(len(transitions), 2)
+            self.assertFalse(transitions[0]["comparable"])  # first archive is baseline
+            transition = transitions[1]
+            self.assertTrue(transition["comparable"])
             self.assertEqual(transition["before_snapshot"], first_result["filename"])
             self.assertEqual(transition["after_snapshot"], second_result["filename"])
             self.assertEqual(set(transition["after_features"]), {"1", "3"})
