@@ -99,3 +99,8 @@ Första manuella månadskörningen verifierade insamlingarna men publicering mis
 ## PM-023 – status efter publiceringskorrigering
 
 PR #489 är mergad. PR-check run #5 passerade teststeget, men källinsamling och snapshot-PR skapades inte i denna körning eftersom de är avsiktligt avstängda vid `pull_request`. PM-023 är därför fortfarande **delvis verifierad**. Nästa acceptanssteg är en manuell `workflow_dispatch` från main och verifiering av att snapshot-PR skapas och kan granskas.
+
+
+### PM-023 – uppdaterad verifieringsstatus 2026-11-22
+
+Run #6 (workflow_dispatch) lyckades och skapade data-PR #491. Den PR-baserade publiceringsvägen är därmed driftverifierad. Snapshotdata väntar fortfarande på manuell granskning/merge. Samråd och utförda avverkningar har samlats in inom Gräsmyr 10 km-piloten. Planerade avverkningsanmälningar är fortsatt endast en 300-radersprobe av cirka 132 594 poster, inte en fullständig snapshot. PM-023 är **delvis verifierad** tills data-PR:n granskats och planerade anmälningar fått en fullständig, auditerbar insamlingslösning.
