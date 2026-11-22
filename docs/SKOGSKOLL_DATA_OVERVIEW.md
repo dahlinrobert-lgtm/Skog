@@ -8,6 +8,14 @@
 
 ## 1. Syfte och målbild
 
+### Operativ huvudprioritet – dagligt snapshotinformationsflöde
+
+Skog ska varje dag ge en samlad, read-only bild av senaste status för alla registrerade datakällor och separata produkter/lager. Informationen ska omfatta senaste kompletta snapshot, senaste körningsförsök, status/fullständighet, aktualitet, geografiskt scope/täckning, antal, jämförbarhet och avvikelser samt länkar till manifest, körning och arkiverat resultat.
+
+Detta innebär inte att alla källor hämtas dagligen. Varje källa har en lämplig kadens utifrån uppdateringsmönster, tekniska begränsningar och rättigheter. Den dagliga rapporten visar källans kadens och ålder på senaste kompletta snapshot. En dagsrapport får aldrig dölja en misslyckad/partiell körning eller presentera en gammal snapshot som aktuell.
+
+En lång och heltäckande backlogg ska parallellt fånga framtida utveckling, men är sekundär till det dagliga informationsflödet och till att befintliga insamlingar fungerar tillförlitligt.
+
 Skogskoll ska vara en fristående, mobilanpassad bevakningstjänst för privata skogsägare. Användaren ska kunna registrera en eller flera fastigheter eller egna bevakningsområden och få relevanta händelser presenterade på karta och i en historik.
 
 Målet är att kombinera myndighetsdata, geodata, raster, statistik och historiska observationer för att kunna svara på:
