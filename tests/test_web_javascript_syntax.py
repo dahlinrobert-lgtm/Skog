@@ -74,6 +74,15 @@ def test_project_manager_msal_dependency_is_pinned_and_integrity_checked():
     assert "crossorigin=\"anonymous\"" in html
     assert "browser/2.39.0/" not in html
 
+def test_project_manager_source_registry_section_is_present():
+    html = (ROOT / "docs/project-manager/index.html").read_text(encoding="utf-8")
+    app = (ROOT / "docs/project-manager/app.js").read_text(encoding="utf-8")
+    assert 'id="source-registry-summary"' in html
+    assert 'id="source-list"' in html
+    assert 'data.source_registry' in app
+    assert "Källregistret kunde inte hämtas komplett" in app
+    assert "Ej operativt bedömd" in app
+
 def test_project_manager_external_javascript_syntax():
     for relative in ("docs/project-manager/app.js", "docs/project-manager/auth-config.js"):
         subprocess.run(["node", "--check", str(ROOT / relative)], check=True, capture_output=True, text=True)
@@ -82,5 +91,6 @@ if __name__ == "__main__":
     test_map_layer_selection_and_legend_colors()
     test_inline_javascript_syntax()
     test_project_manager_msal_dependency_is_pinned_and_integrity_checked()
+    test_project_manager_source_registry_section_is_present()
     test_project_manager_external_javascript_syntax()
     print("Website and project manager JavaScript syntax checks passed.")
