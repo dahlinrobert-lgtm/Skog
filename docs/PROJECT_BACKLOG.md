@@ -218,3 +218,16 @@ PR #531 och #532 är mergade och adaptern mappar befintliga `poll_runs` + `scan_
 | Acceptanskriterier | Agentinstruktion med tydligt uppdrag, granskningsformat, mandatgränser, evidenskrav och tillgänglighets-/responsivitetsgrind; designförslag ska vara små, reversibla och kopplade till testbara användaruppgifter |
 | Nästa steg | Använd designagentens instruktion vid nästa PM-021 UI-iteration; välj första konkreta vy/flöde och granska nuläget innan kodändring |
 | Stoppregler | Agenten får inte själv merge:a, publicera eller ändra datakontrakt; heuristisk granskning får inte beskrivas som användartest; prototypdata ska vara tydligt märkt |
+
+
+### PM-022 implementation update 2026-11-22 – ArcGIS metadata provider
+
+På branchen `feat/skogskoll-arcgis-snapshot-metadata` utökas befintlig `createArcGisSource` med en read-only `getSnapshotMetadata()`. Den hämtar lagerdefinitionen via samma ArcGIS-endpoint som källadaptern använder och bygger:
+- produkt-ID från explicit worker-konfiguration,
+- endpoint och lagernummer från den konfigurerade URL:en,
+- query-definition från samma feature-parametrar som `getPage`, utan offset/sidlängd,
+- coverage-identitet som uttryckligen betyder ofiltrerad lagerquery (inte nationell geografi),
+- schema-version som SHA-256 av kanoniserade fält-/geometrimetadata,
+- identitetsversion från ArcGIS OID-fältet och aktuell GeoJSON-ID-normalisering.
+
+Källans metadata cachelagras per adapterinstans. Saknat fältschema, geometri-typ, OID-fält eller explicit lagernummer stoppar metadataframtagningen. Kundvisning är fortsatt `not_assessed`. Funktionen är ännu inte kopplad till snapshot-envelope eller persistens; inga migrationer eller livekörningar har gjorts. PR/CI-verifiering återstår.
