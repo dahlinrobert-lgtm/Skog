@@ -810,3 +810,15 @@ Ersättnings-PR [#502](https://github.com/dahlinrobert-lgtm/Skog/pull/502) merga
 Detta verifierar en lyckad, avgränsad Gräsmyr-pilotpublicering via PR. Det verifierar inte nationell täckning eller fullständig paginering av planerade avverkningsanmälningar. Inga frånvarobaserade borttagningsslutsatser eller kundlarm får dras från denna enskilda körning. Rättighets- och kundvisningsstatus är oförändrad.
 
 **Nästa steg:** fullständig paginering och fullständighetskontroll av planerade avverkningsanmälningar, följt av minst två kompletta jämförbara körningar. Fortsätt samtidigt verifiera faktisk schemalagd drift och PR-publicering.
+
+
+### Komplett paginering av planerade avverkningsanmälningar – kod mergad (2026-11-22)
+
+PR [#504](https://github.com/dahlinrobert-lgtm/Skog/pull/504) mergades till `main` 2026-11-22 kl. 16:02:26 UTC (merge commit `f75f5ac0832c4823da18fe88de1f516b5d7774f5`). Den lägger till en separat manuell komplett snapshot för Gräsmyr 10 km-piloten:
+
+- `scripts/snapshot_harvest_notifications_pilot.py`: ArcGIS `returnIdsOnly` följt av object-ID-batcher, count- och ID-inventeringskontroll både före och efter hämtning, strikt batchvalidering och avbrott vid källförändring eller ofullständighet. En misslyckad körning skriver inte latest-manifest och raderar/ersätter inga tidigare snapshots.
+- `.github/workflows/skogsstyrelsen-complete-harvest-pilot.yml`: manuell `workflow_dispatch`, separat data-PR och artifact. Flödet är fristående från den befintliga sex­timmarsproben.
+- `tests/test_snapshot_harvest_notifications_pilot.py`: tester för scope, object-ID-batchning, saknade ID:n och transfer-limit.
+- Riktade PR-checkar passerade: [run 45040997464](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45040997464) och [run 45040997430](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45040997430). PR-checken körde testerna men hoppade avsiktligt över insamling och data-PR.
+
+**Status:** implementation och skyddstester är mergade/verifierade. Den första kompletta källhämtningen har ännu inte körts. Scope är endast Gräsmyr 10 km; nationell paginering är inte etablerad. Nästa steg är manuell körning av workflowet, granskning av data-PR och manifest, därefter en andra komplett körning med samma scope. Ingen kundvisning eller alerting aktiveras.
