@@ -120,3 +120,10 @@ Run #6 lyckades och skapade snapshot-PR #491, som därefter mergades till `main`
 - Båda data-PR:erna är öppna och kräver manuell granskning; ingen automatisk merge.
 - Nästa acceptanssteg: granska data/manifest/täckning i #496 och #497, och verifiera därefter att nästa cron-körning för respektive workflow också skapar eller uppdaterar PR utan direktpush till `main`.
 - Teknisk insamling innebär inte att datan är godkänd för kundvisning.
+
+
+### PM-024 – uppdatering efter data-PR-merge (2026-11-22)
+
+Samråd snapshot-PR #496 och Life2Taiga data-PR #497 är nu båda mergade till `main`. Deras merge commits är `f442d6a24832a347319bd7c70fa08e331b2a0674` respektive `467322df3f1c591717e58b0f650717471d2b80cc`.
+
+**Återstående acceptanssteg:** verifiera en faktisk schemalagd körning efter ändringarna för vardera workflow och kontrollera att respektive automation skapar/uppdaterar en granskningsbar PR. Ingen automatisk merge. Ingen kundvisningsrätt följer av publiceringen.
