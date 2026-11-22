@@ -52,14 +52,17 @@ export function createArcGisSource({
   async function getObjectIdField() {
     if (objectIdField) return objectIdField;
     const metadata = await getLayerMetadata();
-    objectIdField = metadata.objectIdField ?? metadata.objectIdFieldName ??
+    const candidate = metadata.objectIdField ?? metadata.objectIdFieldName ??
       metadata.fields.find(field => field.type === "esriFieldTypeOID")?.name;
-    if (!objectIdField) throw new Error("ArcGIS layer metadata has no object ID field");
-    const idFieldMetadata = metadata.fields.find(field => field.name === objectIdField);
+    if (typeof candidate !== "string" || candidate.trim() === "") {
+      throw new Error("ArcGIS layer metadata has no object ID field");
+    }
+    const idFieldMetadata = metadata.fields.find(field => field.name === candidate);
     if (!idFieldMetadata) throw new Error("ArcGIS object ID field is not present in layer fields");
     if (idFieldMetadata.type !== "esriFieldTypeOID") {
       throw new Error("ArcGIS object ID field is not typed as an OID");
     }
+    objectIdField = candidate;
     return objectIdField;
   }
 
