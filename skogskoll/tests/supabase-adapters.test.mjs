@@ -126,6 +126,7 @@ test("ArcGIS metadata rejects an object ID field with a non-OID type", async () 
     }))
   });
   await assert.rejects(source.getSnapshotMetadata(), /not typed as an OID/);
+  await assert.rejects(source.getSnapshotMetadata(), /not typed as an OID/);
 });
 
 test("ArcGIS source returns count and normalizes object IDs", async () => {
