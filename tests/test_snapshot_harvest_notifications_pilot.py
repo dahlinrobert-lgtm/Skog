@@ -1,10 +1,15 @@
+import gzip
+import tempfile
 import unittest
-from unittest.mock import Mock
+from pathlib import Path
+from unittest.mock import Mock, patch
 
 from scripts.snapshot_harvest_notifications_pilot import (
     BATCH_SIZE,
     fetch_complete_features,
     query_scope,
+    atomic_write_text,
+    write_snapshot_atomic,
 )
 
 
@@ -56,6 +61,35 @@ class CompleteHarvestPilotTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(RuntimeError, "transfer-limited"):
             fetch_complete_features(session, "OBJECTID", [1])
+
+    def test_snapshot_is_published_as_complete_gzip_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "snapshot.geojson.gz"
+            raw = b'{"type":"FeatureCollection","features":[]}'
+            write_snapshot_atomic(path, raw)
+            with gzip.open(path, "rb") as source:
+                self.assertEqual(source.read(), raw)
+            self.assertFalse(path.with_name(path.name + ".tmp").exists())
+
+    def test_failed_snapshot_publish_preserves_previous_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "snapshot.geojson.gz"
+            path.write_bytes(b"previous-complete-snapshot")
+            with patch("scripts.snapshot_harvest_notifications_pilot.os.replace", side_effect=OSError("simulated publish failure")):
+                with self.assertRaises(OSError):
+                    write_snapshot_atomic(path, b"new-snapshot")
+            self.assertEqual(path.read_bytes(), b"previous-complete-snapshot")
+            self.assertFalse(path.with_name(path.name + ".tmp").exists())
+
+    def test_manifest_replace_preserves_previous_file_on_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "latest.json"
+            path.write_text('{"status":"previous"}', encoding="utf-8")
+            with patch("scripts.snapshot_harvest_notifications_pilot.os.replace", side_effect=OSError("simulated publish failure")):
+                with self.assertRaises(OSError):
+                    atomic_write_text(path, '{"status":"success"}')
+            self.assertEqual(path.read_text(encoding="utf-8"), '{"status":"previous"}')
+            self.assertFalse(path.with_name(path.name + ".tmp").exists())
 
 
 if __name__ == "__main__":
