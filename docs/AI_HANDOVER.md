@@ -998,3 +998,18 @@ En separat implementation på branchen `feat/skogskoll-arcgis-snapshot-metadata`
 - `customer_visibility` är fortsatt `not_assessed`; `rights_evidence_ref` är null. Metadatafunktionen skapar inga rättigheter.
 
 Detta är en read-only metadatafunktion i källadaptern. Den är ännu inte kopplad till `poll_runs`/`scan_sessions`, snapshot-envelope-persistens eller schemalagd/live ingestion. Ingen SQL-migration, databasändring, kundfeed eller avisering ingår. PR #537:s customer UI-test passerade med 78/78 tester (run 45078075239). Den separata read-only source-proben passerade (run 45078075046) med 300/300 unika ID:n och noll dubbletter/saknade ID:n; den var avsiktligt begränsad och inte en komplett scan. Detta verifierar inte liveanropet till den nya metadatafunktionen eller fullständighet.
+
+## 2026-11-23 – PM-022 worker-/snapshotregisterintegration (PR under review)
+
+PR #537 är mergad i main (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a). Nästa integrationssteg finns på branchen feat/skogskoll-worker-snapshot-envelope-integration:
+
+- runScanBatch hämtar och validerar metadata från samma ArcGIS-source-adapter innan scan startar. Ofullständig metadata stoppar körningen före databasallokering.
+- Metadata skrivs vid scan-start till både poll_runs.diagnostics.snapshot_metadata och scan_sessions.diagnostics.snapshot_metadata. Den följer den ursprungliga scan-sessionen, inte varje workflowförsök.
+- Återupptagning jämför kanoniserad metadata mot den sparade identiteten. Ändrad endpoint/query/schema/identitet gör att den gamla sessionen failas och en ny startas; redan committade observationer och historikrader bevaras.
+- Migration 005 skapar det worker-only, append-only snapshot_envelopes-registret och RPC:n skogskoll_register_snapshot. Endast terminala scan-/run-poster kan registreras. En komplett envelope kräver fortfarande full count/offset/seen-ID-avstämning.
+- Efter lyckad eller fatal avslutad scan läser store tillbaka run/session, mappar via mapWorkerScanToSnapshotEnvelope och registrerar envelope idempotent. Saknad metadata ger inget snapshot; felaktig envelope stoppar registreringen.
+- Kundvisning är fortsatt not_assessed, rättighetsevidens null. Ingen alert, kundfeed, schemalagd ingestion eller live-databasändring aktiveras av PR:n.
+
+**Verifiering:** CI körs på PR-grenen. Databastestworkflowen ska applicera migration 005 och SQL-smoketestet ska kontrollera både atomisk insamling och snapshotregistrering. Inga påståenden om live Supabase eller live ArcGIS-metadata görs. Källstatusrapporten ändras inte eftersom rättighets-/kundvisningsstatus är oförändrad.
+
+**Nästa steg:** invänta gröna tester, granska migrations-/RPC-kontraktet och mergea först därefter. Efter merge behövs separat planerad verifiering i en disponibel Supabase-testmiljö; ingen produktionsmigration eller full scan utan uttryckligt godkännande.
