@@ -76,15 +76,59 @@ def _apply_delta_features(base_features: dict[str, dict[str, Any]], raw: dict[st
     return features
 
 
-def iter_completed_archive_transitions(snapshots_dir: Path):
-    """Yield only added/updated features for consecutive, complete archive states.
+def _reconstruct_archive_state(filename: str, paths_by_name: dict[str, Path]):
+    """Rebuild one archive by following its declared base chain to a full checkpoint.
 
-    The archive chain is streamed: memory use is bounded by one reconstructed
-    feature map instead of retaining every historical full state. Broken delta
-    chains and scope changes reset the comparison baseline rather than implying
-    removals or transitions.
+    Archive filenames are identifiers, not an ordering guarantee. A delta must be
+    applied to the archive named by base_snapshot, even if unrelated or skipped
+    files occur between the two in chronological directory order.
+    """
+    chain = []
+    seen = set()
+    current_name = filename
+    while current_name:
+        if current_name in seen:
+            return None
+        seen.add(current_name)
+        path = paths_by_name.get(current_name)
+        if path is None:
+            return None
+        raw = _read_raw(path)
+        if raw is None:
+            return None
+        if raw.get("snapshot_format") != FORMAT:
+            if not isinstance(raw.get("features"), list):
+                return None
+            state = _feature_map(raw)
+            metadata = raw
+            break
+        delta = raw.get("feature_delta")
+        base_name = raw.get("base_snapshot")
+        if not isinstance(delta, dict) or not base_name:
+            return None
+        chain.append(raw)
+        current_name = str(base_name)
+    else:
+        return None
+
+    for raw in reversed(chain):
+        scope = raw.get("query_scope_sha256")
+        if not scope or scope != metadata.get("query_scope_sha256"):
+            return None
+        state = _apply_delta_features(state, raw)
+        metadata = raw
+    return state, metadata
+
+
+def iter_completed_archive_transitions(snapshots_dir: Path):
+    """Yield added/updated features for each valid archive transition.
+
+    Deltas are resolved against their declared base_snapshot, not assumed to be
+    the immediately preceding filename. Only one reconstructed feature map is
+    retained; a broken/missing chain is skipped rather than treated as deletion.
     """
     paths = sorted(snapshots_dir.glob(f"{PREFIX}*{SUFFIX}"))
+    paths_by_name = {path.name: path for path in paths}
     state: dict[str, dict[str, Any]] = {}
     state_filename = None
     state_checked_at = None
@@ -94,7 +138,6 @@ def iter_completed_archive_transitions(snapshots_dir: Path):
         raw = _read_raw(path)
         if raw is None:
             continue
-
         filename = path.name
         checked_at = raw.get("checked_at")
         scope = raw.get("query_scope_sha256")
@@ -105,8 +148,7 @@ def iter_completed_archive_transitions(snapshots_dir: Path):
             current = _feature_map(raw)
             comparable = bool(
                 state_filename is not None and state_scope and scope
-                and state_scope == scope
-                and state_checked_at != checked_at
+                and state_scope == scope and state_checked_at != checked_at
             )
             changed = {}
             before = {}
@@ -137,93 +179,85 @@ def iter_completed_archive_transitions(snapshots_dir: Path):
             continue
 
         delta = raw.get("feature_delta")
-        base_name = raw.get("base_snapshot")
-        if (
-            not isinstance(delta, dict)
-            or state_filename is None
-            or base_name != state_filename
-            or not scope
-            or scope != state_scope
-        ):
-            # Never bridge a broken chain or a changed query scope.
-            state = {}
-            state_filename = None
-            state_checked_at = None
-            state_scope = None
+        base_name = str(raw.get("base_snapshot") or "")
+        if not isinstance(delta, dict) or not base_name:
+            continue
+
+        if base_name == state_filename and scope and scope == state_scope:
+            base_state = state
+            base_metadata = {"checked_at": state_checked_at, "query_scope_sha256": state_scope}
+        else:
+            rebuilt = _reconstruct_archive_state(base_name, paths_by_name)
+            if rebuilt is None:
+                continue
+            base_state, base_metadata = rebuilt
+
+        if not scope or scope != base_metadata.get("query_scope_sha256"):
             continue
 
         changed_ids = sorted({
             str(key) for key in (delta.get("added", []) + delta.get("updated", []))
         })
-        before = {key: state[key] for key in changed_ids if key in state}
-        payloads = delta.get("features") or {}
+        before = {key: base_state[key] for key in changed_ids if key in base_state}
         after = {}
+        payloads = delta.get("features") or {}
         geometry_unchanged = {str(key) for key in delta.get("geometry_unchanged", [])}
         for key in changed_ids:
             item = payloads.get(key)
             if not isinstance(item, dict):
                 continue
-            if key in geometry_unchanged and key in state:
+            if key in geometry_unchanged and key in base_state:
                 item = dict(item)
-                item["geometry"] = state[key].get("geometry")
+                item["geometry"] = base_state[key].get("geometry")
             after[key] = item
 
-        state = _apply_delta_features(state, raw)
-        comparable = state_checked_at != checked_at
+        current = _apply_delta_features(base_state, raw)
+        comparable = base_metadata.get("checked_at") != checked_at
         yield {
-                "before_snapshot": state_filename,
-                "after_snapshot": filename,
-                "before_checked_at": state_checked_at,
-                "after_checked_at": checked_at,
-                "scope_sha256": scope,
-                "comparable": comparable,
-                "skip_reason": None,
-                "before_features": before,
-                "after_features": after,
-            }
+            "before_snapshot": base_name,
+            "after_snapshot": filename,
+            "before_checked_at": base_metadata.get("checked_at"),
+            "after_checked_at": checked_at,
+            "scope_sha256": scope,
+            "comparable": comparable,
+            "skip_reason": None,
+            "before_features": before,
+            "after_features": after,
+        }
+        state = current
         state_filename = filename
         state_checked_at = checked_at
         state_scope = scope
 
-
 def read_latest_completed_archive(snapshots_dir: Path):
-    """Return only the latest reconstructable complete archive state."""
-    state: dict[str, dict[str, Any]] = {}
-    state_filename = None
-    state_metadata = None
-    for path in sorted(snapshots_dir.glob(f"{PREFIX}*{SUFFIX}")):
+    """Return the latest reconstructable archive by following declared base links."""
+    paths = sorted(snapshots_dir.glob(f"{PREFIX}*{SUFFIX}"))
+    paths_by_name = {path.name: path for path in paths}
+    latest = None
+    for path in paths:
         raw = _read_raw(path)
         if raw is None:
             continue
         if raw.get("snapshot_format") != FORMAT:
             if not isinstance(raw.get("features"), list):
                 continue
-            state = _feature_map(raw)
-            state_filename = path.name
-            state_metadata = raw
+            latest = (_feature_map(raw), raw, path.name)
             continue
-        if (
-            not isinstance(raw.get("feature_delta"), dict)
-            or state_filename is None
-            or raw.get("base_snapshot") != state_filename
-            or not raw.get("query_scope_sha256")
-            or raw.get("query_scope_sha256") != (state_metadata or {}).get("query_scope_sha256")
-        ):
-            continue
-        state = _apply_delta_features(state, raw)
-        state_filename = path.name
-        state_metadata = raw
+        rebuilt = _reconstruct_archive_state(path.name, paths_by_name)
+        if rebuilt is not None:
+            state, metadata = rebuilt
+            latest = (state, metadata, path.name)
 
-    if not state_filename or not state_metadata:
+    if latest is None:
         return None
+    state, metadata, filename = latest
     collection = {
-        key: value for key, value in state_metadata.items()
+        key: value for key, value in metadata.items()
         if key not in {"snapshot_format", "base_snapshot", "feature_delta"}
     }
-    collection["type"] = state_metadata.get("type") or "FeatureCollection"
+    collection["type"] = metadata.get("type") or "FeatureCollection"
     collection["features"] = [state[key] for key in sorted(state)]
-    return state_filename, collection
-
+    return filename, collection
 
 def read_completed_archives(snapshots_dir: Path) -> list[tuple[str, dict[str, Any]]]:
     """Load chronological archives, rebuilding delta archives against their declared base.
