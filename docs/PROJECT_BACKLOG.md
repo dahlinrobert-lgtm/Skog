@@ -231,3 +231,15 @@ På branchen `feat/skogskoll-arcgis-snapshot-metadata` utökas befintlig `create
 - identitetsversion från ArcGIS OID-fältet och aktuell GeoJSON-ID-normalisering.
 
 Källans metadata cachelagras per adapterinstans. Saknat fältschema, geometri-typ, OID-fält eller explicit lagernummer stoppar metadataframtagningen. Kundvisning är fortsatt `not_assessed`. Funktionen är ännu inte kopplad till snapshot-envelope eller persistens; inga migrationer eller livekörningar har gjorts. PR #537:s customer UI-test passerade 78/78 tester (run 45078075239). Read-only source-probe passerade (run 45078075046): 300/300 unika ID:n, noll dubbletter/saknade ID:n, men avsiktligt inte komplett. Liveanrop av den nya metadatafunktionen och fullständig scan återstår.
+
+### PM-022 implementation update 2026-11-23 – worker integration and snapshot registry
+
+PR #537 är mergad (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a). Integrationsarbetet fortsätter i PR på branchen feat/skogskoll-worker-snapshot-envelope-integration.
+
+- Worker hämtar och fail-closed-validerar metadata före scan-start.
+- Samma metadata sparas i run- och scan-sessionens diagnostics. Återupptagning kräver identisk kanoniserad metadata; metadata-/schema-/querydrift får inte blandas in i en befintlig scan.
+- Ny migration 005 inför worker-only snapshot_envelopes med unik scan-session och oföränderlig envelope. Registrerings-RPC kontrollerar terminala statusar, kopplade run-/scan-ID:n, metadataöverensstämmelse och att complete endast kan registreras för fullständigt avslutad scan.
+- Store mappar terminala poster genom befintlig snapshot-envelope-adapter och registrerar dem idempotent. Migrationen markerar registreringstidpunkt och en pending-RPC gör att oregistrerade terminala sessioner kan återförsökas vid nästa workerstart utan att skriva om en befintlig envelope.
+- CI-utökning applicerar migration 005 och SQL-smoketestet täcker registrering. Inga live DB-/ArcGIS-anrop, produktionsmigrationer, alerts eller kundvisning ingår.
+
+**Status:** implementation på PR-branch; samtliga PR-checkar passerade på head 7a7531de245d6ec87d4cb7f0e1d0ff530322fc33. Customer UI tests: 85/85; source probe: success med 300/300 unika ID:n i en avsiktligt begränsad probe; database tests: migration 005 + PostGIS/SQL-smoketest success. Ingen live Supabase eller liveanrop av getSnapshotMetadata ingick. Källstatus och rättighetsgrindar är oförändrade. Nästa steg är manuell PR-granskning och merge; därefter separat planerad verifiering i disponibel Supabase-testmiljö.

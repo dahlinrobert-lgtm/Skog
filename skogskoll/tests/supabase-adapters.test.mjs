@@ -159,7 +159,7 @@ test("Supabase store restores compact checkpoint without downloading all seen ID
     if (parsed.pathname.endsWith("/scan_sessions")) return response([{
       id: "scan-1", source: "source-a", source_count: 3, page_size: 2,
       next_offset: 2, fetched_count: 2, status: "running",
-      diagnostics: { mode: "incremental" }, updated_at: "2026-10-25T00:00:00Z"
+      diagnostics: { mode: "incremental", snapshot_metadata: { product: "harvest_notifications", schema_version: "schema-v1" } }, updated_at: "2026-10-25T00:00:00Z"
     }]);
     throw new Error("Unexpected request: " + url);
   };
@@ -170,6 +170,7 @@ test("Supabase store restores compact checkpoint without downloading all seen ID
   const checkpoint = await store.loadCheckpoint("source-a");
   assert.equal(checkpoint.scanId, "scan-1");
   assert.equal(checkpoint.mode, "incremental");
+  assert.deepEqual(checkpoint.snapshotMetadata, { product: "harvest_notifications", schema_version: "schema-v1" });
   assert.deepEqual(checkpoint.seenIds, []);
   assert.equal(checkpoint.externalSeenIds, true);
   assert.equal(checkpoint.seenIdsCount, 2);
@@ -191,7 +192,7 @@ test("Supabase start scan calls RPC with explicit mode", async () => {
   assert.equal(id, "scan-42");
   assert.ok(calls[0].url.endsWith("/rest/v1/rpc/skogskoll_start_scan"));
   assert.deepEqual(JSON.parse(calls[0].init.body), {
-    p_source: "src", p_source_count: 12, p_page_size: 500, p_mode: "incremental"
+    p_source: "src", p_source_count: 12, p_page_size: 500, p_mode: "incremental", p_snapshot_metadata: null
   });
 });
 
@@ -252,4 +253,108 @@ test("manual stale recovery command is disabled without explicit opt-in", () => 
   assert.equal(result.status, 1);
   assert.match(result.stderr, /Stale-session recovery is disabled/);
   assert.doesNotMatch(result.stderr, /SUPABASE_SERVICE_ROLE_KEY/);
+});
+
+test("Supabase start scan binds immutable source metadata to the run", async () => {
+  const calls = [];
+  const metadata = {
+    product: "harvest_notifications",
+    endpoint: "https://example.test/MapServer/0",
+    layer: "0",
+    query_definition: "where=1=1",
+    coverage_key: "unfiltered-layer-query-v1",
+    schema_version: "schema-v1",
+    identity_version: "oid-v1",
+    customer_visibility: "not_assessed",
+    rights_evidence_ref: null
+  };
+  const store = createSupabaseStore({
+    url: "https://project.supabase.co", serviceRoleKey: "test-key",
+    fetchImpl: async (url, init) => {
+      calls.push({ url: String(url), init });
+      return response([{ scan_id: "scan-42", poll_run_id: "run-42" }]);
+    }
+  });
+  await store.startScan({ sourceKey: "src", reportedTotal: 2, pageSize: 2, mode: "baseline", snapshotMetadata: metadata });
+  assert.deepEqual(JSON.parse(calls[0].init.body), {
+    p_source: "src", p_source_count: 2, p_page_size: 2, p_mode: "baseline", p_snapshot_metadata: metadata
+  });
+});
+
+test("Supabase finish registers a validated immutable snapshot envelope", async () => {
+  const calls = [];
+  const metadata = {
+    product: "harvest_notifications",
+    endpoint: "https://example.test/MapServer/0",
+    layer: "0",
+    query_definition: "where=1=1",
+    coverage_key: "unfiltered-layer-query-v1",
+    schema_version: "schema-v1",
+    identity_version: "oid-v1",
+    customer_visibility: "not_assessed",
+    rights_evidence_ref: null
+  };
+  const fetchImpl = async (url, init = {}) => {
+    const parsed = new URL(url);
+    calls.push({ url: String(url), method: init.method ?? "GET", body: init.body ? JSON.parse(init.body) : null });
+    if (parsed.pathname.endsWith("/rpc/skogskoll_finish_scan")) return response(null);
+    if (parsed.pathname.endsWith("/scan_sessions")) return response([{
+      id: "scan-42", source: "src", source_count: 2, fetched_count: 2, next_offset: 2,
+      status: "complete", completed_at: "2026-11-23T07:00:00.000Z", poll_run_id: "run-42",
+      diagnostics: { snapshot_metadata: metadata }
+    }]);
+    if (parsed.pathname.endsWith("/poll_runs")) return response([{
+      id: "run-42", source: "src", status: "success", fetched_count: 2,
+      finished_at: "2026-11-23T07:00:00.000Z", diagnostics: {}
+    }]);
+    if (parsed.pathname.endsWith("/rpc/skogskoll_register_snapshot")) return response("skogskoll-worker:run-42:scan-42");
+    throw new Error("Unexpected request: " + url);
+  };
+  const store = createSupabaseStore({ url: "https://project.supabase.co", serviceRoleKey: "test-key", fetchImpl });
+  await store.finishScan("scan-42");
+  const registration = calls.find(call => call.url.endsWith("/rpc/skogskoll_register_snapshot"));
+  assert.ok(registration);
+  assert.equal(registration.body.p_scan_id, "scan-42");
+  assert.equal(registration.body.p_envelope.status, "complete");
+  assert.equal(registration.body.p_envelope.customer_visibility, "not_assessed");
+  assert.equal(registration.body.p_envelope.snapshot_id, "skogskoll-worker:run-42:scan-42");
+});
+
+test("Supabase store enumerates and registers terminal scans missing envelopes", async () => {
+  const calls = [];
+  const metadata = {
+    product: "harvest_notifications",
+    endpoint: "https://example.test/MapServer/0",
+    layer: "0",
+    query_definition: "where=1=1",
+    coverage_key: "unfiltered-layer-query-v1",
+    schema_version: "schema-v1",
+    identity_version: "oid-v1",
+    customer_visibility: "not_assessed",
+    rights_evidence_ref: null
+  };
+  const fetchImpl = async (url, init = {}) => {
+    const parsed = new URL(url);
+    calls.push({ url: String(url), init });
+    if (parsed.pathname.endsWith("/rpc/skogskoll_pending_snapshot_scans")) return response([{ scan_id: "scan-pending" }]);
+    if (parsed.pathname.endsWith("/scan_sessions")) return response([{
+      id: "scan-pending", source: "source-a", source_count: 1, fetched_count: 1, next_offset: 1,
+      status: "complete", completed_at: "2026-11-23T07:00:00.000Z", poll_run_id: "run-pending",
+      diagnostics: { snapshot_metadata: metadata }
+    }]);
+    if (parsed.pathname.endsWith("/poll_runs")) return response([{
+      id: "run-pending", source: "source-a", status: "success", fetched_count: 1,
+      finished_at: "2026-11-23T07:00:00.000Z", diagnostics: {}
+    }]);
+    if (parsed.pathname.endsWith("/rpc/skogskoll_register_snapshot")) return response("snapshot-registered");
+    throw new Error("Unexpected request: " + url);
+  };
+  const store = createSupabaseStore({ url: "https://project.supabase.co", serviceRoleKey: "test-key", fetchImpl });
+  const count = await store.registerPendingSnapshots("source-a");
+  assert.equal(count, 1);
+  assert.ok(calls[0].url.endsWith("/rpc/skogskoll_pending_snapshot_scans"));
+  assert.deepEqual(JSON.parse(calls[0].init.body), { p_source: "source-a" });
+  assert.ok(calls[1].url.includes("/scan_sessions?"));
+  assert.ok(calls[2].url.includes("/poll_runs?"));
+  assert.ok(calls[3].url.endsWith("/rpc/skogskoll_register_snapshot"));
 });

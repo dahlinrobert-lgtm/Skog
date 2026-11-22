@@ -1,5 +1,18 @@
 import { advanceCheckpoint, createCheckpoint, validateCheckpoint } from "./scan-plan.mjs";
 import { normalizeFeature, SOURCE_ID } from "./observation-core.mjs";
+import { buildComparabilityKey } from "./snapshot-envelope-adapter.mjs";
+
+function canonicalize(value) {
+  if (Array.isArray(value)) return value.map(canonicalize);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonicalize(value[key])]));
+  }
+  return value;
+}
+
+function sameMetadata(a, b) {
+  return JSON.stringify(canonicalize(a)) === JSON.stringify(canonicalize(b));
+}
 
 function isFatalScanError(error) {
   const message = String(error?.message ?? error).toLowerCase();
@@ -56,7 +69,18 @@ export async function runScanBatch({
 
   const sourceKey = source.key ?? SOURCE_ID;
   let scanId = null;
+  let snapshotMetadata = null;
   try {
+    if (typeof source.getSnapshotMetadata === "function") {
+      snapshotMetadata = await source.getSnapshotMetadata();
+      if (!snapshotMetadata || typeof snapshotMetadata !== "object" || Array.isArray(snapshotMetadata) ||
+          !buildComparabilityKey({ source: sourceKey, metadata: snapshotMetadata })) {
+        throw new Error("source returned incomplete or invalid snapshot metadata");
+      }
+    }
+    if (typeof store.registerPendingSnapshots === "function") {
+      await store.registerPendingSnapshots(sourceKey);
+    }
     const reportedTotal = await source.getCount();
     if (!Number.isSafeInteger(reportedTotal) || reportedTotal < 0) {
       throw new Error("source returned an invalid count");
@@ -65,6 +89,15 @@ export async function runScanBatch({
     let checkpoint = await store.loadCheckpoint(sourceKey);
     if (checkpoint) {
       const validation = validateCheckpoint(checkpoint, { sourceKey, reportedTotal, pageSize });
+      if (validation.valid && snapshotMetadata &&
+          !sameMetadata(checkpoint.snapshotMetadata ?? null, snapshotMetadata)) {
+        validation.valid = false;
+        validation.reasons.push("snapshot_metadata_changed");
+      }
+      if (validation.valid && !snapshotMetadata && checkpoint.snapshotMetadata) {
+        validation.valid = false;
+        validation.reasons.push("snapshot_metadata_unavailable");
+      }
       if (!validation.valid) {
         await store.failScan(checkpoint.scanId ?? null, "checkpoint_invalid", { reasons: validation.reasons });
         checkpoint = null;
@@ -72,14 +105,14 @@ export async function runScanBatch({
     }
     if (!checkpoint) {
       checkpoint = createCheckpoint({ sourceKey, reportedTotal, pageSize, externalSeenIds: store.externalSeenIds === true });
-      scanId = await store.startScan({ sourceKey, reportedTotal, pageSize, checkpoint, mode });
-      checkpoint = { ...checkpoint, scanId };
+      scanId = await store.startScan({ sourceKey, reportedTotal, pageSize, checkpoint, mode, snapshotMetadata });
+      checkpoint = { ...checkpoint, scanId, snapshotMetadata };
     } else {
       scanId = checkpoint.scanId ?? null;
     }
 
     if (checkpoint.complete) {
-      await store.finishScan(scanId, checkpoint);
+      await store.finishScan(scanId, checkpoint, snapshotMetadata);
       return { status: "complete", scanId, fetchedCount: checkpoint.fetchedCount, pagesFetched: 0 };
     }
 
@@ -116,7 +149,7 @@ export async function runScanBatch({
       // Final independent count check before a scan is allowed to be marked complete.
       const finalCount = await source.getCount();
       if (finalCount !== reportedTotal) throw new Error(`source_count_changed_at_finish:${reportedTotal}->${finalCount}`);
-      await store.finishScan(scanId, checkpoint);
+      await store.finishScan(scanId, checkpoint, snapshotMetadata);
       return { status: "complete", scanId, fetchedCount: checkpoint.fetchedCount, pagesFetched };
     }
     return { status: "in_progress", scanId, fetchedCount: checkpoint.fetchedCount, pagesFetched, nextOffset: checkpoint.nextOffset };

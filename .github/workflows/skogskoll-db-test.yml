@@ -1,4 +1,5 @@
 name: Skogskoll database tests
+# Migration 005 also verifies immutable metadata and rechecks complete-scan coverage at registration.
 on:
   push:
     branches: [main]
@@ -60,6 +61,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/002_observation_history.sql
           psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/003_atomic_page_commit.sql
           psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/004_watch_area_matching.sql
+          psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/005_snapshot_envelope_registry.sql
       - name: Run PostGIS matching integration test
         run: psql -v ON_ERROR_STOP=1 -f skogskoll/db/tests/watch-area-matching.sql
       - name: Run transactional ingestion smoke test
@@ -77,6 +79,7 @@ jobs:
             import { readFileSync } from "node:fs";
             const migration = readFileSync("skogskoll/db/migrations/003_atomic_page_commit.sql", "utf8");
             const matching = readFileSync("skogskoll/db/migrations/004_watch_area_matching.sql", "utf8");
+            const snapshot = readFileSync("skogskoll/db/migrations/005_snapshot_envelope_registry.sql", "utf8");
             const smoke = readFileSync("skogskoll/db/tests/smoke-atomic-ingestion.sql", "utf8");
             const matchTest = readFileSync("skogskoll/db/tests/watch-area-matching.sql", "utf8");
             const requiredFns = ["skogskoll_start_scan", "skogskoll_commit_page", "skogskoll_finish_scan", "skogskoll_recover_stale_scan"];
@@ -85,6 +88,9 @@ jobs:
               if (!smoke.includes(name)) throw new Error("Smoke test does not exercise " + name);
             }
             if (!matching.includes("st_dwithin") || !matching.includes("st_intersects") || !matching.includes("security definer")) throw new Error("PostGIS matcher missing required predicates/security");
+            for (const required of ["snapshot_envelopes", "skogskoll_register_snapshot", "skogskoll_pending_snapshot_scans", "snapshot_metadata", "guard_skogskoll_snapshot_envelope_immutable", "guard_skogskoll_snapshot_metadata_immutable"]) {
+              if (!snapshot.includes(required)) throw new Error("Snapshot migration missing " + required);
+            }
             for (const assertion of ["radius match expected 2", "polygon match expected 2", "disabled watch area must return no matches"]) {
               if (!matchTest.includes(assertion)) throw new Error("Matching integration test missing assertion: " + assertion);
             }

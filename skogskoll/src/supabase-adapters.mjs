@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { SOURCE_ID } from "../src/observation-core.mjs";
+import { mapWorkerScanToSnapshotEnvelope } from "./snapshot-envelope-adapter.mjs";
 
 const DEFAULT_ENDPOINT = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0";
 const DEFAULT_PAGE_LIMIT = 1000;
@@ -213,8 +214,54 @@ export function createSupabaseStore({
     return request(`/rest/v1/rpc/${name}`, { method: "POST", body: args });
   }
 
+  async function registerSnapshotForScan(scanId) {
+    const scanQuery = new URLSearchParams({
+      select: "id,source,source_count,fetched_count,next_offset,status,completed_at,diagnostics,poll_run_id",
+      id: `eq.${scanId}`,
+      limit: "1"
+    });
+    const scanRows = await request(`/rest/v1/scan_sessions?${scanQuery}`);
+    if (!Array.isArray(scanRows) || scanRows.length !== 1) {
+      throw new Error("Terminal scan session could not be reloaded for snapshot registration");
+    }
+    const scan = scanRows[0];
+    const metadata = scan.diagnostics?.snapshot_metadata ?? null;
+    if (!metadata) return null;
+    if (!scan.poll_run_id) throw new Error("Scan session has no poll_run_id for snapshot registration");
+    const runQuery = new URLSearchParams({
+      select: "id,source,status,fetched_count,finished_at,diagnostics",
+      id: `eq.${scan.poll_run_id}`,
+      limit: "1"
+    });
+    const runRows = await request(`/rest/v1/poll_runs?${runQuery}`);
+    if (!Array.isArray(runRows) || runRows.length !== 1) {
+      throw new Error("Poll run could not be reloaded for snapshot registration");
+    }
+    const mapped = mapWorkerScanToSnapshotEnvelope({
+      pollRun: runRows[0],
+      scanSession: scan,
+      metadata
+    });
+    if (!mapped.valid) {
+      throw new Error("Snapshot envelope validation failed: " + mapped.errors.join(", "));
+    }
+    return rpc("skogskoll_register_snapshot", {
+      p_scan_id: scanId,
+      p_envelope: mapped.envelope
+    });
+  }
+
   return {
     externalSeenIds: true,
+    async registerPendingSnapshots(sourceKey) {
+      const pending = await rpc("skogskoll_pending_snapshot_scans", { p_source: sourceKey });
+      const rows = Array.isArray(pending) ? pending : [];
+      for (const row of rows) {
+        if (!row?.scan_id) throw new Error("Pending snapshot scan query returned an invalid row");
+        await registerSnapshotForScan(row.scan_id);
+      }
+      return rows.length;
+    },
     async loadCheckpoint(sourceKey) {
       const query = new URLSearchParams({
         select: "id,source,source_count,page_size,next_offset,fetched_count,status,diagnostics,updated_at",
@@ -240,7 +287,8 @@ export function createSupabaseStore({
         updatedAt: row.updated_at ?? null,
         complete: row.next_offset === row.source_count && row.fetched_count === row.source_count,
         scanId: row.id,
-        mode: row.diagnostics?.mode ?? "baseline"
+        mode: row.diagnostics?.mode ?? "baseline",
+        snapshotMetadata: row.diagnostics?.snapshot_metadata ?? null
       };
       if (checkpoint.reportedTotal < 0 || checkpoint.nextOffset > checkpoint.reportedTotal ||
           checkpoint.fetchedCount !== checkpoint.nextOffset) {
@@ -258,12 +306,13 @@ export function createSupabaseStore({
       return checkpoint;
     },
 
-    async startScan({ sourceKey, reportedTotal, pageSize, mode = "baseline" }) {
+    async startScan({ sourceKey, reportedTotal, pageSize, mode = "baseline", snapshotMetadata = null }) {
       const result = await rpc("skogskoll_start_scan", {
         p_source: sourceKey,
         p_source_count: reportedTotal,
         p_page_size: pageSize,
-        p_mode: mode
+        p_mode: mode,
+        p_snapshot_metadata: snapshotMetadata
       });
       const row = Array.isArray(result) ? result[0] : result;
       if (!row?.scan_id) throw new Error("Supabase start-scan RPC returned no scan_id");
@@ -288,6 +337,7 @@ export function createSupabaseStore({
 
     async finishScan(scanId) {
       await rpc("skogskoll_finish_scan", { p_scan_id: scanId });
+      await registerSnapshotForScan(scanId);
     },
 
     async recoverStaleScan({ sourceKey, staleBefore, reason = "stale_worker_recovery" }) {
@@ -309,6 +359,7 @@ export function createSupabaseStore({
         p_reason: String(reason ?? "unknown").slice(0, 500),
         p_details: details
       });
+      await registerSnapshotForScan(scanId);
     }
   };
 }
