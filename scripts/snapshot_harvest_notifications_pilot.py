@@ -171,7 +171,8 @@ def main() -> None:
         "source": SERVICE,
         "layer_id": 0,
         "object_id_field": oid_field,
-        "selected_fields": selected_fields,
+        "selected_fields": ["*"],
+        "field_selection_note": "All source fields retained in the original feature snapshot.",
         "captured_at_utc": captured_at.isoformat(),
         "scope": {
             "type": "point_distance",
