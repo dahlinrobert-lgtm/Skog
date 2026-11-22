@@ -681,3 +681,17 @@ Användaren har bekräftat att snapshot- och dag-för-dag-visningen i ett samman
 - Källstatusrapporten som granskades 2026-11-18 anger noll källor uttryckligen godkända för kundvisning; status måste uppdateras och bedömas per exakt lager innan publicering.
 
 Första UI-implementationen ligger i branch `feat/skogskoll-daily-change-feed-shell`: kundnavigation, primär flödesyta, dagväljare med tydlig frånvaro av anslutna snapshots, kartplaceholder utan länk till intern Skog-karta samt riktade UI-regressionstester. Backend, riktiga snapshots, källvisning och aviseringar aktiveras inte i detta steg.
+
+
+## Skogskoll change-feed – kontrakt implementerat i utvecklingsbranch (2026-11-22)
+
+- PR #483 är mergad till `main`: kundskalet har snapshotbaserat dag-för-dag-flöde och ren kundnavigation. Det betyder inte att verkliga snapshots eller kundhändelser är anslutna.
+- Ny branch `feat/skogskoll-change-feed-contract` innehåller ett första fristående kontrakt och ren domänfunktion: `docs/SKOGSKOLL_CHANGE_FEED_CONTRACT.md`, `skogskoll/src/change-feed-contract.mjs` och `skogskoll/tests/change-feed-contract.test.mjs`.
+- Jämförelse kräver kompletta snapshots med samma source, product, layer, coverage_key, schema_version och identity_version samt distinkta snapshot-/run-ID och strikt senare captured_at.
+- Första kompletta baslinjen är tyst. Efter baslinje skapas endast first_seen/changed när kundvisningsstatus är approved och rights_evidence_ref finns. Oförändrad hash skapar ingen händelse.
+- Frånvaro i aktuell snapshot skapar aldrig borttagningshändelse. Okänd/partiell/failed status och saknad rättighet stänger grinden.
+- Funktionen är ren och skriver inte till databas, anropar inte API, aktiverar inte ingestion eller aviseringar. Den befintliga ingestionen är fortsatt Skogsstyrelsen-specifik.
+- Testerna är tillagda i den befintliga Node-testkatalogen; de behöver verifieras av GitHub Actions innan kontraktet betraktas som CI-verifierat.
+- Källstatusrapporten var senast genererad 2026-11-18 och angav inga källor uttryckligen godkända för kundvisning i den sammanfattande bedömningen. Rättighetsgrinden är därför avsiktligt stängd tills en exakt källa/produkt/lagerpost och evidens godkänts.
+
+**Nästa steg:** verifiera PR-CI och granska kontraktet mot befintliga snapshotmanifest och databasens historikfält. Därefter kan ett separat API-/persistensförslag tas fram; ändra inte databasschema eller koppla verklig kundfeed innan den granskningen och rättighetsbedömningen är klar.
