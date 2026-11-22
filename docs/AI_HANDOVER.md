@@ -918,4 +918,8 @@ Uppföljande PR [#44](https://github.com/dahlinrobert-lgtm/skogskoll-project-man
 
 Uppföljande PR [#45](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/45) är mergad. Projektregistret valideras nu fail-closed före API-anrop: icke-objekt, saknade fält, dubbletter och okända lifecycle-värden stoppar inventeringen i stället för att kunna ge en falskt komplett täckningsbild. Kandidatprojekt är fortsatt exkluderade. PR-CI:s Python-tester och synthetic-append-only-kontroller passerade.
 
+Uppföljande PR [#46](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/46) är mergad. Artefaktsteget använder nu `if-no-files-found: error`, så en utebliven inventeringsfil registreras som fel och hamnar i samma centrala driftärende i stället för att tyst ignoreras. PR-CI:s `unit-tests` och `synthetic-append-only` passerade.
+
+PR [#47](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/47) är mergad. Dashboardens KPI för olösta avvikelser räknar nu även olösta schemalagda fel. Återhämtade fel visas separat och räknas inte som olösta; pågående schemalagda körningar visas i egen prioriterad sektion. PR-CI passerade.
+
 Nästa steg: verifiera första schemalagda inventering, artifact, tidsgrind och central issue-hantering. Ingen Azure-publicering, historikpersistens eller kundavisering aktiveras av denna implementation.
