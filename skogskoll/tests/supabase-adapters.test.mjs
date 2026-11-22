@@ -319,3 +319,19 @@ test("Supabase finish registers a validated immutable snapshot envelope", async 
   assert.equal(registration.body.p_envelope.customer_visibility, "not_assessed");
   assert.equal(registration.body.p_envelope.snapshot_id, "skogskoll-worker:run-42:scan-42");
 });
+
+test("Supabase store enumerates terminal scans awaiting snapshot registration", async () => {
+  const calls = [];
+  const store = createSupabaseStore({
+    url: "https://project.supabase.co", serviceRoleKey: "test-key",
+    fetchImpl: async (url, init) => {
+      calls.push({ url: String(url), init });
+      return response([{ scan_id: "scan-pending" }]);
+    }
+  });
+  const count = await store.registerPendingSnapshots("source-a");
+  assert.equal(count, 1);
+  assert.ok(calls[0].url.endsWith("/rest/v1/rpc/skogskoll_pending_snapshot_scans"));
+  assert.deepEqual(JSON.parse(calls[0].init.body), { p_source: "source-a" });
+  assert.ok(calls[1].url.includes("/scan_sessions?"));
+});
