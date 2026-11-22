@@ -122,6 +122,8 @@ Skog fortsätter vara den bredare dataplattformen. Alla källor i Skog behöver 
 ## Leveranssteg och grindar
 
 ### M1 – Tillförlitlig kärnbevakning
+- Nationell insamling är övergripande mål för varje relevant datakälla och separat produkt/lager, där källans täckning, teknik och rättigheter medger det. Gräsmyr är pilot, inte slutlig geografisk omfattning.
+- Nationell täckning ska bevisas med dokumenterat scope, fullständighetskontroller, stabila ID:n, manifest och återkommande jämförbara observationer. En nationell karta eller lyckad regional pilot räcker inte.
 - Fullständig, paginerad och auditerbar insamling av planerade avverkningsanmälningar.
 - Separat fullständighetskontroll för Samråds punkt-, linje- och polygonlager.
 - Bevara utförda avverkningar och unionera geometrier före arealberäkning.
@@ -180,3 +182,25 @@ Nya datakällor och sidoprojekt prioriteras efter direkt kundnytta, blockerande 
 - Ingen kundvisning eller kommersiell användning utan källspecifikt stöd.
 - Ingen produktionsaktivering innan auth/RLS, ingestion, historik, backup och återställning är verifierade.
 - Geografisk uppskalning först efter stabil och reproducerbar pilot.
+
+## Övergripande mål för nationell insamling per datakälla (fastställt 2026-11-22)
+
+Skog ska utvecklas till en dataplattform med verifierad nationell insamling för varje relevant datakälla, separat per produkt/lager. Målet gäller i den omfattning källan faktiskt tillhandahåller och tillåter. Det innebär inte att alla källor måste ingå i Skogskolls första kundprodukt.
+
+### Gemensam nationell acceptansgrind
+- Avgränsa och dokumentera källans nationella geografi, objektmängd, tidsomfång, filter och kända begränsningar.
+- Verifiera komplett uttagsmetod/paginering, stabila ID:n, unika objekt och avstämning mot källans inventering eller annan oberoende kontroll.
+- Bevara rådata/snapshots och manifest med körnings-ID, tidpunkt, scope, status, antal och checksummor.
+- Fail closed: partial/failed får aldrig ersätta senaste kompletta observation eller skapa falska borttagningar.
+- Kräva minst två kompletta och jämförbara observationer före förändringsklassning.
+- Verifiera schemalagd drift, felhantering, återhämtning och återställning.
+- Bedöma teknisk åtkomst, lagring, bearbetning, kommersiell användning, kundvisning och distribution separat.
+
+### Genomförandeordning
+1. Skogsstyrelsens planerade avverkningsanmälningar: slutför två kompletta jämförbara Gräsmyr-observationer och bygg därefter nationell uttagsdesign.
+2. Skogsstyrelsens Samråd: verifiera nationell täckning och fullständighet separat för punkt-, linje- och polygonlager.
+3. Övriga prioriterade källor: nationell täckningsinventering och stegvis insamling enligt kundnytta, datakvalitet, teknisk möjlighet, kostnad och rättighetsläge.
+4. Källor med regional täckning, oklar omfattning eller begränsade villkor ska redovisas med faktisk täckning och blockerare – inte som nationella.
+
+### Första konkreta bevispunkt
+Den kompletta Gräsmyr 10 km-snapshoten för planerade avverkningsanmälningar från 2026-11-22 är arkiverad genom PR #524. Manifestet visar 165/165 ID:n/geometrier, stabil ID-inventering och complete_scan=true. Detta är en komplett pilotobservation, inte nationell täckning eller en jämförbar tidsserie. Nästa steg är observation nummer två.
