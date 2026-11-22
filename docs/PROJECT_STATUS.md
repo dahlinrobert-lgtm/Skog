@@ -85,3 +85,20 @@ Monitor-run [#45041585086](https://github.com/dahlinrobert-lgtm/Skog/actions/run
 PR [#514](https://github.com/dahlinrobert-lgtm/Skog/pull/514) rättade rekonstruktionen så att varje delta följer sin uttryckliga `base_snapshot`-referens. Riktade arkiv-/evidenstester, full testsvit och audit passerade. Main-monitor-run [#45048859162](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45048859162) avslutades `success` efter 30m22s; samtliga steg inklusive analys och data-PR-publicering passerade. Data-PR [#515](https://github.com/dahlinrobert-lgtm/Skog/pull/515) mergades i `db4aca33642812ee69a6bff5cf7083b50f320de6`.
 
 Den nya analysen läste 383 planerade snapshots utan oläsbara filer och rekonstruerade 381 genomförda arkiv; 370 övergångar var jämförbara, 10 äldre övergångar exkluderades på grund av saknat/ändrat query scope och 702 unika `new_completed_detection_overlap`-händelser återfanns. Händelserna är satellitbaserade överlappskandidater för manuell granskning, inte bevis för utförd avverkning. Planerade ID:n var exakt samma 165 i observationerna 16:42 och 17:20 UTC. Båda observationerna innehöll 1 631 genomförda objekt, men fullständig ID-/manifestjämförelse för genomförda polygoner återstår. Ingen frånvaroklassning eller kundavisering aktiveras.
+
+
+## Gräsmyr – uppföljning efter PR #516 (2026-11-22)
+
+En separat read-only-jämförelse av `data/completed_latest.json` mellan commit `2ee3159902e70b6dc8c92598d852178d620a6ee5` (16:42:36 UTC) och aktuell `main` efter data-PR #515 (17:21:11 UTC) är genomförd.
+
+- Query-scope SHA-256 var identisk: `35078c26165a03b506f0cd0c7c32ed8dca9beab6ddc10413447d01b47a17bbca`.
+- Båda observationerna innehöll 1 631 genomförda polygoner.
+- Samtliga ID:n jämfördes: 0 tillagda, 0 saknade.
+- Samtliga geometrihashar (`geometry_sha256`) jämfördes: 0 ändrade.
+- Samtliga objektproperties jämfördes: 0 ändrade.
+
+Detta verifierar identisk genomförd polygonmängd mellan de två observationerna inom samma 10 km-scope. Det är inte en oberoende kontrollsummeverifiering av varje historisk gzip-fil eller samtliga 381 arkivfiler.
+
+De 10 äldre övergångarna från 2026-10-24 förblir exkluderade eftersom query-scope saknas i äldre metadata (för nio par saknas scope i båda ändar; i det tionde saknas äldre scope). Ingen retrospektiv scope får antas. Bevara arkiven och sök endast efter oberoende historisk evidens.
+
+Monitor-run [#45048859162](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45048859162) var push-utlöst och lyckades; den var inte schemalagd. `.github/workflows/monitor.yml` har daglig cron `17 5 * * *` UTC. Nästa cron-körning ska verifieras separat. Ingen kundavisering eller frånvaroklassning aktiveras.

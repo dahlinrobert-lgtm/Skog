@@ -877,3 +877,24 @@ Projektets roadmap och backlogg är styrande planeringsunderlag; en merge eller 
 Senast verifierad Gräsmyr-status 2026-11-22: PR [#514](https://github.com/dahlinrobert-lgtm/Skog/pull/514) rättade arkivrekonstruktionen så att `base_snapshot` följs explicit i stället för att anta föregående filnamn. PR:n mergades i `2ee3159902e70b6dc8c92598d852178d620a6ee5`; riktade arkiv-/evidenstester, full testsvit och audit passerade. Main-monitor-run [#45048859162](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45048859162) avslutades `success` efter 30m22s och samtliga steg passerade, inklusive `Analyze planned and completed changes` och data-PR-publicering. Efter körningen lästes 383 planerade snapshots utan oläsbara filer; 165 aktuella planerade objekt och 1 631 genomförda objekt analyserades. Planerade ID:n jämfördes mellan observationerna 16:42 och 17:20 UTC: exakt samma 165 ID:n återfanns. Analysrapporten rekonstruerade 381 genomförda arkiv, varav 370 jämförbara övergångar, 10 övergångar hoppades över på grund av saknat/ändrat query scope och 702 unika `new_completed_detection_overlap`-händelser återfanns. PR [#515](https://github.com/dahlinrobert-lgtm/Skog/pull/515) granskades och mergades 2026-11-22 i `db4aca33642812ee69a6bff5cf7083b50f320de6`.
 
 Detta verifierar att den korrigerade arkivkedjan når fram till den senaste kompletta observationen och återger historiska evidensövergångar som tidigare saknades. De 702 händelserna är satellitbaserade överlappskandidater för manuell granskning, inte bevis för utförd avverkning. Äldre övergångar med saknat/ändrat scope är fortsatt exkluderade (10 st); inga frånvaroslutsatser får dras från dem. Planerade ID:n matchar exakt, men separat ID-/manifestjämförelse av samtliga genomförda polygoner återstår innan hela 10 km-piloten godkänns. Ingen kundavisering eller frånvaroklassning aktiveras.
+
+
+## Gräsmyr – jämförelse av genomförda polygoner efter PR #516 (2026-11-22)
+
+Efter PR [#516](https://github.com/dahlinrobert-lgtm/Skog/pull/516) gjordes en separat read-only-jämförelse av `data/completed_latest.json` på föregående monitor-commit `2ee3159902e70b6dc8c92598d852178d620a6ee5` och aktuell `main` efter data-PR #515.
+
+- Observationer: 2026-11-22 16:42:36.002386 UTC respektive 17:21:11.807095 UTC.
+- Query-scope SHA-256 var identisk i båda: `35078c26165a03b506f0cd0c7c32ed8dca9beab6ddc10413447d01b47a17bbca` (Gräsmyr, 10 km).
+- Båda filerna hade `count=1631` och exakt 1 631 poster i `features_by_id`.
+- Jämförelse av samtliga ID:n: 0 tillagda och 0 saknade.
+- Jämförelse av samtliga `geometry_sha256`: 0 ändrade geometrier.
+- Jämförelse av samtliga objektproperties: 0 ändrade attribut.
+- Båda observationerna hade `baseline=false`; detta är en jämförelse mellan två icke-baslinjeobservationer.
+
+**Slutsats:** Den genomförda polygonmängden var exakt oförändrad mellan dessa två observationer, både avseende ID, geometrihash och attribut, inom identiskt query scope. Detta kompletterar den tidigare jämförelsen av planerade ID:n. Det är inte en oberoende SHA-256-kontroll av varje historisk gzip-fil och ska inte beskrivas som en fullständig kontroll av samtliga 381 arkivfiler.
+
+**Kvarstående arkivundantag:** De 10 äldre övergångarna från 2026-10-24 har fortsatt saknat tillräcklig scope-proveniens. Analysrapporten anger att scope saknas i båda ändar för de första nio paren och saknas i den äldre änden för det tionde. De förblir exkluderade från evidensjämförelser. De får inte repareras genom antagande, och de får inte skapa borttagnings- eller förändringshändelser. Bevara originalarkiven och utred endast om oberoende historisk scope-evidens kan hittas.
+
+**Drift:** Monitor-run [#45048859162](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45048859162) var push-utlöst (inte cron) och avslutades success. Workflowet `.github/workflows/monitor.yml` har cron `17 5 * * *` (05:17 UTC dagligen). Nästa schemalagda körning ska verifieras separat; en push-utlöst körning bevisar inte schemalagd drift.
+
+Ingen kundavisering, frånvaroklassning eller ändring av källrättigheter följer av denna kontroll.
