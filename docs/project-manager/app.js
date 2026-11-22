@@ -47,7 +47,7 @@
     const notice = byId("data-notice");
     notice.className = "notice bad";
     notice.textContent = message;
-    ["work-list", "runs-list", "projects-list"].forEach((id) => empty(id, "Ingen verifierad live-data tillgänglig."));
+    ["work-list", "runs-list", "scheduled-runs-list", "recovered-runs-list", "failed-runs-list", "projects-list"].forEach((id) => empty(id, "Ingen verifierad live-data tillgänglig."));
   };
   const render = (data) => {
     if (!data || data.schema_version !== 1 || !Array.isArray(data.projects) ||
@@ -80,9 +80,20 @@
     const work = projects.flatMap((p) => (p.open_work_items || []).map((item) => ({...item, project: p})));
     const runs = projects.flatMap((p) => (p.latest_workflow_runs || []).map((run) => ({...run, project: p})));
     const failedRuns = runs.filter((r) => r.status === "completed" && r.conclusion && r.conclusion !== "success");
+    const workflowKey = (r) => String(r.workflow_id || r.workflow_path || r.name || "unknown") + "|" + r.project.repository;
+    const hasLaterSuccess = (run) => runs.some((candidate) =>
+      workflowKey(candidate) === workflowKey(run) &&
+      candidate.status === "completed" && candidate.conclusion === "success" &&
+      String(candidate.created_at || "") > String(run.created_at || ""));
+    const scheduledRuns = runs.filter((r) => r.event === "schedule");
+    const scheduledActive = scheduledRuns.filter((r) => r.status !== "completed");
+    const scheduledFailures = scheduledRuns.filter((r) =>
+      r.status === "completed" && r.conclusion && r.conclusion !== "success" && !hasLaterSuccess(r));
+    const recoveredFailures = failedRuns.filter(hasLaterSuccess);
+    const unresolvedFailures = failedRuns.filter((r) => !hasLaterSuccess(r));
     const successfulRuns = runs.filter((r) => r.status === "completed" && r.conclusion === "success");
     setText("metric-work", work.length);
-    setText("metric-failed", failedRuns.length);
+    setText("metric-failed", unresolvedFailures.length);
     setText("metric-success", successfulRuns.length);
 
     const workEl = byId("work-list");
@@ -115,19 +126,57 @@
     if (!failedRuns.length) {
       empty("failed-runs-list", "Inga avvikande avslut bland de senaste 20 körningarna per repo.");
     } else {
-      failedRuns.forEach((run) => {
+      unresolvedFailures.forEach((run) => {
         renderItem(failedRunsEl, run.project.project_name + " · " + (run.name || "Workflow"),
           "#" + run.run_number + " · " + (run.head_branch || "okänd branch") + " · " + formatDate(run.created_at),
           run.conclusion || "okänd slutsats", "blocked", run.html_url);
       });
     }
 
+    const scheduledEl = byId("scheduled-runs-list");
+    scheduledEl.replaceChildren();
+    scheduledActive.sort((a,b) => String(b.run_started_at || b.created_at || "").localeCompare(String(a.run_started_at || a.created_at || "")));
+    scheduledFailures.sort((a,b) => String(b.created_at || "").localeCompare(String(a.created_at || "")));
+    if (!scheduledActive.length && !scheduledFailures.length) {
+      empty("scheduled-runs-list", "Inga pågående eller olösta schemalagda körningar i snapshoten.");
+    } else {
+      scheduledActive.forEach((run) => renderItem(scheduledEl,
+        run.project.project_name + " · " + (run.name || "Schemalagt workflow"),
+        "Pågår sedan " + formatDate(run.run_started_at || run.created_at) +
+        " · " + (run.display_title || run.workflow_path || "Geografisk testnivå ej registrerad"),
+        run.status, "next", run.html_url));
+      scheduledFailures.forEach((run) => renderItem(scheduledEl,
+        run.project.project_name + " · " + (run.name || "Schemalagt workflow"),
+        "Schemalagd körning · " + (run.display_title || run.workflow_path || "Geografisk testnivå ej registrerad") +
+        " · " + formatDate(run.created_at),
+        run.conclusion, "blocked", run.html_url));
+    }
+
+    const recoveredEl = byId("recovered-runs-list");
+    recoveredEl.replaceChildren();
+    recoveredFailures.sort((a,b) => String(b.created_at || "").localeCompare(String(a.created_at || "")));
+    if (!recoveredFailures.length) empty("recovered-runs-list", "Inga tidigare fel med en senare lyckad körning i urvalet.");
+    else recoveredFailures.forEach((run) => {
+      const recovery = runs.find((candidate) => workflowKey(candidate) === workflowKey(run) &&
+        candidate.status === "completed" && candidate.conclusion === "success" &&
+        String(candidate.created_at || "") > String(run.created_at || ""));
+      renderItem(recoveredEl, run.project.project_name + " · " + (run.name || "Workflow"),
+        "Fel " + formatDate(run.created_at) + " · senare lyckad körning " +
+        formatDate(recovery?.created_at) + " · " + (run.event || "okänt event"),
+        "Återhämtat", "done", run.html_url);
+    });
+
     const projectsEl = byId("projects-list");
     projectsEl.replaceChildren();
     projects.forEach((project) => {
       const runCount = (project.latest_workflow_runs || []).length;
       const projectFailed = (project.latest_workflow_runs || []).filter((r) =>
-        r.status === "completed" && r.conclusion && r.conclusion !== "success").length;
+        r.status === "completed" && r.conclusion && r.conclusion !== "success" &&
+        !runs.some((candidate) => candidate.project.repository === project.repository &&
+          String(candidate.workflow_id || candidate.workflow_path || candidate.name || "unknown") ===
+            String(r.workflow_id || r.workflow_path || r.name || "unknown") &&
+          candidate.status === "completed" && candidate.conclusion === "success" &&
+          String(candidate.created_at || "") > String(r.created_at || ""))).length;
       const details = (project.open_work_items || []).length + " öppna poster · " +
         runCount + "/20 senaste körningar hämtade · " + projectFailed + " misslyckade bland dessa";
       renderItem(projectsEl, project.project_name || project.repository,
