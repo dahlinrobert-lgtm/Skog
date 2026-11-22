@@ -17,6 +17,7 @@ on:
     - cron: "27 6 * * *"
 permissions:
   contents: write
+  pull-requests: write
 concurrency:
   group: samrad-pilot-archive
   cancel-in-progress: false
@@ -45,29 +46,27 @@ jobs:
           python scripts/build_harvest_event_bundle.py
           mkdir -p docs/data
           cp data/harvest_event_bundle.json docs/data/harvest_event_bundle.json
-      - name: Publish latest result, event bundle and immutable snapshot
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/samrad_latest.json data/harvest_event_bundle.json docs/data/harvest_event_bundle.json data/samrad_snapshots
-          if git diff --cached --quiet; then
-            echo "No Samråd changes to publish."
-            exit 0
-          fi
-          git commit -m "Archive Samråd pilot snapshot"
-          for attempt in 1 2 3 4 5; do
-            git fetch origin main
-            if git rebase origin/main; then
-              if git push origin HEAD:main; then
-                exit 0
-              fi
-              git rebase --abort || true
-            else
-              git rebase --abort || true
-              exit 1
-            fi
-            sleep $((attempt * 2))
-          done
-          echo "Could not publish Samråd snapshot after five attempts." >&2
-          exit 1
+      - name: Create or update Samråd snapshot pull request
+        if: github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: automation/samrad-pilot-snapshots
+          delete-branch: true
+          add-paths: |
+            data/samrad_latest.json
+            data/harvest_event_bundle.json
+            docs/data/harvest_event_bundle.json
+            data/samrad_snapshots
+          commit-message: "Archive Samråd pilot snapshot"
+          title: "data: archive Samråd pilot snapshots"
+          body: |
+            ## Samråd pilot snapshot
+
+            Automated snapshot from the configured pilot area.
+
+            - Point, line and polygon layers were collected and validated by the existing collector.
+            - The combined harvest event bundle was built and validated.
+            - Immutable dated snapshots and latest manifests are included for review.
+
+            Review collection status, coverage and snapshot contents before merging. Incomplete or failed runs must never be interpreted as removals or completed harvests. This PR does not authorize customer display or notifications.
