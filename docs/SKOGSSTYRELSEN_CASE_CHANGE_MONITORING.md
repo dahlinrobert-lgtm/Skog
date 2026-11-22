@@ -53,3 +53,24 @@ Workflowet ska misslyckas om en insamling eller ett test misslyckas. Det får in
 - Ofullständig/failed/partial körning får inte skriva en giltig kontrollpunkt eller skapa borttagningshändelser.
 - Första baslinjen är tyst.
 - Teknisk åtkomst är inte samma sak som kommersiella rättigheter eller kundvisning.
+
+## Driftverifiering 2026-11-22 – första manuella körningen
+
+Första manuella körningen efter merge, [run #4](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45031069869), genomförde samtliga insamlingssteg framgångsrikt:
+- Tester för Samrådsinsamlaren och completed snapshot-arkivet passerade.
+- Samrådsinsamlaren avslutades framgångsrikt för samtliga tre geometrier.
+- Snapshot av utförda avverkningar avslutades framgångsrikt.
+- Read-only-proben för planerade avverkningsanmälningar avslutades framgångsrikt.
+- Probe-rapporten laddades upp som artifact (artifact ID 14758060886; SHA-256 `c3af9908a5c5a72dbc83c00d29bbd0be77a330873a0367b2326b9e0d7efca208`).
+
+Publiceringssteget misslyckades efter att snapshots hade skapats lokalt i runnern. Loggen visar att fyra filer ändrades, inklusive nya komprimerade snapshots:
+- `data/samrad_snapshots/samrad_20261122T140801Z.json.gz`
+- `data/snapshots/completed_20261122T140801Z.geojson.gz`
+
+Push till `main` avvisades fem gånger av repository rules (GH013: “Changes must be made through a pull request”). Därmed publicerades inga snapshotfiler till main från denna körning. Detta var ett publicerings-/behörighetsflödesfel, inte ett insamlingsfel.
+
+### Korrigering
+
+Workflowet ändras till att använda `peter-evans/create-pull-request@v7` med separat automation-branch och `contents: write` + `pull-requests: write`. Varje månadskörning ska skapa eller uppdatera en PR med snapshots. Inga automatiska merges görs. Snapshotdata blir beständig i main först efter granskning och merge av data-PR:n.
+
+**Verifieringsstatus:** Insamling och artifact-uppladdning verifierade för run #4. Git-publicering via PR är ännu inte verifierad; nästa steg är att köra workflowet efter att korrigeringen mergats och kontrollera att en snapshot-PR skapas.
