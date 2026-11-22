@@ -1,0 +1,43 @@
+{
+  "source": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0",
+  "layer_id": 0,
+  "object_id_field": "OBJECTID",
+  "selected_fields": [
+    "*"
+  ],
+  "field_selection_note": "All source fields retained in the original feature snapshot.",
+  "captured_at_utc": "2026-11-22T16:13:47.367039+00:00",
+  "scope": {
+    "type": "point_distance",
+    "center_wgs84": {
+      "x": 19.66455,
+      "y": 63.74646
+    },
+    "radius_m": 10000,
+    "query": {
+      "where": "1=1",
+      "geometry": "{\"x\":19.66455,\"y\":63.74646}",
+      "geometryType": "esriGeometryPoint",
+      "inSR": "4326",
+      "distance": "10000",
+      "units": "esriSRUnit_Meter",
+      "spatialRel": "esriSpatialRelIntersects"
+    }
+  },
+  "pagination": {
+    "method": "returnIdsOnly_then_objectIds_batches",
+    "batch_size": 200,
+    "id_count": 165,
+    "feature_count": 165,
+    "unique_id_count": 165,
+    "count_before": 165,
+    "count_after": 165,
+    "id_inventory_stable_during_scan": true,
+    "complete_scan": true
+  },
+  "snapshot": "snapshots/grasmyr_10km_20261122T161347Z.geojson.gz",
+  "snapshot_bytes_uncompressed": 303866,
+  "snapshot_sha256": "21df361fbef8b0151e7a01e06d2377fe1f5cb42a1d5265217c1e7b7ea3d6bbee",
+  "status": "success",
+  "mode": "read-only pilot archive; no alerts; no customer database writes"
+}
