@@ -139,3 +139,15 @@ test("worker abandons a resumable scan when source metadata identity changes", a
   assert.ok(store.calls.failures[0].details.reasons.includes("snapshot_metadata_changed"));
   assert.equal(store.calls.starts, 1);
 });
+
+test("worker refuses incomplete snapshot metadata before allocating a scan", async () => {
+  const store = makeStore(1);
+  const source = makeSource(1);
+  source.getSnapshotMetadata = async () => ({ product: "harvest_notifications" });
+  await assert.rejects(
+    runScanBatch({ source, store, pageSize: 1, maxPages: 1 }),
+    /incomplete or invalid snapshot metadata/
+  );
+  assert.equal(store.calls.starts, 0);
+  assert.equal(store.calls.commits.length, 0);
+});
