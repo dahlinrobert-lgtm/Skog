@@ -805,3 +805,17 @@ Huvudfynd:
 - Samråd-data-PR #496 och Life2Taiga-data-PR #497 är båda mergade. Deras snapshot-/datasetinnehåll finns beständigt i `main`.
 - Samråd- och Life2Taiga-workflowfixarna (#494/#495) har verifierats med push-utlösta körningar som skapade data-PR:erna #496/#497. Det finns ännu ingen senare cron-utlöst lyckad körning efter dessa ändringar i den kontrollerade Actions-historiken.
 - Nästa steg är att granska kommande schemalagda körningar och kontrollera att de skapar eller uppdaterar PR #496/#497-flödena utan direktpush. Därefter fortsätter arbetet med fullständig paginering av planerade avverkningsanmälningar.
+
+
+## Gräsmyr – snapshot reconcilerad och publicerad via PR #502 (2026-11-22)
+
+- Ersättnings-PR [#502](https://github.com/dahlinrobert-lgtm/Skog/pull/502) mergades 2026-11-22 kl. 15:50:22 UTC. Merge commit: `62a4d0d471409ae4af544128bc1dcef6bf30ae94`.
+- Ursprunglig data-PR #485 stängdes utan merge efter att den visat sig ligga efter aktuell `main`. PR #502 byggdes från då aktuell `main` och förde över Gräsmyr-pilotens snapshot utan att skriva över senare Samråd-data eller senare data för genomförda avverkningar.
+- Planerade avverkningsanmälningar: lyckad körning 2026-11-22 13:20:19 UTC, status `ok`, 165 objekt och 165 unika ID:n inom Gräsmyr 10 km-scope. Snapshot `data/snapshots/20261122T132019Z.json`; `initial_run=false`, befintlig baseline `20261121T155530Z.json`, 165 objekt före och efter, inga tillagda/uppdaterade/borttagna objekt i denna jämförelse.
+- Change analysis skapad 2026-11-22 13:44:18 UTC: 381 planerade snapshots lästa, 0 oläsbara; 1 631 genomförda geometrier laddade. Analysens kategorier är evidens-/uppföljningsklassningar, inte bevis för att en viss planerad avverkning har genomförts.
+- Sammanfogat `data/harvest_event_bundle.json` och `docs/data/harvest_event_bundle.json`: 188 observationer, 188 händelser, 188 evidensposter, 11 relationer och 165 kedjor. Gräsmyrs planerade avverkningskörning (165 poster) och aktuell Samrådskörning från main (23 poster) finns kvar som separata källkörningar. Båda bundle-filerna har samma innehåll.
+- Ny daterad arkivfil för genomförda avverkningar `data/snapshots/completed_20261122T132033Z.geojson.gz` lades till. Befintlig `data/completed_latest.json` och senare genomförda-avverkningsdata från main behölls oförändrade.
+- PR #502 omfattade nio filer. Efter merge verifierades att main pekar på merge committen och att ovanstående snapshot-/manifestdata finns på main. JSON-parsning och unika ID:n kontrollerades före PR. Ingen separat CI-körning/check-run utlöstes för denna data-only PR; gzip-arkivets innehåll har inte verifierats separat.
+- PR-baserad publicering och databevarande är verifierade för denna körning. Detta etablerar inte nationell täckning, fullständig paginering av planerade anmälningar eller kommersiell rätt/kundvisning.
+
+**Nästa konkreta steg:** fortsätt enligt prioriteringen att undersöka ArcGIS metadata/edit tracking och bygg fullständig, paginerad och auditerbar insamling av planerade avverkningsanmälningar. Verifiera sidantal, totalantal, stabila ID:n, fullständighetsmanifest och minst två jämförbara kompletta körningar innan frånvaro används som förändringssignal. Bevaka samtidigt nästa faktiska cron-körningar och deras data-PR:er. Ingen kundfeed eller kundavisering aktiveras.
