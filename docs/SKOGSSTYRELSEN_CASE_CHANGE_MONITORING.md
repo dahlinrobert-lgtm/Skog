@@ -96,3 +96,13 @@ PR-checken [run #5](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45031
 - Probe-artifact: `skogsstyrelsen-monthly-source-audit-45033322810`, artifact ID 14758965735, SHA-256 `c7a63d038d180ace683e90f086b790857b63f9adfe293cf93506805516c987de`.
 - **Verifieringsstatus:** den nya PR-baserade publiceringsvägen är nu verifierad eftersom körningen skapade PR #491. Snapshotinnehållet är ännu inte beständigt i `main`; det sker först efter manuell granskning och merge av PR #491. Planerade avverkningsanmälningar är fortfarande endast en begränsad probe.
 - Rättighetsgrinden för kundvisning påverkas inte. Ingen kundfeed eller larmfunktion aktiveras av denna körning.
+
+
+## Slutstatus efter run #6 och merge av snapshotdata (2026-11-22)
+
+- [Run #6](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45033322810) lyckades med samtliga steg.
+- [Snapshot-PR #491](https://github.com/dahlinrobert-lgtm/Skog/pull/491) är mergad till `main` kl. 14:38:33 UTC, merge commit `e83b9d3059f91099497ad65d66dd35015d0c4cec`. Samrådets latest/manifests och komprimerade snapshot samt completed-harvest latest och delta finns nu beständigt i `main`.
+- [Dokumentations-PR #492](https://github.com/dahlinrobert-lgtm/Skog/pull/492) är mergad kl. 14:42:33 UTC, merge commit `950df85b3f6ded7b586b346815a80547e76cd348`.
+- Publiceringskedjan via separat snapshot-PR är därmed verifierad för denna pilotkörning. Detta verifierar inte ännu flera månaders jämförbarhet.
+- Planerade avverkningsanmälningar är fortfarande endast 300 poster av cirka 132 594 i en bounded probe; fullständig paginerad snapshot saknas.
+- Nästa steg: verifiera ArcGIS edit tracking/datumfält och bygga en komplett paginerad snapshot med tydlig fullständighetskontroll för planerade avverkningsanmälningar.
