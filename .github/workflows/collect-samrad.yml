@@ -1,5 +1,16 @@
 name: Collect Samråd pilot snapshots
 on:
+  pull_request:
+    paths:
+      - "scripts/collect_samrad.py"
+      - "scripts/build_harvest_event_bundle.py"
+      - "tests/test_collect_samrad.py"
+      - "tests/test_harvest_event_bundle.py"
+      - "data-platform/schemas/event-bundle.schema.json"
+      - "data-platform/scripts/validate_event_bundle.py"
+      - "config/area.json"
+      - "requirements.txt"
+      - ".github/workflows/collect-samrad.yml"
   workflow_dispatch:
   push:
     branches: [main]
@@ -40,8 +51,10 @@ jobs:
           python -m unittest discover -s tests -p 'test_collect_samrad.py' -v
           python -m unittest discover -s tests -p 'test_harvest_event_bundle.py' -v
       - name: Collect point, line and polygon layers
+        if: github.event_name != 'pull_request'
         run: python scripts/collect_samrad.py
       - name: Build and validate combined harvest event bundle
+        if: github.event_name != 'pull_request'
         run: |
           python scripts/build_harvest_event_bundle.py
           mkdir -p docs/data
