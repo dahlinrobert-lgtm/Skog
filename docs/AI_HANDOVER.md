@@ -847,3 +847,16 @@ Huvudfynd:
 - Ingen nationell täckning har verifierats. Kommersiella rättigheter och kundvisning ändras inte av den tekniska arkiveringen.
 
 **Nästa konkreta steg:** kör samma manuella workflow igen vid nästa lämpliga kontrolltillfälle. Jämför ID-inventering, antal, objektinnehåll och manifest. Om källan är komplett och jämförbar, dokumentera differenser utan att ännu skapa kundlarm. Behåll sex­timmarsproben som separat monitor.
+
+
+## Gräsmyr analys prestanda – strömmad arkivhantering (2026-11-22)
+
+- PR [#509](https://github.com/dahlinrobert-lgtm/Skog/pull/509) mergades till main i commit `adac73f7d960330aa4a00f9612e99823b4fa8979`.
+- Bakgrunden var att Gräsmyr monitoring-run [45041585086](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45041585086) hade stått länge i steget `Analyze planned and completed changes`. Vid kontroll 16:30 UTC var den fortfarande markerad in_progress; loggar kunde inte hämtas via GitHub-loggendpointen.
+- Inventering av arkivfiler på main visade 379 genomförda-avverkning-arkiv under `data/snapshots/completed_*.geojson.gz`, cirka 194,8 MB komprimerat. 38 var större kontrollpunkter och 341 små deltaarkiv.
+- `completed_snapshot_store.py` har nu `iter_completed_archive_transitions`, som strömmar giltiga arkivtillstånd och lämnar vidare endast tillagda/ändrade objekt från deltaarkiv. Fulla kontrollpunkter jämförs med föregående jämförbara tillstånd. `read_latest_completed_archive` återskapar endast senaste giltiga tillstånd för aktuell analys.
+- `analyze_changes.py` använder dessa funktioner i stället för att materialisera samtliga historiska fullständiga tillstånd två gånger. Första arkivet förblir baslinje. Saknad/ogiltig delta-bas och ändrat scope får inte bli borttagningar eller förändringshändelser. Arkivparens räknare och scope-diagnostik behålls.
+- Tester passerade på PR-grenen: [completed evidence transitions #45044134864](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134864), [completed snapshot tests #45044134796](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134796), [full snapshot storage tests #45044134896](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134896), [geometric union #45044134822](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134822) och [monthly source audit checks #45044134806](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134806).
+- Workflowet `.github/workflows/completed-snapshot-store-tests.yml` har avgränsats till relevanta tester och installerar projektets beroenden före testning.
+
+**Operativ verifiering återstår:** main-push startade en ny Gräsmyr monitoring-run [45044260811](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044260811), som vid dokumentationstillfället stod i pending på grund av den tidigare körningen med samma concurrency-grupp. Följ den nya körningen och verifiera att analyssteget avslutas och att data-PR skapas. Jämför faktisk körtid med den tidigare körningen. Därefter körs den andra kompletta Gräsmyr 10 km-snapshoten separat. Ingen kundavisering eller frånvaroklassning aktiveras före jämförbara kompletta observationer.

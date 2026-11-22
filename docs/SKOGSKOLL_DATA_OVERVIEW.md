@@ -837,3 +837,23 @@ Manifestet visar en komplett read-only-hämtning för Gräsmyr 10 km, fångad 20
 Detta är första kompletta arkiverade observationen, inte ännu en förändringsserie. En andra komplett körning med samma scope behövs innan differenser kan klassas som förändringar. Ingen frånvaro får betraktas som borttagning, och inga kundlarm eller kunddatabas-skrivningar är aktiverade. Nationell täckning och kommersiell kundvisningsrätt är inte verifierade.
 
 **Nästa steg:** gör en andra komplett körning vid senare tillfälle och jämför ID-inventering, antal och objektinnehåll. Behåll befintlig sex­timmarsprobe separat.
+
+
+### Prestanda: strömmad analys av genomförda avverkningar (2026-11-22)
+
+PR [#509](https://github.com/dahlinrobert-lgtm/Skog/pull/509) ersatte analysens fullständiga historikmaterialisering med strömmad arkivhantering.
+
+- `iter_completed_archive_transitions` läser arkivkedjan stegvis och behåller ett rekonstruerat tillstånd i taget. Deltaarkivens `added` och `updated` används för att begränsa vilka objekt som behöver geometri- och tidskontroller. Fulla kontrollpunkter jämförs mot föregående jämförbara tillstånd.
+- `read_latest_completed_archive` rekonstruerar endast det senaste giltiga arkivtillståndet för den aktuella analysen.
+- Första fullständiga arkivet är fortsatt baslinje, inte historiskt larm. Saknade basarkiv, brutna delta-kedjor och scopeändringar får inte tolkas som borttagningar eller förändringshändelser.
+- Arkivparens jämförbarhetsräknare och diagnostik för saknat/ändrat scope bevaras.
+- Vid ändringen fanns 379 genomförda-avverkning-arkiv, totalt cirka 194,8 MB komprimerat (38 större kontrollpunkter och 341 små deltaarkiv).
+
+Verifiering på PR-grenen:
+- [Completed evidence transition tests](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134864) – success.
+- [Completed snapshot storage tests](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134796) – success.
+- [Full snapshot storage test suite](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134896) – success.
+- [Geometric union tests](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134822) – success.
+- [Monthly source audit tests](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044134806) – success.
+
+**Operativ verifiering:** den första monitor-runnen [45041585086](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45041585086) var fortfarande in_progress i analyssteget när PR #509 mergades. Den nya main-runnen [45044260811](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044260811) startade men stod i pending på grund av workflowets concurrency-skydd. En lyckad testsvit verifierar kodens funktion, men ännu inte den verkliga körtiden mot hela arkivhistoriken. Följ main-runnen innan den andra kompletta Gräsmyr-snapshoten körs.
