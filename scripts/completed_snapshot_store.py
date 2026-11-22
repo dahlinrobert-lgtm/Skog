@@ -93,10 +93,6 @@ def iter_completed_archive_transitions(snapshots_dir: Path):
     for path in paths:
         raw = _read_raw(path)
         if raw is None:
-            state = {}
-            state_filename = None
-            state_checked_at = None
-            state_scope = None
             continue
 
         filename = path.name
@@ -105,33 +101,35 @@ def iter_completed_archive_transitions(snapshots_dir: Path):
 
         if raw.get("snapshot_format") != FORMAT:
             if not isinstance(raw.get("features"), list):
-                state = {}
-                state_filename = None
-                state_checked_at = None
-                state_scope = None
                 continue
             current = _feature_map(raw)
             comparable = bool(
-                state and state_filename and state_scope and scope
+                state_filename is not None and state_scope and scope
                 and state_scope == scope
                 and state_checked_at != checked_at
             )
+            changed = {}
+            before = {}
+            reason = None
             if comparable:
                 changed = {
                     key: item for key, item in current.items()
                     if key not in state or canonical_hash(item) != canonical_hash(state[key])
                 }
                 before = {key: state[key] for key in changed if key in state}
-                if changed:
-                    yield {
-                        "before_snapshot": state_filename,
-                        "after_snapshot": filename,
-                        "before_checked_at": state_checked_at,
-                        "after_checked_at": checked_at,
-                        "scope_sha256": scope,
-                        "before_features": before,
-                        "after_features": changed,
-                    }
+            elif state_filename is not None and (not state_scope or not scope or state_scope != scope):
+                reason = "Completed-layer query scope is missing or changed; source differences are not interpreted as evidence transitions."
+            yield {
+                "before_snapshot": state_filename,
+                "after_snapshot": filename,
+                "before_checked_at": state_checked_at,
+                "after_checked_at": checked_at,
+                "scope_sha256": scope,
+                "comparable": comparable,
+                "skip_reason": reason,
+                "before_features": before,
+                "after_features": changed,
+            }
             state = current
             state_filename = filename
             state_checked_at = checked_at
@@ -142,7 +140,7 @@ def iter_completed_archive_transitions(snapshots_dir: Path):
         base_name = raw.get("base_snapshot")
         if (
             not isinstance(delta, dict)
-            or not state
+            or state_filename is None
             or base_name != state_filename
             or not scope
             or scope != state_scope
@@ -171,13 +169,15 @@ def iter_completed_archive_transitions(snapshots_dir: Path):
             after[key] = item
 
         state = _apply_delta_features(state, raw)
-        if state_checked_at != checked_at and after:
-            yield {
+        comparable = state_checked_at != checked_at
+        yield {
                 "before_snapshot": state_filename,
                 "after_snapshot": filename,
                 "before_checked_at": state_checked_at,
                 "after_checked_at": checked_at,
                 "scope_sha256": scope,
+                "comparable": comparable,
+                "skip_reason": None,
                 "before_features": before,
                 "after_features": after,
             }
@@ -194,15 +194,9 @@ def read_latest_completed_archive(snapshots_dir: Path):
     for path in sorted(snapshots_dir.glob(f"{PREFIX}*{SUFFIX}")):
         raw = _read_raw(path)
         if raw is None:
-            state = {}
-            state_filename = None
-            state_metadata = None
             continue
         if raw.get("snapshot_format") != FORMAT:
             if not isinstance(raw.get("features"), list):
-                state = {}
-                state_filename = None
-                state_metadata = None
                 continue
             state = _feature_map(raw)
             state_filename = path.name
@@ -210,14 +204,11 @@ def read_latest_completed_archive(snapshots_dir: Path):
             continue
         if (
             not isinstance(raw.get("feature_delta"), dict)
-            or not state
+            or state_filename is None
             or raw.get("base_snapshot") != state_filename
             or not raw.get("query_scope_sha256")
             or raw.get("query_scope_sha256") != (state_metadata or {}).get("query_scope_sha256")
         ):
-            state = {}
-            state_filename = None
-            state_metadata = None
             continue
         state = _apply_delta_features(state, raw)
         state_filename = path.name
