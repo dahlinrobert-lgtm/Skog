@@ -124,7 +124,17 @@ test("worker persists source metadata at scan start and carries it through compl
 });
 
 test("worker abandons a resumable scan when source metadata identity changes", async () => {
-  const oldMetadata = { endpoint: "https://example.test/MapServer/0", schema_version: "v1" };
+  const oldMetadata = {
+    product: "harvest_notifications",
+    endpoint: "https://example.test/MapServer/0",
+    layer: "0",
+    query_definition: "where=1=1",
+    coverage_key: "unfiltered-layer-query-v1",
+    schema_version: "v1",
+    identity_version: "oid-v1",
+    customer_visibility: "not_assessed",
+    rights_evidence_ref: null
+  };
   const checkpoint = {
     schemaVersion: 1, sourceKey: "source", reportedTotal: 2, pageSize: 1,
     nextOffset: 1, fetchedCount: 1, seenIds: [], externalSeenIds: true,
