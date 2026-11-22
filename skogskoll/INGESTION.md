@@ -84,3 +84,15 @@ Migration 004 adds the read-only, service-role-only RPC `skogskoll_match_observa
 - This RPC only returns matching observations. It does not create alert events, deliver notifications, import source data, or modify user preferences.
 
 The database workflow now starts a disposable PostGIS service in GitHub Actions, creates minimal mock Supabase auth roles, applies the schema and migrations 002–004, and runs rollback-wrapped SQL integration tests. This validates PostgreSQL/PostGIS behavior in CI but is not a live Supabase project test.
+
+## Snapshot metadata and immutable envelope registry (PR under review)
+
+The ArcGIS source adapter exposes getSnapshotMetadata(). The worker now obtains this metadata before allocating a scan and fails closed if the comparison identity is incomplete. The exact metadata object is persisted in both poll_runs.diagnostics.snapshot_metadata and scan_sessions.diagnostics.snapshot_metadata by the metadata-aware start RPC.
+
+A resumed scan must have the same canonical metadata identity. If endpoint, product, layer, query definition, coverage key, schema version, or identity version changes, the old session is failed and a fresh scan starts at offset zero. Previously committed observation/current-state/history rows remain intact; no unseen records are reconciled as inactive.
+
+Migration 005 adds the worker-only snapshot_envelopes table and service-role-only skogskoll_register_snapshot RPC. A terminal run/session is mapped through src/snapshot-envelope-adapter.mjs; the RPC verifies persisted scan identity, metadata equality, terminal status, and that complete status corresponds to a successful fully covered scan. Registration is idempotent for identical envelope content and rejects a conflicting envelope for the same scan. RLS is enabled without public policies.
+
+The store registers envelopes after successful finish and after fatal failure. In-progress scans are not snapshots. A failed envelope is audit metadata, not a customer event. Missing metadata means no envelope is registered. customer_visibility remains not_assessed, and no rights evidence is inferred.
+
+Migration 005 and the SQL smoke test are included in the database CI workflow. This PR does not connect to live Supabase, run a production migration, schedule ingestion, send alerts, or enable customer visibility. CI success will validate the disposable PostgreSQL/PostGIS test environment only.
