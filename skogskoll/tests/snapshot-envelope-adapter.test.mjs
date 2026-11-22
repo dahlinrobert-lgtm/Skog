@@ -151,6 +151,8 @@ test("missing endpoint or query definition is rejected", () => {
       metadata: { ...metadata, [field]: "" }
     });
     assert.equal(r.valid, false);
+    assert.equal(r.envelope.status, "partial");
+    assert.equal(r.envelope.comparability_key, null);
     assert.ok(r.errors.includes("metadata_missing_" + field));
   }
 });
