@@ -1,4 +1,5 @@
 name: Skogskoll database tests
+# Migration 005 also verifies immutable metadata and rechecks complete-scan coverage at registration.
 on:
   push:
     branches: [main]
