@@ -32,7 +32,15 @@ Göra inventeringen mer fullständig och ge ett tillförlitligt underlag för f�
 - Lagringsplats, retention, åtkomst och eventuell exponering av metadata ska dokumenteras.
 - Om ingen beständig baslinje finns tillgänglig ska rapporten tydligt säga att historisk jämförelse inte kunde göras.
 
-### 4. Rapport och beslutsunderlag
+### 4. Arkitekturpassning och återanvändning – ny obligatorisk grind
+Före varje rekommendation om ny funktion, workflow, agent, integration eller lagring ska agenten/projektledaren kontrollera aktuell main för befintliga komponenter, workflows, scheman, register, rapporter och lagringsflöden.
+- Klassificera lösningen som återanvänd, utökad, ersatt eller ny separat komponent.
+- En ny parallell komponent kräver dokumenterad motivering, överlappskontroll, systemgräns, auktoritativ datakälla, integrationspunkt, säkerhets-/driftkonsekvens och eventuell avvecklingsplan.
+- Ge evidenslänkar till de befintliga delarna som granskats; markera ej undersökt som okänt.
+- Om underlaget inte räcker ska rekommendationen uttryckligen vara preliminär och ingen ny arkitektur byggas på antagandet att befintligt saknas.
+- Föredra minsta ändring som utökar befintlig arkitektur utan att skapa dubbla sanningskällor eller parallell drift.
+
+### 5. Rapport och beslutsunderlag
 - Separera fakta, signaler, osäkerheter och rekommenderade åtgärder.
 - Varje rekommendation ska ha evidenslänk, prioritet, beroenden och föreslaget nästa steg.
 - Misslyckade eller avbrutna workflows är granskningssignaler, inte bevis på fel i en datakälla.
@@ -49,7 +57,7 @@ Göra inventeringen mer fullständig och ge ett tillförlitligt underlag för f�
 7. Trunkerad eller ofullständig inventering undertrycker frånvarobaserade slutsatser.
 8. Råinventeringar bevaras oförändrade med körnings-ID, tidpunkt och kontrollsumma.
 9. CI passerar; manuell workflowkörning producerar verifierbar rapport och artifact.
-10. Behörigheter förblir read-only. Ingen schedule, LLM/API eller skrivbehörighet införs.
+10. Varje nytt lösningsförslag innehåller en verifierbar återanvändnings- och arkitekturpassning med evidens och motivering för eventuell ny komponent.\n11. Behörigheter förblir read-only. Ingen schedule, LLM/API eller skrivbehörighet införs.
 
 ## Föreslagen leveransordning
 

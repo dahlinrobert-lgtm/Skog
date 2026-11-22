@@ -125,6 +125,13 @@ class ProjectManagerAgentTests(unittest.TestCase):
         report=build_report(data)
         self.assertIn("trunkerat",report)
         self.assertIn("frånvarobaserade slutsatser",report)
+    def test_report_requires_architecture_reuse_review_before_new_solution(self):
+        report=build_report(collect_inventory(FakeClient(),generated_at="2026-11-18T12:00:00Z"))
+        self.assertIn("Arkitekturpassning", report)
+        self.assertIn("återanvänd", report)
+        self.assertIn("ny parallell lösning", report)
+        self.assertIn("utför inte självständig arkitekturgranskning", report)
+
     def test_inventory_does_not_export_issue_bodies_or_token(self):
         data=collect_inventory(FakeClient(),generated_at="2026-11-18T12:00:00Z")
         serialized=json.dumps(data)
