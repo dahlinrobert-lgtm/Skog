@@ -1,3 +1,4 @@
+-- PR #538: metadata-bound worker scans and immutable snapshot envelope registry.
 -- Skogskoll migration 005: persist source metadata with scan identity and register immutable envelopes.
 -- Apply after migrations 002 and 003. Worker-only data; no customer-facing policies.
 
