@@ -84,6 +84,8 @@ create table if not exists public.snapshot_envelopes (
 );
 
 alter table public.snapshot_envelopes enable row level security;
+alter table public.scan_sessions
+  add column if not exists snapshot_registered_at timestamptz;
 -- Intentionally no public policies. Only trusted service-role workers may register/read envelopes.
 
 create or replace function public.skogskoll_register_snapshot(
@@ -153,7 +155,12 @@ begin
   where scan_session_id = p_scan_id or snapshot_id = v_snapshot_id
   for update;
   if found then
-    if v_existing.envelope = p_envelope then return v_existing.snapshot_id; end if;
+    if v_existing.envelope = p_envelope then
+      update public.scan_sessions
+      set snapshot_registered_at = coalesce(snapshot_registered_at, now())
+      where id = p_scan_id;
+      return v_existing.snapshot_id;
+    end if;
     raise exception 'immutable snapshot envelope already exists with different content';
   end if;
 
@@ -170,9 +177,31 @@ begin
     coalesce(p_envelope->>'customer_visibility','not_assessed'),
     p_envelope->>'rights_evidence_ref', p_envelope
   );
+  update public.scan_sessions
+  set snapshot_registered_at = coalesce(snapshot_registered_at, now())
+  where id = p_scan_id;
   return v_snapshot_id;
 end;
-$$;
+$;
+
+create or replace function public.skogskoll_pending_snapshot_scans(p_source text)
+returns table(scan_id uuid)
+language sql
+security definer
+set search_path = public, extensions
+as $
+  select s.id
+  from public.scan_sessions s
+  where s.source = p_source
+    and s.status in ('complete','failed','abandoned')
+    and s.snapshot_registered_at is null
+    and s.diagnostics ? 'snapshot_metadata'
+  order by s.updated_at asc
+  limit 100;
+$;
+
+revoke all on function public.skogskoll_pending_snapshot_scans(text) from public, anon, authenticated;
+grant execute on function public.skogskoll_pending_snapshot_scans(text) to service_role;
 
 revoke all on function public.skogskoll_start_scan(text,integer,integer,text,jsonb) from public, anon, authenticated;
 revoke all on function public.skogskoll_register_snapshot(uuid,jsonb) from public, anon, authenticated;
