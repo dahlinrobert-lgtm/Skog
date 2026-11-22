@@ -750,9 +750,16 @@ Snapshotfiler skapades i runnern men kunde inte publiceras till `main`: reposito
 
 ### Första lyckade månadskontroll – 2026-11-22
 
-Run #6 genomförde samtliga insamlings- och publiceringssteg. Resultatet är granskningsbart i [data-PR #491](https://github.com/dahlinrobert-lgtm/Skog/pull/491), som ännu inte är mergad.
+Run #6 genomförde samtliga insamlings- och publiceringssteg. [Data-PR #491](https://github.com/dahlinrobert-lgtm/Skog/pull/491) granskades och mergades till `main` 2026-11-22 kl. 14:38:33 UTC (merge commit `e83b9d3059f91099497ad65d66dd35015d0c4cec`). Snapshotfilerna är beständiga i huvudgrenen.
 
 - Samråd: 0 punktobjekt, 11 linjeobjekt och 12 områdesobjekt efter exakt cirkelfilter inom Gräsmyr 10 km.
 - Utförda avverkningar: 1 631 objekt i aktuell kontroll; inga nya, saknade eller geometriändrade ID:n. En 479-byte deltafil representerar oförändrat läge och ska inte tolkas som tomt lager.
 - Planerade avverkningsanmälningar: endast 300 av uppskattningsvis 132 594 poster lästes; fullständig scan saknas.
 - Inga frånvarobaserade borttagningsslutsatser eller kundlarm görs. Rättighetsgrinden är oförändrad.
+
+
+### Beständig publicering verifierad – PR #491/#492 mergade
+
+Run #6:s snapshotdata publicerades till `main` genom PR #491. Dokumentationsuppdateringen i PR #492 är också mergad. Publiceringskedjan är därmed verifierad för den första Gräsmyr-pilotkörningen. Detta innebär inte att en lång historisk tidsserie eller nationell täckning är etablerad.
+
+Planerade avverkningsanmälningar är fortsatt begränsade till 300 poster av cirka 132 594 i den befintliga proben. Fullständig paginerad insamling och validering återstår.
