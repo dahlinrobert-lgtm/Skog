@@ -789,3 +789,10 @@ De två automatiskt skapade data-PR:erna har granskats och mergats:
 - Life2Taiga naturvårdspolygoner [PR #497](https://github.com/dahlinrobert-lgtm/Skog/pull/497), merge commit `467322df3f1c591717e58b0f650717471d2b80cc`, 15:21:08 UTC.
 
 Data från dessa PR:er är nu beständig i `main`. Den tidigare verifieringen av workflowen var push-utlöst efter merge av kodfixarna; faktisk cron-verifiering efter dessa ändringar återstår. Mergad data är inte i sig ett godkännande för kommersiell kundvisning.
+
+
+### Dokumentationsstatus efter PR #498 – 2026-11-22
+
+PR #498 är mergad till `main` med merge commit `21cfa30af358588eb6889d27f78b4e8bffc1fa9a`. Kundgränssnittstester efter merge passerade i [run 45038321932](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45038321932).
+
+Samråd-data-PR #496 och Life2Taiga-data-PR #497 är båda mergade till `main`. Publiceringsfixarna #494/#495 har verifierats med push-utlösta körningar, men faktisk schemalagd drift efter fixarna återstår att bekräfta. Ingen kundvisningsrätt följer av att data finns i `main`.
