@@ -214,6 +214,43 @@ export function createSupabaseStore({
     return request(`/rest/v1/rpc/${name}`, { method: "POST", body: args });
   }
 
+  async function registerSnapshotForScan(scanId) {
+    const scanQuery = new URLSearchParams({
+      select: "id,source,source_count,fetched_count,next_offset,status,completed_at,diagnostics,poll_run_id",
+      id: `eq.${scanId}`,
+      limit: "1"
+    });
+    const scanRows = await request(`/rest/v1/scan_sessions?${scanQuery}`);
+    if (!Array.isArray(scanRows) || scanRows.length !== 1) {
+      throw new Error("Terminal scan session could not be reloaded for snapshot registration");
+    }
+    const scan = scanRows[0];
+    const metadata = scan.diagnostics?.snapshot_metadata ?? null;
+    if (!metadata) return null;
+    if (!scan.poll_run_id) throw new Error("Scan session has no poll_run_id for snapshot registration");
+    const runQuery = new URLSearchParams({
+      select: "id,source,status,fetched_count,finished_at,diagnostics",
+      id: `eq.${scan.poll_run_id}`,
+      limit: "1"
+    });
+    const runRows = await request(`/rest/v1/poll_runs?${runQuery}`);
+    if (!Array.isArray(runRows) || runRows.length !== 1) {
+      throw new Error("Poll run could not be reloaded for snapshot registration");
+    }
+    const mapped = mapWorkerScanToSnapshotEnvelope({
+      pollRun: runRows[0],
+      scanSession: scan,
+      metadata
+    });
+    if (!mapped.valid) {
+      throw new Error("Snapshot envelope validation failed: " + mapped.errors.join(", "));
+    }
+    return rpc("skogskoll_register_snapshot", {
+      p_scan_id: scanId,
+      p_envelope: mapped.envelope
+    });
+  }
+
   return {
     externalSeenIds: true,
     async loadCheckpoint(sourceKey) {
@@ -289,51 +326,9 @@ export function createSupabaseStore({
       return result;
     },
 
-    async finishScan(scanId, checkpoint, snapshotMetadata = null) {
+    async finishScan(scanId) {
       await rpc("skogskoll_finish_scan", { p_scan_id: scanId });
-      if (!snapshotMetadata) return;
-      const scanQuery = new URLSearchParams({
-        select: "id,source,source_count,fetched_count,next_offset,status,completed_at,diagnostics,poll_run_id",
-        id: `eq.${scanId}`,
-        limit: "1"
-      });
-      const scanRows = await request(`/rest/v1/scan_sessions?${scanQuery}`);
-      if (!Array.isArray(scanRows) || scanRows.length !== 1) {
-        throw new Error("Completed scan session could not be reloaded for snapshot registration");
-      }
-      const scan = scanRows[0];
-      const linkedRunId = scan.poll_run_id;
-      if (!linkedRunId) throw new Error("Completed scan has no poll_run_id for snapshot registration");
-      const runQuery = new URLSearchParams({
-          select: "id,source,status,fetched_count,finished_at,diagnostics",
-          id: `eq.${scanId}`,
-          limit: "1"
-        });
-        void runQuery;
-      }
-      const linkedRunId = scan.poll_run_id ?? pollRunId;
-      if (!linkedRunId) throw new Error("Completed scan has no poll_run_id for snapshot registration");
-      const runQuery = new URLSearchParams({
-        select: "id,source,status,fetched_count,finished_at,diagnostics",
-        id: `eq.${linkedRunId}`,
-        limit: "1"
-      });
-      const runRows = await request(`/rest/v1/poll_runs?${runQuery}`);
-      if (!Array.isArray(runRows) || runRows.length !== 1) {
-        throw new Error("Poll run could not be reloaded for snapshot registration");
-      }
-      const mapped = mapWorkerScanToSnapshotEnvelope({
-        pollRun: runRows[0],
-        scanSession: scan,
-        metadata: scan.diagnostics?.snapshot_metadata ?? snapshotMetadata
-      });
-      if (!mapped.valid || mapped.envelope.status !== "complete") {
-        throw new Error("Snapshot envelope validation failed: " + mapped.errors.join(", "));
-      }
-      await rpc("skogskoll_register_snapshot", {
-        p_scan_id: scanId,
-        p_envelope: mapped.envelope
-      });
+      await registerSnapshotForScan(scanId);
     },
 
     async recoverStaleScan({ sourceKey, staleBefore, reason = "stale_worker_recovery" }) {
@@ -355,6 +350,7 @@ export function createSupabaseStore({
         p_reason: String(reason ?? "unknown").slice(0, 500),
         p_details: details
       });
+      await registerSnapshotForScan(scanId);
     }
   };
 }
