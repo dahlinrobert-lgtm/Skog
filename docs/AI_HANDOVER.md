@@ -754,13 +754,22 @@ Huvudfynd:
 
 - Manuell `workflow_dispatch` run #6 lyckades: https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45033322810
 - Alla jobb/steg passerade, inklusive tester, Samrådinsamling, completed-harvest snapshot, planned-harvest probe, skapande av snapshot-PR och artifact-uppladdning.
-- Automatiska data-PR:n är [PR #491](https://github.com/dahlinrobert-lgtm/Skog/pull/491), öppen och mergebar men ännu inte mergad. Den innehåller `data/samrad_latest.json`, `data/completed_latest.json` samt två nya komprimerade snapshotfiler. Granska PR:n manuellt innan merge.
+- Automatiska data-PR:n [#491](https://github.com/dahlinrobert-lgtm/Skog/pull/491) mergades 2026-11-22 kl. 14:38:33 UTC (merge commit `e83b9d3059f91099497ad65d66dd35015d0c4cec`). Snapshotfilerna och latest-manifesten finns nu beständigt i `main`.
 - Samråd, Gräsmyr-pilotens 10 km cirkulära scope: points 0; lines 20 hämtade i envelope, 11 kvar efter exakt cirkelfilter; areas 14 hämtade i envelope, 12 kvar efter exakt cirkelfilter. Status success för samtliga lager. Snapshot: `data/samrad_snapshots/samrad_20261122T143240Z.json.gz` (401 155 byte); scope hash `9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a`.
 - Utförda avverkningar: 1 631 objekt i aktuell fullständig kontroll inom 10 km-scope. Ingen baseline; 0 nya, 0 saknade och 0 geometriändrade ID:n. Arkivfilen `completed_20261122T143240Z.geojson.gz` är en delta på 479 byte med 0 tillagda/uppdaterade/borttagna objekt; detta betyder oförändrat läge, inte att lagret är tomt. Full komprimerad motsvarighet uppskattades till 6 217 406 byte.
 - Planerade avverkningsanmälningar: read-only-probe lyckades men är uttryckligen inte fullständig. Källan rapporterade 132 594 poster; proben läste 300 poster (3 sidor), capped=true, complete_scan=false, ca 0,0754 % av lagret. Den får inte användas som fullständig historik eller larmunderlag.
 - Probe-artifact: `skogsstyrelsen-monthly-source-audit-45033322810`, artifact ID 14758965735, SHA-256 `c7a63d038d180ace683e90f086b790857b63f9adfe293cf93506805516c987de`.
-- **Verifieringsstatus:** den nya PR-baserade publiceringsvägen är nu verifierad eftersom körningen skapade PR #491. Snapshotinnehållet är ännu inte beständigt i `main`; det sker först efter manuell granskning och merge av PR #491. Planerade avverkningsanmälningar är fortfarande endast en begränsad probe.
+- **Verifieringsstatus:** den PR-baserade publiceringsvägen är verifierad och snapshotinnehållet från run #6 är beständigt i `main` efter merge av PR #491. Planerade avverkningsanmälningar är fortfarande endast en begränsad probe.
 - Rättighetsgrinden för kundvisning påverkas inte. Ingen kundfeed eller larmfunktion aktiveras av denna körning.
 
 
-**Nästa konkreta steg:** granska PR #491:s snapshotinnehåll och mergea endast om filer, scope och arkivkedja är korrekta. Därefter utred fullständig paginerad snapshot för planerade avverkningsanmälningar; nuvarande 300-radersprobe är inte komplett.
+**Nästa konkreta steg:** bygg och verifiera en fullständig, paginerad och auditerbar snapshotlösning för planerade avverkningsanmälningar. Nuvarande 300-radersprobe är inte komplett.
+
+
+## Statuskorrigering efter merge av PR #491 och #492 (2026-11-22)
+
+- PR #491 är mergad till `main` med merge commit `e83b9d3059f91099497ad65d66dd35015d0c4cec`; snapshots/latest-filerna från run #6 är beständiga.
+- Dokumentations-PR #492 är mergad till `main` med merge commit `950df85b3f6ded7b586b346815a80547e76cd348`.
+- Run #6 verifierar insamling, snapshotgenerering, PR-publicering och artifact-uppladdning för Samråd och utförda avverkningar i Gräsmyr 10 km-piloten.
+- Planerade avverkningsanmälningar är fortsatt endast en bounded probe: 300 av cirka 132 594 poster. Fullständig paginering, historik och ändringsspårning återstår.
+- Nästa konkreta tekniska steg är att undersöka ArcGIS metadata/edit tracking och implementera/testa fullständig paginering för planerade avverkningsanmälningar. Ingen kundvisning eller kundavisering aktiveras.
