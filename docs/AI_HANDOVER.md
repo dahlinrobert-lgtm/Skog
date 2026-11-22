@@ -748,3 +748,19 @@ Huvudfynd:
 - Merge commit: `4c62e11b58c213e715bd9c4d939d514626cc2359`.
 - PR-kontroll run #5 (45031856059) passerade testerna. Eftersom det var en `pull_request`-körning hoppades samtliga källinsamlingar och snapshot-PR-steget av enligt workflowvillkoren. Den verifierar alltså workflowets testgrind, inte publicering eller källinsamling.
 - Nästa steg: kör workflow_dispatch manuellt från main och verifiera att Samråd, utförda avverkningar och planned-harvest probe körs samt att en separat snapshot-PR skapas. Granska snapshot-PR:n före merge.
+
+
+## Skogsstyrelsen monthly audit – första lyckade publiceringskörningen (2026-11-22)
+
+- Manuell `workflow_dispatch` run #6 lyckades: https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45033322810
+- Alla jobb/steg passerade, inklusive tester, Samrådinsamling, completed-harvest snapshot, planned-harvest probe, skapande av snapshot-PR och artifact-uppladdning.
+- Automatiska data-PR:n är [PR #491](https://github.com/dahlinrobert-lgtm/Skog/pull/491), öppen och mergebar men ännu inte mergad. Den innehåller `data/samrad_latest.json`, `data/completed_latest.json` samt två nya komprimerade snapshotfiler. Granska PR:n manuellt innan merge.
+- Samråd, Gräsmyr-pilotens 10 km cirkulära scope: points 0; lines 20 hämtade i envelope, 11 kvar efter exakt cirkelfilter; areas 14 hämtade i envelope, 12 kvar efter exakt cirkelfilter. Status success för samtliga lager. Snapshot: `data/samrad_snapshots/samrad_20261122T143240Z.json.gz` (401 155 byte); scope hash `9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a`.
+- Utförda avverkningar: 1 631 objekt i aktuell fullständig kontroll inom 10 km-scope. Ingen baseline; 0 nya, 0 saknade och 0 geometriändrade ID:n. Arkivfilen `completed_20261122T143240Z.geojson.gz` är en delta på 479 byte med 0 tillagda/uppdaterade/borttagna objekt; detta betyder oförändrat läge, inte att lagret är tomt. Full komprimerad motsvarighet uppskattades till 6 217 406 byte.
+- Planerade avverkningsanmälningar: read-only-probe lyckades men är uttryckligen inte fullständig. Källan rapporterade 132 594 poster; proben läste 300 poster (3 sidor), capped=true, complete_scan=false, ca 0,0754 % av lagret. Den får inte användas som fullständig historik eller larmunderlag.
+- Probe-artifact: `skogsstyrelsen-monthly-source-audit-45033322810`, artifact ID 14758965735, SHA-256 `c7a63d038d180ace683e90f086b790857b63f9adfe293cf93506805516c987de`.
+- **Verifieringsstatus:** den nya PR-baserade publiceringsvägen är nu verifierad eftersom körningen skapade PR #491. Snapshotinnehållet är ännu inte beständigt i `main`; det sker först efter manuell granskning och merge av PR #491. Planerade avverkningsanmälningar är fortfarande endast en begränsad probe.
+- Rättighetsgrinden för kundvisning påverkas inte. Ingen kundfeed eller larmfunktion aktiveras av denna körning.
+
+
+**Nästa konkreta steg:** granska PR #491:s snapshotinnehåll och mergea endast om filer, scope och arkivkedja är korrekta. Därefter utred fullständig paginerad snapshot för planerade avverkningsanmälningar; nuvarande 300-radersprobe är inte komplett.
