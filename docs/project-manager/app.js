@@ -47,7 +47,7 @@
     const notice = byId("data-notice");
     notice.className = "notice bad";
     notice.textContent = message;
-    ["work-list", "runs-list", "scheduled-runs-list", "recovered-runs-list", "failed-runs-list", "projects-list"].forEach((id) => empty(id, "Ingen verifierad live-data tillgänglig."));
+    ["work-list", "runs-list", "scheduled-runs-list", "recovered-runs-list", "failed-runs-list", "projects-list", "source-list"].forEach((id) => empty(id, "Ingen verifierad live-data tillgänglig."));
   };
   const render = (data) => {
     if (!data || data.schema_version !== 1 || !Array.isArray(data.projects) ||
@@ -59,7 +59,8 @@
     const ageHours = (Date.now() - observed.getTime()) / 3600000;
     const partial = data.status !== "success" ||
       data.successful_repositories !== data.expected_repositories ||
-      data.failed_repositories !== 0;
+      data.failed_repositories !== 0 ||
+      !data.source_registry || data.source_registry.status !== "success";
     const stale = ageHours > 24;
     const notice = byId("data-notice");
     notice.className = "notice " + (partial || stale ? "bad" : "good");
@@ -166,6 +167,43 @@
         formatDate(recovery?.created_at) + " · " + (run.event || "okänt event"),
         "Återhämtat", "done", run.html_url);
     });
+
+
+    const sourceRegistry = data.source_registry;
+    const sourceSummary = byId("source-registry-summary");
+    const sourceList = byId("source-list");
+    sourceList.replaceChildren();
+    if (!sourceRegistry || sourceRegistry.status !== "success" || !Array.isArray(sourceRegistry.sources)) {
+      sourceSummary.textContent = "Källregistret kunde inte hämtas komplett. Källstatus visas som okänd.";
+      empty("source-list", "Ingen verifierad källregisterdata tillgänglig.");
+    } else {
+      const sources = sourceRegistry.sources;
+      const withOps = sources.filter((s) => s.operations && typeof s.operations === "object");
+      sourceSummary.textContent = sources.length + " registrerade källor · " +
+        withOps.length + " med operativ status · " + (sources.length - withOps.length) +
+        " utan operativ status · registerkontroll " + (sourceRegistry.registry_checked_on || "okänt datum") +
+        ". Källan: " + sourceRegistry.source_repository + "/" + sourceRegistry.source_path;
+      sources.slice().sort((a,b) => String(a.name || a.source_id).localeCompare(String(b.name || b.source_id), "sv")).forEach((source) => {
+        const op = source.operations || {};
+        const state = op.snapshot_status || "Ej operativt bedömd";
+        const meta = [
+          source.source_id,
+          source.provider || "Okänd leverantör",
+          "Kadens: " + (source.cadence || "okänd"),
+          "Geografi: " + (source.geography || "okänd"),
+          "Åtkomst: " + (op.access_status || "ej bedömd"),
+          "Historik: " + (op.history_status || "ej bedömd"),
+          "Kommersiellt: " + (op.commercial_use_status || "ej bedömt"),
+          "Kundvisning: " + (op.customer_display_status || "ej bedömd"),
+          "Senast verifierad: " + (op.last_verified || "okänt")
+        ].join(" · ");
+        renderItem(sourceList, source.name || source.source_id, meta, state,
+          op.snapshot_status ? (["recurring","time_series"].includes(state) ? "done" : "next") : "", null);
+        if (op.next_action) {
+          sourceList.lastElementChild.appendChild(make("div", "meta", "Nästa åtgärd: " + op.next_action));
+        }
+      });
+    }
 
     const projectsEl = byId("projects-list");
     projectsEl.replaceChildren();
