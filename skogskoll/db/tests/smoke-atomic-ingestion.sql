@@ -191,7 +191,7 @@ begin
     'endpoint', v_metadata->>'endpoint',
     'layer', v_metadata->>'layer',
     'query_definition', v_metadata->>'query_definition',
-    'captured_at', to_char(now(), 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"'),
+    'captured_at', (select completed_at::text from public.scan_sessions where id = v_scan3),
     'status', 'complete',
     'coverage_key', v_metadata->>'coverage_key',
     'schema_version', v_metadata->>'schema_version',
