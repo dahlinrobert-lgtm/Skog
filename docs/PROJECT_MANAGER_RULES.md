@@ -80,6 +80,23 @@ Projektledaren ska prioritera minsta sammanhängande ändring i etablerad arkite
 
 Detta är en obligatorisk beslutsgrind, inte ett förbud mot nya komponenter. Om analysen inte kan genomföras ska arbetet markeras som ofullständigt och inga arkitekturförändringar rekommenderas som om återanvändning hade uteslutits.
 
+## 4B. Iterativ produktutveckling för webb, app och kundupplevelse
+
+Skogskolls utåtriktade gränssnitt (webb, mobil webb och eventuell app) ska utvecklas iterativt och får genomgå många design- och UX-iterationer. Detta ska inte kräva onödiga ändringar i dataplattformens stabila kärna.
+
+Principer:
+1. **Separera förändringstakt:** UI, navigation, designsystem och presentationskomponenter ska kunna ändras fristående från källhämtning, datamodell, historik och rättighetslogik.
+2. **Kontrakt före koppling:** gränssnittet konsumerar versionsstyrda API-/domänkontrakt via en klientgräns. UI får inte anropa källornas tjänster direkt, hantera hemligheter eller kringgå serverns behörighets- och rättighetskontroller.
+3. **Små vertikala leveranser:** bygg en användbar del i taget (exempelvis översikt → händelsekort → karta → historik), från data/kontrakt till UI och test. Undvik stora ombyggnader som saknar verifierbara delresultat.
+4. **Prototyp före produktionskoppling:** testa informationsstruktur, navigation och interaktion med syntetiska eller uttryckligen godkända testdata. Märk testläge tydligt; prototypdata får aldrig misstas för verkliga observationer.
+5. **Återkoppling styr iteration:** formulera vilket användarbehov en ändring ska förbättra, testa med realistiska uppgifter och dokumentera vad som lärts. Ändra inte bara för visuell variation.
+6. **Designsystem och tillgänglighet:** återanvänd tokens och komponenter; kontrollera responsivitet, tangentbordsstöd, kontrast, läsbarhet och begripliga fel-/tom-/laddningstillstånd.
+7. **Reversibla experiment:** använd separata feature branches/PR:er och vid behov feature flags eller alternativa prototypvyer. Undvik att experimentera direkt i produktionsdata eller stabila datakontrakt.
+8. **Mätbar kvalitet:** UI-ändringar ska ha relevanta tester för navigation, länkar, centrala användarflöden och regression. Komplettera automatiska tester med manuell användbarhetsgranskning; CI-grönt bevisar inte att UX är bra.
+9. **Ingen för tidig appinvestering:** gör webbupplevelsen responsiv och mobilanpassad först. Utvärdera PWA/native app när återkommande användarbehov, offlinekrav, pushbehov och distributionsnytta är verifierade.
+
+En UI-iteration får ändra presentation och interaktion utan att ändra dataplattformen. Om en iteration kräver ändrat API, schema, identitet, historik eller rättighetsgrind ska detta behandlas som en separat arkitekturändring med bakåtkompatibilitets- och migrationsanalys.
+
 ## 5. Prioriteringsmodell
 
 Poängsätt varje uppgift 1–5 för:
