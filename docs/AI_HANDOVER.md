@@ -773,3 +773,16 @@ Huvudfynd:
 - Run #6 verifierar insamling, snapshotgenerering, PR-publicering och artifact-uppladdning för Samråd och utförda avverkningar i Gräsmyr 10 km-piloten.
 - Planerade avverkningsanmälningar är fortsatt endast en bounded probe: 300 av cirka 132 594 poster. Fullständig paginering, historik och ändringsspårning återstår.
 - Nästa konkreta tekniska steg är att undersöka ArcGIS metadata/edit tracking och implementera/testa fullständig paginering för planerade avverkningsanmälningar. Ingen kundvisning eller kundavisering aktiveras.
+
+
+## Status efter merge av Samråd- och Life2Taiga-publiceringsfixar (2026-11-22)
+
+- PR #494 (Samråd) mergades till `main` med merge commit `740a481436004537c277b5bdc91e004ab4f6627f`.
+- PR #495 (Life2Taiga) mergades till `main` med merge commit `88bd4bad06496340d3aec1f3f6ebab83d37049a1`.
+- Efter merge körde Samråd-workflowet på push till main och lyckades: [run 45037391885](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45037391885). Tester, insamling av point/line/polygon, event-bundle och PR-publicering passerade.
+- Efter merge körde Life2Taiga-workflowet på push till main och lyckades: [run 45037447855](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45037447855). Collector-test, hämtning, GeoJSON-validering och PR-publicering passerade.
+- Dessa körningar skapade granskningsbara data-PR:er: [Samråd #496](https://github.com/dahlinrobert-lgtm/Skog/pull/496) och [Life2Taiga #497](https://github.com/dahlinrobert-lgtm/Skog/pull/497). Båda är öppna och ska granskas manuellt; ingen automatisk merge används.
+- Viktig avgränsning: körningarna efter merge utlöstes av push till `main`, inte av cron. Schemalagd drift är därför ännu inte bekräftad efter korrigeringen. Nästa kontroll ska verifiera en faktisk schemalagd körning och att den skapar/uppdaterar respektive data-PR.
+- Ingen kundvisning eller kommersiell rättighet följer av att data hämtas och publiceras i granskningsbara PR:er.
+
+**Nästa konkreta steg:** granska PR #496 och #497:s filinnehåll, manifest, täckning och datadiff innan merge. Därefter invänta/utvärdera nästa cron-körning för båda flödena. Separat kvarstår fullständig paginering och historik för planerade avverkningsanmälningar.
