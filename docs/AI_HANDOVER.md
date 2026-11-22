@@ -916,4 +916,6 @@ Den första automatiserade projektledarkontrollen är implementerad i det separa
 
 Uppföljande PR [#44](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/44) är också mergad. Den inkluderar misslyckad artifact-uppladdning i samma centrala driftlarm och korrigerar README/driftdokumentationens status efter merge.
 
+Uppföljande PR [#45](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/45) är mergad. Projektregistret valideras nu fail-closed före API-anrop: icke-objekt, saknade fält, dubbletter och okända lifecycle-värden stoppar inventeringen i stället för att kunna ge en falskt komplett täckningsbild. Kandidatprojekt är fortsatt exkluderade. PR-CI:s Python-tester och synthetic-append-only-kontroller passerade.
+
 Nästa steg: verifiera första schemalagda inventering, artifact, tidsgrind och central issue-hantering. Ingen Azure-publicering, historikpersistens eller kundavisering aktiveras av denna implementation.

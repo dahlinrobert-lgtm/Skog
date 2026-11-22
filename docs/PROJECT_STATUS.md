@@ -116,4 +116,6 @@ PR [#43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/
 
 Uppföljande PR [#44](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/44) är mergad och gör även misslyckad artifact-uppladdning larmbar.
 
+PR [#45](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/45) är mergad. Registervalideringen stoppar nu felaktiga, dubblerade eller okända projektposter före insamling; kandidater förblir exkluderade. PR-CI passerade.
+
 **Status:** Mergad och konfigurerad, men första schemalagda körningen har ännu inte verifierats. Nästa kontroll är 2026-11-23 kl. 07:00 svensk tid.
