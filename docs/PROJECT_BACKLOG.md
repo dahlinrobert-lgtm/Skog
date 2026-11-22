@@ -127,3 +127,8 @@ Run #6 lyckades och skapade snapshot-PR #491, som därefter mergades till `main`
 Samråd snapshot-PR #496 och Life2Taiga data-PR #497 är nu båda mergade till `main`. Deras merge commits är `f442d6a24832a347319bd7c70fa08e331b2a0674` respektive `467322df3f1c591717e58b0f650717471d2b80cc`.
 
 **Återstående acceptanssteg:** verifiera en faktisk schemalagd körning efter ändringarna för vardera workflow och kontrollera att respektive automation skapar/uppdaterar en granskningsbar PR. Ingen automatisk merge. Ingen kundvisningsrätt följer av publiceringen.
+
+
+### PM-024 – slutstatus för dokumentations- och data-PR:er (2026-11-22)
+
+PR #498 är mergad (merge commit `21cfa30af358588eb6889d27f78b4e8bffc1fa9a`) och kund-UI-test efter merge passerade. Data-PR #496 (Samråd) och #497 (Life2Taiga) är också mergade. Återstående acceptanspunkt är faktisk schemalagd körning efter workflowfixarna #494/#495; push-utlösta körningar räcker inte som cron-verifiering. Därefter fortsätter fullständig paginering för planerade avverkningsanmälningar.
