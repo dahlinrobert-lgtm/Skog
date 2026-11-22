@@ -102,3 +102,16 @@ Detta verifierar identisk genomförd polygonmängd mellan de två observationern
 De 10 äldre övergångarna från 2026-10-24 förblir exkluderade eftersom query-scope saknas i äldre metadata (för nio par saknas scope i båda ändar; i det tionde saknas äldre scope). Ingen retrospektiv scope får antas. Bevara arkiven och sök endast efter oberoende historisk evidens.
 
 Monitor-run [#45048859162](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45048859162) var push-utlöst och lyckades; den var inte schemalagd. `.github/workflows/monitor.yml` har daglig cron `17 5 * * *` UTC. Nästa cron-körning ska verifieras separat. Ingen kundavisering eller frånvaroklassning aktiveras.
+
+
+## Skogskoll Operations Center – daglig projektinventering (2026-11-22)
+
+PR [#43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/43) i det privata projektledarrepot är mergad (`30052942d061c32fb41615328af60895b0384823`). Inventeringen är schemalagd dagligen kl. 07:00 svensk tid via UTC-trigger 05:00/06:00 och en testad `Europe/Stockholm`-tidsgrind som hanterar sommar-/vintertid.
+
+- Read-only-insamling mot registrerade aktiva projekt.
+- Ett centralt GitHub Issue i privata historikrepot vid fel; samma ärende uppdateras och stängs först efter full lyckad återhämtning.
+- 14-dagars artifact för felsökning; partiella resultat betraktas inte som kompletta.
+- PR-CI: `unit-tests` och `synthetic-append-only` passerade.
+- Ingen skrivbehörighet till inventerade källrepon, ingen Azure-publicering och ingen kundavisering.
+
+**Status:** Mergad och konfigurerad, men första schemalagda körningen har ännu inte verifierats. Nästa kontroll är 2026-11-23 kl. 07:00 svensk tid.
