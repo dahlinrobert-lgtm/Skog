@@ -1,0 +1,30 @@
+name: Skogskoll customer UI tests
+
+on:
+  pull_request:
+    paths:
+      - "skogskoll/index.html"
+      - "skogskoll/assets/**"
+      - "skogskoll/tests/customer-ui.test.mjs"
+      - ".github/workflows/skogskoll-customer-ui-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - "skogskoll/index.html"
+      - "skogskoll/assets/**"
+      - "skogskoll/tests/customer-ui.test.mjs"
+      - ".github/workflows/skogskoll-customer-ui-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  customer-ui-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run Skogskoll tests
+        run: node --test skogskoll/tests/*.test.mjs
