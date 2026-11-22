@@ -111,3 +111,16 @@ Manifestet för 2026-11-09 visar en rikare struktur med snapshotdatum, skapandet
 - CI-status från PR #484 verifierades separat. Den här inventeringen har ännu inte ett eget teststeg eftersom den endast dokumenterar befintlig implementation.
 - Ingen databas, snapshot, originalfil, källstatus, kundfeed eller avisering har ändrats eller aktiverats.
 - Källstatusrapporten kontrollerad 2026-11-18 anger **0** uttryckligen godkända källor för kundvisning. Den grinden kvarstår.
+
+## 7. Adaptersteg – worker till snapshot-envelope (2026-11-23)
+
+En ren, fristående adapter har lagts till i `skogskoll/src/snapshot-envelope-adapter.mjs`. Den mappar befintliga `poll_runs`- och `scan_sessions`-rader till det neutrala snapshot-envelope-kontraktet utan att skapa en ny tabell, starta ingestion eller skriva data.
+
+- `snapshot_id` byggs av befintligt poll-run-ID och scan-session-ID; båda behålls i proveniensen.
+- `source`, produkt, lager, täckningsnyckel, schema- och identitetsversion mappas separat. Produkt/lager/scope/version måste lämnas som explicit metadata eftersom dessa fält saknas i nuvarande DB-tabeller; adaptern gissar inte.
+- `complete` kräver både `scan_sessions.status=complete` och `poll_runs.status=success`, lika källidentitet, fullständigt source_count/fetched_count/next_offset, poll-run fetched_count samt båda sluttiderna.
+- `running`/`warning`/räkningsavvikelse blir `partial`; failed/abandoned blir `failed`.
+- Kundvisning defaultar till `not_assessed`; ingen rättighet eller evidens skapas av adaptern.
+- Adaptern returnerar diagnostik och valideringsfel. Den persisterar, publicerar eller skapar inga kundhändelser.
+
+Sex kontraktstester har lagts till för komplett scan, partiell scan, failed, räkningsavvikelse, saknad coverage metadata och källmismatch. CI-verifiering inväntas i PR. Ingen SQL-migration, live-databasanslutning, kundfeed eller avisering ingår.

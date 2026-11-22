@@ -198,3 +198,7 @@ PM-025 är en styrningspost, inte ett påstående om att produkten är färdig. 
 | Acceptanskriterier | Dokumenterad nationell omfattning per källa/lager; verifierad fullständig uttagsmetod; stabila ID:n och count reconciliation; snapshots/manifest/checksummor; fail-closed hantering; minst två kompletta jämförbara observationer; återkommande drift och restore; separat rättighetsbedömning. |
 | Nästa steg | Slutför observation 2 för Skogsstyrelsens avverkningsanmälningar i Gräsmyr; utforma därefter nationell uttagsarkitektur. Fortsätt Samråd med separat täckningsbevis för punkt, linje och polygon. |
 | Stoppregler | Regional pilot är inte nationell täckning. Katalogpost, karta, probe eller delmängd räknas inte som fullständig insamling. Partial/failed får aldrig skapa borttagning eller ersätta komplett snapshot. Ingen kundvisning/kommersiell användning utan källspecifikt stöd. |
+
+### PM-022 uppdatering 2026-11-23
+
+En ren adapter från befintliga `poll_runs` + `scan_sessions` till snapshot-envelope är implementerad på arbetsgrenen `feat/skogskoll-snapshot-envelope-adapter` med sex kontraktstester. Den återanvänder befintliga körnings-/scanidentiteter och kräver explicit metadata för produkt, lager, täckning, schema och identitetsversion. `complete` kräver full scan + lyckad poll-run + matchande antal och sluttider; partial/failed fail-closed. Kundvisning är `not_assessed` som standard. PR/CI-verifiering återstår; ingen migration, live-ingestion eller kundfeed är gjord.
