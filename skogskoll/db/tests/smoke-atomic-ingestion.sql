@@ -3,6 +3,7 @@
 --   db/schema.sql
 --   db/migrations/002_observation_history.sql
 --   db/migrations/003_atomic_page_commit.sql
+--   db/migrations/005_snapshot_envelope_registry.sql
 -- All data inserted by this script is deleted before the transaction rolls back.
 -- The whole test runs inside a transaction and ends with ROLLBACK.
 
