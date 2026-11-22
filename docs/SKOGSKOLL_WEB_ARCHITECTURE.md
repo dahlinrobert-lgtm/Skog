@@ -167,3 +167,28 @@ Detta är en målstruktur, inte en instruktion att flytta workerfilerna in i fro
 ## 8. Nästa konkreta arbetssteg
 
 Gör ett avgränsat första UI-PR: lägg till kundappens gemensamma navigation och designsystemgrund i `skogskoll/`, uppdatera befintlig prototyps navigation så den inte pekar på interna Skog-vyer och lägg till automatiska kontroller för kundnavigation och relativa länkar. Låt sidornas befintliga funktioner och datalogik vara orörda i detta PR.
+
+## 9. Produktens särskiljande kärna – snapshotbaserat dag-för-dag-flöde
+
+Skogskolls primära kundupplevelse är ett **kronologiskt förändringsflöde byggt av daterade snapshots**. Det är produktens huvudsakliga differentiering och ska vara startsidans tydligaste innehåll. Karta, bevakningsområden och historik ska vara sammanlänkade med flödet, inte konkurrerande fristående ingångar.
+
+### Kundupplevelse
+
+- **Flöde:** visa förändringar dag för dag och låt användaren välja en dag eller jämförelseperiod.
+- **Snapshot:** visa vad som faktiskt observerades vid en bestämd avstämningstidpunkt, med källa, produkt/lager, hämtningstid, körnings-ID, status, täckning och kontrollsumma där det finns.
+- **Förändringspost:** skilj mellan första upptäckt av Skogskoll, källans händelsedatum och publiceringsdatum. Visa tillkommet, ändrat och endast när evidensen räcker – försvunnet/inaktivt.
+- **Karta:** samma valda dag och händelse ska styra den geografiska vyn. Kartan ska kunna leda tillbaka till händelsens tidslinje.
+- **Historik:** användaren ska kunna följa ett objekts observationer över flera snapshots och förstå vilka jämförelser som ligger bakom slutsatsen.
+
+### Datakvalitet och tidssemantik
+
+1. Jämför endast snapshots som är kompletta och jämförbara för samma källa/produkt/lager och relevant geografisk täckning.
+2. `partial`, `failed`, okänd täckning eller schema-/produktversionsskifte får inte skapa negativa slutsatser eller borttagningshändelser.
+3. Bevara originalsnapshots oförändrade. Förändringsposter ska vara härledbara från källobservationer och körningsmanifest.
+4. En första komplett baslinje fyller historiken men genererar inte retroaktiva kundlarm.
+5. Frånvaro i en enskild senare snapshot är inte bevis för borttagning eller genomförd avverkning.
+6. Varje förändring ska kunna granskas tillbaka till källa, snapshot och körning.
+
+### UI-steg
+
+Första UI-steget etablerar flödet som startsidans primära yta, datumval och tydliga snapshot-/fullständighetsstatusar. Det får inte visa syntetiska eller obekräftade poster som riktiga händelser. Den riktiga dag-för-dag-tidslinjen kopplas in först när godkända och verifierade snapshotkontrakt finns tillgängliga. Källstatusrapporten som granskades 2026-11-18 anger noll källor uttryckligen godkända för kundvisning; detta måste kontrolleras på nytt innan någon datakälla exponeras.

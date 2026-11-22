@@ -1,0 +1,9 @@
+:root {
+  color-scheme: light;
+  --skk-forest-950: #102f22; --skk-forest-800: #204b36; --skk-forest-100: #e7efe8;
+  --skk-ink: #1e2b23; --skk-muted: #607066; --skk-border: #dce5dd;
+  --skk-surface: #ffffff; --skk-canvas: #f4f7f3; --skk-accent: #d7ad67;
+  --skk-radius-card: 14px; --skk-space-1: 4px; --skk-space-2: 8px;
+  --skk-space-3: 12px; --skk-space-4: 16px; --skk-space-6: 24px;
+  --skk-content-width: 1250px;
+}
