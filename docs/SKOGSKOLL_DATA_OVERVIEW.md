@@ -780,3 +780,12 @@ Körningarna skapade följande öppna data-PR:er:
 - [Life2Taiga data #497](https://github.com/dahlinrobert-lgtm/Skog/pull/497)
 
 Körningarna utlöstes av push till `main` efter merge. De bekräftar därför att insamling och PR-publicering fungerar efter merge, men ännu inte att cron-schemaläggningen har fungerat i en senare schemalagd körning. Data-PR:erna kräver manuell granskning. Detta ändrar inte källornas rättighetsstatus eller tillstånd för kundvisning.
+
+
+### Data-PR #496 och #497 mergade – 2026-11-22
+
+De två automatiskt skapade data-PR:erna har granskats och mergats:
+- Samråd pilot snapshots [PR #496](https://github.com/dahlinrobert-lgtm/Skog/pull/496), merge commit `f442d6a24832a347319bd7c70fa08e331b2a0674`, 15:20:45 UTC.
+- Life2Taiga naturvårdspolygoner [PR #497](https://github.com/dahlinrobert-lgtm/Skog/pull/497), merge commit `467322df3f1c591717e58b0f650717471d2b80cc`, 15:21:08 UTC.
+
+Data från dessa PR:er är nu beständig i `main`. Den tidigare verifieringen av workflowen var push-utlöst efter merge av kodfixarna; faktisk cron-verifiering efter dessa ändringar återstår. Mergad data är inte i sig ett godkännande för kommersiell kundvisning.
