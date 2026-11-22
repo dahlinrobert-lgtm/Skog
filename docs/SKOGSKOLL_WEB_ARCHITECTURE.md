@@ -208,3 +208,10 @@ Detta är ännu inte ett API, en persistensimplementation eller en produktionsko
 PR #484 är mergad till `main` (merge commit `8f44a442e3e0eafb8055b03769e3d2877b05f725`). Kontrakt, ren domänkärna och tester finns i repot. CI för hela Node-testsviten och source probe passerade. Testworkflowens path-filter är utökat så att framtida ändringar i `skogskoll/src/**` och `skogskoll/tests/**` kör testsviten även vid push till main.
 
 Detta är fortsatt en domän-/valideringsimplementation, inte ett produktions-API eller en kundfeed. Nästa steg är en evidensbaserad inventering av befintliga snapshotmanifest och historikfält innan någon persistens- eller API-mappning utformas. Källornas kundvisningsgrind är fortsatt stängd enligt källstatusrapporten.
+
+
+## 11. Inventering av befintliga snapshots och historik (2026-11-22)
+
+Kod- och filinventeringen finns i [SKOGSKOLL_SNAPSHOT_INVENTORY.md](SKOGSKOLL_SNAPSHOT_INVENTORY.md). Den visar att Skogskolls relationsmodell redan har current state, append-only observation history, poll runs, resumable scans och atomiska sidcommits. Den är däremot ännu kopplad till Skogsstyrelsens enda befintliga worker-source och saknar ett gemensamt explicit snapshot-envelope för produkt, lager, coverage, schema-/identitetsversion och rättighetsevidens.
+
+Filbaserade källarkiv använder separata format och scope. Delta-`removed` är en rekonstruktionsinstruktion, inte en kundhändelse. Rekommenderad fortsättning är en ren, testad adapter från befintlig worker-/run-/historymodell till snapshot-kontraktet innan någon ny databasmodell eller API-mappning införs.

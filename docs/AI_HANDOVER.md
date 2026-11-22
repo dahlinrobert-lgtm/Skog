@@ -709,3 +709,18 @@ Första UI-implementationen ligger i branch `feat/skogskoll-daily-change-feed-sh
 - Ingen databas, kund-API, riktig kundfeed, ingestion eller avisering aktiverades.
 
 **Nästa steg:** inventera befintliga snapshotmanifest och historikfält mot kontraktet. Identifiera vad som redan finns och vad som saknas innan någon databas-/API-mappning föreslås. Källstatusrapporten från 2026-11-18 anger fortfarande noll uttryckligen godkända kundvisningskällor; rättighetsgrinden förblir stängd.
+
+
+## Skogskoll snapshot- och historikinventering (2026-11-22)
+
+PR #486 är mergad (merge commit `31300a91b29f323a4f2ea677942de79594259a21`). En kod- och filbaserad inventering har genomförts och dokumenterats i [SKOGSKOLL_SNAPSHOT_INVENTORY.md](SKOGSKOLL_SNAPSHOT_INVENTORY.md).
+
+Huvudfynd:
+- Befintlig Skogskoll-DB har `source_observations` (current state), append-only `source_observation_history`, `poll_runs`, `scan_sessions` och `scan_seen_ids`. Atomisk sidcommit och strikt fullständighetskontroll finns i migrations 002–003. Finish av scan inaktiverar inte poster som saknas.
+- Observationens identitet/hash och första baseline/efterföljande inserted/changed är redan modellerade, men worker/adaptern är källspecifik för Skogsstyrelsens avverkningsanmälningar.
+- DB saknar uttryckliga snapshot-/produkt-/lager-/coverage-/schema-/identity-/rights-envelope-fält och history rows refererar poll_run_id, inte snapshot_id.
+- Repot innehåller flera filbaserade format: 380 spårade planerade-avverknings-snapshots, 377 utförda-avverkningsarkiv, 22 samrådssnapshots, 36 diariefiler och Trafikverkets lager-manifest i pilotkatalogen. Dessa är separata format och scope; filantal avser GitHub-trädet, inte privata molnarkiv.
+- Deltafältet `removed` används i arkivrekonstruktion och får inte mappas direkt till kundhändelse.
+- Källstatusrapporten från 2026-11-18 anger noll källor uttryckligen godkända för kundvisning.
+
+**Nästa steg:** bygg och testa en ren adapter-mappning för Skogsstyrelsens nuvarande `poll_runs` + `scan_sessions` + observationshistorik till snapshot-envelope. Kräv verifierad komplett scan, stabilt coverage key och rättighetsevidens. Ingen migration, livefeed eller kundvisning innan adapterkontraktet är granskat och testat.
