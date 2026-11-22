@@ -954,6 +954,16 @@ Gemensamma acceptanskriterier per källa/lager:
 
 **Nästa steg:** genomföra en andra komplett jämförbar Gräsmyr-observation; därefter designa nationell insamling med hänsyn till källans maximala uttagsmängd, begränsningar, paginering, belastning och lagringsvolym. Samråd ska verifieras separat för punkt-, linje- och polygonlager. Ingen kundvisning eller avisering följer av teknisk insamling.
 
-## 2026-11-23 – PM-022 adaptersteg
+## 2026-11-23 – PM-022 adaptersteg och metadatarevision
+
+PR [#531](https://github.com/dahlinrobert-lgtm/Skog/pull/531) är mergad; sex adaptertester samt PR-kontrollerna customer UI tests och source probe passerade. PR [#532](https://github.com/dahlinrobert-lgtm/Skog/pull/532) uppdaterade denna överlämning och är mergad.
+
+Metadatarevision mot `data-platform/config/sources.yml`, `skogskoll/src/supabase-adapters.mjs`, `skogskoll/src/observation-core.mjs` och `skogskoll/src/scan-worker-core.mjs` visar: källregistret har source_id/provider/access_method/connector/cadence/geography och villkorad rights-status, men saknar explicita snapshotfält för product, layer, coverage_key, schema_version och identity_version. Worker-adaptern pekar på Skogsstyrelsens ArcGIS MapServer layer 0, frågar `where=1=1`, hämtar hela attribut/geometri i EPSG:4326 och använder OBJECTID (med GeoJSON id-varianter) som stabil source_id. `normalizeFeature` hash:ar kanoniserade properties + geometry; mottaget datum `Inkomdatum` är inte verifierat publicerings-/ändringsdatum. Detta är kodverifierade observationer, men de versionsstyrda metadataidentiteterna är ännu inte beslutade. `coverage_key` bör inte hårdkodas som "Sweden" enbart från källregistrets geography; den behöver representera den faktiska query/scope-semantiken. Nästa steg: definiera explicit, versionsstyrd metadata för denna exakta workerkonfiguration och tester för att ändringar i endpoint/lager/query/schema/identitet ger ny jämförelsebas.
+
+## Produktutvecklingsprincip – iterativ kundupplevelse
+
+Skogskolls webb/app ska kunna itereras ofta utan att dataplattformen behöver ändras. UI/navigation/designsystem hålls frikopplade från worker, DB och rättighetslogik via stabila kontrakt och klientgräns. Bygg små vertikala, reversibla steg; prototypa med syntetiska data; testa centrala uppgifter, responsivitet och tillgänglighet; använd manuell UX-feedback utöver CI. Webb först och eventuell PWA/native app efter verifierat behov. Detaljerade regler finns i `PROJECT_MANAGER_RULES.md` avsnitt 4B och PM-021 i `PROJECT_BACKLOG.md`.
+
+
 
 PR [#531](https://github.com/dahlinrobert-lgtm/Skog/pull/531) är mergad till `main` 2026-11-22 kl. 22:03 UTC (merge commit `3db38bd8198eefc8c57d572e39663fe4963c362a`). Den rena adaptern `skogskoll/src/snapshot-envelope-adapter.mjs` mappar befintliga `poll_runs` + `scan_sessions` till change-feed-kontraktets snapshot-envelope. Sex tester täcker complete/partial/failed, räkningsavvikelse, saknad coverage metadata och source mismatch. PR-kontrollerna `Skogskoll customer UI tests` och `Skogskoll source probe` slutfördes med `success` för head commit `a613e4bf32eeefec1b7e950122fa75b284dfb711`. Metadata för produkt/lager/coverage/schema/identity krävs uttryckligen; den får inte härledas från osäkra antaganden. `customer_visibility` defaultar till `not_assessed`. Ingen DB-migration, ingestion, kundfeed eller avisering har aktiverats. Nästa steg: granska om befintlig källkonfiguration kan tillhandahålla verifierad metadata för just Skogsstyrelsens avverkningsanmälningar; först därefter kan eventuell adapterkoppling planeras.
