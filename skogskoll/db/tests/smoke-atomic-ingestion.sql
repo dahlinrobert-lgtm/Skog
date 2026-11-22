@@ -193,6 +193,16 @@ begin
     where id = v_scan3 and snapshot_registered_at is not null
   ) then raise exception 'snapshot registration timestamp was not recorded'; end if;
 
+  -- Even a privileged direct update cannot rewrite a registered snapshot.
+  begin
+    update public.snapshot_envelopes set status = 'partial' where scan_session_id = v_scan3;
+    raise exception 'immutable snapshot envelope was unexpectedly updated';
+  exception
+    when others then
+      if sqlerrm = 'immutable snapshot envelope was unexpectedly updated' then raise; end if;
+      if position('snapshot envelopes are immutable' in sqlerrm) = 0 then raise; end if;
+  end;
+
   -- Recovery should mark an intentionally stale running session failed.
   select scan_id, poll_run_id into v_scan, v_run
   from public.skogskoll_start_scan(v_source || ':stale', 2, 1, 'incremental');
