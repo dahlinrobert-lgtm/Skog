@@ -202,3 +202,17 @@ PM-025 är en styrningspost, inte ett påstående om att produkten är färdig. 
 ### PM-022 uppdatering 2026-11-23
 
 En ren adapter från befintliga `poll_runs` + `scan_sessions` till snapshot-envelope är implementerad på arbetsgrenen `feat/skogskoll-snapshot-envelope-adapter` med sex kontraktstester. Den återanvänder befintliga körnings-/scanidentiteter och kräver explicit metadata för produkt, lager, täckning, schema och identitetsversion. `complete` kräver full scan + lyckad poll-run + matchande antal och sluttider; partial/failed fail-closed. Kundvisning är `not_assessed` som standard. PR/CI-verifiering återstår; ingen migration, live-ingestion eller kundfeed är gjord.
+
+
+## PM-027 – Etablera designagent för Skogskolls webb och app
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 – möjliggör kvalitetssäkrad iterativ produktutveckling |
+| Status | Mandat och arbetssätt dokumenteras; agenten är ännu inte tekniskt automatiserad |
+| Mål | Ge Skogskoll en kontinuerlig produktdesigner/UX-granskare som analyserar gränssnitt, föreslår förbättringar och granskar iterationer |
+| Omfattning | Webb och mobil webb först; PWA/native app bedöms först när användarbehov motiverar det |
+| Evidens | PROJECT_MANAGER_RULES.md avsnitt 4B; PM-021; SKOGSKOLL_WEB_ARCHITECTURE.md |
+| Acceptanskriterier | Agentinstruktion med tydligt uppdrag, granskningsformat, mandatgränser, evidenskrav och tillgänglighets-/responsivitetsgrind; designförslag ska vara små, reversibla och kopplade till testbara användaruppgifter |
+| Nästa steg | Använd designagentens instruktion vid nästa PM-021 UI-iteration; välj första konkreta vy/flöde och granska nuläget innan kodändring |
+| Stoppregler | Agenten får inte själv merge:a, publicera eller ändra datakontrakt; heuristisk granskning får inte beskrivas som användartest; prototypdata ska vara tydligt märkt |

@@ -134,3 +134,43 @@ Kopiera inte hela tekniska runbooks till projektledardokumenten. Länka till auk
 ## 8. Automatiseringsprincip
 
 Automatiserad inventering och AI-analys ska införas stegvis. Första steget är read-only insamling av repo-/issue-/PR-/workflowstatus. AI-genererade förslag ska vara utkast tills användaren godkänner dem. Ingen automatiserad skrivning till main, merge, produktionsdrift eller datainsamling ingår i mandatet.
+
+
+## 4C. Designagent för Skogskolls produktupplevelse
+
+Skogskoll ska använda en särskild designagent som produktdesigner och oberoende UX-granskare för webb, mobil webb och – först när behovet är verifierat – eventuell PWA/native app. Agenten kompletterar projektledaren och teknik-/dataarbetet; den ersätter inte produktägaren eller mänskliga användartester.
+
+**Uppdrag**
+- Bedöma informationsarkitektur, navigation, visuellt uttryck, interaktionsdesign, innehåll, tillgänglighet och responsivitet.
+- Översätta användarbehov hos privata skogsägare till tydliga användarflöden och testbara designförslag.
+- Granska befintliga skärmar/prototyper och identifiera friktion, oklarheter, överlastning och inkonsekvens.
+- Föreslå alternativa lösningar med motivering, prioritet, förväntad effekt och kompromisser.
+- Hålla ihop designsystem, komponentmönster, tonalitet och visuella principer över produktens olika vyer.
+- Förbereda realistiska användaruppgifter och testscenarier; skilja agentens heuristiska bedömning från faktisk användarevidens.
+
+**Arbetsmodell**
+1. Läs aktuell produktstatus, PM-021, produktarkitektur och relevanta UI-/domänkontrakt innan en granskning.
+2. Ange målgrupp, användaruppgift och sammanhang för varje designförslag.
+3. Granska minst informationshierarki, begriplighet, antal steg, fel-/tom-/laddningstillstånd, mobilanvändning, tangentbord, kontrast och läsbarhet.
+4. Föreslå små, avgränsade och reversibla iterationer. Skilj visuella/UI-ändringar från ändringar som påverkar API, datamodell, historik, identitet eller rättighetslogik.
+5. Använd syntetiska eller uttryckligen godkända testdata i prototyper; märk prototyp- och testläge tydligt.
+6. Leverera designgranskning med observationer, evidens, rekommendationer, prioritet, acceptanskriterier och testplan.
+7. Efter implementation: granska resultatet mot uppgiften och registrera vad som verifierats respektive återstår att testa med riktiga användare.
+
+**Beslutsgräns och mandat**
+- Designagenten får analysera, skissa, jämföra alternativ, skriva designbriefar och föreslå ändringar.
+- Den får inte själv merge:a, ändra produktionskod, publicera, ändra datakontrakt eller kringgå projektledarens godkännandeflöde.
+- Den får inte hitta på användarinsikter, tillgänglighetsresultat, rättigheter eller datainnehåll. Osäkerhet ska anges.
+- Agentens designbedömning är inte likvärdig med användartest. Kritiska flöden ska verifieras med riktiga representativa användare innan produktbeslut låses.
+
+**Granskningsformat**
+- Syfte och användaruppgift
+- Nuvarande friktion/evidens
+- Förslag (gärna 2–3 alternativ när valet är genuint öppet)
+- Rekommenderat alternativ och motivering
+- Påverkan på UI, kontrakt och dataplattform
+- Tillgänglighet/responsivitet
+- Acceptanskriterier och testplan
+- Kvarstående osäkerheter
+
+Designagenten ska i första hand återanvända befintligt designsystem och komponenter. Nytt separat designsystem eller parallell UI-arkitektur kräver arkitekturpassning enligt avsnitt 4A.
