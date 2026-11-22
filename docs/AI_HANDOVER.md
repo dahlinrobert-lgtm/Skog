@@ -786,3 +786,13 @@ Huvudfynd:
 - Ingen kundvisning eller kommersiell rättighet följer av att data hämtas och publiceras i granskningsbara PR:er.
 
 **Nästa konkreta steg:** granska PR #496 och #497:s filinnehåll, manifest, täckning och datadiff innan merge. Därefter invänta/utvärdera nästa cron-körning för båda flödena. Separat kvarstår fullständig paginering och historik för planerade avverkningsanmälningar.
+
+
+## Statuskorrigering efter merge av data-PR #496 och #497 (2026-11-22)
+
+- Samråd snapshot-PR #496 är mergad till `main` kl. 15:20:45 UTC, merge commit `f442d6a24832a347319bd7c70fa08e331b2a0674`.
+- Life2Taiga data-PR #497 är mergad till `main` kl. 15:21:08 UTC, merge commit `467322df3f1c591717e58b0f650717471d2b80cc`.
+- Därmed är båda datauppsättningarnas aktuella PR-baserade publicering genomförd till `main`, efter manuell granskning/merge.
+- Efterföljande körningar #45037391885 (Samråd) och #45037447855 (Life2Taiga) var push-utlösta av workflow-fixarnas merge och skapade PR #496/#497. De är inte bevis på senare cron-körning.
+- PR #498 dokumenterar publiceringsfixarna och är fortfarande öppen; dess kund-UI-test passerade.
+- **Nästa steg:** verifiera nästa verkliga schemalagda körning för Samråd och Life2Taiga. Granska därefter resultat, manifest, täckning och PR-diff. Fullständig planerad-avverkning-paginering är fortsatt separat kvarstående arbete.
