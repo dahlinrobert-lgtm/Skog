@@ -913,3 +913,11 @@ Den manuella fullständighetspiloten 2026-11-22 (Actions run #8) hämtade hela I
 Snapshot och manifest arkiverades i PR #524, som mergades 2026-11-22. Detta verifierar en komplett pilotobservation i ett 10 km-område. Det verifierar inte nationell täckning eller förändringsanalys mellan två observationer.
 
 **Nästa steg:** ta en andra komplett jämförbar Gräsmyr-snapshot och granska därefter nationell uttagsdesign, kapacitet, paginering och belastning innan geografisk uppskalning. Fortsätt separat fullständighetskontroll av Samråds tre lager. Ingen källrätt eller kundvisningsrätt uppstår genom teknisk verifiering.
+
+## Skogskoll – worker metadata och snapshot-envelope-persistens (implementation på PR-branch)
+
+Den befintliga ArcGIS-adapterns metadatafunktion kopplas i integrationssteget till worker/store-flödet. Metadata hämtas före scan-start, lagras tillsammans med run-/scan-identiteten och jämförs vid återupptagning. En ändrad metadataidentitet avslutar den gamla sessionen i stället för att blanda två olika query-/schemaförutsättningar.
+
+Migration 005 inför ett internt snapshot_envelopes-register. Det återanvänder poll_runs och scan_sessions, medan envelope-posten bevarar snapshot-ID, käll-/produkt-/lageridentitet, fångsttid, status, coverage, schema-/identitetsversion, comparability key, rights-status och full JSON-envelope. Registrering kräver terminala körningsposter och validerar att metadata motsvarar det som sparades vid scan-start. RLS är aktiverat utan kundpolicyer.
+
+Detta är en intern proveniens- och jämförbarhetsmekanism, inte en kundfeed. Kundvisning för Skogsstyrelsens avverkningsanmälningar inväntar fortsatt lagerkontroll enligt källstatusrapporten. Ingen live-databasanslutning, produktionsmigration, kundavisering eller kundpublicering ingår i PR-arbetet.
