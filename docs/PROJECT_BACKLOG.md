@@ -60,3 +60,17 @@ Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskrit
 | PM-019 | Konfigurera och verifiera ruleset för privat historikrepo | P1 | Konfiguration verifierad | Ruleset ID 27761134: active, exakt `refs/heads/main`, deletion och non_fast_forward, ingen bypass. Klassisk branch protection endpoint ger 403; negativtester av faktisk push/deletion saknas. |
 
 | PM-020 | Separat privat Git-repository för projektledarhistorik | P1 | Klart – bootstrap verifierad | `skogskoll-project-manager-history` är skapat och verifierat privat, default branch `main`; bootstrapdokumentation finns. Nästa: extern backup/restore och syntetiska negativa tester; ruleset verifierat (ID 27761134). Ingen App/secret/persistens. |
+
+
+## PM-021 – Renodla Skogskoll kundwebb
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 |
+| Status | Arkitekturgranskning dokumenterad; första UI-steget ej påbörjat |
+| Mål | Skogskoll blir enda kundprodukt med separat navigation, gemensamt designsystem och tydlig gräns mot Skogs interna vyer |
+| Evidens | [SKOGSKOLL_WEB_ARCHITECTURE.md](SKOGSKOLL_WEB_ARCHITECTURE.md) |
+| Beroenden | Behåll befintliga domän-/worker-moduler och databasbeslut; verifiera publiceringssökvägar före flytt |
+| Acceptanskriterier | Kundnavigationen länkar inte till interna Skog-sidor; relativa länkar fungerar; testläge förblir tydligt; befintliga Skog-sidor och tester påverkas inte |
+| Nästa steg | Separat UI-PR för app-shell, navigation och grundläggande design tokens samt länk-/sökvägstester |
+| Rättighets-/driftgrind | Ingen källa eller datatyp blir kundsynlig utan verifierat godkännande; ingen auth, ingestion eller avisering aktiveras i UI-steget |
