@@ -914,4 +914,6 @@ Den första automatiserade projektledarkontrollen är implementerad i det separa
 
 **Verifiering:** PR-CI för [#43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/43) passerade både `unit-tests` och `synthetic-append-only`. Merge är verifierad. Den första faktiska schemalagda körningen har ännu inte inträffat/verifierats; kontrollera den 2026-11-23 kl. 07:00 svensk tid innan funktionen klassas som operativt verifierad.
 
+Uppföljande PR [#44](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/44) är också mergad. Den inkluderar misslyckad artifact-uppladdning i samma centrala driftlarm och korrigerar README/driftdokumentationens status efter merge.
+
 Nästa steg: verifiera första schemalagda inventering, artifact, tidsgrind och central issue-hantering. Ingen Azure-publicering, historikpersistens eller kundavisering aktiveras av denna implementation.

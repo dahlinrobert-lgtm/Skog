@@ -114,4 +114,6 @@ PR [#43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/
 - PR-CI: `unit-tests` och `synthetic-append-only` passerade.
 - Ingen skrivbehörighet till inventerade källrepon, ingen Azure-publicering och ingen kundavisering.
 
+Uppföljande PR [#44](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/44) är mergad och gör även misslyckad artifact-uppladdning larmbar.
+
 **Status:** Mergad och konfigurerad, men första schemalagda körningen har ännu inte verifierats. Nästa kontroll är 2026-11-23 kl. 07:00 svensk tid.
