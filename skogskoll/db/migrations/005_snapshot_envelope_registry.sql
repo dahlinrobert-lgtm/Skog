@@ -14,7 +14,7 @@ create or replace function public.skogskoll_start_scan(
 language plpgsql
 security definer
 set search_path = public, extensions
-as $$
+as $body$
 declare
   v_scan_id uuid;
   v_run_id uuid;
@@ -59,7 +59,7 @@ begin
 
   return query select v_scan_id, v_run_id;
 end;
-$$;
+$body$;
 
 create table if not exists public.snapshot_envelopes (
   snapshot_id text primary key,
@@ -90,14 +90,14 @@ alter table public.scan_sessions
 -- Snapshot identity is fixed at scan allocation. Later diagnostics may be merged,
 -- but the metadata object itself cannot be replaced or removed.
 create or replace function public.guard_skogskoll_snapshot_metadata_immutable()
-returns trigger language plpgsql as $
+returns trigger language plpgsql as $body$
 begin
   if old.diagnostics->'snapshot_metadata' is distinct from new.diagnostics->'snapshot_metadata' then
     raise exception 'Skogskoll snapshot metadata is immutable after scan start';
   end if;
   return new;
 end;
-$;
+$body$;
 
 drop trigger if exists trg_guard_scan_snapshot_metadata_immutable on public.scan_sessions;
 create trigger trg_guard_scan_snapshot_metadata_immutable
@@ -113,11 +113,11 @@ for each row execute function public.guard_skogskoll_snapshot_metadata_immutable
 revoke all on table public.snapshot_envelopes from public, anon, authenticated, service_role;
 
 create or replace function public.guard_skogskoll_snapshot_envelope_immutable()
-returns trigger language plpgsql as $
+returns trigger language plpgsql as $body$
 begin
   raise exception 'Skogskoll snapshot envelopes are immutable';
 end;
-$;
+$body$;
 
 drop trigger if exists trg_guard_skogskoll_snapshot_envelope_immutable on public.snapshot_envelopes;
 create trigger trg_guard_skogskoll_snapshot_envelope_immutable
@@ -133,7 +133,7 @@ create or replace function public.skogskoll_register_snapshot(
 language plpgsql
 security definer
 set search_path = public, extensions
-as $$
+as $body$
 declare
   v_scan public.scan_sessions%rowtype;
   v_run public.poll_runs%rowtype;
@@ -220,14 +220,14 @@ begin
   where id = p_scan_id;
   return v_snapshot_id;
 end;
-$;
+$body$;
 
 create or replace function public.skogskoll_pending_snapshot_scans(p_source text)
 returns table(scan_id uuid)
 language sql
 security definer
 set search_path = public, extensions
-as $
+as $body$
   select s.id
   from public.scan_sessions s
   where s.source = p_source
@@ -236,7 +236,7 @@ as $
     and s.diagnostics ? 'snapshot_metadata'
   order by s.updated_at asc
   limit 100;
-$;
+$body$;
 
 revoke all on function public.skogskoll_pending_snapshot_scans(text) from public, anon, authenticated;
 grant execute on function public.skogskoll_pending_snapshot_scans(text) to service_role;
