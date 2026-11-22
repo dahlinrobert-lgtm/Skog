@@ -141,6 +141,7 @@ declare
   v_metadata jsonb;
   v_existing public.snapshot_envelopes%rowtype;
   v_snapshot_id text;
+  v_seen_count integer;
 begin
   if p_scan_id is null or p_envelope is null or jsonb_typeof(p_envelope) <> 'object' then
     raise exception 'scan_id and snapshot envelope are required';
@@ -187,6 +188,19 @@ begin
   if (v_scan.status = 'complete' and (v_run.status <> 'success' or p_envelope->>'status' <> 'complete'))
      or (v_scan.status <> 'complete' and p_envelope->>'status' = 'complete') then
     raise exception 'snapshot completeness does not match terminal scan state';
+  end if;
+  if coalesce(length(trim(p_envelope->>'comparability_key')), 0) = 0 then
+    raise exception 'snapshot comparability key is required';
+  end if;
+  if v_scan.status = 'complete' then
+    select count(*) into v_seen_count
+    from public.scan_seen_ids where scan_id = p_scan_id;
+    if v_scan.next_offset <> v_scan.source_count
+       or v_scan.fetched_count <> v_scan.source_count
+       or v_run.fetched_count <> v_scan.source_count
+       or v_seen_count <> v_scan.source_count then
+      raise exception 'complete snapshot requires reconciled scan and seen-ID counts';
+    end if;
   end if;
 
   v_snapshot_id := p_envelope->>'snapshot_id';
