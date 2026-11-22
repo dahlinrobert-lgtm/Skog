@@ -740,3 +740,11 @@ Huvudfynd:
 - Publiceringssteget skapade lokalt fyra ändrade filer (bl.a. Samråd snapshot `samrad_20261122T140801Z.json.gz` och utförd-avverkning snapshot `completed_20261122T140801Z.geojson.gz`) men push till main blockerades fem gånger av GH013 eftersom main kräver PR. Dessa snapshotfiler publicerades alltså inte till main.
 - Korrigerings-PR skapas på branch `fix/skogsstyrelsen-snapshot-pull-request`: ersätt direktpush med `peter-evans/create-pull-request@v7`, automation branch `automation/skogsstyrelsen-monthly-source-audit`, och rättigheten `pull-requests: write`. Snapshot-PR ska granskas och mergas manuellt; ingen auto-merge.
 - **Nästa steg:** merge korrigerings-PR, kör månadsaudit manuellt igen, verifiera att snapshot-PR skapas och granska innehåll/manifest innan den mergas.
+
+
+## Skogsstyrelsen monthly audit – PR-publicering mergead (2026-11-22)
+
+- Korrigerings-PR #489 är mergad till main: https://github.com/dahlinrobert-lgtm/Skog/pull/489
+- Merge commit: `4c62e11b58c213e715bd9c4d939d514626cc2359`.
+- PR-kontroll run #5 (45031856059) passerade testerna. Eftersom det var en `pull_request`-körning hoppades samtliga källinsamlingar och snapshot-PR-steget av enligt workflowvillkoren. Den verifierar alltså workflowets testgrind, inte publicering eller källinsamling.
+- Nästa steg: kör workflow_dispatch manuellt från main och verifiera att Samråd, utförda avverkningar och planned-harvest probe körs samt att en separat snapshot-PR skapas. Granska snapshot-PR:n före merge.
