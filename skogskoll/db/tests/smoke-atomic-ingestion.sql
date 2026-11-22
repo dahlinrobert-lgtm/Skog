@@ -154,6 +154,33 @@ begin
   );
   select scan_id, poll_run_id into v_scan3, v_run3
   from public.skogskoll_start_scan(v_source || ':snapshot', 0, 1, 'baseline', v_metadata);
+
+  -- Metadata is immutable on both run and scan records after allocation.
+  begin
+    update public.scan_sessions
+    set diagnostics = diagnostics || jsonb_build_object(
+      'snapshot_metadata', jsonb_set(v_metadata, '{schema_version}', '"tampered"')
+    )
+    where id = v_scan3;
+    raise exception 'scan snapshot metadata was unexpectedly changed';
+  exception
+    when others then
+      if sqlerrm = 'scan snapshot metadata was unexpectedly changed' then raise; end if;
+      if position('snapshot metadata is immutable' in sqlerrm) = 0 then raise; end if;
+  end;
+  begin
+    update public.poll_runs
+    set diagnostics = diagnostics || jsonb_build_object(
+      'snapshot_metadata', jsonb_set(v_metadata, '{schema_version}', '"tampered"')
+    )
+    where id = v_run3;
+    raise exception 'run snapshot metadata was unexpectedly changed';
+  exception
+    when others then
+      if sqlerrm = 'run snapshot metadata was unexpectedly changed' then raise; end if;
+      if position('snapshot metadata is immutable' in sqlerrm) = 0 then raise; end if;
+  end;
+
   perform public.skogskoll_finish_scan(v_scan3);
 
   select jsonb_build_object(
