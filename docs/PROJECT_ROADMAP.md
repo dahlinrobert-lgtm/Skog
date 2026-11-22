@@ -52,6 +52,24 @@
 
 ## Planeringsprincip
 
+## Överordnad leveransprioritet – dagligt snapshotinformationsflöde
+
+1. **P0 – Dagligt informationsflöde:** daglig, granskningsbar sammanställning av status för alla registrerade källor och separata produkter/lager. Visa senaste snapshot, status/fullständighet, aktualitet, täckning/antal, jämförbarhet, pågående/felaktiga körningar, blockerare och evidenslänkar.
+2. **P1 – Tillförlitlig insamling:** åtgärda fel i schemalagda flöden, säkra fullständighet, historik, manifest och nationell täckning per källa där det är möjligt och tillåtet.
+3. **P2 – Gemensam plattform och produktionsberedskap:** snapshot-/historikmodell, runtime, auth/RLS/PostGIS, återställning och säker ingestion.
+4. **P3 – Långsiktig utvecklingsbacklogg:** nya källor, analyslager, kundfunktioner, kommersiella möjligheter och teknisk skuld. Håll synligt och välbeskrivet men aktivera inte på bekostnad av P0/P1.
+
+Daglig sammanställning innebär inte daglig hämtning av varje källa. Varje källas egen kadens ska visas tillsammans med ålder på senaste kompletta snapshot. Gamla eller ofullständiga snapshots får aldrig presenteras som aktuella.
+
+### P0 – acceptanskriterier
+- Daglig körning och publicering av en sammanhållen rapport/manifestöversikt.
+- Alla registrerade källor och separata produkter/lager finns med, även utan körning eller operativ status.
+- Senaste kompletta snapshot skiljs från senaste körningsförsök.
+- Status, fullständighet, scope/täckning, antal, tidsstämpel och evidens visas när tillgängligt; saknade värden markeras okända, inte noll eller success.
+- Schemalagda failure/partial och oåterhämtade fel prioriteras; återhämtning redovisas utan att felhistorik döljs.
+- Partial/failed kan inte ersätta senaste kompletta snapshot eller skapa borttagningsslutsatser.
+- Rapporten är read-only; inga kunddatabaswrites eller kundaviseringar.
+
 Projektledaren ska föreslå en realistisk veckoplan med högst 3–5 aktiva huvuduppgifter. Blockerade uppgifter ska inte presenteras som om de vore genomförbara. Om en ny blockerare uppstår ska ordningsföljden revideras och beslut som krävs från användaren lyftas separat.
 
 
