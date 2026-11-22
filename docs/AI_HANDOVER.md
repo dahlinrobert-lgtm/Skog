@@ -644,3 +644,15 @@ Ingen schedule, insamlingsfrekvens, geografi, Azure-behörighet eller kundpublic
 - Azure CORS-regeln har enligt användarens bekräftelse uppdaterats med GitHub Pages-origin och begränsade metoder/headers. Den faktiska webbläsarläsningen fungerar nu. Spara inga token eller hemligheter i dokumentationen.
 - Dashboardens roadmap uppdateras i en separat PR: privat hosting flyttas från planerat till verifierad; kvarstående anonym/obehörig nekad åtkomst visas som återstående; schemalagd insamling förblir planerad; run-scoped append-only-snapshot, manifest, SHA-256 och read-back är verifierade medan retention/restore-test återstår.
 - Den synliga bokstavliga `\\n` mellan HTML-sektioner tas bort. Ingen auth-konfiguration, Azure RBAC, CORS, insamlingsfrekvens eller publiceringsfrekvens ändras i denna PR.
+
+
+### Slutlig verifiering av projektledarens privata Azure-läsning (2026-11-22)
+
+Denna notering ersätter tidigare punkter ovan som anger att anonym åtkomstkontroll, CORS eller snapshotkopplingen återstår.
+
+- **Autentiserad läsning:** användaren har verifierat i webbläsaren att Microsoft-inloggning lyckas och att dashboarden läser privat Azure Blob-snapshot `45002255351`. Dashboarden visade 3/3 projekt och innehåll från det privata historikrepot.
+- **Utloggad vy:** efter Microsoft-utloggning visade GitHub Pages `Inte inloggad`, enbart knappen `Logga in` och texten att ingen projektdata hämtas före autentisering. Ingen privat projektdata visades.
+- **Direkt anonym Blob-åtkomst:** användaren öppnade den exakta URL:en för `snapshots/45002255351/dashboard-data.json` utan token. Azure svarade med `PublicAccessNotPermitted` och meddelandet `Public access is not permitted on this storage account.` Därmed är anonym direktläsning av snapshoten nekad på lagringskontonivå.
+- **CORS:** användaren konfigurerade Blob service-regeln för GitHub Pages-origin med endast `GET`, `HEAD`, `OPTIONS` och nödvändiga headers. Den efterföljande autentiserade webbläsarläsningen fungerade.
+- **Bedömning:** autentiserad webbläsarläsning, utloggad UI och anonym direkt Blob-åtkomst är manuellt verifierade. Detta verifierar den avsedda läsvägen och att publik Blob-åtkomst är avstängd. Det ersätter inte en fullständig penetrationstestning eller separat kontroll av alla möjliga identitets-/RBAC-scenarier.
+- **Driftstatus:** dashboarden är publicerad och fungerar med den fasta run-scoped snapshoten. Automatisk schemalagd inventory/publicering, retention och återställning är fortfarande separata planerade arbetssteg. Ingen kundpublicering eller kundåtkomst är aktiverad.
