@@ -293,7 +293,7 @@ export function createSupabaseStore({
       await rpc("skogskoll_finish_scan", { p_scan_id: scanId });
       if (!snapshotMetadata) return;
       const scanQuery = new URLSearchParams({
-        select: "id,source,source_count,fetched_count,next_offset,status,completed_at,diagnostics",
+        select: "id,source,source_count,fetched_count,next_offset,status,completed_at,diagnostics,poll_run_id",
         id: `eq.${scanId}`,
         limit: "1"
       });
@@ -302,10 +302,9 @@ export function createSupabaseStore({
         throw new Error("Completed scan session could not be reloaded for snapshot registration");
       }
       const scan = scanRows[0];
-      const runId = scanRows[0].diagnostics?.poll_run_id ?? null;
-      const pollRunId = runId ?? checkpoint?.pollRunId ?? null;
-      if (!pollRunId) {
-        const runQuery = new URLSearchParams({
+      const linkedRunId = scan.poll_run_id;
+      if (!linkedRunId) throw new Error("Completed scan has no poll_run_id for snapshot registration");
+      const runQuery = new URLSearchParams({
           select: "id,source,status,fetched_count,finished_at,diagnostics",
           id: `eq.${scanId}`,
           limit: "1"
