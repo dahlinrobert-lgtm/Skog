@@ -1,0 +1,61 @@
+name: Skogsstyrelsen complete planned-harvest pilot snapshot
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/snapshot_harvest_notifications_pilot.py"
+      - "tests/test_snapshot_harvest_notifications_pilot.py"
+      - ".github/workflows/skogsstyrelsen-complete-harvest-pilot.yml"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: skogsstyrelsen-complete-harvest-pilot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install requests
+        run: python -m pip install requests
+      - name: Test complete-scan safeguards
+        run: python -m unittest tests.test_snapshot_harvest_notifications_pilot -v
+      - name: Collect complete Gräsmyr 10 km pilot snapshot
+        if: github.event_name == 'workflow_dispatch'
+        run: python scripts/snapshot_harvest_notifications_pilot.py
+      - name: Create or update data pull request
+        if: github.event_name == 'workflow_dispatch'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: \${{ github.token }}
+          branch: automation/skogsstyrelsen-complete-harvest-pilot
+          delete-branch: true
+          add-paths: |
+            data/skogsstyrelsen/harvest_notifications/grasmyr/
+          commit-message: "Archive complete Gräsmyr planned-harvest snapshot"
+          title: "data: archive complete Gräsmyr planned-harvest snapshot"
+          body: |
+            Complete read-only snapshot for the existing Gräsmyr 10 km pilot scope.
+            Review the manifest, count reconciliation, stable ID inventory and SHA-256
+            before merge. No alerts or customer database writes are performed.
+            A failed/partial scan does not write a latest manifest and must never
+            be interpreted as removals.
+      - name: Upload snapshot report
+        if: always() && github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: skogsstyrelsen-complete-harvest-pilot-\${{ github.run_id }}
+          path: data/skogsstyrelsen/harvest_notifications/grasmyr/
+          if-no-files-found: warn
+          retention-days: 90
