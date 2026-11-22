@@ -843,8 +843,8 @@ Detta är första kompletta arkiverade observationen, inte ännu en förändring
 
 PR [#509](https://github.com/dahlinrobert-lgtm/Skog/pull/509) ersatte analysens fullständiga historikmaterialisering med strömmad arkivhantering.
 
-- \`iter_completed_archive_transitions\` läser arkivkedjan stegvis och behåller ett rekonstruerat tillstånd i taget. Deltaarkivens \`added\` och \`updated\` används för att begränsa vilka objekt som behöver geometri- och tidskontroller. Fulla kontrollpunkter jämförs mot föregående jämförbara tillstånd.
-- \`read_latest_completed_archive\` rekonstruerar endast det senaste giltiga arkivtillståndet för den aktuella analysen.
+- `iter_completed_archive_transitions` läser arkivkedjan stegvis och behåller ett rekonstruerat tillstånd i taget. Deltaarkivens `added` och `updated` används för att begränsa vilka objekt som behöver geometri- och tidskontroller. Fulla kontrollpunkter jämförs mot föregående jämförbara tillstånd.
+- `read_latest_completed_archive` rekonstruerar endast det senaste giltiga arkivtillståndet för den aktuella analysen.
 - Första fullständiga arkivet är fortsatt baslinje, inte historiskt larm. Saknade basarkiv, brutna delta-kedjor och scopeändringar får inte tolkas som borttagningar eller förändringshändelser.
 - Arkivparens jämförbarhetsräknare och diagnostik för saknat/ändrat scope bevaras.
 - Vid ändringen fanns 379 genomförda-avverkning-arkiv, totalt cirka 194,8 MB komprimerat (38 större kontrollpunkter och 341 små deltaarkiv).
