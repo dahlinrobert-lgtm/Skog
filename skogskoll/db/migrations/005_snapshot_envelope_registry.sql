@@ -86,7 +86,22 @@ create table if not exists public.snapshot_envelopes (
 alter table public.snapshot_envelopes enable row level security;
 alter table public.scan_sessions
   add column if not exists snapshot_registered_at timestamptz;
--- Intentionally no public policies. Only trusted service-role workers may register/read envelopes.
+-- Only the security-definer registration RPC may insert. No API role can mutate the register directly.
+revoke all on table public.snapshot_envelopes from public, anon, authenticated, service_role;
+
+create or replace function public.guard_skogskoll_snapshot_envelope_immutable()
+returns trigger language plpgsql as $
+begin
+  raise exception 'Skogskoll snapshot envelopes are immutable';
+end;
+$;
+
+drop trigger if exists trg_guard_skogskoll_snapshot_envelope_immutable on public.snapshot_envelopes;
+create trigger trg_guard_skogskoll_snapshot_envelope_immutable
+before update or delete on public.snapshot_envelopes
+for each row execute function public.guard_skogskoll_snapshot_envelope_immutable();
+
+-- Intentionally no public policies. Only the security-definer registration RPC may write envelopes.
 
 create or replace function public.skogskoll_register_snapshot(
   p_scan_id uuid,
