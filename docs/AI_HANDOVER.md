@@ -819,3 +819,17 @@ Huvudfynd:
 - PR-baserad publicering och databevarande är verifierade för denna körning. Detta etablerar inte nationell täckning, fullständig paginering av planerade anmälningar eller kommersiell rätt/kundvisning.
 
 **Nästa konkreta steg:** fortsätt enligt prioriteringen att undersöka ArcGIS metadata/edit tracking och bygg fullständig, paginerad och auditerbar insamling av planerade avverkningsanmälningar. Verifiera sidantal, totalantal, stabila ID:n, fullständighetsmanifest och minst två jämförbara kompletta körningar innan frånvaro används som förändringssignal. Bevaka samtidigt nästa faktiska cron-körningar och deras data-PR:er. Ingen kundfeed eller kundavisering aktiveras.
+
+
+## Komplett pagineringsflöde för planerade avverkningsanmälningar – kod mergad (2026-11-22)
+
+- PR [#504](https://github.com/dahlinrobert-lgtm/Skog/pull/504) mergades 2026-11-22 kl. 16:02:26 UTC, merge commit `f75f5ac0832c4823da18fe88de1f516b5d7774f5`.
+- Nya filer: `scripts/snapshot_harvest_notifications_pilot.py`, `tests/test_snapshot_harvest_notifications_pilot.py` och `.github/workflows/skogsstyrelsen-complete-harvest-pilot.yml`.
+- Flödet är separat från befintlig sex­timmarsprobe och körs manuellt via `workflow_dispatch`. Scope är Gräsmyr 10 km (center 19.66455, 63.74646). Det är inte nationell insamling.
+- Insamlingsmetod: ArcGIS `returnIdsOnly` inventerar alla ID:n för scopet; varje ID hämtas därefter via object-ID-batcher. Antal och ID-inventering kontrolleras före och efter uttaget. Batchar med transfer-limit, saknade/duplicerade ID:n eller källförändring under körningen avbryter hela körningen. Fel skriver inte latest-manifest och rör inte tidigare snapshots.
+- Godkända PR-checkar: riktat workflow [run 45040997464](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45040997464) och bred snapshot storage-testsvit [run 45040997430](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45040997430). Den riktade PR-checken hoppade avsiktligt över själva insamlingen och data-PR-publiceringen; endast skyddstesterna kördes. En första körning #45040980543 misslyckades eftersom workflowet checkade ut main i stället för PR-grenen; checkout korrigerades och omkörningen passerade.
+- Efter merge startade push-utlösta körningar för Gräsmyr monitoring [45041585086](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45041585086) och snapshot storage tests [45041585043](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45041585043). De är inte den manuella kompletta insamlingen och inte cron-verifiering.
+- **Operativ verifiering återstår:** starta `.github/workflows/skogsstyrelsen-complete-harvest-pilot.yml` manuellt på `main` med `workflow_dispatch`. Kontrollera fullständig ID-inventering, count_before/count_after, ID-inventory stability, feature_count, snapshot SHA-256 och att data-PR skapas. Inga frånvarosignaler eller larm förrän minst två kompletta, jämförbara körningar finns.
+- Ingen kundfeed, kundavisering eller rättighetsstatus ändras. Teknisk fullständighet inom pilotscopet är inte nationell täckning eller kommersiellt godkännande.
+
+**Nästa konkreta steg:** kör workflowet manuellt efter att push-utlösta main-kontroller är klara. Granska den skapade data-PR:n och manifestet. Kör sedan en andra komplett körning vid senare tidpunkt med samma scope och jämför antal, ID:n och SHA-256. Först därefter bedöms om frånvaro kan bli en säker förändringssignal.
