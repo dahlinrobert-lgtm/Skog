@@ -24,6 +24,7 @@
 | PM-014 | Utvärdera SCA/Sveaskog-källspår | P3 | Öppen | Källåtkomst, fullständighet och rättigheter; ingen automatisk insamling före beslut. |
 | PM-015 | Slutför Skogskoll produktionsberedskap för auth, RLS, PostGIS och ingestion | P2 | Planerad | Verifiera befintlig kod/CI och separat testprojekt; ingen produktionsaktivering ännu. |
 | PM-016 | Implementera bevakningshistorik och aviseringar efter verifierad baslinje | P2 | Blockerad | Kräver PM-015, källgodkännande, användarsamtycke och tyst första baslinje. |
+| PM-022 | Etablera Skogskolls snapshotbaserade dag-för-dag-flöde | P1 | Pågående – första kundskal/UI i PR | Produktens uttryckliga USP: ett kronologiskt flöde där varje dags observationer och förändringar kan följas över tid. Första UI-steget skapar flödets startsida och dagval utan att fabricera data. Nästa steg: definiera snapshot-/change-feed-kontrakt med fullständighet, jämförbarhet, källproveniens och rättighetsgrind; därefter koppla godkända datakällor och synkroniserad karta. Ofullständiga körningar får aldrig skapa borttagningshändelser. |
 
 ## Kända externa GitHub-issues att synka
 
