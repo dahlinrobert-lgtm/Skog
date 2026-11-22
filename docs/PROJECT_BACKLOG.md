@@ -90,3 +90,7 @@ Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskrit
 | Beroenden | ArcGIS metadata/edit tracking-verifiering; full paginerad planned-harvest snapshot; jämförbara månadssnapshots |
 | Nästa steg | Kör workflow manuellt efter merge, granska loggar/artifact och därefter verifiera editDate/lastEditDate och fullständig paginering för planerade anmälningar |
 | Rättigheter/drift | Endast teknisk pilotkontroll; ingen kundvisning eller kundavisering aktiveras |
+
+## PM-023 uppföljning – publiceringsflöde behöver korrigeras
+
+Första manuella månadskörningen verifierade insamlingarna men publicering misslyckades eftersom workflowet försökte pusha direkt till skyddad main. Korrigering på separat branch ska skapa en granskningsbar data-PR via peter-evans/create-pull-request. Status för PM-023 är därför: **insamling verifierad i första pilotkörning; beständig publicering inväntar korrigering och ny körning**.
