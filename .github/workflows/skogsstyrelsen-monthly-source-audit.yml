@@ -75,9 +75,6 @@ jobs:
             - Planned-harvest probe report is attached to the originating Actions run.
 
             Review the run logs and snapshot manifests before merging. This PR preserves source snapshots; it does not classify missing IDs as removals or completed felling and does not authorize customer display.
-          labels: |
-            automated
-            data
       - name: Upload planned-harvest probe report
         if: always() && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
