@@ -619,3 +619,10 @@ Jämförelsen är begränsad till de 20 senaste körningarna per repository. Ett
 **Geografisk testnivå:** GitHub Actions run-metadata ger inte i sig en tillförlitlig standardiserad uppgift om körningens geografiska omfattning. Dashboarden visar körningens display title/workflow-sökväg som ledtråd, men ska inte gissa liten geografi eller nationell omfattning. Nästa utvecklingssteg är en verifierad metadata-/workflowkatalog som kopplar utvalda workflows till testnivå (lokal/regional/nationell), avsedd uppskalningsnivå och om körningen är ett pilot-/förtest eller produktionsflöde.
 
 Skog Pages-kopian under `docs/project-manager/` synkroniseras med history-repots granskade dashboardfiler. Ingen workflow-schedule, Azure-behörighet, insamlingsfrekvens eller publiceringsfrekvens har ändrats.
+
+
+### Projektledardashboard – geografisk testnivå (2026-11-22)
+
+PR #477 innehåller dashboardsektioner för pågående/olösta schemalagda körningar och återhämtade fel. Dubblering av schemalagda fel i den generella fellistan har tagits bort och felaktiga bokstavliga \\n-sekvenser i HTML har korrigerats. History-repots PR #42 lägger till en explicit katalog som mappar exakta workflow-sökvägar till granskad geografisk nivå och utvecklingsfas; oregistrerade workflows får värdet unknown. Katalogen innehåller verifierade poster för Gräsmyr, Norrbotten och nationell insamling. PR #42 är ännu inte verifierad/mergad; efter merge ska collector-data och dashboard synkroniseras och testas tillsammans.
+
+Ingen schedule, insamlingsfrekvens, geografi, Azure-behörighet eller kundpublicering har ändrats.
