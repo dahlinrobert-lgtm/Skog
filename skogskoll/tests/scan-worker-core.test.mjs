@@ -8,16 +8,19 @@ function makeStore(total, initial = null) {
   return {
     calls,
     async loadCheckpoint() { return checkpoint; },
-    async startScan({ sourceKey, reportedTotal, pageSize, checkpoint: start }) {
+    async startScan({ sourceKey, reportedTotal, pageSize, checkpoint: start, snapshotMetadata }) {
       calls.starts++;
-      checkpoint = { ...start, scanId: "scan-1" };
+      checkpoint = { ...start, scanId: "scan-1", snapshotMetadata };
       return "scan-1";
     },
     async commitPage({ nextCheckpoint }) {
       calls.commits.push(nextCheckpoint.fetchedCount);
       checkpoint = nextCheckpoint;
     },
-    async finishScan() { calls.finished++; },
+    async finishScan(id, finalCheckpoint, snapshotMetadata) {
+      calls.finished++;
+      calls.finishArgs = { id, finalCheckpoint, snapshotMetadata };
+    },
     async failScan(id, reason, details) { calls.failures.push({ id, reason, details }); }
   };
 }
@@ -96,4 +99,43 @@ test("transient source failures preserve the committed scan for resumption", asy
   await assert.rejects(runScanBatch({ source, store, pageSize: 2, maxPages: 1 }), /temporary fetch failed/);
   assert.equal(store.calls.failures.length, 0);
   assert.equal(store.calls.finished, 0);
+});
+
+test("worker persists source metadata at scan start and carries it through completion", async () => {
+  const store = makeStore(1);
+  const metadata = {
+    product: "harvest_notifications",
+    endpoint: "https://example.test/MapServer/0",
+    layer: "0",
+    query_definition: "where=1=1",
+    coverage_key: "unfiltered-layer-query-v1",
+    schema_version: "schema-v1",
+    identity_version: "oid-v1",
+    customer_visibility: "not_assessed",
+    rights_evidence_ref: null
+  };
+  const source = makeSource(1);
+  source.getSnapshotMetadata = async () => metadata;
+  const result = await runScanBatch({ source, store, pageSize: 1, maxPages: 1 });
+  assert.equal(result.status, "complete");
+  assert.deepEqual(store.calls.finishArgs.snapshotMetadata, metadata);
+  assert.deepEqual(store.calls.finishArgs.finalCheckpoint.snapshotMetadata, metadata);
+});
+
+test("worker abandons a resumable scan when source metadata identity changes", async () => {
+  const oldMetadata = { endpoint: "https://example.test/MapServer/0", schema_version: "v1" };
+  const checkpoint = {
+    schemaVersion: 1, sourceKey: "source", reportedTotal: 2, pageSize: 1,
+    nextOffset: 1, fetchedCount: 1, seenIds: [], externalSeenIds: true,
+    seenIdsCount: 1, updatedAt: "2026-10-25T00:00:00Z", complete: false,
+    scanId: "scan-old", mode: "incremental", snapshotMetadata: oldMetadata
+  };
+  const store = makeStore(2, checkpoint);
+  const source = makeSource(2);
+  source.getSnapshotMetadata = async () => ({ ...oldMetadata, schema_version: "v2" });
+  const result = await runScanBatch({ source, store, pageSize: 1, maxPages: 1 });
+  assert.equal(result.status, "in_progress");
+  assert.equal(store.calls.failures[0].id, "scan-old");
+  assert.ok(store.calls.failures[0].details.reasons.includes("snapshot_metadata_changed"));
+  assert.equal(store.calls.starts, 1);
 });
