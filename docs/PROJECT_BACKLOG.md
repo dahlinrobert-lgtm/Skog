@@ -230,4 +230,4 @@ På branchen `feat/skogskoll-arcgis-snapshot-metadata` utökas befintlig `create
 - schema-version som SHA-256 av kanoniserade fält-/geometrimetadata,
 - identitetsversion från ArcGIS OID-fältet och aktuell GeoJSON-ID-normalisering.
 
-Källans metadata cachelagras per adapterinstans. Saknat fältschema, geometri-typ, OID-fält eller explicit lagernummer stoppar metadataframtagningen. Kundvisning är fortsatt `not_assessed`. Funktionen är ännu inte kopplad till snapshot-envelope eller persistens; inga migrationer eller livekörningar har gjorts. PR/CI-verifiering återstår.
+Källans metadata cachelagras per adapterinstans. Saknat fältschema, geometri-typ, OID-fält eller explicit lagernummer stoppar metadataframtagningen. Kundvisning är fortsatt `not_assessed`. Funktionen är ännu inte kopplad till snapshot-envelope eller persistens; inga migrationer eller livekörningar har gjorts. PR #537:s customer UI-test passerade 78/78 tester (run 45078075239). Read-only source-probe passerade (run 45078075046): 300/300 unika ID:n, noll dubbletter/saknade ID:n, men avsiktligt inte komplett. Liveanrop av den nya metadatafunktionen och fullständig scan återstår.
