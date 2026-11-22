@@ -4,10 +4,11 @@ import { runScanBatch } from "../src/scan-worker-core.mjs";
 
 function makeStore(total, initial = null) {
   let checkpoint = initial;
-  const calls = { starts: 0, commits: [], finished: 0, failures: [] };
+  const calls = { starts: 0, commits: [], finished: 0, failures: [], pendingChecks: 0, order: [] };
   return {
     calls,
-    async loadCheckpoint() { return checkpoint; },
+    async registerPendingSnapshots() { calls.pendingChecks++; calls.order.push("pending"); return 0; },
+    async loadCheckpoint() { calls.order.push("checkpoint"); return checkpoint; },
     async startScan({ sourceKey, reportedTotal, pageSize, checkpoint: start, snapshotMetadata }) {
       calls.starts++;
       checkpoint = { ...start, scanId: "scan-1", snapshotMetadata };
@@ -150,4 +151,12 @@ test("worker refuses incomplete snapshot metadata before allocating a scan", asy
   );
   assert.equal(store.calls.starts, 0);
   assert.equal(store.calls.commits.length, 0);
+});
+
+test("worker retries terminal snapshot registration before loading a new checkpoint", async () => {
+  const store = makeStore(1);
+  const result = await runScanBatch({ source: makeSource(1), store, pageSize: 1, maxPages: 1 });
+  assert.equal(result.status, "complete");
+  assert.equal(store.calls.pendingChecks, 1);
+  assert.deepEqual(store.calls.order.slice(0, 2), ["pending", "checkpoint"]);
 });
