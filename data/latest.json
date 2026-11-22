@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-21T15:55:30.889706Z",
+  "checked_at": "2026-11-22T13:20:19.694999Z",
   "area": {
     "name": "Gräsmyr, Nordmalings kommun",
     "latitude": 63.74646,
@@ -27634,6 +27634,19 @@
     "collection": "sentinel-1-grd",
     "items": [
       {
+        "id": "S1C_IW_GRDH_1SDV_20261122T050506_20261122T050531_010445_014DFD_D1E5_COG",
+        "collection": "sentinel-1-grd",
+        "acquired_at": "2026-11-22T05:05:06.870821Z",
+        "published_at": "2026-11-22T05:11:34.046437Z",
+        "cloud_cover_percent": null,
+        "bbox": [
+          17.220472,
+          62.105785,
+          23.074848,
+          64.051605
+        ]
+      },
+      {
         "id": "S1D_IW_GRDH_1SDV_20261121T051334_20261121T051359_005561_00AA5D_074D_COG",
         "collection": "sentinel-1-grd",
         "acquired_at": "2026-11-21T05:13:34.368463Z",
@@ -30219,19 +30232,6 @@
           20.975239,
           64.564697
         ]
-      },
-      {
-        "id": "S1A_IW_GRDH_1SDV_20260625T161431_20260625T161456_065128_0835AC_83C4_COG",
-        "collection": "sentinel-1-grd",
-        "acquired_at": "2026-06-25T16:14:31.674035Z",
-        "published_at": "2026-06-25T15:07:12.836895Z",
-        "cloud_cover_percent": null,
-        "bbox": [
-          16.497595,
-          63.648468,
-          22.675962,
-          65.603256
-        ]
       }
     ],
     "count": 200,
@@ -30243,6 +30243,19 @@
     "url": "https://stac.dataspace.copernicus.eu/v1/search",
     "collection": "sentinel-2-l2a",
     "items": [
+      {
+        "id": "S2A_MSIL2A_20261121T103251_N0513_R108_T34VDR_20261121T152003",
+        "collection": "sentinel-2-l2a",
+        "acquired_at": "2026-11-21T10:32:51.024000Z",
+        "published_at": "2026-11-21T16:08:10.000000Z",
+        "cloud_cover_percent": 99.48,
+        "bbox": [
+          18.953501523280057,
+          63.02793322568484,
+          20.47071175540385,
+          64.02238301044605
+        ]
+      },
       {
         "id": "S2B_MSIL2A_20261121T102239_N0513_R065_T34VDR_20261121T140608",
         "collection": "sentinel-2-l2a",
@@ -32829,19 +32842,6 @@
           21.199734465434084,
           64.02701663648664
         ]
-      },
-      {
-        "id": "S2B_MSIL2A_20260412T101019_N0512_R022_T34VDR_20260412T140343",
-        "collection": "sentinel-2-l2a",
-        "acquired_at": "2026-04-12T10:10:19.024000Z",
-        "published_at": "2026-04-12T14:41:56.000000Z",
-        "cloud_cover_percent": 0.3,
-        "bbox": [
-          18.955282235384256,
-          63.02793322568484,
-          21.199734465434084,
-          64.02701663648664
-        ]
       }
     ],
     "count": 200,
@@ -32850,42 +32850,29 @@
   },
   "new_scenes_since_previous_run": [
     {
-      "id": "S1D_IW_GRDH_1SDV_20261121T051334_20261121T051359_005561_00AA5D_074D_COG",
+      "id": "S1C_IW_GRDH_1SDV_20261122T050506_20261122T050531_010445_014DFD_D1E5_COG",
       "collection": "sentinel-1-grd",
-      "acquired_at": "2026-11-21T05:13:34.368463Z",
-      "published_at": "2026-11-21T05:25:58.311948Z",
+      "acquired_at": "2026-11-22T05:05:06.870821Z",
+      "published_at": "2026-11-22T05:11:34.046437Z",
       "cloud_cover_percent": null,
       "bbox": [
-        15.157351,
-        62.064869,
-        20.966906,
-        64.00769
+        17.220472,
+        62.105785,
+        23.074848,
+        64.051605
       ]
     },
     {
-      "id": "S1D_IW_GRDH_1SDV_20261121T051309_20261121T051334_005561_00AA5D_C7FF_COG",
-      "collection": "sentinel-1-grd",
-      "acquired_at": "2026-11-21T05:13:09.369283Z",
-      "published_at": "2026-11-21T05:26:01.478624Z",
-      "cloud_cover_percent": null,
-      "bbox": [
-        15.673365,
-        63.542179,
-        21.809738,
-        65.494987
-      ]
-    },
-    {
-      "id": "S2B_MSIL2A_20261121T102239_N0513_R065_T34VDR_20261121T140608",
+      "id": "S2A_MSIL2A_20261121T103251_N0513_R108_T34VDR_20261121T152003",
       "collection": "sentinel-2-l2a",
-      "acquired_at": "2026-11-21T10:22:39.024000Z",
-      "published_at": "2026-11-21T14:39:49.000000Z",
-      "cloud_cover_percent": 99.65,
+      "acquired_at": "2026-11-21T10:32:51.024000Z",
+      "published_at": "2026-11-21T16:08:10.000000Z",
+      "cloud_cover_percent": 99.48,
       "bbox": [
         18.953501523280057,
         63.02793322568484,
-        21.199734465434084,
-        64.02701663648664
+        20.47071175540385,
+        64.02238301044605
       ]
     }
   ],
