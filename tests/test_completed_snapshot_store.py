@@ -68,6 +68,59 @@ class CompletedSnapshotStoreTests(unittest.TestCase):
             self.assertEqual(by_id["1"]["properties"]["ArendeStatus"], "B")
             self.assertEqual(by_id["1"]["geometry"], feature(1)["geometry"])
 
+
+    def test_streamed_transitions_only_yield_added_and_updated_features(self):
+        from scripts.completed_snapshot_store import iter_completed_archive_transitions
+
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            first = collection("2026-01-01T05:00:00Z", [feature(1), feature(2)])
+            first_result = write_completed_archive(first, directory)
+            second = collection(
+                "2026-01-02T05:00:00Z",
+                [feature(1, status="B"), feature(3, x=0.02)],
+            )
+            second_result = write_completed_archive(
+                second, directory,
+                previous_collection=first, previous_filename=first_result["filename"],
+                prefer_delta=True,
+            )
+            transitions = list(iter_completed_archive_transitions(directory))
+            self.assertEqual(len(transitions), 2)
+            self.assertFalse(transitions[0]["comparable"])  # first archive is baseline
+            transition = transitions[1]
+            self.assertTrue(transition["comparable"])
+            self.assertEqual(transition["before_snapshot"], first_result["filename"])
+            self.assertEqual(transition["after_snapshot"], second_result["filename"])
+            self.assertEqual(set(transition["after_features"]), {"1", "3"})
+            self.assertEqual(set(transition["before_features"]), {"1"})
+            self.assertEqual(
+                transition["after_features"]["1"]["geometry"],
+                feature(1)["geometry"],
+            )
+
+    def test_latest_archive_stream_reconstructs_delta_chain(self):
+        from scripts.completed_snapshot_store import read_latest_completed_archive
+
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            first = collection("2026-01-01T05:00:00Z", [feature(1), feature(2)])
+            first_result = write_completed_archive(first, directory)
+            second = collection(
+                "2026-01-02T05:00:00Z",
+                [feature(1, status="B"), feature(3, x=0.02)],
+            )
+            second_result = write_completed_archive(
+                second, directory,
+                previous_collection=first, previous_filename=first_result["filename"],
+                prefer_delta=True,
+            )
+            latest = read_latest_completed_archive(directory)
+            self.assertEqual(latest[0], second_result["filename"])
+            by_id = {item["id"]: item for item in latest[1]["features"]}
+            self.assertEqual(set(by_id), {"1", "3"})
+            self.assertEqual(by_id["1"]["properties"]["ArendeStatus"], "B")
+
     def test_scope_change_forces_checkpoint(self):
         with tempfile.TemporaryDirectory() as tmp:
             directory = Path(tmp)
