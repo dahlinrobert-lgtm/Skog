@@ -1,8 +1,11 @@
+import { createHash } from "node:crypto";
 import { SOURCE_ID } from "../src/observation-core.mjs";
 
 const DEFAULT_ENDPOINT = "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAvverkningsanmalan/MapServer/0";
 const DEFAULT_PAGE_LIMIT = 1000;
 const REST_BATCH_SIZE = 1000;
+const DEFAULT_PRODUCT = "harvest_notifications";
+const COVERAGE_KEY = "unfiltered-layer-query-v1";
 
 function requiredEnv(env, name) {
   const value = env[name];
@@ -14,12 +17,16 @@ function requiredEnv(env, name) {
 
 export function createArcGisSource({
   endpoint = DEFAULT_ENDPOINT,
+  product = DEFAULT_PRODUCT,
   pageLimit = DEFAULT_PAGE_LIMIT,
   fetchImpl = fetch
 } = {}) {
   if (!Number.isSafeInteger(pageLimit) || pageLimit < 1) throw new TypeError("pageLimit must be a positive integer");
-  const queryEndpoint = endpoint.replace(/\/$/, "") + "/query";
+  if (typeof product !== "string" || product.trim() === "") throw new TypeError("product must be a non-empty string");
+  const normalizedEndpoint = endpoint.replace(/\/$/, "");
+  const queryEndpoint = normalizedEndpoint + "/query";
   let objectIdField = null;
+  let layerMetadata = null;
 
   async function json(url) {
     const response = await fetchImpl(url, {
@@ -32,17 +39,116 @@ export function createArcGisSource({
     return body;
   }
 
+  async function getLayerMetadata() {
+    if (layerMetadata) return layerMetadata;
+    const metadata = await json(normalizedEndpoint + "?f=pjson");
+    if (!Array.isArray(metadata.fields) || metadata.fields.length === 0) {
+      throw new Error("ArcGIS layer metadata has no field schema");
+    }
+    layerMetadata = metadata;
+    return layerMetadata;
+  }
+
   async function getObjectIdField() {
     if (objectIdField) return objectIdField;
-    const metadata = await json(endpoint.replace(/\/$/, "") + "?f=pjson");
-    objectIdField = metadata.objectIdField ?? metadata.objectIdFieldName ??
-      (metadata.fields ?? []).find(field => field.type === "esriFieldTypeOID")?.name;
-    if (!objectIdField) throw new Error("ArcGIS layer metadata has no object ID field");
+    const metadata = await getLayerMetadata();
+    const candidate = metadata.objectIdField ?? metadata.objectIdFieldName ??
+      metadata.fields.find(field => field.type === "esriFieldTypeOID")?.name;
+    if (typeof candidate !== "string" || candidate.trim() === "") {
+      throw new Error("ArcGIS layer metadata has no object ID field");
+    }
+    const idFieldMetadata = metadata.fields.find(field => field.name === candidate);
+    if (!idFieldMetadata) throw new Error("ArcGIS object ID field is not present in layer fields");
+    if (idFieldMetadata.type !== "esriFieldTypeOID") {
+      throw new Error("ArcGIS object ID field is not typed as an OID");
+    }
+    objectIdField = candidate;
     return objectIdField;
+  }
+
+  function featureQueryParameters(idField) {
+    return {
+      where: "1=1",
+      outFields: "*",
+      returnGeometry: "true",
+      outSR: "4326",
+      f: "geojson",
+      orderByFields: `${idField} ASC`
+    };
+  }
+
+  function canonicalize(value) {
+    if (Array.isArray(value)) return value.map(canonicalize);
+    if (value && typeof value === "object") {
+      return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonicalize(value[key])]));
+    }
+    return value;
+  }
+
+  async function getSnapshotMetadata() {
+    const metadata = await getLayerMetadata();
+    const idField = await getObjectIdField();
+    const layerMatch = normalizedEndpoint.match(/\/(?:MapServer|FeatureServer)\/(\d+)$/i);
+    if (!layerMatch) throw new Error("ArcGIS endpoint does not identify a MapServer/FeatureServer layer number");
+    if (typeof metadata.geometryType !== "string" || metadata.geometryType === "") {
+      throw new Error("ArcGIS layer metadata has no geometry type");
+    }
+
+    const fields = metadata.fields.map(field => {
+      if (typeof field.name !== "string" || field.name === "" ||
+          typeof field.type !== "string" || field.type === "") {
+        throw new Error("ArcGIS layer metadata contains an invalid field definition");
+      }
+      return {
+        name: field.name,
+        type: field.type,
+        length: Number.isSafeInteger(field.length) ? field.length : null,
+        nullable: typeof field.nullable === "boolean" ? field.nullable : null,
+        domain: canonicalize(field.domain ?? null)
+      };
+    }).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+
+    if (new Set(fields.map(field => field.name)).size !== fields.length) {
+      throw new Error("ArcGIS layer metadata contains duplicate field names");
+    }
+
+    const schemaDescriptor = canonicalize({
+      fields,
+      geometry_type: metadata.geometryType,
+      has_z: metadata.hasZ === true,
+      has_m: metadata.hasM === true,
+      source_spatial_reference: metadata.spatialReference?.latestWkid ??
+        metadata.spatialReference?.wkid ?? null,
+      output_spatial_reference: "EPSG:4326"
+    });
+    const schemaDigest = createHash("sha256")
+      .update(JSON.stringify(schemaDescriptor))
+      .digest("hex");
+
+    return {
+      product,
+      endpoint: normalizedEndpoint,
+      layer: layerMatch[1],
+      // Pagination controls are deliberately excluded: changing page size or
+      // offset does not change the logical set of source features.
+      query_definition: Object.entries(featureQueryParameters(idField))
+        .map(([key, value]) => `${key}=${value}`)
+        .join(";"),
+      // This identifies the unfiltered layer query, not a claim of national
+      // geographic coverage or a verified source completeness statement.
+      coverage_key: COVERAGE_KEY,
+      schema_version: `arcgis-layer-schema-v1:${schemaDigest}`,
+      // The field is the ArcGIS technical OID mapped to a string GeoJSON id.
+      // This does not assert that the provider preserves OIDs indefinitely.
+      identity_version: `arcgis-oid-field:${idField}:geojson-id-string-v1`,
+      customer_visibility: "not_assessed",
+      rights_evidence_ref: null
+    };
   }
 
   return {
     key: SOURCE_ID,
+    getSnapshotMetadata,
     async getCount() {
       const body = await json(queryEndpoint + "?" + new URLSearchParams({
         where: "1=1", returnCountOnly: "true", f: "json"
@@ -53,14 +159,10 @@ export function createArcGisSource({
     async getPage(offset, requestedSize) {
       const idField = await getObjectIdField();
       const size = Math.min(requestedSize, pageLimit);
+      const query = featureQueryParameters(idField);
       const url = queryEndpoint + "?" + new URLSearchParams({
-        where: "1=1",
-        outFields: "*",
-        returnGeometry: "true",
-        outSR: "4326",
-        f: "geojson",
+        ...query,
         resultRecordCount: String(size),
-        orderByFields: `${idField} ASC`,
         resultOffset: String(offset)
       });
       const body = await json(url);

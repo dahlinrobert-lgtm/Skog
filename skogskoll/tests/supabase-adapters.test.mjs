@@ -12,6 +12,123 @@ function response(body, { ok = true, status = 200 } = {}) {
   };
 }
 
+
+function arcGisLayerMetadata(overrides = {}) {
+  return {
+    objectIdField: "OBJECTID",
+    geometryType: "esriGeometryPolygon",
+    hasZ: false,
+    hasM: false,
+    spatialReference: { wkid: 102100, latestWkid: 3857 },
+    fields: [
+      { name: "OBJECTID", type: "esriFieldTypeOID", nullable: false },
+      { name: "Beteckn", type: "esriFieldTypeString", length: 80, nullable: true },
+      { name: "Inkomdatum", type: "esriFieldTypeDate", nullable: true }
+    ],
+    ...overrides
+  };
+}
+
+test("ArcGIS snapshot metadata is derived from the configured layer and live layer schema", async () => {
+  let metadataCalls = 0;
+  const fetchImpl = async url => {
+    const parsed = new URL(url);
+    if (parsed.pathname.endsWith("/0")) {
+      metadataCalls++;
+      return response(arcGisLayerMetadata());
+    }
+    throw new Error("Unexpected request: " + url);
+  };
+  const source = createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer/0",
+    fetchImpl
+  });
+
+  const first = await source.getSnapshotMetadata();
+  const second = await source.getSnapshotMetadata();
+  assert.deepEqual(first, second);
+  assert.equal(metadataCalls, 1, "layer metadata is cached for the source instance");
+  assert.equal(first.product, "harvest_notifications");
+  assert.equal(first.layer, "0");
+  assert.equal(first.endpoint, "https://example.test/arcgis/rest/services/Harvest/MapServer/0");
+  assert.equal(first.coverage_key, "unfiltered-layer-query-v1");
+  assert.doesNotMatch(first.coverage_key, /sweden|national/i);
+  assert.equal(
+    first.query_definition,
+    "where=1=1;outFields=*;returnGeometry=true;outSR=4326;f=geojson;orderByFields=OBJECTID ASC"
+  );
+  assert.match(first.schema_version, /^arcgis-layer-schema-v1:[a-f0-9]{64}$/);
+  assert.equal(first.identity_version, "arcgis-oid-field:OBJECTID:geojson-id-string-v1");
+  assert.equal(first.customer_visibility, "not_assessed");
+  assert.equal(first.rights_evidence_ref, null);
+});
+
+test("ArcGIS schema and identity changes create new metadata versions", async () => {
+  const createSource = metadata => createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer/0",
+    fetchImpl: async () => response(metadata)
+  });
+  const base = await createSource(arcGisLayerMetadata()).getSnapshotMetadata();
+  const changedSchema = await createSource(arcGisLayerMetadata({
+    fields: [
+      ...arcGisLayerMetadata().fields,
+      { name: "Status", type: "esriFieldTypeString", length: 20, nullable: true }
+    ]
+  })).getSnapshotMetadata();
+  const changedIdentity = await createSource(arcGisLayerMetadata({
+    objectIdField: "ROW_ID",
+    fields: [
+      { name: "ROW_ID", type: "esriFieldTypeOID", nullable: false },
+      ...arcGisLayerMetadata().fields.slice(1)
+    ]
+  })).getSnapshotMetadata();
+
+  assert.notEqual(base.schema_version, changedSchema.schema_version);
+  assert.notEqual(base.identity_version, changedIdentity.identity_version);
+  assert.notEqual(base.query_definition, changedIdentity.query_definition);
+});
+
+test("ArcGIS metadata rejects an endpoint without an explicit layer number", async () => {
+  const source = createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer",
+    fetchImpl: async () => response(arcGisLayerMetadata())
+  });
+  await assert.rejects(source.getSnapshotMetadata(), /layer number/);
+});
+
+test("ArcGIS metadata rejects incomplete field schema", async () => {
+  const source = createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer/0",
+    fetchImpl: async () => response({ objectIdField: "OBJECTID", fields: [] })
+  });
+  await assert.rejects(source.getSnapshotMetadata(), /no field schema/);
+});
+
+
+test("ArcGIS schema fingerprint is independent of field metadata order", async () => {
+  const fields = arcGisLayerMetadata().fields;
+  const makeSource = orderedFields => createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer/0",
+    fetchImpl: async () => response(arcGisLayerMetadata({ fields: orderedFields }))
+  });
+  const a = await makeSource(fields).getSnapshotMetadata();
+  const b = await makeSource([...fields].reverse()).getSnapshotMetadata();
+  assert.equal(a.schema_version, b.schema_version);
+});
+
+test("ArcGIS metadata rejects an object ID field with a non-OID type", async () => {
+  const source = createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer/0",
+    fetchImpl: async () => response(arcGisLayerMetadata({
+      fields: arcGisLayerMetadata().fields.map(field =>
+        field.name === "OBJECTID" ? { ...field, type: "esriFieldTypeInteger" } : field
+      )
+    }))
+  });
+  await assert.rejects(source.getSnapshotMetadata(), /not typed as an OID/);
+  await assert.rejects(source.getSnapshotMetadata(), /not typed as an OID/);
+});
+
 test("ArcGIS source returns count and normalizes object IDs", async () => {
   const calls = [];
   const fetchImpl = async url => {

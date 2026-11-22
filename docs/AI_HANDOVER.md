@@ -984,3 +984,17 @@ PM-028 har lagts till som styrningsuppgift. En separat designagent föreslås so
 PM-028 har lagts till som styrningsuppgift. En separat designagent föreslås som produktdesigner/UX-granskare för Skogskolls webb och mobil webb, med eventuell PWA/native app först efter verifierat behov. Uppdrag, arbetsmodell, granskningsformat och mandatgränser finns i `PROJECT_MANAGER_RULES.md` avsnitt 4C. Agenten är i detta skede en dokumenterad arbetsroll/instruktionsspecifikation, inte en tekniskt driftsatt autonom agent. Den ska föreslå och granska; mänskliga användartester och projektledarens godkännande kvarstår.
 
 **Nästa steg:** använd designagentens granskningsmodell i PM-021:s första konkreta UI-iteration. Välj en avgränsad vy eller användaruppgift, dokumentera nuläge och testuppgift, ta fram designförslag och granska innan implementation. Håll UI-iterationer separata från PM-022:s snapshotmetadata-/jämförbarhetsarbete.
+
+
+## 2026-11-22 – Metadataidentitet från Skogskoll ArcGIS-worker
+
+En separat implementation på branchen `feat/skogskoll-arcgis-snapshot-metadata` lägger till `source.getSnapshotMetadata()` i den befintliga ArcGIS-källadaptern.
+
+- Produkt-ID är explicit konfigurerat som `harvest_notifications`; endpoint och MapServer/FeatureServer-lagernummer härleds från den faktiska adapterkonfigurationen.
+- Query-definitionen beskriver samma ofiltrerade feature-query som `getPage`: `where=1=1`, alla attribut, geometri, EPSG:4326, GeoJSON och sortering på det metadatahämtade OID-fältet. Paginering (`resultOffset`/`resultRecordCount`) exkluderas eftersom den inte ändrar den logiska mängden.
+- `coverage_key=unfiltered-layer-query-v1` betyder endast att queryn saknar attribut-/geografiskt filter. Det är **inte** ett påstående om nationell täckning eller fullständighet.
+- `schema_version` är SHA-256 över kanoniserad ArcGIS-fältmetadata, geometri-typ/dimensioner och spatialreferensinformation.
+- `identity_version` identifierar det metadatahämtade ArcGIS OID-fältet och konverteringen till strängbaserat GeoJSON feature-id. Den påstår inte att OID är permanent stabilt över tid.
+- `customer_visibility` är fortsatt `not_assessed`; `rights_evidence_ref` är null. Metadatafunktionen skapar inga rättigheter.
+
+Detta är en read-only metadatafunktion i källadaptern. Den är ännu inte kopplad till `poll_runs`/`scan_sessions`, snapshot-envelope-persistens eller schemalagd/live ingestion. Ingen SQL-migration, databasändring, kundfeed eller avisering ingår. PR #537:s customer UI-test passerade med 78/78 tester (run 45078075239). Den separata read-only source-proben passerade (run 45078075046) med 300/300 unika ID:n och noll dubbletter/saknade ID:n; den var avsiktligt begränsad och inte en komplett scan. Detta verifierar inte liveanropet till den nya metadatafunktionen eller fullständighet.
