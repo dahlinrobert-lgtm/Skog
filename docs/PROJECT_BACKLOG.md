@@ -6,6 +6,43 @@
 
 ## Prioriterade arbetsområden
 
+## Överordnad prioritering
+
+**P0 – Dagligt snapshotinformationsflöde är projektets primära leverans.** En daglig sammanställning ska visa status för samtliga registrerade källor och separata produkter/lager: senaste kompletta snapshot, senaste körningsförsök, running/success/partial/failed, aktualitet, scope/täckning, antal, jämförbarhet, förändringar, blockerare och länkar till workflow/manifest/artifact/PR. Okända statusvärden ska förbli okända, aldrig visas som noll eller godkända.
+
+Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att alla källor hämtas varje dag. Varje källa behåller en dokumenterad lämplig kadens. Rapporten uppdateras dagligen och visar källans färskhet i förhållande till sin kadens.
+
+**Backloggen ska vara långsiktig och heltäckande men sekundär.** Fånga framtida arbete i separata nivåer; skapa inte fler aktiva spår än kapaciteten medger. Vid konflikt prioriteras P0, därefter fel/fullständighet i befintliga snapshots och nationell täckning, därefter plattform och kundfunktioner.
+
+### PM-027 – Dagligt snapshot- och källinformationsflöde (P0)
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P0 – högsta operativa prioritet |
+| Status | Krav fastställt; inventering av befintliga rapporter/workflows återstår |
+| Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
+| Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
+| Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
+| Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
+| Nästa steg | Inventera befintlig projektledarinventering och snapshot/change-feed-kontrakt; definiera minsta rapportfält och käll-/lagerkoppling utan parallell historikmodell |
+
+### Backloggens långsiktiga täckningsområden
+
+Backloggen ska successivt fånga följande områden. Detta är en planeringsram, inte en order att starta allt.
+
+- **Källregister och nationell täckning:** varje källa/produkt/lager, nationell geografi, fullständighetsmetod, stabila ID:n och täckningsluckor.
+- **Daglig drift och observability:** schemalagda körningar, freshness/SLA, felklassning, återhämtning, runbooks, kostnad och kapacitetsgränser.
+- **Snapshots och historik:** gemensamt envelope, manifestschema, checksummor, append-only-arkiv, retention, deduplicering, checkpoints och restore.
+- **Datakvalitet och geometri:** CRS, giltighet, topologi, precision, attribut, ID-stabilitet, dubbletter och scope-hash.
+- **Källspecifika adaptrar:** ArcGIS/OGC API, raster, WMS, PxWeb/statistik, filhämtning, diarier och versionsstyrda geodata.
+- **Analys och indikatorer:** förändringsdetektion, överlapp/union, arealberäkning, riskindikatorer, historiska jämförelser och osäkerhetsmått.
+- **Skogskoll runtime:** auth, RLS, PostGIS, säker ingestion, bevakningsområden, matchning, API, testmiljö, backup och restore.
+- **Kundupplevelse:** karta, historik, filter, sökning, förklaringar, proveniens, mobilanpassning och tillgänglighet.
+- **Aviseringar:** tyst baslinje, opt-in, relevansfilter, deduplicering, transactional outbox, e-post/push och leveransstatus.
+- **Rättigheter och regelefterlevnad:** teknisk åtkomst, lagring, bearbetning, derivat, kommersiell användning, kundvisning, redistribution, attribution, personuppgifter och sekretess per produkt/lager.
+- **Kommersiell drift:** abonnemang, behörigheter, support, incidenter, kostnadsmodell, användningsvillkor och mätning av nytta.
+- **Teknisk skuld och förvaltning:** beroendeuppdateringar, Node/Python-versioner, CI, dokumentation, kodägarskap, säkerhetsskanning, testtäckning och legacyavveckling.
+
 | ID | Uppgift | Prioritet | Status | Beroenden / nästa steg |
 |---|---|---|---|---|
 | PM-001 | Bygg read-only projektinventering av issues, PR, workflows och dokumentstatus | P1 | v1/v2a verifierade; v2b Git + indefinite beslutat, design/implementation återstår | Användaren har valt separat skyddad Git-branch och indefinite retention. Teknisk design dokumenterad i `PROJECT_MANAGER_AGENT_V2B_TECHNICAL_DESIGN.md`. Offline-modulen är mergad via PR #440 och lokal restore-/round-trip-funktion via PR #441; PR #441:s samtliga checks passerade. Säkerhetsgranskningen finns i `PROJECT_MANAGER_AGENT_V2B_SECURITY_AUDIT.md`: rulesets-endpointen gav tom lista, men klassiskt branchskydd för main kunde inte läsas (HTTP 403). Historikbranch saknas ännu. Detta blockerar livepersistens tills administrativ verifiering och separat permissionsmodell är klara. CI push-paths korrigeras för history-modul och tester. Ingen v2c ännu. |
