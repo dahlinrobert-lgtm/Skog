@@ -239,7 +239,7 @@ PR #537 är mergad (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a). Inte
 - Worker hämtar och fail-closed-validerar metadata före scan-start.
 - Samma metadata sparas i run- och scan-sessionens diagnostics. Återupptagning kräver identisk kanoniserad metadata; metadata-/schema-/querydrift får inte blandas in i en befintlig scan.
 - Ny migration 005 inför worker-only snapshot_envelopes med unik scan-session och oföränderlig envelope. Registrerings-RPC kontrollerar terminala statusar, kopplade run-/scan-ID:n, metadataöverensstämmelse och att complete endast kan registreras för fullständigt avslutad scan.
-- Store mappar terminala poster genom befintlig snapshot-envelope-adapter och registrerar dem idempotent. Misslyckad registrering kan återförsökas genom ny finish/fail-hantering utan att skriva om en befintlig envelope.
+- Store mappar terminala poster genom befintlig snapshot-envelope-adapter och registrerar dem idempotent. Migrationen markerar registreringstidpunkt och en pending-RPC gör att oregistrerade terminala sessioner kan återförsökas vid nästa workerstart utan att skriva om en befintlig envelope.
 - CI-utökning applicerar migration 005 och SQL-smoketestet täcker registrering. Inga live DB-/ArcGIS-anrop, produktionsmigrationer, alerts eller kundvisning ingår.
 
 **Status:** implementation på PR-branch; CI och SQL-verifiering inväntas. Källstatus och rättighetsgrindar är oförändrade. Nästa steg är att granska och verifiera PR-checkarna innan merge.
