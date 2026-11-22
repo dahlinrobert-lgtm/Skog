@@ -740,3 +740,9 @@ En särskild arbetsmodell och första månatliga kontroll finns dokumenterad i [
 - Inget av dessa flöden får tolka frånvaro i en senare körning som bevis på borttagning, avbokning eller utförd avverkning.
 - `Inkomdatum` är ett inkomstdatum, inte verifierat ändringsdatum. Editor tracking och eventuella editDate/lastEditDate-fält måste kontrolleras separat.
 - Nationell täckning, fullständiga planned-harvest snapshots och kundvisning är inte etablerade av denna kontroll.
+
+## Skogsstyrelsen månadskontroll – driftutfall och publicering
+
+Den första manuella körningen (2026-11-22, [run #4](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45031069869)) lyckades med tester, Samråd point/line/polygon-insamling, snapshot av utförda avverkningar och planned-harvest probe. Probe-rapporten sparades som Actions-artifact.
+
+Snapshotfiler skapades i runnern men kunde inte publiceras till `main`: repository rules kräver pull request (GH013). Korrigerings-PR byter därför direktpush mot automatisk skapande/uppdatering av en separat data-PR. Data-PR:n ska granskas manuellt innan snapshots blir del av main. Se [driftrapporten](SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md).
