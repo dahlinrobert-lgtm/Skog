@@ -121,6 +121,40 @@ class CompletedSnapshotStoreTests(unittest.TestCase):
             self.assertEqual(set(by_id), {"1", "3"})
             self.assertEqual(by_id["1"]["properties"]["ArendeStatus"], "B")
 
+    def test_streamed_transitions_follow_declared_base_not_previous_filename(self):
+        from scripts.completed_snapshot_store import iter_completed_archive_transitions
+
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            first = collection("2026-01-01T05:00:00Z", [feature(1)], "scope-A")
+            first_result = write_completed_archive(first, directory)
+
+            # A later full archive is a separate checkpoint. The following delta
+            # explicitly references the earlier checkpoint, not the preceding file.
+            unrelated = collection("2026-01-02T05:00:00Z", [feature(9)], "scope-A")
+            write_completed_archive(unrelated, directory)
+
+            target = collection("2026-01-03T05:00:00Z", [feature(1, status="B")], "scope-A")
+            delta = write_completed_archive(
+                target, directory,
+                previous_collection=first, previous_filename=first_result["filename"],
+                prefer_delta=True,
+            )
+            transitions = list(iter_completed_archive_transitions(directory))
+            match = next(item for item in transitions if item["after_snapshot"] == delta["filename"])
+            self.assertTrue(match["comparable"])
+            self.assertEqual(match["before_snapshot"], first_result["filename"])
+            self.assertEqual(set(match["before_features"]), {"1"})
+            self.assertEqual(set(match["after_features"]), {"1"})
+            self.assertEqual(match["after_features"]["1"]["properties"]["ArendeStatus"], "B")
+
+            from scripts.completed_snapshot_store import read_latest_completed_archive
+            latest = read_latest_completed_archive(directory)
+            self.assertEqual(latest[0], delta["filename"])
+            by_id = {item["id"]: item for item in latest[1]["features"]}
+            self.assertEqual(set(by_id), {"1"})
+            self.assertEqual(by_id["1"]["properties"]["ArendeStatus"], "B")
+
     def test_scope_change_forces_checkpoint(self):
         with tempfile.TemporaryDirectory() as tmp:
             directory = Path(tmp)
