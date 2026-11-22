@@ -104,6 +104,30 @@ test("ArcGIS metadata rejects incomplete field schema", async () => {
   await assert.rejects(source.getSnapshotMetadata(), /no field schema/);
 });
 
+
+test("ArcGIS schema fingerprint is independent of field metadata order", async () => {
+  const fields = arcGisLayerMetadata().fields;
+  const makeSource = orderedFields => createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer/0",
+    fetchImpl: async () => response(arcGisLayerMetadata({ fields: orderedFields }))
+  });
+  const a = await makeSource(fields).getSnapshotMetadata();
+  const b = await makeSource([...fields].reverse()).getSnapshotMetadata();
+  assert.equal(a.schema_version, b.schema_version);
+});
+
+test("ArcGIS metadata rejects an object ID field with a non-OID type", async () => {
+  const source = createArcGisSource({
+    endpoint: "https://example.test/arcgis/rest/services/Harvest/MapServer/0",
+    fetchImpl: async () => response(arcGisLayerMetadata({
+      fields: arcGisLayerMetadata().fields.map(field =>
+        field.name === "OBJECTID" ? { ...field, type: "esriFieldTypeInteger" } : field
+      )
+    }))
+  });
+  await assert.rejects(source.getSnapshotMetadata(), /not typed as an OID/);
+});
+
 test("ArcGIS source returns count and normalizes object IDs", async () => {
   const calls = [];
   const fetchImpl = async url => {
