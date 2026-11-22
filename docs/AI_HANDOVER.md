@@ -667,3 +667,17 @@ Denna notering ersätter tidigare punkter ovan som anger att anonym åtkomstkont
 - Källstatusrapporten anger noll källor uttryckligen godkända för kundvisning vid senaste rapporterade registerkontroll. Kundwebben ska därför stödja rättighetsstyrd publicering per exakt produkt/lager; teknisk åtkomst räcker inte.
 - En separat dokumentationsbranch `docs/skogskoll-web-architecture-review` har skapats för granskningen. Nästa kodsteg enligt dokumentet: isolera kundnavigationen, lägga grund för gemensamt designsystem och testa relativa länkar utan att ändra befintlig datalogik eller interna Skog-sidor.
 - Inga produktionskopplingar, datakällor, aviseringar eller kundvisningar har aktiverats i detta arbete.
+
+## Skogskoll – dag-för-dag-flödet som produktens USP (2026-11-22)
+
+Användaren har bekräftat att snapshot- och dag-för-dag-visningen i ett sammanhängande flöde är Skogskolls främsta särskiljande värde. Kundupplevelsen ska därför utgå från ett kronologiskt förändringsflöde byggt av daterade snapshots; karta, bevakningar och historik ska vara kopplade till samma tidsmässiga sammanhang.
+
+- Startsidan ska vara **Flöde**, inte en generell statistiköversikt.
+- Flödet ska skilja mellan tillkommet, ändrat och eventuellt försvunnet, men försvunnet får endast visas när två kompletta och jämförbara snapshots ger tillräcklig evidens.
+- Varje händelse ska visa källans händelsedatum, publiceringsdatum och Skogskolls första upptäckt separat.
+- Dagval och jämförelse ska kunna spåras till snapshot, källa, körnings-ID, status, täckning och kontrollsumma när relevant.
+- Kartan ska synkroniseras med vald dag/händelse. Historiken ska visa samma objekts utveckling över flera snapshots.
+- Syntetiska testposter får aldrig visas som verkliga kundhändelser. Ingen riktig feed är ansluten i första UI-steget.
+- Källstatusrapporten som granskades 2026-11-18 anger noll källor uttryckligen godkända för kundvisning; status måste uppdateras och bedömas per exakt lager innan publicering.
+
+Första UI-implementationen ligger i branch `feat/skogskoll-daily-change-feed-shell`: kundnavigation, primär flödesyta, dagväljare med tydlig frånvaro av anslutna snapshots, kartplaceholder utan länk till intern Skog-karta samt riktade UI-regressionstester. Backend, riktiga snapshots, källvisning och aviseringar aktiveras inte i detta steg.
