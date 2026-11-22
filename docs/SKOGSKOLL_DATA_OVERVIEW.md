@@ -822,3 +822,18 @@ PR [#504](https://github.com/dahlinrobert-lgtm/Skog/pull/504) mergades till `mai
 - Riktade PR-checkar passerade: [run 45040997464](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45040997464) och [run 45040997430](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45040997430). PR-checken körde testerna men hoppade avsiktligt över insamling och data-PR.
 
 **Status:** implementation och skyddstester är mergade/verifierade. Den första kompletta källhämtningen har ännu inte körts. Scope är endast Gräsmyr 10 km; nationell paginering är inte etablerad. Nästa steg är manuell körning av workflowet, granskning av data-PR och manifest, därefter en andra komplett körning med samma scope. Ingen kundvisning eller alerting aktiveras.
+
+
+### Första kompletta Gräsmyr-snapshoten arkiverad (2026-11-22)
+
+Efter fixen av tokenautentiseringen i PR #506 lyckades workflow-körning [#5 / 45042577564](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45042577564). Data-PR [#507](https://github.com/dahlinrobert-lgtm/Skog/pull/507) mergades 2026-11-22 16:15:13 UTC (merge commit `565a1134ac973bcf963e5269681792bb726a4054`). Main verifierades på samma commit.
+
+Arkiverade filer:
+- `data/skogsstyrelsen/harvest_notifications/grasmyr/latest.json`
+- `data/skogsstyrelsen/harvest_notifications/grasmyr/snapshots/grasmyr_10km_20261122T161347Z.geojson.gz`
+
+Manifestet visar en komplett read-only-hämtning för Gräsmyr 10 km, fångad 2026-11-22 16:13:47 UTC. ArcGIS returnerade 165 ID:n; 165 objekt hämtades; 165 ID:n var unika; count före/efter var 165/165 och ID-inventeringen var stabil. `complete_scan=true`. Objektbatchstorlek 200. Okomprimerad GeoJSON var 303 866 byte och SHA-256 var `21df361fbef8b0151e7a01e06d2377fe1f5cb42a1d5265217c1e7b7ea3d6bbee`. Workflow producerade dessutom ett artifact på 92 642 byte.
+
+Detta är första kompletta arkiverade observationen, inte ännu en förändringsserie. En andra komplett körning med samma scope behövs innan differenser kan klassas som förändringar. Ingen frånvaro får betraktas som borttagning, och inga kundlarm eller kunddatabas-skrivningar är aktiverade. Nationell täckning och kommersiell kundvisningsrätt är inte verifierade.
+
+**Nästa steg:** gör en andra komplett körning vid senare tillfälle och jämför ID-inventering, antal och objektinnehåll. Behåll befintlig sex­timmarsprobe separat.

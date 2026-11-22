@@ -833,3 +833,17 @@ Huvudfynd:
 - Ingen kundfeed, kundavisering eller rättighetsstatus ändras. Teknisk fullständighet inom pilotscopet är inte nationell täckning eller kommersiellt godkännande.
 
 **Nästa konkreta steg:** kör workflowet manuellt efter att push-utlösta main-kontroller är klara. Granska den skapade data-PR:n och manifestet. Kör sedan en andra komplett körning vid senare tidpunkt med samma scope och jämför antal, ID:n och SHA-256. Först därefter bedöms om frånvaro kan bli en säker förändringssignal.
+
+
+## Första kompletta Gräsmyr-hämtningen arkiverad på main (2026-11-22)
+
+- Efter korrigeringen i PR [#506](https://github.com/dahlinrobert-lgtm/Skog/pull/506) lyckades manuell workflow-körning [#5 / run 45042577564](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45042577564). Alla steg passerade: skyddstester, komplett ArcGIS-hämtning, artifact-uppladdning och data-PR-publicering.
+- Data-PR [#507](https://github.com/dahlinrobert-lgtm/Skog/pull/507) mergades 2026-11-22 16:15:13 UTC. Merge commit: `565a1134ac973bcf963e5269681792bb726a4054`; main verifierades på samma SHA.
+- Arkiverade filer: `data/skogsstyrelsen/harvest_notifications/grasmyr/latest.json` och `data/skogsstyrelsen/harvest_notifications/grasmyr/snapshots/grasmyr_10km_20261122T161347Z.geojson.gz`.
+- Manifest: fångad 2026-11-22 16:13:47 UTC; scope Gräsmyr 10 km, center 19.66455, 63.74646; OBJECTID; returnIdsOnly + object-ID-batcher om 200; count före/efter 165/165; ID count 165; feature count 165; unika ID 165; stabil inventering true; complete_scan true. Okomprimerad storlek 303 866 byte. SHA-256 för okomprimerad GeoJSON: `21df361fbef8b0151e7a01e06d2377fe1f5cb42a1d5265217c1e7b7ea3d6bbee`.
+- Workflow-run skapade ett artifact (92 642 byte, artifact digest `sha256:c7f8f75d1847fd7a18d8059ccf86d0fb56aee45c8fe212614e11e32c120994d7`).
+- Den tidigare körningen #3 misslyckades efter lyckad hämtning p.g.a. felaktigt tokenuttryck. PR #506 korrigerade autentisering och flyttade artifact-uppladdningen före PR-publicering. Körning #5 bekräftar att den korrigerade kedjan fungerar.
+- Detta är första kompletta arkiverade observationen för scopet. En andra komplett körning vid senare tidpunkt krävs för att mäta förändringar. Ingen frånvaro får ännu klassas som borttagning och inga larm/kunddatabas-skrivningar sker.
+- Ingen nationell täckning har verifierats. Kommersiella rättigheter och kundvisning ändras inte av den tekniska arkiveringen.
+
+**Nästa konkreta steg:** kör samma manuella workflow igen vid nästa lämpliga kontrolltillfälle. Jämför ID-inventering, antal, objektinnehåll och manifest. Om källan är komplett och jämförbar, dokumentera differenser utan att ännu skapa kundlarm. Behåll sex­timmarsproben som separat monitor.
