@@ -61,7 +61,7 @@ Backloggen ska successivt fånga följande områden. Detta är en planeringsram,
 | PM-014 | Utvärdera SCA/Sveaskog-källspår | P3 | Öppen | Källåtkomst, fullständighet och rättigheter; ingen automatisk insamling före beslut. |
 | PM-015 | Slutför Skogskoll produktionsberedskap för auth, RLS, PostGIS och ingestion | P2 | Planerad | Verifiera befintlig kod/CI och separat testprojekt; ingen produktionsaktivering ännu. |
 | PM-016 | Implementera bevakningshistorik och aviseringar efter verifierad baslinje | P2 | Blockerad | Kräver PM-015, källgodkännande, användarsamtycke och tyst första baslinje. |
-| PM-022 | Etablera Skogskolls snapshotbaserade dag-för-dag-flöde | P1 | Pågående – inventering klar; adapterkontrakt nästa | PR #483 kundskal och PR #484 change-feed-kontrakt är mergade; PR #486 dokumentationsstatus är också mergad. Snapshot-/historikinventering finns i docs/SKOGSKOLL_SNAPSHOT_INVENTORY.md. Nästa steg: ren adapter-mappning för befintlig Skogsstyrelsen-worker till snapshot-envelope och tester för fullständighet/täckning/rättighetsgrind. Ingen migration eller kundfeed är aktiverad. Ofullständiga körningar får aldrig skapa borttagningshändelser. |
+| PM-022 | Etablera Skogskolls snapshotbaserade dag-för-dag-flöde | P1 | Adapter och sex tester mergade; metadata-/integrationsgranskning återstår | PR #531 mappar befintliga `poll_runs` + `scan_sessions` till snapshot-envelope och sex tester passerar; PR #532 dokumenterar merge. Källregistret ger source/provider/access/cadence/geography och villkorad rättighetsstatus, men saknar uttryckliga produkt-, lager-, coverage-, schema- och identity-versioner. Worker-koden visar ArcGIS MapServer layer 0, `where=1=1`, normalisering och OBJECTID-baserad identitet, men dessa värden är ännu inte formaliserade som versionsstyrd snapshotmetadata. Nästa steg: utforma explicit metadata för exakt workerprodukt/lager och definiera coverage_key/schema_version/identity_version från verifierad query-, normaliserings- och identitetssemantik. Ingen DB-migration, ingestionkoppling, kundfeed eller avisering aktiveras i detta steg. |
 
 ## Kända externa GitHub-issues att synka
 
@@ -110,7 +110,7 @@ Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskrit
 | Evidens | [SKOGSKOLL_WEB_ARCHITECTURE.md](SKOGSKOLL_WEB_ARCHITECTURE.md) |
 | Beroenden | Behåll befintliga domän-/worker-moduler och databasbeslut; verifiera publiceringssökvägar före flytt |
 | Acceptanskriterier | Kundnavigationen länkar inte till interna Skog-sidor; relativa länkar fungerar; testläge förblir tydligt; befintliga Skog-sidor och tester påverkas inte |
-| Nästa steg | Separat UI-PR för app-shell, navigation och grundläggande design tokens samt länk-/sökvägstester |
+| Nästa steg | Bygg UI i små, reversibla vertikala iterationer: app-shell/navigation först, därefter flöde/kort, karta och historik. Testa varje steg med syntetiska data, länk-/sökvägstester, responsivitet och manuell UX-granskning. UI ska vara frikopplat från worker/DB via kontrakt och klientgräns. |
 | Rättighets-/driftgrind | Ingen källa eller datatyp blir kundsynlig utan verifierat godkännande; ingen auth, ingestion eller avisering aktiveras i UI-steget |
 
 
