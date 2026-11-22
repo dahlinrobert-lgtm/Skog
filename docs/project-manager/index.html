@@ -35,11 +35,15 @@ footer{max-width:1120px;margin:32px auto;padding:16px 18px;border-top:1px solid 
 <section class="section card"><h2>Återhämtade körningar</h2><p class="meta">Tidigare fel där en senare lyckad körning av samma workflow finns i snapshoten. Behålls synliga men prioriteras lägre.</p><div id="recovered-runs-list" class="empty">Inväntar verifierad data.</div></section>
 <section class="section card"><h2>Övriga workflow-körningar att följa upp</h2><p class="meta">Misslyckade eller på annat sätt avvikande avslut bland de 20 senaste körningarna per aktivt repo. Öppna länken för detaljer och fellogg i GitHub.</p><div id="failed-runs-list" class="empty">Inväntar verifierad data.</div></section>
 <section class="section card"><h2>Projektöversikt</h2><div id="projects-list" class="empty">Inväntar verifierad data.</div></section>
+<section class="section card"><h2>Slutmål: Skogskoll som kundprodukt</h2>
+<p class="meta">Skog är dataplattformen. Skogskoll är tjänsten för privata skogsägare: registrera fastighet/bevakningsområde, upptäck kvalitetssäkrade händelser, matcha geografiskt, visa spårbar historik och erbjud valbara aviseringar först efter verifierade rättigheter och baslinjer.</p>
+<div class="item"><strong>M1 · Tillförlitlig kärnbevakning</strong><div class="meta">Fullständig avverkningsinsamling, Samråd per lager, utförda avverkningar, jämförbara snapshots och stabil schemalagd drift.</div><span class="pill next">Aktivt huvudspår</span></div>
+<div class="item"><strong>M2 · Gemensam historikplattform</strong><div class="meta">Standardiserade snapshots, manifest, checksummor, proveniens, transaktionell ingestion och återställning.</div><span class="pill next">Aktivt huvudspår</span></div>
+<div class="item"><strong>M3 · Skogskoll runtime</strong><div class="meta">Liveverifiera Postgres/PostGIS, autentisering, RLS och serverbaserad ingestion i separat testmiljö.</div><span class="pill next">Aktivt huvudspår</span></div>
+<div class="item"><strong>M4 · Kundupplevelse och aviseringar</strong><div class="meta">Karta, historik, opt-in och deduplicerade e-post/push-larm. Kräver verifierad baslinje och rättigheter.</div><span class="pill">Efter grindar</span></div>
+<div class="item"><strong>M5 · Kommersiell drift</strong><div class="meta">Källvillkor, abonnemang, support, backup, mätetal och geografisk uppskalning efter pilot.</div><span class="pill">Senare fas</span></div>
+<div class="meta">Detaljer och acceptanskriterier: <a href="../PROJECT_ROADMAP.md">samlad roadmap</a> · <a href="../PROJECT_BACKLOG.md">prioriterad backlogg</a> · <a href="../PROJECT_STATUS.md">projektstatus</a></div></section>
 <div class="cols">
-<section class="section card"><h2>Planerat / kommande</h2>
-<div class="item"><strong>1. Verifiera avvisad åtkomst</strong><div class="meta">Autentiserad Azure Blob-läsning fungerar. Kvar: verifiera att utloggade och obehöriga användare nekas.</div><span class="pill next">Återstår</span></div>
-<div class="item"><strong>2. Automatisera schemalagd insamling</strong><div class="meta">Behåll read-only-behörighet och publicera endast validerad, sanerad data till skyddad miljö.</div><span class="pill next">Planerat</span></div>
-<div class="item"><strong>3. Utöka historik och återställning</strong><div class="meta">Run-scoped append-only-snapshot, manifest, SHA-256 och read-back är verifierade. Kvar: retention och återställningstest.</div><span class="pill next">Planerat</span></div></section>
 <section class="section card"><h2>Arbetsprinciper</h2>
 <div class="item"><strong>Utfört kräver evidens</strong><div class="meta">PR, commit, workflow-körning eller verifierat dataunderlag.</div></div>
 <div class="item"><strong>Planerat är inte pågående</strong><div class="meta">Planerade aktiviteter visas separat och markeras inte som utförda.</div></div>

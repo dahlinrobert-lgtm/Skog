@@ -65,3 +65,19 @@ Följande öppna issues returnerades av GitHub-sökningen 2026-11-18. De är kan
 ## AI-projektledare – v2a implementerad och liveverifierad (2026-11-19)
 
 PR #436 är sammanslagen i `main` (merge commit `fffad6fd9ccb9af356c89e7c486bdbac7ee53ce5`). Projektledartester och Snapshot storage tests passerade efter merge. Manuell workflowkörning #10 [passerade](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44456582601) och producerade artifact `skogskoll-project-manager-report` med `inventory.json` och `report.md`. Issues-endpointen hämtade 436 poster på 5 sidor; 11 var issues efter filtrering av PR-poster. PR-endpointen hämtade 425 poster på 5 sidor. Båda listorna hade status `complete`, utan trunkering. Artifact SHA-256: `de613fbcc54d2f1567f5c8f5bab75b65a09b1e4a797d9dfb0e4a30cfa85c6dbb`, retention till 2026-12-03 04:12:41 UTC. Rapporten omfattade 100 workflows, 50 workflow runs och 100 senaste commits; 13 av de 50 workflowkörningarna hade failure/cancelled vid inventeringstidpunkten. Dessa är granskningssignaler, inte automatiska felbeslut; de senaste korrigerade PR-kontrollerna och liveinventeringen passerade. Ingen historisk baslinjelagring, jämförelse, schedule, LLM/API eller skrivbehörighet införs.
+
+
+## Uppdaterad produktstyrning och verifieringsläge (2026-11-22)
+
+Projektets slutmål är en kundklar Skogskoll-tjänst för privata skogsägare, inte enbart en samling fungerande datainsamlingsflöden. Tjänsten ska stödja bevakningsområden/fastigheter, kvalitetssäkrade händelser, geografisk matchning, spårbar historik och valbara aviseringar. Kundvisning och aviseringar förblir avstängda tills respektive datakälla, rättigheter, baslinje och drift är verifierade.
+
+Källstatusrapporten som hämtats från `main` anger 51 registrerade källor, 14 med operativ status och 0 uttryckligen godkända för kundvisning. Äldre siffror i denna baslinjes ursprungliga avsnitt (49/12) ska betraktas som historiska; den aktuella rapporten har kontrollstämpel 2026-11-18.
+
+### Fyra aktiva huvudspår
+1. Kärnbevakning: fullständig och jämförbar insamling av planerade avverkningar samt verifiering av Samråd och utförda avverkningar.
+2. Gemensam historik: standardiserade snapshots, manifest, coverage-gates, proveniens och restore.
+3. Skogskoll runtime: liveverifiera Supabase/Postgres/PostGIS, auth/RLS och serverbaserad ingestion i separat testmiljö.
+4. Rättigheter: avgör per exakt produkt/lager vad som får lagras, bearbetas, kommersialiseras och visas för kund.
+
+### Driftuppföljning – Gräsmyr 2026-11-22
+Efter merge av PR #509 är relevanta CI-kontroller gröna, men den operativa effekten är ännu inte bevisad. Run #45041585086 stod i analyssteget och run #45044260811 väntade på concurrency. Nästa acceptanskriterium är att en körning efter ändringen slutför analysen och skapar en granskningsbar data-PR. Därefter genomförs den andra kompletta Gräsmyr 10 km-snapshoten separat. Inga frånvaroslutsatser eller kundaviseringar får grundas på ofullständiga eller ojämförbara körningar.

@@ -56,7 +56,7 @@ Validerare: `data-platform/scripts/validate_source_registry.py`
 Rapportgenerator: `data-platform/scripts/build_source_status_report.py`  
 Rapport: `docs/SKOGSKOLL_SOURCE_STATUS.md`
 
-Registret har 49 källposter och 12 poster med ett operativt `operations`-block vid senaste dokumenterade kontrollen. Övriga källor saknar ännu operativ status; det betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
+Registret har 51 källposter och 14 poster med ett operativt `operations`-block enligt den senast hämtade källstatusrapporten (rapportens registerkontrolldatum är 2026-11-18). Övriga källor saknar ännu operativ status; det betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 Rapporten visar åtkomst, snapshots, historik, kommersiell användning, kundvisning och nästa åtgärd. Den ska uppdateras automatiskt när källregistret ändras via workflowet för källregistervalidering. Om rapporten blir inaktuell kan den byggas lokalt:
 
@@ -860,3 +860,18 @@ Huvudfynd:
 - Workflowet `.github/workflows/completed-snapshot-store-tests.yml` har avgränsats till relevanta tester och installerar projektets beroenden före testning.
 
 **Operativ verifiering återstår:** main-push startade en ny Gräsmyr monitoring-run [45044260811](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45044260811), som vid dokumentationstillfället stod i pending på grund av den tidigare körningen med samma concurrency-grupp. Följ den nya körningen och verifiera att analyssteget avslutas och att data-PR skapas. Jämför faktisk körtid med den tidigare körningen. Därefter körs den andra kompletta Gräsmyr 10 km-snapshoten separat. Ingen kundavisering eller frånvaroklassning aktiveras före jämförbara kompletta observationer.
+
+
+## Projektstyrning mot slutmålet – uppdatering 2026-11-22
+
+Slutmålet är en driftsäker och kommersiellt hållbar Skogskoll-tjänst för privata skogsägare: registrera fastighet/bevakningsområde, upptäcka och verifiera relevanta skogshändelser, matcha dem geografiskt, visa spårbar historik och – först efter godkända datakällor och verifierad baslinje – skicka valbara aviseringar.
+
+Arbetet styrs nu i fyra parallella men begränsade huvudspår:
+1. Tillförlitlig kärnbevakning av avverkningsanmälningar, samråd och utförda avverkningar.
+2. Gemensamt snapshot-/historikflöde med fullständighetsgrindar, manifest, proveniens och återställning.
+3. Produktionsverifiering av Skogskolls databas, autentisering, RLS, PostGIS och serverbaserad ingestion i separat testmiljö.
+4. Källspecifika rättighetsbesked för lagring, bearbetning, kommersiell användning och kundvisning.
+
+Projektets roadmap och backlogg är styrande planeringsunderlag; en merge eller lyckad teknisk körning innebär inte automatiskt produktions- eller kundberedskap. Se `PROJECT_ROADMAP.md`, `PROJECT_BACKLOG.md` och `PROJECT_STATUS.md`.
+
+Senast kontrollerad Gräsmyr-status 2026-11-22: run #45041585086 stod kvar i analyssteget `Analyze planned and completed changes`; run #45044260811 väntade i concurrency-kön. PR #509 (streamingoptimering) är mergad och relevanta CI-kontroller passerade. Operativ effekt är ännu inte verifierad förrän en körning efter ändringen passerat analyssteget och skapat en granskbar data-PR. Starta inte fler parallella körningar. Efter lyckad verifiering: kör den andra kompletta Gräsmyr 10 km-snapshoten separat. Ingen kundavisering eller frånvaroklassning före jämförbara kompletta observationer.

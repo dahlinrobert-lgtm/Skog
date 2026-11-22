@@ -109,3 +109,74 @@ Verifierad status 2026-11-20: repository rulesets API returnerar `[]`. Klassisk 
 - [ ] Separat godkännande innan App, credentials, writer workflow eller persistens skapas.
 
 Konfigurationen är verifierad; faktisk negativ push-/delete-testning är ännu inte utförd. Ingen produktionshistorik är skriven.
+
+
+# Samordnad målroadmap – från dataplattform till kundprodukt (2026-11-22)
+
+## Slutmål
+
+Skogskoll ska vara en driftsäker och kommersiellt hållbar bevakningstjänst för privata skogsägare. Kunden ska kunna registrera en fastighet eller ett eget bevakningsområde, få relevanta och kvalitetssäkrade skogshändelser matchade mot området, se när förändringen upptäcktes och vilken källa den bygger på samt välja e-post/pushaviseringar.
+
+Skog fortsätter vara den bredare dataplattformen. Alla källor i Skog behöver inte ingå i Skogskolls första produktversion.
+
+## Leveranssteg och grindar
+
+### M1 – Tillförlitlig kärnbevakning
+- Fullständig, paginerad och auditerbar insamling av planerade avverkningsanmälningar.
+- Separat fullständighetskontroll för Samråds punkt-, linje- och polygonlager.
+- Bevara utförda avverkningar och unionera geometrier före arealberäkning.
+- Minst två kompletta och jämförbara observationer innan frånvaro eller nyhet tolkas som förändring.
+- Gräsmyr-piloten ska verifieras operativt innan geografisk uppskalning.
+
+**Godkänd när:** schemalagda körningar lyckas, manifest/täckning kan granskas, historik bevaras och ofullständiga körningar inte kan skapa falska borttagningar.
+
+### M2 – Gemensam historik- och dataplattform
+- Gemensamma käll-ID:n, snapshot-envelope, manifest, körnings-ID och kontrollsummor.
+- Idempotent och transaktionell ingestion med scan sessions och checkpoints.
+- Append-only observationshistorik, proveniens, felhantering och restore-test.
+- Standardiserade statusar för åtkomst, fullständighet, historik, rättigheter och kundvisning.
+
+**Godkänd när:** minst ett prioriterat produktflöde kan återställas och reproduceras från bevarat original/snapshot med verifierade checksummor.
+
+### M3 – Skogskoll runtime
+- Separat testmiljö med liveverifierad Postgres/Supabase och PostGIS.
+- Autentisering och RLS testas positivt och negativt.
+- Säker serverbaserad ingestion med hemligheter endast på serversidan.
+- Matchning mellan bevakningsområden och observationer via PostGIS.
+- Fastighetsidentifiering/-sökning först när Lantmäteriets exakta villkor är klarlagda.
+
+**Godkänd när:** en testanvändare kan skapa och läsa endast sina egna bevakningar och se korrekta matchningar från en verifierad datakälla.
+
+### M4 – Kundupplevelse och avisering
+- Kundens karta, händelselista och spårbara historik.
+- Tydlig skillnad mellan verifierad händelse, planeringsunderlag och risk-/indikatorlager.
+- Aviseringspreferenser, opt-in, deduplicering och transactional outbox.
+- Tyst första baslinje; inga historiska poster ska generera larm.
+
+**Godkänd när:** end-to-end-test visar att en verkligt ny, verifierad och relevant händelse kan visas och aviseras en gång till rätt användare – och att partial/duplicat/baslinje inte ger larm.
+
+### M5 – Kommersiell drift
+- Källspecifika beslut om lagring, bearbetning, kommersiell användning, kundvisning och vidare distribution.
+- Abonnemang/behörighetsmodell, support, incidenthantering, backup och återställning.
+- Mätning av täckning, aktualitet, precision, falska positiva och användarnytta.
+- Gradvis geografisk uppskalning efter verifierad pilot.
+
+**Godkänd när:** produktens kundflöde, rättigheter, säkerhet, drift och support är granskade och dokumenterade.
+
+## Aktiv arbetsprioritering
+
+Högst fyra huvudspår ska vara aktiva samtidigt:
+1. Kärnbevakning och schemalagd drift.
+2. Gemensam snapshot-/historikplattform.
+3. Liveverifiering av Skogskoll runtime i separat testmiljö.
+4. Rättighetsbesked för de källor som behövs i första kundflödet.
+
+Nya datakällor och sidoprojekt prioriteras efter direkt kundnytta, blockerande effekt, evidens, kostnad och rättigheter. En tekniskt lyckad insamling är inte i sig ett kundklart resultat.
+
+## Övergripande stoppregler
+
+- Ingen frånvaroklassning från ofullständig eller ojämförbar körning.
+- Ingen historisk baslinjeavisering.
+- Ingen kundvisning eller kommersiell användning utan källspecifikt stöd.
+- Ingen produktionsaktivering innan auth/RLS, ingestion, historik, backup och återställning är verifierade.
+- Geografisk uppskalning först efter stabil och reproducerbar pilot.

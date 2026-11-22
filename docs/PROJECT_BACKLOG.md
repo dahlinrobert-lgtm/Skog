@@ -132,3 +132,19 @@ Samråd snapshot-PR #496 och Life2Taiga data-PR #497 är nu båda mergade till `
 ### PM-024 – slutstatus för dokumentations- och data-PR:er (2026-11-22)
 
 PR #498 är mergad (merge commit `21cfa30af358588eb6889d27f78b4e8bffc1fa9a`) och kund-UI-test efter merge passerade. Data-PR #496 (Samråd) och #497 (Life2Taiga) är också mergade. Återstående acceptanspunkt är faktisk schemalagd körning efter workflowfixarna #494/#495; push-utlösta körningar räcker inte som cron-verifiering. Därefter fortsätter fullständig paginering för planerade avverkningsanmälningar.
+
+
+## PM-025 – Styr Skog/Skogskoll mot sammanhållen kundprodukt
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 |
+| Status | Planen samordnad i dokumentation; implementation och acceptans sker stegvis |
+| Mål | Säkerställa att dataplattformens arbete leder till en driftsäker, rättighetsklar och användbar Skogskoll-tjänst |
+| Slutmål | Privat skogsägare kan registrera fastighet/bevakningsområde, få kvalitetssäkrade och geografiskt matchade skogshändelser, följa spårbar historik och välja aviseringar |
+| Evidens | `PROJECT_ROADMAP.md`, `PROJECT_STATUS.md`, `SKOGSKOLL_DATA_OVERVIEW.md`, `skogskoll/README.md`, `skogskoll/INGESTION.md` |
+| Nästa steg | Prioritera fyra huvudspår: (1) kärnbevakning, (2) gemensamt snapshot-/historikflöde, (3) liveverifiering av auth/RLS/PostGIS/ingestion i testmiljö, (4) källspecifika rättighetsbesked |
+| Acceptanskriterier | End-to-end-flöde verifierat från källinsamling till kundens historik; fullständighets- och rättighetsgrindar passerar; ingen historisk baslinje aviseringas; partial kan inte skapa borttagning; aviseringar kräver opt-in; drift och återställning är testade |
+| Säkerhetsgrind | Ingen kundvisning, fastighetskoppling eller avisering aktiveras innan rättigheter och tekniska kontroller är uttryckligen verifierade |
+
+PM-025 är en styrningspost, inte ett påstående om att produkten är färdig. Datakällor som inte bidrar till prioriterade kundflöden ska inte automatiskt tränga undan blockerande kärnarbete.
