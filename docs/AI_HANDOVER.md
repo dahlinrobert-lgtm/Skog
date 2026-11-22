@@ -967,3 +967,10 @@ Skogskolls webb/app ska kunna itereras ofta utan att dataplattformen behöver ä
 
 
 PR [#531](https://github.com/dahlinrobert-lgtm/Skog/pull/531) är mergad till `main` 2026-11-22 kl. 22:03 UTC (merge commit `3db38bd8198eefc8c57d572e39663fe4963c362a`). Den rena adaptern `skogskoll/src/snapshot-envelope-adapter.mjs` mappar befintliga `poll_runs` + `scan_sessions` till change-feed-kontraktets snapshot-envelope. Sex tester täcker complete/partial/failed, räkningsavvikelse, saknad coverage metadata och source mismatch. PR-kontrollerna `Skogskoll customer UI tests` och `Skogskoll source probe` slutfördes med `success` för head commit `a613e4bf32eeefec1b7e950122fa75b284dfb711`. Metadata för produkt/lager/coverage/schema/identity krävs uttryckligen; den får inte härledas från osäkra antaganden. `customer_visibility` defaultar till `not_assessed`. Ingen DB-migration, ingestion, kundfeed eller avisering har aktiverats. Nästa steg: granska om befintlig källkonfiguration kan tillhandahålla verifierad metadata för just Skogsstyrelsens avverkningsanmälningar; först därefter kan eventuell adapterkoppling planeras.
+
+
+## 2026-11-23 – Designagent för iterativ produktutveckling
+
+PM-027 har lagts till som styrningsuppgift. En separat designagent föreslås som produktdesigner/UX-granskare för Skogskolls webb och mobil webb, med eventuell PWA/native app först efter verifierat behov. Uppdrag, arbetsmodell, granskningsformat och mandatgränser finns i `PROJECT_MANAGER_RULES.md` avsnitt 4C. Agenten är i detta skede en dokumenterad arbetsroll/instruktionsspecifikation, inte en tekniskt driftsatt autonom agent. Den ska föreslå och granska; mänskliga användartester och projektledarens godkännande kvarstår.
+
+**Nästa steg:** använd designagentens granskningsmodell i PM-021:s första konkreta UI-iteration. Välj en avgränsad vy eller användaruppgift, dokumentera nuläge och testuppgift, ta fram designförslag och granska innan implementation. Håll UI-iterationer separata från PM-022:s snapshotmetadata-/jämförbarhetsarbete.
