@@ -78,6 +78,9 @@ export async function runScanBatch({
         throw new Error("source returned incomplete or invalid snapshot metadata");
       }
     }
+    if (typeof store.registerPendingSnapshots === "function") {
+      await store.registerPendingSnapshots(sourceKey);
+    }
     const reportedTotal = await source.getCount();
     if (!Number.isSafeInteger(reportedTotal) || reportedTotal < 0) {
       throw new Error("source returned an invalid count");
