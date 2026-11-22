@@ -90,7 +90,7 @@
     const scheduledFailures = scheduledRuns.filter((r) =>
       r.status === "completed" && r.conclusion && r.conclusion !== "success" && !hasLaterSuccess(r));
     const recoveredFailures = failedRuns.filter(hasLaterSuccess);
-    const unresolvedFailures = failedRuns.filter((r) => !hasLaterSuccess(r));
+    const unresolvedFailures = failedRuns.filter((r) => r.event !== "schedule" && !hasLaterSuccess(r));
     const successfulRuns = runs.filter((r) => r.status === "completed" && r.conclusion === "success");
     setText("metric-work", work.length);
     setText("metric-failed", unresolvedFailures.length);
