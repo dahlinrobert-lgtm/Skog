@@ -55,7 +55,8 @@ export function mapWorkerScanToSnapshotEnvelope({ pollRun, scanSession, metadata
     Number.isSafeInteger(offset) && offset >= 0;
   if (!countsValid) errors.push("scan_counts_invalid");
 
-  const complete = countsValid &&
+  const metadataValid = REQUIRED_METADATA.every(field => nonEmpty(metadata[field]));
+  const complete = metadataValid && countsValid &&
     scanSession.status === "complete" &&
     pollRun.status === "success" &&
     fetched === total &&
