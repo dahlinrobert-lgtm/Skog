@@ -109,3 +109,14 @@ Run #6 (workflow_dispatch) lyckades och skapade data-PR #491. Den PR-baserade pu
 ### PM-023 – slutstatus efter första snapshot-merge (2026-11-22)
 
 Run #6 lyckades och skapade snapshot-PR #491, som därefter mergades till `main`. Dokumentations-PR #492 är också mergad. Därmed är första pilotens insamling och PR-baserade publiceringskedja verifierade. PM-023 är fortfarande delvis klar: planerade avverkningsanmälningar täcks endast av 300-radersprobe av cirka 132 594 poster; fullständig paginerad insamling, edit tracking och jämförbarhet mellan flera månadssnapshots återstår.
+
+
+## PM-024 – Återställ säker PR-publicering för Samråd och Life2Taiga (2026-11-22)
+
+**Status: teknisk publiceringskedja verifierad efter merge; schemalagd drift och data-PR-granskning återstår.**
+
+- Samråd-fix #494 och Life2Taiga-fix #495 är mergade till `main`.
+- Efterföljande push-utlösta körningar lyckades hela vägen och skapade data-PR #496 respektive #497.
+- Båda data-PR:erna är öppna och kräver manuell granskning; ingen automatisk merge.
+- Nästa acceptanssteg: granska data/manifest/täckning i #496 och #497, och verifiera därefter att nästa cron-körning för respektive workflow också skapar eller uppdaterar PR utan direktpush till `main`.
+- Teknisk insamling innebär inte att datan är godkänd för kundvisning.
