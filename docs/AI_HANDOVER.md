@@ -1,6 +1,6 @@
 # Skog / Skogskoll – överlämning för fortsatt arbete
 
-**Senast uppdaterad:** 2026-11-19  
+**Senast uppdaterad:** 2026-11-22  
 **Syfte:** Detta dokument är en kompakt startpunkt för fortsatt utveckling, även när arbetet fortsätter i en ny ChatGPT-chatt.
 
 > Läs detta dokument först i en ny chatt. Läs därefter den automatiska källstatusrapporten och den fullständiga datakälleöversikten. Kontrollera alltid aktuella filer och GitHub Actions innan du påstår att en körning eller status fortfarande gäller.
@@ -597,3 +597,14 @@ Nästa steg: verifiera CI, invänta Pages-deploy och testa i webbläsaren att MS
 - CI verifierar kod/tester och metadata. Den bevisar inte att GitHub Pages-deployen är klar eller att MSAL kan ladda i den aktuella webbläsaren.
 
 **Nästa konkreta steg:** verifiera Pages-deploy för Skog main och testa därefter den publicerade projektledarsidan i privat webbläsarsession: MSAL ska laddas, Entra-inloggningen ska lyckas och den behöriga användaren ska kunna läsa den privata Blob-snapshoten. Testa separat att anonym/obehörig läsning nekas. Ändra inte Azure RBAC eller slå på schemalagd publicering som del av detta test.
+
+
+## Projektledardashboard – separat lista för workflow-avvikelser (2026-11-22)
+
+History-repots PR #40 är sammanslagen (merge commit `d65618c107b5dbfe61f8e7f8598418e6e74ebe42`). Dashboarden har nu en egen sektion `Workflow-körningar att följa upp` som listar körningar med `status=completed` och `conclusion` annat än `success`, med direktlänk till respektive GitHub Actions-körning. Sammanräkningen benämns `Avvikande senaste körningar` eftersom listan även kan innehålla avbrutna eller andra icke-success-avslut, inte bara tekniska fel.
+
+**Begränsning:** Insamlaren hämtar fortfarande endast de 20 senaste workflow-körningarna per aktivt repository. Ett äldre fel kan därför falla ur översikten när fler körningar tillkommer. Dashboarden visar en ögonblicksbild från Azure Blob; den uppdateras inte automatiskt och är inte en fullständig eller realtidsbaserad körhistorik. GitHub-mejlen är fortsatt en separat och snabb notifieringskanal.
+
+Skog Pages-kopian under `docs/project-manager/` ska hållas synkroniserad med det privata history-repots `dashboard/`-filer. Den här uppdateringen kopierar den granskade UI-ändringen; autentisering, Blob-URL, RBAC och publiceringsflöde ändras inte.
+
+**Nästa steg:** verifiera GitHub Pages build/deploy och öppna dashboarden igen. Kontrollera att den nya sektionen visar avvikande körningar och att länkarna leder till rätt Actions-run. Därefter kan insamlaren utökas med en separat, tidsavgränsad fellista så att fel inte försvinner bara för att fler än 20 senare körningar tillkommer.
