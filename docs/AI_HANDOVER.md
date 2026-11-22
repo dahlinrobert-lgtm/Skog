@@ -898,3 +898,20 @@ Efter PR [#516](https://github.com/dahlinrobert-lgtm/Skog/pull/516) gjordes en s
 **Drift:** Monitor-run [#45048859162](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45048859162) var push-utlöst (inte cron) och avslutades success. Workflowet `.github/workflows/monitor.yml` har cron `17 5 * * *` (05:17 UTC dagligen). Nästa schemalagda körning ska verifieras separat; en push-utlöst körning bevisar inte schemalagd drift.
 
 Ingen kundavisering, frånvaroklassning eller ändring av källrättigheter följer av denna kontroll.
+
+
+## Skogskoll Operations Center – daglig projektinventering (2026-11-22)
+
+Den första automatiserade projektledarkontrollen är implementerad i det separata privata repot `dahlinrobert-lgtm/skogskoll-project-manager-history` genom PR [#43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/43), mergad 2026-11-22 i commit `30052942d061c32fb41615328af60895b0384823`.
+
+- Workflow: `.github/workflows/project-manager-inventory.yml` i det privata historikrepot.
+- Måltid: varje dag 07:00 Europe/Stockholm.
+- GitHub cron körs i UTC och triggar 05:00 samt 06:00 UTC; `scripts/check_local_schedule.py` tillåter endast den trigger som motsvarar 07 lokal tid. Enhetstester täcker UTC+1, UTC+2 och den trigger som ska hoppas över.
+- Inventeringen fortsätter använda `PROJECTS_READ_TOKEN` som read-only mot registrerade källrepon.
+- Ett centralt driftärende skapas/uppdateras i det privata historikrepot vid fel. Samma öppna ärende återanvänds; senare komplett lyckad inventering dokumenterar återhämtning och stänger ärendet.
+- Körningsunderlag laddas upp som artifact med 14 dagars retention. Ingen partiell körning får behandlas som komplett.
+- Workflowets `GITHUB_TOKEN` har `issues: write` i det privata historikrepot; inga skrivbehörigheter till Skog eller andra inventerade källrepon har lagts till.
+
+**Verifiering:** PR-CI för [#43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/43) passerade både `unit-tests` och `synthetic-append-only`. Merge är verifierad. Den första faktiska schemalagda körningen har ännu inte inträffat/verifierats; kontrollera den 2026-11-23 kl. 07:00 svensk tid innan funktionen klassas som operativt verifierad.
+
+Nästa steg: verifiera första schemalagda inventering, artifact, tidsgrind och central issue-hantering. Ingen Azure-publicering, historikpersistens eller kundavisering aktiveras av denna implementation.
