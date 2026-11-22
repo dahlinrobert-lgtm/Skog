@@ -124,3 +124,20 @@ En ren, fristående adapter har lagts till i `skogskoll/src/snapshot-envelope-ad
 - Adaptern returnerar diagnostik och valideringsfel. Den persisterar, publicerar eller skapar inga kundhändelser.
 
 Sex kontraktstester har lagts till för komplett scan, partiell scan, failed, räkningsavvikelse, saknad coverage metadata och källmismatch. CI-verifiering inväntas i PR. Ingen SQL-migration, live-databasanslutning, kundfeed eller avisering ingår.
+
+
+## 8. ArcGIS-worker – metadataidentitet från faktisk källkonfiguration (under PR)
+
+Den befintliga `createArcGisSource` får en read-only metod `getSnapshotMetadata()` som återanvänder samma endpoint och lagerdefinition som hämtningen.
+
+| Envelope-fält | Härledning | Viktig avgränsning |
+|---|---|---|
+| `product` | Explicit worker-konfiguration: `harvest_notifications` | Produktklassning är konfiguration, inte ett fält från ArcGIS |
+| `endpoint` | Normaliserad konfigurerad layer-URL | Ändrad endpoint ger ny jämförelsebas |
+| `layer` | Layer-numret i `MapServer/{id}` eller `FeatureServer/{id}` | Saknat layer-ID stoppar metadataframtagning |
+| `query_definition` | Samma where/outFields/geometry/SR/format/OID-sortering som feature-queryn | Offset och sidstorlek utelämnas; de ändrar inte queryns logiska scope |
+| `coverage_key` | `unfiltered-layer-query-v1` | Betyder ofiltrerad lagerquery, inte nationell geografisk täckning |
+| `schema_version` | SHA-256 av kanoniserade fältnamn, typer, längder, nullability, domäner, geometri-typ/dimensioner och spatialreferens | Nytt fält/schema ger ny version |
+| `identity_version` | ArcGIS OID-fältnamn + strängnormalisering till GeoJSON feature ID | Bevisar inte långsiktig OID-stabilitet |
+
+Metadataresultatet behåller `customer_visibility=not_assessed` och `rights_evidence_ref=null`. Detta är en metadatafunktion, inte ett fullständighetsbevis eller en snapshot. Den är ännu inte kopplad till worker-run-persistens/adaptern. PR-CI och tester ska passera före merge; ingen migration eller live-ingestion ingår.
