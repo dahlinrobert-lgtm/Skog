@@ -140,9 +140,9 @@ Den befintliga `createArcGisSource` får en read-only metod `getSnapshotMetadata
 | `schema_version` | SHA-256 av kanoniserade fältnamn, typer, längder, nullability, domäner, geometri-typ/dimensioner och spatialreferens | Nytt fält/schema ger ny version |
 | `identity_version` | ArcGIS OID-fältnamn + strängnormalisering till GeoJSON feature ID | Bevisar inte långsiktig OID-stabilitet |
 
-Metadataresultatet behåller `customer_visibility=not_assessed` och `rights_evidence_ref=null`. Detta är en metadatafunktion, inte ett fullständighetsbevis eller en snapshot. Den är ännu inte kopplad till worker-run-persistens/adaptern. PR #537:s customer UI-test passerade 78/78 tester (run 45078075239). Read-only source-probe passerade (run 45078075046) med 300/300 unika ID:n och noll dubbletter/saknade ID:n, men var avsiktligt begränsad och inte en komplett scan. Den nya metadatafunktionen har ännu inte verifierats mot live ArcGIS-metadata. Ingen migration eller live-ingestion ingår.
+Metadataresultatet behåller `customer_visibility=not_assessed` och `rights_evidence_ref=null`. Detta är en metadatafunktion, inte ett fullständighetsbevis eller en snapshot. PR #537:s tester passerade och PR #538 kopplade funktionen till worker-run-persistens. Liveanrop av metadatafunktionen mot ArcGIS metadata återstår; den begränsade source-proben verifierar inte detta. Ingen live-ingestion eller produktionsmigration ingår.
 
-## 9. Persistens – ArcGIS worker till oföränderligt snapshotregister (PR under granskning)
+## 9. Persistens – ArcGIS worker till oföränderligt snapshotregister (PR #538 mergad)
 
 Integrationsförslaget återanvänder poll_runs och scan_sessions som körningsidentiteter och lägger till ett separat register för färdiga snapshot-envelopes.
 
@@ -153,4 +153,4 @@ Integrationsförslaget återanvänder poll_runs och scan_sessions som körningsi
 - Store läser tillbaka terminala poster, använder befintlig mapWorkerScanToSnapshotEnvelope och registrerar via RPC. Samma envelope kan återregistreras idempotent; en annan envelope för samma scan avvisas. snapshot_registered_at och pending-RPC gör misslyckad registrering återförsökbar vid nästa workerstart.
 - In-progress scan får ingen snapshotpost förrän den avslutas. En fatal scan kan registreras som failed. En transient nätverksstörning behåller checkpointen och den ursprungliga metadataidentiteten.
 
-Ingen live Supabase-anslutning eller produktionsmigration är utförd i denna PR. CI verifierade migration 005 i disponibel PostgreSQL/PostGIS och rollback-wrapped SQL-smoketest passerade i run 45079498504. Kundvisning är fortsatt not_assessed; detta register är intern proveniens, inte ett publicerings- eller rättighetsgodkännande.
+PR #538 är mergad till `main` (merge commit `38f2474ff75fc5d34dc491da059178c266590b58`). CI verifierade migration 005 i disponibel PostgreSQL/PostGIS och SQL-smoketest passerade i run 45079711277. Ingen live Supabase-anslutning eller produktionsmigration är utförd. Kundvisning är fortsatt `not_assessed`; detta register är intern proveniens, inte ett publicerings- eller rättighetsgodkännande.
