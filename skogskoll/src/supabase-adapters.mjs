@@ -55,10 +55,23 @@ export function createArcGisSource({
     objectIdField = metadata.objectIdField ?? metadata.objectIdFieldName ??
       metadata.fields.find(field => field.type === "esriFieldTypeOID")?.name;
     if (!objectIdField) throw new Error("ArcGIS layer metadata has no object ID field");
-    if (!metadata.fields.some(field => field.name === objectIdField)) {
-      throw new Error("ArcGIS object ID field is not present in layer fields");
+    const idFieldMetadata = metadata.fields.find(field => field.name === objectIdField);
+    if (!idFieldMetadata) throw new Error("ArcGIS object ID field is not present in layer fields");
+    if (idFieldMetadata.type !== "esriFieldTypeOID") {
+      throw new Error("ArcGIS object ID field is not typed as an OID");
     }
     return objectIdField;
+  }
+
+  function featureQueryParameters(idField) {
+    return {
+      where: "1=1",
+      outFields: "*",
+      returnGeometry: "true",
+      outSR: "4326",
+      f: "geojson",
+      orderByFields: `${idField} ASC`
+    };
   }
 
   function canonicalize(value) {
@@ -90,7 +103,7 @@ export function createArcGisSource({
         nullable: typeof field.nullable === "boolean" ? field.nullable : null,
         domain: canonicalize(field.domain ?? null)
       };
-    }).sort((a, b) => a.name.localeCompare(b.name));
+    }).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
 
     if (new Set(fields.map(field => field.name)).size !== fields.length) {
       throw new Error("ArcGIS layer metadata contains duplicate field names");
@@ -115,14 +128,9 @@ export function createArcGisSource({
       layer: layerMatch[1],
       // Pagination controls are deliberately excluded: changing page size or
       // offset does not change the logical set of source features.
-      query_definition: [
-        "where=1=1",
-        "outFields=*",
-        "returnGeometry=true",
-        "outSR=4326",
-        "f=geojson",
-        `orderByFields=${idField} ASC`
-      ].join(";"),
+      query_definition: Object.entries(featureQueryParameters(idField))
+        .map(([key, value]) => `${key}=${value}`)
+        .join(";"),
       // This identifies the unfiltered layer query, not a claim of national
       // geographic coverage or a verified source completeness statement.
       coverage_key: COVERAGE_KEY,
@@ -148,14 +156,7 @@ export function createArcGisSource({
     async getPage(offset, requestedSize) {
       const idField = await getObjectIdField();
       const size = Math.min(requestedSize, pageLimit);
-      const query = {
-        where: "1=1",
-        outFields: "*",
-        returnGeometry: "true",
-        outSR: "4326",
-        f: "geojson",
-        orderByFields: `${idField} ASC`
-      };
+      const query = featureQueryParameters(idField);
       const url = queryEndpoint + "?" + new URLSearchParams({
         ...query,
         resultRecordCount: String(size),
