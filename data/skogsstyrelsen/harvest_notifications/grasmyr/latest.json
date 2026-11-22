@@ -6,7 +6,7 @@
     "*"
   ],
   "field_selection_note": "All source fields retained in the original feature snapshot.",
-  "captured_at_utc": "2026-11-22T16:13:47.367039+00:00",
+  "captured_at_utc": "2026-11-22T19:27:44.074209+00:00",
   "scope": {
     "type": "point_distance",
     "center_wgs84": {
@@ -35,7 +35,7 @@
     "id_inventory_stable_during_scan": true,
     "complete_scan": true
   },
-  "snapshot": "snapshots/grasmyr_10km_20261122T161347Z.geojson.gz",
+  "snapshot": "snapshots/grasmyr_10km_20261122T192744Z.geojson.gz",
   "snapshot_bytes_uncompressed": 303866,
   "snapshot_sha256": "21df361fbef8b0151e7a01e06d2377fe1f5cb42a1d5265217c1e7b7ea3d6bbee",
   "status": "success",
