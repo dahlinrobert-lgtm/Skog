@@ -1,6 +1,18 @@
 import { advanceCheckpoint, createCheckpoint, validateCheckpoint } from "./scan-plan.mjs";
 import { normalizeFeature, SOURCE_ID } from "./observation-core.mjs";
 
+function canonicalize(value) {
+  if (Array.isArray(value)) return value.map(canonicalize);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonicalize(value[key])]));
+  }
+  return value;
+}
+
+function sameMetadata(a, b) {
+  return JSON.stringify(canonicalize(a)) === JSON.stringify(canonicalize(b));
+}
+
 function isFatalScanError(error) {
   const message = String(error?.message ?? error).toLowerCase();
   // Network/server failures can be retried from the last atomically committed
@@ -73,7 +85,7 @@ export async function runScanBatch({
     if (checkpoint) {
       const validation = validateCheckpoint(checkpoint, { sourceKey, reportedTotal, pageSize });
       if (validation.valid && snapshotMetadata &&
-          JSON.stringify(checkpoint.snapshotMetadata ?? null) !== JSON.stringify(snapshotMetadata)) {
+          !sameMetadata(checkpoint.snapshotMetadata ?? null, snapshotMetadata)) {
         validation.valid = false;
         validation.reasons.push("snapshot_metadata_changed");
       }
