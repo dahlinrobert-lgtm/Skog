@@ -25,6 +25,14 @@ GitHub Pages: https://dahlinrobert-lgtm.github.io/Skog/
 
 ## 3. Viktiga arkitektur- och säkerhetsbeslut
 
+## 3A. Styrande prioritering – dagligt snapshotinformationsflöde först (fastställt 2026-11-22)
+
+**Primär leverans:** ett tillförlitligt dagligt informationsflöde som sammanställer senaste snapshotstatus och förändringar per källa/produkt/lager. Det ska visa senaste kompletta observation, senaste körningsförsök, running/success/partial/failed, aktualitet, täckning/antal, jämförbarhet, avvikelser och granskningsbehov med länkar till manifest, artifact, workflow-run och PR där sådana finns.
+
+Det dagliga informationsflödet är en daglig sammanställning och kontrollpunkt; det betyder **inte** att varje datakälla ska hämtas dagligen. Insamlingsfrekvensen bestäms per källa utifrån uppdateringsmönster, tekniska gränser, kostnad och rättigheter. Visa när källan senast kontrollerades och när nästa kontroll förväntas.
+
+**Sekundärt:** håll en lång, strukturerad backlogg över framtida datakällor, nationell täckning, analys, kundfunktioner, drift, kvalitet, säkerhet och teknisk skuld. Backloggen ska vara omfattande men inte skapa parallellt aktivt arbete. Vid konflikt prioriteras daglig driftinformation och befintliga insamlingars tillförlitlighet före nya funktioner och backloggexpansion.
+
 - Bevara rådata och ursprungliga snapshots oförändrade; bearbetade produkter ska kunna spåras till källa och körning.
 - Varje snapshot ska ha källa, produkt/lager, hämtningstid, körnings-ID, status, täckning, antal, format och kontrollsumma när det är relevant.
 - Skilj källans händelsedatum, publiceringsdatum och Skogskolls första upptäckt.
