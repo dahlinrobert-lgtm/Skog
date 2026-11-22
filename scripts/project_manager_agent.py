@@ -180,6 +180,17 @@ def build_report(data: dict[str, Any]) -> str:
         lines.append(f"- **{label}:** {status}; {meta.get('items_fetched', 0)} poster på {meta.get('pages_fetched', 0)} sidor (sidstorlek {meta.get('page_size', PAGE_SIZE)}, max {meta.get('max_pages', MAX_LIST_PAGES)} sidor).")
         if meta.get("truncated"):
             lines.append(f"  - Säkerhetsgränsen nåddes; minst en ytterligare sida finns. Uttaget är trunkerat och får inte användas för frånvarobaserade slutsatser.")
+    lines.extend([
+        "",
+        "## Arkitekturpassning – obligatorisk kontroll före ny lösning",
+        "",
+        "- Kontrollera aktuell main efter befintliga komponenter, scripts, workflows, schemaläggningar, register, datakontrakt, rapporter och lagringsflöden som redan löser hela eller delar av behovet.",
+        "- Klassificera föreslagen väg som återanvänd, utökad, ersatt eller ny separat. Ny parallell lösning kräver evidensbaserad motivering.",
+        "- Redovisa överlapp, dubbla sanningskällor, säkerhets-/driftgränser, auktoritativ datakälla, integrationspunkt och eventuell avvecklingsplan.",
+        "- Länka granskade filer och workflow-/PR-evidens. Om analysen inte är gjord ska den anges som ej undersökt; frånvaro av evidens är inte bevis för att befintlig förmåga saknas.",
+        "- Denna deterministiska inventeringsrapport utför inte självständig arkitekturgranskning. Kontrollen är en obligatorisk del av projektledarens analys före rekommendation eller implementation.",
+        "",
+    ])
     lines.extend(["", "## Kräver uppmärksamhet", ""])
     if failed:
         lines.extend(f"- **{x.get('name')}** – `{x.get('conclusion')}` / `{x.get('status')}` ({x.get('updated_at')}); [körning]({x.get('url')})" for x in failed[:20])
