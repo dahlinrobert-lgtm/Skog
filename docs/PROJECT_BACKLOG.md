@@ -94,3 +94,8 @@ Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskrit
 ## PM-023 uppföljning – publiceringsflöde behöver korrigeras
 
 Första manuella månadskörningen verifierade insamlingarna men publicering misslyckades eftersom workflowet försökte pusha direkt till skyddad main. Korrigering på separat branch ska skapa en granskningsbar data-PR via peter-evans/create-pull-request. Status för PM-023 är därför: **insamling verifierad i första pilotkörning; beständig publicering inväntar korrigering och ny körning**.
+
+
+## PM-023 – status efter publiceringskorrigering
+
+PR #489 är mergad. PR-check run #5 passerade teststeget, men källinsamling och snapshot-PR skapades inte i denna körning eftersom de är avsiktligt avstängda vid `pull_request`. PM-023 är därför fortfarande **delvis verifierad**. Nästa acceptanssteg är en manuell `workflow_dispatch` från main och verifiering av att snapshot-PR skapas och kan granskas.

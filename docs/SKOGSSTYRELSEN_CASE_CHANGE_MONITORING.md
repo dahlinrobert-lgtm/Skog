@@ -74,3 +74,12 @@ Push till `main` avvisades fem gånger av repository rules (GH013: “Changes mu
 Workflowet ändras till att använda `peter-evans/create-pull-request@v7` med separat automation-branch och `contents: write` + `pull-requests: write`. Varje månadskörning ska skapa eller uppdatera en PR med snapshots. Inga automatiska merges görs. Snapshotdata blir beständig i main först efter granskning och merge av data-PR:n.
 
 **Verifieringsstatus:** Insamling och artifact-uppladdning verifierade för run #4. Git-publicering via PR är ännu inte verifierad; nästa steg är att köra workflowet efter att korrigeringen mergats och kontrollera att en snapshot-PR skapas.
+
+
+## Uppföljning efter merge av publiceringskorrigering (2026-11-22)
+
+PR #489 är mergad till `main` (merge commit `4c62e11b58c213e715bd9c4d939d514626cc2359`).
+
+PR-checken [run #5](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45031856059) passerade. Den var en `pull_request`-körning: testerna kördes och passerade, medan alla tre källinsamlingar, snapshot-PR-steget och artifact-uppladdningen hoppades över med avsikt. Den är därför inte en driftverifiering av den nya publiceringsvägen.
+
+**Återstående verifiering:** starta workflowet med `workflow_dispatch` på `main`. Godkänt utfall kräver att insamlingarna genomförs, en automation-PR med snapshots skapas/uppdateras och att dess manifest/scope/antal/kontrollsummor granskas innan data-PR:n mergas. Ingen auto-merge.
