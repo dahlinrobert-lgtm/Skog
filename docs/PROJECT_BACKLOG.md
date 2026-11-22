@@ -82,13 +82,13 @@ Avsluta inte en uppgift enbart för att en PR mergats. Kontrollera acceptanskrit
 | Fält | Värde |
 |---|---|
 | Prioritet | P1 |
-| Status | Första månatliga pilotkontroll etablerad i PR; driftverifiering återstår |
+| Status | Första månatliga pilotkörning och PR-baserad snapshotpublicering verifierade; planned-harvest fullscan återstår |
 | Mål | Fånga nya/ändrade ärenden löpande och kontrollera historikens fullständighet med periodiska snapshots för planerade avverkningar, Samråd och utförda avverkningar |
 | Evidens | [SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md](SKOGSSTYRELSEN_CASE_CHANGE_MONITORING.md); workflow [skogsstyrelsen-monthly-source-audit.yml](../.github/workflows/skogsstyrelsen-monthly-source-audit.yml) |
 | Scope | Gräsmyr pilotområde, 10 km radie. Planerade avverkningsanmälningar är endast bounded probe i första versionen. |
 | Acceptanskriterier | Månatligt workflow lyckas; Samråd tre lager hämtas komplett; utförda avverkningar arkiveras med scope-hash; probe för planerade anmälningar sparas; fel/partial ger ingen giltig kontrollpunkt eller borttagningsslutsats |
 | Beroenden | ArcGIS metadata/edit tracking-verifiering; full paginerad planned-harvest snapshot; jämförbara månadssnapshots |
-| Nästa steg | Kör workflow manuellt efter merge, granska loggar/artifact och därefter verifiera editDate/lastEditDate och fullständig paginering för planerade anmälningar |
+| Nästa steg | Verifiera ArcGIS edit tracking/datumfält och implementera fullständig paginerad snapshot för planerade anmälningar; följ upp jämförbarhet vid nästa månadskörning |
 | Rättigheter/drift | Endast teknisk pilotkontroll; ingen kundvisning eller kundavisering aktiveras |
 
 ## PM-023 uppföljning – publiceringsflöde behöver korrigeras
@@ -104,3 +104,8 @@ PR #489 är mergad. PR-check run #5 passerade teststeget, men källinsamling och
 ### PM-023 – uppdaterad verifieringsstatus 2026-11-22
 
 Run #6 (workflow_dispatch) lyckades och skapade data-PR #491. Den PR-baserade publiceringsvägen är därmed driftverifierad. Snapshotdata väntar fortfarande på manuell granskning/merge. Samråd och utförda avverkningar har samlats in inom Gräsmyr 10 km-piloten. Planerade avverkningsanmälningar är fortsatt endast en 300-radersprobe av cirka 132 594 poster, inte en fullständig snapshot. PM-023 är **delvis verifierad** tills data-PR:n granskats och planerade anmälningar fått en fullständig, auditerbar insamlingslösning.
+
+
+### PM-023 – slutstatus efter första snapshot-merge (2026-11-22)
+
+Run #6 lyckades och skapade snapshot-PR #491, som därefter mergades till `main`. Dokumentations-PR #492 är också mergad. Därmed är första pilotens insamling och PR-baserade publiceringskedja verifierade. PM-023 är fortfarande delvis klar: planerade avverkningsanmälningar täcks endast av 300-radersprobe av cirka 132 594 poster; fullständig paginerad insamling, edit tracking och jämförbarhet mellan flera månadssnapshots återstår.
