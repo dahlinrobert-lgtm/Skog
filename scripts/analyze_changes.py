@@ -95,6 +95,16 @@ def evidence_transition_events(planned_map, planned_history):
 
     for transition in iter_completed_archive_transitions(SNAPSHOTS):
         snapshot_count += 1
+        if not transition["comparable"]:
+            if transition.get("skip_reason"):
+                skipped_scope_pairs.append({
+                    "from_snapshot": transition["before_snapshot"],
+                    "to_snapshot": transition["after_snapshot"],
+                    "from_scope_sha256": None,
+                    "to_scope_sha256": transition.get("scope_sha256"),
+                    "reason": transition["skip_reason"],
+                })
+            continue
         comparable_pairs += 1
         for oid, done_feature in transition["after_features"].items():
             done_geom = valid_geometry(done_feature)
