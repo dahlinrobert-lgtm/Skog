@@ -57,6 +57,10 @@ Det dagliga informationsflödet är en daglig sammanställning och kontrollpunkt
 - ÄFO-gränserna hämtas som GeoJSON i EPSG:4326 för Leaflet-visning, med klick/zoom per polygon. Standard/Flygfoto och kartans gemensamma layout återanvänds. Statistikunderlaget är fortfarande regionalt (30 jaktområden för 2026/2027) och är inte joinat till polygonerna; kartan ska därför inte färgsättas som avskjutningskarta ännu.
 - Källan är registrerad som `lansstyrelsen.elk_management_areas`. Teknisk åtkomst via REST ska verifieras i webbläsare/CI; datasetsspecifika villkor för extraktion, cache, bearbetning, kommersiell användning och kundvisning är inte verifierade. Behåll attribution till Länsstyrelserna och behandla visning, lagring och vidareanvändning separat.
 
+## 3B. AI-projektledarens obligatoriska arkitekturpassning (2026-11-22)
+
+Före varje ny funktion, workflow, integration, agent eller lagringslösning ska projektledaren först kontrollera om befintliga komponenter och processer i aktuell `main` redan löser hela eller delar av behovet. Föredra återanvändning eller utökning av befintlig arkitektur framför parallella arbetsflöden och dubbla sanningskällor. Varje lösningsförslag ska klassificeras som återanvänt, utökat, ersatt eller nytt separat. Ny separat komponent kräver evidensbaserad motivering, överlapps-/konsekvensanalys, systemgräns, auktoritativ datakälla, integrationspunkt och eventuell avvecklingsplan. Saknad analys anges som okänd och får inte behandlas som att befintligt saknas. Regeln är dokumenterad i [PROJECT_MANAGER_RULES.md](PROJECT_MANAGER_RULES.md) avsnitt 4A och ska användas som obligatorisk beslutsgrind. Den deterministiska agentrapporten påminner om kontrollen men gör inte självständig arkitekturgranskning.
+
 ## 4. Källregister och automatisk rapport
 
 Maskinläsbart register: `data-platform/config/sources.yml`  
