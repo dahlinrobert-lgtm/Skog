@@ -81,6 +81,7 @@
     const runs = projects.flatMap((p) => (p.latest_workflow_runs || []).map((run) => ({...run, project: p})));
     const failedRuns = runs.filter((r) => r.status === "completed" && r.conclusion && r.conclusion !== "success");
     const workflowKey = (r) => String(r.workflow_id || r.workflow_path || r.name || "unknown") + "|" + r.project.repository;
+    const workflowContext = (r) => [r.scope_label || "Geografisk nivå ej registrerad", r.geography_scope || "unknown", r.rollout_stage || "unknown"].join(" · ");
     const hasLaterSuccess = (run) => runs.some((candidate) =>
       workflowKey(candidate) === workflowKey(run) &&
       candidate.status === "completed" && candidate.conclusion === "success" &&
@@ -143,11 +144,11 @@
       scheduledActive.forEach((run) => renderItem(scheduledEl,
         run.project.project_name + " · " + (run.name || "Schemalagt workflow"),
         "Pågår sedan " + formatDate(run.run_started_at || run.created_at) +
-        " · " + (run.display_title || run.workflow_path || "Geografisk testnivå ej registrerad"),
+        " · " + workflowContext(run) + " · " + (run.display_title || run.workflow_path || "Workflow"),
         run.status, "next", run.html_url));
       scheduledFailures.forEach((run) => renderItem(scheduledEl,
         run.project.project_name + " · " + (run.name || "Schemalagt workflow"),
-        "Schemalagd körning · " + (run.display_title || run.workflow_path || "Geografisk testnivå ej registrerad") +
+        "Schemalagd körning · " + workflowContext(run) + " · " + (run.display_title || run.workflow_path || "Workflow") +
         " · " + formatDate(run.created_at),
         run.conclusion, "blocked", run.html_url));
     }
