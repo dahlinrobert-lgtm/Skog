@@ -14,7 +14,7 @@
 | PM-004 | Felsök Skogsstyrelsens SIS metadataövervakning | P1 | Öppen | Kontrollera misslyckade körningar 13–14 november, rasterhämtning och produktvillkor. |
 | PM-005 | Följ upp NVR:s 30-dagars observationstest och fullständighetsmodell | P1 | Pågående | Kontrollera dagliga körningar, snapshots, manifest och jämförbarhet; partial får inte ge borttagningsslutsatser. |
 | PM-006 | Slutför Rovbase geografiska kvalitetsgranskning | P1 | Pågående | Kör korrigerad full validering i separat output; utred 35 koordinatpar och bekräfta RT90-systemet med källägaren. |
-| PM-007 | Verifiera Skogsstyrelsens avverkningsanmälningar med kompletta jämförbara körningar | P1 | Öppen | Full paginering, checkpoint/retry, stabila ID:n och minst två kompletta jämförbara körningar. |
+| PM-007 | Verifiera Skogsstyrelsens avverkningsanmälningar med kompletta jämförbara körningar | P1 | Första kompletta Gräsmyr-observation verifierad; nationell täckning och observation 2 återstår | Run #8 (2026-11-22) och PR #524: 165/165 ID:n/geometrier, stabil ID-inventering, complete_scan=true, snapshot SHA-256 arkiverad. Nästa: andra kompletta jämförbara Gräsmyr-snapshoten; därefter nationell uttagsdesign och fullständighetsgrind. |
 | PM-008 | Verifiera samråd separat per punkt-, linje- och polygonlager | P1 | Öppen | Fullständighet och snapshotmanifest per lager. |
 | PM-009 | Fortsätt Torvkarta/SIS veckosnapshot och jämförbarhetstest | P1 | Pågående | Två jämförbara snapshots per tjänst innan geografisk breddning enligt issue #132. |
 | PM-010 | Verifiera Viltdata rättigheter och beslut om Azure-arkivering | P1 | Blockerad | Invänta skriftligt besked om historisk lagring/arkivering och avsedda användningar; ingen riktig upload före beslut. |
@@ -148,3 +148,16 @@ PR #498 är mergad (merge commit `21cfa30af358588eb6889d27f78b4e8bffc1fa9a`) och
 | Säkerhetsgrind | Ingen kundvisning, fastighetskoppling eller avisering aktiveras innan rättigheter och tekniska kontroller är uttryckligen verifierade |
 
 PM-025 är en styrningspost, inte ett påstående om att produkten är färdig. Datakällor som inte bidrar till prioriterade kundflöden ska inte automatiskt tränga undan blockerande kärnarbete.
+
+## PM-026 – Nationell insamling per relevant datakälla
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 – övergripande programkrav |
+| Status | Mål fastställt; källvisa nationella acceptansbevis återstår |
+| Mål | Etablera verifierad nationell insamling för varje relevant datakälla och separat produkt/lager, där källans täckning, tekniska villkor och rättigheter medger det |
+| Evidens | PROJECT_ROADMAP.md; SKOGSKOLL_DATA_OVERVIEW.md; Gräsmyr fullscan run #8 och arkiv-PR #524 |
+| Omfattning | Samtliga relevanta källor i data-platform/config/sources.yml, prioriterade efter kundnytta, kvalitet, teknisk möjlighet, kostnad och rättigheter. Ingen automatisk utvidgning till kundproduktens scope. |
+| Acceptanskriterier | Dokumenterad nationell omfattning per källa/lager; verifierad fullständig uttagsmetod; stabila ID:n och count reconciliation; snapshots/manifest/checksummor; fail-closed hantering; minst två kompletta jämförbara observationer; återkommande drift och restore; separat rättighetsbedömning. |
+| Nästa steg | Slutför observation 2 för Skogsstyrelsens avverkningsanmälningar i Gräsmyr; utforma därefter nationell uttagsarkitektur. Fortsätt Samråd med separat täckningsbevis för punkt, linje och polygon. |
+| Stoppregler | Regional pilot är inte nationell täckning. Katalogpost, karta, probe eller delmängd räknas inte som fullständig insamling. Partial/failed får aldrig skapa borttagning eller ersätta komplett snapshot. Ingen kundvisning/kommersiell användning utan källspecifikt stöd. |
