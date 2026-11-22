@@ -1,5 +1,6 @@
 import { advanceCheckpoint, createCheckpoint, validateCheckpoint } from "./scan-plan.mjs";
 import { normalizeFeature, SOURCE_ID } from "./observation-core.mjs";
+import { buildComparabilityKey } from "./snapshot-envelope-adapter.mjs";
 
 function canonicalize(value) {
   if (Array.isArray(value)) return value.map(canonicalize);
@@ -72,8 +73,9 @@ export async function runScanBatch({
   try {
     if (typeof source.getSnapshotMetadata === "function") {
       snapshotMetadata = await source.getSnapshotMetadata();
-      if (!snapshotMetadata || typeof snapshotMetadata !== "object" || Array.isArray(snapshotMetadata)) {
-        throw new Error("source returned invalid snapshot metadata");
+      if (!snapshotMetadata || typeof snapshotMetadata !== "object" || Array.isArray(snapshotMetadata) ||
+          !buildComparabilityKey({ source: sourceKey, metadata: snapshotMetadata })) {
+        throw new Error("source returned incomplete or invalid snapshot metadata");
       }
     }
     const reportedTotal = await source.getCount();
