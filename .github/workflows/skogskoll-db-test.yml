@@ -87,7 +87,7 @@ jobs:
               if (!smoke.includes(name)) throw new Error("Smoke test does not exercise " + name);
             }
             if (!matching.includes("st_dwithin") || !matching.includes("st_intersects") || !matching.includes("security definer")) throw new Error("PostGIS matcher missing required predicates/security");
-            for (const required of ["snapshot_envelopes", "skogskoll_register_snapshot", "snapshot_metadata"]) {
+            for (const required of ["snapshot_envelopes", "skogskoll_register_snapshot", "skogskoll_pending_snapshot_scans", "snapshot_metadata"]) {
               if (!snapshot.includes(required)) throw new Error("Snapshot migration missing " + required);
             }
             for (const assertion of ["radius match expected 2", "polygon match expected 2", "disabled watch area must return no matches"]) {
