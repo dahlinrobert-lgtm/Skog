@@ -656,3 +656,14 @@ Denna notering ersätter tidigare punkter ovan som anger att anonym åtkomstkont
 - **CORS:** användaren konfigurerade Blob service-regeln för GitHub Pages-origin med endast `GET`, `HEAD`, `OPTIONS` och nödvändiga headers. Den efterföljande autentiserade webbläsarläsningen fungerade.
 - **Bedömning:** autentiserad webbläsarläsning, utloggad UI och anonym direkt Blob-åtkomst är manuellt verifierade. Detta verifierar den avsedda läsvägen och att publik Blob-åtkomst är avstängd. Det ersätter inte en fullständig penetrationstestning eller separat kontroll av alla möjliga identitets-/RBAC-scenarier.
 - **Driftstatus:** dashboarden är publicerad och fungerar med den fasta run-scoped snapshoten. Automatisk schemalagd inventory/publicering, retention och återställning är fortfarande separata planerade arbetssteg. Ingen kundpublicering eller kundåtkomst är aktiverad.
+
+
+### Skogskoll – kundwebbens arkitekturgranskning (2026-11-22)
+
+- Användaren har valt att Skogskoll ska vara den enda kundprodukten; Skog är den bakomliggande interna dataplattformen. Skogs interna Gräsmyr-, analys- och pilotvyer ska inte ingå i kundnavigationen.
+- Granskningen finns i [SKOGSKOLL_WEB_ARCHITECTURE.md](SKOGSKOLL_WEB_ARCHITECTURE.md). Den bygger på aktuell `main` och inventerar publiceringsstruktur, kundprototyp, befintliga domänmoduler, schema/RLS och källstatus.
+- Verifierat problem: GitHub Pages-roten `docs/index.html` är en Gräsmyr-/Nordmaling-orienterad intern analysvy; kundprototypen ligger i `skogskoll/index.html` och dess huvudnavigation länkar tillbaka till interna Skog-sidor. Skogskoll-sidan är en monolitisk prototyp med lokal lagring och syntetisk matchning, inte en produktionsansluten kundapp.
+- Befintliga worker-/domänmoduler, tester och Supabase/PostGIS-schema ska bevaras och hållas separerade från publika frontend-assets. Ingestion, service-role-nycklar och källspecifik hämtning får inte flyttas till webbläsaren.
+- Källstatusrapporten anger noll källor uttryckligen godkända för kundvisning vid senaste rapporterade registerkontroll. Kundwebben ska därför stödja rättighetsstyrd publicering per exakt produkt/lager; teknisk åtkomst räcker inte.
+- En separat dokumentationsbranch `docs/skogskoll-web-architecture-review` har skapats för granskningen. Nästa kodsteg enligt dokumentet: isolera kundnavigationen, lägga grund för gemensamt designsystem och testa relativa länkar utan att ändra befintlig datalogik eller interna Skog-sidor.
+- Inga produktionskopplingar, datakällor, aviseringar eller kundvisningar har aktiverats i detta arbete.
