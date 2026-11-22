@@ -970,7 +970,7 @@ PR [#531](https://github.com/dahlinrobert-lgtm/Skog/pull/531) är mergad till `m
 
 PR [#534](https://github.com/dahlinrobert-lgtm/Skog/pull/534) är mergad (merge commit `65f3ba9deea95e7ae781926ee807a7a605455a8e`) och `Skogskoll customer UI tests` passerade. Designagentens mandat och granskningsprocess är dokumenterade i `docs/SKOGSKOLL_DESIGN_AGENT.md` och `PROJECT_MANAGER_RULES.md` avsnitt 4C. Agenten är fortfarande en dokumenterad arbetsroll, inte en autonom tekniskt driftsatt agent.
 
-**PM-022 nästa steg:** koppla metadata till verifierad faktisk worker-konfiguration utan hårdkodade antaganden. Worker-koden visar Skogsstyrelsens ArcGIS MapServer layer 0, `where=1=1`, `outFields=*`, geometri i EPSG:4326, GeoJSON och sortering på källans OID-fält. Endpointen hämtas från `DEFAULT_ENDPOINT`; OID-fältnamnet hämtas från lager-metadata. Utred exakt scope/täckning, stabil identitetssemantik och normaliseringsschema och definiera versionsstyrd konfiguration. Först därefter kopplas adaptern in i befintlig worker/store-väg. Ingen DB-migration, live-ingestion, kundfeed eller avisering aktiveras.
+**PM-022 status efter PR #538:** metadata är nu kopplad till worker/store-flödet och migration 005 är mergad i `main`. `runScanBatch` hämtar och fail-closed-validerar metadata före scan-start; metadataidentiteten sparas med run-/scan-sessionen och jämförs vid återupptagning. Terminala körningar mappas till det oföränderliga `snapshot_envelopes`-registret. Fullständighetsräkning och `captured_at` kontrolleras även av registrerings-RPC:n. CI för PR #538 passerade: 85/85 UI-tester, read-only probe 300/300 unika ID:n i en begränsad sample och migration 005/SQL-smoketest i disponibel PostgreSQL/PostGIS. Live Supabase-migration och liveanrop av metadatafunktionen mot ArcGIS är inte verifierade.
 
 ## 2026-11-23 – Designagent för iterativ produktutveckling
 
@@ -997,9 +997,9 @@ En separat implementation på branchen `feat/skogskoll-arcgis-snapshot-metadata`
 - `identity_version` identifierar det metadatahämtade ArcGIS OID-fältet och konverteringen till strängbaserat GeoJSON feature-id. Den påstår inte att OID är permanent stabilt över tid.
 - `customer_visibility` är fortsatt `not_assessed`; `rights_evidence_ref` är null. Metadatafunktionen skapar inga rättigheter.
 
-Detta är en read-only metadatafunktion i källadaptern. Den är ännu inte kopplad till `poll_runs`/`scan_sessions`, snapshot-envelope-persistens eller schemalagd/live ingestion. Ingen SQL-migration, databasändring, kundfeed eller avisering ingår. PR #537:s customer UI-test passerade med 78/78 tester (run 45078075239). Den separata read-only source-proben passerade (run 45078075046) med 300/300 unika ID:n och noll dubbletter/saknade ID:n; den var avsiktligt begränsad och inte en komplett scan. Detta verifierar inte liveanropet till den nya metadatafunktionen eller fullständighet.
+Metadatafunktionen var först fristående i PR #537 och kopplades därefter in i worker/store-flödet genom PR #538. PR #538:s implementation och migration 005 är mergade. Liveanrop av `getSnapshotMetadata()` mot ArcGIS metadata är fortfarande inte verifierat; metadataidentiteterna testades med mockad metadata. Den begränsade read-only-proben är inte ett fullständighetsbevis.
 
-## 2026-11-23 – PM-022 worker-/snapshotregisterintegration (PR under review)
+## 2026-11-23 – PM-022 worker-/snapshotregisterintegration (PR #538 mergad)
 
 PR #537 är mergad i main (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a). Nästa integrationssteg finns på branchen feat/skogskoll-worker-snapshot-envelope-integration:
 
@@ -1014,4 +1014,4 @@ PR #537 är mergad i main (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a
 
 **Verifiering på PR-head 7a7531de245d6ec87d4cb7f0e1d0ff530322fc33:** customer UI-tests passerade 85/85 ([run 45079498457](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498457)); source probe passerade ([run 45079498474](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498474)) med 300/300 unika ID:n, 0 dubbletter och 0 saknade ID:n av källans rapporterade 132 589. Proben var avsiktligt begränsad (complete_scan=false). Databastesterna passerade ([run 45079498504](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498504)): migration 005 applicerades i disponibel PostgreSQL/PostGIS och både PostGIS-matchning samt transaktionellt ingestion-/snapshot-smoketest passerade med rollback. Source-proben anropar inte den nya getSnapshotMetadata-funktionen mot live metadata; den funktionen testas med mockad ArcGIS-metadata. Ingen live Supabase-anslutning eller produktionsmigration har gjorts. Källstatusrapporten ändras inte eftersom rättighets-/kundvisningsstatus är oförändrad.
 
-**Nästa steg:** invänta gröna tester, granska migrations-/RPC-kontraktet och mergea först därefter. Efter merge behövs separat planerad verifiering i en disponibel Supabase-testmiljö; ingen produktionsmigration eller full scan utan uttryckligt godkännande.
+**Nästa steg:** gör en separat verifiering av migration 005 och RPC-kontrakten i en disponibel Supabase-testmiljö, om sådan miljö och behörighet finns. Verifiera därefter livehämtning av ArcGIS-lagermetadata read-only. Produktionsmigration, schemalagd ingestion, full nationell scan, kundfeed och avisering kräver separata beslut och godkännanden.
