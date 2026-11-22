@@ -763,3 +763,29 @@ Run #6 genomförde samtliga insamlings- och publiceringssteg. [Data-PR #491](htt
 Run #6:s snapshotdata publicerades till `main` genom PR #491. Dokumentationsuppdateringen i PR #492 är också mergad. Publiceringskedjan är därmed verifierad för den första Gräsmyr-pilotkörningen. Detta innebär inte att en lång historisk tidsserie eller nationell täckning är etablerad.
 
 Planerade avverkningsanmälningar är fortsatt begränsade till 300 poster av cirka 132 594 i den befintliga proben. Fullständig paginerad insamling och validering återstår.
+
+
+### Samråd och Life2Taiga – PR-baserad publicering verifierad efter merge (2026-11-22)
+
+Publiceringsfixarna är mergade:
+- [Samråd workflow-fix #494](https://github.com/dahlinrobert-lgtm/Skog/pull/494), merge commit `740a481436004537c277b5bdc91e004ab4f6627f`.
+- [Life2Taiga workflow-fix #495](https://github.com/dahlinrobert-lgtm/Skog/pull/495), merge commit `88bd4bad06496340d3aec1f3f6ebab83d37049a1`.
+
+Verifierade körningar efter merge:
+- [Samråd run 45037391885](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45037391885): tester, point/line/polygon-insamling, event-bundle och PR-skapande passerade.
+- [Life2Taiga run 45037447855](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45037447855): tester, källhämtning, GeoJSON-validering och PR-skapande passerade.
+
+Körningarna skapade följande öppna data-PR:er:
+- [Samråd snapshots #496](https://github.com/dahlinrobert-lgtm/Skog/pull/496)
+- [Life2Taiga data #497](https://github.com/dahlinrobert-lgtm/Skog/pull/497)
+
+Körningarna utlöstes av push till `main` efter merge. De bekräftar därför att insamling och PR-publicering fungerar efter merge, men ännu inte att cron-schemaläggningen har fungerat i en senare schemalagd körning. Data-PR:erna kräver manuell granskning. Detta ändrar inte källornas rättighetsstatus eller tillstånd för kundvisning.
+
+
+### Data-PR #496 och #497 mergade – 2026-11-22
+
+De två automatiskt skapade data-PR:erna har granskats och mergats:
+- Samråd pilot snapshots [PR #496](https://github.com/dahlinrobert-lgtm/Skog/pull/496), merge commit `f442d6a24832a347319bd7c70fa08e331b2a0674`, 15:20:45 UTC.
+- Life2Taiga naturvårdspolygoner [PR #497](https://github.com/dahlinrobert-lgtm/Skog/pull/497), merge commit `467322df3f1c591717e58b0f650717471d2b80cc`, 15:21:08 UTC.
+
+Data från dessa PR:er är nu beständig i `main`. Den tidigare verifieringen av workflowen var push-utlöst efter merge av kodfixarna; faktisk cron-verifiering efter dessa ändringar återstår. Mergad data är inte i sig ett godkännande för kommersiell kundvisning.
