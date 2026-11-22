@@ -253,6 +253,15 @@ export function createSupabaseStore({
 
   return {
     externalSeenIds: true,
+    async registerPendingSnapshots(sourceKey) {
+      const pending = await rpc("skogskoll_pending_snapshot_scans", { p_source: sourceKey });
+      const rows = Array.isArray(pending) ? pending : [];
+      for (const row of rows) {
+        if (!row?.scan_id) throw new Error("Pending snapshot scan query returned an invalid row");
+        await registerSnapshotForScan(row.scan_id);
+      }
+      return rows.length;
+    },
     async loadCheckpoint(sourceKey) {
       const query = new URLSearchParams({
         select: "id,source,source_count,page_size,next_offset,fetched_count,status,diagnostics,updated_at",
