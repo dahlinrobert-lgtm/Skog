@@ -923,3 +923,21 @@ Uppföljande PR [#46](https://github.com/dahlinrobert-lgtm/skogskoll-project-man
 PR [#47](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/47) är mergad. Dashboardens KPI för olösta avvikelser räknar nu även olösta schemalagda fel. Återhämtade fel visas separat och räknas inte som olösta; pågående schemalagda körningar visas i egen prioriterad sektion. PR-CI passerade.
 
 Nästa steg: verifiera första schemalagda inventering, artifact, tidsgrind och central issue-hantering. Ingen Azure-publicering, historikpersistens eller kundavisering aktiveras av denna implementation.
+
+## Nationell insamling – övergripande projektmål (beslut 2026-11-22)
+
+**Mål:** För varje relevant och registrerad datakälla ska Skog utreda, bygga och verifiera en insamling med nationell geografisk täckning där källan erbjuder sådan täckning och där tekniska villkor och rättigheter medger det. Gräsmyr är en pilotgeografi för kvalitetssäkring, inte slutlig geografisk målbild.
+
+Nationell täckning ska redovisas separat per källa och produkt/lager. Katalogposter, nationella kartvyer, metadata-prober eller lyckade regionala piloter räknas inte som nationell insamling.
+
+Gemensamma acceptanskriterier per källa/lager:
+- dokumenterad källomfattning, geografi, objekt-/tidsomfång och eventuella exkluderingar,
+- komplett paginering eller annan verifierad uttagsmetod, stabila ID:n och avstämning av antal/täckning,
+- manifest med källa, produkt/lager, körnings-ID, tidpunkt, status, scope, antal och SHA-256 där relevant,
+- fail-closed publicering: partial/failed körning får inte ersätta senaste kompletta observation eller skapa borttagningsslutsatser,
+- återkommande körningar och minst två kompletta, jämförbara observationer innan förändringsklassning,
+- separat bedömning av teknisk åtkomst, lagring, bearbetning, kommersiell användning och kundvisning.
+
+**Senaste verifierade framsteg:** Skogsstyrelsens planerade avverkningsanmälningar har en komplett read-only Gräsmyr 10 km-snapshot från 2026-11-22. 165/165 ID:n och geometrier stämdes av, ID-inventeringen var stabil under körningen, complete_scan=true, och snapshoten arkiverades genom PR #524 (mergad). Detta är endast en verifierad pilotobservation – inte nationell täckning och ännu inte två observationer för förändringsanalys.
+
+**Nästa steg:** genomföra en andra komplett jämförbar Gräsmyr-observation; därefter designa nationell insamling med hänsyn till källans maximala uttagsmängd, begränsningar, paginering, belastning och lagringsvolym. Samråd ska verifieras separat för punkt-, linje- och polygonlager. Ingen kundvisning eller avisering följer av teknisk insamling.
