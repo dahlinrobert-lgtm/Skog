@@ -3,7 +3,6 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import Mock, patch
-from unittest.mock import Mock
 
 from scripts.snapshot_harvest_notifications_pilot import (
     BATCH_SIZE,
