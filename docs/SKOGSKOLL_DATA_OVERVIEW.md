@@ -880,3 +880,28 @@ Efter PR [#516](https://github.com/dahlinrobert-lgtm/Skog/pull/516) gjordes en s
 **Drift:** Monitor-run [#45048859162](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45048859162) var push-utlöst (inte cron) och avslutades success. Workflowet `.github/workflows/monitor.yml` har cron `17 5 * * *` (05:17 UTC dagligen). Nästa schemalagda körning ska verifieras separat; en push-utlöst körning bevisar inte schemalagd drift.
 
 Ingen kundavisering, frånvaroklassning eller ändring av källrättigheter följer av denna kontroll.
+
+## Övergripande mål: nationell insamling per relevant datakälla
+
+Skog ska på sikt ha en verifierad nationell insamling för varje relevant datakälla och separat produkt/lager, i den omfattning källan faktiskt erbjuder och tillåter. Nationell insamling är ett mål för dataplattformen – det innebär inte att varje källa automatiskt ingår i Skogskolls första kundprodukt.
+
+Gräsmyr 10 km används som kontrollerad pilotgeografi för att verifiera metod, fullständighet, historik och drift. En lyckad pilot får inte beskrivas som nationell täckning. En nationell kartvy, katalogpost, metadata-probe eller ett enstaka urval räknas inte heller som fullständig nationell insamling.
+
+### Nationell acceptansgrind per källa och produkt/lager
+1. **Omfattning:** dokumentera nationell geografi, tillgängliga objekt, tidsperiod, filter, undantag och källans egna begränsningar.
+2. **Fullständighet:** verifiera full paginering/uttagsmetod, stabila objekt-ID:n, unika poster och avstämning mot källans antal eller annan oberoende kontroll.
+3. **Proveniens:** spara original/snapshot, körnings-ID, tidpunkt, scope, antal, status och SHA-256 där det är relevant.
+4. **Historik:** bevara tidigare observationer; partial/failed körningar får inte ersätta senaste kompletta snapshot eller skapa falska borttagningar.
+5. **Jämförbarhet:** minst två kompletta jämförbara observationer innan förändringar, frånvaro eller nyhet tolkas.
+6. **Drift:** verifiera återkommande körning, felhantering, återhämtning, lagring och återställning.
+7. **Rättigheter:** bedöm separat teknisk åtkomst, lagring, bearbetning, kommersiell användning, kundvisning och vidare distribution.
+
+Täckning ska redovisas separat för varje lager. Exempelvis ska Skogsstyrelsens Samråd punkt-, linje- och polygonlager inte slås ihop till ett enda odifferentierat fullständighetsbesked. Trafikverkets olika produkter, Länsstyrelsernas olika tjänster och NVR:s olika dataset ska likaså hållas åtskilda.
+
+### Aktuell pilotstatus – Skogsstyrelsens planerade avverkningsanmälningar
+
+Den manuella fullständighetspiloten 2026-11-22 (Actions run #8) hämtade hela ID-inventeringen för Gräsmyr 10 km: ID:n före/efter 165/165, hämtade geometrier 165, unika ID:n 165, stabil ID-inventering under skanningen och complete_scan=true. Snapshot SHA-256: 21df361fbef8b0151e7a01e06d2377fe1f5cb42a1d5265217c1e7b7ea3d6bbee.
+
+Snapshot och manifest arkiverades i PR #524, som mergades 2026-11-22. Detta verifierar en komplett pilotobservation i ett 10 km-område. Det verifierar inte nationell täckning eller förändringsanalys mellan två observationer.
+
+**Nästa steg:** ta en andra komplett jämförbar Gräsmyr-snapshot och granska därefter nationell uttagsdesign, kapacitet, paginering och belastning innan geografisk uppskalning. Fortsätt separat fullständighetskontroll av Samråds tre lager. Ingen källrätt eller kundvisningsrätt uppstår genom teknisk verifiering.
