@@ -141,3 +141,16 @@ Den befintliga `createArcGisSource` får en read-only metod `getSnapshotMetadata
 | `identity_version` | ArcGIS OID-fältnamn + strängnormalisering till GeoJSON feature ID | Bevisar inte långsiktig OID-stabilitet |
 
 Metadataresultatet behåller `customer_visibility=not_assessed` och `rights_evidence_ref=null`. Detta är en metadatafunktion, inte ett fullständighetsbevis eller en snapshot. Den är ännu inte kopplad till worker-run-persistens/adaptern. PR #537:s customer UI-test passerade 78/78 tester (run 45078075239). Read-only source-probe passerade (run 45078075046) med 300/300 unika ID:n och noll dubbletter/saknade ID:n, men var avsiktligt begränsad och inte en komplett scan. Den nya metadatafunktionen har ännu inte verifierats mot live ArcGIS-metadata. Ingen migration eller live-ingestion ingår.
+
+## 9. Persistens – ArcGIS worker till oföränderligt snapshotregister (PR under granskning)
+
+Integrationsförslaget återanvänder poll_runs och scan_sessions som körningsidentiteter och lägger till ett separat register för färdiga snapshot-envelopes.
+
+- Metadata från createArcGisSource.getSnapshotMetadata() sparas i båda körningsposternas diagnostics vid atomisk scan-start. Diagnostics är här proveniens för återupptagning; den auktoritativa färdiga snapshotposten är snapshot_envelopes.
+- Återupptagning kräver samma kanoniserade metadata som vid scan-start. Om metadata har ändrats avslutas den tidigare sessionen som failed och en ny scan startar från offset 0. Befintlig observation-/historikdata raderas inte.
+- Migration 005 skapar snapshot_envelopes, med unik snapshot_id och scan_session_id, run-/scan-referenser, centrala jämförbarhetsfält och hela envelope-JSON. Tabellen har RLS utan publika policies; registrering sker via service-role-only security-definer RPC.
+- Registrerings-RPC kräver terminal scan/run, kontrollerar identiteter och att envelope-metadata/rights-status motsvarar metadata som sparades vid scan-start. Complete kräver scan complete + poll_run success; partial/failed kan inte uppgraderas till complete.
+- Store läser tillbaka terminala poster, använder befintlig mapWorkerScanToSnapshotEnvelope och registrerar via RPC. Samma envelope kan återregistreras idempotent; en annan envelope för samma scan avvisas.
+- In-progress scan får ingen snapshotpost förrän den avslutas. En fatal scan kan registreras som failed. En transient nätverksstörning behåller checkpointen och den ursprungliga metadataidentiteten.
+
+Ingen live Supabase-anslutning eller produktionsmigration är utförd i denna PR. CI:s PostGIS-testmiljö ska verifiera migration 005 och rollback-wrapped SQL-smoketest. Kundvisning är fortsatt not_assessed; detta register är intern proveniens, inte ett publicerings- eller rättighetsgodkännande.
