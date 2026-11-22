@@ -695,3 +695,17 @@ Första UI-implementationen ligger i branch `feat/skogskoll-daily-change-feed-sh
 - Källstatusrapporten var senast genererad 2026-11-18 och angav inga källor uttryckligen godkända för kundvisning i den sammanfattande bedömningen. Rättighetsgrinden är därför avsiktligt stängd tills en exakt källa/produkt/lagerpost och evidens godkänts.
 
 **Nästa steg:** verifiera PR-CI och granska kontraktet mot befintliga snapshotmanifest och databasens historikfält. Därefter kan ett separat API-/persistensförslag tas fram; ändra inte databasschema eller koppla verklig kundfeed innan den granskningen och rättighetsbedömningen är klar.
+
+
+## Skogskoll change-feed-kontrakt – merge verifierad (2026-11-22 14:44 CET)
+
+**Korrigering av föregående statusnotering:** PR #484 är nu verifierat mergad. GitHub REST visar `state=closed`, `merged=true`, `merged_at=2026-11-22T13:44:18Z` och merge commit `8f44a442e3e0eafb8055b03769e3d2877b05f725`. Användarens skärmbild bekräftar också GitHubs Merged-status.
+
+- Kontraktet finns nu på `main`: `docs/SKOGSKOLL_CHANGE_FEED_CONTRACT.md`.
+- Domänkärna och tester finns på `main`: `skogskoll/src/change-feed-contract.mjs`, `skogskoll/tests/change-feed-contract.test.mjs`.
+- CI för kund-UI och hela Node-testsviten passerade i [run #45028806338](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45028806338).
+- Befintlig source probe och relaterade ingestion-/SQL-kontroller passerade i [run #45028806343](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45028806343).
+- Testworkflowens path-filter omfattar nu `skogskoll/src/**`, `skogskoll/tests/**` och kontraktsdokumentationen vid pull requests samt push till main.
+- Ingen databas, kund-API, riktig kundfeed, ingestion eller avisering aktiverades.
+
+**Nästa steg:** inventera befintliga snapshotmanifest och historikfält mot kontraktet. Identifiera vad som redan finns och vad som saknas innan någon databas-/API-mappning föreslås. Källstatusrapporten från 2026-11-18 anger fortfarande noll uttryckligen godkända kundvisningskällor; rättighetsgrinden förblir stängd.
