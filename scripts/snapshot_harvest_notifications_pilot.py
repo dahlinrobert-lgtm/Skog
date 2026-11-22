@@ -33,6 +33,29 @@ def canonical_json(value: Any) -> bytes:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
 
 
+def atomic_write_text(path: Path, content: str) -> None:
+    """Replace a text file atomically; preserve the previous file on failure."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    try:
+        temporary.write_text(content, encoding="utf-8")
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def write_snapshot_atomic(path: Path, raw: bytes) -> None:
+    """Publish a gzip snapshot only after the complete compressed file is written."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    try:
+        with gzip.open(temporary, "wb", compresslevel=9) as target:
+            target.write(raw)
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def query_scope() -> dict[str, str]:
     return {
         "where": "1=1",
@@ -163,9 +186,7 @@ def main() -> None:
     digest = hashlib.sha256(raw).hexdigest()
     snapshot_name = f"grasmyr_10km_{stamp}.geojson.gz"
     snapshot_path = OUT_DIR / "snapshots" / snapshot_name
-    snapshot_path.parent.mkdir(parents=True, exist_ok=True)
-    with gzip.open(snapshot_path, "wb", compresslevel=9) as target:
-        target.write(raw)
+    write_snapshot_atomic(snapshot_path, raw)
 
     manifest = {
         "source": SERVICE,
@@ -198,7 +219,7 @@ def main() -> None:
         "mode": "read-only pilot archive; no alerts; no customer database writes",
     }
     latest_path = OUT_DIR / "latest.json"
-    latest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    atomic_write_text(latest_path, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(manifest, ensure_ascii=False, indent=2))
 
 
