@@ -24,7 +24,7 @@
 | PM-014 | Utvärdera SCA/Sveaskog-källspår | P3 | Öppen | Källåtkomst, fullständighet och rättigheter; ingen automatisk insamling före beslut. |
 | PM-015 | Slutför Skogskoll produktionsberedskap för auth, RLS, PostGIS och ingestion | P2 | Planerad | Verifiera befintlig kod/CI och separat testprojekt; ingen produktionsaktivering ännu. |
 | PM-016 | Implementera bevakningshistorik och aviseringar efter verifierad baslinje | P2 | Blockerad | Kräver PM-015, källgodkännande, användarsamtycke och tyst första baslinje. |
-| PM-022 | Etablera Skogskolls snapshotbaserade dag-för-dag-flöde | P1 | Pågående – UI och kontrakt mergade, manifestinventering nästa | PR #483 (kundskal/Flöde) och PR #484 (snapshot-/change-feed-kontrakt) är mergade. CI för hela Node-testsviten och befintlig source probe passerade 2026-11-22. Nästa steg: inventera faktiska snapshotmanifest och historikfält mot kontraktet, därefter föreslå API/persistens. Ingen kundkälla eller verklig feed är aktiverad. Ofullständiga körningar får aldrig skapa borttagningshändelser. |
+| PM-022 | Etablera Skogskolls snapshotbaserade dag-för-dag-flöde | P1 | Pågående – inventering klar; adapterkontrakt nästa | PR #483 kundskal och PR #484 change-feed-kontrakt är mergade; PR #486 dokumentationsstatus är också mergad. Snapshot-/historikinventering finns i docs/SKOGSKOLL_SNAPSHOT_INVENTORY.md. Nästa steg: ren adapter-mappning för befintlig Skogsstyrelsen-worker till snapshot-envelope och tester för fullständighet/täckning/rättighetsgrind. Ingen migration eller kundfeed är aktiverad. Ofullständiga körningar får aldrig skapa borttagningshändelser. |
 
 ## Kända externa GitHub-issues att synka
 
