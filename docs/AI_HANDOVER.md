@@ -1224,3 +1224,17 @@ The user's read-only Supabase SQL results from the dedicated `skogskoll-test` pr
 This does not establish production ingestion readiness, source rights, customer visibility, customer matching or alert delivery. No production source or customer notification was used. Keep the test project and its evidence isolated; do not change grants or delete test history.
 
 **Next concrete step:** continue with the existing worker/adapter architecture and plan the next narrowly scoped validation only after checking current source readiness and rights. Do not enable production ingestion or customer alerts based solely on this synthetic test.
+
+
+## 2026-11-23 – National ÄFO snapshot pipeline correction in alg-grasmyr
+
+The separate repository `dahlinrobert-lgtm/alg-grasmyr` already owns the national Länsstyrelsernas Älgdata collection. Do not create a parallel collector in Skog. The national collector correction was merged in [alg-grasmyr PR #81](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/81): dated per-ÄFO snapshots remain immutable, while the derived national dashboard may advance only to a newer complete batch. Identical same-day retries are idempotent; changed same-day snapshots/dashboard content and attempts to move the dashboard backwards are rejected.
+
+Verification on PR head `77f23545c38ea0a684f9086047c98d40621955f9`:
+- National ÄFO test workflow passed, including four new dashboard regression tests.
+- Full stored-snapshot validator passed.
+- Post-merge validation workflow passed on alg-grasmyr main commit `6ee9d450e54677b801fa673a1a16ade7191565a2`.
+
+The prior national scheduled run #12 (2026-11-23) failed because the old implementation refused to update the 2026-11-21 dashboard. Its uploaded artifact was retained; no snapshot batch was committed. The correction is merged, but a fresh complete 129/129 national run has not yet been performed after the fix.
+
+**Next concrete step:** manually dispatch [Daily national ÄFO avskjutning snapshots](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/workflows/daily-national-afo-avskjutning.yml) on `main`. Verify 129/129 active AFOs, exact match against current JaktAdm boundary IDs, raw ÄJO row preservation and aggregate sums from `ShotTotal`/`AssignedTotal`, then verify that the dashboard date advances without changing any earlier dated snapshots. Only after that run succeeds should Skog's source status and integration planning be revisited. No Skog worker integration, customer display, or alerts have been enabled.
