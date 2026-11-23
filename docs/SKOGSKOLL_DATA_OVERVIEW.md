@@ -1013,8 +1013,21 @@ Both observations remain active and retain their original `first_seen_at`; `last
 This verifies idempotency for repeated identical synthetic fixtures in the test project. It does not certify production ingestion, source rights, customer visibility or alert delivery.
 
 
-## 2026-11-23 – Controlled synthetic changed-observation test prepared
+## 2026-11-23 – Kontrollerat syntetiskt worker-test med ändrad observation verifierat
 
-The existing synthetic worker workflow is extended with a scenario selector, defaulting to `unchanged`. The explicit `change_feature_001` scenario alters only the existing stable fixture ID `worker-smoke-feature-001` by changing its `sequence` property from 1 to 101; fixture 002 remains unchanged. The existing dedicated Supabase host guard and explicit durable-write confirmation remain required.
+PR [#560](https://github.com/dahlinrobert-lgtm/Skog/pull/560) utökade det befintliga syntetiska worker-workflowet med scenariot `change_feature_001`. [GitHub Actions-körning #4](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45270531634) kördes manuellt på `main` (commit `30a96696ae97179d3e60e33a2a1479020c128bee`) och avslutades `completed/success`. Loggen visar fixture-variant `change_feature_001`, scan `9fddb92c-8ea0-444c-b4aa-9b8cff79d019`, `status=complete`, två hämtade poster på en sida, förväntat ändrat ID `worker-smoke-feature-001`, `alertsEnabled=false` och `productionSourceUsed=false`.
 
-Expected database result (not yet executed): a complete two-record scan; successful poll with `inserted_count=0`, `updated_count=1`; two current observations; three history rows total, including exactly one new `changed` event for fixture 001 and both original baseline events; four complete snapshot envelopes after the fourth run. Use the new read-only diagnostic after the manual dispatch. No test dispatch or database write has occurred during preparation.
+Användarens read-only SQL-resultat från Supabase-projektet `skogskoll-test` verifierar den beständiga databaspersistensen:
+
+- Senaste scan: `complete`, `source_count=2`, `page_size=2`, `next_offset=2`, `fetched_count=2`; snapshot registrerad.
+- Kopplad poll run `7f5345d3-8f2c-46a1-a935-db87f1f92cb5`: `success`, `fetched_count=2`, `inserted_count=0`, `updated_count=1`.
+- Senaste scan har 2 seen IDs; databasen har 2 aktuella observationer, 3 historikrader och 4 snapshot envelopes.
+- `worker-smoke-feature-001` har nu `sequence=101`; `worker-smoke-feature-002` är oförändrad med `sequence=2`. Båda är fortsatt aktiva.
+- Historiken innehåller de två ursprungliga `baseline`-raderna från den första poll run samt exakt en ny `changed`-rad för feature 001, kopplad till den senaste poll run. Baslinjeraderna har bevarats.
+- Samtliga fyra snapshot envelopes har `status=complete`, `customer_visibility=not_assessed` och `rights_evidence_ref=null`.
+
+**Verifierad slutsats:** den kontrollerade ändringsvägen fungerar i det isolerade testprojektet. En befintlig observation uppdaterades, exakt en `changed`-historikrad lades till, den andra observationen och de ursprungliga baslinjeraderna bevarades och den fjärde kompletta snapshot-envelope registrerades. Testposterna är beständiga och ska behållas; ingen rensning genomfördes.
+
+Detta verifierar inte produktionsingestion, källrättigheter, kundvisning, kundmatchning eller larmleverans. Ingen produktionskälla eller kundavisering användes. Testprojektets avgränsning, befintliga behörigheter och historik ska behållas.
+
+**Nästa steg:** fortsätt med befintlig worker-/adapterarkitektur och välj nästa avgränsade validering först efter kontroll av aktuell källstatus och rättigheter. Aktivera inte produktionsingestion eller kundaviseringar enbart på grundval av detta syntetiska test.
