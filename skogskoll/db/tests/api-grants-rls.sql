@@ -43,7 +43,7 @@ $fixtures$;
 
 do $privileges$
 begin
-  if not has_table_privilege('anon', 'public.watch_areas', 'SELECT')
+  if has_table_privilege('anon', 'public.watch_areas', 'SELECT')
      or has_table_privilege('anon', 'public.alert_events', 'SELECT')
      or has_table_privilege('anon', 'public.push_subscriptions', 'SELECT') then
     raise exception 'anon customer-table privilege matrix is incorrect';
