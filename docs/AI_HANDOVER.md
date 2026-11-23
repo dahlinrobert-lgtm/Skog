@@ -1126,3 +1126,12 @@ Jobbloggen visar att `run-synthetic-worker-smoke-test.mjs` kördes med testproje
 Testet behåller de syntetiska poll runs, scan session, seen IDs, observations, historikrader och snapshot envelope i `skogskoll-test`; inget städades bort. Ingen produktionskälla användes och inga kundaviseringar aktiverades.
 
 **Nästa steg:** gör en read-only efterkontroll i `skogskoll-test` av scan ID ovan och fixture-ID:na `worker-smoke-feature-001`/`worker-smoke-feature-002`, inklusive snapshot-envelope-status och antal observationer/historikrader. Därefter bedöms eventuella idempotens-/omkörningsfrågor innan en avgränsad källspecifik worker-probe övervägs. Fortsätt hålla produktionsingestion och alerts avstängda.
+
+
+## 2026-11-23 – Read-only SQL audit prepared for synthetic worker run
+
+Review of migration 006 confirms the worker service role has direct REST SELECT grants only on `scan_sessions` and `poll_runs`. It intentionally has no direct SELECT on `source_observations`, `source_observation_history`, `scan_seen_ids` or `snapshot_envelopes`. Therefore the GitHub Actions log cannot independently enumerate those protected rows through the current adapter permissions.
+
+Added `skogskoll/db/diagnostics/verify-synthetic-worker-smoke.sql`, a SELECT-only script for Supabase SQL Editor. It inspects the known scan ID `1a53c3b2-fad4-47d1-afb4-9340dc50f15c`, the two fixed fixture IDs, linked poll run, seen-ID ledger, observation history, snapshot envelope and count reconciliation. It performs no writes or deletes. Run it only in the dedicated `skogskoll-test` project.
+
+**Next step:** execute the diagnostic in Supabase SQL Editor and review all six result sets. Do not broaden service-role table grants merely for diagnostics; retain the current least-privilege boundary. Use observed results to decide whether a narrowly scoped, service-role-only audit RPC is warranted.
