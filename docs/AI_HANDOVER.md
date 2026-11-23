@@ -1112,3 +1112,17 @@ The merged implementation includes the source-identity binding fix, regression t
 **Live status:** the synthetic Supabase worker workflow has not yet been dispatched. Thus worker RPC start, atomic page commit, finish and snapshot-envelope registration through the real Supabase adapter remain unverified. No synthetic database writes have been made by this workflow. No production ArcGIS scan or customer notification has been run.
 
 **Next step:** obtain explicit confirmation before dispatching the workflow because it creates durable test records (poll run, scan session, seen IDs, observations/history and snapshot envelope) in `skogskoll-test`. These records are intentionally retained, not rolled back or deleted. After a confirmed run, inspect the records and envelope before planning any broader integration test.
+
+## 2026-11-23 – Syntetiskt worker-smoketest genomfört med framgång
+
+GitHub Actions-körning [#45259733480](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45259733480) kördes manuellt (`workflow_dispatch`) på `main`, commit `a29bf69e6b2ede4997ab233abcea45ea1a2132b7`. Workflow och enda jobbet `synthetic-worker-smoke` avslutades `completed/success`; steget `Run isolated synthetic worker against Supabase test project` passerade.
+
+Jobbloggen visar att `run-synthetic-worker-smoke-test.mjs` kördes med testprojektets GitHub Actions-secrets (värden maskerade) och gav `status=complete`, `fetchedCount=2`, `pagesFetched=1`, `pagesExpected=1`, källa `skogskoll:synthetic:worker-smoke-test`, fixture `skogskoll-worker-smoke-v1`, `alertsEnabled=false` och `productionSourceUsed=false`. Worker-resultatet innehåller scan ID `1a53c3b2-fad4-47d1-afb4-9340dc50f15c`.
+
+**Verifierat:** den verkliga worker-orchestreringen och Supabase-adaptern genomförde en komplett syntetisk körning med två fixtureposter på en sida. Genom kodgranskning av den version som kördes framgår att adaptern använder RPC:erna `skogskoll_register_snapshot`, `skogskoll_start_scan`, `skogskoll_commit_page` och `skogskoll_finish_scan`; ett komplett resultat kräver att workerflödet når finish efter full täckning. Detta verifierar inte ArcGIS, produktionskälla, kundmatchning, kundvisning eller aviseringar.
+
+**Databasinsynens begränsning:** workflowlogg/resultat bekräftar worker-resultatet men innehåller inte en separat efterföljande SQL-inventering av alla lagrade rader. Skrivflödet ska betraktas som genomfört via adaptern, medan oberoende kontroll av varje tabellrad och snapshot-envelope i Supabase Dashboard/SQL ännu återstår.
+
+Testet behåller de syntetiska poll runs, scan session, seen IDs, observations, historikrader och snapshot envelope i `skogskoll-test`; inget städades bort. Ingen produktionskälla användes och inga kundaviseringar aktiverades.
+
+**Nästa steg:** gör en read-only efterkontroll i `skogskoll-test` av scan ID ovan och fixture-ID:na `worker-smoke-feature-001`/`worker-smoke-feature-002`, inklusive snapshot-envelope-status och antal observationer/historikrader. Därefter bedöms eventuella idempotens-/omkörningsfrågor innan en avgränsad källspecifik worker-probe övervägs. Fortsätt hålla produktionsingestion och alerts avstängda.
