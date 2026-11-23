@@ -1255,5 +1255,19 @@ Oberoende granskning av artifact `national-afo-snapshot-batch` (ID `14867345764`
 
 Detta verifierar en fullständig nationell observation och den korrigerade summerings-/dashboardvägen. Värdena är kumulativa rapporterade säsongsvärden, inte individuella älghändelser eller exakta fälldatum. Teknisk åtkomst och insamlingsfullständighet ger inte automatiskt rätt till kommersiell användning, historisk lagring, bearbetning, kundvisning eller vidare distribution. Ingen Skogskoll-worker, kundfeed eller avisering har aktiverats.
 
-**Nästa steg:** ta en andra komplett jämförbar nationell snapshot vid nästa ordinarie kontroll och jämför förändringar endast på stabila ID:n och jämförbar säsong/gränssättning. Behåll alla daterade snapshots. Genomför separat rights assessment för teknisk åtkomst, historisk lagring, bearbetning, kommersiell användning och kundvisning innan integration i Skogskoll övervägs.
+**Nästa steg:** slutför rad-för-rad-jämförelse av samtliga råa ÄJO-rader mellan 2026-11-21 och 2026-11-23 med stabila registreringsnummer och separera ändrade värden från statusändringar. Behåll alla daterade snapshots. Genomför separat rights assessment för teknisk åtkomst, historisk lagring, bearbetning, kommersiell användning och kundvisning innan integration i Skogskoll övervägs.
 
+
+
+
+## 2026-11-23 – Första nationella differensgranskningen 21–23 november
+
+Dashboarderna i alg-grasmyr har jämförts direkt från Git-historiken: 2026-11-21 (`c16495a638a12f3e55a8e41ba94e01a3d7f9c6f2`) mot 2026-11-23 (`8d78cdfd7eed017040b7ab74ce96b1c724f84d73`). Båda avser säsong 2026/2027 och 129 unika ÄFO-ID:n. På dashboardnivå verifierades:
+
+- Rapporterat kumulativt `fallda_totalt`: 56 715 → 57 687, differens +972.
+- `avskjutningsmal_totalt`: 79 704 → 79 704, differens 0.
+- 109 av 129 ÄFO har högre rapporterat fälltal; 20 är oförändrade; inget ÄFO har lägre aggregat.
+- Största observerade ÄFO-differenser: 25-003 +76, 25-006 +55, 25-004 +46, 25-005 +45 och 07-001 +23.
+- Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata för samtliga 129 områden. `FinishedReporting`-antalet ändras däremot i 10 områden; i 14-005 minskar det från 5 till 4. Detta visar att rapporteringsstatus inte ska behandlas som monotont eller som en händelsehistorik.
+
+Detta är en dashboard-/ÄFO-aggregatjämförelse, inte en fullständig rad-för-rad ÄJO-differens. En begränsad kontroll av råa ÄJO-rader har visat att samma registreringsnummer förekommer över datumen och att rapportvärden/status kan ändras, men samtliga 3 237 rader har ännu inte jämförts systematiskt med stabil ÄJO-identitet. Ingen differens ska därför tolkas som exakt fälldatum eller daglig händelse. Nästa steg är en komplett rå-rad-jämförelse med extraherat stabilt registreringsnummer ur `AfoName`-länkens `drillDownToAjoReport`-ID, kontroll av radtillskott/bortfall och ändrade värden, samt separat klassning av rapportstatusändringar. Bevara båda snapshots och skapa ingen automatisk borttagningshändelse.
