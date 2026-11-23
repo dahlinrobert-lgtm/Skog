@@ -20,7 +20,6 @@ select
   s.next_offset,
   s.fetched_count as scan_fetched_count,
   s.status as scan_status,
-  s.created_at as scan_created_at,
   s.completed_at,
   s.snapshot_registered_at,
   s.poll_run_id,
