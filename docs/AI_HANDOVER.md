@@ -1320,3 +1320,20 @@ Verified: 3,237 raw ÄJO rows on each date; 2,841 unchanged; 396 rows with one o
 The audit implementation, tests and run instructions are documented in [alg-grasmyr NATIONAL_AJO_ROW_DIFF.md](https://github.com/dahlinrobert-lgtm/alg-grasmyr/blob/main/docs/NATIONAL_AJO_ROW_DIFF.md). Missing rows are classified as unconfirmed absences, never as deletions. No Skog worker, customer feed or alerts are enabled.
 
 **Next concrete step:** continue scheduled/controlled national snapshots and compare later dates using the same immutable row-level audit. Separately review the existing rights evidence for exact commercial/customer-display scope before any product integration. Do not interpret cumulative differences as event-level harvests.
+
+
+## 2026-11-24 – Project Manager: drift-, täcknings- och källriskvy under utveckling
+
+En separat staging-implementation finns i det privata repot [skogskoll-project-manager-history PR #52](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/52). Den utökar Project Manager-källvyn med explicit driftklassificering, geografisk täckning och risk-/kontinuitetsprofil per source_id.
+
+Viktiga skydd:
+- Fullständigt verifierad drift kräver exakt koppling till workflow, explicit produktionsstatus och scope samt minst två lyckade, kompletta och jämförbara körningar.
+- Saknade uppgifter visas som okända/ej bedömda; inga servergränser eller täckningsnivåer får antas.
+- Riskprofilen ska omfatta anropsintervall, samtidighet, sidstorlek, timeout, retry/backoff, kända servergränser, felpolicy och återhämtning.
+- Vid driftstörning bevaras senaste kompletta snapshot. Partial/failed får inte skapa falska borttagningar; återhämtning ska vara kontrollerad och idempotent.
+
+PR #52 ligger i privat staging-repo. Profilregistret är initialt tomt eftersom källspecifika servergränser, anropsbudgetar och återhämtningsbeteenden ännu inte har verifierats. CI för Python-enhetstester, JavaScript-syntax och syntetiska append-only-tester passerade på kodcommit 2f7464dcf3149b3d9ec82ba99d8fd982ea185109; en senare ändring uppdaterade endast profilmodellens dokumentation. PR är öppen och inte mergad.
+
+Ingen Azure-publicering, latest pointer, GitHub Pages-deploy, auth/CORS-ändring eller ändring av befintlig produktionsdashboard har gjorts. Befintlig snapshot och manuell publiceringsgrind är oförändrade.
+
+**Nästa steg:** granska och mergea staging-PR efter kodgranskning. Därefter koppla faktiska källor till exakta workflows och dokumentera risk-/kontinuitetsprofiler från API-dokumentation, leverantörsvillkor, befintlig kod och kontrollerad driftsevidens. Först därefter kan en ny komplett inventering och separat manuellt godkänd Azure-publicering ge dashboarden nya uppgifter.
