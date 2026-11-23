@@ -947,3 +947,11 @@ Workerflödet återanvänder `runScanBatch` och den befintliga Supabase-adaptern
 Det manuella testet använder den reserverade identiteten `skogskoll:synthetic:worker-smoke-test`, två fasta fixture-ID:n och en syntetisk metadataendpoint under `.invalid`. Det utför start, en atomisk sidcommit, finish och snapshot-envelope-registrering i `skogskoll-test`. Workflowet kräver explicit manuell bekräftelse och får aldrig köras mot produktion.
 
 Detta är beständiga testskrivningar, inte en rollback-transaktion. Testets poll runs, scan sessions, seen IDs, observations, historikrader och immutable snapshot envelopes behålls för spårbarhet. Ingen automatisk radering görs. Ingen ArcGIS-hämtning, kundmatchning, kundfeed eller avisering ingår. Livekörningen är ännu inte genomförd.
+
+## 2026-11-23 – Syntetiskt worker-smoketest mergat
+
+PR [#551](https://github.com/dahlinrobert-lgtm/Skog/pull/551) är mergad till main i commit `15380835ff6488393738c0552ba8ef5ddc1d4d5f`. Både [customer UI tests #45254523110](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45254523110) och [source probe #45254522745](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45254522745) passerade på PR-committen.
+
+Workflowet och skriptet finns nu på main. De kräver manuell dispatch och explicit bekräftelse, använder endast syntetiska fixtures och har en separat kontroll som låser Supabase API-host till det verifierade `skogskoll-test`-projektet. Det livebaserade worker-testet är ännu inte kört; därför är RPC start, atomisk sidcommit, finish och snapshot-envelope-registrering via den verkliga adaptern ännu inte verifierade.
+
+Nästa steg är att inhämta uttryckligt godkännande innan workflowet startas. Testet skapar beständiga syntetiska poster i testdatabasen och raderar dem inte. Ingen produktionsskanning eller kundavisering ingår.

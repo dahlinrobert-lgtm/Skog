@@ -1102,3 +1102,13 @@ A dedicated manual workflow and fixture script are prepared on branch `feat/synt
 Local automated tests cover the source-identity binding. The live Supabase workflow has not been run. A successful run will verify the existing adapter's start, atomic page commit, finish and snapshot registration against the test project; it will not verify ArcGIS ingestion, production, customer visibility or notifications.
 
 **Next step:** review and merge the PR after CI; then manually dispatch the synthetic workflow with confirmation only after verifying that `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` still point to `skogskoll-test`. Inspect the resulting synthetic records and envelope before any further worker expansion.
+
+## 2026-11-23 – Synthetic worker smoke test merged; CI green
+
+PR [#551](https://github.com/dahlinrobert-lgtm/Skog/pull/551) was merged to main in commit `15380835ff6488393738c0552ba8ef5ddc1d4d5f`. The `Skogskoll customer UI tests` run [#45254523110](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45254523110) and `Skogskoll source probe` run [#45254522745](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45254522745) both completed successfully on the PR head.
+
+The merged implementation includes the source-identity binding fix, regression test, a manually dispatched synthetic worker workflow and a fixture script restricted to the verified test-project API host `jdfekakdxmltaccslrkp.supabase.co`. The workflow requires `confirm_synthetic_write=true`; the script independently requires `SKOGSKOLL_ENABLE_SYNTHETIC_SMOKE_TEST=YES` and the exact test API hostname.
+
+**Live status:** the synthetic Supabase worker workflow has not yet been dispatched. Thus worker RPC start, atomic page commit, finish and snapshot-envelope registration through the real Supabase adapter remain unverified. No synthetic database writes have been made by this workflow. No production ArcGIS scan or customer notification has been run.
+
+**Next step:** obtain explicit confirmation before dispatching the workflow because it creates durable test records (poll run, scan session, seen IDs, observations/history and snapshot envelope) in `skogskoll-test`. These records are intentionally retained, not rolled back or deleted. After a confirmed run, inspect the records and envelope before planning any broader integration test.
