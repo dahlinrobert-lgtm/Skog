@@ -1042,3 +1042,22 @@ GitHub Actions [körning #13](https://github.com/dahlinrobert-lgtm/alg-grasmyr/a
 **Status:** en nationell baslinje plus en andra daterad observation finns. Före förändringsanalys ska jämförbarhet verifieras per område med stabila `afo_id`, samma säsong och `boundary_mode=current`; aggregerade säsongsvärden får inte beskrivas som dagliga fälldatum eller individuella händelser. Insamlingen är tekniskt verifierad, men kundvisning, vidare distribution och rätt till historisk lagring/bearbetning ska bedömas separat med attribution. Ingen Skogskoll-worker, kundfeed eller avisering har aktiverats.
 
 **Nästa steg:** kör jämförbarhets-/differensgranskning mellan 2026-11-21 och 2026-11-23; dokumentera eventuella förändringar utan att tolka differenser som dagliga händelser. Gör separat rights assessment före produktintegration.
+
+
+## Första jämförelsen av nationella ÄFO-snapshots (2026-11-21–2026-11-23)
+
+Dashboardversionerna från alg-grasmyr har jämförts för samma säsong (2026/2027) och samma 129 unika `afo_id`:
+
+| Mått | 2026-11-21 | 2026-11-23 | Differens |
+|---|---:|---:|---:|
+| Kumulativt rapporterade fällda (`ShotTotal`) | 56 715 | 57 687 | +972 |
+| Avskjutningsmål (`AssignedTotal`) | 79 704 | 79 704 | 0 |
+| ÄFO med högre fälltal | – | 109 | – |
+| ÄFO oförändrade | – | 20 | – |
+| ÄFO med lägre fälltal | – | 0 | – |
+
+Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata. `FinishedReporting`-antalet ändras i 10 områden, inklusive en minskning i ÄFO 14-005 (5 till 4). Rapportstatus är alltså inte monoton och ska inte behandlas som en historisk händelse i sig. Största ökningar på ÄFO-nivå är 25-003 (+76), 25-006 (+55), 25-004 (+46), 25-005 (+45) och 07-001 (+23).
+
+Detta är en jämförelse av ÄFO-dashboardaggregat, inte en fullständig ÄJO-rad-för-rad-differens. Innan ÄJO-förändringar klassificeras måste alla råa rader jämföras med stabilt registreringsnummer (utdraget ur `AfoName`-länkens `drillDownToAjoReport`-ID), och både tillkomna/borttagna rader och ändrade värden/statusar redovisas. Bortfall får inte automatiskt bli borttagningshändelser. Värdena är kumulativa säsongsuppgifter och kan inte placeras på exakta fälldatum.
+
+**Nästa steg:** fullständig ÄJO-rad-jämförelse och separat rättighetsbedömning innan Skogskoll-integration.
