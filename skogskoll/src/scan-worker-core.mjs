@@ -126,7 +126,12 @@ export async function runScanBatch({
       const page = await source.getPage(checkpoint.nextOffset, pageSize);
       if (!page || !Array.isArray(page.features)) throw new Error("source returned a malformed page");
       const next = advanceCheckpoint(checkpoint, page, { observedAt: observedAt() });
-      const records = page.features.map(feature => normalizeFeature(feature, next.updatedAt));
+      const records = page.features.map(feature => ({
+        ...normalizeFeature(feature, next.updatedAt),
+        // The worker's source identity is authoritative for both the scan and its records.
+        // This also permits isolated synthetic adapters without impersonating production.
+        source: sourceKey
+      }));
       if (records.some(record => !record.ok)) throw new Error("page contains a feature without a stable source ID");
 
       // Atomic adapter contract: upsert observations + append history + insert seen IDs + checkpoint.
