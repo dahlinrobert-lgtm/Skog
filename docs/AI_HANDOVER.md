@@ -1036,3 +1036,21 @@ Status vid dokumentuppdatering: branch/PR-CI behöver verifieras. Migration 006 
 Första CI-körningen för migration 006 stoppade i steget som skapar den minimala Supabase-kompatibla auth-miljön. Felet låg i test-workflowens SQL-definition av `auth.uid()`: dollarquoting-blocket hade blivit felaktigt återgivet som en ensam `$`, så PostgreSQL kunde inte parsa funktionen. Det var ett fixture-/workflowfel före applicering av schema och migrationer; det gav alltså inget resultat om migration 006 eller RLS-testets funktion.
 
 Workflowet har korrigerats på PR #540:s branch genom att använda en vanlig citerad SQL-funktionskropp i stället för dollarquoting. Ny CI körs på commit `a7a1634081ac9f7048b98f991c9fdb1a20ea5e65`. Vid dokumentationstillfället är databas-, UI- och source-probe-workflows startade men ännu inte färdiga. Föregående source probe och UI-test passerade; databasjobbet på föregående commit misslyckades i auth-fixture-steget.
+
+
+## 2026-11-23 – Supabase-test migration 006 och RPC-behörigheter verifierade
+
+Användaren har installerat `skogskoll/db/migrations/006_explicit_api_grants.sql` manuellt i den separata Supabase-instansen `skogskoll-test`. Supabase SQL Editor visade `Success. No rows returned`.
+
+Efter installationen visade privilegiekontrollen 27 rader med förväntat resultat:
+- `anon`: inga direkta privilegier på de nio kontrollerade tabellerna.
+- `authenticated`: CRUD på `watch_areas` och `push_subscriptions`, endast SELECT på `alert_events`; inga direkta privilegier på interna worker-/snapshot-tabeller.
+- `service_role`: endast SELECT på `poll_runs` och `scan_sessions`; inga direkta INSERT/UPDATE/DELETE där och ingen direkt åtkomst till observations-/historik-/snapshotregister.
+
+Separat RPC-kontroll visade åtta `skogskoll_*`-funktioner: `anon` och `authenticated` saknar EXECUTE, `service_role` har EXECUTE. Samtliga åtta är `SECURITY DEFINER` med fast `search_path=public, extensions`. Detta omfattar även `skogskoll_match_observations`, som enligt migration 004 är en serversidig matchningsprimitiv och inte direkt kund-RPC.
+
+Tidigare manuellt visade resultat i samma testinstans: objektinventering med sju tabeller/åtta RPC-funktioner och RLS på samtliga sju tabeller; PostGIS watch-area matching-test samt atomiskt ingestion/snapshot smoke-test returnerade `Success. No rows returned`. PR #540 och dess CI-databastest inklusive migration 006 är mergade/godkända enligt GitHub-status.
+
+**Verifierad avgränsning:** detta är schema-, privilegie- och SQL-testverifiering. En riktig workeranslutning, REST-läsning med service_role, RPC-körning från workern, ArcGIS metadata-provider live-anrop och end-to-end test är ännu inte verifierade. Ingen nationell insamling, produktionsanslutning, kundfeed eller kundavisering har startats. Källstatus och kundvisningsrättigheter ändras inte.
+
+**Nästa steg:** förbered en isolerad worker smoke-test mot `skogskoll-test` med en separat testidentitet/secret. Bekräfta först att befintligt workflow och adapter kan återanvändas, att Supabase URL och service_role secret finns som GitHub Actions secrets (hemligheten får aldrig visas eller läggas i Git), och kör därefter en liten, uttryckligen avgränsad testkälla. Kontrollera RPC start/commit/finish samt snapshotregistrering och att inga kundaviseringar skapas. Håll nationell insamling avstängd.
