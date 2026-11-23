@@ -993,3 +993,12 @@ Användarens SQL-resultat från `skogskoll-test` verifierar för scan `1a53c3b2-
 - Aggregerade antal: 2 seen IDs, 2 observationer, 2 historikrader, 1 envelope.
 
 Poll-run-statusen är ännu inte verifierad i det delade materialet: fråga 1:s resultatrad är horisontellt avklippt innan poll-kolumnerna. Nästa steg är att kontrollera den delen av resultatraden. Därefter kan en kontrollerad idempotensomkörning göras. Ingen omkörning, privilege-ändring, produktionsinsamling eller kundavisering har gjorts.
+
+
+## 2026-11-23 – Poll-run-status verifierad för första syntetiska worker-körningen
+
+Den fullständiga SQL-resultatraden för scan `1a53c3b2-fad4-47d1-afb4-9340dc50f15c` verifierar poll run `b7ce384f-d9fb-4240-ab6e-2bdee386a287` med `status=success`, `fetched_count=2`, `inserted_count=2`, `updated_count=0` och `finished_at=2026-11-23 20:28:53.695946+00`.
+
+Därmed är första worker-körningens scan och poll run kompletta/lyckade. Tillsammans med tidigare resultat är två aktiva observationer, två `baseline`-historikrader och ett `complete` snapshot-envelope med `customer_visibility=not_assessed` verifierade.
+
+**Nästa steg:** en andra manuell syntetisk worker-körning mot enbart `skogskoll-test` för idempotens. Samma två fixture-ID:n och samma innehåll ska ge en ny scan/poll-run och ett nytt snapshot-envelope, men inte skapa fler observationer eller historikrader; posterna ska klassas `unchanged`. Detta måste verifieras efter körningen och är ännu inte ett observerat resultat. Behåll testdata och befintliga grants; ingen produktion eller kundavisering.
