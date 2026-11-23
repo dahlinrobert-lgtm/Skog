@@ -1238,3 +1238,16 @@ Verification on PR head `77f23545c38ea0a684f9086047c98d40621955f9`:
 The prior national scheduled run #12 (2026-11-23) failed because the old implementation refused to update the 2026-11-21 dashboard. Its uploaded artifact was retained; no snapshot batch was committed. The correction is merged, but a fresh complete 129/129 national run has not yet been performed after the fix.
 
 **Next concrete step:** manually dispatch [Daily national ÄFO avskjutning snapshots](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/workflows/daily-national-afo-avskjutning.yml) on `main`. Verify 129/129 active AFOs, exact match against current JaktAdm boundary IDs, raw ÄJO row preservation and aggregate sums from `ShotTotal`/`AssignedTotal`, then verify that the dashboard date advances without changing any earlier dated snapshots. Only after that run succeeds should Skog's source status and integration planning be revisited. No Skog worker integration, customer display, or alerts have been enabled.
+
+
+## 2026-11-23 – Azure prenumeration, budget och dataskydd verifierade
+
+Användarens Azure Portal-skärmbilder verifierar att prenumerationen `Azure subscription 1` (ID `e758647f-da18-4063-adfd-f1ce79d5d2af`) visas som aktiv efter uppgradering till Pay-As-You-Go. En månadsbudget `Skogskoll-budget` på 200 SEK har skapats med faktiska kostnadsaviseringar vid 50/75/90 procent (100/150/180 SEK). Budgeten är en notifiering, inte ett hårt kostnadstak.
+
+Storage Account `stskogkolldata` är `StorageV2`, standardprestanda, Sweden Central (`swedencentral`) och LRS. Dataskyddsbilden visar blobversionering aktiverad med alla versioner behållna, soft delete för blobbar och behållare aktiverat i 14 dagar, permanent borttagning inaktiverad samt Azure Backup, point-in-time restore, Change Feed och immutability inaktiverade. TLS-miniminivå är 1.2. Offentlig blobåtkomst är inaktiverad på kontonivå; offentlig nätverksåtkomst är däremot aktiverad för alla nätverk. Den senare inställningen ska inte förväxlas med anonym blobåtkomst.
+
+Azure Monitor visade cirka 754,7 MiB och 770 MiB Used capacity vid två ögonblicksbilder samt 310 summerade transaktioner för den valda senaste 24-timmarsperioden. Detta är inte en tillväxtserie eller fakturaverifiering. En specifik blob `project-manager/snapshots/45002255351/dashboard-data.json` hade inga tidigare versioner listade vid kontrollen; detta är förenligt med att versionering är aktiverad men att filen saknar tidigare versioner.
+
+Detaljer, begränsningar och kvarstående kontroller finns i [Azure – konto- och kostnadsdrift](azure-storage-operations.md). Även [STORAGE_INVENTORY.md](STORAGE_INVENTORY.md) och [viltdata-azure-storage.md](viltdata-azure-storage.md) har uppdaterats med kontots aktuella konfiguration. Ingen kod, workflow, behörighet, källdata eller kundavisering ändrades i detta dokumentationsarbete.
+
+**Nästa konkreta steg:** följ faktisk kostnad och budgetaviseringar efter normal drift, och planera ett separat restore-test. Behåll nuvarande dataskydd; inför ingen automatisk gallring av historiska snapshots utan konsekvensanalys.
