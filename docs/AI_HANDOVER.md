@@ -1076,3 +1076,17 @@ PR [#546](https://github.com/dahlinrobert-lgtm/Skog/pull/546) är mergad (merge 
 **Användaråtgärd före nästa test:** öppna Supabase-projektet `skogskoll-test`, gå till Project Settings → API och kopiera projektets **Project URL** (API URL), normalt `https://<project-ref>.supabase.co`. Uppdatera GitHub repository secret `SUPABASE_URL` i Skog-repot med exakt den adressen, utan `/dashboard`, extra sökväg eller snedstreck utöver eventuell avslutande slash. Låt `SUPABASE_SERVICE_ROLE_KEY` vara oförändrad om den kommer från samma projekt; verifiera i så fall endast att den är testprojektets service_role-nyckel. Visa eller skicka inte nyckelvärdet i chatt eller logg.
 
 Efter uppdateringen körs det manuella workflowet `.github/workflows/skogskoll-supabase-connection-check.yml` igen. En godkänd körning verifierar endast service-role REST-auth och read-only SELECT på `scan_sessions` och `poll_runs`; den verifierar inte skrivande RPC eller ingestion. Fortsatt inga scans, observation writes, snapshot registrations, produktionsanslutningar, kundfeed eller aviseringar före separat steg och godkännande.
+
+## 2026-11-23 – Supabase read-only connection check: successful authentication
+
+Manuell workflow-körning [#45228866495](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45228866495), run #3, avslutades `completed/success` på main-commit `86a4f222ee14ea67240697b7052f135ddb5e87c1`. Jobbloggen verifierar att `SUPABASE_SERVICE_ROLE_KEY` autentiserar mot projektets REST API och att båda read-only-anropen lyckades:
+- `scan_sessions`: HTTP-success, JSON, 0 exempelrader returnerade.
+- `poll_runs`: HTTP-success, JSON, 0 exempelrader returnerade.
+
+Detta bekräftar fungerande GitHub Actions → Supabase REST-anslutning och de två SELECT-behörigheterna. Noll returnerade exempelrader är förenligt med att testdatabasen ännu saknar workerposter. Körningen utförde endast GET/SELECT; inga RPC-anrop, tabellskrivningar, scan-sessioner, observationer, snapshot envelopes eller kundaviseringar skapades.
+
+Den tidigare misslyckade körningen #45225415712 och 401-körningen #45228136142 är historiska felsökningsresultat. Den senare returnerade HTTP 401 för `scan_sessions`; efter korrigering av `SUPABASE_SERVICE_ROLE_KEY` passerade körning #3. Hemlighetens värde har inte lästs ut eller loggats.
+
+**Aktuell verifierad status:** Supabase testprojektets read-only REST-anslutning fungerar från GitHub Actions. Skrivande RPC från worker, atomiskt page commit, finish, snapshot-envelope-registrering och end-to-end workerflöde är fortfarande inte verifierade. Ingen riktig ArcGIS-skanning, nationell ingestion, produktionsanslutning, kundfeed eller kundavisering har startats.
+
+**Nästa steg:** granska aktuell workeradapter och samtliga migrationer på main. Utforma därefter ett separat, syntetiskt worker-smoketest med tydligt isolerad testidentitet och verifierad återställnings-/städstrategi. Testet ska omfatta start, sidcommit, finish och snapshotregistrering utan att använda produktionskällans identitet eller skapa kundaviseringar. Kör inte `run-scan` mot den riktiga ArcGIS-källan som anslutningstest.
