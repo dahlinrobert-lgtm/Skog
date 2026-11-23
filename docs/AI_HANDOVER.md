@@ -1184,3 +1184,14 @@ Verifierade poll-run-fält:
 Tillsammans med tidigare delade SQL-resultat är första körningens scan och poll run terminalt lyckade, båda fixture-objekten är aktiva, båda historikraderna är `baseline`, och snapshot-envelope är `complete` med `customer_visibility=not_assessed` och `rights_evidence_ref=null`.
 
 **Nästa steg – idempotenskontroll:** kör samma isolerade manuella workflow en gång till, endast med den explicita `confirm_synthetic_write=true`-bekräftelsen och fortsatt låst till `skogskoll-test`. Workflowet använder samma två fasta fixture-ID:n och samma innehåll. Förväntat resultat är en ny komplett scan/poll-run och ett nytt immutable snapshot-envelope, medan befintliga observationer förblir två och historikraderna förblir två eftersom båda posterna ska klassas `unchanged`. Detta är ett förväntat testresultat, inte ännu verifierat. Efter körningen ska SQL-kontrollen utökas/köras mot det nya scan-ID:t och de totala observation-/historikantalen jämföras. Testposter behålls; inga grants ändras. Produktion, kundmatchning och aviseringar förblir avstängda.
+
+
+## 2026-11-23 – Idempotency audit prepared for second synthetic worker run
+
+Reviewed the existing main-branch workflow, fixture script, worker core and SQL persistence logic. The existing manually dispatched workflow is reusable without code or workflow changes: it uses the same two stable fixture IDs, the same synthetic source identity, the same content and the host guard for the dedicated skogskoll-test project. The worker's observation classifier maps equal content hashes to unchanged; migration 003 does not append history for unchanged records and increments poll-run inserted/updated counts only for inserted/changed records.
+
+Added skogskoll/db/diagnostics/verify-synthetic-worker-idempotency.sql, a SELECT-only audit for the second run. It identifies the latest scan dynamically and checks the linked poll run, latest seen-ID count, current observation count, retained history rows, current observation fields and both snapshot envelopes. Expected results are documented in the SQL file; they are not yet observed.
+
+**Execution status:** no workflow dispatch has been made in this step. The available GitHub integration exposes read operations but no workflow_dispatch action. The second run creates durable records and must be manually dispatched in GitHub Actions with confirm_synthetic_write=true, after confirming the workflow is on main and the repository secrets still target only skogskoll-test. Do not use production credentials. After a successful run, execute the new SELECT-only audit in the test project's Supabase SQL Editor and review all five result sets.
+
+No workflow, worker code, database schema, grants, source registry or customer-facing behavior was changed. No production ingestion, customer matching or alerts were enabled.
