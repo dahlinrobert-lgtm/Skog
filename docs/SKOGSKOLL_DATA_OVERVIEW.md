@@ -921,3 +921,21 @@ ArcGIS-adapterns metadatafunktion är nu kopplad till worker/store-flödet. Meta
 Migration 005 inför ett internt snapshot_envelopes-register. Det återanvänder poll_runs och scan_sessions, medan envelope-posten bevarar snapshot-ID, käll-/produkt-/lageridentitet, fångsttid, status, coverage, schema-/identitetsversion, comparability key, rights-status och full JSON-envelope. Registrering kräver terminala körningsposter och validerar att metadata motsvarar det som sparades vid scan-start. RLS är aktiverat utan kundpolicyer.
 
 Detta är en intern proveniens- och jämförbarhetsmekanism, inte en kundfeed. PR #538 är mergad till `main` (merge commit `38f2474ff75fc5d34dc491da059178c266590b58`). CI passerade: 85/85 UI-tester, begränsad read-only source probe (300/300 unika ID:n) samt migration 005 och SQL-smoketest i disponibel PostgreSQL/PostGIS. Ingen live Supabase-anslutning eller produktionsmigration har gjorts. Livehämtning av den nya metadatafunktionen mot ArcGIS återstår. Kundvisning för Skogsstyrelsens avverkningsanmälningar inväntar fortsatt lagerkontroll enligt källstatusrapporten; teknisk persistens ger inte kundvisningsrätt.
+
+
+## 2026-11-23 – Supabase-test migration 006 och RPC-behörigheter verifierade
+
+Användaren har installerat `skogskoll/db/migrations/006_explicit_api_grants.sql` manuellt i den separata Supabase-instansen `skogskoll-test`. Supabase SQL Editor visade `Success. No rows returned`.
+
+Efter installationen visade privilegiekontrollen 27 rader med förväntat resultat:
+- `anon`: inga direkta privilegier på de nio kontrollerade tabellerna.
+- `authenticated`: CRUD på `watch_areas` och `push_subscriptions`, endast SELECT på `alert_events`; inga direkta privilegier på interna worker-/snapshot-tabeller.
+- `service_role`: endast SELECT på `poll_runs` och `scan_sessions`; inga direkta INSERT/UPDATE/DELETE där och ingen direkt åtkomst till observations-/historik-/snapshotregister.
+
+Separat RPC-kontroll visade åtta `skogskoll_*`-funktioner: `anon` och `authenticated` saknar EXECUTE, `service_role` har EXECUTE. Samtliga åtta är `SECURITY DEFINER` med fast `search_path=public, extensions`. Detta omfattar även `skogskoll_match_observations`, som enligt migration 004 är en serversidig matchningsprimitiv och inte direkt kund-RPC.
+
+Tidigare manuellt visade resultat i samma testinstans: objektinventering med sju tabeller/åtta RPC-funktioner och RLS på samtliga sju tabeller; PostGIS watch-area matching-test samt atomiskt ingestion/snapshot smoke-test returnerade `Success. No rows returned`. PR #540 och dess CI-databastest inklusive migration 006 är mergade/godkända enligt GitHub-status.
+
+**Verifierad avgränsning:** detta är schema-, privilegie- och SQL-testverifiering. En riktig workeranslutning, REST-läsning med service_role, RPC-körning från workern, ArcGIS metadata-provider live-anrop och end-to-end test är ännu inte verifierade. Ingen nationell insamling, produktionsanslutning, kundfeed eller kundavisering har startats. Källstatus och kundvisningsrättigheter ändras inte.
+
+**Nästa steg:** förbered en isolerad worker smoke-test mot `skogskoll-test` med en separat testidentitet/secret. Bekräfta först att befintligt workflow och adapter kan återanvändas, att Supabase URL och service_role secret finns som GitHub Actions secrets (hemligheten får aldrig visas eller läggas i Git), och kör därefter en liten, uttryckligen avgränsad testkälla. Kontrollera RPC start/commit/finish samt snapshotregistrering och att inga kundaviseringar skapas. Håll nationell insamling avstängd.
