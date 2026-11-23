@@ -215,3 +215,16 @@ Detta är fortsatt en domän-/valideringsimplementation, inte ett produktions-AP
 Kod- och filinventeringen finns i [SKOGSKOLL_SNAPSHOT_INVENTORY.md](SKOGSKOLL_SNAPSHOT_INVENTORY.md). Den visar att Skogskolls relationsmodell redan har current state, append-only observation history, poll runs, resumable scans och atomiska sidcommits. Den är däremot ännu kopplad till Skogsstyrelsens enda befintliga worker-source och saknar ett gemensamt explicit snapshot-envelope för produkt, lager, coverage, schema-/identitetsversion och rättighetsevidens.
 
 Filbaserade källarkiv använder separata format och scope. Delta-`removed` är en rekonstruktionsinstruktion, inte en kundhändelse. Rekommenderad fortsättning är en ren, testad adapter från befintlig worker-/run-/historymodell till snapshot-kontraktet innan någon ny databasmodell eller API-mappning införs.
+
+
+## 2026-11-23 – Explicit API-privilegier och RLS (migration 006)
+
+Supabase-testinstansen `skogskoll-test` har verifierats manuellt efter installation av grundschema och migrationerna 002–005. Objektinventering och befintliga PostGIS-/ingestiontester har visats lyckade av användaren. En separat privilegiekontroll visade att RLS var aktiverat men att API-rollerna saknade direkta tabellprivilegier.
+
+Föreslagen migration 006 på branch `fix/skogskoll-explicit-api-grants-rls-20261123` kompletterar de redan befintliga ägarbaserade RLS-policyerna med minsta nödvändiga GRANTs:
+- `authenticated`: CRUD på `watch_areas` och `push_subscriptions`, SELECT på `alert_events`; befintliga RLS-policyer begränsar rader till aktuell användare.
+- `service_role`: endast direkt SELECT på `scan_sessions` och `poll_runs`, vilka den befintliga workeradaptern läser via REST. Workerwrites fortsätter via SECURITY DEFINER-RPC.
+- `anon`: inga tabellbehörigheter.
+- `source_observations`, `source_observation_history`, `scan_seen_ids` och `snapshot_envelopes`: inga direkta API-privilegier; snapshotregistret förblir append-only och RPC-skyddat.
+
+Nytt SQL-test kontrollerar privilegier, ägarisolering och workerläsning med ROLLBACK. Migrationen är ännu inte applicerad i Supabase-testprojektet och får inte beskrivas som produktionssatt. Kundfeed, källvisning och e-post/push förblir avstängda.
