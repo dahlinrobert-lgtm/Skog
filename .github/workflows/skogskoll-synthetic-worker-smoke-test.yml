@@ -1,0 +1,30 @@
+name: Skogskoll synthetic worker smoke test
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_synthetic_write:
+        description: "Confirm durable writes to the dedicated skogskoll-test Supabase project"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-worker-smoke:
+    if: inputs.confirm_synthetic_write == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run isolated synthetic worker against Supabase test project
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SKOGSKOLL_ENABLE_SYNTHETIC_SMOKE_TEST: "YES"
+        run: node skogskoll/scripts/run-synthetic-worker-smoke-test.mjs

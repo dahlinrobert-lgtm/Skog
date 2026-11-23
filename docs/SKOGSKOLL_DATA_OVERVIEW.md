@@ -939,3 +939,11 @@ Tidigare manuellt visade resultat i samma testinstans: objektinventering med sju
 **Verifierad avgränsning:** detta är schema-, privilegie- och SQL-testverifiering. En riktig workeranslutning, REST-läsning med service_role, RPC-körning från workern, ArcGIS metadata-provider live-anrop och end-to-end test är ännu inte verifierade. Ingen nationell insamling, produktionsanslutning, kundfeed eller kundavisering har startats. Källstatus och kundvisningsrättigheter ändras inte.
 
 **Nästa steg:** förbered en isolerad worker smoke-test mot `skogskoll-test` med en separat testidentitet/secret. Bekräfta först att befintligt workflow och adapter kan återanvändas, att Supabase URL och service_role secret finns som GitHub Actions secrets (hemligheten får aldrig visas eller läggas i Git), och kör därefter en liten, uttryckligen avgränsad testkälla. Kontrollera RPC start/commit/finish samt snapshotregistrering och att inga kundaviseringar skapas. Håll nationell insamling avstängd.
+
+## Skogskoll – isolerat syntetiskt worker-smoketest (förberett 2026-11-23)
+
+Workerflödet återanvänder `runScanBatch` och den befintliga Supabase-adaptern. En identitetsinkonsekvens har rättats: normaliserade observationsposter binds nu till den injicerade källans `source.key`, så att en syntetisk testkälla inte kan skriva poster under Skogsstyrelsens produktionsidentitet. Standardkällan behåller sin befintliga identitet.
+
+Det manuella testet använder den reserverade identiteten `skogskoll:synthetic:worker-smoke-test`, två fasta fixture-ID:n och en syntetisk metadataendpoint under `.invalid`. Det utför start, en atomisk sidcommit, finish och snapshot-envelope-registrering i `skogskoll-test`. Workflowet kräver explicit manuell bekräftelse och får aldrig köras mot produktion.
+
+Detta är beständiga testskrivningar, inte en rollback-transaktion. Testets poll runs, scan sessions, seen IDs, observations, historikrader och immutable snapshot envelopes behålls för spårbarhet. Ingen automatisk radering görs. Ingen ArcGIS-hämtning, kundmatchning, kundfeed eller avisering ingår. Livekörningen är ännu inte genomförd.

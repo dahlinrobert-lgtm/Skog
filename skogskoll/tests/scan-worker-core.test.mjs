@@ -170,3 +170,20 @@ test("worker retries terminal snapshot registration before loading a new checkpo
   assert.equal(store.calls.pendingChecks, 1);
   assert.deepEqual(store.calls.order.slice(0, 2), ["pending", "checkpoint"]);
 });
+
+
+test("worker binds normalized observations to the injected source identity", async () => {
+  const store = makeStore(1);
+  let committedRecords;
+  store.commitPage = async ({ records, nextCheckpoint }) => {
+    committedRecords = records;
+    store.calls.commits.push(nextCheckpoint.fetchedCount);
+  };
+  const source = makeSource(1);
+  source.key = "skogskoll:synthetic-worker-test";
+  const result = await runScanBatch({ source, store, pageSize: 1, maxPages: 1 });
+  assert.equal(result.status, "complete");
+  assert.equal(committedRecords.length, 1);
+  assert.equal(committedRecords[0].source, "skogskoll:synthetic-worker-test");
+  assert.equal(committedRecords[0].source_id, "1");
+});
