@@ -8,6 +8,14 @@ on:
         required: true
         type: boolean
         default: false
+      fixture_variant:
+        description: "Synthetic fixture scenario; use change_feature_001 only for the explicit change-event test"
+        required: true
+        type: choice
+        options:
+          - unchanged
+          - change_feature_001
+        default: unchanged
 
 permissions:
   contents: read
@@ -27,4 +35,5 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SKOGSKOLL_ENABLE_SYNTHETIC_SMOKE_TEST: "YES"
+          SKOGSKOLL_SYNTHETIC_FIXTURE_VARIANT: ${{ inputs.fixture_variant }}
         run: node skogskoll/scripts/run-synthetic-worker-smoke-test.mjs

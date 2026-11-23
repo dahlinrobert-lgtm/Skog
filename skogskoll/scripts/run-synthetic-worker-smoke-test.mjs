@@ -5,6 +5,10 @@ import { SOURCE_ID } from "../src/observation-core.mjs";
 const ENABLE_FLAG = "SKOGSKOLL_ENABLE_SYNTHETIC_SMOKE_TEST";
 const SYNTHETIC_SOURCE = "skogskoll:synthetic:worker-smoke-test";
 const PAGE_SIZE = 2;
+const FIXTURE_VARIANT = process.env.SKOGSKOLL_SYNTHETIC_FIXTURE_VARIANT ?? "unchanged";
+if (!["unchanged", "change_feature_001"].includes(FIXTURE_VARIANT)) {
+  throw new Error("Unsupported synthetic fixture variant");
+}
 
 if (process.env[ENABLE_FLAG] !== "YES") {
   throw new Error(`Synthetic worker smoke test is disabled. Set ${ENABLE_FLAG}=YES only for the dedicated test workflow.`);
@@ -23,7 +27,16 @@ if (apiHost !== "jdfekakdxmltaccslrkp.supabase.co") {
 
 const store = createSupabaseStore({ url, serviceRoleKey });
 const features = [
-  { type: "Feature", id: "worker-smoke-feature-001", properties: { smoke_test: true, fixture: "skogskoll-worker-smoke-v1", sequence: 1 }, geometry: null },
+  {
+    type: "Feature",
+    id: "worker-smoke-feature-001",
+    properties: {
+      smoke_test: true,
+      fixture: "skogskoll-worker-smoke-v1",
+      sequence: FIXTURE_VARIANT === "change_feature_001" ? 101 : 1
+    },
+    geometry: null
+  },
   { type: "Feature", id: "worker-smoke-feature-002", properties: { smoke_test: true, fixture: "skogskoll-worker-smoke-v1", sequence: 2 }, geometry: null }
 ];
 
@@ -34,7 +47,7 @@ const source = {
       product: "synthetic_worker_smoke",
       endpoint: "https://synthetic.invalid/skogskoll/worker-smoke/FeatureServer/0",
       layer: "0",
-      query_definition: "fixture=skogskoll-worker-smoke-v1;returnGeometry=true",
+      query_definition: `fixture=skogskoll-worker-smoke-v1;variant=${FIXTURE_VARIANT};returnGeometry=true`,
       coverage_key: "synthetic-fixture-only-v1",
       schema_version: "synthetic-worker-smoke-schema-v1",
       identity_version: "stable-fixture-id-v1",
@@ -54,7 +67,9 @@ if (result.status !== "complete" || result.fetchedCount !== features.length) {
 }
 
 console.log(JSON.stringify({
-  result, source: SYNTHETIC_SOURCE, fixture: "skogskoll-worker-smoke-v1", pagesExpected: 1,
+  result, source: SYNTHETIC_SOURCE, fixture: "skogskoll-worker-smoke-v1",
+  fixtureVariant: FIXTURE_VARIANT, expectedChangedSourceIds: FIXTURE_VARIANT === "change_feature_001" ? ["worker-smoke-feature-001"] : [],
+  pagesExpected: 1,
   alertsEnabled: false, productionSourceUsed: false,
   note: "Synthetic observations, poll runs, scan sessions and immutable snapshot envelopes are retained in the test project for audit; no cleanup deletes history."
 }, null, 2));
