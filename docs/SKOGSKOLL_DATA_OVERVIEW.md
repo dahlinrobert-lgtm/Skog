@@ -1002,3 +1002,12 @@ Den fullständiga SQL-resultatraden för scan `1a53c3b2-fad4-47d1-afb4-9340dc50f
 Därmed är första worker-körningens scan och poll run kompletta/lyckade. Tillsammans med tidigare resultat är två aktiva observationer, två `baseline`-historikrader och ett `complete` snapshot-envelope med `customer_visibility=not_assessed` verifierade.
 
 **Nästa steg:** en andra manuell syntetisk worker-körning mot enbart `skogskoll-test` för idempotens. Samma två fixture-ID:n och samma innehåll ska ge en ny scan/poll-run och ett nytt snapshot-envelope, men inte skapa fler observationer eller historikrader; posterna ska klassas `unchanged`. Detta måste verifieras efter körningen och är ännu inte ett observerat resultat. Behåll testdata och befintliga grants; ingen produktion eller kundavisering.
+
+
+## 2026-11-23 – Repeated synthetic worker run verified by independent SQL
+
+Supabase SQL Editor results for the latest synthetic run verify scan `879f0071-68e4-462a-a0ff-216c10a8c6cf` as `complete` with 2/2 fetched, and linked poll run `6613004d-8f05-4de1-8c39-964014148eed` as `success` with `inserted_count=0` and `updated_count=0`. The latest scan has 2 seen IDs. Aggregate counts are 2 current observations, 2 history rows, and 3 snapshot envelopes across the three complete synthetic runs.
+
+Both observations remain active and retain their original `first_seen_at`; `last_seen_at` and `last_run_id` advance to the latest poll. The two retained history records remain `baseline` events linked to the initial poll run. No new history rows were created by the repeated unchanged content. All three snapshot envelopes are complete and remain `customer_visibility=not_assessed` with `rights_evidence_ref=null`.
+
+This verifies idempotency for repeated identical synthetic fixtures in the test project. It does not certify production ingestion, source rights, customer visibility or alert delivery.
