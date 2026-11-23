@@ -972,3 +972,10 @@ Nästa steg: inspektera scan ID och de två stabila fixture-ID:na i Supabase-tes
 Migration 006 ger medvetet service_role direkt SELECT endast på `scan_sessions` och `poll_runs`. Direktläsning av observations-, historik-, seen-ID- och snapshot-envelope-tabellerna är spärrad. Därför kan Actions-loggen inte ensam ge en oberoende inventering av samtliga skrivna rader.
 
 En SELECT-only kontrollfråga har lagts till i `skogskoll/db/diagnostics/verify-synthetic-worker-smoke.sql`. Den kontrollerar scan ID, poll run, de två syntetiska observations-ID:na, seen-ID-ledger, historikrader, snapshot envelope och antal. Den ska köras i Supabase SQL Editor mot `skogskoll-test` och gör inga ändringar.
+
+
+## 2026-11-23 – Oberoende SQL-antal verifierade för syntetiskt worker-test
+
+Användaren körde den aggregerade SELECT-kontrollen i `skogskoll-test`. Resultatet var `seen_id_count=2`, `observation_count=2`, `history_row_count=2` och `snapshot_envelope_count=1`. Detta matchar de två fasta fixture-ID:na och en snapshot-envelope och bekräftar att motsvarande rader finns i databasen.
+
+Kontrollen verifierar endast antal. De separata resultatuppsättningarna för scan/poll-status, observationsfält, historikens `event_type` och snapshot-envelope-fälten har inte delats och ska inte betraktas som verifierade. Nästa steg är att granska SQL-diagnostikens frågor 1, 2, 4 och 5. Ingen idempotens-omkörning ska göras före den granskningen. Testdata behålls; inga grants ändras och produktion/aviseringar förblir avstängda.
