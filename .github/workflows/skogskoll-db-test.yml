@@ -1,5 +1,5 @@
 name: Skogskoll database tests
-# Migration 005 also verifies immutable metadata and rechecks complete-scan coverage at registration.
+# Migration 006 verifies least-privilege API grants and owner-scoped RLS.
 on:
   push:
     branches: [main]
@@ -51,9 +51,10 @@ jobs:
           create role service_role nologin bypassrls;
           create schema auth;
           create table auth.users (id uuid primary key);
-          create function auth.uid() returns uuid language sql stable as $$
-            select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
-          $$;
+          create function auth.uid() returns uuid language sql stable
+          as 'select nullif(current_setting(''request.jwt.claim.sub'', true), '''')::uuid';
+          grant usage on schema auth to anon, authenticated, service_role;
+          grant execute on function auth.uid() to anon, authenticated, service_role;
           SQL
       - name: Apply schema and migrations
         run: |
@@ -62,10 +63,13 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/003_atomic_page_commit.sql
           psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/004_watch_area_matching.sql
           psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/005_snapshot_envelope_registry.sql
+          psql -v ON_ERROR_STOP=1 -f skogskoll/db/migrations/006_explicit_api_grants.sql
       - name: Run PostGIS matching integration test
         run: psql -v ON_ERROR_STOP=1 -f skogskoll/db/tests/watch-area-matching.sql
       - name: Run transactional ingestion smoke test
         run: psql -v ON_ERROR_STOP=1 -f skogskoll/db/tests/smoke-atomic-ingestion.sql
+      - name: Run API grants and RLS integration test
+        run: psql -v ON_ERROR_STOP=1 -f skogskoll/db/tests/api-grants-rls.sql
   static-sql-check:
     runs-on: ubuntu-latest
     steps:
@@ -80,6 +84,8 @@ jobs:
             const migration = readFileSync("skogskoll/db/migrations/003_atomic_page_commit.sql", "utf8");
             const matching = readFileSync("skogskoll/db/migrations/004_watch_area_matching.sql", "utf8");
             const snapshot = readFileSync("skogskoll/db/migrations/005_snapshot_envelope_registry.sql", "utf8");
+            const grants = readFileSync("skogskoll/db/migrations/006_explicit_api_grants.sql", "utf8");
+            const grantsTest = readFileSync("skogskoll/db/tests/api-grants-rls.sql", "utf8");
             const smoke = readFileSync("skogskoll/db/tests/smoke-atomic-ingestion.sql", "utf8");
             const matchTest = readFileSync("skogskoll/db/tests/watch-area-matching.sql", "utf8");
             const requiredFns = ["skogskoll_start_scan", "skogskoll_commit_page", "skogskoll_finish_scan", "skogskoll_recover_stale_scan"];
@@ -91,6 +97,12 @@ jobs:
             for (const required of ["snapshot_envelopes", "skogskoll_register_snapshot", "skogskoll_pending_snapshot_scans", "snapshot_metadata", "guard_skogskoll_snapshot_envelope_immutable", "guard_skogskoll_snapshot_metadata_immutable"]) {
               if (!snapshot.includes(required)) throw new Error("Snapshot migration missing " + required);
             }
+            for (const required of ["watch_areas", "alert_events", "push_subscriptions", "scan_sessions", "poll_runs", "service_role"]) {
+              if (!grants.includes(required)) throw new Error("Grant migration missing " + required);
+              if (!grantsTest.includes(required)) throw new Error("Grant/RLS test missing " + required);
+            }
+            if (!grantsTest.includes("watch_areas RLS leaked") || !grantsTest.includes("push_subscriptions RLS leaked") || !grantsTest.includes("alert_events RLS leaked")) throw new Error("Owner RLS assertions are incomplete");
+            if (!grantsTest.includes("begin;") || !grantsTest.trimEnd().endsWith("rollback;")) throw new Error("Grant/RLS test must be wrapped in transaction + rollback");
             for (const assertion of ["radius match expected 2", "polygon match expected 2", "disabled watch area must return no matches"]) {
               if (!matchTest.includes(assertion)) throw new Error("Matching integration test missing assertion: " + assertion);
             }

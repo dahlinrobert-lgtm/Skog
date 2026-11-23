@@ -1015,3 +1015,24 @@ PR #537 är mergad i main (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a
 **Verifiering på PR-head 7a7531de245d6ec87d4cb7f0e1d0ff530322fc33:** customer UI-tests passerade 85/85 ([run 45079498457](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498457)); source probe passerade ([run 45079498474](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498474)) med 300/300 unika ID:n, 0 dubbletter och 0 saknade ID:n av källans rapporterade 132 589. Proben var avsiktligt begränsad (complete_scan=false). Databastesterna passerade ([run 45079498504](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498504)): migration 005 applicerades i disponibel PostgreSQL/PostGIS och både PostGIS-matchning samt transaktionellt ingestion-/snapshot-smoketest passerade med rollback. Source-proben anropar inte den nya getSnapshotMetadata-funktionen mot live metadata; den funktionen testas med mockad ArcGIS-metadata. Ingen live Supabase-anslutning eller produktionsmigration har gjorts. Källstatusrapporten ändras inte eftersom rättighets-/kundvisningsstatus är oförändrad.
 
 **Nästa steg:** gör en separat verifiering av migration 005 och RPC-kontrakten i en disponibel Supabase-testmiljö, om sådan miljö och behörighet finns. Verifiera därefter livehämtning av ArcGIS-lagermetadata read-only. Produktionsmigration, schemalagd ingestion, full nationell scan, kundfeed och avisering kräver separata beslut och godkännanden.
+
+
+## 2026-11-23 – Supabase-test behörighetsrevision och migration 006
+
+En separat Supabase-testinstans `skogskoll-test` har skapats av användaren i region West EU (Ireland), Free/Nano. Användaren rapporterar att `schema.sql` och migrationerna 002–005 har körts. Read-only objektinventering i Supabase visade de sju förväntade tabellerna och åtta RPC-funktionerna; RLS var aktiverat på samtliga sju inventerade tabeller. Två SQL-integrationstester kördes manuellt i testprojektet och användaren visade `Success. No rows returned`: PostGIS-matchning och atomisk ingestion/snapshot-smoketest. Dessa resultat är användarrapporterade skärmbildsverifieringar, inte en oberoende anslutning från GitHub Actions till Supabase.
+
+Behörighetsrevisionen visade att `anon`, `authenticated` och `service_role` saknade direkta tabellprivilegier. Kodgranskning av `skogskoll/src/supabase-adapters.mjs` på main visade att workeradaptern gör direkta REST-SELECT på `scan_sessions` och `poll_runs`, medan skrivningar sker via befintliga SECURITY DEFINER-RPC:er. Grundschemat har redan ägarbaserade RLS-policyer för `watch_areas`, `alert_events` och `push_subscriptions`, men saknade explicita GRANTs.
+
+**Föreslagen migration 006** finns på branchen `fix/skogskoll-explicit-api-grants-rls-20261123`:
+- `skogskoll/db/migrations/006_explicit_api_grants.sql`: authenticated får CRUD på egna watch areas och push subscriptions via befintliga RLS-policyer, SELECT på egna alert events, och endast service_role får direkt SELECT på poll_runs/scan_sessions. Övriga interna tabeller och snapshot_envelopes förblir utan direkt API-åtkomst. Service_role får inte direkta tabellskrivningar.
+- `skogskoll/db/tests/api-grants-rls.sql`: testar privilegier, ägarisolering, push-sekvensbehörighet och workerläsning i transaktion med ROLLBACK.
+- `.github/workflows/skogskoll-db-test.yml`: applicerar migration 006 och kör det nya RLS-testet i den befintliga disponibla PostGIS-testdatabasen.
+
+Status vid dokumentuppdatering: branch/PR-CI behöver verifieras. Migration 006 är **inte** applicerad i Supabase-testprojektet. Ingen worker är ansluten; ingen ingestion, kundfeed eller avisering är aktiverad. Efter CI-granskning och merge ska användaren köra migration 006 i `skogskoll-test`, därefter verifieras privilegierna och först därefter görs en kontrollerad workeranslutning. `SKOGSKOLL_SOURCE_STATUS.md` ändras inte eftersom inga källrättigheter eller kundvisningsbeslut ändras.
+
+
+### CI-fel och korrigering i PR #540 (2026-11-23)
+
+Första CI-körningen för migration 006 stoppade i steget som skapar den minimala Supabase-kompatibla auth-miljön. Felet låg i test-workflowens SQL-definition av `auth.uid()`: dollarquoting-blocket hade blivit felaktigt återgivet som en ensam `$`, så PostgreSQL kunde inte parsa funktionen. Det var ett fixture-/workflowfel före applicering av schema och migrationer; det gav alltså inget resultat om migration 006 eller RLS-testets funktion.
+
+Workflowet har korrigerats på PR #540:s branch genom att använda en vanlig citerad SQL-funktionskropp i stället för dollarquoting. Ny CI körs på commit `a7a1634081ac9f7048b98f991c9fdb1a20ea5e65`. Vid dokumentationstillfället är databas-, UI- och source-probe-workflows startade men ännu inte färdiga. Föregående source probe och UI-test passerade; databasjobbet på föregående commit misslyckades i auth-fixture-steget.
