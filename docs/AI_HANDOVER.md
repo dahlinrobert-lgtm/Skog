@@ -1206,10 +1206,21 @@ The independent aggregate query reports 2 seen IDs in the latest scan, 2 current
 **Assessment:** idempotency is verified for repeated identical fixture content: no duplicate current observations and no extra history rows were created. The new scan, poll run and snapshot envelope were persisted successfully. This is a test-project synthetic verification only; it does not establish production-source readiness, commercial rights, customer visibility, alert delivery, or production operational readiness. Keep test records and existing grants; no cleanup or privilege changes.
 
 
-## 2026-11-23 – Next synthetic worker test: one changed fixture (prepared, not dispatched)
+## 2026-11-23 – Controlled synthetic worker change-event test verified
 
-After PR #559, the next isolated test reuses the existing synthetic workflow, source identity, two stable fixture IDs, worker and Supabase adapter. The workflow gains a required scenario choice with safe default `unchanged`; the explicit `change_feature_001` variant changes only fixture 001's existing `sequence` property from 1 to 101. Fixture 002 remains byte-for-byte logically unchanged. The test remains protected by the existing explicit durable-write confirmation and exact Supabase test-host guard.
+PR [#560](https://github.com/dahlinrobert-lgtm/Skog/pull/560) added the explicit `change_feature_001` fixture variant to the existing synthetic worker workflow. The workflow was manually dispatched as [run #4](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45270531634) on `main`, commit `30a96696ae97179d3e60e33a2a1479020c128bee`, and completed successfully. The log confirms fixture variant `change_feature_001`, scan ID `9fddb92c-8ea0-444c-b4aa-9b8cff79d019`, `status=complete`, `fetchedCount=2`, one page, expected changed ID `worker-smoke-feature-001`, `alertsEnabled=false`, and `productionSourceUsed=false`.
 
-Expected result when manually dispatched with `fixture_variant=change_feature_001` against the same `skogskoll-test` database: scan complete/fetched 2; poll success with inserted_count=0 and updated_count=1; current observations remain 2; history grows from 2 to 3 with exactly one `changed` event for fixture 001; both original baseline rows remain; snapshot envelopes grow from 3 to 4. The test creates durable records and does not clean up. It must be followed by the new SELECT-only SQL audit. This is an expected outcome, not yet observed.
+The user's read-only Supabase SQL results from the dedicated `skogskoll-test` project independently verify the database effects:
 
-No dispatch has been made and no database writes have been performed by this preparation. Production source, production credentials, customer matching, customer visibility and alerts remain out of scope.
+- Latest scan `9fddb92c-8ea0-444c-b4aa-9b8cff79d019`: complete, source_count=2, page_size=2, next_offset=2, fetched_count=2, and snapshot registered.
+- Linked poll run `7f5345d3-8f2c-46a1-a935-db87f1f92cb5`: success, fetched_count=2, inserted_count=0, updated_count=1.
+- Latest scan seen-ID count=2; current observations=2; total history rows=3; snapshot envelopes=4.
+- Current observation `worker-smoke-feature-001` has `sequence=101`; `worker-smoke-feature-002` remains at `sequence=2`. Both remain active.
+- History contains the two original `baseline` rows from the initial poll run and exactly one new `changed` row for feature 001, linked to the latest poll run. No baseline history was overwritten.
+- All four snapshot envelopes are `complete`; `customer_visibility=not_assessed` and `rights_evidence_ref=null`.
+
+**Assessment:** the controlled single-observation change path is verified end-to-end in the isolated test project: the worker updated one existing observation, appended exactly one `changed` history row, retained the other observation and both original baseline rows, and registered the fourth complete snapshot envelope. Test records are durable and retained; no cleanup was run.
+
+This does not establish production ingestion readiness, source rights, customer visibility, customer matching or alert delivery. No production source or customer notification was used. Keep the test project and its evidence isolated; do not change grants or delete test history.
+
+**Next concrete step:** continue with the existing worker/adapter architecture and plan the next narrowly scoped validation only after checking current source readiness and rights. Do not enable production ingestion or customer alerts based solely on this synthetic test.
