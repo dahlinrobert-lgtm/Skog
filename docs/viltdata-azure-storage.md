@@ -9,7 +9,7 @@ Skog använder redan GitHub Actions OIDC mot Azure Storage-kontot stskogkolldata
 Befintliga arkiv ligger i separata containrar. Viltdata ska få en egen container för att inte blanda avskjutningsstatistiken med Kungjort eller polisdata:
 
 - Konto: stskogkolldata
-- Azure-loginens CLI-utdata visade `westus2` (behöver stämmas av mot resursens faktiska `location` i Azure; lagringsregistrets Sweden Central-uppgift är ännu inte bekräftad).
+- Storage Account-resursens faktiska region är verifierad i Azure Portal som `swedencentral` (Sweden Central), 2026-11-18 och återbekräftad 2026-11-23. CLI-utdata `westus2` avsåg inte resursens faktiska location.
 - Avsedd container: viltdata-kill-statistics
 - Prefix för syntetiska åtkomsttester: smoke-tests/github-actions/<run-id>/attempt-<attempt>/
 - Avsett framtida prefix för data: snapshots/<snapshot-id>/
@@ -77,6 +77,11 @@ Workflow `.github/workflows/viltdata-azure-archive.yml` är mergad i `main`, man
 ## Nästa steg
 
 1. Inhämta skriftligt besked från Svenska Jägareförbundet/Viltdata om historisk lagring/arkivering av exakt `kill`-statistikprodukt samt avsedda användningar. `rights_approved` ska inte aktiveras före dokumenterat besked.
-2. Kontrollera Storage Account-resursens faktiska `location` och den använda identitetens RBAC-roll/scope i Azure Portal.
+2. Kontots region och OIDC-roll/scope är nu verifierade; se [Azure – konto- och kostnadsdrift](azure-storage-operations.md).
 3. När rättighetsbeskedet finns: kör manuell `upload` med `rights_approved=true`, därefter `audit` och `restore` till en ny katalog. Jämför återställd snapshot byte för byte/SHA-256 med ursprungsartefakten.
 4. Dokumentera första arkiverade kompletta snapshot som tyst baslinje; skapa inga historiska aviseringar. Ingen schemaläggning innan upload, audit, restore, region/RBAC och rättigheter är verifierade.
+
+
+## Gemensam Azure-kontokonfiguration (2026-11-23)
+
+Prenumerationen och kontots gemensamma fakturerings-/dataskyddsinställningar är nu dokumenterade i [Azure – konto- och kostnadsdrift](azure-storage-operations.md). Detta ändrar inte Viltdata-flödets separata rättighetsgrind: `rights_approved` ska fortsatt vara false tills skriftligt besked om den exakta statistikprodukten och avsedda användningar finns. Ingen Viltdata-originaldata har därmed godkänts eller laddats upp genom denna kontokonfiguration.
