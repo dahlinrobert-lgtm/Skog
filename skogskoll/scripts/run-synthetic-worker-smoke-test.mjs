@@ -3,7 +3,7 @@ import { runScanBatch } from "../src/scan-worker-core.mjs";
 import { SOURCE_ID } from "../src/observation-core.mjs";
 
 const ENABLE_FLAG = "SKOGSKOLL_ENABLE_SYNTHETIC_SMOKE_TEST";
-const SYNTHETIC_SOURCE = "skogskoll:synthetic-worker-smoke-test";
+const SYNTHETIC_SOURCE = "skogskoll:synthetic:worker-smoke-test";
 const PAGE_SIZE = 2;
 
 if (process.env[ENABLE_FLAG] !== "YES") {
@@ -16,6 +16,10 @@ if (SYNTHETIC_SOURCE === SOURCE_ID || !SYNTHETIC_SOURCE.startsWith("skogskoll:sy
 const url = process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 if (!url || !serviceRoleKey) throw new Error("Supabase test credentials are missing");
+const apiHost = new URL(url).hostname;
+if (apiHost !== "jdfekakdxmltaccslrkp.supabase.co") {
+  throw new Error("Synthetic worker smoke test is restricted to the verified skogskoll-test Supabase project");
+}
 
 const store = createSupabaseStore({ url, serviceRoleKey });
 const features = [
