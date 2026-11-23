@@ -965,3 +965,10 @@ Detta verifierar workerflödet mot det dedikerade Supabase-testprojektet med syn
 Testdata behålls avsiktligt. Oberoende read-only kontroll av de enskilda databastabellerna och snapshot-envelope i Supabase återstår; workflowets lyckade workerresultat är inte i sig en separat SQL-inventering.
 
 Nästa steg: inspektera scan ID och de två stabila fixture-ID:na i Supabase-testprojektet, verifiera observationer/historikrader samt envelope-status och bedöm därefter idempotens vid omkörning. Produktionsingestion och kundaviseringar förblir avstängda.
+
+
+## 2026-11-23 – Read-only SQL-verifiering för syntetiskt worker-test
+
+Migration 006 ger medvetet service_role direkt SELECT endast på `scan_sessions` och `poll_runs`. Direktläsning av observations-, historik-, seen-ID- och snapshot-envelope-tabellerna är spärrad. Därför kan Actions-loggen inte ensam ge en oberoende inventering av samtliga skrivna rader.
+
+En SELECT-only kontrollfråga har lagts till i `skogskoll/db/diagnostics/verify-synthetic-worker-smoke.sql`. Den kontrollerar scan ID, poll run, de två syntetiska observations-ID:na, seen-ID-ledger, historikrader, snapshot envelope och antal. Den ska köras i Supabase SQL Editor mot `skogskoll-test` och gör inga ändringar.
