@@ -1011,3 +1011,10 @@ Supabase SQL Editor results for the latest synthetic run verify scan `879f0071-6
 Both observations remain active and retain their original `first_seen_at`; `last_seen_at` and `last_run_id` advance to the latest poll. The two retained history records remain `baseline` events linked to the initial poll run. No new history rows were created by the repeated unchanged content. All three snapshot envelopes are complete and remain `customer_visibility=not_assessed` with `rights_evidence_ref=null`.
 
 This verifies idempotency for repeated identical synthetic fixtures in the test project. It does not certify production ingestion, source rights, customer visibility or alert delivery.
+
+
+## 2026-11-23 – Controlled synthetic changed-observation test prepared
+
+The existing synthetic worker workflow is extended with a scenario selector, defaulting to `unchanged`. The explicit `change_feature_001` scenario alters only the existing stable fixture ID `worker-smoke-feature-001` by changing its `sequence` property from 1 to 101; fixture 002 remains unchanged. The existing dedicated Supabase host guard and explicit durable-write confirmation remain required.
+
+Expected database result (not yet executed): a complete two-record scan; successful poll with `inserted_count=0`, `updated_count=1`; two current observations; three history rows total, including exactly one new `changed` event for fixture 001 and both original baseline events; four complete snapshot envelopes after the fourth run. Use the new read-only diagnostic after the manual dispatch. No test dispatch or database write has occurred during preparation.
