@@ -1238,3 +1238,22 @@ Verification on PR head `77f23545c38ea0a684f9086047c98d40621955f9`:
 The prior national scheduled run #12 (2026-11-23) failed because the old implementation refused to update the 2026-11-21 dashboard. Its uploaded artifact was retained; no snapshot batch was committed. The correction is merged, but a fresh complete 129/129 national run has not yet been performed after the fix.
 
 **Next concrete step:** manually dispatch [Daily national ÄFO avskjutning snapshots](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/workflows/daily-national-afo-avskjutning.yml) on `main`. Verify 129/129 active AFOs, exact match against current JaktAdm boundary IDs, raw ÄJO row preservation and aggregate sums from `ShotTotal`/`AssignedTotal`, then verify that the dashboard date advances without changing any earlier dated snapshots. Only after that run succeeds should Skog's source status and integration planning be revisited. No Skog worker integration, customer display, or alerts have been enabled.
+
+
+## 2026-11-23 – Nationell ÄFO-avskjutning: fullständig snapshot verifierad
+
+GitHub Actions [körning #13](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45273303393) avslutades `completed/success` på `main`, commit `3cba0cd17e17ae839f11a66b185cbc6cc47a6ac3`. Körningen passerade parser-/arkivregressionstester, full nationell insamling, artifact-uppladdning och commit av snapshots. Workflowet skapade därefter commit `8d78cdfd7eed017040b7ab74ce96b1c724f84d73` på alg-grasmyr `main`.
+
+Oberoende granskning av artifact `national-afo-snapshot-batch` (ID `14867345764`, SHA-256 `0d0f812962051acb1893c4c0410aee690acf2bce0d5c031ca1d9c43e16046c3d`) verifierade:
+
+- Dashboarddatum `2026-11-23`, säsong `2026/2027`, `afo_count=129` och `areas_with_data=129`.
+- 129 daterade snapshotfiler för 2026-11-23 och 129 unika `afo_id`; ID-mängden motsvarar dashboardens 129 områden.
+- Samtliga 129 snapshots innehåller bevarade `raw_area_rows`; totalt 3 237 råa ÄJO-rader.
+- Summering direkt från de råa raderna ger `ShotTotal=57 687` och `AssignedTotal=79 704`. Dessa värden matchar exakt dashboardens summerade `fallda_totalt` respektive `avskjutningsmal_totalt`.
+- Git-trädet efter körningen innehåller 129 filer daterade 2026-11-21 och 129 daterade 2026-11-23. De tidigare daterade filerna finns kvar separat; dashboarden har avancerat till 2026-11-23.
+- Insamlaren kontrollerar att JaktAdm:s aktuella boundary `afo_id`-mängd exakt matchar den nationella säsongskatalogen före arkivering. Den lyckade fullkörningen innebär att denna kontroll passerade. Råa ÄJO-rader och HTML `Summa`-rad bevaras i varje snapshot.
+
+Detta verifierar en fullständig nationell observation och den korrigerade summerings-/dashboardvägen. Värdena är kumulativa rapporterade säsongsvärden, inte individuella älghändelser eller exakta fälldatum. Teknisk åtkomst och insamlingsfullständighet ger inte automatiskt rätt till kommersiell användning, historisk lagring, bearbetning, kundvisning eller vidare distribution. Ingen Skogskoll-worker, kundfeed eller avisering har aktiverats.
+
+**Nästa steg:** ta en andra komplett jämförbar nationell snapshot vid nästa ordinarie kontroll och jämför förändringar endast på stabila ID:n och jämförbar säsong/gränssättning. Behåll alla daterade snapshots. Genomför separat rights assessment för teknisk åtkomst, historisk lagring, bearbetning, kommersiell användning och kundvisning innan integration i Skogskoll övervägs.
+
