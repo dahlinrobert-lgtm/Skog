@@ -1151,3 +1151,20 @@ Antalen stämmer med den syntetiska körningens två fixture-ID:n och en förvä
 **Begränsning:** användaren har endast delat det aggregerade resultatradsetet. Scan-/poll-status, observationsfält och aktiv-status, historikens `event_type` samt envelope-status och `customer_visibility` är därför ännu inte verifierade genom delade SQL-resultat. Antalen ensamma bevisar inte dessa fält.
 
 **Nästa steg:** kör och dela resultatraderna från diagnostikens frågor 1, 2, 4 och 5 för scan/poll run, observationer, historik och snapshot-envelope. Gör ingen andra workeromkörning förrän den första körningens innehåll och envelope har granskats. Behåll testdata; ändra inte grants och håll produktion/aviseringar avstängda.
+
+
+## 2026-11-23 – Detaljerad read-only SQL-granskning av första syntetiska worker-körningen
+
+Användaren delade SQL-resultat från Supabase SQL Editor i det dedikerade `skogskoll-test`-projektet för scan `1a53c3b2-fad4-47d1-afb4-9340dc50f15c`.
+
+Verifierade uppgifter:
+- Scan-sessionen har `status=complete`, `source_count=2`, `next_offset=2` och `fetched_count=2`.
+- Seen-ID-ledgern innehåller exakt `worker-smoke-feature-001` (offset 0) och `worker-smoke-feature-002` (offset 1).
+- Observationstabellen innehåller exakt två visade fixture-observationer. Båda har `active=true`, samma första/senaste observationstid vid baslinjen, och fixture-attribut med sekvens 1 respektive 2.
+- Historiktabellen innehåller två rader, en per fixture-ID, båda med `event_type=baseline`. De är kopplade till poll-run `b7ce384f-d9fb-4240-ab6e-2bdee386a287`.
+- Snapshot-envelope har `status=complete`, `customer_visibility=not_assessed`, `rights_evidence_ref=null`, produkten `synthetic_worker_smoke` och scope `synthetic-fixture-only-v1`.
+- Aggregerad avstämning: seen IDs 2, observationer 2, historikrader 2, snapshot envelopes 1.
+
+**Kvarstående kontroll:** SQL-resultatbilden för fråga 1 visar scan-kolumnerna men inte den horisontellt dolda delen med poll-run-status, fetched_count och finish-tid. Poll-run-ID kan bekräftas från historikraderna, men poll-run-status ska inte markeras verifierad förrän den synliga resultatraden har delats.
+
+**Bedömning:** första körningens scan, baslinjehistorik, observationer och envelope är verifierade. Baslinjen har inte genererat inserted/changed-händelser eller kundaviseringar. Kör inte om worker ännu; kontrollera först poll-run-statusen och därefter genomförs en avgränsad idempotensomkörning i testprojektet. Behåll befintliga testposter och ändra inte grants. Produktion och kundaviseringar förblir avstängda.
