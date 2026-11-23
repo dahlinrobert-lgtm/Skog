@@ -1135,3 +1135,19 @@ Review of migration 006 confirms the worker service role has direct REST SELECT 
 Added `skogskoll/db/diagnostics/verify-synthetic-worker-smoke.sql`, a SELECT-only script for Supabase SQL Editor. It inspects the known scan ID `1a53c3b2-fad4-47d1-afb4-9340dc50f15c`, the two fixed fixture IDs, linked poll run, seen-ID ledger, observation history, snapshot envelope and count reconciliation. It performs no writes or deletes. Run it only in the dedicated `skogskoll-test` project.
 
 **Next step:** execute the diagnostic in Supabase SQL Editor and review all six result sets. Do not broaden service-role table grants merely for diagnostics; retain the current least-privilege boundary. Use observed results to decide whether a narrowly scoped, service-role-only audit RPC is warranted.
+
+
+## 2026-11-23 – Oberoende SQL-antal verifierade för syntetiskt worker-test
+
+Användaren körde den aggregerade SELECT-kontrollen i Supabase SQL Editor mot det dedikerade `skogskoll-test`-projektet. Resultatet var:
+
+- `seen_id_count=2`
+- `observation_count=2`
+- `history_row_count=2`
+- `snapshot_envelope_count=1`
+
+Antalen stämmer med den syntetiska körningens två fixture-ID:n och en förväntad snapshot-envelope. Detta är oberoende verifiering av radantal i databasen, utöver workerloggens `status=complete`.
+
+**Begränsning:** användaren har endast delat det aggregerade resultatradsetet. Scan-/poll-status, observationsfält och aktiv-status, historikens `event_type` samt envelope-status och `customer_visibility` är därför ännu inte verifierade genom delade SQL-resultat. Antalen ensamma bevisar inte dessa fält.
+
+**Nästa steg:** kör och dela resultatraderna från diagnostikens frågor 1, 2, 4 och 5 för scan/poll run, observationer, historik och snapshot-envelope. Gör ingen andra workeromkörning förrän den första körningens innehåll och envelope har granskats. Behåll testdata; ändra inte grants och håll produktion/aviseringar avstängda.
