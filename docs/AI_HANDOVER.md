@@ -1090,3 +1090,15 @@ Den tidigare misslyckade körningen #45225415712 och 401-körningen #45228136142
 **Aktuell verifierad status:** Supabase testprojektets read-only REST-anslutning fungerar från GitHub Actions. Skrivande RPC från worker, atomiskt page commit, finish, snapshot-envelope-registrering och end-to-end workerflöde är fortfarande inte verifierade. Ingen riktig ArcGIS-skanning, nationell ingestion, produktionsanslutning, kundfeed eller kundavisering har startats.
 
 **Nästa steg:** granska aktuell workeradapter och samtliga migrationer på main. Utforma därefter ett separat, syntetiskt worker-smoketest med tydligt isolerad testidentitet och verifierad återställnings-/städstrategi. Testet ska omfatta start, sidcommit, finish och snapshotregistrering utan att använda produktionskällans identitet eller skapa kundaviseringar. Kör inte `run-scan` mot den riktiga ArcGIS-källan som anslutningstest.
+
+## 2026-11-23 – Synthetic Supabase worker smoke test prepared
+
+The worker/store review confirmed that the existing `runScanBatch` orchestration and `createSupabaseStore` adapter can be reused for a synthetic integration test. A source-identity mismatch was found: `runScanBatch` loads/allocates a scan using `source.key`, while `normalizeFeature` previously stamped every normalized observation with the fixed production `SOURCE_ID`. The worker now explicitly binds normalized records to the injected source identity; the production ArcGIS source continues to use the existing `SOURCE_ID`.
+
+A dedicated manual workflow and fixture script are prepared on branch `feat/synthetic-supabase-worker-smoke-20261123`. The workflow requires an explicit boolean confirmation before any job runs and uses the existing Supabase secrets. The fixture uses the reserved source key `skogskoll:synthetic-worker-smoke-test`, two fixed synthetic IDs, a `.invalid` metadata endpoint and one bounded page. It does not call ArcGIS, customer matching, alert or notification code.
+
+**Important persistence boundary:** this is a real write test, not a rollback test. The SQL RPCs commit each operation independently through PostgREST. Synthetic poll runs, scan sessions, seen IDs, observations, initial history rows and immutable snapshot envelopes are retained in `skogskoll-test` for audit; the workflow deliberately does not delete them. Repeated runs reuse the same fixture source and IDs, so they do not create a new observation identity set each time. Do not point this workflow at production.
+
+Local automated tests cover the source-identity binding. The live Supabase workflow has not been run. A successful run will verify the existing adapter's start, atomic page commit, finish and snapshot registration against the test project; it will not verify ArcGIS ingestion, production, customer visibility or notifications.
+
+**Next step:** review and merge the PR after CI; then manually dispatch the synthetic workflow with confirmation only after verifying that `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` still point to `skogskoll-test`. Inspect the resulting synthetic records and envelope before any further worker expansion.
