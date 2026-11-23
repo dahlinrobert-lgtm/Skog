@@ -1288,3 +1288,22 @@ Azure Monitor visade cirka 754,7 MiB och 770 MiB Used capacity vid två ögonbli
 Detaljer, begränsningar och kvarstående kontroller finns i [Azure – konto- och kostnadsdrift](azure-storage-operations.md). Även [STORAGE_INVENTORY.md](STORAGE_INVENTORY.md) och [viltdata-azure-storage.md](viltdata-azure-storage.md) har uppdaterats med kontots aktuella konfiguration. Ingen kod, workflow, behörighet, källdata eller kundavisering ändrades i detta dokumentationsarbete.
 
 **Nästa konkreta steg:** följ faktisk kostnad och budgetaviseringar efter normal drift, och planera ett separat restore-test. Behåll nuvarande dataskydd; inför ingen automatisk gallring av historiska snapshots utan konsekvensanalys.
+
+
+## 2026-11-23 – Plan för publik lansering av Skogsspan.se dokumenterad
+
+GitHub-issue [#566 – Planera och förbered lansering av Skogsspan.se](https://github.com/dahlinrobert-lgtm/Skog/issues/566) är den samlade uppgiften och auktoritativa checklistan för lanseringsförberedelserna. Den omfattar:
+
+- inventering av befintlig webbplats, Skogskoll-prototyp, GitHub Pages och återanvändbara komponenter;
+- separat publik marknadswebbplats och inloggad kundapplikation;
+- branch/PR-baserad utveckling med förhandsvisning så design och UX kan itereras utan att påverka produktion;
+- GitHub Pages, domänkoppling för `skogsspan.se`, DNS och HTTPS samt eventuell framtida `app.skogsspan.se`;
+- säkerhets- och sekretessinventering av relevanta GitHub-repon före eventuella visibility-beslut;
+- robots-/indexeringsstrategi, där `robots.txt` och `noindex` inte behandlas som åtkomstskydd;
+- verifiering av att publikt innehåll och kundvisning endast omfattar funktioner och datakällor med tillräckligt underlag och rättigheter.
+
+**Beslutade arbetsprinciper:** använd GitHub för kod och historik, PR-baserad granskning och separerad förhandsvisning/produktion. Gör inga repos privata, ändra inte DNS/domän/Pages och publicera inte robots- eller åtkomständringar utan separat konsekvensbedömning och uttryckligt godkännande. Bevara nuvarande fungerande publicering tills ersättande lösning är verifierad.
+
+**Status vid dokumentation:** issue #566 är skapad. Ingen repo-visibility, domän, DNS, Pages-konfiguration, robots.txt eller kundapplikationsåtkomst har ändrats. Project Manager-dashboarden använder en separat Azure Blob-snapshot och en fast snapshotreferens i klientkonfigurationen. Snapshotuppdatering och dashboardens livevisning är därför separata steg; uppdatera inte den fasta klientreferensen/deploya inte en ny dashboardversion förrän den dokumenterade CORS-, Entra-inloggnings- och behörighetskontrollen är genomförd. Den privata snapshotpubliceringsmiljön kunde inte läsas via aktuell GitHub-integration vid denna kontroll; dess workflowstatus och publicering är därför inte verifierade.
+
+**Nästa konkreta steg:** genomför säkerhets-/sekretessinventering av befintliga publika repos och granska beroenden för Pages innan beslut om målstruktur eller synlighet. Separat: återställ åtkomst till det privata project-manager-history-repot, verifiera dess snapshotworkflow och CORS-/autentiseringsgrindar och uppdatera därefter dashboardens snapshot på ett append-only sätt utan att skriva över äldre snapshots.
