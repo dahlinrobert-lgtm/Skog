@@ -25,6 +25,12 @@ GitHub Pages: https://dahlinrobert-lgtm.github.io/Skog/
 
 ## 3. Viktiga arkitektur- och säkerhetsbeslut
 
+## 3C. Projektledarens dokumentationsgrind
+
+Projektledarens styrande dokumentations- och Definition of Done-regel finns i det privata projektledarrepot: [Project manager rules – documentation and completion](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/blob/main/docs/PROJECT_MANAGER_RULES.md). Den gäller vid tydliga delmål, färdig uppgift, PR-granskning/merge, driftsättning eller manuell konfigurationsändring samt överlämning – även när arbetet inte avslutas genom en PR. Varje meningsfull uppgift ska få statusen `Documented`, `Assessed – no update required` eller `Documentation outstanding`. Dokumentation ska bygga på verifierad kod, konfiguration eller evidens; små ändringar utan bestående påverkan behöver inte skapa dokumentationsarbete. PR-livscykeln ska ange dokumentationsstatus och får inte markera en leverans helt färdig medan nödvändig dokumentation återstår.
+
+
+
 ## 3A. Styrande prioritering – dagligt snapshotinformationsflöde först (fastställt 2026-11-22)
 
 **Primär leverans:** ett tillförlitligt dagligt informationsflöde som sammanställer senaste snapshotstatus och förändringar per källa/produkt/lager. Det ska visa senaste kompletta observation, senaste körningsförsök, running/success/partial/failed, aktualitet, täckning/antal, jämförbarhet, avvikelser och granskningsbehov med länkar till manifest, artifact, workflow-run och PR där sådana finns.
@@ -1271,3 +1277,14 @@ Dashboarderna i alg-grasmyr har jämförts direkt från Git-historiken: 2026-11-
 - Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata för samtliga 129 områden. `FinishedReporting`-antalet ändras däremot i 10 områden; i 14-005 minskar det från 5 till 4. Detta visar att rapporteringsstatus inte ska behandlas som monotont eller som en händelsehistorik.
 
 Detta är en dashboard-/ÄFO-aggregatjämförelse, inte en fullständig rad-för-rad ÄJO-differens. En begränsad kontroll av råa ÄJO-rader har visat att samma registreringsnummer förekommer över datumen och att rapportvärden/status kan ändras, men samtliga 3 237 rader har ännu inte jämförts systematiskt med stabil ÄJO-identitet. Ingen differens ska därför tolkas som exakt fälldatum eller daglig händelse. Nästa steg är en komplett rå-rad-jämförelse med extraherat stabilt registreringsnummer ur `AfoName`-länkens `drillDownToAjoReport`-ID, kontroll av radtillskott/bortfall och ändrade värden, samt separat klassning av rapportstatusändringar. Bevara båda snapshots och skapa ingen automatisk borttagningshändelse.
+## 2026-11-23 – Azure prenumeration, budget och dataskydd verifierade
+
+Användarens Azure Portal-skärmbilder verifierar att prenumerationen `Azure subscription 1` (ID `e758647f-da18-4063-adfd-f1ce79d5d2af`) visas som aktiv efter uppgradering till Pay-As-You-Go. En månadsbudget `Skogskoll-budget` på 200 SEK har skapats med faktiska kostnadsaviseringar vid 50/75/90 procent (100/150/180 SEK). Budgeten är en notifiering, inte ett hårt kostnadstak.
+
+Storage Account `stskogkolldata` är `StorageV2`, standardprestanda, Sweden Central (`swedencentral`) och LRS. Dataskyddsbilden visar blobversionering aktiverad med alla versioner behållna, soft delete för blobbar och behållare aktiverat i 14 dagar, permanent borttagning inaktiverad samt Azure Backup, point-in-time restore, Change Feed och immutability inaktiverade. TLS-miniminivå är 1.2. Offentlig blobåtkomst är inaktiverad på kontonivå; offentlig nätverksåtkomst är däremot aktiverad för alla nätverk. Den senare inställningen ska inte förväxlas med anonym blobåtkomst.
+
+Azure Monitor visade cirka 754,7 MiB och 770 MiB Used capacity vid två ögonblicksbilder samt 310 summerade transaktioner för den valda senaste 24-timmarsperioden. Detta är inte en tillväxtserie eller fakturaverifiering. En specifik blob `project-manager/snapshots/45002255351/dashboard-data.json` hade inga tidigare versioner listade vid kontrollen; detta är förenligt med att versionering är aktiverad men att filen saknar tidigare versioner.
+
+Detaljer, begränsningar och kvarstående kontroller finns i [Azure – konto- och kostnadsdrift](azure-storage-operations.md). Även [STORAGE_INVENTORY.md](STORAGE_INVENTORY.md) och [viltdata-azure-storage.md](viltdata-azure-storage.md) har uppdaterats med kontots aktuella konfiguration. Ingen kod, workflow, behörighet, källdata eller kundavisering ändrades i detta dokumentationsarbete.
+
+**Nästa konkreta steg:** följ faktisk kostnad och budgetaviseringar efter normal drift, och planera ett separat restore-test. Behåll nuvarande dataskydd; inför ingen automatisk gallring av historiska snapshots utan konsekvensanalys.
