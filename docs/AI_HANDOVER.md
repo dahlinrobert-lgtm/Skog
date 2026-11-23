@@ -1168,3 +1168,19 @@ Verifierade uppgifter:
 **Kvarstående kontroll:** SQL-resultatbilden för fråga 1 visar scan-kolumnerna men inte den horisontellt dolda delen med poll-run-status, fetched_count och finish-tid. Poll-run-ID kan bekräftas från historikraderna, men poll-run-status ska inte markeras verifierad förrän den synliga resultatraden har delats.
 
 **Bedömning:** första körningens scan, baslinjehistorik, observationer och envelope är verifierade. Baslinjen har inte genererat inserted/changed-händelser eller kundaviseringar. Kör inte om worker ännu; kontrollera först poll-run-statusen och därefter genomförs en avgränsad idempotensomkörning i testprojektet. Behåll befintliga testposter och ändra inte grants. Produktion och kundaviseringar förblir avstängda.
+
+
+## 2026-11-23 – Poll-run-status verifierad för första syntetiska worker-körningen
+
+Användaren delade den fullständigt horisontellt synliga SQL-resultatraden för scan `1a53c3b2-fad4-47d1-afb4-9340dc50f15c` och poll run `b7ce384f-d9fb-4240-ab6e-2bdee386a287`.
+
+Verifierade poll-run-fält:
+- `status=success`
+- `fetched_count=2`
+- `inserted_count=2`
+- `updated_count=0`
+- `finished_at=2026-11-23 20:28:53.695946+00`
+
+Tillsammans med tidigare delade SQL-resultat är första körningens scan och poll run terminalt lyckade, båda fixture-objekten är aktiva, båda historikraderna är `baseline`, och snapshot-envelope är `complete` med `customer_visibility=not_assessed` och `rights_evidence_ref=null`.
+
+**Nästa steg – idempotenskontroll:** kör samma isolerade manuella workflow en gång till, endast med den explicita `confirm_synthetic_write=true`-bekräftelsen och fortsatt låst till `skogskoll-test`. Workflowet använder samma två fasta fixture-ID:n och samma innehåll. Förväntat resultat är en ny komplett scan/poll-run och ett nytt immutable snapshot-envelope, medan befintliga observationer förblir två och historikraderna förblir två eftersom båda posterna ska klassas `unchanged`. Detta är ett förväntat testresultat, inte ännu verifierat. Efter körningen ska SQL-kontrollen utökas/köras mot det nya scan-ID:t och de totala observation-/historikantalen jämföras. Testposter behålls; inga grants ändras. Produktion, kundmatchning och aviseringar förblir avstängda.
