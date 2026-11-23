@@ -1,6 +1,6 @@
 # Skog / Skogskoll – överlämning för fortsatt arbete
 
-**Senast uppdaterad:** 2026-11-22  
+**Senast uppdaterad:** 2026-11-23  
 **Syfte:** Detta dokument är en kompakt startpunkt för fortsatt utveckling, även när arbetet fortsätter i en ny ChatGPT-chatt.
 
 > Läs detta dokument först i en ny chatt. Läs därefter den automatiska källstatusrapporten och den fullständiga datakälleöversikten. Kontrollera alltid aktuella filer och GitHub Actions innan du påstår att en körning eller status fortfarande gäller.
@@ -1307,3 +1307,24 @@ GitHub-issue [#566 – Planera och förbered lansering av Skogsspan.se](https://
 **Status vid dokumentation:** issue #566 är skapad. Ingen repo-visibility, domän, DNS, Pages-konfiguration, robots.txt eller kundapplikationsåtkomst har ändrats. Project Manager-dashboarden använder en separat Azure Blob-snapshot och en fast snapshotreferens i klientkonfigurationen. Snapshotuppdatering och dashboardens livevisning är därför separata steg; uppdatera inte den fasta klientreferensen/deploya inte en ny dashboardversion förrän den dokumenterade CORS-, Entra-inloggnings- och behörighetskontrollen är genomförd. Den privata snapshotpubliceringsmiljön kunde inte läsas via aktuell GitHub-integration vid denna kontroll; dess workflowstatus och publicering är därför inte verifierade.
 
 **Nästa konkreta steg:** genomför säkerhets-/sekretessinventering av befintliga publika repos och granska beroenden för Pages innan beslut om målstruktur eller synlighet. Separat: återställ åtkomst till det privata project-manager-history-repot, verifiera dess snapshotworkflow och CORS-/autentiseringsgrindar och uppdatera därefter dashboardens snapshot på ett append-only sätt utan att skriva över äldre snapshots.
+
+
+## 2026-11-23 – Uppdatering: nationell ÄJO-rad-jämförelse verifierad
+
+Den separata insamlaren alg-grasmyr äger nationell insamling och de oföränderliga snapshotsen. Skog återanvänder dess jämförelseresultat; ingen parallell collector eller ny sanningskälla byggs.
+
+PR [#83](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/83) är mergad. Jämförelseworkflow [#45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790) avslutades completed/success på PR-committen. Artifact national-ajo-row-diff innehöll rapporten (rapport-SHA-256 enligt alg-grasmyr-dokumentationen: efa92935eecc4a3434ec5c8c63cdb179caeed755bf39b918534ea9ad98abdb35).
+
+Verifierat för snapshots 2026-11-21 och 2026-11-23, säsong 2026/2027 och boundary_mode=current:
+- 129/129 ÄFO validerade; 3 237 råa ÄJO-rader i vardera snapshot.
+- 2 841 rader oförändrade och 396 rader med en eller flera ändrade källattribut.
+- Inga nya portal-ID:n och inga ID:n som saknades i den senare snapshoten.
+- ShotTotal ändrades på 378 rader; nationell kumulativ summa ökade med 972 (56 715 till 57 687).
+- FinishedReporting ändrades på 42 rader: 41 Nej -> Ja och en Ja -> Nej.
+- Källsnapshotsen ändrades inte (source_snapshots_modified=false).
+
+Detta är jämförelse av kumulativa säsongsuppgifter, inte individuella fälthändelser. Ändrad rapportstatus är inte en händelsehistorik. Eventuella frånvarande ID:n ska klassificeras som obekräftad frånvaro, aldrig automatisk borttagning.
+
+Rättighetsstatus ändras inte: historisk lagring, bearbetning, kommersiell användning, kundvisning och vidare distribution behöver bedömas separat. Ingen Skogskoll-integration, kundfeed eller avisering aktiveras av jämförelsen.
+
+**Aktuellt nästa steg:** granska och dokumentera källans exakta villkor/evidens för dessa separata användningsdimensioner. Återanvänd befintligt källregister och rättighetsdokument; ändra inte status till godkänd utan stöd.
