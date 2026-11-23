@@ -1195,3 +1195,12 @@ Added skogskoll/db/diagnostics/verify-synthetic-worker-idempotency.sql, a SELECT
 **Execution status:** no workflow dispatch has been made in this step. The available GitHub integration exposes read operations but no workflow_dispatch action. The second run creates durable records and must be manually dispatched in GitHub Actions with confirm_synthetic_write=true, after confirming the workflow is on main and the repository secrets still target only skogskoll-test. Do not use production credentials. After a successful run, execute the new SELECT-only audit in the test project's Supabase SQL Editor and review all five result sets.
 
 No workflow, worker code, database schema, grants, source registry or customer-facing behavior was changed. No production ingestion, customer matching or alerts were enabled.
+
+
+## 2026-11-23 – Third synthetic worker run confirms idempotency
+
+The user supplied Supabase SQL Editor result screenshots for the latest synthetic run. The latest scan is `879f0071-68e4-462a-a0ff-216c10a8c6cf`, source `skogskoll:synthetic:worker-smoke-test`, with `source_count=2`, `page_size=2`, `next_offset=2`, `fetched_count=2`, `status=complete`, and a populated `snapshot_registered_at`. Its poll run is `6613004d-8f05-4de1-8c39-964014148eed`, `status=success`, `fetched_count=2`, `inserted_count=0`, `updated_count=0`.
+
+The independent aggregate query reports 2 seen IDs in the latest scan, 2 current observations, 2 total observation-history rows, and 3 snapshot envelopes across the three completed synthetic runs. Both current fixture observations remain active; their original `first_seen_at` values remain unchanged, while `last_seen_at` and `last_run_id` reflect the latest successful poll. The only two history rows remain `baseline` events linked to the first poll run; the repeated unchanged polls did not append history. All three snapshot envelopes are `complete`, with coverage key `synthetic-fixture-only-v1`, customer visibility `not_assessed`, and no rights evidence reference.
+
+**Assessment:** idempotency is verified for repeated identical fixture content: no duplicate current observations and no extra history rows were created. The new scan, poll run and snapshot envelope were persisted successfully. This is a test-project synthetic verification only; it does not establish production-source readiness, commercial rights, customer visibility, alert delivery, or production operational readiness. Keep test records and existing grants; no cleanup or privilege changes.
