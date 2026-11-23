@@ -979,3 +979,17 @@ En SELECT-only kontrollfråga har lagts till i `skogskoll/db/diagnostics/verify-
 Användaren körde den aggregerade SELECT-kontrollen i `skogskoll-test`. Resultatet var `seen_id_count=2`, `observation_count=2`, `history_row_count=2` och `snapshot_envelope_count=1`. Detta matchar de två fasta fixture-ID:na och en snapshot-envelope och bekräftar att motsvarande rader finns i databasen.
 
 Kontrollen verifierar endast antal. De separata resultatuppsättningarna för scan/poll-status, observationsfält, historikens `event_type` och snapshot-envelope-fälten har inte delats och ska inte betraktas som verifierade. Nästa steg är att granska SQL-diagnostikens frågor 1, 2, 4 och 5. Ingen idempotens-omkörning ska göras före den granskningen. Testdata behålls; inga grants ändras och produktion/aviseringar förblir avstängda.
+
+
+## 2026-11-23 – Detaljerad read-only SQL-granskning av första syntetiska worker-körningen
+
+Användarens SQL-resultat från `skogskoll-test` verifierar för scan `1a53c3b2-fad4-47d1-afb4-9340dc50f15c`:
+
+- Scan `status=complete`, `source_count=2`, `next_offset=2`, `fetched_count=2`.
+- Seen-ID-ledgern innehåller de två förväntade fixture-ID:na med offset 0 och 1.
+- Två observationer finns; båda är `active=true` och har förväntade fixture-attribut/sekvensnummer.
+- Två historikrader finns, båda `event_type=baseline`, kopplade till poll-run `b7ce384f-d9fb-4240-ab6e-2bdee386a287`.
+- Ett snapshot-envelope finns med `status=complete`, `customer_visibility=not_assessed`, `rights_evidence_ref=null`, produkt `synthetic_worker_smoke` och scope `synthetic-fixture-only-v1`.
+- Aggregerade antal: 2 seen IDs, 2 observationer, 2 historikrader, 1 envelope.
+
+Poll-run-statusen är ännu inte verifierad i det delade materialet: fråga 1:s resultatrad är horisontellt avklippt innan poll-kolumnerna. Nästa steg är att kontrollera den delen av resultatraden. Därefter kan en kontrollerad idempotensomkörning göras. Ingen omkörning, privilege-ändring, produktionsinsamling eller kundavisering har gjorts.
