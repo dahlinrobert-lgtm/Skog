@@ -243,3 +243,10 @@ PR #537 är mergad (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a). Inte
 - CI-utökning applicerar migration 005 och SQL-smoketestet täcker registrering. Inga live DB-/ArcGIS-anrop, produktionsmigrationer, alerts eller kundvisning ingår.
 
 **Status efter merge:** PR #538 mergad i `main` med commit `38f2474ff75fc5d34dc491da059178c266590b58`. Slutliga PR-checkar passerade på kodhead `72c02f9`: UI 85/85, begränsad source probe 300/300 unika ID:n och database tests med migration 005 + PostGIS/SQL-smoketest. Ingen live Supabase eller live ArcGIS metadatahämtning ingick. Källstatus och rättighetsgrindar är oförändrade. Nästa steg är separat verifiering i disponibel Supabase-testmiljö.
+
+
+### PM-015 uppdatering 2026-11-23 – Supabase-test och behörighetsmigration
+
+Användaren har skapat den separata Supabase-testinstansen `skogskoll-test` (West EU/Ireland, Free/Nano) och rapporterat installation av grundschema samt migrationerna 002–005. I testinstansen visade read-only kontroll att sju tabeller och åtta RPC-funktioner finns och att RLS är aktiverat på de sju tabellerna. Användaren visade lyckade resultat för PostGIS-matchningstestet och atomiskt ingestion/snapshot-smoketest. Behörighetsrevisionen visade dock att API-rollerna saknade direkta tabellprivilegier. Kodgranskning visade att workern behöver direkta REST-SELECT på `scan_sessions` och `poll_runs`.
+
+Migration 006 och ett separat transaktionellt RLS-/privilegietest har därför lagts till på branchen `fix/skogskoll-explicit-api-grants-rls-20261123`. Föreslagen modell: authenticated får CRUD på egna `watch_areas` och `push_subscriptions` samt SELECT på egna `alert_events`, allt begränsat av befintliga ägarpolicyer; service_role får endast SELECT på `scan_sessions` och `poll_runs` direkt; övriga interna tabeller och snapshotregister förblir direkt oåtkomliga. PR-CI och manuell installation av 006 återstår. Ingen produktionskoppling eller kundavisering.
