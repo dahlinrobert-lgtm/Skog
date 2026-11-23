@@ -25,6 +25,12 @@ GitHub Pages: https://dahlinrobert-lgtm.github.io/Skog/
 
 ## 3. Viktiga arkitektur- och säkerhetsbeslut
 
+## 3C. Projektledarens dokumentationsgrind
+
+Projektledarens styrande dokumentations- och Definition of Done-regel finns i det privata projektledarrepot: [Project manager rules – documentation and completion](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/blob/main/docs/PROJECT_MANAGER_RULES.md). Den gäller vid tydliga delmål, färdig uppgift, PR-granskning/merge, driftsättning eller manuell konfigurationsändring samt överlämning – även när arbetet inte avslutas genom en PR. Varje meningsfull uppgift ska få statusen `Documented`, `Assessed – no update required` eller `Documentation outstanding`. Dokumentation ska bygga på verifierad kod, konfiguration eller evidens; små ändringar utan bestående påverkan behöver inte skapa dokumentationsarbete. PR-livscykeln ska ange dokumentationsstatus och får inte markera en leverans helt färdig medan nödvändig dokumentation återstår.
+
+
+
 ## 3A. Styrande prioritering – dagligt snapshotinformationsflöde först (fastställt 2026-11-22)
 
 **Primär leverans:** ett tillförlitligt dagligt informationsflöde som sammanställer senaste snapshotstatus och förändringar per källa/produkt/lager. Det ska visa senaste kompletta observation, senaste körningsförsök, running/success/partial/failed, aktualitet, täckning/antal, jämförbarhet, avvikelser och granskningsbehov med länkar till manifest, artifact, workflow-run och PR där sådana finns.
