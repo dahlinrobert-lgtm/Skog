@@ -9,7 +9,7 @@
 --   latest scan has exactly 2 seen IDs
 --   exactly 2 current observations remain
 --   exactly 2 immutable history rows remain (both baseline from the first run)
---   exactly 2 snapshot envelopes exist for the synthetic source (one per complete run)
+--   exactly 3 snapshot envelopes exist for the synthetic source after three complete runs
 
 -- 1) Latest scan and linked poll run. Confirm this is the new run, not the baseline run.
 select
