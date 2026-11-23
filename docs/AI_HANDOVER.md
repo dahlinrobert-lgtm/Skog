@@ -1307,3 +1307,16 @@ GitHub-issue [#566 – Planera och förbered lansering av Skogsspan.se](https://
 **Status vid dokumentation:** issue #566 är skapad. Ingen repo-visibility, domän, DNS, Pages-konfiguration, robots.txt eller kundapplikationsåtkomst har ändrats. Project Manager-dashboarden använder en separat Azure Blob-snapshot och en fast snapshotreferens i klientkonfigurationen. Snapshotuppdatering och dashboardens livevisning är därför separata steg; uppdatera inte den fasta klientreferensen/deploya inte en ny dashboardversion förrän den dokumenterade CORS-, Entra-inloggnings- och behörighetskontrollen är genomförd. Den privata snapshotpubliceringsmiljön kunde inte läsas via aktuell GitHub-integration vid denna kontroll; dess workflowstatus och publicering är därför inte verifierade.
 
 **Nästa konkreta steg:** genomför säkerhets-/sekretessinventering av befintliga publika repos och granska beroenden för Pages innan beslut om målstruktur eller synlighet. Separat: återställ åtkomst till det privata project-manager-history-repot, verifiera dess snapshotworkflow och CORS-/autentiseringsgrindar och uppdatera därefter dashboardens snapshot på ett append-only sätt utan att skriva över äldre snapshots.
+
+
+## 2026-11-23 – National ÄJO row-level comparison verified
+
+The national collector and immutable snapshot archive remain owned by `dahlinrobert-lgtm/alg-grasmyr`; Skog does not create a parallel collector. [alg-grasmyr PR #83](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/83) was merged on 2026-11-23 (merge commit `bec3edb2f2cee4c1122b6b38e105ae842c26bd0a`).
+
+The read-only row-level audit compared all 129 ÄFO snapshot pairs for 2026-11-21 and 2026-11-23 using the portal `drillDownToAjoReport` ID scoped by `afo_id`. [GitHub Actions run 45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790) passed and uploaded artifact 14870128151.
+
+Verified: 3,237 raw ÄJO rows on each date; 2,841 unchanged; 396 rows with one or more changed attributes; zero added and zero missing portal IDs. `ShotTotal` changed on 378 rows. `FinishedReporting` changed on 42 rows (41 `Nej`→`Ja`, one `Ja`→`Nej`). Dashboard cumulative `ShotTotal` rose by 972 (56,715→57,687), while `AssignedTotal` remained 79,704. These are cumulative season-report differences, not individual kill events or exact dates. The report confirmed that source snapshots were not modified.
+
+The audit implementation, tests and run instructions are documented in [alg-grasmyr NATIONAL_AJO_ROW_DIFF.md](https://github.com/dahlinrobert-lgtm/alg-grasmyr/blob/main/docs/NATIONAL_AJO_ROW_DIFF.md). Missing rows are classified as unconfirmed absences, never as deletions. No Skog worker, customer feed or alerts are enabled.
+
+**Next concrete step:** continue scheduled/controlled national snapshots and compare later dates using the same immutable row-level audit. Separately review the existing rights evidence for exact commercial/customer-display scope before any product integration. Do not interpret cumulative differences as event-level harvests.
