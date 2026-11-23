@@ -1031,3 +1031,14 @@ Användarens read-only SQL-resultat från Supabase-projektet `skogskoll-test` ve
 Detta verifierar inte produktionsingestion, källrättigheter, kundvisning, kundmatchning eller larmleverans. Ingen produktionskälla eller kundavisering användes. Testprojektets avgränsning, befintliga behörigheter och historik ska behållas.
 
 **Nästa steg:** fortsätt med befintlig worker-/adapterarkitektur och välj nästa avgränsade validering först efter kontroll av aktuell källstatus och rättigheter. Aktivera inte produktionsingestion eller kundaviseringar enbart på grundval av detta syntetiska test.
+
+
+## Länsstyrelsernas Älgdata – nationell ÄFO-avskjutning (verifierad 2026-11-23)
+
+Den separata insamlaren i `alg-grasmyr` äger den nationella insamlingen. Skog ska återanvända dess arkiverade snapshots och dashboard som källflöde i stället för att bygga en parallell collector.
+
+GitHub Actions [körning #13](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45273303393) passerade på alg-grasmyr `main` och skapade commit `8d78cdfd7eed017040b7ab74ce96b1c724f84d73`. Granskad artifact visar 129/129 aktiva ÄFO för 2026/2027, 3 237 bevarade råa ÄJO-rader och totalsummor `ShotTotal=57 687`, `AssignedTotal=79 704`. Båda totalsummorna stämmer exakt mot dashboarden och summering av råmaterialet. Koden kräver exakt match mellan katalogens ID:n och JaktAdm:s aktuella boundary-ID:n. Daterade snapshots för både 2026-11-21 och 2026-11-23 finns kvar i Git; dashboarden pekar på 2026-11-23.
+
+**Status:** en nationell baslinje plus en andra daterad observation finns. Före förändringsanalys ska jämförbarhet verifieras per område med stabila `afo_id`, samma säsong och `boundary_mode=current`; aggregerade säsongsvärden får inte beskrivas som dagliga fälldatum eller individuella händelser. Insamlingen är tekniskt verifierad, men kundvisning, vidare distribution och rätt till historisk lagring/bearbetning ska bedömas separat med attribution. Ingen Skogskoll-worker, kundfeed eller avisering har aktiverats.
+
+**Nästa steg:** kör jämförbarhets-/differensgranskning mellan 2026-11-21 och 2026-11-23; dokumentera eventuella förändringar utan att tolka differenser som dagliga händelser. Gör separat rights assessment före produktintegration.
