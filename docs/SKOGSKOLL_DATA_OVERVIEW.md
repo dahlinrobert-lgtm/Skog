@@ -1061,3 +1061,21 @@ Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata. `Finished
 Detta är en jämförelse av ÄFO-dashboardaggregat, inte en fullständig ÄJO-rad-för-rad-differens. Innan ÄJO-förändringar klassificeras måste alla råa rader jämföras med stabilt registreringsnummer (utdraget ur `AfoName`-länkens `drillDownToAjoReport`-ID), och både tillkomna/borttagna rader och ändrade värden/statusar redovisas. Bortfall får inte automatiskt bli borttagningshändelser. Värdena är kumulativa säsongsuppgifter och kan inte placeras på exakta fälldatum.
 
 **Nästa steg:** fullständig ÄJO-rad-jämförelse och separat rättighetsbedömning innan Skogskoll-integration.
+
+
+### Rå ÄJO-rad-jämförelse – verifierad 2026-11-23
+
+Den nationella snapshotinsamlingen och dess arkiv ägs av det separata repot [alg-grasmyr](https://github.com/dahlinrobert-lgtm/alg-grasmyr). Skog ska konsumera dessa verifierade snapshots/dashboard och inte bygga en parallell insamlare.
+
+Alg-grasmyr PR #83 är mergad. Den nya skrivskyddade analysen använder portalens ID i `drillDownToAjoReport`, avgränsat inom respektive `afo_id`, som stabil ÄJO-identitet. Full jämförelse av 129 ÄFO mellan 2026-11-21 och 2026-11-23 passerade i [Actions run 45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790):
+
+- 3 237 råa ÄJO-rader per datum.
+- 2 841 oförändrade rader och 396 rader med ett eller flera ändrade attribut.
+- 0 tillkomna och 0 saknade portal-ID:n.
+- `ShotTotal` ändrades på 378 rader.
+- `FinishedReporting` ändrades på 42 rader: 41 från Nej till Ja och 1 från Ja till Nej.
+- Kumulativt dashboardvärde för `ShotTotal` ökade från 56 715 till 57 687 (+972); `AssignedTotal` var oförändrat 79 704.
+
+Flera attribut kan ändras på samma ÄJO-rad. Detta är förändringar mellan kumulativa säsongsrapporter, inte enskilda fälthändelser eller exakta fälldatum. Analysen ändrar inte originalsnapshots. En rad som saknas i ett senare uttag ska klassas som obekräftad frånvaro, inte borttagning, avbokning eller genomförande.
+
+Detaljer, fältfördelning och reproducerbar körinstruktion finns i [alg-grasmyr/docs/NATIONAL_AJO_ROW_DIFF.md](https://github.com/dahlinrobert-lgtm/alg-grasmyr/blob/main/docs/NATIONAL_AJO_ROW_DIFF.md). Fortsatt användning i Skogskoll kräver separat kontroll av exakt kommersiell användning, kundvisning och distribution; ingen worker eller kundavisering har aktiverats.
