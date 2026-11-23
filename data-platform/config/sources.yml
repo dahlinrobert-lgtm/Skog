@@ -1826,7 +1826,7 @@ sources:
     operations:
       access_status: verified
       snapshot_status: pilot
-      history_status: partial_history
+      history_status: partial
       commercial_use_status: verified_with_attribution
       customer_display_status: conditional_on_attribution_and_source_scope
       last_verified: "2026-11-23"
