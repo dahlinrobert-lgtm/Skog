@@ -1061,3 +1061,19 @@ Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata. `Finished
 Detta är en jämförelse av ÄFO-dashboardaggregat, inte en fullständig ÄJO-rad-för-rad-differens. Innan ÄJO-förändringar klassificeras måste alla råa rader jämföras med stabilt registreringsnummer (utdraget ur `AfoName`-länkens `drillDownToAjoReport`-ID), och både tillkomna/borttagna rader och ändrade värden/statusar redovisas. Bortfall får inte automatiskt bli borttagningshändelser. Värdena är kumulativa säsongsuppgifter och kan inte placeras på exakta fälldatum.
 
 **Nästa steg:** fullständig ÄJO-rad-jämförelse och separat rättighetsbedömning innan Skogskoll-integration.
+
+
+## 2026-11-23 – Nationell ÄJO-råjämförelse färdigställd
+
+Den befintliga nationella snapshotarkitekturen i alg-grasmyr återanvänds; Skog bygger ingen parallell insamlare. PR [#83](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/83) och workflow [#45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790) verifierade jämförelsen mellan 2026-11-21 och 2026-11-23 för samma säsong (2026/2027), boundary_mode=current och 129/129 ÄFO.
+
+- 3 237 råa ÄJO-rader per snapshot.
+- 2 841 oförändrade rader; 396 rader med ändrade källattribut.
+- 0 tillkomna portal-ID:n och 0 ID:n saknade i senare snapshot.
+- ShotTotal ändrades på 378 rader; kumulativ nationell ökning +972 (56 715 till 57 687).
+- FinishedReporting ändrades på 42 rader: 41 Nej -> Ja, 1 Ja -> Nej.
+- Källsnapshotsen var oförändrade. Rapporten är ett härlett granskningsresultat, inte en ny insamlingskälla.
+
+Ändringar avser kumulativa säsongsrapporter, inte enskilda fälldatum eller händelser. FinishedReporting är en muterbar rapportstatus, inte en historisk händelse. Frånvaro ska inte tolkas som borttagning.
+
+**Nästa steg:** separat rättighetsbedömning för historisk lagring, bearbetning, kommersiell användning, kundvisning och vidare distribution. Ingen produktintegration eller kundpublicering ska ske innan dessa dimensioner har stöd i exakta villkor eller skriftlig evidens.
