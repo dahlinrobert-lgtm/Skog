@@ -1014,7 +1014,7 @@ PR #537 är mergad i main (merge commit 8ad923d9d4f5b2ef3b4e995c0b9aa15035e8256a
 
 **Verifiering på PR-head 7a7531de245d6ec87d4cb7f0e1d0ff530322fc33:** customer UI-tests passerade 85/85 ([run 45079498457](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498457)); source probe passerade ([run 45079498474](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498474)) med 300/300 unika ID:n, 0 dubbletter och 0 saknade ID:n av källans rapporterade 132 589. Proben var avsiktligt begränsad (complete_scan=false). Databastesterna passerade ([run 45079498504](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45079498504)): migration 005 applicerades i disponibel PostgreSQL/PostGIS och både PostGIS-matchning samt transaktionellt ingestion-/snapshot-smoketest passerade med rollback. Source-proben anropar inte den nya getSnapshotMetadata-funktionen mot live metadata; den funktionen testas med mockad ArcGIS-metadata. Ingen live Supabase-anslutning eller produktionsmigration har gjorts. Källstatusrapporten ändras inte eftersom rättighets-/kundvisningsstatus är oförändrad.
 
-**Nästa steg:** gör en separat verifiering av migration 005 och RPC-kontrakten i en disponibel Supabase-testmiljö, om sådan miljö och behörighet finns. Verifiera därefter livehämtning av ArcGIS-lagermetadata read-only. Produktionsmigration, schemalagd ingestion, full nationell scan, kundfeed och avisering kräver separata beslut och godkännanden.
+**Historiskt nästa steg – ersatt:** verifieringen i disponibla Supabase-testmiljön har genomförts och utökats med migration 006 och privilegiekontroller enligt avsnittet nedan. Återstående steg är en kontrollerad worker smoke-test i `skogskoll-test`, efter att nödvändiga GitHub Actions-secrets och en manuell, strikt avgränsad körväg har etablerats. Livehämtning av ArcGIS-lagermetadata read-only ska ingå som första kontroll. Produktionsmigration, schemalagd ingestion, full nationell scan, kundfeed och avisering kräver separata beslut och godkännanden.
 
 
 ## 2026-11-23 – Supabase-test behörighetsrevision och migration 006
@@ -1028,7 +1028,7 @@ Behörighetsrevisionen visade att `anon`, `authenticated` och `service_role` sak
 - `skogskoll/db/tests/api-grants-rls.sql`: testar privilegier, ägarisolering, push-sekvensbehörighet och workerläsning i transaktion med ROLLBACK.
 - `.github/workflows/skogskoll-db-test.yml`: applicerar migration 006 och kör det nya RLS-testet i den befintliga disponibla PostGIS-testdatabasen.
 
-Status vid dokumentuppdatering: branch/PR-CI behöver verifieras. Migration 006 är **inte** applicerad i Supabase-testprojektet. Ingen worker är ansluten; ingen ingestion, kundfeed eller avisering är aktiverad. Efter CI-granskning och merge ska användaren köra migration 006 i `skogskoll-test`, därefter verifieras privilegierna och först därefter görs en kontrollerad workeranslutning. `SKOGSKOLL_SOURCE_STATUS.md` ändras inte eftersom inga källrättigheter eller kundvisningsbeslut ändras.
+Historisk statusnotering från före PR #540/#541; aktuell status dokumenteras i avsnittet **Supabase-test migration 006 och RPC-behörigheter verifierade** nedan. Migration 006 är nu mergad och användaren har installerat den i `skogskoll-test`. Ingen worker är ännu ansluten och ingen ingestion, kundfeed eller avisering är aktiverad.
 
 
 ### CI-fel och korrigering i PR #540 (2026-11-23)
