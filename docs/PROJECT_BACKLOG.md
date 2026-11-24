@@ -354,3 +354,19 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 **Beslutspunkt efter prototypen:** avgör om befintliga payloadfält och metadata kan utökas minimalt eller om ett separat versionsstyrt kontrakt verkligen behövs. Formellt kontrakt får tas fram först när prototypen visar konkret behov och fältens semantik är verifierad.
 
 **Skyddsräcken:** ingen parallell collector eller historikmodell; ingen kopiering av källdata till projektledararkivet; latest attempt hålls skild från latest complete snapshot; partial/failed får aldrig ersätta komplett status; rättigheter hålls separata; ingen kundfeed, kundwrite, alert eller ändrad Azure-publicering.
+
+
+
+## PM-029 – Aktualisera projektledaren löpande med verifierade snapshots
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 – operativ överblick och snabb upptäckt av avvikelser |
+| Status | Planerad – uppdateringsschema beslutat; implementation och liveverifiering återstår |
+| Mål | Hålla den privata projektledarsidan aktuell med senaste kompletta GitHub-inventering utan att blanda ihop webbläsaruppdatering med faktisk källinsamling |
+| Beslutat schema | Europe/Stockholm: insamling var 5:e minut vardagar 16.00–01.00 och helger 10.00–01.00; övrig tid en gång per timme. Webbläsaren kontrollerar efter ny snapshot varje minut under de aktiva tiderna och en gång per timme övrig tid |
+| Arkitektur | Återanvänd befintlig read-only collector, validator, separata OIDC-publisheridentitet och privata Azure Blob-container. Ingen ny parallell collector eller publik projektdata |
+| Acceptanskriterier | Tidsgrind testad över vardag/helg och midnatt; komplett inventory krävs före publicering; run-scoped snapshots och manifest bevaras; latest-pointer uppdateras först efter verifierad publicering; browser läser endast senaste pekare/snapshot efter Entra-autentisering; fel behåller senaste kompletta snapshot och visas tydligt |
+| Säkerhetsgrind | Ingen containerlistning från webbläsaren; ingen anonym blobåtkomst; ingen ändring av befintliga Azure-identiteters scope; ingen partial/failed publicering; inga källfeaturedata eller kunddata i projektledarens inventory |
+| Nästa steg | Utforma och testa en DST-säker schemaläggningsgrind och ett atomiskt latest-manifest i det privata projektledarrepot. Därefter synkronisera den publicerade Pages-klienten och verifiera autentiserad läsning |
+| Övrigt | GitHub Actions schematriggers kan försenas eller tappas. Övervaka faktisk körning och freshness; schemat är önskad kadens, inte en SLA |
