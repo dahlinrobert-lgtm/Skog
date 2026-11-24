@@ -47,3 +47,5 @@ The Trafikverket umbrella record `trafikverket.open_data` is catalogue-only. Use
 - `.github/workflows/validate-source-registry.yml`: runs the registry validator on relevant changes.
 - `config/model-contract.yml`: initial logical record contract.
 - `../docs/open-data-and-commercial-use.md`: policy, source assessments and pre-publication checklist.
+
+- `scripts/inspect_lansstyrelsen_fire_ban_service.py`: manual metadata-only inspection of Länsstyrelsen's fire-ban FeatureServer. It does not query feature records, download geometries, create snapshots or schedule work; see `docs/SKOGSKOLL_DATA_OVERVIEW.md`.
