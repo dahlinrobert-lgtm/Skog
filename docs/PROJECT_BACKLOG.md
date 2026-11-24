@@ -65,6 +65,33 @@ Verifierat befintligt att återanvända:
 
 **Nästa steg:** utforma och testa en adapter/normaliserare som läser befintliga källregisterposter och källägda manifest-/snapshotindex och producerar ovanstående read model. Innan implementation måste inventeringen av befintliga manifest-/indexformat per prioriterad källa kompletteras och ett versionsstyrt source-to-workflow-mappningskontrakt beslutas. Därefter kan en separat PR implementera endast read-only aggregering och syntetiska success/partial/failed/stale/unknown-tester. Ingen schedule-, publisher-, Azure-behörighets- eller UI-ändring ingår i detta steg.
 
+#### Inventering av faktiska källformat – 2026-11-24
+
+Fortsatt read-only-granskning av kod, workflows och befintliga manifest på `main` visar att flera källor redan har användbara men **olika** kontrakt. De ska adapteras källspecifikt; de ska inte tvingas in i en ny gemensam snapshotlagring.
+
+| Källflöde | Befintligt format/evidens | Fullständighet och begränsning |
+|---|---|---|
+| `skogsstyrelsen.harvest_notifications` | `data/skogsstyrelsen/harvest_notifications/grasmyr/latest.json` pekar på gzip-GeoJSON. Manifestet har `captured_at_utc`, scope, `count_before/count_after`, ID-/featureantal, stabil ID-inventering, `complete_scan`, SHA-256 och snapshotrelativ sökväg. | Stark pilotgrind: ID-inventering före/efter måste vara identisk. Workflow är manuell `workflow_dispatch`, inte ett verifierat sex-timmarsflöde. Gräsmyr 10 km är pilotgeografi, inte nationell täckning. |
+| `skogsstyrelsen.samrad` | `scripts/collect_samrad.py` skriver gzipade, tidsstämplade snapshots och en muterbar `data/samrad_latest.json`. Payload har `schema_version`, `source_id`, `checked_at`, `status`, `scope_hash`, scope, separata point/line/area-lager, sidantal, hämtade poster och antal i scope. | Alla tre lager hämtas innan snapshot byggs; fel avbryter körningen. Stabilt ObjectId krävs och paginering har skydd. Snapshoten saknar i det granskade kontraktet ett fristående manifest med fil-SHA; payloadens scope hash är inte en snapshot-checksumma. Workflow har daglig schedule och skapar PR för arkivering. |
+| `slu.peat_map.v1` och `skogsstyrelsen.standortsindex_sis` | `data/geodata_timeline/snapshots/{snapshot_id}.json`, `latest.json`, NPZ-sampel och append-only `events.jsonl`. Snapshot innehåller observationstid, sample-geometri, per service status, metadata-/pixelhash, arrayform/datatyp, NPZ-referens, bandjämförelse, föregående snapshot och change-status. | Veckovis sample/change detection, inte fullständig nationell rasterdump. Per-service fel kan samexistera med lyckade tjänster i samma snapshot; adapter måste behålla status per service och inte göra hela körningen success om någon service har error. Jämförelse kräver kompatibel grid och tidigare NPZ. |
+| `lansstyrelsen.public_diary` | `data/lansstyrelsen-diary/snapshot-runs.jsonl` innehåller en manifestrad per försök. Varje lyckad county/phrase/interval ger en immutable JSONL-snapshot med run-ID, observationstid, county, diarienummer, sökfras, intervall och content hash. | `run_complete` kräver reconciled intervall, full paginering och match mellan källtotal och unika extraherade diarienummer. En komplett delkörning för county/fras är inte automatiskt en komplett nationell månad. Misslyckade försök får manifest men inga snapshotrader. |
+| `trafikverket.miljoweb_landskap` | `data/trafikverket/snapshots/{date}/manifest.json` innehåller snapshotdatum, skapandetid, geografiskt pilotområde och per service/lager metadata, identitetsfält, förväntat/observerat antal, filreferens, storlek och SHA-256. | Manifestet har lagergranularitet och passar som direkt evidenskälla. Granskad manifestversion avser Gräsmyr pilot/envelope; `source_object_count` kan vara null och får inte ersättas med noll. |
+| Gemensamt event bundle | `data-platform/schemas/event-bundle.schema.json` och exempel definierar ett separat semantiskt kontrakt med `source_runs`, `observations`, `events`, `evidence`, `relationships` och `chains`. | Detta är en härledd händelse-/evidensmodell, inte ett universellt råsnapshotmanifest. Behåll gränsen mellan källsnapshot och tolkad händelse. |
+
+**Konsekvens för adapterkontraktet:**
+
+- En källpost kan mappa till flera rapporteringsenheter: exempelvis Samråds tre geometrier/lager, rastertjänsterna Torvkarta/SIS och Trafikverkets många enskilda lager.
+- Normalisera inte bort källspecifik fullständighetsbevisning. Spara en `completeness_basis`/evidence reference som anger exakt kontroll (ID inventory, paging+source total, per-layer status, raster comparison, manifest checksum etc.).
+- Rapportera `latest_attempt` och `latest_complete_snapshot` separat. För Samråd och rastertimeline måste status även vara per lager/tjänst.
+- Bevara både manifestets och snapshotfilens sökväg, checksumma när den finns, workflow/run-ID och källans scope hash. Om checksumma saknas ska fältet vara null/unknown – beräkna inte en påhittad historisk checksumma.
+- `freshness` beräknas mot källregistrets kadens men får inte beskriva en pilot som nationell. Geografiskt scope och täckningsnivå måste följa med.
+- Rättighetsfält i `sources.yml` förblir separat från teknisk fullständighet och åtkomst.
+
+**Rekommenderad första adapterordning:** (1) Skogsstyrelsens avverkningsanmälningar och Samråd – tydliga vektorsnapshotformat och hög relevans för kärnbevakningen; (2) Torvkarta/SIS och Trafikverket Miljöwebb – manifest-/sample-/lagergranularitet; (3) Länsstyrelsens diarier – mer komplex multi-query/multi-county-kompletthet. Detta är en implementationordning, inte en ändring av källornas operativa prioritet eller kundrättigheter.
+
+**Nästa steg:** definiera versionsstyrd mapping mellan `source_id`, produkt/lager, workflow path, manifest locator och scope. Därefter bygg en read-only adapter för första två vektorflödena med fixtures från befintliga format och tester för komplett/partial/failed/stale/unknown. Ingen ny snapshotlagring eller ändring av källinsamling behövs för den första leveransen.
+
+
 ### Backloggens långsiktiga täckningsområden
 
 Backloggen ska successivt fånga följande områden. Detta är en planeringsram, inte en order att starta allt.
