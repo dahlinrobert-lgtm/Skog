@@ -1,7 +1,7 @@
 # Lagringsregister – vad finns var?
 
-**Senast inventerat:** 2026-11-17  
-**Status:** Första samlade inventering. Poster märkta *bekräftad* bygger på känd sökväg eller verifierad projekt-/molnkonfiguration. *Delvis känd* betyder att projektet eller lagringen är känd men exakt sökväg/container ännu inte är dokumenterad. *Ej inventerad* betyder att platsen måste kontrolleras.
+**Senast inventerat:** 2026-11-24  
+**Status:** Första samlade inventering med kompletterande lokal miljö- och schemaläggningskontroll 2026-11-24. Inventeringen är fortfarande avgränsad; ej kontrollerade lagringsplatser är fortsatt markerade som ej inventerade. Poster märkta *bekräftad* bygger på känd sökväg eller verifierad projekt-/molnkonfiguration. *Delvis känd* betyder att projektet eller lagringen är känd men exakt sökväg/container ännu inte är dokumenterad. *Ej inventerad* betyder att platsen måste kontrolleras.
 
 > **Syfte:** Detta är huvudregistret för var projekt, originaldata, historik, säkerhetskopior och arbetskopior lagras. Det ersätter inte källregistret i `data-platform/config/sources.yml` eller datakälledokumentationen i `docs/SKOGSKOLL_DATA_OVERVIEW.md`.
 
@@ -235,3 +235,88 @@ Indefinite retention betyder att ingen automatisk gallring eller tidsbaserad rad
 
 
 | 2026-11-23 | Gemensam Azure-konfiguration dokumenterad: aktiv Pay-As-You-Go-prenumeration, 200 SEK månadsbudget med 50/75/90 %-aviseringar, blobversionering och 14 dagars soft delete. Azure Monitor visade cirka 755–770 MiB och 310 transaktioner under vald 24-timmarsperiod. | `docs/azure-storage-operations.md`; användarens Azure Portal-skärmbilder |
+
+
+## 7. Lokal utvecklingsmiljö och daglig inventering – verifierat 2026-11-24
+
+Denna komplettering bygger på användarens read-only PowerShell-utdata, lokal Git-status och statisk granskning av `scripts/inventory-local-storage.ps1` från aktuell `main`. Ingen lokal inventeringsrapport har hämtats eller publicerats i GitHub i denna kontroll.
+
+### 7.1 Utvecklingsmiljö
+
+| Komponent | Verifierat läge |
+|---|---|
+| Windows | Windows 10 Home enligt produktfältet; OS build 26200 |
+| Windows PowerShell | 5.1.26100.9818; `pwsh` hittades inte i PATH |
+| Git | 2.56.0.windows.4 |
+| Python huvudmiljö | Python 3.12.10, global installation |
+| Python extra installation | Python 3.15.2, separat global installation |
+| Node.js / npm | Båda hittades i PATH |
+| GIS-kommandon | `ogr2ogr`, `gdalinfo` och `qgis` hittades inte i PATH; installation utanför PATH är inte utesluten |
+| R | `Rscript` hittades inte i PATH |
+
+Python 3.12 hade 42 installerade paket vid kontrollen. De åtta direkta beroendena i Skogs `requirements.txt` var installerade inom angivna versionsintervall; `pip check` rapporterade inga trasiga beroenden och `pip install --dry-run --no-index -r requirements.txt` visade samtliga krav som redan uppfyllda. Centrala paket inkluderar GeoPandas 1.2.0, Shapely 2.1.2, Pyogrio 0.13.0, PyProj 3.7.2, Pandas 3.1.1, NumPy 2.5.4, DuckDB 2.0.0 och Playwright 1.65.2.
+
+Python 3.15 hade 8 installerade paket och klarade sin egen `pip check`, men kunde inte uppfylla Skogs fullständiga `requirements.txt` i lokal no-index-kontroll: Shapely saknades. Python 3.15 är därför inte verifierad som Skogs utvecklingsmiljö. Ingen `.venv`, `venv`, `env` eller `conda`-katalog hittades i Skogs projektträd. Endast `requirements.txt` hittades bland de kontrollerade vanliga beroendefilerna.
+
+### 7.2 Lokala Git-projekt och arbetskataloger
+
+| Repo | Lokal branch vid kontroll | Spårade filer | Ospårade poster |
+|---|---|---|---:|
+| Skog | `main`, synkroniserad med `origin/main` | Inga spårade ändringar rapporterade | 34 |
+| bear-data | `audit/nvr-rt90-coordinate-recovery`, spårade origin-branch | Inga spårade ändringar rapporterade | 15 |
+
+De ospårade posterna inkluderar lokala analysprogram, CSV/JSON-resultat, datauttag, cachekataloger och backupfiler. De har inte automatiskt klassats som skräp och får inte raderas eller läggas till i Git utan separat granskning. Det fanns ingen aktiv PowerShell-jobbpost i den aktuella sessionen.
+
+### 7.3 Avgränsad lokal filinventering
+
+| Område | Observerat innehåll | Omfattning |
+|---|---|---:|
+| `Skog/data` | 466 GZ, 2 576 JSON, 44 JSONL, 3 ZIP, 1 Parquet, 5 CSV, 8 NPZ, 3 MD och 1 GeoJSON | 3 107 filer, cirka 702,86 MiB |
+| `Skog/data-platform` | YAML, Python, JSON, Markdown och en Python-bytecodefil | 11 filer |
+| `road_network_endpoint_analysis` | CSV | 3 filer, cirka 9,08 MiB |
+| `data/viltdata` | Ospårad lokal katalog | 2 154 filer, cirka 4,95 MiB |
+| `data/police_events/external_import` | Ospårad lokal katalog | 1 fil, cirka 14,43 MiB |
+
+Storlekarna kommer från PowerShells `Length / 1MB` och är avrundade. Sökningen var begränsad till angivna projektkataloger och är inte en fullständig diskinventering. Filinnehåll öppnades inte.
+
+### 7.4 Befintlig Windows-schemaläggning
+
+Aktiviteten `Skogskoll - local storage inventory` finns redan registrerad i Windows Task Scheduler.
+
+| Egenskap | Verifierat värde |
+|---|---|
+| Status | Ready |
+| Trigger | Dagligen, var 1 dag |
+| Start | 2026-11-16 kl. 21:00 lokal tid |
+| Körprogram | `powershell.exe` |
+| Skript | `scripts/inventory-local-storage.ps1` |
+| Senaste kontrollerade körning | 2026-11-23 21:00:01 |
+| Senaste resultatkod | 0 |
+| Missade körningar | 0 |
+| Nästa körning vid kontrollen | 2026-11-24 21:00 |
+| Anpassade rötter/output | Nej |
+| Flyttbara diskar | Ja, `-IncludeRemovableDrives` |
+| SHA-256 | Nej, `-HashFiles` används inte |
+
+Skriptets standardrötter är GitHub-kloner under användarprofilen och `Skogskoll` under OneDrive-synkroten när den hittas. Om ingen OneDrive-rot hittas används lokal fallback under hemkatalogen. Standardutdata placeras i `Skogskoll\\_inventory` under OneDrive när OneDrive-roten finns, annars `storage-inventory` under hemkatalogen. Den faktiska aktuella outputkatalogen och de senaste rapporterna har ännu inte lästs/verifierats i denna komplettering.
+
+### 7.5 Kodgranskningsfynd – risker att åtgärda
+
+Den befintliga implementationen är avsedd att vara read-only för källdata och skapar tidsstämplade JSON-/Markdownrapporter. Statisk granskning identifierade dock följande risker:
+
+1. Filenumereringen använder `Get-ChildItem -Recurse -ErrorAction SilentlyContinue`. Fel i enskilda underkataloger kan därmed döljas utan att hamna i rapportens `errors`.
+2. Jämförelsen kan skapa `missing` för tidigare observerade filer även om aktuell enumerering varit partiell.
+3. Föregående och aktuell uppsättning inventeringsrötter jämförs inte som ett stabilt scope. En utelämnad eller ändrad rot kan därför ge falska `missing`-poster.
+4. JSON-rapporten innehåller datornamn, användarnamn och fullständiga lokala sökvägar. Rapporternas åtkomst och eventuell delning behöver bedömas.
+5. SHA-256 är avstängt i den schemalagda aktiviteten. Resultatkod 0 bekräftar Task Schedulers körresultat, inte fullständig täckning eller integritet för rapportinnehållet.
+
+**Skyddsprincip:** partiell eller scope-inkompatibel inventering får aldrig skapa borttagnings-/`missing`-slutsatser. Tidigare rapporter ska bevaras. Inga filer, schemalagda aktiviteter eller inventeringsinställningar har ändrats i denna kontroll.
+
+### 7.6 Projektledaruppföljning
+
+- GitHub issue [#597 – Härda lokal lagringsinventering mot partiella körningar och falska missing-händelser](https://github.com/dahlinrobert-lgtm/Skog/issues/597) samlar implementationens acceptanskriterier.
+- Skog är registrerat som aktivt repo i projektledarens projektregister. Projektledarens befintliga read-only collector hämtar öppna issues/PR från aktiva projekt. Issue #597 kan därför visas i projektledarens arbetslista efter nästa kompletta inventering och publicerade dashboard-snapshot.
+- Ingen separat projektledarwebbkomponent behövs för att skapa arbetskortet; dashboarden renderar redan `open_work_items`. Den aktuella webbpubliceringen har inte uppdaterats/verifierats i denna dokumentationsändring.
+- Nästa steg är att granska senaste lokala JSON-/Markdownrapporten och dess faktiska outputplats, därefter implementera fail-closed-fullständighet och scope-kontroll i en separat kod-PR.
+
+**Dokumentationsstatus:** Documented – nuläge och risker registrerade; implementation och rapportgranskning återstår.
