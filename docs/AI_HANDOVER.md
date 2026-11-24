@@ -1320,3 +1320,12 @@ Verified: 3,237 raw ÄJO rows on each date; 2,841 unchanged; 396 rows with one o
 The audit implementation, tests and run instructions are documented in [alg-grasmyr NATIONAL_AJO_ROW_DIFF.md](https://github.com/dahlinrobert-lgtm/alg-grasmyr/blob/main/docs/NATIONAL_AJO_ROW_DIFF.md). Missing rows are classified as unconfirmed absences, never as deletions. No Skog worker, customer feed or alerts are enabled.
 
 **Next concrete step:** continue scheduled/controlled national snapshots and compare later dates using the same immutable row-level audit. Separately review the existing rights evidence for exact commercial/customer-display scope before any product integration. Do not interpret cumulative differences as event-level harvests.
+
+
+## 2026-11-24 – Mobilappspublicering registrerad i projektbackloggen
+
+GitHub issue [#573](https://github.com/dahlinrobert-lgtm/Skog/issues/573) och backloggpost PM-024 registrerar kommande arbete för att förbereda Skogskoll för Google Play och Apple App Store. Detta är planering/kravinsamling, inte ett beslut att börja bygga eller publicera.
+
+Omfattningen inkluderar beslut om juridisk utgivare och kontoägare, read-only inventering av befintlig frontend, jämförelse av PWA/Capacitor/React Native, butikarnas integritets-, behörighets-, kontoraderings- och granskningskrav, testning samt drift och releaseförvaltning. Tidigare angivna butikskontoavgifter (Google Play 25 USD engångsvis, Apple Developer Program 99 USD/år) är endast preliminära budgetvärden och måste verifieras mot officiella aktuella villkor före registrering eller betalning.
+
+Nästa konkreta steg är att inventera aktuell Skogskoll-frontend, mobilanpassning, auth, kartor och notifieringsflöden. Ingen utvecklarkontoregistrering, ny produktionsaktivering eller kundavisering ska ske som del av detta planeringssteg. Se [PROJECT_BACKLOG.md, PM-024](PROJECT_BACKLOG.md).
