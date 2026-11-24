@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "scripts/inventory-local-storage.ps1"
+      - "scripts/test_inventory_local_storage.ps1"
       - "scripts/install-local-storage-inventory-task.ps1"
       - ".github/workflows/validate-storage-inventory-scripts.yml"
   pull_request:
@@ -26,6 +27,7 @@ jobs:
         run: |
           $files = @(
             "scripts/inventory-local-storage.ps1",
+            "scripts/test_inventory_local_storage.ps1",
             "scripts/install-local-storage-inventory-task.ps1"
           )
           foreach ($file in $files) {
