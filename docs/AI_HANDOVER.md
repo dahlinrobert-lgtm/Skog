@@ -1573,3 +1573,29 @@ Den andra runtime-delen av PM-029 är nu mergad i det privata projektledarrepot 
 **Verifieringsgräns:** merge och CI är verifierade. Automatisk trigger efter en verklig schemalagd inventory-run, OIDC/RBAC, Azure-upload/read-back, latest-pekarens liveinnehåll samt Entra/CORS/browserläsning är ännu inte verifierade. Ingen browser-polling är implementerad eller aktiverad.
 
 **Nästa konkreta steg:** invänta nästa lyckade inventory-run på `main`; verifiera att publishern triggas och att payload, manifest och `latest.json` läses tillbaka korrekt i privat Azure. Testa också att partial/failed-run inte kan flytta latest. Först därefter implementeras autentiserad Pages-polling mot latest-pekaren och dashboardens freshness/stale-visning.
+
+
+## 2026-11-24 – Fail-closed lokal lagringsinventering mergad
+
+PR [#600](https://github.com/dahlinrobert-lgtm/Skog/pull/600) är mergad i `main`, merge commit `670b8dd5cfad60f7a1eb0a26ef1c91e2921bb599`. Issue [#597](https://github.com/dahlinrobert-lgtm/Skog/issues/597) stängdes automatiskt vid merge.
+
+**Implementation i main:**
+- `scripts/inventory-local-storage.ps1` producerar schema 2.0 med `inventory_status`, `comparison_status`, `comparison_reason`, rotstatus och antal rötter/kataloger/filer/fel.
+- Enumereringsfel fångas. Saknade rötter behålls i scope och kan inte tyst försvinna ur jämförelsen.
+- Diff beräknas endast när aktuell inventering är komplett, föregående schema 2.0-rapport är komplett och rotuppsättningen är identisk. Annars undertrycks diffen.
+- Schema 1-rapporter är avsiktligt icke-jämförbara och ger en tyst baseline.
+- PowerShell 5.1-parsning och regressionstest passerade i [Actions run 45486453158](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45486453158). Testfallen täcker baseline, komplett jämförelse, ändrat rot-set och saknad rot.
+
+**Viktiga kvarstående begränsningar:**
+- ACL-test med nekad åtkomst till en underkatalog saknas; befintligt partielltest använder en saknad rot.
+- JSON-rapporten har inte längre dator-/användaridentitetsfält, men innehåller fortfarande fullständiga lokala filsökvägar. Markdownrapporten innehåller datornamn. Rapporterna ska hållas lokalt och inte publiceras utan separat granskning.
+- Den nya versionen är inte manuellt körd på användarens dator. Task Scheduler-aktiviteten, dess dagliga 21:00-schema, removable-drive-inställning och SHA-256-inställning har inte ändrats.
+
+**Nästa konkreta arbetssteg:**
+1. Bevara en kopia av lokalt `scripts/inventory-local-storage.ps1` och hela rapportmappen innan lokal uppdatering.
+2. Uppdatera den lokala arbetskopian från `main` och kör skriptet manuellt en gång. Ändra inte Task Scheduler och aktivera inte `-HashFiles`.
+3. Granska schema 2.0, samtliga rotstatusar, `error_count`, `comparison_status` och `comparison_reason`. En första schema 2.0-körning ska vara baseline; äldre schema 1 ska inte skapa historiska missing-händelser.
+4. Lägg till ett isolerat ACL-regressionstest för nekad underkatalogåtkomst och utred minimering av filsökvägar/datornamn i lokala rapporter.
+5. Efter godkänd manuell kontroll: låt befintlig schemalagda aktivitet vara oförändrad och verifiera en senare schemalagd körning.
+
+**Dokumentation:** `docs/STORAGE_INVENTORY.md`, `docs/PROJECT_BACKLOG.md` och denna handover uppdateras i dokumentations-PR efter implementationens merge. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms inte behöva ändras: inga källor, källrättigheter eller datainsamlingsflöden ändrades.
