@@ -1475,3 +1475,12 @@ Main innehåller nu:
 Granska resultatet och uppdatera `SKOGSKOLL_DATA_OVERVIEW.md` och källregistrets evidens först när de faktiska metadataresultaten finns. Behåll källstatus fail-closed tills dess.
 
 Ingen feature-query, geometrihämtning, snapshot, schemaläggning eller kundvisning är aktiverad. Enligt användarens beslut får schemaläggning och operativa snapshots tidigast övervägas 2027-01-24, efter separat beslut. Första operativa snapshot ska vara en tyst baslinje utan historiska larm.
+
+
+## 2026-11-24 – Älgdata: öppna data-villkor preciserade
+
+Länsstyrelsen Västerbottens officiella öppna data-sida beskriver Älgdata som statistik över fällda älgar och inrapporterad avskjutning, anger att databasen får användas helt fritt, att villkor saknas och att formatet är Microsoft XLSX. Samma uppgift har kontrollerats på Länsstyrelsen Stockholm och Jämtland. Detta ger starkt stöd för fri återanvändning av den publicerade statistiken, inklusive historisk jämförelse, bearbetning, kommersiella analyser och kundvisning inom statistikens scope. Attribution anges inte som villkor; källhänvisning rekommenderas ändå.
+
+**Viktig avgränsning:** detta villkorsbesked dokumenterar inte portalens interna API som ett stabilt automatiseringsgränssnitt, dess anropsfrekvens eller SLA. Innan högfrekvent/produktionskritisk maskinhämtning bör Länsstyrelsen bekräfta den tekniska hämtvägen. JaktAdm-geometrier är en separat produkt och omfattas inte automatiskt av Älgdata-statistikens villkor.
+
+Se [rättighetsgranskningen](source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md), avsnitt 5. Nästa konkreta steg: begär ett kort tekniskt besked från Länsstyrelsen om återkommande maskinell hämtning via den använda statistikportalen/API-vägen och eventuella frekvensbegränsningar. Ingen kod, worker eller kundfeed aktiveras i detta dokumentationssteg.
