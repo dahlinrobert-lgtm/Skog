@@ -128,21 +128,30 @@ def filter_to_radius(collection: dict[str, Any], latitude: float, longitude: flo
     centre = transform(TO_TM, Point(longitude, latitude))
     circle = centre.buffer(radius_m)
     retained = []
+    missing_geometry = 0
+    geometry_errors = 0
+    outside_scope = 0
     for feature in collection["features"]:
         geometry = feature.get("geometry")
         if not geometry:
+            missing_geometry += 1
             continue
         try:
             projected = transform(TO_TM, shape(geometry))
             if not projected.is_valid:
                 projected = projected.buffer(0)
-            if not projected.is_empty and projected.intersects(circle):
-                retained.append(feature)
+            if projected.is_empty or not projected.intersects(circle):
+                outside_scope += 1
+                continue
+            retained.append(feature)
         except Exception:
-            continue
+            geometry_errors += 1
     result = dict(collection)
     result["features"] = retained
     result["records_in_scope"] = len(retained)
+    result["records_outside_scope"] = outside_scope
+    result["records_missing_geometry"] = missing_geometry
+    result["records_geometry_error"] = geometry_errors
     return result
 
 
@@ -199,6 +208,9 @@ def collect(config: dict[str, Any], session: requests.Session | None = None) -> 
             name: {
                 "records_fetched_in_envelope": layer["records_fetched"],
                 "records_in_scope": layer["records_in_scope"],
+                "records_outside_scope": layer["records_outside_scope"],
+                "records_missing_geometry": layer["records_missing_geometry"],
+                "records_geometry_error": layer["records_geometry_error"],
                 "pages": layer["pages"],
             }
             for name, layer in layer_results.items()
@@ -212,6 +224,57 @@ def collect(config: dict[str, Any], session: requests.Session | None = None) -> 
     }
 
 
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def build_small_manifest(result: dict[str, Any], snapshot_path: str, snapshot_bytes: int, snapshot_sha256: str) -> dict[str, Any]:
+    layer_manifest = {}
+    for name in ("points", "lines", "areas"):
+        layer = result.get("layers", {}).get(name, {})
+        counts = result.get("counts", {}).get(name, {})
+        geometry_issues = counts.get("records_missing_geometry", 0) + counts.get("records_geometry_error", 0)
+        layer_complete = (
+            layer.get("status") == "success"
+            and isinstance(counts.get("pages"), int)
+            and isinstance(counts.get("records_fetched_in_envelope"), int)
+            and isinstance(counts.get("records_in_scope"), int)
+            and geometry_issues == 0
+        )
+        layer_manifest[name] = {
+            "status": "complete_for_configured_scope" if layer_complete else "partial_or_unknown",
+            "pagination_status": "exhausted" if layer.get("status") == "success" else "unknown",
+            "pages": counts.get("pages"),
+            "records_fetched_in_envelope": counts.get("records_fetched_in_envelope"),
+            "records_in_scope": counts.get("records_in_scope"),
+            "records_outside_scope": counts.get("records_outside_scope"),
+            "records_missing_geometry": counts.get("records_missing_geometry"),
+            "records_geometry_error": counts.get("records_geometry_error"),
+        }
+    complete = all(item["status"] == "complete_for_configured_scope" for item in layer_manifest.values())
+    return {
+        "schema_version": 1,
+        "source_id": SOURCE_ID,
+        "status": "success" if complete else "partial",
+        "completeness_status": "complete_for_configured_scope" if complete else "partial_or_unknown",
+        "completeness_basis": "all three configured layers paginated to exhaustion; all fetched features assigned to in-scope/outside-scope with no missing or failed geometries",
+        "source_total_reconciled": False,
+        "checked_at": result.get("checked_at"),
+        "scope_hash": result.get("scope_hash"),
+        "scope": result.get("scope"),
+        "snapshot": {
+            "path": snapshot_path,
+            "bytes": snapshot_bytes,
+            "sha256": snapshot_sha256,
+        },
+        "layers": layer_manifest,
+    }
+
+
 def main() -> int:
     config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     try:
@@ -222,12 +285,18 @@ def main() -> int:
     stamp = datetime.fromisoformat(result["checked_at"].replace("Z", "+00:00")).strftime("%Y%m%dT%H%M%SZ")
     snapshot_path = SNAPSHOTS / f"samrad_{stamp}.json.gz"
     size = write_snapshot(snapshot_path, result)
+    snapshot_relative_path = str(snapshot_path.relative_to(ROOT))
+    manifest = build_small_manifest(result, snapshot_relative_path, size, sha256_file(snapshot_path))
     atomic_write_json(LATEST, result)
+    manifest_path = DATA / "samrad_latest_manifest.json"
+    atomic_write_json(manifest_path, manifest)
     print(json.dumps({
         "status": result["status"], "checked_at": result["checked_at"],
         "scope_hash": result["scope_hash"], "counts": result["counts"],
-        "snapshot": str(snapshot_path.relative_to(ROOT)), "snapshot_bytes": size,
+        "snapshot": snapshot_relative_path, "snapshot_bytes": size,
         "latest": str(LATEST.relative_to(ROOT)),
+        "manifest": str(manifest_path.relative_to(ROOT)),
+        "manifest_status": manifest["completeness_status"],
     }, ensure_ascii=False))
     return 0
 
