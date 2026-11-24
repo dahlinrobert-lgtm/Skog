@@ -1556,3 +1556,20 @@ Den första runtime-delen är nu mergad i det privata projektledarrepot `dahlinr
 **Verifiering:** Merge-commitens main-run #117 (Actions run 45483671689) passerade. Python-enhetstester och dashboardens JavaScript-syntaxkontroll är gröna. En tidigare testkörning hittade ett felaktigt UTC-testvärde för helggränsen; testet korrigerades före merge. Detta verifierar kod och testsvit, inte långvarig faktisk schedule-drift. GitHub schedule events kan försenas eller tappas; kadensen är inte en SLA.
 
 **Nästa konkreta steg:** bygg och testa den separata OIDC-baserade Azure-publiceringen i projektledarrepot. Publicera först immutable run-scoped snapshot och manifest efter komplett inventory-validering och read-back. Inför därefter en skyddad latest-pekare som endast flyttas efter verifierad publicering. Efter det uppdateras Pages-klienten med autentiserad polling och tydlig freshness/stale-status. Behåll senaste kompletta snapshot vid partial/failed och bevara historiska snapshots.
+
+
+### PM-029 – Azure-publicering och latest-pekare mergad 2026-11-24
+
+Den andra runtime-delen av PM-029 är nu mergad i det privata projektledarrepot `dahlinrobert-lgtm/skogskoll-project-manager-history`.
+
+- PR #68: https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/68
+- Merge commit: `44c2bfa73b14193c7d7fb364084b69c791819ca8`.
+- Main CI run #45486205149 passerade Python unit tests och dashboardens JavaScript-syntaxkontroll.
+- Publiceringsworkflowet triggas automatiskt efter avslutad inventory-workflow via `workflow_run`, och behåller manuell dispatch som operatörsväg.
+- Källkörningen måste vara lyckad, färdig, komma från exakt inventory-workflow på `main` i rätt repo och ha ett enda namngivet/oexpirerat artifact. Gate-tick utan inventory-artifact hoppas över.
+- Payload och deterministiskt manifest lagras run-scopat. Byte-för-byte read-back krävs innan `latest.json` uppdateras. Äldre run får inte flytta latest bakåt; samma run kräver matchande manifestreferens och payload-SHA-256.
+- Befintlig OIDC-identitet och privat Azure Storage återanvänds. Ingen anonym blobåtkomst, containerlistning, källfeaturedata eller kunddata införs.
+
+**Verifieringsgräns:** merge och CI är verifierade. Automatisk trigger efter en verklig schemalagd inventory-run, OIDC/RBAC, Azure-upload/read-back, latest-pekarens liveinnehåll samt Entra/CORS/browserläsning är ännu inte verifierade. Ingen browser-polling är implementerad eller aktiverad.
+
+**Nästa konkreta steg:** invänta nästa lyckade inventory-run på `main`; verifiera att publishern triggas och att payload, manifest och `latest.json` läses tillbaka korrekt i privat Azure. Testa också att partial/failed-run inte kan flytta latest. Först därefter implementeras autentiserad Pages-polling mot latest-pekaren och dashboardens freshness/stale-visning.
