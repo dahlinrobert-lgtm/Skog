@@ -11,7 +11,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $timestamp = (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
-$errors = New-Object System.Collections.Generic.List[object]
+$errors = [System.Collections.Generic.List[object]]::new()
 $discoveryComplete = $true
 
 if (-not $Roots -or $Roots.Count -eq 0) {
@@ -73,8 +73,8 @@ if (-not $OutputDirectory) {
 }
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 
-$items = New-Object System.Collections.Generic.List[object]
-$rootStates = New-Object System.Collections.Generic.List[object]
+$items = [System.Collections.Generic.List[object]]::new()
+$rootStates = [System.Collections.Generic.List[object]]::new()
 
 foreach ($root in $Roots) {
     Write-Host "Scanning: $root"
@@ -146,7 +146,7 @@ if (@($rootStates.ToArray() | Where-Object { $_.status -eq "failed" }).Count -eq
 $previousSnapshot = Get-ChildItem -LiteralPath $OutputDirectory -Filter "local-storage-inventory-*.json" -File -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
 
-$changes = New-Object System.Collections.Generic.List[object]
+$changes = [System.Collections.Generic.List[object]]::new()
 $comparisonStatus = "baseline"
 $comparisonReason = "no_previous_snapshot"
 if ($previousSnapshot) {
