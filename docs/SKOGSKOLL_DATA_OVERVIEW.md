@@ -1079,3 +1079,37 @@ Alg-grasmyr PR #83 är mergad. Den nya skrivskyddade analysen använder portalen
 Flera attribut kan ändras på samma ÄJO-rad. Detta är förändringar mellan kumulativa säsongsrapporter, inte enskilda fälthändelser eller exakta fälldatum. Analysen ändrar inte originalsnapshots. En rad som saknas i ett senare uttag ska klassas som obekräftad frånvaro, inte borttagning, avbokning eller genomförande.
 
 Detaljer, fältfördelning och reproducerbar körinstruktion finns i [alg-grasmyr/docs/NATIONAL_AJO_ROW_DIFF.md](https://github.com/dahlinrobert-lgtm/alg-grasmyr/blob/main/docs/NATIONAL_AJO_ROW_DIFF.md). Fortsatt användning i Skogskoll kräver separat kontroll av exakt kommersiell användning, kundvisning och distribution; ingen worker eller kundavisering har aktiverats.
+
+
+### Länsstyrelserna – eldningsförbud i skog och mark (EXT)
+
+**Käll-ID:** `lansstyrelsen.fire_ban`  
+**Metadata-ID:** `53514d5d-b1ea-4162-bc56-58e496f0f4f7`
+
+- WebbGIS: https://ext-webbgis.lansstyrelsen.se/lst_eldningsforbud/
+- FeatureServer: https://ext-geodata-nationella-visning.lansstyrelsen.se/arcgis/rest/services/LST/LST_eldningsforbud_EXT/FeatureServer
+- Geodatakatalogens metadata: https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/GetMetaDataById?id=53514d5d-b1ea-4162-bc56-58e496f0f4f7
+- Metadata enligt användarens skärmbild: skapad 2020-05-13, reviderad 2026-08-26; underhåll anges som årligen och kontinuerligt. Beskrivningen säger att karttjänsten också tillhandahålls via WMS och Map Service.
+- Metadata beskriver fem statusvärden: eldningsförbud, inget eldningsförbud, skärpt eldningsförbud, annat eldningsförbud och ej angivet. Den anger även uppgifter om beslutsfattare, startdatum, besluts-/informationslänk och kommunstatus.
+- **Viktig semantik:** saknad information eller statusen ej angivet betyder inte att eldningsförbud saknas. Metadata beskriver även att kommuner kan ha egna förbud/regler enligt annan lagstiftning; den här tjänsten får därför inte beskrivas som en fullständig förteckning över alla lokala eldningsregler.
+- Metadata-skärmbilden visar inga tillämpliga användnings- eller åtkomstvillkor. Den maskinläsbara metadatarecorden och eventuella lager-/komponentvillkor är inte oberoende verifierade. Detta ska inte tolkas som ett generellt juridiskt godkännande för historisk lagring, bearbetning, kommersiell användning eller kundvisning.
+- Geografisk täckning, lager-ID:n, fält, stabila objekt-ID:n, maxRecordCount och pagineringsstöd är ännu inte verifierade mot FeatureServer.
+
+**Implementerad första etapp (connector, inte insamling):**
+
+`data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py` gör en manuell metadata-only-inspektion av FeatureServer-roten och de lager/tabeller som annonseras. Den rapporterar schema, fält, geometri, extent, spatial reference, objekt-ID/global-ID-fält, maxRecordCount och pagineringskapacitet. Den har timeout, sekventiella anrop och ett tak på 25 lager-/tabellmetadataanrop som standard (högst 50 efter uttrycklig parameterändring).
+
+Connectorn frågar **inte** efter feature-poster eller geometrier, skapar inga snapshots och har inget workflow/schedule. Standardläget skriver inte någon fil; `--out` kan användas för att spara metadataresultatet manuellt.
+
+**Planering:** schemaläggning och operativa snapshots ska tidigast övervägas från **2027-01-24**. Detta är ett planerat datum, inte en aktiverad körning. Första operativa snapshoten ska vara en tyst baslinje utan historiska larm. Före den tidpunkten krävs metadata-probe, verifierad scope/identitet/paginering, fullständighetsstrategi, källvillkor och separat beslut om lagring/publicering.
+
+Kör manuellt efter merge när tjänsten är tillgänglig:
+
+    python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py
+    python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py --out /tmp/lansstyrelsen-fire-ban-metadata.json
+
+Test:
+
+    python -m unittest discover -s tests -p "test_inspect_lansstyrelsen_fire_ban_service.py" -v
+
+Ingen featuredata hämtas av dessa kommandon.
