@@ -1484,3 +1484,10 @@ Länsstyrelsen Västerbottens officiella öppna data-sida beskriver Älgdata som
 **Viktig avgränsning:** detta villkorsbesked dokumenterar inte portalens interna API som ett stabilt automatiseringsgränssnitt, dess anropsfrekvens eller SLA. Innan högfrekvent/produktionskritisk maskinhämtning bör Länsstyrelsen bekräfta den tekniska hämtvägen. JaktAdm-geometrier är en separat produkt och omfattas inte automatiskt av Älgdata-statistikens villkor.
 
 Se [rättighetsgranskningen](source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md), avsnitt 5. Nästa konkreta steg: begär ett kort tekniskt besked från Länsstyrelsen om återkommande maskinell hämtning via den använda statistikportalen/API-vägen och eventuella frekvensbegränsningar. Ingen kod, worker eller kundfeed aktiveras i detta dokumentationssteg.
+
+
+## 2026-11-24 – Länsstyrelsens svar om Älgdata-kartskikt inväntas
+
+Gmail-tråden ”Förfrågan om återanvändning av kartskikt från Länsstyrelsens Älgdata i webbtjänst” skickades 2026-11-23 till Länsstyrelsens generella kartstöd. Den 2026-11-24 svarade `fo-natur@lansstyrelsen.se` (Daniel): ”Vi kollar på dina frågor och återkommer.” Detta är en mottagningsbekräftelse, inte ett sakligt rättighetsbesked.
+
+**Nästa konkreta steg:** invänta och granska Länsstyrelsens sakliga svar om lager/tjänster, extern och kommersiell visning, cache/lagring, historik och uppdateringsfrekvens. Skicka ingen upprepning innan svar eller rimlig uppföljningstid. Skilj fortsatt JaktAdm-geometrier från Älgdata-statistikens öppna data-villkor.
