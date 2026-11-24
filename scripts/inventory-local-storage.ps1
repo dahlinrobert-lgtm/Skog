@@ -126,6 +126,7 @@ foreach ($root in $Roots) {
     $rootMatching = @($items.ToArray() | Where-Object { $_.root -eq $root })
     $rootStates.Add([pscustomobject]@{
         root = $root
+        root_id = $rootIds[$root]
         status = $rootStatus
         directory_count = $rootDirectories
         file_count = $rootMatching.Count
@@ -163,7 +164,7 @@ if ($previousSnapshot) {
         if ($inventoryStatus -ne "complete") {
             $comparisonStatus = "suppressed"
             $comparisonReason = "current_inventory_not_complete"
-        } elseif ([string]$previous.schema_version -ne "2.0" -or [string]$previous.inventory_status -ne "complete") {
+        } elseif ([string]$previous.schema_version -ne "2.1" -or [string]$previous.inventory_status -ne "complete") {
             $comparisonStatus = "suppressed"
             $comparisonReason = "previous_report_not_comparable"
         } else {
@@ -318,7 +319,7 @@ $lines.Add("")
 $lines.Add("")
 $lines.Add("Changes since previous snapshot: $($changes.Count)")
 $lines.Add("| Change | Root ID | Relative path | Old bytes | New bytes |")
-$lines.Add("|---|---|---:|---:|")
+$lines.Add("|---|---|---|---:|---:|")
 foreach ($change in $safeChanges) { $lines.Add("| $($change.change) | $($change.root_id) | $($change.relative_path) | $($change.old_size_bytes) | $($change.new_size_bytes) |") }
 $lines.Add("")
 $lines.Add("Errors: $($errors.Count)")
