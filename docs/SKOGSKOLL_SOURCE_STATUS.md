@@ -1,13 +1,13 @@
 # Skogskoll – automatisk status för datakällor
 
-**Register kontrollerat:** 2026-11-23  
+**Register kontrollerat:** 2026-11-24  
 **Underlag:** data-platform/config/sources.yml
 
 > Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 ## Sammanfattning
 
-- Registrerade datakällor: **51**
+- Registrerade datakällor: **52**
 - Källor med operativ status: **14**
 - Källor som ännu inte har operativ status: **37**
 - Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 1, Teknisk probe: 1, Verifierad: 6
