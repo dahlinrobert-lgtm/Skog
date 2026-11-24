@@ -80,10 +80,14 @@ foreach ($root in $Roots) {
     Write-Host "Scanning: $root"
     try {
         $enumerationErrors = @()
-        $files = @(Get-ChildItem -LiteralPath $root -File -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable +enumerationErrors | Where-Object {
+        $files = @(Get-ChildItem -LiteralPath $root -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable +enumerationErrors | Where-Object {
             -not ($OutputDirectory -and $_.FullName.StartsWith($OutputDirectory, [System.StringComparison]::OrdinalIgnoreCase))
         })
         foreach ($file in $files) {
+            if ($file.PSIsContainer) {
+                $rootDirectories++
+                continue
+            }
             $hash = $null
             if ($HashFiles -and $file.Length -le $MaxHashBytes) {
                 try { $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash }
@@ -114,7 +118,7 @@ foreach ($root in $Roots) {
     $rootStates.Add([pscustomobject]@{
         root = $root
         status = $rootStatus
-        directory_count = $null
+        directory_count = $rootDirectories
         file_count = $rootMatching.Count
         total_bytes = [long](($rootMatching | Measure-Object -Property size_bytes -Sum).Sum)
         error_count = @($errors | Where-Object { $_.path -eq $root }).Count
@@ -207,7 +211,7 @@ $report = [ordered]@{
     comparison_status = $comparisonStatus
     comparison_reason = $comparisonReason
     root_count = $rootStates.Count
-    directory_count = $null
+    directory_count = [long](($rootStates | Measure-Object -Property directory_count -Sum).Sum)
     file_count = $items.Count
     error_count = $errors.Count
     generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
