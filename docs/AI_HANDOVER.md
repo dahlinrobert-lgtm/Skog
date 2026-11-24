@@ -1378,3 +1378,19 @@ I det privata repot `dahlinrobert-lgtm/skogskoll-project-manager-history` är PR
 - PR-CI passerade: Project manager tests run `45440389309` och Synthetic append-only tests run `45440389414`.
 
 **Kvarstående:** ingen live inventory-körning eller nytt artifact efter merge är verifierat. GitHub-integrationen i denna session kan läsa workflow-runs och artifacts men erbjuder inte dispatch av workflow. Starta därför en manuell körning från projektledarrepots `main` via GitHub Actions, lämna `manage_alert_issue` avmarkerad och granska artifact innan PM-027:s två källor och dashboard verifieras. Ingen Azure-publicering, källskrivning eller kundavisering ingår.
+
+
+## 2026-11-24 – PM-027 collectorimport korrigerad och mergad
+
+I det privata projektledarrepot [skogskoll-project-manager-history PR #58](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/58) är importfixen för PM-027-adaptern mergad till `main` i commit `02e2ee876bf2a8293d8c7ab2ad0600c35a750f44`.
+
+Collector använder nu paketrelativ import när den körs som modul och syskonimport som reserv när workflowet kör `python scripts/collect_github.py`. Regressionstestet reproducerar direkt skriptkörningsmiljön genom att lägga `scripts/` på `sys.path`, importera collector-modulen utan paketkontext och verifiera att befintlig `collect()`-väg faktiskt kopplar in adapterevidensen.
+
+Verifiering:
+- Korrigerad PR-CI: Project manager tests [45442219024](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442219024) och Synthetic append-only tests [45442219569](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442219569) passerade.
+- Post-merge main-test: [45442304488](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442304488) passerade.
+- Tidigare manuella inventory-försök [45441579231](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45441579231) och [45440849681](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45440849681) misslyckades före denna korrigering (först dubblett i workflow-metadata, därefter importfel). De är inte live-verifiering av PM-027-adaptern.
+
+**Kvarstående:** kör den befintliga read-only inventory-workflowen manuellt från projektledarrepots `main`. Lämna `manage_alert_issue` avmarkerad. Granska collector-status, fullständighet för aktiva projekt, source registry, de två `source_snapshot_evidence`-posterna (avverkningsanmälningar och Samråd) samt artifact. Latest attempt och latest complete snapshot ska fortsatt hållas isär; okänd evidens ska förbli `unknown`. Denna kodfix ändrar inte källinsamling, källrättigheter, Azure-publicering eller kundbeteende.
+
+Ingen ny källstatus eller rättighetsbedömning följer av merge eller CI. Kundvisning och kommersiell användning förblir enligt källregistret oförändrade.
