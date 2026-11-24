@@ -11,6 +11,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 $timestamp = (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
+$errors = [System.Collections.Generic.List[object]]::new()
+$discoveryComplete = $true
 
 if (-not $Roots -or $Roots.Count -eq 0) {
     $candidateRoots = @()
@@ -40,12 +42,14 @@ if ($IncludeRemovableDrives) {
             if (Test-Path -LiteralPath $mount) { $Roots += $mount }
         }
     } catch {
-        Write-Warning "Could not enumerate removable drives: $($_.Exception.Message)"
+        $discoveryComplete = $false
+        $errors.Add([pscustomobject]@{ path="(removable-drive discovery)"; category="root_discovery"; error=$_.Exception.Message })
     }
 }
 
-$Roots = @($Roots | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | ForEach-Object {
-    (Resolve-Path -LiteralPath $_).Path
+$Roots = @($Roots | Where-Object { $_ } | ForEach-Object {
+    if (Test-Path -LiteralPath $_ -PathType Container) { (Resolve-Path -LiteralPath $_).Path }
+    else { [System.IO.Path]::GetFullPath($_) }
 } | Sort-Object -Unique)
 
 if (-not $Roots -or $Roots.Count -eq 0) {
@@ -69,16 +73,22 @@ if (-not $OutputDirectory) {
 }
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 
-$items = New-Object System.Collections.Generic.List[object]
-$errors = New-Object System.Collections.Generic.List[object]
+$items = [System.Collections.Generic.List[object]]::new()
+$rootStates = [System.Collections.Generic.List[object]]::new()
 
 foreach ($root in $Roots) {
     Write-Host "Scanning: $root"
+    $rootDirectories = 0
     try {
-        $files = Get-ChildItem -LiteralPath $root -File -Recurse -Force -ErrorAction SilentlyContinue | Where-Object {
+        $enumerationErrors = @()
+        $files = @(Get-ChildItem -LiteralPath $root -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable +enumerationErrors | Where-Object {
             -not ($OutputDirectory -and $_.FullName.StartsWith($OutputDirectory, [System.StringComparison]::OrdinalIgnoreCase))
-        }
+        })
         foreach ($file in $files) {
+            if ($file.PSIsContainer) {
+                $rootDirectories++
+                continue
+            }
             $hash = $null
             if ($HashFiles -and $file.Length -le $MaxHashBytes) {
                 try { $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash }
@@ -96,13 +106,28 @@ foreach ($root in $Roots) {
                 sha256 = $hash
             })
         }
+        foreach ($enumerationError in @($enumerationErrors)) {
+            $errors.Add([pscustomobject]@{ path=$root; category="enumeration"; error=$enumerationError.Exception.Message })
+        }
+        $rootStatus = if (@($enumerationErrors).Count -gt 0) { "partial" } else { "complete" }
+        if (-not (Test-Path -LiteralPath $root -PathType Container)) { $rootStatus = "failed" }
     } catch {
-        $errors.Add([pscustomobject]@{ path=$root; error=$_.Exception.Message })
+        $errors.Add([pscustomobject]@{ path=$root; category="enumeration"; error=$_.Exception.Message })
+        $rootStatus = "failed"
     }
+    $rootMatching = @($items.ToArray() | Where-Object { $_.root -eq $root })
+    $rootStates.Add([pscustomobject]@{
+        root = $root
+        status = $rootStatus
+        directory_count = $rootDirectories
+        file_count = $rootMatching.Count
+        total_bytes = [long](($rootMatching | Measure-Object -Property size_bytes -Sum).Sum)
+        error_count = @($errors.ToArray() | Where-Object { $_.path -eq $root }).Count
+    })
 }
 
 $rootSummary = foreach ($root in $Roots) {
-    $matching = @($items | Where-Object { $_.root -eq $root })
+    $matching = @($items.ToArray() | Where-Object { $_.root -eq $root })
     [pscustomobject]@{
         root = $root
         file_count = $matching.Count
@@ -110,37 +135,69 @@ $rootSummary = foreach ($root in $Roots) {
     }
 }
 
+$inventoryStatus = "complete"
+if (@($rootStates.ToArray() | Where-Object { $_.status -ne "complete" }).Count -gt 0 -or -not $discoveryComplete) {
+    $inventoryStatus = "partial"
+}
+if (@($rootStates.ToArray() | Where-Object { $_.status -eq "failed" }).Count -eq $rootStates.Count) {
+    $inventoryStatus = "failed"
+}
+
 $previousSnapshot = Get-ChildItem -LiteralPath $OutputDirectory -Filter "local-storage-inventory-*.json" -File -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
 
-$changes = New-Object System.Collections.Generic.List[object]
+$changes = [System.Collections.Generic.List[object]]::new()
+$comparisonStatus = "baseline"
+$comparisonReason = "no_previous_snapshot"
 if ($previousSnapshot) {
     try {
         $previous = Get-Content -LiteralPath $previousSnapshot.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
-        $previousByPath = @{}
-        foreach ($old in $previous.files) { $previousByPath[$old.path] = $old }
-        $currentByPath = @{}
-        foreach ($current in $items) {
-            $currentByPath[$current.path] = $current
-            if (-not $previousByPath.ContainsKey($current.path)) {
-                $changes.Add([pscustomobject]@{ change="added"; path=$current.path; old_size_bytes=$null; new_size_bytes=$current.size_bytes })
+        if ($inventoryStatus -ne "complete") {
+            $comparisonStatus = "suppressed"
+            $comparisonReason = "current_inventory_not_complete"
+        } elseif ([string]$previous.schema_version -ne "2.0" -or [string]$previous.inventory_status -ne "complete") {
+            $comparisonStatus = "suppressed"
+            $comparisonReason = "previous_report_not_comparable"
+        } else {
+            $currentRoots = @($rootStates | ForEach-Object { [string]$_.root } | Sort-Object)
+            $previousRoots = @($previous.roots | ForEach-Object { [string]$_.root } | Sort-Object)
+            $sameRoots = ($currentRoots.Count -eq $previousRoots.Count) -and (($currentRoots -join [Environment]::NewLine) -ceq ($previousRoots -join [Environment]::NewLine))
+            if (-not $sameRoots) {
+                $comparisonStatus = "suppressed"
+                $comparisonReason = "root_scope_changed"
             } else {
-                $old = $previousByPath[$current.path]
-                if ([long]$old.size_bytes -ne [long]$current.size_bytes -or $old.last_write_time_utc -ne $current.last_write_time_utc) {
-                    $changes.Add([pscustomobject]@{ change="modified"; path=$current.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=[long]$current.size_bytes })
+                $comparisonStatus = "compared"
+                $comparisonReason = "complete_same_scope"
+                $previousByPath = @{}
+                foreach ($old in @($previous.files)) { $previousByPath[[string]$old.path] = $old }
+                $currentByPath = @{}
+                foreach ($current in $items) {
+                    $currentByPath[[string]$current.path] = $current
+                    if (-not $previousByPath.ContainsKey([string]$current.path)) {
+                        $changes.Add([pscustomobject]@{ change="added"; path=$current.path; old_size_bytes=$null; new_size_bytes=$current.size_bytes })
+                    } else {
+                        $old = $previousByPath[[string]$current.path]
+                        if ([long]$old.size_bytes -ne [long]$current.size_bytes -or $old.last_write_time_utc -ne $current.last_write_time_utc) {
+                            $changes.Add([pscustomobject]@{ change="modified"; path=$current.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$current.size_bytes })
+                        }
+                    }
+                }
+                foreach ($old in @($previous.files)) {
+                    if (-not $currentByPath.ContainsKey([string]$old.path)) {
+                        $changes.Add([pscustomobject]@{ change="missing"; path=$old.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$null })
+                    }
                 }
             }
         }
-        foreach ($old in $previous.files) {
-            if (-not $currentByPath.ContainsKey($old.path)) {
-                $changes.Add([pscustomobject]@{ change="missing"; path=$old.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$null })
-            }
-        }
     } catch {
-        $errors.Add([pscustomobject]@{ path=$previousSnapshot.FullName; error="Could not compare previous inventory: $($_.Exception.Message)" })
+        $comparisonStatus = "suppressed"
+        $comparisonReason = "previous_report_unreadable"
+        $errors.Add([pscustomobject]@{ path=$previousSnapshot.Name; category="previous_report"; error=$_.Exception.Message })
     }
-} else {
-    $changes.Add([pscustomobject]@{ change="baseline"; path=$null; old_size_bytes=$null; new_size_bytes=$null })
+}
+if ($comparisonStatus -ne "compared") {
+    $changes.Clear()
+    $changes.Add([pscustomobject]@{ change="comparison_suppressed"; path=$null; old_size_bytes=$null; new_size_bytes=$null; reason=$comparisonReason })
 }
 
 $previousSnapshotName = $null
@@ -149,15 +206,21 @@ if ($previousSnapshot) {
 }
 
 $report = [ordered]@{
-    schema_version = "1.0"
+    schema_version = "2.0"
+    inventory_status = $inventoryStatus
+    discovery_complete = [bool]$discoveryComplete
+    comparison_status = $comparisonStatus
+    comparison_reason = $comparisonReason
+    root_count = $rootStates.Count
+    directory_count = [long](($rootStates | Measure-Object -Property directory_count -Sum).Sum)
+    file_count = $items.Count
+    error_count = $errors.Count
     generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
-    computer_name = $env:COMPUTERNAME
-    user_name = $env:USERNAME
     scan_mode = "read-only"
     hash_enabled = [bool]$HashFiles
     max_hash_bytes = $MaxHashBytes
     previous_snapshot = $previousSnapshotName
-    roots = @($rootSummary)
+    roots = @($rootStates)
     change_count = $changes.Count
     changes = $changes.ToArray()
     files = $items.ToArray()
