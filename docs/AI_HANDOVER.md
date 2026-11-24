@@ -1454,3 +1454,24 @@ Connectorn hämtar endast service- och lager/tabellmetadata, sekventiellt med ti
 **Användarbeslut:** schemaläggning och operativa snapshots får tidigast börja om två månader, satt till 2027-01-24. Före det datumet kan endast manuell metadata-inspektion och teknisk förberedelse göras. Första operativa snapshot ska bli tyst baslinje utan historiska larm. Saknad information/”ej angivet” får aldrig tolkas som inget eldningsförbud.
 
 **Nästa steg efter PR:** granska och merg:a connectorn, kör därefter den manuella metadata-only-proben när endpointen är åtkomlig. Uppdatera sedan dokumentationen med faktiska lager-/fält-/scope-/pagineringresultat. Vänta med featurehämtning, schemaläggning och snapshots till tidigast 2027-01-24 och separat godkännande.
+
+
+## 2026-11-24 – Eldningsförbud metadata-connector mergad
+
+Skog PR [#590](https://github.com/dahlinrobert-lgtm/Skog/pull/590) är mergad i main (merge commit `ea5e65a947c239d7100b15171e4f532975ab7413`). PR-headens tre GitHub Actions-kontroller passerade: `test`, `validate` och `customer-ui-tests` (commit `fd44ea344d70ca7e7d02a71449b054703b3b5f01`).
+
+Main innehåller nu:
+- källposten `lansstyrelsen.fire_ban` i `data-platform/config/sources.yml`,
+- manuell metadata-only connector `data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py`,
+- tester `tests/test_inspect_lansstyrelsen_fire_ban_service.py`,
+- uppdaterad datakälle- och statusdokumentation.
+
+**Runtime-status:** connectorn är inte körd mot FeatureServer ännu. Ett försök att öppna den direkta REST-metadataadressen via tillgänglig webbläsarhämtning gav inte åtkomst. Därför finns ännu inga verifierade liveuppgifter om lager-ID:n, fält, extent/täckning, objektidentitet, maxRecordCount eller paginering. CI verifierar kod/tester och register, inte extern endpoint.
+
+**Nästa konkreta steg:** kör manuellt från en miljö med nätverksåtkomst:
+
+    python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py --out /tmp/lansstyrelsen-fire-ban-metadata.json
+
+Granska resultatet och uppdatera `SKOGSKOLL_DATA_OVERVIEW.md` och källregistrets evidens först när de faktiska metadataresultaten finns. Behåll källstatus fail-closed tills dess.
+
+Ingen feature-query, geometrihämtning, snapshot, schemaläggning eller kundvisning är aktiverad. Enligt användarens beslut får schemaläggning och operativa snapshots tidigast övervägas 2027-01-24, efter separat beslut. Första operativa snapshot ska vara en tyst baslinje utan historiska larm.
