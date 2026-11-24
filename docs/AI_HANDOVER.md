@@ -1426,3 +1426,14 @@ Verifierade resultat:
 PM-027 är därmed live-verifierad för befintlig read-only collector/read model och dess uttryckliga evidensgränser. Ingen rättighetsstatus, kommersiell användning, kundvisning eller kundfeed har ändrats.
 
 **Nästa konkreta steg:** förbättra hämtningen av senaste matchande workflow-försök utan att skrapa all workflow-historik, därefter undersöka en liten separat Samråd-manifestfil med per-lager antal, paging och fullständighet. Behåll `unknown` där evidens saknas. Autentiserad dashboardvisning är inte verifierad av artifactkontrollen och ska testas separat.
+
+
+## 2026-11-24 – PM-027 riktad latest-attempt-uppslagning mergad
+
+Projektledarrepot [skogskoll-project-manager-history PR #62](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/62) är mergad i commit `c3f94216c07d2496e1a64cd44b739288e0682908`. PM-027-adaptern använder nu riktade read-only GitHub Actions-uppslag: lista workflow-metadata, matcha exakta konfigurerade workflow-sökvägar, hämta `per_page=1` för varje workflow-ID och välj senaste körning per källa. Den generella dashboardens latest-20-lista är oförändrad.
+
+Saknat workflow eller tom körningshistorik ger fortsatt `unknown`. API-fel och felaktiga svar failar adaptern stängt så inventory blir partiell. Inga källors feature-data hämtas, inga källrepon skrivs och inga rättighets- eller kundvisningsstatusar ändras.
+
+Verifierade tester på PR-commit `7573a7c87c975e93534c52b8bc3d3ae795055ab2`: [Project manager tests #45449073568](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449073568) och [Synthetic append-only tests #45449073704](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449073704) passerade. Post-merge [main tests #45449310070](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449310070) passerade.
+
+**Nästa konkreta steg:** kör den befintliga manuella read-only projektinventeringen från projektledarrepots `main`, lämna `manage_alert_issue` avstängd och granska artifactet. Verifiera `latest_attempt` för både `skogsstyrelsen.harvest_notifications` och `skogsstyrelsen.samrad` mot exakta workflow-run-ID:n. Om inget matchande workflow/run finns ska `unknown` bevaras. Liveinventering efter ändringen är ännu inte genomförd/verifierad.
