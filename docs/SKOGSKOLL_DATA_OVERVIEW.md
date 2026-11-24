@@ -143,8 +143,10 @@ Separata punkt-, linje- och polygonlager hämtas med paginering inom det konfigu
 
 Detta är verifierade körningsvärden för den aktuella pilotkonfigurationen, inte nationell täckning eller en avstämning mot en separat auktoritativ källtotal. Den nuvarande `samrad_latest.json` innehåller både metadata och featuredata och är därför för stor för projektledarens metadata-only-adapter att läsa säkert. Projektledarens inventering visar därför fortfarande `latest_complete_snapshot=unknown` och scope unknown, trots att senaste workflow-försöket lyckades.
 
-**Manifestförbättring under granskning**
-PR [#606](https://github.com/dahlinrobert-lgtm/Skog/pull/606) föreslår en separat liten `data/samrad_latest_manifest.json` med snapshotreferens, gzip-SHA-256, scope-hash och per-lager sid-/antal-/geometristatus. Manifestet ska endast ange `complete_for_configured_scope` när alla tre lager har paginerats till slut och alla hämtade poster har kunnat klassificeras; det ska uttryckligen ange att källans totala antal inte har stämts av. Detta är ännu inte mergat eller liveverifierat.
+**Separat litet snapshotmanifest – implementation mergad, liveverifiering återstår**
+Skog PR [#606](https://github.com/dahlinrobert-lgtm/Skog/pull/606) mergades 2026-11-24 i commit `917fa445559413385a0c995d448c1203d0520c2a`. Insamlingsflödet skapar nu `data/samrad_latest_manifest.json` separat från feature-snapshoten. Manifestet innehåller snapshotreferens, gzip-SHA-256, scope-hash samt per-lager sid-/antal-/geometristatus. Saknad eller felaktig geometri räknas explicit och hindrar `complete_for_configured_scope`. Statusen avser endast paginerad och geometriskt klassificerad data inom konfigurerat scope; `source_total_reconciled=false` betyder att källans totala antal inte är avstämt.
+
+PR #606:s CI körde Samråd-tester och händelsekedjetester med godkänt resultat före merge. En separat körning efter merge behövs för att skapa manifestet på `main` och verifiera faktisk innehållsstruktur. Ingen nationell täckning eller kommersiell/kundvisningsrätt följer av detta.
 
 **Historik/tidsserie**
 Målet är dagliga snapshots där källans ID, geometri, attribut, hämtningstid och källans egna datum bevaras. Försvunna objekt ska först klassas efter en komplett och godkänd skanning. En lyckad körning eller komplett paginering inom pilotområdet bevisar inte nationell täckning.
