@@ -1456,22 +1456,22 @@ Connectorn hämtar endast service- och lager/tabellmetadata, sekventiellt med ti
 **Nästa steg efter PR:** granska och merg:a connectorn, kör därefter den manuella metadata-only-proben när endpointen är åtkomlig. Uppdatera sedan dokumentationen med faktiska lager-/fält-/scope-/pagineringresultat. Vänta med featurehämtning, schemaläggning och snapshots till tidigast 2027-01-24 och separat godkännande.
 
 
-## 2026-11-24 – PM-027 read-only adapter och live inventory verifierade
+## 2026-11-24 – Eldningsförbud metadata-connector mergad
 
-PM-027:s avgränsade read-only adapter för Skogsstyrelsens avverkningsanmälningar och Samråd är nu live-verifierad efter merge av implementationen och riktad latest-attempt-lookup i projektledarrepot `skogskoll-project-manager-history`.
+Skog PR [#590](https://github.com/dahlinrobert-lgtm/Skog/pull/590) är mergad i main (merge commit `ea5e65a947c239d7100b15171e4f532975ab7413`). PR-headens tre GitHub Actions-kontroller passerade: `test`, `validate` och `customer-ui-tests` (commit `fd44ea344d70ca7e7d02a71449b054703b3b5f01`).
 
-Projektledarrepots manuella inventory [run #45456596948](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45456596948) kördes från `main` och avslutades `completed/success`. Artifact `project-manager-inventory-45456596948` (artifact ID `14949154835`, SHA-256 `5256eb314ac80500ca987d8578066f04981b7e345503cb9fd2b2b97578886f90`) granskades i sin helhet. Alla 3/3 aktiva repositories samlades in; källregistret innehöll 51 source_id, varav 14 med operations-block. Collectorlogg: 61/61 tester godkända, JavaScript syntaxkontroll godkänd, `Collection status=success repositories=3/3`. Alert-jobbet var `skipped` eftersom `manage_alert_issue` lämnades avstängt.
+Main innehåller nu:
+- källposten `lansstyrelsen.fire_ban` i `data-platform/config/sources.yml`,
+- manuell metadata-only connector `data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py`,
+- tester `tests/test_inspect_lansstyrelsen_fire_ban_service.py`,
+- uppdaterad datakälle- och statusdokumentation.
 
-Verifierad PM-027-evidens:
-- `skogsstyrelsen.harvest_notifications`: senaste försök via exakt workflow `.github/workflows/national-monitor.yml`, run `43881404640`, `completed/failure`, skapad `2026-11-16T14:01:05Z`. Den andra konfigurerade workflow-sökvägen hittades inte. Senaste kompletta snapshot är fortsatt `manifest_complete`, 165 poster, endast Gräsmyr 10 km-pilot, fångad `2026-11-22T19:27:44Z`; detta är inte nationell täckning. Manifestets SHA-256 är ett källpåstående och räknades inte om av adaptern.
-- `skogsstyrelsen.samrad`: senaste försök via exakt workflow `.github/workflows/collect-samrad.yml`, run `45454250815`, `completed/success`, skapad `2026-11-24T17:57:36Z`. Metadata inventory identifierar 24 daterade snapshots, men snapshot-fullständighet, scope och punkt-/linje-/polygonantal förblir `unknown`; adaptern hämtar inte feature-data.
+**Runtime-status:** connectorn är inte körd mot FeatureServer ännu. Ett försök att öppna den direkta REST-metadataadressen via tillgänglig webbläsarhämtning gav inte åtkomst. Därför finns ännu inga verifierade liveuppgifter om lager-ID:n, fält, extent/täckning, objektidentitet, maxRecordCount eller paginering. CI verifierar kod/tester och register, inte extern endpoint.
 
-Den riktade lookup-funktionen matchar exakta workflow-sökvägar, hämtar endast senaste körningen per matchat workflow och väljer senaste försök per källa. Den generella dashboardens latest-20-lista är oförändrad. Saknat workflow/run och otillräcklig evidens förblir `unknown`; API-fel failar stängt.
+**Nästa konkreta steg:** kör manuellt från en miljö med nätverksåtkomst:
 
-Dokumentations-PR [#65](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/65) är mergad i projektledarrepot, merge commit `9da228fb77fe221df2f526cb9ee11645bb26d743`. Den uppdaterar `docs/PM027_ADAPTER_SPIKE.md` och `docs/OPERATIONS_CENTER.md`. PR-CI passerade: [Project manager tests #45457392500](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45457392500) och [Synthetic append-only tests #45457392160](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45457392160).
+    python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py --out /tmp/lansstyrelsen-fire-ban-metadata.json
 
-**Avgränsning:** detta verifierar projektledarens read-only inventory och PM-027-adapterns metadata-/manifest-evidens. Det verifierar inte nationell avverkningsanmälningstäckning, Samråds fullständighet, autentiserad dashboard-rendering eller kommersiella rättigheter/kundvisning. Inga source features laddades ned, inga källrepon skrevs till, ingen Azure-publicering, kundfeed eller alert-issue-sidoeffekt utfördes. Källstatus, rättigheter och kundvisningsstatus ändras inte.
+Granska resultatet och uppdatera `SKOGSKOLL_DATA_OVERVIEW.md` och källregistrets evidens först när de faktiska metadataresultaten finns. Behåll källstatus fail-closed tills dess.
 
-**Status:** PM-027 är färdig som adapter-/inventoryleverans. Separat Samrådsmanifest och autentiserad dashboardkontroll är möjliga uppföljningsuppgifter, inte blockerare för denna leverans.
-
-**Dokumentationsbedömning:** `docs/AI_HANDOVER.md` uppdateras för att registrera verifierat nuläge och nästa avgränsade förbättringar. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` ändras inte eftersom denna leverans inte ändrar källregister, insamlingsstatus eller rättighetsbedömningar.
+Ingen feature-query, geometrihämtning, snapshot, schemaläggning eller kundvisning är aktiverad. Enligt användarens beslut får schemaläggning och operativa snapshots tidigast övervägas 2027-01-24, efter separat beslut. Första operativa snapshot ska vara en tyst baslinje utan historiska larm.
