@@ -1366,3 +1366,15 @@ Efter att ha granskat aktuell `main` i Skog och den privata `skogskoll-project-m
 **Nästa konkreta steg:** en avgränsad read-only genomförbarhetsprototyp i befintlig collector/read model för Skogsstyrelsens avverkningsanmälningar och Samråd. Använd befintliga källmanifest/snapshotformat och explicit workflow-/scope-evidens. Ingen ny collector, snapshotlagring, historikmodell, schedule, Azure-publicering eller kundfunktion. Unknown ska förbli unknown; latest attempt och latest complete snapshot ska hållas isär.
 
 **Beslutspunkt:** efter prototypen avgörs om en liten utökning av befintlig payload räcker eller om ett separat versionsstyrt kontrakt behövs. Kontraktsdesign ska alltså inte vara ett självständigt förarbete innan denna konkreta prövning.
+
+
+## 2026-11-24 – Projektledarens dagliga inventory-schema säkrat
+
+I det privata repot `dahlinrobert-lgtm/skogskoll-project-manager-history` är PR [#55](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/55) mergad (commit `ccda5189e83deec96df5f0262412208fe1fdb3a3`).
+
+- Inventory-workflowet använder en enda GitHub Actions-trigger kl. 07:17 med tidszonen `Europe/Stockholm`. Den tidigare dubbla UTC-triggern och exakta lokala entimmesgrinden är borttagna, så försenad start leder inte längre till att insamlingen hoppas över på grund av klockslaget.
+- Schemalagda körningar kan enligt GitHubs dokumentation fortfarande försenas eller tappas vid hög belastning. Schemat är flyttat från hel timme, men faktisk körning och artifact måste fortsatt verifieras.
+- Collector-jobbet har endast `contents: read`. Issue-sidoeffekten ligger i separat jobb med `issues: write`; manuella körningar har den avstängd som standard och kräver explicit `manage_alert_issue=true`.
+- PR-CI passerade: Project manager tests run `45440389309` och Synthetic append-only tests run `45440389414`.
+
+**Kvarstående:** ingen live inventory-körning eller nytt artifact efter merge är verifierat. GitHub-integrationen i denna session kan läsa workflow-runs och artifacts men erbjuder inte dispatch av workflow. Starta därför en manuell körning från projektledarrepots `main` via GitHub Actions, lämna `manage_alert_issue` avmarkerad och granska artifact innan PM-027:s två källor och dashboard verifieras. Ingen Azure-publicering, källskrivning eller kundavisering ingår.
