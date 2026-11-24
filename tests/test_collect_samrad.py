@@ -37,6 +37,10 @@ def feature(oid, lon=19.66455, lat=63.74646):
 
 
 class SamradCollectorTests(unittest.TestCase):
+    def test_workflow_checks_out_pr_head_but_main_for_non_pr_runs(self):
+        workflow = (ROOT / ".github" / "workflows" / "collect-samrad.yml").read_text(encoding="utf-8")
+        self.assertIn("ref: \${{ github.event.pull_request.head.sha || 'main' }}", workflow)
+
     def test_query_envelope_contains_area_center(self):
         env = query_envelope(63.74646, 19.66455, 10000)
         self.assertLess(env["xmin"], 19.66455)
