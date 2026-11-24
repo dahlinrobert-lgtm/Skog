@@ -76,10 +76,11 @@ New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 $items = [System.Collections.Generic.List[object]]::new()
 $rootStates = [System.Collections.Generic.List[object]]::new()
 $rootIds = @{}
+$rootsById = @{}
 foreach ($root in $Roots) {
     $bytes = [System.Text.Encoding]::UTF8.GetBytes($root.ToLowerInvariant())
     $sha = [System.Security.Cryptography.SHA256]::Create()
-    try { $rootIds[$root] = ([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace("-", "").ToLowerInvariant() }
+    try { $rootIds[$root] = ([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace("-", "").ToLowerInvariant(); $rootsById[$rootIds[$root]] = $root }
     finally { $sha.Dispose() }
 }
 
@@ -166,8 +167,8 @@ if ($previousSnapshot) {
             $comparisonStatus = "suppressed"
             $comparisonReason = "previous_report_not_comparable"
         } else {
-            $currentRoots = @($rootStates | ForEach-Object { [string]$_.root } | Sort-Object)
-            $previousRoots = @($previous.roots | ForEach-Object { [string]$_.root } | Sort-Object)
+            $currentRoots = @($rootStates | ForEach-Object { [string]$_.root_id } | Sort-Object)
+            $previousRoots = @($previous.roots | ForEach-Object { [string]$_.root_id } | Sort-Object)
             $sameRoots = ($currentRoots.Count -eq $previousRoots.Count) -and (($currentRoots -join [Environment]::NewLine) -ceq ($previousRoots -join [Environment]::NewLine))
             if (-not $sameRoots) {
                 $comparisonStatus = "suppressed"
@@ -176,22 +177,25 @@ if ($previousSnapshot) {
                 $comparisonStatus = "compared"
                 $comparisonReason = "complete_same_scope"
                 $previousByPath = @{}
-                foreach ($old in @($previous.files)) { $previousByPath[[string]$old.path] = $old }
+                foreach ($old in @($previous.files)) { $previousByPath[([string]$old.root_id + "|" + [string]$old.relative_path)] = $old }
                 $currentByPath = @{}
                 foreach ($current in $items) {
-                    $currentByPath[[string]$current.path] = $current
-                    if (-not $previousByPath.ContainsKey([string]$current.path)) {
+                    $currentKey = [string]$rootIds[$current.root] + "|" + [string]$current.relative_path
+                    $currentByPath[$currentKey] = $current
+                    if (-not $previousByPath.ContainsKey($currentKey)) {
                         $changes.Add([pscustomobject]@{ change="added"; path=$current.path; old_size_bytes=$null; new_size_bytes=$current.size_bytes })
                     } else {
-                        $old = $previousByPath[[string]$current.path]
+                        $old = $previousByPath[$currentKey]
                         if ([long]$old.size_bytes -ne [long]$current.size_bytes -or $old.last_write_time_utc -ne $current.last_write_time_utc) {
                             $changes.Add([pscustomobject]@{ change="modified"; path=$current.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$current.size_bytes })
                         }
                     }
                 }
                 foreach ($old in @($previous.files)) {
-                    if (-not $currentByPath.ContainsKey([string]$old.path)) {
-                        $changes.Add([pscustomobject]@{ change="missing"; path=$old.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$null })
+                    $oldKey = [string]$old.root_id + "|" + [string]$old.relative_path
+                    if (-not $currentByPath.ContainsKey($oldKey)) {
+                        $oldAbsolutePath = Join-Path $rootsById[[string]$old.root_id] ([string]$old.relative_path)
+                        $changes.Add([pscustomobject]@{ change="missing"; path=$oldAbsolutePath; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$null })
                     }
                 }
             }
