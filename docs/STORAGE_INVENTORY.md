@@ -315,23 +315,36 @@ Aktiviteten `Skogskoll - local storage inventory` finns redan registrerad i Wind
 
 Skriptets standardrötter är GitHub-kloner under användarprofilen och `Skogskoll` under OneDrive-synkroten när den hittas. Om ingen OneDrive-rot hittas används lokal fallback under hemkatalogen. Standardutdata placeras i `Skogskoll\\_inventory` under OneDrive när OneDrive-roten finns, annars `storage-inventory` under hemkatalogen. Den faktiska aktuella outputkatalogen och de senaste rapporterna har ännu inte lästs/verifierats i denna komplettering.
 
-### 7.5 Kodgranskningsfynd – risker att åtgärda
+### 7.5 Kodgranskning och åtgärdade risker
 
-Den befintliga implementationen är avsedd att vara read-only för källdata och skapar tidsstämplade JSON-/Markdownrapporter. Statisk granskning identifierade dock följande risker:
+De ursprungliga riskerna i den äldre inventeraren har hanterats i PR #600, #603 och #604:
 
-1. Filenumereringen använder `Get-ChildItem -Recurse -ErrorAction SilentlyContinue`. Fel i enskilda underkataloger kan därmed döljas utan att hamna i rapportens `errors`.
-2. Jämförelsen kan skapa `missing` för tidigare observerade filer även om aktuell enumerering varit partiell.
-3. Föregående och aktuell uppsättning inventeringsrötter jämförs inte som ett stabilt scope. En utelämnad eller ändrad rot kan därför ge falska `missing`-poster.
-4. JSON-rapporten innehåller datornamn, användarnamn och fullständiga lokala sökvägar. Rapporternas åtkomst och eventuell delning behöver bedömas.
-5. SHA-256 är avstängt i den schemalagda aktiviteten. Resultatkod 0 bekräftar Task Schedulers körresultat, inte fullständig täckning eller integritet för rapportinnehållet.
+1. Enumereringsfel fångas och redovisas per rot; nekad underkatalogåtkomst ger partiell status i stället för att döljas.
+2. Förändringsdiffar undertrycks om aktuell inventering inte är komplett.
+3. Jämförelse kräver komplett föregående rapport och identisk rotuppsättning. Saknad eller ändrad rot får inte skapa falska `missing`-händelser.
+4. Rapportschema 2.1 använder stabila SHA-256-baserade `root_id`-värden och `relative_path`; absoluta lokala sökvägar och datornamn skrivs inte ut i JSON/Markdown.
+5. SHA-256-filhashning är fortsatt avstängd i den schemalagda aktiviteten. Resultatkod 0 är inte i sig bevis på fullständig inventering eller filintegritet.
 
-**Skyddsprincip:** partiell eller scope-inkompatibel inventering får aldrig skapa borttagnings-/`missing`-slutsatser. Tidigare rapporter ska bevaras. Inga filer, schemalagda aktiviteter eller inventeringsinställningar har ändrats i denna kontroll.
+**Kvarvarande integritetsbegränsning:** `root_id` är pseudonymisering, inte anonymisering. Värdet är deterministiskt för samma normaliserade rot och kan därför länkas mellan rapporter. Relativa sökvägar, filnamn och katalogstruktur finns kvar och kan avslöja information. Rapporter ska fortsatt hållas lokalt och inte laddas upp/publiceras utan separat granskning.
+
+**Skyddsprincip:** partiell eller scope-inkompatibel inventering får aldrig skapa borttagnings-/`missing`-slutsatser. Tidigare rapporter ska bevaras. Inga lokala filer, schemalagda aktiviteter eller inventeringsinställningar ändras av GitHub-implementationen.
 
 ### 7.6 Projektledaruppföljning
 
-- GitHub issue [#597 – Härda lokal lagringsinventering mot partiella körningar och falska missing-händelser](https://github.com/dahlinrobert-lgtm/Skog/issues/597) samlar implementationens acceptanskriterier.
-- Skog är registrerat som aktivt repo i projektledarens projektregister. Projektledarens befintliga read-only collector hämtar öppna issues/PR från aktiva projekt. Issue #597 kan därför visas i projektledarens arbetslista efter nästa kompletta inventering och publicerade dashboard-snapshot.
-- Ingen separat projektledarwebbkomponent behövs för att skapa arbetskortet; dashboarden renderar redan `open_work_items`. Den aktuella webbpubliceringen har inte uppdaterats/verifierats i denna dokumentationsändring.
-- Nästa steg är att granska senaste lokala JSON-/Markdownrapporten och dess faktiska outputplats, därefter implementera fail-closed-fullständighet och scope-kontroll i en separat kod-PR.
+- Issue [#597 – Härda lokal lagringsinventering mot partiella körningar och falska missing-händelser](https://github.com/dahlinrobert-lgtm/Skog/issues/597) stängdes automatiskt när implementationen mergades.
+- Skog är aktivt i projektledarens repo-register. Den befintliga read-only collectorn hämtar öppna issues/PR; den stängda issue #597 är inte längre en öppen arbetsuppgift.
+- Ingen separat UI-komponent behövs för arbetskort. Projektledarens dashboard visar öppna arbetsuppgifter från collectorns publicerade snapshot. Livevisning av denna specifika ändring är inte verifierad här.
 
-**Dokumentationsstatus:** Documented – nuläge och risker registrerade; implementation och rapportgranskning återstår.
+**Dokumentationsstatus:** implementationen är mergad och main-CI:s Windows PowerShell 5.1-parsning/regressionstest har passerat. Lokal driftsättning och efterföljande schemalagd verifiering återstår.
+
+### 7.7 Rapportschema 2.1 – integritetsminimering och jämförelse
+
+PR [#604](https://github.com/dahlinrobert-lgtm/Skog/pull/604) mergades 2026-11-24 i commit `a08163a8bee42848ed27d76c381103105fed9d7d`.
+
+- JSON och Markdown använder `root_id` i stället för lokala rotvägar; filposter använder `relative_path` i stället för absoluta sökvägar.
+- Datornamn tas inte med i Markdownrapporten. JSON-/Markdownrapporterna innehåller fortfarande filnamn och relativa katalogvägar.
+- `root_id` är SHA-256 av rotens gemener-normaliserade absoluta sökväg. Det är en deterministisk pseudonym, inte anonymisering.
+- Jämförelse kräver schema 2.1, komplett föregående rapport, komplett aktuell inventering och identiskt root-ID-set. Schema 2.0 och äldre är inte jämförbara; första 2.1-körningen blir tyst baseline.
+- Regressionstesterna kontrollerar att absoluta testvägar/datornamn inte förekommer i rapporterna, att komplett jämförelse upptäcker tillagda filer och att scope-/åtkomstfel undertrycker diffen.
+
+**Lokal status:** schema 2.1 är ännu inte installerat/verifierat på användarens Windows-dator. Före lokal uppdatering ska befintligt skript och hela faktiska rapportkatalogen säkerhetskopieras separat. Rapportkatalogens verkliga sökväg måste först fastställas; tidigare backupinstruktion får inte antas ha kopierat rapporterna korrekt. Ändra inte Task Scheduler och aktivera inte `-HashFiles`.

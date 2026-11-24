@@ -1599,3 +1599,16 @@ PR [#600](https://github.com/dahlinrobert-lgtm/Skog/pull/600) är mergad i `main
 5. Efter godkänd manuell kontroll: låt befintlig schemalagda aktivitet vara oförändrad och verifiera en senare schemalagd körning.
 
 **Dokumentation:** `docs/STORAGE_INVENTORY.md`, `docs/PROJECT_BACKLOG.md` och denna handover uppdateras i dokumentations-PR efter implementationens merge. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms inte behöva ändras: inga källor, källrättigheter eller datainsamlingsflöden ändrades.
+
+
+## 2026-11-24 – PM-030: lokal lagringsinventering schema 2.1 mergad
+
+**GitHub main:** PR [#604](https://github.com/dahlinrobert-lgtm/Skog/pull/604) är mergad i commit `a08163a8bee42848ed27d76c381103105fed9d7d`. Föregående delar: PR #600 (fail-closed schema 2.0) och PR #603 (ACL-test för nekad underkatalog) är också mergade. Main Actions [run 45491349781](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45491349781) har genomfört Windows PowerShell 5.1-parsning och regressionstester med success på jobbet; kontrollera workflowets slutliga conclusion om körningen fortfarande var in progress vid dokumentationstillfället.
+
+**Schema 2.1:** JSON-/Markdownrapporter innehåller `root_id` och relativa sökvägar i stället för absoluta lokala sökvägar; datornamn har tagits bort. `root_id` är SHA-256-baserad och deterministisk för samma rot, alltså pseudonymisering snarare än anonymisering. Filnamn och relativa katalogvägar finns kvar. Schema 2.0 och äldre rapporter är icke-jämförbara; första schema 2.1-körningen blir tyst baseline. Jämförelse kräver kompletta rapporter och identiskt root-ID-set.
+
+**Kvarstående lokal driftsättning – ej genomförd/verifierad:** användaren har inte lämnat bekräftelse på backup av det lokala skriptet och hela rapportkatalogen. Fastställ först den faktiska rapportkatalogen; kopiera den separat till en backupplats utanför katalogen. Bevara alla lokala ospårade filer. Uppdatera därefter lokal main-kopia, kör skriptet manuellt och granska schema 2.1, rotstatus, error_count och `comparison_status=baseline`. Ändra inte Task Scheduler (dagligen 21:00, `-IncludeRemovableDrives`) och aktivera inte `-HashFiles`. Efter godkänd manuell körning: verifiera en senare schemalagd körning. Råa lokala inventeringsrapporter ska inte laddas upp till GitHub.
+
+**Nästa konkreta arbetssteg:** invänta användarens backupkörning/output; verifiera att både skriptbackup och hela faktiska rapportkatalogen finns innan några lokala uppdateringskommandon körs. Därefter ge en säker, stegvis lokal uppdaterings-/baselineprocedur.
+
+**Dokumentationsbedömning:** `STORAGE_INVENTORY.md`, `PROJECT_BACKLOG.md` och denna handover uppdateras i dokumentations-PR. `SKOGSKOLL_SOURCE_STATUS.md` och `SKOGSKOLL_DATA_OVERVIEW.md` är kontrollerade på main och lämnas oförändrade eftersom inga källor, källrättigheter eller insamlingsflöden ändrats.
