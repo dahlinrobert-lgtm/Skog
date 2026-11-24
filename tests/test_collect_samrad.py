@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from collect_samrad import PAGE_SIZE, query_envelope, query_params, fetch_layer, filter_to_radius  # noqa: E402
+from collect_samrad import PAGE_SIZE, query_envelope, query_params, fetch_layer, filter_to_radius, build_small_manifest  # noqa: E402
 
 
 class FakeResponse:
@@ -70,6 +70,37 @@ class SamradCollectorTests(unittest.TestCase):
         result = filter_to_radius(collection, 63.74646, 19.66455, 10000)
         self.assertEqual([f["id"] for f in result["features"]], [1])
         self.assertEqual(result["records_in_scope"], 1)
+
+    def test_filter_to_radius_counts_missing_and_invalid_geometries(self):
+        collection = {"features": [
+            feature(1),
+            {"type": "Feature", "id": 2, "properties": {}, "geometry": None},
+            {"type": "Feature", "id": 3, "properties": {}, "geometry": {"type": "Unsupported", "coordinates": []}},
+        ]}
+        result = filter_to_radius(collection, 63.74646, 19.66455, 10000)
+        self.assertEqual(result["records_in_scope"], 1)
+        self.assertEqual(result["records_missing_geometry"], 1)
+        self.assertEqual(result["records_geometry_error"], 1)
+
+    def test_small_manifest_is_complete_only_for_all_three_clean_layers(self):
+        result = {
+            "checked_at": "2026-11-24T17:58:36Z",
+            "scope_hash": "scope-hash",
+            "scope": {"radius_m": 10000},
+            "layers": {name: {"status": "success"} for name in ("points", "lines", "areas")},
+            "counts": {name: {
+                "pages": 1, "records_fetched_in_envelope": 4, "records_in_scope": 3,
+                "records_outside_scope": 1, "records_missing_geometry": 0, "records_geometry_error": 0,
+            } for name in ("points", "lines", "areas")},
+        }
+        manifest = build_small_manifest(result, "data/samrad_snapshots/test.json.gz", 123, "a" * 64)
+        self.assertEqual(manifest["completeness_status"], "complete_for_configured_scope")
+        self.assertFalse(manifest["source_total_reconciled"])
+        self.assertEqual(manifest["layers"]["points"]["pagination_status"], "exhausted")
+        result["counts"]["lines"]["records_geometry_error"] = 1
+        partial = build_small_manifest(result, "data/samrad_snapshots/test.json.gz", 123, "a" * 64)
+        self.assertEqual(partial["completeness_status"], "partial_or_unknown")
+        self.assertEqual(partial["layers"]["lines"]["status"], "partial_or_unknown")
 
 
 if __name__ == "__main__":
