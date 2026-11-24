@@ -115,19 +115,19 @@ foreach ($root in $Roots) {
         $errors.Add([pscustomobject]@{ path=$root; category="enumeration"; error=$_.Exception.Message })
         $rootStatus = "failed"
     }
-    $rootMatching = @($items | Where-Object { $_.root -eq $root })
+    $rootMatching = @($items.ToArray() | Where-Object { $_.root -eq $root })
     $rootStates.Add([pscustomobject]@{
         root = $root
         status = $rootStatus
         directory_count = $rootDirectories
         file_count = $rootMatching.Count
         total_bytes = [long](($rootMatching | Measure-Object -Property size_bytes -Sum).Sum)
-        error_count = @($errors | Where-Object { $_.path -eq $root }).Count
+        error_count = @($errors.ToArray() | Where-Object { $_.path -eq $root }).Count
     })
 }
 
 $rootSummary = foreach ($root in $Roots) {
-    $matching = @($items | Where-Object { $_.root -eq $root })
+    $matching = @($items.ToArray() | Where-Object { $_.root -eq $root })
     [pscustomobject]@{
         root = $root
         file_count = $matching.Count
@@ -136,10 +136,10 @@ $rootSummary = foreach ($root in $Roots) {
 }
 
 $inventoryStatus = "complete"
-if (@($rootStates | Where-Object { $_.status -ne "complete" }).Count -gt 0 -or -not $discoveryComplete) {
+if (@($rootStates.ToArray() | Where-Object { $_.status -ne "complete" }).Count -gt 0 -or -not $discoveryComplete) {
     $inventoryStatus = "partial"
 }
-if (@($rootStates | Where-Object { $_.status -eq "failed" }).Count -eq $rootStates.Count) {
+if (@($rootStates.ToArray() | Where-Object { $_.status -eq "failed" }).Count -eq $rootStates.Count) {
     $inventoryStatus = "failed"
 }
 
