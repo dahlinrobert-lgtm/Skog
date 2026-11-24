@@ -40,7 +40,8 @@ if ($IncludeRemovableDrives) {
             if (Test-Path -LiteralPath $mount) { $Roots += $mount }
         }
     } catch {
-        Write-Warning "Could not enumerate removable drives: $($_.Exception.Message)"
+        $discoveryComplete = $false
+        $errors.Add([pscustomobject]@{ path="(removable-drive discovery)"; category="root_discovery"; error=$_.Exception.Message })
     }
 }
 
@@ -104,6 +105,7 @@ foreach ($root in $Roots) {
             $errors.Add([pscustomobject]@{ path=$root; category="enumeration"; error=$enumerationError.Exception.Message })
         }
         $rootStatus = if (@($enumerationErrors).Count -gt 0) { "partial" } else { "complete" }
+        if (-not (Test-Path -LiteralPath $root -PathType Container)) { $rootStatus = "failed" }
     } catch {
         $errors.Add([pscustomobject]@{ path=$root; category="enumeration"; error=$_.Exception.Message })
         $rootStatus = "failed"
