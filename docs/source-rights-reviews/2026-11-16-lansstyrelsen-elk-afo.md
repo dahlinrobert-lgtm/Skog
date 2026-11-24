@@ -74,3 +74,39 @@ En enskild ÄFO-provkörning har passerat. Full nationell batch är under verifi
 - Geometri: **Källa: Länsstyrelserna – Älgförvaltningsområden (JaktAdm)** – https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer
 
 **Rättighetsstatus:** Teknisk åtkomst verifierad. Exakta villkor för lagring, bearbetning, extern visning och kommersiell användning av geometrierna och statistikprodukten måste bedömas separat.
+
+
+## 5. Kompletterande kontroll av öppna data-villkor – 2026-11-24
+
+### Officiellt publicerade villkor för Älgdata-statistiken
+
+Länsstyrelsen Västerbottens sida för öppna data kontrollerades 2026-11-24:
+https://www.lansstyrelsen.se/vasterbotten/om-oss/vara-tjanster/oppna-data.html
+
+Under rubriken **Älgdata** beskriver myndigheten materialet som en databas med statistik över fällda älgar under älgjakten och inrapporterad avskjutning. Sidan anger uttryckligen:
+- databasen kan användas helt fritt;
+- villkor: inga;
+- format: Microsoft XLSX.
+
+Samma formulering återfinns på Länsstyrelsen Stockholms och Jämtlands öppna data-sidor. Detta stärker att den publicerade Älgdata-statistiken är avsedd för fri återanvändning och att sidan inte anger krav på attribution. Uppgiften gäller den uttryckligen beskrivna Älgdata-statistiken – inte automatiskt varje annan datamängd eller tjänst hos Länsstyrelsen.
+
+### Bedömning per användning
+
+| Användning | Bedömning 2026-11-24 | Underlag/begränsning |
+|---|---|---|
+| Läsa och använda publicerad Älgdata-statistik | Stöd finns | Öppna data-sidan säger ”helt fritt”, villkor ”inga”. |
+| Kopiera och lagra statistik för historisk jämförelse | Starkt stöd, inte separat exemplifierat | Fri användning utan angivna villkor talar för återanvändning; myndigheten nämner inte uttryckligen snapshots/arkivering. |
+| Bearbeta, aggregera och skapa härledda mått | Starkt stöd, inte separat exemplifierat | Fri användning utan angivna villkor; ingen särskild begränsning publicerad för statistiken. |
+| Kommersiell användning av statistik/härledda analyser | Starkt stöd, inte uttryckligen ordagrant specificerat | Inga villkor anges och ingen icke-kommersiell begränsning framgår. Registrera detta som en välgrundad tolkning, inte som ett individuellt skriftligt myndighetsbesked. |
+| Visa statistik och härledda analyser för kunder | Starkt stöd för själva statistiken | Fri användning utan angivna villkor. Beskriv värdena korrekt som kumulativ rapporterad avskjutning per valt jaktår/ÄFO/ÄJO, inte exakta fälldatum eller realtidsuppgifter. |
+| Vidaredistribuera oförändrade råa datauttag | Stöd finns men format/scope bör hållas till den publicerade statistikprodukten | XLSX anges som format. Skilj publicerad statistik från andra personuppgifter eller rapporteringsgränssnitt. |
+| Automatiserad hämtning via portalens interna/observerade API-anrop | Inte uttryckligen dokumenterad | Öppna data-sidan anger XLSX, inte ett API-kontrakt, frekvens, SLA, rate limit eller automatiseringsvillkor. Fri användning av statistiken ska inte förväxlas med garanterad teknisk API-tillgänglighet eller obegränsad anropsfrekvens. |
+| ÄFO-gränsgeometri från JaktAdm FeatureServer | Separat bedömning krävs | Älgdata-statistikens ”inga villkor” omfattar inte automatiskt geometrierna. Följ geodatakatalogens metadata och JaktAdm-lagrets egna villkor. |
+
+### Rekommenderad produktgräns
+
+Skogskoll kan planera användning av publicerad Älgdata-statistik och egna summeringar som en kommersiell analyskomponent, med tydlig källbeskrivning som god praxis även om öppna data-sidan anger inga villkor. Bevara provenance, uttagsdatum, jaktår, rapportnivå, gränsläge och fullständighetsstatus.
+
+Innan den nuvarande automatiserade insamlingsmetoden körs tätare eller görs till en kritisk produktionsintegration bör Länsstyrelsen bekräfta att den använda portalvägen/API-anropen är avsedda för återkommande maskinell hämtning och ange eventuella frekvens-/driftbegränsningar. Detta är en teknisk åtkomst- och driftsfråga, inte ett påstående om att statistikens återanvändningsrätt är begränsad.
+
+**Statusslutsats:** Fri återanvändning av den publicerade Älgdata-statistiken har officiellt stöd. Ingen uttrycklig attribution krävs enligt den granskade öppna data-sidan. Kommersiell användning, historisk lagring, bearbetning och kundvisning har starkt stöd inom just statistikens scope. Automatiserad API-hämtning och JaktAdm-geometrier är separata frågor och ska inte ges ett bredare godkännande på grundval av Älgdata-sidans villkor.
