@@ -252,3 +252,20 @@ Användaren har skapat den separata Supabase-testinstansen `skogskoll-test` (Wes
 PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541 dokumenterade verifieringen och är också mergad. Användarens 27-raders tabellprivilegiekontroll bekräftade: authenticated får CRUD på egna `watch_areas`/`push_subscriptions` och SELECT på egna `alert_events`; service_role får endast SELECT på `scan_sessions`/`poll_runs`; övriga interna tabeller är direkt oåtkomliga. Åtta worker-RPC:er är EXECUTE-begränsade till service_role. CI och manuella SQL-smoketester är godkända. Ingen worker är ännu ansluten; ingen produktionskoppling, kundfeed eller avisering är aktiverad.
 
 **Nästa steg:** etablera en explicit manuell worker smoke-test-väg mot `skogskoll-test`, utan schedule. Den ska först verifiera live ArcGIS metadata read-only och därefter endast köra en uttryckligt avgränsad teknisk testbatch när testhemligheter är konfigurerade. Bekräfta att befintlig `run-scan.mjs` och adapter återanvänds; inga parallella ingestionimplementationer. Secrets ska vara worker-only och aldrig exponeras i logs eller frontend.
+
+
+## PM-024 – Förbered publicering av Skogskoll som mobilapp
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P2 – efter stabilisering av kundwebb och produktionsförutsättningar |
+| Status | Planerad – krav och arbetsmoment registrerade; teknisk inventering återstår |
+| Evidens | [GitHub issue #573](https://github.com/dahlinrobert-lgtm/Skog/issues/573) |
+| Mål | Förbereda en gemensam och förvaltningsbar mobilapp för Google Play och Apple App Store utan att skapa parallell backend eller kringgå befintliga rättighets-/säkerhetsgrindar |
+| Omfattning | Ägarskap och utvecklarkonton; inventering av befintlig frontend; jämförelse PWA/Capacitor/React Native; butikarnas metadata-, integritets-, behörighets-, konto- och granskningskrav; testning; drift, signering, release och support |
+| Kostnad | Preliminärt 25 USD engångsavgift för Google Play Console och 99 USD/år för Apple Developer Program. Beloppen är inte verifierade för beslut och ska kontrolleras mot officiella prisuppgifter, kontoform, moms och valutaväxling före registrering |
+| Viktiga beroenden | PM-021 kundwebb; verifierad auth-/kontomodell; mobilanpassning; notifieringsdesign; beslutad juridisk utgivare |
+| Acceptanskriterier | Aktuell kodbas inventerad; teknikval motiverat; kontoägare beslutad; aktuella butikskrav och avgifter verifierade; komplett checklista för integritet, behörigheter, kontoradering, granskaråtkomst, metadata, testning och drift; tids-/kostnadsestimat framtaget |
+| Säkerhets-/rättighetsgrind | Ingen kontoregistrering/betalning före ägarbeslut. Ingen kundvisning, datakälleaktivering eller avisering som bieffekt. Källrättigheter bedöms fortsatt separat |
+| Nästa steg | Read-only inventera befintlig frontend, mobilanpassning, autentisering, kartor och notifieringsflöden; jämför därefter tekniska alternativ och skapa butiksspecifik kravmatris |
+
