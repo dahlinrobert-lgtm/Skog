@@ -26,6 +26,45 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
 | Nästa steg | Inventera befintlig projektledarinventering och snapshot/change-feed-kontrakt; definiera minsta rapportfält och käll-/lagerkoppling utan parallell historikmodell |
 
+
+#### Arkitekturpassning och inventering – 2026-11-24
+
+**Inventering genomförd mot aktuell `main` i Skog och det privata `skogskoll-project-manager-history`-repot.**
+
+Verifierat befintligt att återanvända:
+
+- `skogskoll-project-manager-history` har en read-only GitHub-inventory collector som läser registrerade aktiva repos, öppna issues/PR och de senaste 20 workflow-körningarna per repo. Den läser även Skogs `data-platform/config/sources.yml` och tar med källornas kadens, geografi och uttryckliga `operations`-fält.
+- Det privata repot har en daglig schemalagd inventory-workflow (UTC 05/06 med Europe/Stockholm-schedule gate), samt en separat manuell Azure-publisher. Publiceringen validerar en exakt lyckad källkörning och skriver run-scopade snapshots med manifest och read-back-kontroll.
+- En privat Azure-container `project-manager` och dedikerad OIDC-publisheridentitet finns dokumenterade. En första snapshot för källkörning `44958916377` publicerades och lästes tillbaka byte-för-byte i publisherkörningen `44959260856`.
+- Skogs befintliga `docs/project-manager/app.js` läser en fast Blob-URL efter Entra-inloggning, kontrollerar schema, `observed_at_utc`, ålder över 24 timmar och partial-status. Den visar även källregistret och `operations`-status.
+- Skogs `data-platform/config/sources.yml` och den genererade `SKOGSKOLL_SOURCE_STATUS.md` är auktoritativa för käll-/produktbeskrivning och registrerad operativ/rättighetsstatus. `data-platform/scripts/build_source_status_report.py` genererar statusrapporten.
+
+**Identifierade luckor som PM-027 måste lösa:**
+
+1. Projektinventeringen är repo-/workfloworienterad. De senaste 20 workflow-körningarna per repo är ett begränsat felsökningsfönster, inte ett komplett snapshotregister per datakälla/produkt/lager.
+2. Källregistret beskriver kadens och operativa statusfält, men det finns ingen verifierad generell koppling mellan varje `source_id`/produkt/lager och dess exakta workflow, manifest, snapshot-URI, fullständighetskontroll och senaste kompletta observation.
+3. Den befintliga Azure-publishern är manuell och run-scopad. Den första publicerade snapshoten är inte bevis på en återkommande historiktjänst eller ett dagligt källsnapshotflöde. En automatisk `latest`-pekare/containerlistning eller webbläsarbaserad blobinventering är inte dokumenterad som etablerad.
+4. Project Manager-klienten använder en fast snapshotreferens. Den behöver en kontrollerad uppdaterings-/versionsstrategi innan den kan visa senaste dagliga rapporten utan att ändra kodreferensen vid varje körning.
+5. Källstatusrapporten och projektledarens Azure-dashboarddata är separata read models. Deras observationstider och fullständighetsstatus måste hållas åtskilda; en färsk projektinventering innebär inte att varje datakälla har färska snapshots.
+6. Den publika GitHub-integrationen kunde läsa kod och dokumentation men inte verifiera privat Azure Blob-innehåll eller livewebbläsarens Entra/CORS-läsning. Live-KPI och faktisk dashboardaktualitet är därför inte verifierade här.
+
+**Arkitekturval enligt regel 4A:** utöka befintlig privat project-manager collector/read-model och befintlig Azure run-scoped snapshot/publisher efter separat kontraktsdesign. Återanvänd Skogs källregister som källa till käll-/produkt-/lageridentitet. Bygg inte en parallell collector, snapshotdatabas eller historikmodell. Behåll respektive källworkflow och dess egna manifest/snapshots som auktoritativ evidens; projektledaren ska indexera och sammanfatta referenser, inte kopiera källdata.
+
+**Föreslaget minsta rapportkontrakt per källa/produkt/lager (fält kan vara okända):**
+
+- identitet: `source_id`, produkt-/lager-ID och källans namn;
+- ägarskap/evidens: repository, workflow path/ID, run ID/attempt, commit SHA, manifest- och artifact-/snapshotlänk;
+- observation: senaste försökstid och status separat från senaste kompletta snapshotens tid/status;
+- kvalitet: completeness-basis, jämförbarhet, scope/geografi, förväntat/observerat antal och paginerings-/täckningsresultat;
+- aktualitet: registrerad kadens, ålder och klassning `fresh`/`stale`/`unknown` relativt kadensen;
+- förändring: endast verifierad diff från befintlig källspecifik jämförelse, annars `not_available`;
+- hinder/rättigheter: tekniska fel, blockerare, åtkomst, historik, kommersiell användning och kundvisning hålls separata;
+- tidsstämpel för projektledarens egen observation och status för hela indexinsamlingen.
+
+**Fail-closed-regler:** partial/failed försök får inte ersätta senaste kompletta snapshot. Saknat manifest eller okänd koppling ger `unknown`, inte noll/success. Frånvaro i en senare inventering betyder endast ej observerad. Ingen kundfeed, kundwrite eller avisering.
+
+**Nästa steg:** utforma och testa en adapter/normaliserare som läser befintliga källregisterposter och källägda manifest-/snapshotindex och producerar ovanstående read model. Innan implementation måste inventeringen av befintliga manifest-/indexformat per prioriterad källa kompletteras och ett versionsstyrt source-to-workflow-mappningskontrakt beslutas. Därefter kan en separat PR implementera endast read-only aggregering och syntetiska success/partial/failed/stale/unknown-tester. Ingen schedule-, publisher-, Azure-behörighets- eller UI-ändring ingår i detta steg.
+
 ### Backloggens långsiktiga täckningsområden
 
 Backloggen ska successivt fånga följande områden. Detta är en planeringsram, inte en order att starta allt.

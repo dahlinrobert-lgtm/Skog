@@ -1329,3 +1329,14 @@ GitHub issue [#573](https://github.com/dahlinrobert-lgtm/Skog/issues/573) och ba
 Omfattningen inkluderar beslut om juridisk utgivare och kontoägare, read-only inventering av befintlig frontend, jämförelse av PWA/Capacitor/React Native, butikarnas integritets-, behörighets-, kontoraderings- och granskningskrav, testning samt drift och releaseförvaltning. Tidigare angivna butikskontoavgifter (Google Play 25 USD engångsvis, Apple Developer Program 99 USD/år) är endast preliminära budgetvärden och måste verifieras mot officiella aktuella villkor före registrering eller betalning.
 
 Nästa konkreta steg är att inventera aktuell Skogskoll-frontend, mobilanpassning, auth, kartor och notifieringsflöden. Ingen utvecklarkontoregistrering, ny produktionsaktivering eller kundavisering ska ske som del av detta planeringssteg. Se [PROJECT_BACKLOG.md, PM-024](PROJECT_BACKLOG.md).
+
+
+## 2026-11-24 – PM-027 arkitekturpassning och read-model-inventering
+
+PM-027 är P0. Inventering mot aktuell Skog `main` och privata `skogskoll-project-manager-history` verifierar att det redan finns en repo-/workfloworienterad projektinventering, ett källregister med operativa fält, en daglig schemalagd inventory-workflow i det privata repot samt en separat manuell Azure-publisher med run-scopade snapshots och manifest. Den första Azure-publiceringen (`44958916377`, publisher run `44959260856`) verifierades byte-för-byte i samma workflow enligt det privata repots driftdokumentation.
+
+Den befintliga projektledarinventeringen visar de senaste 20 workflow-körningarna per repo och läser källregistrets kadens, geografi och operations-fält. Den visar däremot inte ett verifierat senaste komplett snapshot per `source_id`/produkt/lager. Ingen generell source-to-workflow/manifest/snapshot-koppling har ännu verifierats. Azure-publishern är dokumenterad som manuell och run-scopad; den första publiceringen bevisar inte en återkommande daglig publicering. Skogs Project Manager-klient använder en fast Blob-referens och har schema-/freshness-/partial-kontroller, men live Azure-innehåll och webbläsarens Entra/CORS-flöde kunde inte verifieras genom GitHub-integrationen.
+
+**Arkitekturval:** utöka befintlig privat collector/read-model och befintlig Azure snapshot/publisher efter kontraktsdesign. Återanvänd `data-platform/config/sources.yml` som auktoritativ källa till source/product/layer-identitet och källägda manifest/snapshots som evidens. Ingen parallell collector eller historikmodell.
+
+**Nästa konkreta steg:** inventera exakta manifest-/snapshotindexformat för prioriterade befintliga källflöden; definiera versionsstyrd source-to-workflow-mappning och minsta normaliserade rapportkontrakt. Därefter implementera en read-only adapter med syntetiska tester för success, partial, failed, stale och unknown. Ingen ändring av schema, publicering, behörighet eller kundflöde är godkänd i detta inventeringssteg.
