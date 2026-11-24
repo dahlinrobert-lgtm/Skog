@@ -335,3 +335,22 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Säkerhets-/rättighetsgrind | Ingen kontoregistrering/betalning före ägarbeslut. Ingen kundvisning, datakälleaktivering eller avisering som bieffekt. Källrättigheter bedöms fortsatt separat |
 | Nästa steg | Read-only inventera befintlig frontend, mobilanpassning, autentisering, kartor och notifieringsflöden; jämför därefter tekniska alternativ och skapa butiksspecifik kravmatris |
 
+
+
+#### PM-027 – beslut om arbetsordning efter källformatinventeringen (2026-11-24)
+
+**Beslut:** formell kontraktsdesign skjuts upp. Det finns redan ett dokumenterat förslag till minsta rapportfält, men den befintliga projektledarens faktiska read model och publiceringsflöde behöver först prövas mot de två prioriterade källflödena. Att låsa ett nytt versionsstyrt kontrakt innan denna prövning riskerar att skapa abstraktioner eller fält som inte behövs.
+
+**Verifierad befintlig förmåga i `skogskoll-project-manager-history`:**
+- `scripts/collect_github.py` samlar repo-/issue-/PR-/workflowmetadata och läser Skogs publika `sources.yml` till `source_registry`.
+- Källregistret innehåller identitet, kadens, geografi och registrerad operativ-/rättighetsstatus.
+- `data/workflow_metadata.json` klassar workflow paths med geografi och rollout stage.
+- `scripts/validate_inventory.py` validerar nuvarande inventory/read-model payload och `scripts/append_history.py` hanterar ett separat, syntetiskt append-only-format.
+- Dashboarden visar källregisterstatus och de senaste 20 workflow-körningarna per repo. Den kopplar ännu inte verifierat ett enskilt `source_id`/lager till dess senaste kompletta källsnapshot.
+- `docs/HISTORY_FORMAT.md` beskriver ett format för projektinventeringens historik; det är inte ett kontrakt för källornas egna snapshots.
+
+**Nästa steg:** gör en avgränsad read-only genomförbarhetsprototyp i befintlig collector/read model för Skogsstyrelsens avverkningsanmälningar och Samråd. Använd faktiska befintliga manifest-/snapshotformat och explicit workflow-/scope-evidens. Börja med att visa vad som kan härledas utan att ändra insamlingsflöden, lagring eller publicering. Registrera saknade uppgifter som `unknown`/ej verifierade.
+
+**Beslutspunkt efter prototypen:** avgör om befintliga payloadfält och metadata kan utökas minimalt eller om ett separat versionsstyrt kontrakt verkligen behövs. Formellt kontrakt får tas fram först när prototypen visar konkret behov och fältens semantik är verifierad.
+
+**Skyddsräcken:** ingen parallell collector eller historikmodell; ingen kopiering av källdata till projektledararkivet; latest attempt hålls skild från latest complete snapshot; partial/failed får aldrig ersätta komplett status; rättigheter hålls separata; ingen kundfeed, kundwrite, alert eller ändrad Azure-publicering.
