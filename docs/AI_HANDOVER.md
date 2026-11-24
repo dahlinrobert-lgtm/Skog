@@ -1628,3 +1628,17 @@ Riktad latest-attempt-lookup visar:
 **Nästa konkreta steg:** granska och merge:a manifest-PR efter CI. Därefter uppdatera projektledarrepots befintliga PM-027-adapter att läsa endast den lilla manifestfilen, verifiera att refererad gzip-snapshot finns i Skog main-trädet och exponera per-lager evidens utan att ladda ned features. Kör därefter en ny read-only inventory och granska artifact. Behåll okända värden som unknown; manifestet ändrar inte källans kommersiella användning eller kundvisningsstatus.
 
 **Dokumentationsstatus:** Documentation outstanding tills manifestimplementeringen är mergad och adapterintegrationen är liveverifierad.
+
+
+## 2026-11-24 – Samråd small manifest och PM-027-adapter mergade
+
+Båda beroendeimplementationerna är nu mergade:
+- Skog PR [#606](https://github.com/dahlinrobert-lgtm/Skog/pull/606), merge commit `917fa445559413385a0c995d448c1203d0520c2a`: separat liten `data/samrad_latest_manifest.json`, per-lager pagination-/antal-/geometristatus, explicit räkning av saknad/felaktig geometri och SHA-256 av den skrivna gzip-snapshoten. `complete_for_configured_scope` kräver att alla tre lager är framgångsrikt paginerade och att samtliga hämtade geometrier kan klassificeras. `source_total_reconciled=false` bevaras.
+- Projektledarrepo PR [#70](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/70), merge commit `9f27cc7b61761b09cba37bf84ccb7b24a6d45a5b`: PM-027-adaptern läser endast det lilla manifestet och Git-trädets metadata, kräver samtliga tre kompletta lager samt att refererad snapshot finns. Den laddar inte ned featuredata eller gzip-snapshot. SHA-256 exponeras som manifestets påstående (`checksum_verified_by_adapter=false`), inte som omräknad checksumma.
+- Projektledarens post-merge CI [run 45497224654](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45497224654) passerade. PR-testet omfattade 75 Python-tester och JavaScript-syntaxkontroller.
+
+**Liveverifiering återstår:** manifestfilen har ännu inte verifierats på Skog `main` efter en körning av produktionsworkflowet, och projektledarens nya adapter har ännu inte verifierats i en ny read-only inventory/artifact efter merge. Den senaste verifierade read-only inventory är fortfarande run #13 [45495087348](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45495087348), som föregick merge av dessa två PR:er. Ingen automatisk workflow-dispatch är tillgänglig i denna session.
+
+**Nästa konkreta steg:** kör `.github/workflows/collect-samrad.yml` från Skog `main` för att skapa och verifiera `data/samrad_latest_manifest.json`. Kontrollera att manifestets status och per-lagerfält är rimliga och att snapshotreferensen finns. Kör därefter projektledarens read-only inventory från `main` med `manage_alert_issue` avstängd; granska artifacten och verifiera att Samråd exponeras som `manifest_complete_for_configured_scope` endast om manifestet klarar adapterns grindar. Om manifest saknas/är partiellt ska status förbli `unknown`.
+
+**Dokumentationsstatus:** Documentation outstanding tills båda post-merge-körningarna och artifactgranskningen är klara. Rättighetsbedömning, nationell täckning och kundvisning har inte ändrats.
