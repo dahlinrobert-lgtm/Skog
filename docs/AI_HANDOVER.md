@@ -1540,3 +1540,19 @@ Dokumentationsbedömning: PM-029 är registrerad i `docs/PROJECT_BACKLOG.md`. K�
 4. Behåll daglig Task Scheduler-konfiguration, read-only-egenskaper och tidigare rapporter. Ingen SHA-256-aktivering eller schemaläggningsändring utan separat beslut.
 
 **Dokumentationsstatus:** Documented för inventeringsnuläge och riskbedömning; implementation är öppen via issue #597.
+
+
+### PM-029 – implementation update 2026-11-24
+
+Den första runtime-delen är nu mergad i det privata projektledarrepot `dahlinrobert-lgtm/skogskoll-project-manager-history`.
+
+- PR #66: https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/66
+- Merge commit: `1317798385eff9a9eafd3998b1d27b36a77fb75a`.
+- `.github/workflows/project-manager-inventory.yml` triggar nu en lättviktig schedule-gate var femte minut i `Europe/Stockholm`.
+- `scripts/schedule_gate.py` använder `zoneinfo` för att avgöra om read-only collector ska köras var femte minut under vardagarnas 16.00–01.00 och helgernas 10.00–01.00, eller endast vid hel timme övrig tid.
+- Alert-jobbets `issues: write` är separat och schemalagt endast vid hel timme. Manuella dispatchar hanterar inte ärenden om inte `manage_alert_issue=true` uttryckligen väljs.
+- Collector behåller `contents: read`, separat read-only-token och run-scoped artifact. Ingen Azure-publicering, latest-pointer eller browser-polling ingår ännu.
+
+**Verifiering:** Merge-commitens main-run #117 (Actions run 45483671689) passerade. Python-enhetstester och dashboardens JavaScript-syntaxkontroll är gröna. En tidigare testkörning hittade ett felaktigt UTC-testvärde för helggränsen; testet korrigerades före merge. Detta verifierar kod och testsvit, inte långvarig faktisk schedule-drift. GitHub schedule events kan försenas eller tappas; kadensen är inte en SLA.
+
+**Nästa konkreta steg:** bygg och testa den separata OIDC-baserade Azure-publiceringen i projektledarrepot. Publicera först immutable run-scoped snapshot och manifest efter komplett inventory-validering och read-back. Inför därefter en skyddad latest-pekare som endast flyttas efter verifierad publicering. Efter det uppdateras Pages-klienten med autentiserad polling och tydlig freshness/stale-status. Behåll senaste kompletta snapshot vid partial/failed och bevara historiska snapshots.
