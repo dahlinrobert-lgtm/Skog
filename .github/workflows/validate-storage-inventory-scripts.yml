@@ -42,6 +42,10 @@ jobs:
             }
             Write-Host "OK (Windows PowerShell 5.1): $file"
           }
+      - name: Run local inventory regression tests
+        shell: powershell
+        run: |
+          ./scripts/test_inventory_local_storage.ps1
       - name: Parse PowerShell scripts
         shell: pwsh
         run: |
