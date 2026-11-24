@@ -362,15 +362,19 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Fält | Värde |
 |---|---|
 | Prioritet | P1 – operativ överblick och snabb upptäckt av avvikelser |
-| Status | Planerad – uppdateringsschema beslutat; implementation och liveverifiering återstår |
+| Status | Schemaläggningsgrind implementerad och CI-verifierad i privat projektledarrepo; Azure latest-publicering, browser-polling och faktisk schedule-drift återstår |
 | Mål | Hålla den privata projektledarsidan aktuell med senaste kompletta GitHub-inventering utan att blanda ihop webbläsaruppdatering med faktisk källinsamling |
 | Beslutat schema | Europe/Stockholm: insamling var 5:e minut vardagar 16.00–01.00 och helger 10.00–01.00; övrig tid en gång per timme. Webbläsaren kontrollerar efter ny snapshot varje minut under de aktiva tiderna och en gång per timme övrig tid |
 | Arkitektur | Återanvänd befintlig read-only collector, validator, separata OIDC-publisheridentitet och privata Azure Blob-container. Ingen ny parallell collector eller publik projektdata |
 | Acceptanskriterier | Tidsgrind testad över vardag/helg och midnatt; komplett inventory krävs före publicering; run-scoped snapshots och manifest bevaras; latest-pointer uppdateras först efter verifierad publicering; browser läser endast senaste pekare/snapshot efter Entra-autentisering; fel behåller senaste kompletta snapshot och visas tydligt |
 | Säkerhetsgrind | Ingen containerlistning från webbläsaren; ingen anonym blobåtkomst; ingen ändring av befintliga Azure-identiteters scope; ingen partial/failed publicering; inga källfeaturedata eller kunddata i projektledarens inventory |
-| Nästa steg | Utforma och testa en DST-säker schemaläggningsgrind och ett atomiskt latest-manifest i det privata projektledarrepot. Därefter synkronisera den publicerade Pages-klienten och verifiera autentiserad läsning |
+| Nästa steg | Implementera och testa OIDC-publicering av immutable run-scoped snapshot + manifest efter komplett validering, därefter verifierad latest-pekare. Synkronisera sedan Pages-klienten med autentiserad polling och verifiera live freshness/stale-beteende |
 | Övrigt | GitHub Actions schematriggers kan försenas eller tappas. Övervaka faktisk körning och freshness; schemat är önskad kadens, inte en SLA |
 
+
+
+
+**PM-029 statusuppdatering 2026-11-24:** Schemaläggningsgrinden är implementerad i privata projektledarrepot genom PR #66 (merge commit `1317798385eff9a9eafd3998b1d27b36a77fb75a`). Main-CI run #117 passerade Python-tester och JS-syntaxkontroll. Grinden kör collector var femte minut i de beslutade aktiva fönstren och timvis övrig tid; issue-write hålls separat och timvis/opt-in. Detta är kod-/CI-verifiering, inte ännu bevis på återkommande schedule-drift. Azure latest-publicering och webbläsarpolling är fortfarande ej implementerade.
 
 ## PM-030 – Härda lokal lagringsinventering mot partiella körningar
 
