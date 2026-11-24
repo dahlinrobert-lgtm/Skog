@@ -1394,3 +1394,20 @@ Verifiering:
 **Kvarstående:** kör den befintliga read-only inventory-workflowen manuellt från projektledarrepots `main`. Lämna `manage_alert_issue` avmarkerad. Granska collector-status, fullständighet för aktiva projekt, source registry, de två `source_snapshot_evidence`-posterna (avverkningsanmälningar och Samråd) samt artifact. Latest attempt och latest complete snapshot ska fortsatt hållas isär; okänd evidens ska förbli `unknown`. Denna kodfix ändrar inte källinsamling, källrättigheter, Azure-publicering eller kundbeteende.
 
 Ingen ny källstatus eller rättighetsbedömning följer av merge eller CI. Kundvisning och kommersiell användning förblir enligt källregistret oförändrade.
+
+
+## 2026-11-24 – PM-027 live inventory #11 verifierad
+
+Projektledarrepots [inventory run #11](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45443506944) är `completed/success` efter merge av PR #60. Collector rapporterade 3/3 aktiva projekt, 0 fel. Artifact [project-manager-inventory-45443506944](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45443506944/artifacts/14944607060) har laddats ned och granskats.
+
+Verifierade resultat:
+- Källregistret: 51 källposter, 14 operations-block, 37 utan operativ status; registerkontrolldatum 2026-11-18.
+- PM-027-adaptern returnerade `status=success`; Skog Git tree var inte trunkerat.
+- `skogsstyrelsen.harvest_notifications`: manifeststatus `manifest_complete` för Gräsmyr 10 km-pilot, 165 poster. Detta innebär inte nationell täckning. SHA-256 i manifestet är inte omräknad av adaptern.
+- `skogsstyrelsen.samrad`: 24 daterade metadataidentifierade snapshots. Fullständighet, scope och punkt-/linje-/polygonantal är fortsatt `unknown`.
+- `latest_attempt` var `unknown` för båda källorna, eftersom matchande workflows inte fanns bland de senaste 20 workflow-körningarna för repot. Det är en begränsning i lookup-fönstret, inte bevis för att körning saknas.
+- Artifact uppladdades och dess SHA-256 digest var `256c010207f7719da4aa53e55c910f3dab63774e1db08c1b87d67007cb486fb8`. Alert-jobbet var överhoppat; inga källfeatures laddades ner.
+
+PM-027 är därmed live-verifierad för befintlig read-only collector/read model och dess uttryckliga evidensgränser. Ingen rättighetsstatus, kommersiell användning, kundvisning eller kundfeed har ändrats.
+
+**Nästa konkreta steg:** förbättra hämtningen av senaste matchande workflow-försök utan att skrapa all workflow-historik, därefter undersöka en liten separat Samråd-manifestfil med per-lager antal, paging och fullständighet. Behåll `unknown` där evidens saknas. Autentiserad dashboardvisning är inte verifierad av artifactkontrollen och ska testas separat.
