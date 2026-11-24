@@ -362,13 +362,13 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Fält | Värde |
 |---|---|
 | Prioritet | P1 – operativ överblick och snabb upptäckt av avvikelser |
-| Status | Schemaläggningsgrind implementerad och CI-verifierad i privat projektledarrepo; Azure latest-publicering, browser-polling och faktisk schedule-drift återstår |
+| Status | Schemaläggningsgrind och Azure latest-publicerare mergade och CI-verifierade; livepublicering, faktisk schedule-drift och browser-polling återstår |
 | Mål | Hålla den privata projektledarsidan aktuell med senaste kompletta GitHub-inventering utan att blanda ihop webbläsaruppdatering med faktisk källinsamling |
 | Beslutat schema | Europe/Stockholm: insamling var 5:e minut vardagar 16.00–01.00 och helger 10.00–01.00; övrig tid en gång per timme. Webbläsaren kontrollerar efter ny snapshot varje minut under de aktiva tiderna och en gång per timme övrig tid |
 | Arkitektur | Återanvänd befintlig read-only collector, validator, separata OIDC-publisheridentitet och privata Azure Blob-container. Ingen ny parallell collector eller publik projektdata |
 | Acceptanskriterier | Tidsgrind testad över vardag/helg och midnatt; komplett inventory krävs före publicering; run-scoped snapshots och manifest bevaras; latest-pointer uppdateras först efter verifierad publicering; browser läser endast senaste pekare/snapshot efter Entra-autentisering; fel behåller senaste kompletta snapshot och visas tydligt |
 | Säkerhetsgrind | Ingen containerlistning från webbläsaren; ingen anonym blobåtkomst; ingen ändring av befintliga Azure-identiteters scope; ingen partial/failed publicering; inga källfeaturedata eller kunddata i projektledarens inventory |
-| Nästa steg | Implementera och testa OIDC-publicering av immutable run-scoped snapshot + manifest efter komplett validering, därefter verifierad latest-pekare. Synkronisera sedan Pages-klienten med autentiserad polling och verifiera live freshness/stale-beteende |
+| Nästa steg | Verifiera nästa schemalagda inventory-run, automatisk workflow_run-trigger, OIDC/RBAC, Azure payload+manifest read-back och latest.json. Testa partial/failed-skydd. Därefter autentiserad Pages-polling och freshness/stale-visning |
 | Övrigt | GitHub Actions schematriggers kan försenas eller tappas. Övervaka faktisk körning och freshness; schemat är önskad kadens, inte en SLA |
 
 
@@ -392,3 +392,6 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Säkerhetsgrind | Ingen radering/flytt av lokala filer, ingen publicering av rå inventeringsrapport, ingen aktivering av SHA-256 eller ändring av Task Scheduler utan separat godkännande. |
 
 **Projektledarwebb:** Skog är aktivt i projektledarens repo-register. Issue #597 hämtas av den befintliga read-only collectorn som en öppen arbetsuppgift och visas i dashboardens `open_work_items` efter nästa kompletta inventering och publicerade snapshot. Ingen separat UI-komponent krävs; dashboarduppdatering är ännu inte liveverifierad.
+
+
+**Statusuppdatering 2026-11-24 (Azure publisher):** PR #68 i det privata projektledarrepot är mergad med merge commit `44c2bfa73b14193c7d7fb364084b69c791819ca8`; main CI run `45486205149` passerade unit tests och JS-syntaxkontroll. Automatisk publicering, immutable payload/manifest med byte-read-back och skyddad latest-pekare är implementerade. Live Azure-publicering och browser-polling är ännu inte verifierade/implementerade. Se AI_HANDOVER PM-029-uppdateringen och privata `docs/OPERATIONS_CENTER.md`.
