@@ -1329,3 +1329,18 @@ GitHub issue [#573](https://github.com/dahlinrobert-lgtm/Skog/issues/573) och ba
 Omfattningen inkluderar beslut om juridisk utgivare och kontoägare, read-only inventering av befintlig frontend, jämförelse av PWA/Capacitor/React Native, butikarnas integritets-, behörighets-, kontoraderings- och granskningskrav, testning samt drift och releaseförvaltning. Tidigare angivna butikskontoavgifter (Google Play 25 USD engångsvis, Apple Developer Program 99 USD/år) är endast preliminära budgetvärden och måste verifieras mot officiella aktuella villkor före registrering eller betalning.
 
 Nästa konkreta steg är att inventera aktuell Skogskoll-frontend, mobilanpassning, auth, kartor och notifieringsflöden. Ingen utvecklarkontoregistrering, ny produktionsaktivering eller kundavisering ska ske som del av detta planeringssteg. Se [PROJECT_BACKLOG.md, PM-024](PROJECT_BACKLOG.md).
+
+## 2026-11-24 – Projektstyrning: riskregister och synliga kontrolluppgifter
+
+En ny styrningsrunda har utgått från aktuell `main` och de tre obligatoriska nulägesdokumenten. Källstatusrapporten kontrollerad 2026-11-23 omfattar 51 källor, varav 14 har operativ status och 37 saknar sådan; ingen är uttryckligen godkänd för kundvisning. Dagligt snapshotinformationsflöde är fortsatt P0 och varje källa behåller sin egen lämpliga insamlingskadens.
+
+- PM-027 finns i backloggen men saknade ett eget öppet GitHub-ärende. Issue [#575](https://github.com/dahlinrobert-lgtm/Skog/issues/575) är nu skapad för att göra P0-arbetet synligt i projektledarens befintliga issue-inventering.
+- PM-029 [#576](https://github.com/dahlinrobert-lgtm/Skog/issues/576) registrerar källskydd: skonsam anropspolicy, begränsad samtidighet/retry, hantering av 429/503/timeouts, checkpoint/återhämtning och källspecifika gränser. Detta är en skyddsgrind; inga insamlingsfrekvenser har ändrats.
+- PM-030 [#577](https://github.com/dahlinrobert-lgtm/Skog/issues/577) registrerar kostnads- och kapacitetsuppföljning. Den befintliga Azure-budgeten ska återanvändas, inte ersättas av en parallell budget.
+- PM-031 [#578](https://github.com/dahlinrobert-lgtm/Skog/issues/578) registrerar tvärgående backup-/restore- och kontinuitetskontroll. Befintliga NVR- och Azure-skydd ska inventeras före nya lösningar.
+- `docs/PROJECT_RISK_REGISTER.md` är den samlade, kuraterade riskbilden. Den skiljer verifierade skydd från okända eller ännu ej testade kontroller och innehåller ägare, evidens, åtgärd och nästa steg.
+- Projektledarsidan får en synlig sektion med länkar till riskregistret och de fyra öppna kontrolluppgifterna. Den fortsätter använda befintlig read-only GitHub-inventering; ingen ny datakälla eller parallell issue-lista införs.
+
+**Viktiga avgränsningar:** Ingen källans insamlingskadens, API-belastning, Azure-prenumeration, betalningsinställning, backupretention, kundvisning eller avisering har ändrats. Källspecifika rättigheter är fortsatt separata. Uppgifterna är registrerade, inte genomförda.
+
+**Nästa konkreta steg:** genomför read-only arkitekturpassning av befintliga insamlare/workflows för PM-029 och inventera befintliga PM-027 rapport-/snapshotkontrakt. Därefter prioritera implementation efter faktisk överlappning och risk.
