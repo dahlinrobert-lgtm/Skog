@@ -35,6 +35,19 @@ try {
         throw "Changed root scope produced missing events."
     }
 
+    $outComparable = Join-Path $temp "comparable-output"
+    New-Item -ItemType Directory -Path $outComparable | Out-Null
+    & $scriptPath -Roots @($rootA) -OutputDirectory $outComparable
+    $comparableBaseline = Read-LatestReport $outComparable
+    if ($comparableBaseline.comparison_status -ne "baseline") { throw "Initial comparable baseline assertion failed." }
+    Start-Sleep -Seconds 1
+    Set-Content -LiteralPath (Join-Path $rootA "two.txt") -Value "two"
+    & $scriptPath -Roots @($rootA) -OutputDirectory $outComparable
+    $comparable = Read-LatestReport $outComparable
+    if ($comparable.comparison_status -ne "compared" -or @($comparable.changes | Where-Object { $_.change -eq "added" }).Count -ne 1) {
+        throw "Complete same-scope comparison assertion failed."
+    }
+
     & $scriptPath -Roots @($rootA) -OutputDirectory $outPartial
     $partialBaseline = Read-LatestReport $outPartial
     if ($partialBaseline.inventory_status -ne "complete") { throw "Partial-test baseline was not complete." }
