@@ -370,3 +370,21 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Säkerhetsgrind | Ingen containerlistning från webbläsaren; ingen anonym blobåtkomst; ingen ändring av befintliga Azure-identiteters scope; ingen partial/failed publicering; inga källfeaturedata eller kunddata i projektledarens inventory |
 | Nästa steg | Utforma och testa en DST-säker schemaläggningsgrind och ett atomiskt latest-manifest i det privata projektledarrepot. Därefter synkronisera den publicerade Pages-klienten och verifiera autentiserad läsning |
 | Övrigt | GitHub Actions schematriggers kan försenas eller tappas. Övervaka faktisk körning och freshness; schemat är önskad kadens, inte en SLA |
+
+
+## PM-030 – Härda lokal lagringsinventering mot partiella körningar
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 – dataskydd, tillförlitlig lagringsöverblick och förebyggande av falska bortfall |
+| Status | Dokumenterad; implementation ej påbörjad |
+| Evidens | [GitHub issue #597](https://github.com/dahlinrobert-lgtm/Skog/issues/597), `docs/STORAGE_INVENTORY.md`, `scripts/inventory-local-storage.ps1` |
+| Mål | Behålla befintlig daglig lokalinventering men göra status och förändringsjämförelse fail-closed |
+| Verifierat nuläge | Windows-aktivitet kör dagligen 21:00; standardrötter; flyttbara diskar inkluderas; SHA-256 avstängt; senaste kontrollerade körning 2026-11-23 hade resultatkod 0. |
+| Risker | Dolda enumereringsfel, `missing` vid partiell läsning, ändrat root-set utan scope-gate samt lokala identiteter/fullständiga sökvägar i JSON-rapporten |
+| Acceptanskriterier | Explicit `complete/partial/failed` per rot; enumereringsfel räknas; `missing` endast vid kompletta jämförbara root-set; scope-avvikelse redovisas separat; rapporten visar coverage/error counts; personuppgifter/sökvägar minimeras; tester täcker partiell åtkomst, saknad/ändrad rot, baseline och komplett jämförelse |
+| Arkitektur | Återanvänd befintligt PowerShell-skript och befintlig Task Scheduler-aktivitet. Ingen parallell inventerare eller ny schemaläggning. |
+| Nästa steg | Granska senaste lokala JSON-/Markdownrapporten och implementera completeness-/scope-gates i en separat branch/PR. Behåll schemaläggning och read-only-egenskaper. |
+| Säkerhetsgrind | Ingen radering/flytt av lokala filer, ingen publicering av rå inventeringsrapport, ingen aktivering av SHA-256 eller ändring av Task Scheduler utan separat godkännande. |
+
+**Projektledarwebb:** Skog är aktivt i projektledarens repo-register. Issue #597 hämtas av den befintliga read-only collectorn som en öppen arbetsuppgift och visas i dashboardens `open_work_items` efter nästa kompletta inventering och publicerade snapshot. Ingen separat UI-komponent krävs; dashboarduppdatering är ännu inte liveverifierad.

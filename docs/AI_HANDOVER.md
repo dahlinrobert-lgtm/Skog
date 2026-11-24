@@ -1,6 +1,6 @@
 # Skog / Skogskoll – överlämning för fortsatt arbete
 
-**Senast uppdaterad:** 2026-11-23  
+**Senast uppdaterad:** 2026-11-24  
 **Syfte:** Detta dokument är en kompakt startpunkt för fortsatt utveckling, även när arbetet fortsätter i en ny ChatGPT-chatt.
 
 > Läs detta dokument först i en ny chatt. Läs därefter den automatiska källstatusrapporten och den fullständiga datakälleöversikten. Kontrollera alltid aktuella filer och GitHub Actions innan du påstår att en körning eller status fortfarande gäller.
@@ -1512,3 +1512,31 @@ Nästa konkreta arbetssteg:
 5. Genomför liveverifiering av Azure CORS/RBAC/browser read före aktivering. Uppdatera PM-029 och denna handover med faktisk evidens efter varje steg.
 
 Dokumentationsbedömning: PM-029 är registrerad i `docs/PROJECT_BACKLOG.md`. Källstatus och datakälleöversikt behöver inte ändras eftersom inga källor, källrättigheter eller datainsamlingsflöden har ändrats.
+
+
+## 2026-11-24 – Lokal miljöinventering och befintlig Windows-lagringsinventering
+
+**Verifierat nuläge:**
+- Lokal miljöinventering är genomförd i avgränsade steg. Windows 10 Home/build 26200, Windows PowerShell 5.1.26100.9818, Git 2.56.0.windows.4, Python 3.12.10 och 3.15.2 samt Node.js/npm identifierades.
+- Python 3.12 är den fungerande Skog-miljön vid kontrollen: 42 installerade paket, alla åtta direkta krav i `requirements.txt` uppfyllda, `pip check` utan fel. Python 3.15 har 8 paket och saknar minst Shapely i no-index-kontrollen av projektkraven. Ingen virtuell miljö hittades i Skogs projektträd.
+- Lokala Git-repon: Skog på `main` med 34 ospårade poster och bear-data på `audit/nvr-rt90-coordinate-recovery` med 15 ospårade poster. Inga spårade ändringar rapporterades. Ospårade data/skript ska bevaras tills de klassificerats.
+- Avgränsad skanning fann 3 107 filer i `data` (cirka 702,86 MiB), 11 filer i `data-platform`, 3 analys-CSV i `road_network_endpoint_analysis`, 2 154 filer i `data/viltdata` och 1 fil i `data/police_events/external_import`. Detta är inte en fullständig diskinventering.
+- Befintlig Windows Task Scheduler-aktivitet `Skogskoll - local storage inventory` kör dagligen kl. 21:00 med `powershell.exe` och `scripts/inventory-local-storage.ps1`. Senaste kontrollerade körning 2026-11-23 21:00:01 hade resultatkod 0 och 0 missade körningar. Nästa körning vid kontrollen var 2026-11-24 21:00.
+- Schemalagda parametrar: standardrötter och standardoutput; `-IncludeRemovableDrives` aktiv; `-HashFiles` inaktiv. Inga anpassade rötter/outputkataloger. Ingen aktivitet eller fil ändrades.
+
+**Kodgranskning – öppna risker:**
+- `Get-ChildItem -Recurse -ErrorAction SilentlyContinue` kan dölja underkatalogfel.
+- `missing` skapas utan krav på komplett inventering.
+- Förra och nuvarande root-set jämförs inte; ändrat scope kan ge falska bortfall.
+- JSON-rapporter innehåller dator-/användaridentitet och fullständiga lokala sökvägar.
+- Resultatkod 0 är inte bevis på fullständig inventering eller filintegritet.
+
+**Projektledare:** Issue [#597](https://github.com/dahlinrobert-lgtm/Skog/issues/597) skapad med mål, risker och acceptanskriterier. Skog är aktivt i projektledarens register och dess collector läser öppna issues. Den befintliga Project Manager-webbklienten visar `open_work_items`; issue #597 bör visas efter nästa kompletta inventory och publicerade dashboard-snapshot. Ingen webbklientkod eller publicering ändrades här.
+
+**Nästa konkreta steg:**
+1. Läs senaste lokala inventeringsrapporten från den faktiska outputkatalogen och kontrollera roots, errors, antal och tidigare snapshot.
+2. Utforma fail-closed-status per rot och root-set-jämförelse i `inventory-local-storage.ps1`; `missing` får bara beräknas mellan kompletta jämförbara inventeringar.
+3. Lägg till tester för nekad katalogåtkomst, partiell inventering, ändrat root-set, baseline och komplett jämförbar körning.
+4. Behåll daglig Task Scheduler-konfiguration, read-only-egenskaper och tidigare rapporter. Ingen SHA-256-aktivering eller schemaläggningsändring utan separat beslut.
+
+**Dokumentationsstatus:** Documented för inventeringsnuläge och riskbedömning; implementation är öppen via issue #597.
