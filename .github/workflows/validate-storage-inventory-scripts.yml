@@ -10,6 +10,7 @@ on:
   pull_request:
     paths:
       - "scripts/inventory-local-storage.ps1"
+      - "scripts/test_inventory_local_storage.ps1"
       - "scripts/install-local-storage-inventory-task.ps1"
       - ".github/workflows/validate-storage-inventory-scripts.yml"
   workflow_dispatch:
