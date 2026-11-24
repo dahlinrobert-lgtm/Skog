@@ -1,6 +1,6 @@
 # Skog/Skogskoll – prioriterad projektbacklogg
 
-**Baslinje:** 2026-11-18  
+**Baslinje:** 2026-11-24  
 **Ägare av beslut:** Användaren  
 **Regler:** Se [PROJECT_MANAGER_RULES.md](PROJECT_MANAGER_RULES.md). Prioriteringar är förslag, inte godkända arbetsorder.
 
@@ -19,7 +19,7 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Fält | Värde |
 |---|---|
 | Prioritet | P0 – högsta operativa prioritet |
-| Status | Krav fastställt; inventering av befintliga rapporter/workflows återstår |
+| Status | Krav fastställt; GitHub issue [#575](https://github.com/dahlinrobert-lgtm/Skog/issues/575) skapad; read-only inventering återstår |
 | Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
@@ -269,3 +269,38 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Säkerhets-/rättighetsgrind | Ingen kontoregistrering/betalning före ägarbeslut. Ingen kundvisning, datakälleaktivering eller avisering som bieffekt. Källrättigheter bedöms fortsatt separat |
 | Nästa steg | Read-only inventera befintlig frontend, mobilanpassning, autentisering, kartor och notifieringsflöden; jämför därefter tekniska alternativ och skapa butiksspecifik kravmatris |
 
+## PM-029 – Skydda externa datakällor med skonsam och återhämtningsbar insamling
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P0 – skyddsgrind för befintliga och kommande insamlingar |
+| Status | Uppgift registrerad; read-only inventering återstår |
+| Evidens | [GitHub issue #576](https://github.com/dahlinrobert-lgtm/Skog/issues/576); [riskregister](PROJECT_RISK_REGISTER.md) |
+| Mål | Minska risken att Skogs anrop belastar eller stör externa källtjänster och säkerställa kontrollerad återhämtning vid driftstörningar |
+| Omfattning | Källspecifik kadens, rate limits, paginering, timeout, samtidighet, svarsstorlek, retry-budget, exponential backoff/jitter, Retry-After, 429/503, circuit breaker, checkpoints och runbooks |
+| Acceptanskriterier | Källgränser dokumenterade eller markerade okända; syntetiska tester för 429/503/timeout/avbruten paginering; hårda retry- och samtidighetstak; partial/failed fail-closed; föregående kompletta snapshot bevaras |
+| Nästa steg | Read-only inventera befintliga HTTP-klienter, adapters och workflows. Klassificera lösningen som återanvändning, utökning eller ny separat komponent innan implementation. Ingen ökad kadens eller ny schedule. |
+| Stoppregler | Ingen aggressiv retry, parallell hämtning eller automatisk återstart utan källspecifika gränser. Teknisk åtkomst innebär inte rätt till obevakad insamling. |
+
+## PM-030 – Följ upp kostnader och kapacitetsgränser
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 |
+| Status | Uppgift registrerad; befintliga mätvärden ska inventeras |
+| Evidens | [GitHub issue #577](https://github.com/dahlinrobert-lgtm/Skog/issues/577); [riskregister](PROJECT_RISK_REGISTER.md); [Azure driftöversikt](azure-storage-operations.md) |
+| Mål | Samlad uppföljning av faktisk kostnad, budgetprognos och teknisk kapacitet för Azure, Supabase, GitHub Actions och relevanta externa tjänster |
+| Acceptanskriterier | Verifierade mätvärdeskällor och kontrolltidpunkter; okända värden markeras okända; kostnad skiljs från kvoter/kapacitet; befintlig Azure-budget återanvänds; inga betalnings-/planändringar utan godkännande |
+| Nästa steg | Read-only inventera Azure-budgetens faktiska utfall samt tillgängliga Supabase- och GitHub Actions-mätvärden. |
+
+## PM-031 – Verifiera backup, återställning och kontinuitet
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 |
+| Status | Uppgift registrerad; tvärgående restore-inventering återstår |
+| Evidens | [GitHub issue #578](https://github.com/dahlinrobert-lgtm/Skog/issues/578); [riskregister](PROJECT_RISK_REGISTER.md); [Azure driftöversikt](azure-storage-operations.md) |
+| Mål | Säkerställa att prioriterade data och system kan återställas efter radering, korruption, felpublicering eller större driftavbrott |
+| Acceptanskriterier | Kritiska system/data har backupkälla, retention, ansvar och verifierat restore-förfarande eller dokumenterat gap; isolerat restore-test med manifest/kontrollsummor; återställning skriver inte över produktionsdata; runbook och överlämning uppdaterade |
+| Nästa steg | Read-only inventera befintliga NVR-backuper, Azure-skydd, Git-historik/rulesets och restore-runbooks; välj därefter ett isolerat återställningstest. |
+| Stoppregler | Ingen automatisk gallring, destruktiv migrering eller produktionsåterställning i detta arbete. |
