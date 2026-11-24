@@ -75,6 +75,13 @@ New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 
 $items = [System.Collections.Generic.List[object]]::new()
 $rootStates = [System.Collections.Generic.List[object]]::new()
+$rootIds = @{}
+foreach ($root in $Roots) {
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($root.ToLowerInvariant())
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try { $rootIds[$root] = ([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace("-", "").ToLowerInvariant() }
+    finally { $sha.Dispose() }
+}
 
 foreach ($root in $Roots) {
     Write-Host "Scanning: $root"
@@ -205,8 +212,67 @@ if ($previousSnapshot) {
     $previousSnapshotName = $previousSnapshot.Name
 }
 
+$safeRoots = @($rootStates | ForEach-Object {
+    [pscustomobject]@{
+        root_id = $_.root_id
+        status = $_.status
+        directory_count = $_.directory_count
+        file_count = $_.file_count
+        total_bytes = $_.total_bytes
+        error_count = $_.error_count
+    }
+})
+$safeFiles = @($items | ForEach-Object {
+    [pscustomobject]@{
+        root_id = $rootIds[$_.root]
+        relative_path = $_.relative_path
+        name = $_.name
+        extension = $_.extension
+        size_bytes = $_.size_bytes
+        last_write_time_utc = $_.last_write_time_utc
+        sha256 = $_.sha256
+    }
+})
+$safeChanges = @($changes | ForEach-Object {
+    $entry = $_
+    $matchedRoot = $null
+    if ($entry.path) {
+        foreach ($root in $Roots) {
+            if ($entry.path.StartsWith($root, [System.StringComparison]::OrdinalIgnoreCase)) {
+                $matchedRoot = $root
+                break
+            }
+        }
+    }
+    [pscustomobject]@{
+        change = $entry.change
+        root_id = if ($matchedRoot) { $rootIds[$matchedRoot] } else { $null }
+        relative_path = if ($matchedRoot -and $entry.path.Length -gt $matchedRoot.Length) { $entry.path.Substring($matchedRoot.Length).TrimStart([char]92) } else { $null }
+        old_size_bytes = $entry.old_size_bytes
+        new_size_bytes = $entry.new_size_bytes
+        reason = $entry.reason
+    }
+})
+$safeErrors = @($errors | ForEach-Object {
+    $entry = $_
+    $matchedRoot = $null
+    foreach ($root in $Roots) {
+        if ($entry.path -and $entry.path.StartsWith($root, [System.StringComparison]::OrdinalIgnoreCase)) {
+            $matchedRoot = $root
+            break
+        }
+    }
+    $message = [string]$entry.error
+    foreach ($root in $Roots) { $message = $message.Replace($root, "<root>") }
+    [pscustomobject]@{
+        root_id = if ($matchedRoot) { $rootIds[$matchedRoot] } else { $null }
+        category = $entry.category
+        error = $message
+    }
+})
+
 $report = [ordered]@{
-    schema_version = "2.0"
+    schema_version = "2.1"
     inventory_status = $inventoryStatus
     discovery_complete = [bool]$discoveryComplete
     comparison_status = $comparisonStatus
@@ -220,11 +286,11 @@ $report = [ordered]@{
     hash_enabled = [bool]$HashFiles
     max_hash_bytes = $MaxHashBytes
     previous_snapshot = $previousSnapshotName
-    roots = @($rootStates)
-    change_count = $changes.Count
-    changes = $changes.ToArray()
-    files = $items.ToArray()
-    errors = $errors.ToArray()
+    roots = $safeRoots
+    change_count = $safeChanges.Count
+    changes = $safeChanges
+    files = $safeFiles
+    errors = $safeErrors
 }
 
 $jsonPath = Join-Path $OutputDirectory "local-storage-inventory-$timestamp.json"
@@ -238,18 +304,18 @@ $lines.Add("- Generated (UTC): $($report.generated_at_utc)")
 $lines.Add("- Computer: $env:COMPUTERNAME")
 $lines.Add("- Mode: read-only")
 $lines.Add("")
-$lines.Add("| Root | Files | Total size (GB) |")
+$lines.Add("| Root ID | Files | Total size (GB) |")
 $lines.Add("|---|---:|---:|")
 foreach ($entry in $rootSummary) {
     $gb = [math]::Round(($entry.total_bytes / 1GB), 3)
-    $lines.Add("| $($entry.root) | $($entry.file_count) | $gb |")
+    $lines.Add("| $($rootIds[$entry.root]) | $($entry.file_count) | $gb |")
 }
 $lines.Add("")
 $lines.Add("")
 $lines.Add("Changes since previous snapshot: $($changes.Count)")
-$lines.Add("| Change | Path | Old bytes | New bytes |")
+$lines.Add("| Change | Root ID | Relative path | Old bytes | New bytes |")
 $lines.Add("|---|---|---:|---:|")
-foreach ($change in $changes) { $lines.Add("| $($change.change) | $($change.path) | $($change.old_size_bytes) | $($change.new_size_bytes) |") }
+foreach ($change in $safeChanges) { $lines.Add("| $($change.change) | $($change.root_id) | $($change.relative_path) | $($change.old_size_bytes) | $($change.new_size_bytes) |") }
 $lines.Add("")
 $lines.Add("Errors: $($errors.Count)")
 $lines.Add("")
