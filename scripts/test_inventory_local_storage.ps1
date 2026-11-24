@@ -21,8 +21,21 @@ try {
 
     & $scriptPath -Roots @($rootA) -OutputDirectory $outScope
     $baseline = Read-LatestReport $outScope
-    if ($baseline.schema_version -ne "2.0" -or $baseline.inventory_status -ne "complete" -or $baseline.comparison_status -ne "baseline") {
+    if ($baseline.schema_version -ne "2.1" -or $baseline.inventory_status -ne "complete" -or $baseline.comparison_status -ne "baseline") {
         throw "Baseline assertion failed."
+    }
+    $baselineFile = Get-ChildItem -LiteralPath $outScope -Filter "local-storage-inventory-*.json" -File |
+        Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
+    $baselineJson = Get-Content -LiteralPath $baselineFile.FullName -Raw -Encoding UTF8
+    $baselineMarkdown = [System.IO.File]::ReadAllText([System.IO.Path]::ChangeExtension($baselineFile.FullName, ".md"))
+    if ($baselineJson.Contains($rootA) -or $baselineJson.Contains($temp) -or $baselineJson.Contains($env:COMPUTERNAME)) {
+        throw "JSON report exposed an absolute local path or computer name."
+    }
+    if ($baselineMarkdown.Contains($rootA) -or $baselineMarkdown.Contains($temp) -or $baselineMarkdown.Contains($env:COMPUTERNAME)) {
+        throw "Markdown report exposed an absolute local path or computer name."
+    }
+    if (-not $baseline.files[0].relative_path -or -not $baseline.files[0].root_id -or $baseline.files[0].path) {
+        throw "Privacy-preserving file identity fields are missing or absolute path field remains."
     }
 
     Start-Sleep -Seconds 1
@@ -110,7 +123,7 @@ try {
         Set-Acl -LiteralPath $blocked -AclObject $originalAcl
     }
 
-    Write-Host "PASS: baseline, changed-root scope suppression, missing-root suppression, and denied-subdirectory ACL suppression."
+    Write-Host "PASS: baseline, minimized paths, complete comparison, changed-root scope suppression, missing-root suppression, and denied-subdirectory ACL suppression."
 }
 finally {
     Remove-Item -LiteralPath $temp -Recurse -Force -ErrorAction SilentlyContinue
