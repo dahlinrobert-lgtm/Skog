@@ -11,6 +11,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 $timestamp = (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
+$errors = New-Object System.Collections.Generic.List[object]
+$discoveryComplete = $true
 
 if (-not $Roots -or $Roots.Count -eq 0) {
     $candidateRoots = @()
@@ -72,12 +74,11 @@ if (-not $OutputDirectory) {
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 
 $items = New-Object System.Collections.Generic.List[object]
-$errors = New-Object System.Collections.Generic.List[object]
 $rootStates = New-Object System.Collections.Generic.List[object]
-$discoveryComplete = $true
 
 foreach ($root in $Roots) {
     Write-Host "Scanning: $root"
+    $rootDirectories = 0
     try {
         $enumerationErrors = @()
         $files = @(Get-ChildItem -LiteralPath $root -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable +enumerationErrors | Where-Object {
