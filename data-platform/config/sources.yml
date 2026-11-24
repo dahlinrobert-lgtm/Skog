@@ -1821,21 +1821,24 @@ sources:
       redistribution: yes_with_attribution
       attribution: "Länsstyrelsernas Älgdata statistikportal"
       api_or_service_constraints: "Use report ID 3 (ÄFO) with current boundaries. Derive each ÄFO total by summing ShotTotal and AssignedTotal across all TableDataFormatted ÄJO rows. The visible Summa cell is two-part (for example 42 (2 408)); its leading value is not the animal total. Preserve the raw rows and HTML Summa row."
-      evidence_checked_on: "2026-11-16"
-      caveat: "The verified sample for Sydöstra ÄFO (24-005) has 107 ÄJO rows; their ShotTotal sum is 2,408 and AssignedTotal sum is 3,394. A full 129-ÄFO batch is being rerun with the corrected row-sum parser; no historical completeness claim is made."
+      evidence_checked_on: "2026-11-23"
+      caveat: "The complete national batch for 2026-11-23 covers 129/129 current AFOs and preserves 3,237 raw ÄJO rows. The 2026-11-21 and 2026-11-23 snapshots were compared row by row using the portal drillDownToAjoReport ID scoped to afo_id: 3,237 rows on both dates, 396 rows with changed attributes, 2,841 unchanged, no added or missing IDs. These are cumulative season-report changes, not dated kill events."
     operations:
       access_status: verified
       snapshot_status: pilot
-      history_status: none
+      history_status: partial
       commercial_use_status: verified_with_attribution
       customer_display_status: conditional_on_attribution_and_source_scope
-      last_verified: "2026-11-16"
-      next_action: "Complete a new national 129-ÄFO snapshot using sums of underlying ShotTotal and AssignedTotal ÄJO rows; the first 129/129 batch used the leading Summa values and is invalid for animal totals."
-      evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md; alg-grasmyr Actions run 43948854012 (single-ÄFO parser and portal probe)"
+      last_verified: "2026-11-23"
+      next_action: "Continue immutable national snapshots in alg-grasmyr and validate future comparable batches. Keep the row-level audit read-only; assess exact product scope, attribution and customer display before any Skog/Skogskoll integration."
+      evidence_reference: "docs/source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md; alg-grasmyr PR #83 (merged 2026-11-23); Actions run 45283539790 (129-ÄFO row-level comparison artifact)"
     notes:
       - "The report is cumulative reporting for a selected hunting season, not event-level kill locations or exact field dates."
       - "AFO totals are derived by summing ShotTotal and AssignedTotal from every TableDataFormatted ÄJO row; preserve the visible Summa row as a cross-check, not as the parsed metric."
       - "The regional ÄJO pilot history and the national AFO summary are distinct products and must not be presented as the same coverage."
+      - "Stable row identity for national ÄJO comparison is the portal ID passed to drillDownToAjoReport, scoped within its parent afo_id."
+      - "Rows absent from a later snapshot are unconfirmed absences, not deletion, cancellation or completion events."
+      - "A field-level difference is a change between cumulative snapshots; it is not an individual harvest event or exact harvest date."
 
   - source_id: lansstyrelsen.elk_afo_boundaries
     name: "Länsstyrelserna – nationella älgförvaltningsområden (JaktAdm)"
@@ -2101,3 +2104,56 @@ sources:
       - "Manifest complete=true means technical request and file completeness; it does not mean all reporting years are final."
       - "The first complete snapshot must be treated as a baseline and must not generate historical alerts."
       - "Incomplete snapshots must never be used as evidence of missing observations or as diff/baseline input."
+
+
+  - source_id: lansstyrelsen.fire_ban
+    name: "Länsstyrelserna – eldningsförbud i skog och mark (EXT)"
+    source_type: public_authority_fire_restriction_status
+    provider: Länsstyrelserna
+    access_method: arcgis_feature_service
+    connector: lansstyrelsen_fire_ban_metadata_inspector
+    status: metadata_probe_pending
+    cadence: manual_metadata_only_until_2027_01_24
+    geography: coverage_to_be_verified
+    format: [ArcGIS_FeatureServer, WMS, Map_Service]
+    rights:
+      licence: "Geodatakatalogens metadata-skärmbild visar inga tillämpliga användnings- eller åtkomstvillkor. Metadatarecordens maskinläsbara innehåll och eventuella lager-/komponentvillkor har ännu inte verifierats separat; detta är inte ett generellt publiceringsgodkännande."
+      licence_url: "https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/GetMetaDataById?id=53514d5d-b1ea-4162-bc56-58e496f0f4f7"
+      review_status: metadata_terms_seen_exact_layer_review_pending
+      commercial_use: unknown_pending_exact_layer_review
+      historical_storage: unknown_pending_exact_layer_review
+      derivatives: unknown_pending_exact_layer_review
+      redistribution: unknown_pending_exact_layer_review
+      attribution: "Länsstyrelserna – Eldningsförbud i skog och mark (EXT); bekräfta eventuell attribution per lager."
+      api_or_service_constraints: "Endast manuell metadata-inspektion i första etappen. Ingen feature-query, geometrihämtning, schemaläggning eller snapshot före separat beslut. Respektera tjänstens publicerade gränser och använd metadata för maxRecordCount/paginering när datainsamling senare utreds."
+      evidence_checked_on: "2026-11-24"
+      caveat: "WebbGIS-metadata anger årlig och kontinuerlig underhållsfrekvens. Den exakta geografiska täckningen, lageridentiteten, stabila objekt-ID:n och användningsvillkoren behöver verifieras på FeatureServer-/lagernivå."
+    compliance:
+      secrecy_review: check_if_source_contains_protected_information
+      personal_data_review: check_fields_and_linkage_risk
+      gdpr_lawful_basis: required_if_personal_data_is_processed
+      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      research_material_status: not_assumed_research_data_check_if_applicable
+      third_party_rights: check_provider_chain_and_layer_metadata
+      publication_gate: block_external_publication_when_relevant_review_is_unresolved
+      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
+      evidence_reference: "Geodatakatalogens metadata-ID 53514d5d-b1ea-4162-bc56-58e496f0f4f7; user-provided metadata screenshot; FeatureServer endpoint"
+      reviewed_on: "2026-11-24"
+      next_review: "After metadata-only connector probe and before any feature extraction or external publication"
+    operations:
+      access_status: not_verified
+      snapshot_status: not_started
+      history_status: none
+      commercial_use_status: unknown
+      customer_display_status: not_assessed
+      last_verified: "2026-11-24"
+      next_action: "Kör den manuella metadata-only-inspektionen, verifiera lager, fält, täckning, objektidentitet och tjänstegränser. Planera separat beslut om första baslinje och schemaläggning tidigast 2027-01-24."
+      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; metadata ID 53514d5d-b1ea-4162-bc56-58e496f0f4f7; data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py"
+    notes:
+      - "Metadata beskriver fem statusvärden: eldningsförbud, inget eldningsförbud, skärpt eldningsförbud, annat eldningsförbud och ej angivet."
+      - "Avsaknad av information eller statusen ej angivet betyder inte att eldningsförbud saknas."
+      - "Metadata anger att information kan omfatta beslutsfattare, startdatum, besluts-/informationslänk och kommunstatus."
+      - "Service: https://ext-geodata-nationella-visning.lansstyrelsen.se/arcgis/rest/services/LST/LST_eldningsforbud_EXT/FeatureServer"
+      - "WebbGIS: https://ext-webbgis.lansstyrelsen.se/lst_eldningsforbud/"
+      - "Första etappen är en metadata-connector. Den får inte hämta feature-poster eller geometrier och skapar inga snapshots."
+      - "Planerad tidigaste start för schemaläggning och operativa snapshots: 2027-01-24; datumet är en plan, inte en aktiverad workflow."

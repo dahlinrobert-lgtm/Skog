@@ -1039,9 +1039,9 @@ Den separata insamlaren i `alg-grasmyr` äger den nationella insamlingen. Skog s
 
 GitHub Actions [körning #13](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45273303393) passerade på alg-grasmyr `main` och skapade commit `8d78cdfd7eed017040b7ab74ce96b1c724f84d73`. Granskad artifact visar 129/129 aktiva ÄFO för 2026/2027, 3 237 bevarade råa ÄJO-rader och totalsummor `ShotTotal=57 687`, `AssignedTotal=79 704`. Båda totalsummorna stämmer exakt mot dashboarden och summering av råmaterialet. Koden kräver exakt match mellan katalogens ID:n och JaktAdm:s aktuella boundary-ID:n. Daterade snapshots för både 2026-11-21 och 2026-11-23 finns kvar i Git; dashboarden pekar på 2026-11-23.
 
-**Status:** en nationell baslinje plus en andra daterad observation finns. Före förändringsanalys ska jämförbarhet verifieras per område med stabila `afo_id`, samma säsong och `boundary_mode=current`; aggregerade säsongsvärden får inte beskrivas som dagliga fälldatum eller individuella händelser. Insamlingen är tekniskt verifierad, men kundvisning, vidare distribution och rätt till historisk lagring/bearbetning ska bedömas separat med attribution. Ingen Skogskoll-worker, kundfeed eller avisering har aktiverats.
+**Status:** en nationell baslinje plus en andra daterad observation finns. Jämförbarheten för 2026-11-21 och 2026-11-23 är verifierad för 129/129 ÄFO, samma säsong och stabila portal-ID:n inom `afo_id`. Den fullständiga råa ÄJO-radjämförelsen är dokumenterad nedan. Aggregerade säsongsvärden får inte beskrivas som dagliga fälldatum eller individuella händelser. Insamlingen är tekniskt verifierad, men kundvisning, vidare distribution och rätt till historisk lagring/bearbetning ska bedömas separat med attribution. Ingen Skogskoll-worker, kundfeed eller avisering har aktiverats.
 
-**Nästa steg:** kör jämförbarhets-/differensgranskning mellan 2026-11-21 och 2026-11-23; dokumentera eventuella förändringar utan att tolka differenser som dagliga händelser. Gör separat rights assessment före produktintegration.
+**Nästa steg:** fortsätt bevara jämförbara nationella snapshots i alg-grasmyr och granska framtida förändringar med samma stabila identitet och fail-closed-kontroller. Gör separat rättighetsbedömning före produktintegration.
 
 
 ## Första jämförelsen av nationella ÄFO-snapshots (2026-11-21–2026-11-23)
@@ -1058,7 +1058,7 @@ Dashboardversionerna från alg-grasmyr har jämförts för samma säsong (2026/2
 
 Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata. `FinishedReporting`-antalet ändras i 10 områden, inklusive en minskning i ÄFO 14-005 (5 till 4). Rapportstatus är alltså inte monoton och ska inte behandlas som en historisk händelse i sig. Största ökningar på ÄFO-nivå är 25-003 (+76), 25-006 (+55), 25-004 (+46), 25-005 (+45) och 07-001 (+23).
 
-Detta är en jämförelse av ÄFO-dashboardaggregat, inte en fullständig ÄJO-rad-för-rad-differens. Innan ÄJO-förändringar klassificeras måste alla råa rader jämföras med stabilt registreringsnummer (utdraget ur `AfoName`-länkens `drillDownToAjoReport`-ID), och både tillkomna/borttagna rader och ändrade värden/statusar redovisas. Bortfall får inte automatiskt bli borttagningshändelser. Värdena är kumulativa säsongsuppgifter och kan inte placeras på exakta fälldatum.
+Detta är en jämförelse av ÄFO-dashboardaggregat. Den fullständiga råa ÄJO-radjämförelsen är nu verifierad och dokumenterad i avsnittet nedan. Bortfall i framtida snapshots får inte automatiskt bli borttagningshändelser. Värdena är kumulativa säsongsuppgifter och kan inte placeras på exakta fälldatum.
 
 **Nästa steg:** fullständig ÄJO-rad-jämförelse och separat rättighetsbedömning innan Skogskoll-integration.
 
@@ -1077,3 +1077,56 @@ Den befintliga nationella snapshotarkitekturen i alg-grasmyr återanvänds; Skog
 Ändringar avser kumulativa säsongsrapporter, inte enskilda fälldatum eller händelser. FinishedReporting är en muterbar rapportstatus, inte en historisk händelse. Frånvaro ska inte tolkas som borttagning.
 
 **Nästa steg:** separat rättighetsbedömning för historisk lagring, bearbetning, kommersiell användning, kundvisning och vidare distribution. Ingen produktintegration eller kundpublicering ska ske innan dessa dimensioner har stöd i exakta villkor eller skriftlig evidens.
+**Nästa steg:** fortsätt med framtida jämförbara snapshots och separat rättighetsbedömning innan eventuell Skogskoll-integration.
+
+
+### Rå ÄJO-rad-jämförelse – verifierad 2026-11-23
+
+Den nationella snapshotinsamlingen och dess arkiv ägs av det separata repot [alg-grasmyr](https://github.com/dahlinrobert-lgtm/alg-grasmyr). Skog ska konsumera dessa verifierade snapshots/dashboard och inte bygga en parallell insamlare.
+
+Alg-grasmyr PR #83 är mergad. Den nya skrivskyddade analysen använder portalens ID i `drillDownToAjoReport`, avgränsat inom respektive `afo_id`, som stabil ÄJO-identitet. Full jämförelse av 129 ÄFO mellan 2026-11-21 och 2026-11-23 passerade i [Actions run 45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790):
+
+- 3 237 råa ÄJO-rader per datum.
+- 2 841 oförändrade rader och 396 rader med ett eller flera ändrade attribut.
+- 0 tillkomna och 0 saknade portal-ID:n.
+- `ShotTotal` ändrades på 378 rader.
+- `FinishedReporting` ändrades på 42 rader: 41 från Nej till Ja och 1 från Ja till Nej.
+- Kumulativt dashboardvärde för `ShotTotal` ökade från 56 715 till 57 687 (+972); `AssignedTotal` var oförändrat 79 704.
+
+Flera attribut kan ändras på samma ÄJO-rad. Detta är förändringar mellan kumulativa säsongsrapporter, inte enskilda fälthändelser eller exakta fälldatum. Analysen ändrar inte originalsnapshots. En rad som saknas i ett senare uttag ska klassas som obekräftad frånvaro, inte borttagning, avbokning eller genomförande.
+
+Detaljer, fältfördelning och reproducerbar körinstruktion finns i [alg-grasmyr/docs/NATIONAL_AJO_ROW_DIFF.md](https://github.com/dahlinrobert-lgtm/alg-grasmyr/blob/main/docs/NATIONAL_AJO_ROW_DIFF.md). Fortsatt användning i Skogskoll kräver separat kontroll av exakt kommersiell användning, kundvisning och distribution; ingen worker eller kundavisering har aktiverats.
+
+
+### Länsstyrelserna – eldningsförbud i skog och mark (EXT)
+
+**Käll-ID:** `lansstyrelsen.fire_ban`  
+**Metadata-ID:** `53514d5d-b1ea-4162-bc56-58e496f0f4f7`
+
+- WebbGIS: https://ext-webbgis.lansstyrelsen.se/lst_eldningsforbud/
+- FeatureServer: https://ext-geodata-nationella-visning.lansstyrelsen.se/arcgis/rest/services/LST/LST_eldningsforbud_EXT/FeatureServer
+- Geodatakatalogens metadata: https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/GetMetaDataById?id=53514d5d-b1ea-4162-bc56-58e496f0f4f7
+- Metadata enligt användarens skärmbild: skapad 2020-05-13, reviderad 2026-08-26; underhåll anges som årligen och kontinuerligt. Beskrivningen säger att karttjänsten också tillhandahålls via WMS och Map Service.
+- Metadata beskriver fem statusvärden: eldningsförbud, inget eldningsförbud, skärpt eldningsförbud, annat eldningsförbud och ej angivet. Den anger även uppgifter om beslutsfattare, startdatum, besluts-/informationslänk och kommunstatus.
+- **Viktig semantik:** saknad information eller statusen ej angivet betyder inte att eldningsförbud saknas. Metadata beskriver även att kommuner kan ha egna förbud/regler enligt annan lagstiftning; den här tjänsten får därför inte beskrivas som en fullständig förteckning över alla lokala eldningsregler.
+- Metadata-skärmbilden visar inga tillämpliga användnings- eller åtkomstvillkor. Den maskinläsbara metadatarecorden och eventuella lager-/komponentvillkor är inte oberoende verifierade. Detta ska inte tolkas som ett generellt juridiskt godkännande för historisk lagring, bearbetning, kommersiell användning eller kundvisning.
+- Geografisk täckning, lager-ID:n, fält, stabila objekt-ID:n, maxRecordCount och pagineringsstöd är ännu inte verifierade mot FeatureServer.
+
+**Implementerad första etapp (connector, inte insamling):**
+
+`data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py` gör en manuell metadata-only-inspektion av FeatureServer-roten och de lager/tabeller som annonseras. Den rapporterar schema, fält, geometri, extent, spatial reference, objekt-ID/global-ID-fält, maxRecordCount och pagineringskapacitet. Den har timeout, sekventiella anrop och ett tak på 25 lager-/tabellmetadataanrop som standard (högst 50 efter uttrycklig parameterändring).
+
+Connectorn frågar **inte** efter feature-poster eller geometrier, skapar inga snapshots och har inget workflow/schedule. Standardläget skriver inte någon fil; `--out` kan användas för att spara metadataresultatet manuellt.
+
+**Planering:** schemaläggning och operativa snapshots ska tidigast övervägas från **2027-01-24**. Detta är ett planerat datum, inte en aktiverad körning. Första operativa snapshoten ska vara en tyst baslinje utan historiska larm. Före den tidpunkten krävs metadata-probe, verifierad scope/identitet/paginering, fullständighetsstrategi, källvillkor och separat beslut om lagring/publicering.
+
+Kör manuellt efter merge när tjänsten är tillgänglig:
+
+    python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py
+    python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py --out /tmp/lansstyrelsen-fire-ban-metadata.json
+
+Test:
+
+    python -m unittest discover -s tests -p "test_inspect_lansstyrelsen_fire_ban_service.py" -v
+
+Ingen featuredata hämtas av dessa kommandon.

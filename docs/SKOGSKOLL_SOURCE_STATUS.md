@@ -1,20 +1,20 @@
 # Skogskoll – automatisk status för datakällor
 
-**Register kontrollerat:** 2026-11-23  
+**Register kontrollerat:** 2026-11-24  
 **Underlag:** data-platform/config/sources.yml
 
 > Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 ## Sammanfattning
 
-- Registrerade datakällor: **51**
-- Källor med operativ status: **14**
+- Registrerade datakällor: **52**
+- Källor med operativ status: **15**
 - Källor som ännu inte har operativ status: **37**
-- Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 1, Teknisk probe: 1, Verifierad: 6
-- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 2, Metadatabevakning behöver repareras: 1, Pilot: 8
-- Historik: Delvis historik: 5, Delvis historiskt arkiv: 1, Ej verifierad: 4, Endast metadataserie: 1, Ingen: 3
-- Kommersiellt: Inväntar produktvillkor: 1, Okänd: 1, Verifierad med källhänvisning: 2, Villkorad: 4, Villkorad av attribution/källomfattning: 1, Villkorad per handling/post: 1, Villkorad per produkt: 4
-- Kundvisning: Ej bedömd: 1, Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 3
+- Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 2, Teknisk probe: 1, Verifierad: 6
+- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 3, Metadatabevakning behöver repareras: 1, Pilot: 8
+- Historik: Delvis historik: 6, Delvis historiskt arkiv: 1, Ej verifierad: 4, Endast metadataserie: 1, Ingen: 3
+- Kommersiellt: Inväntar produktvillkor: 1, Okänd: 2, Verifierad med källhänvisning: 2, Villkorad: 4, Villkorad av attribution/källomfattning: 1, Villkorad per handling/post: 1, Villkorad per produkt: 4
+- Kundvisning: Ej bedömd: 2, Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 3
 - Uttryckligen godkända för kundvisning i registret: **0**
 
 ## Operativ status per datakälla
@@ -29,15 +29,17 @@
 | Trafikverket – öppna data | trafikverket.open_data | Ej verifierad | Inte startad | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Lantmäteriet – Fastighetsindelning Direkt (OAPIF) | lantmateriet.fastighetsindelning_direkt | Teknisk probe | Inte startad | Ingen | Inväntar produktvillkor | Inväntar skriftligt/beställt scope | 2026-11-14 |
 | Nationella Viltolycksrådet – historiska och löpande viltolyckor | nvr.wildlife_collisions | Auktoriserad åtkomst använd | 30-dagars dagligt test | Delvis historiskt arkiv | Villkorad | Villkorad | 2026-11-15 |
-| Länsstyrelsernas Älgdata – avskjutning per älgförvaltningsområde | lansstyrelsen.elk_harvest_statistics | Verifierad | Nationell 129/129 snapshot verifierad | Två nationella snapshots: 2026-11-21 och 2026-11-23; dashboarddifferens granskad, rå ÄJO-differens återstår | Verifierad med källhänvisning | Villkorad av attribution/källomfattning | 2026-11-23 |
+| Länsstyrelsernas Älgdata – avskjutning per älgförvaltningsområde | lansstyrelsen.elk_harvest_statistics | Verifierad | Nationell 129/129 snapshot verifierad | Två nationella snapshots: 2026-11-21 och 2026-11-23; rå ÄJO-jämförelse verifierad: 3 237 rader per datum, 396 ändrade, 2 841 oförändrade, inga tillkomna/saknade ID:n | Verifierad med källhänvisning | Villkorad av attribution/källomfattning | 2026-11-23 |
 | Länsstyrelserna – nationella älgförvaltningsområden (JaktAdm) | lansstyrelsen.elk_afo_boundaries | Verifierad | Inte startad | Ingen | Villkorad av attribution/källomfattning | Villkorad av attribution/källomfattning | 2026-11-16 |
 | Trafikverket – Miljöwebb Landskap | trafikverket.miljoweb_landskap | Delvis verifierad | Pilot | Delvis historik | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Trafikverket – NVDB Viltolyckor | trafikverket.nvdb.wildlife_collision_frequency | Delvis verifierad | Pilot | Delvis historik | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Trafikverket – NVDB vägnät och Lastkajen | trafikverket.nvdb.road_network_lastkajen | Delvis verifierad | Endast baslinje | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
+| Länsstyrelserna – eldningsförbud i skog och mark (EXT) | lansstyrelsen.fire_ban | Ej verifierad | Inte startad | Ingen | Okänd | Ej bedömd | 2026-11-24 |
 | Viltdata.se – nationell avskjutningsstatistik | viltdata.kill_statistics | Verifierad | Pilot | Ej verifierad | Okänd | Ej bedömd | 2026-11-18 |
 
 ## Nästa åtgärd
 
+- **Länsstyrelserna – eldningsförbud i skog och mark (EXT):** Kör manuell metadata-only-inspektion av FeatureServer; verifiera lager, fält, täckning, stabil identitet och paginering. Schemaläggning och operativa snapshots får tidigast övervägas 2027-01-24; första snapshot ska vara tyst baslinje utan historiska larm.
 - **Skogsstyrelsen – avverkningsanmälningar:** Verifiera komplett paginering och minst två kompletta jämförbara körningar; skilj nya anmälningar från äldre baslinje och bortfall.
 - **Skogsstyrelsen – Samråd point, line and area layers:** Verifiera fullständighet separat för punkt-, linje- och polygonlagren och fortsätt bevara dagliga snapshots.
 - **Länsstyrelsen – offentliga diarier och ärendehandlingar:** Upprepa en avgränsad, manuell månadskörning för att verifiera reproducerbarhet; dokumentera läns-/frasomfattning och utred Länsstyrelsens tekniska begränsningar innan återkommande drift. Granska dokument/bilagor separat från metadata.
@@ -46,7 +48,7 @@
 - **Trafikverket – öppna data:** Använd de tre separata produktposterna nedan för faktisk åtkomst, snapshotstatus, historik och rättighetsbedömning; uppdatera denna post endast om Trafikverket inför en ny gemensam produkt eller tjänst.
 - **Lantmäteriet – Fastighetsindelning Direkt (OAPIF):** Hämta och granska beslut/villkor för ärendena LM2026/171963 och LM2026/171968; verifiera kundvisning, lagring, historik och kommersiell användning.
 - **Nationella Viltolycksrådet – historiska och löpande viltolyckor:** Följ upp 30-dagarstestet och etablera en kontrollerad, skrivskyddad publiceringsendpoint för NVR-händelser med manifest, fullständighetsstatus och källhänvisning. Rådata får inte publiceras direkt från OneDrive eller GitHub Pages utan separat publiceringskontroll.
-- **Länsstyrelsernas Älgdata – avskjutning per älgförvaltningsområde:** Slutför rå ÄJO-rad-för-rad-jämförelse mellan 2026-11-21 och 2026-11-23 med stabila registreringsnummer. Dashboardjämförelsen visar +972 kumulativa fällda (109 ÄFO ökade, 20 oförändrade, inga minskade) och oförändrat mål 79 704. Tolka inte differensen som dagliga fälthändelser. Utred separat rättigheter för historisk lagring, bearbetning och kundvisning innan produktintegration.
+- **Länsstyrelsernas Älgdata – avskjutning per älgförvaltningsområde:** Fortsätt bevara jämförbara nationella snapshots i alg-grasmyr och granska framtida förändringar på stabilt ÄJO-portal-ID inom respektive ÄFO. För jämförelsen 2026-11-21–2026-11-23 verifierades 3 237 rader per datum, 396 rader med ändrade attribut, 2 841 oförändrade och inga tillkomna/saknade ID:n. `ShotTotal` ändrades på 378 ÄJO-rader; `FinishedReporting` ändrades på 42 (41 Nej→Ja, 1 Ja→Nej). Dashboardens kumulativa fällda ökade med 972 och målet var oförändrat 79 704. Tolka inte detta som dagliga fälthändelser. Rätt till kundvisning/distribution ska fortsatt bedömas separat.
 - **Länsstyrelserna – nationella älgförvaltningsområden (JaktAdm):** Retrieve the exact geodata metadata record when available and check for layer-specific restrictions; keep Länsstyrelsen attribution and do not offer raw geometry downloads.
 - **Trafikverket – Miljöwebb Landskap:** Verifiera vilka lager som ingår i Gräsmyr-piloten, kontrollera antal/geografisk täckning och spara senaste två kompletta snapshots med manifest och kontrollsummor.
 - **Trafikverket – NVDB Viltolyckor:** Verifiera produktens exakta definition, referensperiod, geografiska täckning och uppdateringsdatum; spara jämförbara snapshots och dokumentera om värdena är frekvenser, antal eller klassningar.
@@ -58,7 +60,7 @@
 
 - Full nationell körning #13 i alg-grasmyr är `completed/success` på main och har arkiverat 129/129 aktuella ÄFO för säsong 2026/2027.
 - Artifactkontroll: 3 237 råa ÄJO-rader; `ShotTotal` summerar till 57 687 och `AssignedTotal` till 79 704, med exakt överensstämmelse mot dashboarden.
-- Daterade snapshots finns för 2026-11-21 och 2026-11-23. Detta ger två nationella observationer, men jämförbar förändringsanalys ska först göras efter kontroll av stabila ID:n, säsong och gränssättning samt snapshoternas faktiska innehåll.
+- Daterade snapshots finns för 2026-11-21 och 2026-11-23. Full rå ÄJO-radjämförelse är verifierad för samma säsong och 129 ÄFO med stabilt portal-ID inom `afo_id`: 3 237 rader per datum, 2 841 oförändrade, 396 ändrade, inga tillkomna/saknade ID:n. Framtida jämförelser ska fortsatt kontrollera säsong, gränssättning, stabila ID:n och fullständighet.
 - Dashboard är uppdaterad till 2026-11-23. Äldre snapshotfiler bevarades.
 - Kumulativa säsongssummor är inte individuella fälldatum/händelser. Kundvisning är fortsatt villkorad av attribution/källomfattning; lagring, bearbetning och kommersiell användning ska bedömas separat.
 

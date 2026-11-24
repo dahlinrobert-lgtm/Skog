@@ -26,6 +26,72 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
 | Nästa steg | Inventera befintlig projektledarinventering och snapshot/change-feed-kontrakt; definiera minsta rapportfält och käll-/lagerkoppling utan parallell historikmodell |
 
+
+#### Arkitekturpassning och inventering – 2026-11-24
+
+**Inventering genomförd mot aktuell `main` i Skog och det privata `skogskoll-project-manager-history`-repot.**
+
+Verifierat befintligt att återanvända:
+
+- `skogskoll-project-manager-history` har en read-only GitHub-inventory collector som läser registrerade aktiva repos, öppna issues/PR och de senaste 20 workflow-körningarna per repo. Den läser även Skogs `data-platform/config/sources.yml` och tar med källornas kadens, geografi och uttryckliga `operations`-fält.
+- Det privata repot har en daglig schemalagd inventory-workflow (UTC 05/06 med Europe/Stockholm-schedule gate), samt en separat manuell Azure-publisher. Publiceringen validerar en exakt lyckad källkörning och skriver run-scopade snapshots med manifest och read-back-kontroll.
+- En privat Azure-container `project-manager` och dedikerad OIDC-publisheridentitet finns dokumenterade. En första snapshot för källkörning `44958916377` publicerades och lästes tillbaka byte-för-byte i publisherkörningen `44959260856`.
+- Skogs befintliga `docs/project-manager/app.js` läser en fast Blob-URL efter Entra-inloggning, kontrollerar schema, `observed_at_utc`, ålder över 24 timmar och partial-status. Den visar även källregistret och `operations`-status.
+- Skogs `data-platform/config/sources.yml` och den genererade `SKOGSKOLL_SOURCE_STATUS.md` är auktoritativa för käll-/produktbeskrivning och registrerad operativ/rättighetsstatus. `data-platform/scripts/build_source_status_report.py` genererar statusrapporten.
+
+**Identifierade luckor som PM-027 måste lösa:**
+
+1. Projektinventeringen är repo-/workfloworienterad. De senaste 20 workflow-körningarna per repo är ett begränsat felsökningsfönster, inte ett komplett snapshotregister per datakälla/produkt/lager.
+2. Källregistret beskriver kadens och operativa statusfält, men det finns ingen verifierad generell koppling mellan varje `source_id`/produkt/lager och dess exakta workflow, manifest, snapshot-URI, fullständighetskontroll och senaste kompletta observation.
+3. Den befintliga Azure-publishern är manuell och run-scopad. Den första publicerade snapshoten är inte bevis på en återkommande historiktjänst eller ett dagligt källsnapshotflöde. En automatisk `latest`-pekare/containerlistning eller webbläsarbaserad blobinventering är inte dokumenterad som etablerad.
+4. Project Manager-klienten använder en fast snapshotreferens. Den behöver en kontrollerad uppdaterings-/versionsstrategi innan den kan visa senaste dagliga rapporten utan att ändra kodreferensen vid varje körning.
+5. Källstatusrapporten och projektledarens Azure-dashboarddata är separata read models. Deras observationstider och fullständighetsstatus måste hållas åtskilda; en färsk projektinventering innebär inte att varje datakälla har färska snapshots.
+6. Den publika GitHub-integrationen kunde läsa kod och dokumentation men inte verifiera privat Azure Blob-innehåll eller livewebbläsarens Entra/CORS-läsning. Live-KPI och faktisk dashboardaktualitet är därför inte verifierade här.
+
+**Arkitekturval enligt regel 4A:** utöka befintlig privat project-manager collector/read-model och befintlig Azure run-scoped snapshot/publisher efter separat kontraktsdesign. Återanvänd Skogs källregister som källa till käll-/produkt-/lageridentitet. Bygg inte en parallell collector, snapshotdatabas eller historikmodell. Behåll respektive källworkflow och dess egna manifest/snapshots som auktoritativ evidens; projektledaren ska indexera och sammanfatta referenser, inte kopiera källdata.
+
+**Föreslaget minsta rapportkontrakt per källa/produkt/lager (fält kan vara okända):**
+
+- identitet: `source_id`, produkt-/lager-ID och källans namn;
+- ägarskap/evidens: repository, workflow path/ID, run ID/attempt, commit SHA, manifest- och artifact-/snapshotlänk;
+- observation: senaste försökstid och status separat från senaste kompletta snapshotens tid/status;
+- kvalitet: completeness-basis, jämförbarhet, scope/geografi, förväntat/observerat antal och paginerings-/täckningsresultat;
+- aktualitet: registrerad kadens, ålder och klassning `fresh`/`stale`/`unknown` relativt kadensen;
+- förändring: endast verifierad diff från befintlig källspecifik jämförelse, annars `not_available`;
+- hinder/rättigheter: tekniska fel, blockerare, åtkomst, historik, kommersiell användning och kundvisning hålls separata;
+- tidsstämpel för projektledarens egen observation och status för hela indexinsamlingen.
+
+**Fail-closed-regler:** partial/failed försök får inte ersätta senaste kompletta snapshot. Saknat manifest eller okänd koppling ger `unknown`, inte noll/success. Frånvaro i en senare inventering betyder endast ej observerad. Ingen kundfeed, kundwrite eller avisering.
+
+**Nästa steg:** utforma och testa en adapter/normaliserare som läser befintliga källregisterposter och källägda manifest-/snapshotindex och producerar ovanstående read model. Innan implementation måste inventeringen av befintliga manifest-/indexformat per prioriterad källa kompletteras och ett versionsstyrt source-to-workflow-mappningskontrakt beslutas. Därefter kan en separat PR implementera endast read-only aggregering och syntetiska success/partial/failed/stale/unknown-tester. Ingen schedule-, publisher-, Azure-behörighets- eller UI-ändring ingår i detta steg.
+
+#### Inventering av faktiska källformat – 2026-11-24
+
+Fortsatt read-only-granskning av kod, workflows och befintliga manifest på `main` visar att flera källor redan har användbara men **olika** kontrakt. De ska adapteras källspecifikt; de ska inte tvingas in i en ny gemensam snapshotlagring.
+
+| Källflöde | Befintligt format/evidens | Fullständighet och begränsning |
+|---|---|---|
+| `skogsstyrelsen.harvest_notifications` | `data/skogsstyrelsen/harvest_notifications/grasmyr/latest.json` pekar på gzip-GeoJSON. Manifestet har `captured_at_utc`, scope, `count_before/count_after`, ID-/featureantal, stabil ID-inventering, `complete_scan`, SHA-256 och snapshotrelativ sökväg. | Stark pilotgrind: ID-inventering före/efter måste vara identisk. Workflow är manuell `workflow_dispatch`, inte ett verifierat sex-timmarsflöde. Gräsmyr 10 km är pilotgeografi, inte nationell täckning. |
+| `skogsstyrelsen.samrad` | `scripts/collect_samrad.py` skriver gzipade, tidsstämplade snapshots och en muterbar `data/samrad_latest.json`. Payload har `schema_version`, `source_id`, `checked_at`, `status`, `scope_hash`, scope, separata point/line/area-lager, sidantal, hämtade poster och antal i scope. | Alla tre lager hämtas innan snapshot byggs; fel avbryter körningen. Stabilt ObjectId krävs och paginering har skydd. Snapshoten saknar i det granskade kontraktet ett fristående manifest med fil-SHA; payloadens scope hash är inte en snapshot-checksumma. Workflow har daglig schedule och skapar PR för arkivering. |
+| `slu.peat_map.v1` och `skogsstyrelsen.standortsindex_sis` | `data/geodata_timeline/snapshots/{snapshot_id}.json`, `latest.json`, NPZ-sampel och append-only `events.jsonl`. Snapshot innehåller observationstid, sample-geometri, per service status, metadata-/pixelhash, arrayform/datatyp, NPZ-referens, bandjämförelse, föregående snapshot och change-status. | Veckovis sample/change detection, inte fullständig nationell rasterdump. Per-service fel kan samexistera med lyckade tjänster i samma snapshot; adapter måste behålla status per service och inte göra hela körningen success om någon service har error. Jämförelse kräver kompatibel grid och tidigare NPZ. |
+| `lansstyrelsen.public_diary` | `data/lansstyrelsen-diary/snapshot-runs.jsonl` innehåller en manifestrad per försök. Varje lyckad county/phrase/interval ger en immutable JSONL-snapshot med run-ID, observationstid, county, diarienummer, sökfras, intervall och content hash. | `run_complete` kräver reconciled intervall, full paginering och match mellan källtotal och unika extraherade diarienummer. En komplett delkörning för county/fras är inte automatiskt en komplett nationell månad. Misslyckade försök får manifest men inga snapshotrader. |
+| `trafikverket.miljoweb_landskap` | `data/trafikverket/snapshots/{date}/manifest.json` innehåller snapshotdatum, skapandetid, geografiskt pilotområde och per service/lager metadata, identitetsfält, förväntat/observerat antal, filreferens, storlek och SHA-256. | Manifestet har lagergranularitet och passar som direkt evidenskälla. Granskad manifestversion avser Gräsmyr pilot/envelope; `source_object_count` kan vara null och får inte ersättas med noll. |
+| Gemensamt event bundle | `data-platform/schemas/event-bundle.schema.json` och exempel definierar ett separat semantiskt kontrakt med `source_runs`, `observations`, `events`, `evidence`, `relationships` och `chains`. | Detta är en härledd händelse-/evidensmodell, inte ett universellt råsnapshotmanifest. Behåll gränsen mellan källsnapshot och tolkad händelse. |
+
+**Konsekvens för adapterkontraktet:**
+
+- En källpost kan mappa till flera rapporteringsenheter: exempelvis Samråds tre geometrier/lager, rastertjänsterna Torvkarta/SIS och Trafikverkets många enskilda lager.
+- Normalisera inte bort källspecifik fullständighetsbevisning. Spara en `completeness_basis`/evidence reference som anger exakt kontroll (ID inventory, paging+source total, per-layer status, raster comparison, manifest checksum etc.).
+- Rapportera `latest_attempt` och `latest_complete_snapshot` separat. För Samråd och rastertimeline måste status även vara per lager/tjänst.
+- Bevara både manifestets och snapshotfilens sökväg, checksumma när den finns, workflow/run-ID och källans scope hash. Om checksumma saknas ska fältet vara null/unknown – beräkna inte en påhittad historisk checksumma.
+- `freshness` beräknas mot källregistrets kadens men får inte beskriva en pilot som nationell. Geografiskt scope och täckningsnivå måste följa med.
+- Rättighetsfält i `sources.yml` förblir separat från teknisk fullständighet och åtkomst.
+
+**Rekommenderad första adapterordning:** (1) Skogsstyrelsens avverkningsanmälningar och Samråd – tydliga vektorsnapshotformat och hög relevans för kärnbevakningen; (2) Torvkarta/SIS och Trafikverket Miljöwebb – manifest-/sample-/lagergranularitet; (3) Länsstyrelsens diarier – mer komplex multi-query/multi-county-kompletthet. Detta är en implementationordning, inte en ändring av källornas operativa prioritet eller kundrättigheter.
+
+**Nästa steg:** definiera versionsstyrd mapping mellan `source_id`, produkt/lager, workflow path, manifest locator och scope. Därefter bygg en read-only adapter för första två vektorflödena med fixtures från befintliga format och tester för komplett/partial/failed/stale/unknown. Ingen ny snapshotlagring eller ändring av källinsamling behövs för den första leveransen.
+
+
 ### Backloggens långsiktiga täckningsområden
 
 Backloggen ska successivt fånga följande områden. Detta är en planeringsram, inte en order att starta allt.
@@ -252,3 +318,39 @@ Användaren har skapat den separata Supabase-testinstansen `skogskoll-test` (Wes
 PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541 dokumenterade verifieringen och är också mergad. Användarens 27-raders tabellprivilegiekontroll bekräftade: authenticated får CRUD på egna `watch_areas`/`push_subscriptions` och SELECT på egna `alert_events`; service_role får endast SELECT på `scan_sessions`/`poll_runs`; övriga interna tabeller är direkt oåtkomliga. Åtta worker-RPC:er är EXECUTE-begränsade till service_role. CI och manuella SQL-smoketester är godkända. Ingen worker är ännu ansluten; ingen produktionskoppling, kundfeed eller avisering är aktiverad.
 
 **Nästa steg:** etablera en explicit manuell worker smoke-test-väg mot `skogskoll-test`, utan schedule. Den ska först verifiera live ArcGIS metadata read-only och därefter endast köra en uttryckligt avgränsad teknisk testbatch när testhemligheter är konfigurerade. Bekräfta att befintlig `run-scan.mjs` och adapter återanvänds; inga parallella ingestionimplementationer. Secrets ska vara worker-only och aldrig exponeras i logs eller frontend.
+
+
+## PM-024 – Förbered publicering av Skogskoll som mobilapp
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P2 – efter stabilisering av kundwebb och produktionsförutsättningar |
+| Status | Planerad – krav och arbetsmoment registrerade; teknisk inventering återstår |
+| Evidens | [GitHub issue #573](https://github.com/dahlinrobert-lgtm/Skog/issues/573) |
+| Mål | Förbereda en gemensam och förvaltningsbar mobilapp för Google Play och Apple App Store utan att skapa parallell backend eller kringgå befintliga rättighets-/säkerhetsgrindar |
+| Omfattning | Ägarskap och utvecklarkonton; inventering av befintlig frontend; jämförelse PWA/Capacitor/React Native; butikarnas metadata-, integritets-, behörighets-, konto- och granskningskrav; testning; drift, signering, release och support |
+| Kostnad | Preliminärt 25 USD engångsavgift för Google Play Console och 99 USD/år för Apple Developer Program. Beloppen är inte verifierade för beslut och ska kontrolleras mot officiella prisuppgifter, kontoform, moms och valutaväxling före registrering |
+| Viktiga beroenden | PM-021 kundwebb; verifierad auth-/kontomodell; mobilanpassning; notifieringsdesign; beslutad juridisk utgivare |
+| Acceptanskriterier | Aktuell kodbas inventerad; teknikval motiverat; kontoägare beslutad; aktuella butikskrav och avgifter verifierade; komplett checklista för integritet, behörigheter, kontoradering, granskaråtkomst, metadata, testning och drift; tids-/kostnadsestimat framtaget |
+| Säkerhets-/rättighetsgrind | Ingen kontoregistrering/betalning före ägarbeslut. Ingen kundvisning, datakälleaktivering eller avisering som bieffekt. Källrättigheter bedöms fortsatt separat |
+| Nästa steg | Read-only inventera befintlig frontend, mobilanpassning, autentisering, kartor och notifieringsflöden; jämför därefter tekniska alternativ och skapa butiksspecifik kravmatris |
+
+
+
+#### PM-027 – beslut om arbetsordning efter källformatinventeringen (2026-11-24)
+
+**Beslut:** formell kontraktsdesign skjuts upp. Det finns redan ett dokumenterat förslag till minsta rapportfält, men den befintliga projektledarens faktiska read model och publiceringsflöde behöver först prövas mot de två prioriterade källflödena. Att låsa ett nytt versionsstyrt kontrakt innan denna prövning riskerar att skapa abstraktioner eller fält som inte behövs.
+
+**Verifierad befintlig förmåga i `skogskoll-project-manager-history`:**
+- `scripts/collect_github.py` samlar repo-/issue-/PR-/workflowmetadata och läser Skogs publika `sources.yml` till `source_registry`.
+- Källregistret innehåller identitet, kadens, geografi och registrerad operativ-/rättighetsstatus.
+- `data/workflow_metadata.json` klassar workflow paths med geografi och rollout stage.
+- `scripts/validate_inventory.py` validerar nuvarande inventory/read-model payload och `scripts/append_history.py` hanterar ett separat, syntetiskt append-only-format.
+- Dashboarden visar källregisterstatus och de senaste 20 workflow-körningarna per repo. Den kopplar ännu inte verifierat ett enskilt `source_id`/lager till dess senaste kompletta källsnapshot.
+- `docs/HISTORY_FORMAT.md` beskriver ett format för projektinventeringens historik; det är inte ett kontrakt för källornas egna snapshots.
+
+**Nästa steg:** gör en avgränsad read-only genomförbarhetsprototyp i befintlig collector/read model för Skogsstyrelsens avverkningsanmälningar och Samråd. Använd faktiska befintliga manifest-/snapshotformat och explicit workflow-/scope-evidens. Börja med att visa vad som kan härledas utan att ändra insamlingsflöden, lagring eller publicering. Registrera saknade uppgifter som `unknown`/ej verifierade.
+
+**Beslutspunkt efter prototypen:** avgör om befintliga payloadfält och metadata kan utökas minimalt eller om ett separat versionsstyrt kontrakt verkligen behövs. Formellt kontrakt får tas fram först när prototypen visar konkret behov och fältens semantik är verifierad.
+
+**Skyddsräcken:** ingen parallell collector eller historikmodell; ingen kopiering av källdata till projektledararkivet; latest attempt hålls skild från latest complete snapshot; partial/failed får aldrig ersätta komplett status; rättigheter hålls separata; ingen kundfeed, kundwrite, alert eller ändrad Azure-publicering.

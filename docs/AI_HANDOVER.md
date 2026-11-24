@@ -1276,7 +1276,7 @@ Dashboarderna i alg-grasmyr har jämförts direkt från Git-historiken: 2026-11-
 - Största observerade ÄFO-differenser: 25-003 +76, 25-006 +55, 25-004 +46, 25-005 +45 och 07-001 +23.
 - Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata för samtliga 129 områden. `FinishedReporting`-antalet ändras däremot i 10 områden; i 14-005 minskar det från 5 till 4. Detta visar att rapporteringsstatus inte ska behandlas som monotont eller som en händelsehistorik.
 
-Detta är en dashboard-/ÄFO-aggregatjämförelse, inte en fullständig rad-för-rad ÄJO-differens. En begränsad kontroll av råa ÄJO-rader har visat att samma registreringsnummer förekommer över datumen och att rapportvärden/status kan ändras, men samtliga 3 237 rader har ännu inte jämförts systematiskt med stabil ÄJO-identitet. Ingen differens ska därför tolkas som exakt fälldatum eller daglig händelse. Nästa steg är en komplett rå-rad-jämförelse med extraherat stabilt registreringsnummer ur `AfoName`-länkens `drillDownToAjoReport`-ID, kontroll av radtillskott/bortfall och ändrade värden, samt separat klassning av rapportstatusändringar. Bevara båda snapshots och skapa ingen automatisk borttagningshändelse.
+Detta avsnitt dokumenterar dashboard-/ÄFO-aggregatjämförelsen. Den fullständiga råa ÄJO-rad-för-rad-jämförelsen slutfördes senare och verifierades i alg-grasmyr PR #83 och Actions run 45283539790; resultat och stabil identitet dokumenteras i avsnittet **2026-11-23 – National ÄJO row-level comparison verified** längre ned i denna överlämning. De kumulativa differenserna ska inte tolkas som exakta fälldatum eller dagliga händelser. Bevara snapshots och skapa ingen automatisk borttagningshändelse vid frånvaro.
 ## 2026-11-23 – Azure prenumeration, budget och dataskydd verifierade
 
 Användarens Azure Portal-skärmbilder verifierar att prenumerationen `Azure subscription 1` (ID `e758647f-da18-4063-adfd-f1ce79d5d2af`) visas som aktiv efter uppgradering till Pay-As-You-Go. En månadsbudget `Skogskoll-budget` på 200 SEK har skapats med faktiska kostnadsaviseringar vid 50/75/90 procent (100/150/180 SEK). Budgeten är en notifiering, inte ett hårt kostnadstak.
@@ -1309,22 +1309,169 @@ GitHub-issue [#566 – Planera och förbered lansering av Skogsspan.se](https://
 **Nästa konkreta steg:** genomför säkerhets-/sekretessinventering av befintliga publika repos och granska beroenden för Pages innan beslut om målstruktur eller synlighet. Separat: återställ åtkomst till det privata project-manager-history-repot, verifiera dess snapshotworkflow och CORS-/autentiseringsgrindar och uppdatera därefter dashboardens snapshot på ett append-only sätt utan att skriva över äldre snapshots.
 
 
-## 2026-11-23 – Uppdatering: nationell ÄJO-rad-jämförelse verifierad
+## 2026-11-23 – National ÄJO row-level comparison verified
 
-Den separata insamlaren alg-grasmyr äger nationell insamling och de oföränderliga snapshotsen. Skog återanvänder dess jämförelseresultat; ingen parallell collector eller ny sanningskälla byggs.
+The national collector and immutable snapshot archive remain owned by `dahlinrobert-lgtm/alg-grasmyr`; Skog does not create a parallel collector. [alg-grasmyr PR #83](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/83) was merged on 2026-11-23 (merge commit `bec3edb2f2cee4c1122b6b38e105ae842c26bd0a`).
 
-PR [#83](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/83) är mergad. Jämförelseworkflow [#45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790) avslutades completed/success på PR-committen. Artifact national-ajo-row-diff innehöll rapporten (rapport-SHA-256 enligt alg-grasmyr-dokumentationen: efa92935eecc4a3434ec5c8c63cdb179caeed755bf39b918534ea9ad98abdb35).
+The read-only row-level audit compared all 129 ÄFO snapshot pairs for 2026-11-21 and 2026-11-23 using the portal `drillDownToAjoReport` ID scoped by `afo_id`. [GitHub Actions run 45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790) passed and uploaded artifact 14870128151.
 
-Verifierat för snapshots 2026-11-21 och 2026-11-23, säsong 2026/2027 och boundary_mode=current:
-- 129/129 ÄFO validerade; 3 237 råa ÄJO-rader i vardera snapshot.
-- 2 841 rader oförändrade och 396 rader med en eller flera ändrade källattribut.
-- Inga nya portal-ID:n och inga ID:n som saknades i den senare snapshoten.
-- ShotTotal ändrades på 378 rader; nationell kumulativ summa ökade med 972 (56 715 till 57 687).
-- FinishedReporting ändrades på 42 rader: 41 Nej -> Ja och en Ja -> Nej.
-- Källsnapshotsen ändrades inte (source_snapshots_modified=false).
+Verified: 3,237 raw ÄJO rows on each date; 2,841 unchanged; 396 rows with one or more changed attributes; zero added and zero missing portal IDs. `ShotTotal` changed on 378 rows. `FinishedReporting` changed on 42 rows (41 `Nej`→`Ja`, one `Ja`→`Nej`). Dashboard cumulative `ShotTotal` rose by 972 (56,715→57,687), while `AssignedTotal` remained 79,704. These are cumulative season-report differences, not individual kill events or exact dates. The report confirmed that source snapshots were not modified.
 
-Detta är jämförelse av kumulativa säsongsuppgifter, inte individuella fälthändelser. Ändrad rapportstatus är inte en händelsehistorik. Eventuella frånvarande ID:n ska klassificeras som obekräftad frånvaro, aldrig automatisk borttagning.
+The audit implementation, tests and run instructions are documented in [alg-grasmyr NATIONAL_AJO_ROW_DIFF.md](https://github.com/dahlinrobert-lgtm/alg-grasmyr/blob/main/docs/NATIONAL_AJO_ROW_DIFF.md). Missing rows are classified as unconfirmed absences, never as deletions. No Skog worker, customer feed or alerts are enabled.
 
-Rättighetsstatus ändras inte: historisk lagring, bearbetning, kommersiell användning, kundvisning och vidare distribution behöver bedömas separat. Ingen Skogskoll-integration, kundfeed eller avisering aktiveras av jämförelsen.
+**Next concrete step:** continue scheduled/controlled national snapshots and compare later dates using the same immutable row-level audit. Separately review the existing rights evidence for exact commercial/customer-display scope before any product integration. Do not interpret cumulative differences as event-level harvests.
 
-**Aktuellt nästa steg:** granska och dokumentera källans exakta villkor/evidens för dessa separata användningsdimensioner. Återanvänd befintligt källregister och rättighetsdokument; ändra inte status till godkänd utan stöd.
+
+## 2026-11-24 – Project Manager: drift-, täcknings- och källriskvy under utveckling
+
+En separat staging-implementation finns i det privata repot [skogskoll-project-manager-history PR #52](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/52). Den utökar Project Manager-källvyn med explicit driftklassificering, geografisk täckning och risk-/kontinuitetsprofil per source_id.
+
+Viktiga skydd:
+- Fullständigt verifierad drift kräver exakt koppling till workflow, explicit produktionsstatus och scope samt minst två lyckade, kompletta och jämförbara körningar.
+- Saknade uppgifter visas som okända/ej bedömda; inga servergränser eller täckningsnivåer får antas.
+- Riskprofilen ska omfatta anropsintervall, samtidighet, sidstorlek, timeout, retry/backoff, kända servergränser, felpolicy och återhämtning.
+- Vid driftstörning bevaras senaste kompletta snapshot. Partial/failed får inte skapa falska borttagningar; återhämtning ska vara kontrollerad och idempotent.
+
+PR #52 ligger i privat staging-repo. Profilregistret är initialt tomt eftersom källspecifika servergränser, anropsbudgetar och återhämtningsbeteenden ännu inte har verifierats. CI för Python-enhetstester, JavaScript-syntax och syntetiska append-only-tester passerade på kodcommit 2f7464dcf3149b3d9ec82ba99d8fd982ea185109; en senare ändring uppdaterade endast profilmodellens dokumentation. PR är öppen och inte mergad.
+
+Ingen Azure-publicering, latest pointer, GitHub Pages-deploy, auth/CORS-ändring eller ändring av befintlig produktionsdashboard har gjorts. Befintlig snapshot och manuell publiceringsgrind är oförändrade.
+
+**Nästa steg:** granska och mergea staging-PR efter kodgranskning. Därefter koppla faktiska källor till exakta workflows och dokumentera risk-/kontinuitetsprofiler från API-dokumentation, leverantörsvillkor, befintlig kod och kontrollerad driftsevidens. Först därefter kan en ny komplett inventering och separat manuellt godkänd Azure-publicering ge dashboarden nya uppgifter.
+## 2026-11-24 – Mobilappspublicering registrerad i projektbackloggen
+
+GitHub issue [#573](https://github.com/dahlinrobert-lgtm/Skog/issues/573) och backloggpost PM-024 registrerar kommande arbete för att förbereda Skogskoll för Google Play och Apple App Store. Detta är planering/kravinsamling, inte ett beslut att börja bygga eller publicera.
+
+Omfattningen inkluderar beslut om juridisk utgivare och kontoägare, read-only inventering av befintlig frontend, jämförelse av PWA/Capacitor/React Native, butikarnas integritets-, behörighets-, kontoraderings- och granskningskrav, testning samt drift och releaseförvaltning. Tidigare angivna butikskontoavgifter (Google Play 25 USD engångsvis, Apple Developer Program 99 USD/år) är endast preliminära budgetvärden och måste verifieras mot officiella aktuella villkor före registrering eller betalning.
+
+Nästa konkreta steg är att inventera aktuell Skogskoll-frontend, mobilanpassning, auth, kartor och notifieringsflöden. Ingen utvecklarkontoregistrering, ny produktionsaktivering eller kundavisering ska ske som del av detta planeringssteg. Se [PROJECT_BACKLOG.md, PM-024](PROJECT_BACKLOG.md).
+
+
+## 2026-11-24 – PM-027 arkitekturpassning och read-model-inventering
+
+PM-027 är P0. Inventering mot aktuell Skog `main` och privata `skogskoll-project-manager-history` verifierar att det redan finns en repo-/workfloworienterad projektinventering, ett källregister med operativa fält, en daglig schemalagd inventory-workflow i det privata repot samt en separat manuell Azure-publisher med run-scopade snapshots och manifest. Den första Azure-publiceringen (`44958916377`, publisher run `44959260856`) verifierades byte-för-byte i samma workflow enligt det privata repots driftdokumentation.
+
+Den befintliga projektledarinventeringen visar de senaste 20 workflow-körningarna per repo och läser källregistrets kadens, geografi och operations-fält. Den visar däremot inte ett verifierat senaste komplett snapshot per `source_id`/produkt/lager. Ingen generell source-to-workflow/manifest/snapshot-koppling har ännu verifierats. Azure-publishern är dokumenterad som manuell och run-scopad; den första publiceringen bevisar inte en återkommande daglig publicering. Skogs Project Manager-klient använder en fast Blob-referens och har schema-/freshness-/partial-kontroller, men live Azure-innehåll och webbläsarens Entra/CORS-flöde kunde inte verifieras genom GitHub-integrationen.
+
+**Arkitekturval:** utöka befintlig privat collector/read-model och befintlig Azure snapshot/publisher efter kontraktsdesign. Återanvänd `data-platform/config/sources.yml` som auktoritativ källa till source/product/layer-identitet och källägda manifest/snapshots som evidens. Ingen parallell collector eller historikmodell.
+
+**Nästa konkreta steg:** inventera exakta manifest-/snapshotindexformat för prioriterade befintliga källflöden; definiera versionsstyrd source-to-workflow-mappning och minsta normaliserade rapportkontrakt. Därefter implementera en read-only adapter med syntetiska tester för success, partial, failed, stale och unknown. Ingen ändring av schema, publicering, behörighet eller kundflöde är godkänd i detta inventeringssteg.
+
+
+## 2026-11-24 – PM-027 källmanifest- och snapshotformat inventerade
+
+Fortsatt read-only-granskning av Skog `main` identifierade konkreta format för:
+- Skogsstyrelsens avverkningsanmälningar: `latest.json` manifest med scope, före/efter-ID-inventering, count, complete_scan, SHA-256 och gzip-GeoJSON-referens; workflow manuell och Gräsmyr 10 km pilot.
+- Samråd: gzipade tidsstämplade snapshots samt `samrad_latest.json`; payload har source_id, scope_hash, per-lager status/paging/counts. Daglig workflow. Inget separat snapshotfil-SHA-fält i det granskade payloadkontraktet.
+- Torvkarta/SIS: veckovis `geodata_timeline` JSON-snapshot, NPZ-sampel, metadata-/pixelhash och append-only events. Per-tjänst status; samplebaserat change detection, inte nationell full rasterdump.
+- Länsstyrelsens diarier: append-only JSONL manifest per försök och immutable JSONL snapshot per county/phrase/interval. Fullständighet kräver paging och källtotal/unik-ID-reconciliation; delkörning är inte nationell fullständighet.
+- Trafikverket Miljöwebb: datumpartitionerat manifest med per-lager antal, geometri/ID-fält, filreferens, storlek och SHA-256.
+- Event bundle schema är en separat semantisk händelse-/evidensmodell, inte ersättning för råsnapshotmanifest.
+
+**Viktig slutsats:** PM-027 behöver en källspecifik adapter/mapping, inte ett nytt universellt snapshotarkiv. Normaliserad read model måste behålla lager-/tjänstgranularitet, scope, source-specific completeness basis, run-/manifest-/snapshotreferenser och null/unknown där underlag saknas. Latest attempt och latest complete snapshot hålls åtskilda.
+
+**Nästa steg:** skapa versionsstyrd mapping mellan source_id, produkt/lager, workflow, manifest locator och scope. Implementera därefter read-only adapter för avverkningsanmälningar och Samråd först, med fixtures och tester för complete/partial/failed/stale/unknown. Ingen ny snapshotlagring eller ändring av källinsamling.
+
+
+## 2026-11-24 – PM-027: formell kontraktsdesign uppskjuten
+
+Efter att ha granskat aktuell `main` i Skog och den privata `skogskoll-project-manager-history` är arbetsordningen justerad. Ett minsta rapportfältförslag finns redan i `PROJECT_BACKLOG.md`, men formell versionsstyrd kontraktsdesign bedöms vara för tidig innan den befintliga read modellen har prövats mot riktiga källmanifest.
+
+**Verifierat i projektledarrepot:** `scripts/collect_github.py` samlar repo-/issue-/PR-/workflowmetadata och läser `data-platform/config/sources.yml` som `source_registry`. `data/workflow_metadata.json` klassar workflow paths. `scripts/validate_inventory.py` validerar inventorypayloaden. `scripts/append_history.py` och `docs/HISTORY_FORMAT.md` avser projektinventeringens append-only-historik, inte ett universellt kontrakt för källsnapshots. Dashboarden visar källregisterstatus och senaste 20 workflow-körningarna per repo; en verifierad koppling från varje source/product/layer till senaste kompletta källsnapshot saknas fortfarande.
+
+**Nästa konkreta steg:** en avgränsad read-only genomförbarhetsprototyp i befintlig collector/read model för Skogsstyrelsens avverkningsanmälningar och Samråd. Använd befintliga källmanifest/snapshotformat och explicit workflow-/scope-evidens. Ingen ny collector, snapshotlagring, historikmodell, schedule, Azure-publicering eller kundfunktion. Unknown ska förbli unknown; latest attempt och latest complete snapshot ska hållas isär.
+
+**Beslutspunkt:** efter prototypen avgörs om en liten utökning av befintlig payload räcker eller om ett separat versionsstyrt kontrakt behövs. Kontraktsdesign ska alltså inte vara ett självständigt förarbete innan denna konkreta prövning.
+
+
+## 2026-11-24 – Projektledarens dagliga inventory-schema säkrat
+
+I det privata repot `dahlinrobert-lgtm/skogskoll-project-manager-history` är PR [#55](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/55) mergad (commit `ccda5189e83deec96df5f0262412208fe1fdb3a3`).
+
+- Inventory-workflowet använder en enda GitHub Actions-trigger kl. 07:17 med tidszonen `Europe/Stockholm`. Den tidigare dubbla UTC-triggern och exakta lokala entimmesgrinden är borttagna, så försenad start leder inte längre till att insamlingen hoppas över på grund av klockslaget.
+- Schemalagda körningar kan enligt GitHubs dokumentation fortfarande försenas eller tappas vid hög belastning. Schemat är flyttat från hel timme, men faktisk körning och artifact måste fortsatt verifieras.
+- Collector-jobbet har endast `contents: read`. Issue-sidoeffekten ligger i separat jobb med `issues: write`; manuella körningar har den avstängd som standard och kräver explicit `manage_alert_issue=true`.
+- PR-CI passerade: Project manager tests run `45440389309` och Synthetic append-only tests run `45440389414`.
+
+**Kvarstående:** ingen live inventory-körning eller nytt artifact efter merge är verifierat. GitHub-integrationen i denna session kan läsa workflow-runs och artifacts men erbjuder inte dispatch av workflow. Starta därför en manuell körning från projektledarrepots `main` via GitHub Actions, lämna `manage_alert_issue` avmarkerad och granska artifact innan PM-027:s två källor och dashboard verifieras. Ingen Azure-publicering, källskrivning eller kundavisering ingår.
+
+
+## 2026-11-24 – PM-027 collectorimport korrigerad och mergad
+
+I det privata projektledarrepot [skogskoll-project-manager-history PR #58](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/58) är importfixen för PM-027-adaptern mergad till `main` i commit `02e2ee876bf2a8293d8c7ab2ad0600c35a750f44`.
+
+Collector använder nu paketrelativ import när den körs som modul och syskonimport som reserv när workflowet kör `python scripts/collect_github.py`. Regressionstestet reproducerar direkt skriptkörningsmiljön genom att lägga `scripts/` på `sys.path`, importera collector-modulen utan paketkontext och verifiera att befintlig `collect()`-väg faktiskt kopplar in adapterevidensen.
+
+Verifiering:
+- Korrigerad PR-CI: Project manager tests [45442219024](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442219024) och Synthetic append-only tests [45442219569](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442219569) passerade.
+- Post-merge main-test: [45442304488](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442304488) passerade.
+- Tidigare manuella inventory-försök [45441579231](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45441579231) och [45440849681](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45440849681) misslyckades före denna korrigering (först dubblett i workflow-metadata, därefter importfel). De är inte live-verifiering av PM-027-adaptern.
+
+**Kvarstående:** kör den befintliga read-only inventory-workflowen manuellt från projektledarrepots `main`. Lämna `manage_alert_issue` avmarkerad. Granska collector-status, fullständighet för aktiva projekt, source registry, de två `source_snapshot_evidence`-posterna (avverkningsanmälningar och Samråd) samt artifact. Latest attempt och latest complete snapshot ska fortsatt hållas isär; okänd evidens ska förbli `unknown`. Denna kodfix ändrar inte källinsamling, källrättigheter, Azure-publicering eller kundbeteende.
+
+Ingen ny källstatus eller rättighetsbedömning följer av merge eller CI. Kundvisning och kommersiell användning förblir enligt källregistret oförändrade.
+
+
+## 2026-11-24 – PM-027 live inventory #11 verifierad
+
+Projektledarrepots [inventory run #11](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45443506944) är `completed/success` efter merge av PR #60. Collector rapporterade 3/3 aktiva projekt, 0 fel. Artifact [project-manager-inventory-45443506944](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45443506944/artifacts/14944607060) har laddats ned och granskats.
+
+Verifierade resultat:
+- Källregistret: 51 källposter, 14 operations-block, 37 utan operativ status; registerkontrolldatum 2026-11-18.
+- PM-027-adaptern returnerade `status=success`; Skog Git tree var inte trunkerat.
+- `skogsstyrelsen.harvest_notifications`: manifeststatus `manifest_complete` för Gräsmyr 10 km-pilot, 165 poster. Detta innebär inte nationell täckning. SHA-256 i manifestet är inte omräknad av adaptern.
+- `skogsstyrelsen.samrad`: 24 daterade metadataidentifierade snapshots. Fullständighet, scope och punkt-/linje-/polygonantal är fortsatt `unknown`.
+- `latest_attempt` var `unknown` för båda källorna, eftersom matchande workflows inte fanns bland de senaste 20 workflow-körningarna för repot. Det är en begränsning i lookup-fönstret, inte bevis för att körning saknas.
+- Artifact uppladdades och dess SHA-256 digest var `256c010207f7719da4aa53e55c910f3dab63774e1db08c1b87d67007cb486fb8`. Alert-jobbet var överhoppat; inga källfeatures laddades ner.
+
+PM-027 är därmed live-verifierad för befintlig read-only collector/read model och dess uttryckliga evidensgränser. Ingen rättighetsstatus, kommersiell användning, kundvisning eller kundfeed har ändrats.
+
+**Nästa konkreta steg:** förbättra hämtningen av senaste matchande workflow-försök utan att skrapa all workflow-historik, därefter undersöka en liten separat Samråd-manifestfil med per-lager antal, paging och fullständighet. Behåll `unknown` där evidens saknas. Autentiserad dashboardvisning är inte verifierad av artifactkontrollen och ska testas separat.
+
+
+## 2026-11-24 – PM-027 riktad latest-attempt-uppslagning mergad
+
+Projektledarrepot [skogskoll-project-manager-history PR #62](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/62) är mergad i commit `c3f94216c07d2496e1a64cd44b739288e0682908`. PM-027-adaptern använder nu riktade read-only GitHub Actions-uppslag: lista workflow-metadata, matcha exakta konfigurerade workflow-sökvägar, hämta `per_page=1` för varje workflow-ID och välj senaste körning per källa. Den generella dashboardens latest-20-lista är oförändrad.
+
+Saknat workflow eller tom körningshistorik ger fortsatt `unknown`. API-fel och felaktiga svar failar adaptern stängt så inventory blir partiell. Inga källors feature-data hämtas, inga källrepon skrivs och inga rättighets- eller kundvisningsstatusar ändras.
+
+Verifierade tester på PR-commit `7573a7c87c975e93534c52b8bc3d3ae795055ab2`: [Project manager tests #45449073568](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449073568) och [Synthetic append-only tests #45449073704](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449073704) passerade. Post-merge [main tests #45449310070](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449310070) passerade.
+
+**Nästa konkreta steg:** kör den befintliga manuella read-only projektinventeringen från projektledarrepots `main`, lämna `manage_alert_issue` avstängd och granska artifactet. Verifiera `latest_attempt` för både `skogsstyrelsen.harvest_notifications` och `skogsstyrelsen.samrad` mot exakta workflow-run-ID:n. Om inget matchande workflow/run finns ska `unknown` bevaras. Liveinventering efter ändringen är ännu inte genomförd/verifierad.
+
+
+## 2026-11-24 – Länsstyrelsernas eldningsförbud: metadata-connector förberedd
+
+Ny källpost `lansstyrelsen.fire_ban` har lagts till i `data-platform/config/sources.yml` på branch `feat/lansstyrelsen-fire-ban-connector`, tillsammans med en manuell read-only metadata-inspektör:
+`data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py`.
+
+Källan är Länsstyrelsernas externa WebbGIS **LST Eldningsförbud i skog och mark (EXT)**. Metadata-ID `53514d5d-b1ea-4162-bc56-58e496f0f4f7`. FeatureServer:
+https://ext-geodata-nationella-visning.lansstyrelsen.se/arcgis/rest/services/LST/LST_eldningsforbud_EXT/FeatureServer
+
+Användarens metadata-skärmbild visar revision 2026-08-26, underhåll årligen/kontinuerligt, fem statusvärden och att inga användnings-/åtkomstvillkor anges i metadata. Maskinläsbar metadata, exakt lagerstruktur, fält, geografisk täckning, stabil identitet, paginering och villkor är ännu inte verifierade. Status är därför fail-closed: åtkomst ej verifierad, snapshots ej startade, historik ingen, kommersiell användning okänd, kundvisning ej bedömd.
+
+Connectorn hämtar endast service- och lager/tabellmetadata, sekventiellt med timeout och säkerhetstak. Den frågar inte efter feature-poster eller geometrier och skapar inga snapshots. Ingen schemaläggning/workflow har lagts till.
+
+**Användarbeslut:** schemaläggning och operativa snapshots får tidigast börja om två månader, satt till 2027-01-24. Före det datumet kan endast manuell metadata-inspektion och teknisk förberedelse göras. Första operativa snapshot ska bli tyst baslinje utan historiska larm. Saknad information/”ej angivet” får aldrig tolkas som inget eldningsförbud.
+
+**Nästa steg efter PR:** granska och merg:a connectorn, kör därefter den manuella metadata-only-proben när endpointen är åtkomlig. Uppdatera sedan dokumentationen med faktiska lager-/fält-/scope-/pagineringresultat. Vänta med featurehämtning, schemaläggning och snapshots till tidigast 2027-01-24 och separat godkännande.
+
+
+## 2026-11-24 – Eldningsförbud metadata-connector mergad
+
+Skog PR [#590](https://github.com/dahlinrobert-lgtm/Skog/pull/590) är mergad i main (merge commit `ea5e65a947c239d7100b15171e4f532975ab7413`). PR-headens tre GitHub Actions-kontroller passerade: `test`, `validate` och `customer-ui-tests` (commit `fd44ea344d70ca7e7d02a71449b054703b3b5f01`).
+
+Main innehåller nu:
+- källposten `lansstyrelsen.fire_ban` i `data-platform/config/sources.yml`,
+- manuell metadata-only connector `data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py`,
+- tester `tests/test_inspect_lansstyrelsen_fire_ban_service.py`,
+- uppdaterad datakälle- och statusdokumentation.
+
+**Runtime-status:** connectorn är inte körd mot FeatureServer ännu. Ett försök att öppna den direkta REST-metadataadressen via tillgänglig webbläsarhämtning gav inte åtkomst. Därför finns ännu inga verifierade liveuppgifter om lager-ID:n, fält, extent/täckning, objektidentitet, maxRecordCount eller paginering. CI verifierar kod/tester och register, inte extern endpoint.
+
+**Nästa konkreta steg:** kör manuellt från en miljö med nätverksåtkomst:
+
+    python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py --out /tmp/lansstyrelsen-fire-ban-metadata.json
+
+Granska resultatet och uppdatera `SKOGSKOLL_DATA_OVERVIEW.md` och källregistrets evidens först när de faktiska metadataresultaten finns. Behåll källstatus fail-closed tills dess.
+
+Ingen feature-query, geometrihämtning, snapshot, schemaläggning eller kundvisning är aktiverad. Enligt användarens beslut får schemaläggning och operativa snapshots tidigast övervägas 2027-01-24, efter separat beslut. Första operativa snapshot ska vara en tyst baslinje utan historiska larm.
