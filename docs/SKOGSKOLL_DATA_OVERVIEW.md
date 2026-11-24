@@ -136,10 +136,18 @@ Slutför källverifiering och fullständig ingestion, etablera baslinje och jäm
 **Datatyper:** punkt-, linje- och polygonlager.
 
 **Nuvarande läge**
-Separata lager och objektidentiteter har undersökts. Historisk insamling är ett prioriterat spår, men status för varje geometri-/lagers fullständiga produktionshistorik måste verifieras i respektive workflow och snapshotmanifest.
+Separata punkt-, linje- och polygonlager hämtas med paginering inom det konfigurerade pilotområdet. Workflow [collect-samrad.yml](../.github/workflows/collect-samrad.yml) körde senast 2026-11-24 i [run 45454250815](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45454250815), med status `completed/success`. Jobbloggen redovisade:
+- punkter: 0 hämtade i envelope, 0 inom scope, 0 sidor,
+- linjer: 20 hämtade i envelope, 11 inom scope, 1 sida,
+- polygoner: 14 hämtade i envelope, 12 inom scope, 1 sida.
+
+Detta är verifierade körningsvärden för den aktuella pilotkonfigurationen, inte nationell täckning eller en avstämning mot en separat auktoritativ källtotal. Den nuvarande `samrad_latest.json` innehåller både metadata och featuredata och är därför för stor för projektledarens metadata-only-adapter att läsa säkert. Projektledarens inventering visar därför fortfarande `latest_complete_snapshot=unknown` och scope unknown, trots att senaste workflow-försöket lyckades.
+
+**Manifestförbättring under granskning**
+PR [`feat/samrad-small-snapshot-manifest`](https://github.com/dahlinrobert-lgtm/Skog/pull/PLACEHOLDER) föreslår en separat liten `data/samrad_latest_manifest.json` med snapshotreferens, gzip-SHA-256, scope-hash och per-lager sid-/antal-/geometristatus. Manifestet ska endast ange `complete_for_configured_scope` när alla tre lager har paginerats till slut och alla hämtade poster har kunnat klassificeras; det ska uttryckligen ange att källans totala antal inte har stämts av. Detta är ännu inte mergat eller liveverifierat.
 
 **Historik/tidsserie**
-Målet är dagliga snapshots där källans ID, geometri, attribut, hämtningstid och källans egna datum bevaras. Försvunna objekt ska först klassas efter en komplett och godkänd skanning.
+Målet är dagliga snapshots där källans ID, geometri, attribut, hämtningstid och källans egna datum bevaras. Försvunna objekt ska först klassas efter en komplett och godkänd skanning. En lyckad körning eller komplett paginering inom pilotområdet bevisar inte nationell täckning.
 
 **Rättigheter**
 Skogsstyrelsens generella CC0-villkor är utgångspunkt, med kontroll av varje specifik produkt.
