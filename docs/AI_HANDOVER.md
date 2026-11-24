@@ -1484,3 +1484,31 @@ Länsstyrelsen Västerbottens officiella öppna data-sida beskriver Älgdata som
 **Viktig avgränsning:** detta villkorsbesked dokumenterar inte portalens interna API som ett stabilt automatiseringsgränssnitt, dess anropsfrekvens eller SLA. Innan högfrekvent/produktionskritisk maskinhämtning bör Länsstyrelsen bekräfta den tekniska hämtvägen. JaktAdm-geometrier är en separat produkt och omfattas inte automatiskt av Älgdata-statistikens villkor.
 
 Se [rättighetsgranskningen](source-rights-reviews/2026-11-16-lansstyrelsen-elk-afo.md), avsnitt 5. Nästa konkreta steg: begär ett kort tekniskt besked från Länsstyrelsen om återkommande maskinell hämtning via den använda statistikportalen/API-vägen och eventuella frekvensbegränsningar. Ingen kod, worker eller kundfeed aktiveras i detta dokumentationssteg.
+
+
+
+## PM-029 – Projektledarens uppdateringskadens (beslut 2026-11-24)
+
+Användaren har godkänt följande målbild för den privata projektledarsidan:
+- Europe/Stockholm, vardagar 16.00–01.00: read-only GitHub-inventering var femte minut.
+- Helger 10.00–01.00: read-only GitHub-inventering var femte minut.
+- Övrig tid: inventering en gång per timme.
+- Webbläsaren kontrollerar efter ny publicerad snapshot varje minut under de aktiva tiderna och en gång per timme övrig tid.
+
+Detta är ett beslutat schema, inte implementerad eller verifierad drift. Befintlig arkitektur ska återanvändas: read-only collector och validator i `skogskoll-project-manager-history`, separat OIDC-publisher med containerbegränsad Azure-behörighet, privata run-scopade snapshots och autentiserad Entra/MSAL-läsare. Ingen publik projektdata, containerlistning i browsern eller parallell collector.
+
+Viktiga nulägesfynd:
+- Inventeringsworkflowet kör för närvarande dagligen 07.17 Europe/Stockholm.
+- Azure-publishern är manuell och skriver run-scopade snapshots/manifest; ingen latest-pointer eller schemalagd publicering är verifierad.
+- Pages-konfigurationen i Skog pekar på snapshot `45002255351`, medan staging-konfigurationen i det privata projektledarrepot pekar på `44958916377`. Referenserna måste jämkas genom en säker latest-mekanism, inte genom att hårdkoda ytterligare run-ID.
+- Den publicerade browserklienten saknar automatisk polling.
+- GitHub Actions schematriggers kan försenas eller tappas; actual run/artifact freshness måste kontrolleras.
+
+Nästa konkreta arbetssteg:
+1. I det privata projektledarrepot: implementera/testa en DST-säker tidsgrind (Europe/Stockholm), femminuterskadens i aktiva fönster och timkadens övrig tid. Undvik att alert-jobbet får onödiga issue-sidoeffekter vid varje femminuterskörning.
+2. Lägg till en atomiskt publicerad latest-manifest/pekare först efter komplett validering och byte-for-byte read-back; behåll alla run-scopade snapshots oförändrade.
+3. Uppdatera den publicerade Pages-klienten att kontrollera pekaren enligt minut-/timkadensen och endast läsa ny snapshot vid ändrat run-ID. Behåll Entra-autentisering och fail-closed-visning.
+4. Testa midnatt, veckodagsgräns, helg, sommar-/vintertid, parallella körningar, misslyckad/partial insamling, saknad pekare, stale data och återhämtning.
+5. Genomför liveverifiering av Azure CORS/RBAC/browser read före aktivering. Uppdatera PM-029 och denna handover med faktisk evidens efter varje steg.
+
+Dokumentationsbedömning: PM-029 är registrerad i `docs/PROJECT_BACKLOG.md`. Källstatus och datakälleöversikt behöver inte ändras eftersom inga källor, källrättigheter eller datainsamlingsflöden har ändrats.
