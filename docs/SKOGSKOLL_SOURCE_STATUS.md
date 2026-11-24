@@ -58,7 +58,7 @@
 
 - Full nationell körning #13 i alg-grasmyr är `completed/success` på main och har arkiverat 129/129 aktuella ÄFO för säsong 2026/2027.
 - Artifactkontroll: 3 237 råa ÄJO-rader; `ShotTotal` summerar till 57 687 och `AssignedTotal` till 79 704, med exakt överensstämmelse mot dashboarden.
-- Daterade snapshots finns för 2026-11-21 och 2026-11-23. Detta ger två nationella observationer, men jämförbar förändringsanalys ska först göras efter kontroll av stabila ID:n, säsong och gränssättning samt snapshoternas faktiska innehåll.
+- Daterade snapshots finns för 2026-11-21 och 2026-11-23. Full rå ÄJO-radjämförelse är verifierad för samma säsong och 129 ÄFO med stabilt portal-ID inom `afo_id`: 3 237 rader per datum, 2 841 oförändrade, 396 ändrade, inga tillkomna/saknade ID:n. Framtida jämförelser ska fortsatt kontrollera säsong, gränssättning, stabila ID:n och fullständighet.
 - Dashboard är uppdaterad till 2026-11-23. Äldre snapshotfiler bevarades.
 - Kumulativa säsongssummor är inte individuella fälldatum/händelser. Kundvisning är fortsatt villkorad av attribution/källomfattning; lagring, bearbetning och kommersiell användning ska bedömas separat.
 
