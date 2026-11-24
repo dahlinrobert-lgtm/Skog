@@ -44,8 +44,9 @@ if ($IncludeRemovableDrives) {
     }
 }
 
-$Roots = @($Roots | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | ForEach-Object {
-    (Resolve-Path -LiteralPath $_).Path
+$Roots = @($Roots | Where-Object { $_ } | ForEach-Object {
+    if (Test-Path -LiteralPath $_ -PathType Container) { (Resolve-Path -LiteralPath $_).Path }
+    else { [System.IO.Path]::GetFullPath($_) }
 } | Sort-Object -Unique)
 
 if (-not $Roots -or $Roots.Count -eq 0) {
@@ -127,37 +128,69 @@ $rootSummary = foreach ($root in $Roots) {
     }
 }
 
+$inventoryStatus = "complete"
+if (@($rootStates | Where-Object { $_.status -ne "complete" }).Count -gt 0 -or -not $discoveryComplete) {
+    $inventoryStatus = "partial"
+}
+if (@($rootStates | Where-Object { $_.status -eq "failed" }).Count -eq $rootStates.Count) {
+    $inventoryStatus = "failed"
+}
+
 $previousSnapshot = Get-ChildItem -LiteralPath $OutputDirectory -Filter "local-storage-inventory-*.json" -File -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
 
 $changes = New-Object System.Collections.Generic.List[object]
+$comparisonStatus = "baseline"
+$comparisonReason = "no_previous_snapshot"
 if ($previousSnapshot) {
     try {
         $previous = Get-Content -LiteralPath $previousSnapshot.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
-        $previousByPath = @{}
-        foreach ($old in $previous.files) { $previousByPath[$old.path] = $old }
-        $currentByPath = @{}
-        foreach ($current in $items) {
-            $currentByPath[$current.path] = $current
-            if (-not $previousByPath.ContainsKey($current.path)) {
-                $changes.Add([pscustomobject]@{ change="added"; path=$current.path; old_size_bytes=$null; new_size_bytes=$current.size_bytes })
+        if ($inventoryStatus -ne "complete") {
+            $comparisonStatus = "suppressed"
+            $comparisonReason = "current_inventory_not_complete"
+        } elseif ([string]$previous.schema_version -ne "2.0" -or [string]$previous.inventory_status -ne "complete") {
+            $comparisonStatus = "suppressed"
+            $comparisonReason = "previous_report_not_comparable"
+        } else {
+            $currentRoots = @($rootStates | ForEach-Object { [string]$_.root } | Sort-Object)
+            $previousRoots = @($previous.roots | ForEach-Object { [string]$_.root } | Sort-Object)
+            $sameRoots = ($currentRoots.Count -eq $previousRoots.Count) -and (($currentRoots -join [Environment]::NewLine) -ceq ($previousRoots -join [Environment]::NewLine))
+            if (-not $sameRoots) {
+                $comparisonStatus = "suppressed"
+                $comparisonReason = "root_scope_changed"
             } else {
-                $old = $previousByPath[$current.path]
-                if ([long]$old.size_bytes -ne [long]$current.size_bytes -or $old.last_write_time_utc -ne $current.last_write_time_utc) {
-                    $changes.Add([pscustomobject]@{ change="modified"; path=$current.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=[long]$current.size_bytes })
+                $comparisonStatus = "compared"
+                $comparisonReason = "complete_same_scope"
+                $previousByPath = @{}
+                foreach ($old in @($previous.files)) { $previousByPath[[string]$old.path] = $old }
+                $currentByPath = @{}
+                foreach ($current in $items) {
+                    $currentByPath[[string]$current.path] = $current
+                    if (-not $previousByPath.ContainsKey([string]$current.path)) {
+                        $changes.Add([pscustomobject]@{ change="added"; path=$current.path; old_size_bytes=$null; new_size_bytes=$current.size_bytes })
+                    } else {
+                        $old = $previousByPath[[string]$current.path]
+                        if ([long]$old.size_bytes -ne [long]$current.size_bytes -or $old.last_write_time_utc -ne $current.last_write_time_utc) {
+                            $changes.Add([pscustomobject]@{ change="modified"; path=$current.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$current.size_bytes })
+                        }
+                    }
+                }
+                foreach ($old in @($previous.files)) {
+                    if (-not $currentByPath.ContainsKey([string]$old.path)) {
+                        $changes.Add([pscustomobject]@{ change="missing"; path=$old.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$null })
+                    }
                 }
             }
         }
-        foreach ($old in $previous.files) {
-            if (-not $currentByPath.ContainsKey($old.path)) {
-                $changes.Add([pscustomobject]@{ change="missing"; path=$old.path; old_size_bytes=[long]$old.size_bytes; new_size_bytes=$null })
-            }
-        }
     } catch {
-        $errors.Add([pscustomobject]@{ path=$previousSnapshot.FullName; error="Could not compare previous inventory: $($_.Exception.Message)" })
+        $comparisonStatus = "suppressed"
+        $comparisonReason = "previous_report_unreadable"
+        $errors.Add([pscustomobject]@{ path=$previousSnapshot.Name; category="previous_report"; error=$_.Exception.Message })
     }
-} else {
-    $changes.Add([pscustomobject]@{ change="baseline"; path=$null; old_size_bytes=$null; new_size_bytes=$null })
+}
+if ($comparisonStatus -ne "compared") {
+    $changes.Clear()
+    $changes.Add([pscustomobject]@{ change="comparison_suppressed"; path=$null; old_size_bytes=$null; new_size_bytes=$null; reason=$comparisonReason })
 }
 
 $previousSnapshotName = $null
