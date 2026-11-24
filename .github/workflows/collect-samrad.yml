@@ -68,6 +68,7 @@ jobs:
           delete-branch: true
           add-paths: |
             data/samrad_latest.json
+            data/samrad_latest_manifest.json
             data/harvest_event_bundle.json
             docs/data/harvest_event_bundle.json
             data/samrad_snapshots
