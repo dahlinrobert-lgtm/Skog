@@ -1454,3 +1454,24 @@ Connectorn hämtar endast service- och lager/tabellmetadata, sekventiellt med ti
 **Användarbeslut:** schemaläggning och operativa snapshots får tidigast börja om två månader, satt till 2027-01-24. Före det datumet kan endast manuell metadata-inspektion och teknisk förberedelse göras. Första operativa snapshot ska bli tyst baslinje utan historiska larm. Saknad information/”ej angivet” får aldrig tolkas som inget eldningsförbud.
 
 **Nästa steg efter PR:** granska och merg:a connectorn, kör därefter den manuella metadata-only-proben när endpointen är åtkomlig. Uppdatera sedan dokumentationen med faktiska lager-/fält-/scope-/pagineringresultat. Vänta med featurehämtning, schemaläggning och snapshots till tidigast 2027-01-24 och separat godkännande.
+
+
+## 2026-11-24 – PM-027 read-only adapter och live inventory verifierade
+
+PM-027:s avgränsade read-only adapter för Skogsstyrelsens avverkningsanmälningar och Samråd är nu live-verifierad efter merge av implementationen och riktad latest-attempt-lookup i projektledarrepot `skogskoll-project-manager-history`.
+
+Projektledarrepots manuella inventory [run #45456596948](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45456596948) kördes från `main` och avslutades `completed/success`. Artifact `project-manager-inventory-45456596948` (artifact ID `14949154835`, SHA-256 `5256eb314ac80500ca987d8578066f04981b7e345503cb9fd2b2b97578886f90`) granskades i sin helhet. Alla 3/3 aktiva repositories samlades in; källregistret innehöll 51 source_id, varav 14 med operations-block. Collectorlogg: 61/61 tester godkända, JavaScript syntaxkontroll godkänd, `Collection status=success repositories=3/3`. Alert-jobbet var `skipped` eftersom `manage_alert_issue` lämnades avstängt.
+
+Verifierad PM-027-evidens:
+- `skogsstyrelsen.harvest_notifications`: senaste försök via exakt workflow `.github/workflows/national-monitor.yml`, run `43881404640`, `completed/failure`, skapad `2026-11-16T14:01:05Z`. Den andra konfigurerade workflow-sökvägen hittades inte. Senaste kompletta snapshot är fortsatt `manifest_complete`, 165 poster, endast Gräsmyr 10 km-pilot, fångad `2026-11-22T19:27:44Z`; detta är inte nationell täckning. Manifestets SHA-256 är ett källpåstående och räknades inte om av adaptern.
+- `skogsstyrelsen.samrad`: senaste försök via exakt workflow `.github/workflows/collect-samrad.yml`, run `45454250815`, `completed/success`, skapad `2026-11-24T17:57:36Z`. Metadata inventory identifierar 24 daterade snapshots, men snapshot-fullständighet, scope och punkt-/linje-/polygonantal förblir `unknown`; adaptern hämtar inte feature-data.
+
+Den riktade lookup-funktionen matchar exakta workflow-sökvägar, hämtar endast senaste körningen per matchat workflow och väljer senaste försök per källa. Den generella dashboardens latest-20-lista är oförändrad. Saknat workflow/run och otillräcklig evidens förblir `unknown`; API-fel failar stängt.
+
+Dokumentations-PR [#65](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/65) är mergad i projektledarrepot, merge commit `9da228fb77fe221df2f526cb9ee11645bb26d743`. Den uppdaterar `docs/PM027_ADAPTER_SPIKE.md` och `docs/OPERATIONS_CENTER.md`. PR-CI passerade: [Project manager tests #45457392500](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45457392500) och [Synthetic append-only tests #45457392160](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45457392160).
+
+**Avgränsning:** detta verifierar projektledarens read-only inventory och PM-027-adapterns metadata-/manifest-evidens. Det verifierar inte nationell avverkningsanmälningstäckning, Samråds fullständighet, autentiserad dashboard-rendering eller kommersiella rättigheter/kundvisning. Inga source features laddades ned, inga källrepon skrevs till, ingen Azure-publicering, kundfeed eller alert-issue-sidoeffekt utfördes. Källstatus, rättigheter och kundvisningsstatus ändras inte.
+
+**Status:** PM-027 är färdig som adapter-/inventoryleverans. Separat Samrådsmanifest och autentiserad dashboardkontroll är möjliga uppföljningsuppgifter, inte blockerare för denna leverans.
+
+**Dokumentationsbedömning:** `docs/AI_HANDOVER.md` uppdateras för att registrera verifierat nuläge och nästa avgränsade förbättringar. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` ändras inte eftersom denna leverans inte ändrar källregister, insamlingsstatus eller rättighetsbedömningar.
