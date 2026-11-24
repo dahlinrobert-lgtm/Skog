@@ -1276,7 +1276,7 @@ Dashboarderna i alg-grasmyr har jämförts direkt från Git-historiken: 2026-11-
 - Största observerade ÄFO-differenser: 25-003 +76, 25-006 +55, 25-004 +46, 25-005 +45 och 07-001 +23.
 - Antalet råa ÄJO-rader per ÄFO är oförändrat i dashboardmetadata för samtliga 129 områden. `FinishedReporting`-antalet ändras däremot i 10 områden; i 14-005 minskar det från 5 till 4. Detta visar att rapporteringsstatus inte ska behandlas som monotont eller som en händelsehistorik.
 
-Detta är en dashboard-/ÄFO-aggregatjämförelse, inte en fullständig rad-för-rad ÄJO-differens. En begränsad kontroll av råa ÄJO-rader har visat att samma registreringsnummer förekommer över datumen och att rapportvärden/status kan ändras, men samtliga 3 237 rader har ännu inte jämförts systematiskt med stabil ÄJO-identitet. Ingen differens ska därför tolkas som exakt fälldatum eller daglig händelse. Nästa steg är en komplett rå-rad-jämförelse med extraherat stabilt registreringsnummer ur `AfoName`-länkens `drillDownToAjoReport`-ID, kontroll av radtillskott/bortfall och ändrade värden, samt separat klassning av rapportstatusändringar. Bevara båda snapshots och skapa ingen automatisk borttagningshändelse.
+Detta avsnitt dokumenterar dashboard-/ÄFO-aggregatjämförelsen. Den fullständiga råa ÄJO-rad-för-rad-jämförelsen slutfördes senare och verifierades i alg-grasmyr PR #83 och Actions run 45283539790; resultat och stabil identitet dokumenteras i avsnittet **2026-11-23 – National ÄJO row-level comparison verified** längre ned i denna överlämning. De kumulativa differenserna ska inte tolkas som exakta fälldatum eller dagliga händelser. Bevara snapshots och skapa ingen automatisk borttagningshändelse vid frånvaro.
 ## 2026-11-23 – Azure prenumeration, budget och dataskydd verifierade
 
 Användarens Azure Portal-skärmbilder verifierar att prenumerationen `Azure subscription 1` (ID `e758647f-da18-4063-adfd-f1ce79d5d2af`) visas som aktiv efter uppgradering till Pay-As-You-Go. En månadsbudget `Skogskoll-budget` på 200 SEK har skapats med faktiska kostnadsaviseringar vid 50/75/90 procent (100/150/180 SEK). Budgeten är en notifiering, inte ett hårt kostnadstak.
@@ -1337,3 +1337,92 @@ PR #52 ligger i privat staging-repo. Profilregistret är initialt tomt eftersom 
 Ingen Azure-publicering, latest pointer, GitHub Pages-deploy, auth/CORS-ändring eller ändring av befintlig produktionsdashboard har gjorts. Befintlig snapshot och manuell publiceringsgrind är oförändrade.
 
 **Nästa steg:** granska och mergea staging-PR efter kodgranskning. Därefter koppla faktiska källor till exakta workflows och dokumentera risk-/kontinuitetsprofiler från API-dokumentation, leverantörsvillkor, befintlig kod och kontrollerad driftsevidens. Först därefter kan en ny komplett inventering och separat manuellt godkänd Azure-publicering ge dashboarden nya uppgifter.
+## 2026-11-24 – Mobilappspublicering registrerad i projektbackloggen
+
+GitHub issue [#573](https://github.com/dahlinrobert-lgtm/Skog/issues/573) och backloggpost PM-024 registrerar kommande arbete för att förbereda Skogskoll för Google Play och Apple App Store. Detta är planering/kravinsamling, inte ett beslut att börja bygga eller publicera.
+
+Omfattningen inkluderar beslut om juridisk utgivare och kontoägare, read-only inventering av befintlig frontend, jämförelse av PWA/Capacitor/React Native, butikarnas integritets-, behörighets-, kontoraderings- och granskningskrav, testning samt drift och releaseförvaltning. Tidigare angivna butikskontoavgifter (Google Play 25 USD engångsvis, Apple Developer Program 99 USD/år) är endast preliminära budgetvärden och måste verifieras mot officiella aktuella villkor före registrering eller betalning.
+
+Nästa konkreta steg är att inventera aktuell Skogskoll-frontend, mobilanpassning, auth, kartor och notifieringsflöden. Ingen utvecklarkontoregistrering, ny produktionsaktivering eller kundavisering ska ske som del av detta planeringssteg. Se [PROJECT_BACKLOG.md, PM-024](PROJECT_BACKLOG.md).
+
+
+## 2026-11-24 – PM-027 arkitekturpassning och read-model-inventering
+
+PM-027 är P0. Inventering mot aktuell Skog `main` och privata `skogskoll-project-manager-history` verifierar att det redan finns en repo-/workfloworienterad projektinventering, ett källregister med operativa fält, en daglig schemalagd inventory-workflow i det privata repot samt en separat manuell Azure-publisher med run-scopade snapshots och manifest. Den första Azure-publiceringen (`44958916377`, publisher run `44959260856`) verifierades byte-för-byte i samma workflow enligt det privata repots driftdokumentation.
+
+Den befintliga projektledarinventeringen visar de senaste 20 workflow-körningarna per repo och läser källregistrets kadens, geografi och operations-fält. Den visar däremot inte ett verifierat senaste komplett snapshot per `source_id`/produkt/lager. Ingen generell source-to-workflow/manifest/snapshot-koppling har ännu verifierats. Azure-publishern är dokumenterad som manuell och run-scopad; den första publiceringen bevisar inte en återkommande daglig publicering. Skogs Project Manager-klient använder en fast Blob-referens och har schema-/freshness-/partial-kontroller, men live Azure-innehåll och webbläsarens Entra/CORS-flöde kunde inte verifieras genom GitHub-integrationen.
+
+**Arkitekturval:** utöka befintlig privat collector/read-model och befintlig Azure snapshot/publisher efter kontraktsdesign. Återanvänd `data-platform/config/sources.yml` som auktoritativ källa till source/product/layer-identitet och källägda manifest/snapshots som evidens. Ingen parallell collector eller historikmodell.
+
+**Nästa konkreta steg:** inventera exakta manifest-/snapshotindexformat för prioriterade befintliga källflöden; definiera versionsstyrd source-to-workflow-mappning och minsta normaliserade rapportkontrakt. Därefter implementera en read-only adapter med syntetiska tester för success, partial, failed, stale och unknown. Ingen ändring av schema, publicering, behörighet eller kundflöde är godkänd i detta inventeringssteg.
+
+
+## 2026-11-24 – PM-027 källmanifest- och snapshotformat inventerade
+
+Fortsatt read-only-granskning av Skog `main` identifierade konkreta format för:
+- Skogsstyrelsens avverkningsanmälningar: `latest.json` manifest med scope, före/efter-ID-inventering, count, complete_scan, SHA-256 och gzip-GeoJSON-referens; workflow manuell och Gräsmyr 10 km pilot.
+- Samråd: gzipade tidsstämplade snapshots samt `samrad_latest.json`; payload har source_id, scope_hash, per-lager status/paging/counts. Daglig workflow. Inget separat snapshotfil-SHA-fält i det granskade payloadkontraktet.
+- Torvkarta/SIS: veckovis `geodata_timeline` JSON-snapshot, NPZ-sampel, metadata-/pixelhash och append-only events. Per-tjänst status; samplebaserat change detection, inte nationell full rasterdump.
+- Länsstyrelsens diarier: append-only JSONL manifest per försök och immutable JSONL snapshot per county/phrase/interval. Fullständighet kräver paging och källtotal/unik-ID-reconciliation; delkörning är inte nationell fullständighet.
+- Trafikverket Miljöwebb: datumpartitionerat manifest med per-lager antal, geometri/ID-fält, filreferens, storlek och SHA-256.
+- Event bundle schema är en separat semantisk händelse-/evidensmodell, inte ersättning för råsnapshotmanifest.
+
+**Viktig slutsats:** PM-027 behöver en källspecifik adapter/mapping, inte ett nytt universellt snapshotarkiv. Normaliserad read model måste behålla lager-/tjänstgranularitet, scope, source-specific completeness basis, run-/manifest-/snapshotreferenser och null/unknown där underlag saknas. Latest attempt och latest complete snapshot hålls åtskilda.
+
+**Nästa steg:** skapa versionsstyrd mapping mellan source_id, produkt/lager, workflow, manifest locator och scope. Implementera därefter read-only adapter för avverkningsanmälningar och Samråd först, med fixtures och tester för complete/partial/failed/stale/unknown. Ingen ny snapshotlagring eller ändring av källinsamling.
+
+
+## 2026-11-24 – PM-027: formell kontraktsdesign uppskjuten
+
+Efter att ha granskat aktuell `main` i Skog och den privata `skogskoll-project-manager-history` är arbetsordningen justerad. Ett minsta rapportfältförslag finns redan i `PROJECT_BACKLOG.md`, men formell versionsstyrd kontraktsdesign bedöms vara för tidig innan den befintliga read modellen har prövats mot riktiga källmanifest.
+
+**Verifierat i projektledarrepot:** `scripts/collect_github.py` samlar repo-/issue-/PR-/workflowmetadata och läser `data-platform/config/sources.yml` som `source_registry`. `data/workflow_metadata.json` klassar workflow paths. `scripts/validate_inventory.py` validerar inventorypayloaden. `scripts/append_history.py` och `docs/HISTORY_FORMAT.md` avser projektinventeringens append-only-historik, inte ett universellt kontrakt för källsnapshots. Dashboarden visar källregisterstatus och senaste 20 workflow-körningarna per repo; en verifierad koppling från varje source/product/layer till senaste kompletta källsnapshot saknas fortfarande.
+
+**Nästa konkreta steg:** en avgränsad read-only genomförbarhetsprototyp i befintlig collector/read model för Skogsstyrelsens avverkningsanmälningar och Samråd. Använd befintliga källmanifest/snapshotformat och explicit workflow-/scope-evidens. Ingen ny collector, snapshotlagring, historikmodell, schedule, Azure-publicering eller kundfunktion. Unknown ska förbli unknown; latest attempt och latest complete snapshot ska hållas isär.
+
+**Beslutspunkt:** efter prototypen avgörs om en liten utökning av befintlig payload räcker eller om ett separat versionsstyrt kontrakt behövs. Kontraktsdesign ska alltså inte vara ett självständigt förarbete innan denna konkreta prövning.
+
+
+## 2026-11-24 – Projektledarens dagliga inventory-schema säkrat
+
+I det privata repot `dahlinrobert-lgtm/skogskoll-project-manager-history` är PR [#55](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/55) mergad (commit `ccda5189e83deec96df5f0262412208fe1fdb3a3`).
+
+- Inventory-workflowet använder en enda GitHub Actions-trigger kl. 07:17 med tidszonen `Europe/Stockholm`. Den tidigare dubbla UTC-triggern och exakta lokala entimmesgrinden är borttagna, så försenad start leder inte längre till att insamlingen hoppas över på grund av klockslaget.
+- Schemalagda körningar kan enligt GitHubs dokumentation fortfarande försenas eller tappas vid hög belastning. Schemat är flyttat från hel timme, men faktisk körning och artifact måste fortsatt verifieras.
+- Collector-jobbet har endast `contents: read`. Issue-sidoeffekten ligger i separat jobb med `issues: write`; manuella körningar har den avstängd som standard och kräver explicit `manage_alert_issue=true`.
+- PR-CI passerade: Project manager tests run `45440389309` och Synthetic append-only tests run `45440389414`.
+
+**Kvarstående:** ingen live inventory-körning eller nytt artifact efter merge är verifierat. GitHub-integrationen i denna session kan läsa workflow-runs och artifacts men erbjuder inte dispatch av workflow. Starta därför en manuell körning från projektledarrepots `main` via GitHub Actions, lämna `manage_alert_issue` avmarkerad och granska artifact innan PM-027:s två källor och dashboard verifieras. Ingen Azure-publicering, källskrivning eller kundavisering ingår.
+
+
+## 2026-11-24 – PM-027 collectorimport korrigerad och mergad
+
+I det privata projektledarrepot [skogskoll-project-manager-history PR #58](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/58) är importfixen för PM-027-adaptern mergad till `main` i commit `02e2ee876bf2a8293d8c7ab2ad0600c35a750f44`.
+
+Collector använder nu paketrelativ import när den körs som modul och syskonimport som reserv när workflowet kör `python scripts/collect_github.py`. Regressionstestet reproducerar direkt skriptkörningsmiljön genom att lägga `scripts/` på `sys.path`, importera collector-modulen utan paketkontext och verifiera att befintlig `collect()`-väg faktiskt kopplar in adapterevidensen.
+
+Verifiering:
+- Korrigerad PR-CI: Project manager tests [45442219024](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442219024) och Synthetic append-only tests [45442219569](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442219569) passerade.
+- Post-merge main-test: [45442304488](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45442304488) passerade.
+- Tidigare manuella inventory-försök [45441579231](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45441579231) och [45440849681](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45440849681) misslyckades före denna korrigering (först dubblett i workflow-metadata, därefter importfel). De är inte live-verifiering av PM-027-adaptern.
+
+**Kvarstående:** kör den befintliga read-only inventory-workflowen manuellt från projektledarrepots `main`. Lämna `manage_alert_issue` avmarkerad. Granska collector-status, fullständighet för aktiva projekt, source registry, de två `source_snapshot_evidence`-posterna (avverkningsanmälningar och Samråd) samt artifact. Latest attempt och latest complete snapshot ska fortsatt hållas isär; okänd evidens ska förbli `unknown`. Denna kodfix ändrar inte källinsamling, källrättigheter, Azure-publicering eller kundbeteende.
+
+Ingen ny källstatus eller rättighetsbedömning följer av merge eller CI. Kundvisning och kommersiell användning förblir enligt källregistret oförändrade.
+
+
+## 2026-11-24 – PM-027 live inventory #11 verifierad
+
+Projektledarrepots [inventory run #11](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45443506944) är `completed/success` efter merge av PR #60. Collector rapporterade 3/3 aktiva projekt, 0 fel. Artifact [project-manager-inventory-45443506944](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45443506944/artifacts/14944607060) har laddats ned och granskats.
+
+Verifierade resultat:
+- Källregistret: 51 källposter, 14 operations-block, 37 utan operativ status; registerkontrolldatum 2026-11-18.
+- PM-027-adaptern returnerade `status=success`; Skog Git tree var inte trunkerat.
+- `skogsstyrelsen.harvest_notifications`: manifeststatus `manifest_complete` för Gräsmyr 10 km-pilot, 165 poster. Detta innebär inte nationell täckning. SHA-256 i manifestet är inte omräknad av adaptern.
+- `skogsstyrelsen.samrad`: 24 daterade metadataidentifierade snapshots. Fullständighet, scope och punkt-/linje-/polygonantal är fortsatt `unknown`.
+- `latest_attempt` var `unknown` för båda källorna, eftersom matchande workflows inte fanns bland de senaste 20 workflow-körningarna för repot. Det är en begränsning i lookup-fönstret, inte bevis för att körning saknas.
+- Artifact uppladdades och dess SHA-256 digest var `256c010207f7719da4aa53e55c910f3dab63774e1db08c1b87d67007cb486fb8`. Alert-jobbet var överhoppat; inga källfeatures laddades ner.
+
+PM-027 är därmed live-verifierad för befintlig read-only collector/read model och dess uttryckliga evidensgränser. Ingen rättighetsstatus, kommersiell användning, kundvisning eller kundfeed har ändrats.
+
+**Nästa konkreta steg:** förbättra hämtningen av senaste matchande workflow-försök utan att skrapa all workflow-historik, därefter undersöka en liten separat Samråd-manifestfil med per-lager antal, paging och fullständighet. Behåll `unknown` där evidens saknas. Autentiserad dashboardvisning är inte verifierad av artifactkontrollen och ska testas separat.
