@@ -71,13 +71,16 @@ New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 
 $items = New-Object System.Collections.Generic.List[object]
 $errors = New-Object System.Collections.Generic.List[object]
+$rootStates = New-Object System.Collections.Generic.List[object]
+$discoveryComplete = $true
 
 foreach ($root in $Roots) {
     Write-Host "Scanning: $root"
     try {
-        $files = Get-ChildItem -LiteralPath $root -File -Recurse -Force -ErrorAction SilentlyContinue | Where-Object {
+        $enumerationErrors = @()
+        $files = @(Get-ChildItem -LiteralPath $root -File -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable +enumerationErrors | Where-Object {
             -not ($OutputDirectory -and $_.FullName.StartsWith($OutputDirectory, [System.StringComparison]::OrdinalIgnoreCase))
-        }
+        })
         foreach ($file in $files) {
             $hash = $null
             if ($HashFiles -and $file.Length -le $MaxHashBytes) {
@@ -96,9 +99,23 @@ foreach ($root in $Roots) {
                 sha256 = $hash
             })
         }
+        foreach ($enumerationError in @($enumerationErrors)) {
+            $errors.Add([pscustomobject]@{ path=$root; category="enumeration"; error=$enumerationError.Exception.Message })
+        }
+        $rootStatus = if (@($enumerationErrors).Count -gt 0) { "partial" } else { "complete" }
     } catch {
-        $errors.Add([pscustomobject]@{ path=$root; error=$_.Exception.Message })
+        $errors.Add([pscustomobject]@{ path=$root; category="enumeration"; error=$_.Exception.Message })
+        $rootStatus = "failed"
     }
+    $rootMatching = @($items | Where-Object { $_.root -eq $root })
+    $rootStates.Add([pscustomobject]@{
+        root = $root
+        status = $rootStatus
+        directory_count = $null
+        file_count = $rootMatching.Count
+        total_bytes = [long](($rootMatching | Measure-Object -Property size_bytes -Sum).Sum)
+        error_count = @($errors | Where-Object { $_.path -eq $root }).Count
+    })
 }
 
 $rootSummary = foreach ($root in $Roots) {
@@ -149,15 +166,21 @@ if ($previousSnapshot) {
 }
 
 $report = [ordered]@{
-    schema_version = "1.0"
+    schema_version = "2.0"
+    inventory_status = $inventoryStatus
+    discovery_complete = [bool]$discoveryComplete
+    comparison_status = $comparisonStatus
+    comparison_reason = $comparisonReason
+    root_count = $rootStates.Count
+    directory_count = $null
+    file_count = $items.Count
+    error_count = $errors.Count
     generated_at_utc = (Get-Date).ToUniversalTime().ToString("o")
-    computer_name = $env:COMPUTERNAME
-    user_name = $env:USERNAME
     scan_mode = "read-only"
     hash_enabled = [bool]$HashFiles
     max_hash_bytes = $MaxHashBytes
     previous_snapshot = $previousSnapshotName
-    roots = @($rootSummary)
+    roots = @($rootStates)
     change_count = $changes.Count
     changes = $changes.ToArray()
     files = $items.ToArray()
