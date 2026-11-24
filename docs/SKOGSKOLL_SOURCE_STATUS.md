@@ -29,7 +29,7 @@
 | Trafikverket – öppna data | trafikverket.open_data | Ej verifierad | Inte startad | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Lantmäteriet – Fastighetsindelning Direkt (OAPIF) | lantmateriet.fastighetsindelning_direkt | Teknisk probe | Inte startad | Ingen | Inväntar produktvillkor | Inväntar skriftligt/beställt scope | 2026-11-14 |
 | Nationella Viltolycksrådet – historiska och löpande viltolyckor | nvr.wildlife_collisions | Auktoriserad åtkomst använd | 30-dagars dagligt test | Delvis historiskt arkiv | Villkorad | Villkorad | 2026-11-15 |
-| Länsstyrelsernas Älgdata – avskjutning per älgförvaltningsområde | lansstyrelsen.elk_harvest_statistics | Verifierad | Nationell 129/129 snapshot verifierad | Två nationella snapshots: 2026-11-21 och 2026-11-23; rå ÄJO-jämförelse verifierad: 3 237 rader per datum, 396 ändrade, 2 841 oförändrade, inga tillkomna/saknade ID:n | Verifierad med källhänvisning | Villkorad av attribution/källomfattning | 2026-11-23 |
+| Länsstyrelsernas Älgdata – avskjutning per älgförvaltningsområde | lansstyrelsen.elk_harvest_statistics | Verifierad | Nationell 129/129 snapshot verifierad | Två nationella snapshots: 2026-11-21 och 2026-11-23; rå ÄJO-jämförelse verifierad: 3 237 rader per datum, 396 ändrade, 2 841 oförändrade, inga tillkomna/saknade ID:n | Fri återanvändning av publicerad statistik enligt öppna data (inga villkor); automatiserad API-metod separat tekniskt villkorad | Fri återanvändning av publicerad statistik; attribution ej angiven som villkor, men rekommenderas | 2026-11-24 |
 | Länsstyrelserna – nationella älgförvaltningsområden (JaktAdm) | lansstyrelsen.elk_afo_boundaries | Verifierad | Inte startad | Ingen | Villkorad av attribution/källomfattning | Villkorad av attribution/källomfattning | 2026-11-16 |
 | Trafikverket – Miljöwebb Landskap | trafikverket.miljoweb_landskap | Delvis verifierad | Pilot | Delvis historik | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Trafikverket – NVDB Viltolyckor | trafikverket.nvdb.wildlife_collision_frequency | Delvis verifierad | Pilot | Delvis historik | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
@@ -101,3 +101,12 @@ Dashboardjämförelsen omfattar 129/129 samma ÄFO-ID:n och samma säsong 2026/2
 Den fullständiga jämförelsen är verifierad i [alg-grasmyr PR #83](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/83) och [workflow #45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790). Resultat: 129/129 ÄFO, 3 237 rader i vardera snapshot, 2 841 oförändrade rader, 396 ändrade rader, 0 tillkomna ID:n och 0 saknade ID:n. ShotTotal ändrades på 378 rader (+972 kumulativt nationellt); FinishedReporting ändrades på 42 rader (41 Nej -> Ja, 1 Ja -> Nej). Ingen källsnapshot ändrades.
 
 **Återstående:** separat rättighetsbedömning. Teknisk åtkomst och genomförd jämförelse ger inte i sig rätt till historisk lagring, bearbetning, kommersiell användning, kundvisning eller vidare distribution.
+
+
+### Älgdata – förtydligad rättighetsbedömning 2026-11-24
+
+Länsstyrelsen Västerbottens officiella öppna data-sida beskriver Älgdata som statistik över fällda älgar och inrapporterad avskjutning, anger att databasen får användas helt fritt, att villkor saknas och att formatet är Microsoft XLSX. Samma formulering har kontrollerats på Länsstyrelsen Stockholm och Jämtland.
+
+Detta ger stöd för fri återanvändning av den publicerade statistiken, inklusive historisk jämförelse, bearbetning, kommersiella analyser och kundvisning inom statistikens scope. Ingen attribution anges som villkor; källhänvisning rekommenderas ändå som god praxis. Detta är en bedömning av den publicerade statistikprodukten, inte ett individuellt skriftligt besked.
+
+**Avgränsningar:** öppna data-sidan dokumenterar inte portalens interna API som ett stabilt automatiseringsgränssnitt, anropsfrekvens eller SLA. Bekräfta därför den maskinella hämtvägen med Länsstyrelsen innan högfrekvent/produktionskritisk API-drift. JaktAdm-gränsgeometrier är en separat produkt med egna metadata-/villkorskontroller. Se rättighetsgranskningen 2026-11-16, avsnitt 5.
