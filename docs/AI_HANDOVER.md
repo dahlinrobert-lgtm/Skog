@@ -1340,3 +1340,18 @@ Den befintliga projektledarinventeringen visar de senaste 20 workflow-körningar
 **Arkitekturval:** utöka befintlig privat collector/read-model och befintlig Azure snapshot/publisher efter kontraktsdesign. Återanvänd `data-platform/config/sources.yml` som auktoritativ källa till source/product/layer-identitet och källägda manifest/snapshots som evidens. Ingen parallell collector eller historikmodell.
 
 **Nästa konkreta steg:** inventera exakta manifest-/snapshotindexformat för prioriterade befintliga källflöden; definiera versionsstyrd source-to-workflow-mappning och minsta normaliserade rapportkontrakt. Därefter implementera en read-only adapter med syntetiska tester för success, partial, failed, stale och unknown. Ingen ändring av schema, publicering, behörighet eller kundflöde är godkänd i detta inventeringssteg.
+
+
+## 2026-11-24 – PM-027 källmanifest- och snapshotformat inventerade
+
+Fortsatt read-only-granskning av Skog `main` identifierade konkreta format för:
+- Skogsstyrelsens avverkningsanmälningar: `latest.json` manifest med scope, före/efter-ID-inventering, count, complete_scan, SHA-256 och gzip-GeoJSON-referens; workflow manuell och Gräsmyr 10 km pilot.
+- Samråd: gzipade tidsstämplade snapshots samt `samrad_latest.json`; payload har source_id, scope_hash, per-lager status/paging/counts. Daglig workflow. Inget separat snapshotfil-SHA-fält i det granskade payloadkontraktet.
+- Torvkarta/SIS: veckovis `geodata_timeline` JSON-snapshot, NPZ-sampel, metadata-/pixelhash och append-only events. Per-tjänst status; samplebaserat change detection, inte nationell full rasterdump.
+- Länsstyrelsens diarier: append-only JSONL manifest per försök och immutable JSONL snapshot per county/phrase/interval. Fullständighet kräver paging och källtotal/unik-ID-reconciliation; delkörning är inte nationell fullständighet.
+- Trafikverket Miljöwebb: datumpartitionerat manifest med per-lager antal, geometri/ID-fält, filreferens, storlek och SHA-256.
+- Event bundle schema är en separat semantisk händelse-/evidensmodell, inte ersättning för råsnapshotmanifest.
+
+**Viktig slutsats:** PM-027 behöver en källspecifik adapter/mapping, inte ett nytt universellt snapshotarkiv. Normaliserad read model måste behålla lager-/tjänstgranularitet, scope, source-specific completeness basis, run-/manifest-/snapshotreferenser och null/unknown där underlag saknas. Latest attempt och latest complete snapshot hålls åtskilda.
+
+**Nästa steg:** skapa versionsstyrd mapping mellan source_id, produkt/lager, workflow, manifest locator och scope. Implementera därefter read-only adapter för avverkningsanmälningar och Samråd först, med fixtures och tester för complete/partial/failed/stale/unknown. Ingen ny snapshotlagring eller ändring av källinsamling.
