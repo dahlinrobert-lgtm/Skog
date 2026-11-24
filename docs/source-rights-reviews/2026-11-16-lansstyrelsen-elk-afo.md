@@ -110,3 +110,14 @@ Skogskoll kan planera användning av publicerad Älgdata-statistik och egna summ
 Innan den nuvarande automatiserade insamlingsmetoden körs tätare eller görs till en kritisk produktionsintegration bör Länsstyrelsen bekräfta att den använda portalvägen/API-anropen är avsedda för återkommande maskinell hämtning och ange eventuella frekvens-/driftbegränsningar. Detta är en teknisk åtkomst- och driftsfråga, inte ett påstående om att statistikens återanvändningsrätt är begränsad.
 
 **Statusslutsats:** Fri återanvändning av den publicerade Älgdata-statistiken har officiellt stöd. Ingen uttrycklig attribution krävs enligt den granskade öppna data-sidan. Kommersiell användning, historisk lagring, bearbetning och kundvisning har starkt stöd inom just statistikens scope. Automatiserad API-hämtning och JaktAdm-geometrier är separata frågor och ska inte ges ett bredare godkännande på grundval av Älgdata-sidans villkor.
+
+
+## 6. Kontakt med Länsstyrelsen – svar inväntas (2026-11-24)
+
+Gmail-tråden **”Förfrågan om återanvändning av kartskikt från Länsstyrelsens Älgdata i webbtjänst”** visar att frågan skickades 2026-11-23 till Länsstyrelsens generella kartstöd. Den vidarebefordrades/internt hanteras av `fo-natur@lansstyrelsen.se`. Den 2026-11-24 svarade Daniel:
+
+> Vi kollar på dina frågor och återkommer.
+
+Detta är endast en mottagnings-/statusbekräftelse, inte ett sakligt besked eller tillstånd. Vi inväntar ett mer fullständigt svar på frågor om tillgängliga lager/tjänster, extern och kommersiell visning, cache och egen lagring, historik/versionering samt uppdateringar.
+
+**Uppföljningsstatus:** väntar på sakligt svar. Ingen ny förfrågan behöver skickas nu. När svar kommer ska det bedömas per datalager och användning; Älgdata-statistikens öppna data-villkor ska inte blandas ihop med JaktAdm-geometrierna.
