@@ -306,7 +306,6 @@ $lines = New-Object System.Collections.Generic.List[string]
 $lines.Add("# Local storage inventory")
 $lines.Add("")
 $lines.Add("- Generated (UTC): $($report.generated_at_utc)")
-$lines.Add("- Computer: $env:COMPUTERNAME")
 $lines.Add("- Mode: read-only")
 $lines.Add("")
 $lines.Add("| Root ID | Files | Total size (GB) |")
