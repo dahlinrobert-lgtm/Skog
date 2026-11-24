@@ -381,17 +381,22 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Fält | Värde |
 |---|---|
 | Prioritet | P1 – dataskydd, tillförlitlig lagringsöverblick och förebyggande av falska bortfall |
-| Status | Dokumenterad; implementation ej påbörjad |
+| Status | Implementationen mergad och CI-verifierad; lokal driftsättning och kompletterande integritets-/åtkomsttest återstår |
 | Evidens | [GitHub issue #597](https://github.com/dahlinrobert-lgtm/Skog/issues/597), `docs/STORAGE_INVENTORY.md`, `scripts/inventory-local-storage.ps1` |
 | Mål | Behålla befintlig daglig lokalinventering men göra status och förändringsjämförelse fail-closed |
 | Verifierat nuläge | Windows-aktivitet kör dagligen 21:00; standardrötter; flyttbara diskar inkluderas; SHA-256 avstängt; senaste kontrollerade körning 2026-11-23 hade resultatkod 0. |
 | Risker | Dolda enumereringsfel, `missing` vid partiell läsning, ändrat root-set utan scope-gate samt lokala identiteter/fullständiga sökvägar i JSON-rapporten |
 | Acceptanskriterier | Explicit `complete/partial/failed` per rot; enumereringsfel räknas; `missing` endast vid kompletta jämförbara root-set; scope-avvikelse redovisas separat; rapporten visar coverage/error counts; personuppgifter/sökvägar minimeras; tester täcker partiell åtkomst, saknad/ändrad rot, baseline och komplett jämförelse |
 | Arkitektur | Återanvänd befintligt PowerShell-skript och befintlig Task Scheduler-aktivitet. Ingen parallell inventerare eller ny schemaläggning. |
-| Nästa steg | Granska senaste lokala JSON-/Markdownrapporten och implementera completeness-/scope-gates i en separat branch/PR. Behåll schemaläggning och read-only-egenskaper. |
+| Nästa steg | Säkerhetskopiera lokalt skript och rapportmapp; kör den mergade schema 2.0-versionen manuellt utan att ändra Task Scheduler. Granska rotstatus, felantal och jämförelseutfall. Komplettera därefter ACL-test för nekad underkatalogåtkomst och besluta om minimering av sökvägar/datornamn i lokala rapporter. |
 | Säkerhetsgrind | Ingen radering/flytt av lokala filer, ingen publicering av rå inventeringsrapport, ingen aktivering av SHA-256 eller ändring av Task Scheduler utan separat godkännande. |
 
 **Projektledarwebb:** Skog är aktivt i projektledarens repo-register. Issue #597 hämtas av den befintliga read-only collectorn som en öppen arbetsuppgift och visas i dashboardens `open_work_items` efter nästa kompletta inventering och publicerade snapshot. Ingen separat UI-komponent krävs; dashboarduppdatering är ännu inte liveverifierad.
 
 
 **Statusuppdatering 2026-11-24 (Azure publisher):** PR #68 i det privata projektledarrepot är mergad med merge commit `44c2bfa73b14193c7d7fb364084b69c791819ca8`; main CI run `45486205149` passerade unit tests och JS-syntaxkontroll. Automatisk publicering, immutable payload/manifest med byte-read-back och skyddad latest-pekare är implementerade. Live Azure-publicering och browser-polling är ännu inte verifierade/implementerade. Se AI_HANDOVER PM-029-uppdateringen och privata `docs/OPERATIONS_CENTER.md`.
+
+
+**Statusuppdatering 2026-11-24 – implementation mergad:** PR [#600](https://github.com/dahlinrobert-lgtm/Skog/pull/600) är mergad i commit `670b8dd5cfad60f7a1eb0a26ef1c91e2921bb599`. Skriptet använder schema 2.0, rotstatus (`complete/partial/failed`) och undertrycker förändringsdiffar om aktuell/föregående inventering inte är komplett och har identiskt rot-set. Första körningen är tyst baseline; schema 1-rapporter jämförs inte. Windows PowerShell 5.1-parsning och regressionstester för baseline, samma scope, ändrat scope och saknad rot passerade i [Actions run 45486453158](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45486453158).
+
+**Kvarstående:** ACL-test för nekad underkatalogåtkomst saknas. JSON saknar dator-/användaridentitet men har fortfarande fullständiga filsökvägar; Markdown innehåller datornamn. Lokal manuell körning med den nya versionen är inte verifierad. Task Scheduler-konfigurationen och SHA-256-inställningen har inte ändrats. Issue #597 stängdes av merge; dessa kvarstående steg ska hanteras innan PM-030 betraktas som helt färdig.
