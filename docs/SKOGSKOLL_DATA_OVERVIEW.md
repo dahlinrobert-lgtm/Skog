@@ -1110,6 +1110,6 @@ Kör manuellt efter merge när tjänsten är tillgänglig:
 
 Test:
 
-    python -m unittest tests.test_inspect_lansstyrelsen_fire_ban_service -v
+    python -m unittest discover -s tests -p "test_inspect_lansstyrelsen_fire_ban_service.py" -v
 
 Ingen featuredata hämtas av dessa kommandon.
