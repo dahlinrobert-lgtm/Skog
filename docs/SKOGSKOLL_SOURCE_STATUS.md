@@ -94,3 +94,10 @@ Kontrollera att rapporten är aktuell med:
 ### Nationell ÄFO-differens 2026-11-21 till 2026-11-23
 
 Dashboardjämförelsen omfattar 129/129 samma ÄFO-ID:n och samma säsong 2026/2027. Kumulativt rapporterat fälltal ökade från 56 715 till 57 687 (+972); 109 områden ökade, 20 var oförändrade och inget minskade. Avskjutningsmålet var oförändrat 79 704. Antalet råa ÄJO-rader per område var oförändrat i dashboardmetadata. Antalet färdigrapporterande ÄJO ändrades i 10 områden, inklusive en minskning i 14-005. Full rad-för-rad-jämförelse av råa ÄJO-rader återstår och krävs före slutsatser om nytillkomna/förändrade poster. Differenserna är kumulativa rapportförändringar, inte exakta dagliga händelser.
+
+
+### Uppdatering 2026-11-23 – ÄJO-råjämförelse färdigställd
+
+Den fullständiga jämförelsen är verifierad i [alg-grasmyr PR #83](https://github.com/dahlinrobert-lgtm/alg-grasmyr/pull/83) och [workflow #45283539790](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45283539790). Resultat: 129/129 ÄFO, 3 237 rader i vardera snapshot, 2 841 oförändrade rader, 396 ändrade rader, 0 tillkomna ID:n och 0 saknade ID:n. ShotTotal ändrades på 378 rader (+972 kumulativt nationellt); FinishedReporting ändrades på 42 rader (41 Nej -> Ja, 1 Ja -> Nej). Ingen källsnapshot ändrades.
+
+**Återstående:** separat rättighetsbedömning. Teknisk åtkomst och genomförd jämförelse ger inte i sig rätt till historisk lagring, bearbetning, kommersiell användning, kundvisning eller vidare distribution.
