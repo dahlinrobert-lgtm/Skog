@@ -1437,3 +1437,20 @@ Saknat workflow eller tom körningshistorik ger fortsatt `unknown`. API-fel och 
 Verifierade tester på PR-commit `7573a7c87c975e93534c52b8bc3d3ae795055ab2`: [Project manager tests #45449073568](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449073568) och [Synthetic append-only tests #45449073704](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449073704) passerade. Post-merge [main tests #45449310070](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45449310070) passerade.
 
 **Nästa konkreta steg:** kör den befintliga manuella read-only projektinventeringen från projektledarrepots `main`, lämna `manage_alert_issue` avstängd och granska artifactet. Verifiera `latest_attempt` för både `skogsstyrelsen.harvest_notifications` och `skogsstyrelsen.samrad` mot exakta workflow-run-ID:n. Om inget matchande workflow/run finns ska `unknown` bevaras. Liveinventering efter ändringen är ännu inte genomförd/verifierad.
+
+
+## 2026-11-24 – Länsstyrelsernas eldningsförbud: metadata-connector förberedd
+
+Ny källpost `lansstyrelsen.fire_ban` har lagts till i `data-platform/config/sources.yml` på branch `feat/lansstyrelsen-fire-ban-connector`, tillsammans med en manuell read-only metadata-inspektör:
+`data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py`.
+
+Källan är Länsstyrelsernas externa WebbGIS **LST Eldningsförbud i skog och mark (EXT)**. Metadata-ID `53514d5d-b1ea-4162-bc56-58e496f0f4f7`. FeatureServer:
+https://ext-geodata-nationella-visning.lansstyrelsen.se/arcgis/rest/services/LST/LST_eldningsforbud_EXT/FeatureServer
+
+Användarens metadata-skärmbild visar revision 2026-08-26, underhåll årligen/kontinuerligt, fem statusvärden och att inga användnings-/åtkomstvillkor anges i metadata. Maskinläsbar metadata, exakt lagerstruktur, fält, geografisk täckning, stabil identitet, paginering och villkor är ännu inte verifierade. Status är därför fail-closed: åtkomst ej verifierad, snapshots ej startade, historik ingen, kommersiell användning okänd, kundvisning ej bedömd.
+
+Connectorn hämtar endast service- och lager/tabellmetadata, sekventiellt med timeout och säkerhetstak. Den frågar inte efter feature-poster eller geometrier och skapar inga snapshots. Ingen schemaläggning/workflow har lagts till.
+
+**Användarbeslut:** schemaläggning och operativa snapshots får tidigast börja om två månader, satt till 2027-01-24. Före det datumet kan endast manuell metadata-inspektion och teknisk förberedelse göras. Första operativa snapshot ska bli tyst baslinje utan historiska larm. Saknad information/”ej angivet” får aldrig tolkas som inget eldningsförbud.
+
+**Nästa steg efter PR:** granska och merg:a connectorn, kör därefter den manuella metadata-only-proben när endpointen är åtkomlig. Uppdatera sedan dokumentationen med faktiska lager-/fält-/scope-/pagineringresultat. Vänta med featurehämtning, schemaläggning och snapshots till tidigast 2027-01-24 och separat godkännande.
