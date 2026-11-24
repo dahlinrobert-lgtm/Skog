@@ -169,6 +169,21 @@ Standardtid är 21:00 lokal tid. Den aktuella installeraren skapar en bakgrundsu
 
 Rapporten kan innehålla personliga sökvägar och filnamn. Granska den innan den laddas upp till GitHub eller delas. Lägg inte råa inventeringslistor med privata filer i ett publikt repo.
 
+### 7.7 Fail-closed-skydd – implementation mergad 2026-11-24
+
+PR [#600](https://github.com/dahlinrobert-lgtm/Skog/pull/600) är mergad till `main` i commit `670b8dd5cfad60f7a1eb0a26ef1c91e2921bb599`. Skriptet använder rapportformat schema `2.0` och redovisar inventeringsstatus, jämförelsestatus, rotstatus samt antal rötter, kataloger, filer och fel.
+
+- En rot markeras `complete`, `partial` eller `failed`; enumereringsfel samlas i rapporten.
+- Saknade rötter behålls i scope i stället för att filtreras bort.
+- Förändringsjämförelse görs endast när aktuell inventering är komplett, föregående rapport är komplett schema 2.0 och rotuppsättningen är identisk.
+- Första körningen blir en tyst baseline. Äldre schema 1-rapporter jämförs inte och skapar inte historiska `missing`-händelser.
+- Vid ofullständig inventering, oläsbar föregående rapport eller ändrat scope undertrycks diffen.
+- Windows PowerShell 5.1-parsning och regressionstester passerade i [GitHub Actions run 45486453158](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45486453158).
+
+**Begränsningar som kvarstår:** regressionstesterna täcker baseline, komplett jämförelse, ändrat scope och saknad rot. Ett separat ACL-test med nekad åtkomst till en underkatalog är ännu inte implementerat. JSON-rapporten saknar dator-/användaridentitetsfält, men rapporterna innehåller fortfarande fullständiga lokala filsökvägar; Markdownrapporten innehåller även datornamn. Rårapporter ska därför fortsatt hållas lokalt och granskas innan eventuell delning. Detta är inte en integritets-/anonymiseringslösning.
+
+**Driftsättning:** den befintliga Task Scheduler-aktiviteten, dess dagliga 21:00-schema, removable-drive-inställning och SHA-256-inställning ändrades inte av PR #600. Den nya koden är ännu inte verifierad genom en manuell körning på användarens dator. Före byte av lokalt skript ska befintlig rapportmapp och skriptversion bevaras. Kör först manuellt och kontrollera schema 2.0, rotstatusar och felantal; aktivera inte SHA-256 och ändra inte schemaläggningen som del av denna uppgift.
+
 ## 8. Uppdateringsmodell och begränsningar
 
 Detta dokument är den centrala manuella katalogen. Följande automatisering kan byggas stegvis:
