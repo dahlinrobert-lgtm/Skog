@@ -237,13 +237,17 @@ def build_small_manifest(result: dict[str, Any], snapshot_path: str, snapshot_by
     for name in ("points", "lines", "areas"):
         layer = result.get("layers", {}).get(name, {})
         counts = result.get("counts", {}).get(name, {})
-        geometry_issues = counts.get("records_missing_geometry", 0) + counts.get("records_geometry_error", 0)
+        missing_geometry = counts.get("records_missing_geometry")
+        geometry_errors = counts.get("records_geometry_error")
+        geometry_counts_valid = isinstance(missing_geometry, int) and isinstance(geometry_errors, int)
         layer_complete = (
             layer.get("status") == "success"
             and isinstance(counts.get("pages"), int)
             and isinstance(counts.get("records_fetched_in_envelope"), int)
             and isinstance(counts.get("records_in_scope"), int)
-            and geometry_issues == 0
+            and geometry_counts_valid
+            and missing_geometry == 0
+            and geometry_errors == 0
         )
         layer_manifest[name] = {
             "status": "complete_for_configured_scope" if layer_complete else "partial_or_unknown",
