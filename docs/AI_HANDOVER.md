@@ -1355,3 +1355,14 @@ Fortsatt read-only-granskning av Skog `main` identifierade konkreta format för:
 **Viktig slutsats:** PM-027 behöver en källspecifik adapter/mapping, inte ett nytt universellt snapshotarkiv. Normaliserad read model måste behålla lager-/tjänstgranularitet, scope, source-specific completeness basis, run-/manifest-/snapshotreferenser och null/unknown där underlag saknas. Latest attempt och latest complete snapshot hålls åtskilda.
 
 **Nästa steg:** skapa versionsstyrd mapping mellan source_id, produkt/lager, workflow, manifest locator och scope. Implementera därefter read-only adapter för avverkningsanmälningar och Samråd först, med fixtures och tester för complete/partial/failed/stale/unknown. Ingen ny snapshotlagring eller ändring av källinsamling.
+
+
+## 2026-11-24 – PM-027: formell kontraktsdesign uppskjuten
+
+Efter att ha granskat aktuell `main` i Skog och den privata `skogskoll-project-manager-history` är arbetsordningen justerad. Ett minsta rapportfältförslag finns redan i `PROJECT_BACKLOG.md`, men formell versionsstyrd kontraktsdesign bedöms vara för tidig innan den befintliga read modellen har prövats mot riktiga källmanifest.
+
+**Verifierat i projektledarrepot:** `scripts/collect_github.py` samlar repo-/issue-/PR-/workflowmetadata och läser `data-platform/config/sources.yml` som `source_registry`. `data/workflow_metadata.json` klassar workflow paths. `scripts/validate_inventory.py` validerar inventorypayloaden. `scripts/append_history.py` och `docs/HISTORY_FORMAT.md` avser projektinventeringens append-only-historik, inte ett universellt kontrakt för källsnapshots. Dashboarden visar källregisterstatus och senaste 20 workflow-körningarna per repo; en verifierad koppling från varje source/product/layer till senaste kompletta källsnapshot saknas fortfarande.
+
+**Nästa konkreta steg:** en avgränsad read-only genomförbarhetsprototyp i befintlig collector/read model för Skogsstyrelsens avverkningsanmälningar och Samråd. Använd befintliga källmanifest/snapshotformat och explicit workflow-/scope-evidens. Ingen ny collector, snapshotlagring, historikmodell, schedule, Azure-publicering eller kundfunktion. Unknown ska förbli unknown; latest attempt och latest complete snapshot ska hållas isär.
+
+**Beslutspunkt:** efter prototypen avgörs om en liten utökning av befintlig payload räcker eller om ett separat versionsstyrt kontrakt behövs. Kontraktsdesign ska alltså inte vara ett självständigt förarbete innan denna konkreta prövning.
