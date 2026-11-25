@@ -6,6 +6,7 @@ from unittest.mock import Mock
 from collect_lansstyrelsen_monthly_snapshot import (
     collect_interval,
     select_county_and_wait,
+    build_repeated_page_diagnostic,
 )
 
 
@@ -49,6 +50,21 @@ class MonthlySearchRuleTests(unittest.TestCase):
             select_county_and_wait(
                 page, "Länsstyrelsen i Norrbottens län", "17"
             )
+
+
+    def test_repeated_page_diagnostic_preserves_pager_and_truncation_metadata(self):
+        diagnostic = build_repeated_page_diagnostic(
+            7, ("123-2026", "456-2026"),
+            ["123-2026 Första ärendet", "456-2026 Andra ärendet"],
+            "1 2 3 ...", "<tr>" + ("x" * 12010) + "</tr>",
+            "body excerpt",
+        )
+        self.assertEqual(diagnostic["page_number"], 7)
+        self.assertEqual(diagnostic["diary_numbers"], ["123-2026", "456-2026"])
+        self.assertEqual(len(diagnostic["pager_html"]), 12000)
+        self.assertTrue(diagnostic["pager_html_truncated"])
+        self.assertEqual(diagnostic["pager_html_original_length"], 12019)
+        self.assertEqual(diagnostic["body_text_excerpt"], "body excerpt")
 
     def test_month_end_dates(self):
         import calendar
