@@ -11,7 +11,10 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-import build_harvest_event_bundle as builder
+try:
+    import build_harvest_event_bundle as builder
+except ModuleNotFoundError:
+    from scripts import build_harvest_event_bundle as builder
 
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT_DIR = ROOT / "data" / "samrad_snapshots"
