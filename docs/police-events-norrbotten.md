@@ -141,3 +141,15 @@ Ett separat exportverktyg, `scripts/export_ortnamn_municipality_reference.py`, e
 Behåll `detaljtyp` som ursprunglig kod tills kodlistans semantik har verifierats mot aktuell produktdokumentation. Ortnamnspunkter är namnreferenser/kartografiska placeringar, inte ortsgränser eller olyckspositioner. Exporten är ett internt analysunderlag; kommersiell användning, lagring, bearbetning och kundvisning är inte godkända genom teknisk åtkomst.
 
 **Nästa steg:** kör kommunexporten för `2580`, kontrollera fullständigt antal och kodfördelning och jämför därefter relevanta ortnamn med NVDB:s väg 97-ankare. Ingen automatisk Police–NVR-matchning eller statusändring görs i detta steg.
+
+## Historikskydd – UTF-8 BOM vid inläsning (2026-11-25)
+
+events.csv skrivs med UTF-8 BOM (utf-8-sig). Insamlingsskriptets read_events() måste därför också läsa filen med encoding=utf-8-sig. Om den läses som vanlig UTF-8 får första kolumnnamnet ett dolt BOM-tecken och befintliga event_id-värden kan inte läsas. Då behandlas alla API-poster som nya och den normaliserade CSV-vyn skrivs om utan tidigare händelser.
+
+Detta inträffade i [Police events archive run #25](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45639053543), 2026-11-25:
+- 500 API-poster hämtades och 500 klassades som nya (changed_or_new_versions=500).
+- Råsegmentet verifierades i Azure: 500 rader, 1 992 823 råbytes, SHA-256 7b8701a7c51c8be478ab3d622acd305e24e23b56f2152f45a2905deb242ef879.
+- PR #448:s normaliserade lista innehöll 500 poster från 12 augusti–25 november, medan dåvarande main-listan innehöll 500 poster från 1 augusti–20 november. Jämförelsen visade 30 tidigare ID:n som saknades i PR-versionen och 30 nya ID:n.
+- Råsegmentet i Azure är bevarat; main hade inte ersatts av PR #448. PR #448 ska inte mergas med den gamla datafilen.
+
+Inläsningen korrigeras till utf-8-sig och ett regressionstest säkerställer att en befintlig BOM-skriven händelse överlever en inkrementell körning. Efter att korrigeringen har mergats ska nästa insamlingskörning uppdatera PR #448 från aktuell main. Kontrollera då att tidigare ID:n finns kvar och att nya händelser tillkommer. Råsegmentens historik i Azure förblir den oföränderliga källhistoriken; CSV-filerna är normaliserade analysvyer.
