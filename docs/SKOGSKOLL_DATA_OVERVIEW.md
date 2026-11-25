@@ -499,7 +499,7 @@ Identifiera relevanta myndighetsärenden och beslut. Börja eventuell nationell 
 | Viltdata älg | Nationell täckning saknas | Utöka från regional pilot efter källinventering |
 | Naturvårdsverket | Exakta prioriterade lager och producentvillkor | Välj lager och dokumentera metadata |
 | Vindbrukskollen | Nationell historik och fullständighet | Verifiera återkommande snapshotflöde |
-| Länsstyrelsernas diarier | Första pilotbaslinjen är publicerad för Norrbotten, oktober 2026, kategori B; PR #610:s pagineringsfix är mergad och PR-kontrollerna passerade, men liveverifiering återstår | Kör en avgränsad manuell sökning och verifiera hämtat antal mot portalens total; dokumentera län/fras-täckning och granska metadata separat från dokument/bilagor |
+| Länsstyrelsernas diarier | PR #610:s pagineringsfix är mergad; två livekontroller (group_06 och group_07, kategori B, oktober 2026) har stämt av 36/36 intervall och 131/131 träffar för sex län. Inget intervall krävde mer än en resultatsida; glidande sidfönsterövergång är ännu inte liveverifierad | Kör avgränsad diagnostik för kategori A och prioritera intervall med fler än en resultatsida; kontrollera alla sidövergångar mot portalens totalantal. Granska metadata separat från dokument/bilagor |
 | Rovbase | Fullständig kvalitetsrapport och administrativ koordinatvalidering återstår; 35 RT90-avvikelser och 32 poster med skyddsjakt enskilds initiativ behöver utredas. Rättighets-/användningsvillkor saknas i projektunderlaget. | Kör geografisk validering mot befintligt Lantmäteriet-GPKG; begär källförtydligande och bedöm lagring, analys och kundvisning separat. |
 
 ## 6. Hur snapshots och historik ska fungera
