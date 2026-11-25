@@ -48,7 +48,7 @@ def select_next_pager_action(
             for candidate in preceding
         )
         has_numeric_after = any(
-            re.fullmatch(r"Page\\$(\\d+)", candidate.get("argument", ""), re.I)
+            re.fullmatch(r"Page\$(\d+)", candidate.get("argument", ""), re.I)
             and candidate.get("label", "").strip() not in {"...", "…"}
             for candidate in following
         )
