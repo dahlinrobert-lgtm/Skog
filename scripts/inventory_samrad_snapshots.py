@@ -11,6 +11,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from shapely.geometry import shape
+
 try:
     import build_harvest_event_bundle as builder
 except ModuleNotFoundError:
@@ -105,6 +107,55 @@ def eligibility_diagnostics(snapshot: dict[str, Any]) -> list[str]:
     return reasons
 
 
+
+def layer_diagnostics(snapshot: dict[str, Any]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    layers = snapshot.get("layers")
+    counts = snapshot.get("counts")
+    for name in ("points", "lines", "areas"):
+        layer = layers.get(name) if isinstance(layers, dict) else None
+        count = counts.get(name) if isinstance(counts, dict) else None
+        features = layer.get("features") if isinstance(layer, dict) else None
+        if not isinstance(features, list):
+            result[name] = {"layer_status": layer.get("status") if isinstance(layer, dict) else None,
+                            "features_count": None, "count_fields_present": sorted(count) if isinstance(count, dict) else [],
+                            "geometry_missing_or_empty": None, "geometry_unparseable": None, "geometry_invalid": None}
+            continue
+        missing = unparseable = invalid = 0
+        ids: list[str] = []
+        for feature in features:
+            if not isinstance(feature, dict):
+                unparseable += 1
+                continue
+            props = feature.get("properties") or {}
+            object_id = feature.get("id") or props.get("ObjectId") or props.get("OBJECTID")
+            if object_id not in (None, ""):
+                ids.append(str(object_id))
+            geometry = feature.get("geometry")
+            if not isinstance(geometry, dict):
+                missing += 1
+                continue
+            try:
+                parsed = shape(geometry)
+                if parsed.is_empty:
+                    missing += 1
+                elif not parsed.is_valid:
+                    invalid += 1
+            except Exception:
+                unparseable += 1
+        result[name] = {
+            "layer_status": layer.get("status") if isinstance(layer, dict) else None,
+            "features_count": len(features),
+            "count_fields_present": sorted(count) if isinstance(count, dict) else [],
+            "feature_ids_unique": len(ids) == len(set(ids)),
+            "feature_ids_without_stable_id": len(features) - len(ids),
+            "geometry_missing_or_empty": missing,
+            "geometry_unparseable": unparseable,
+            "geometry_invalid": invalid,
+        }
+    return result
+
+
 def inventory_snapshot_files(directory: Path) -> tuple[list[dict[str, Any]], dict[str, set[str]]]:
     rows: list[dict[str, Any]] = []
     eligible_ids: dict[str, set[str]] = defaultdict(set)
@@ -134,12 +185,14 @@ def inventory_snapshot_files(directory: Path) -> tuple[list[dict[str, Any]], dic
         row["scope_hash_present"] = bool(str(snapshot.get("scope_hash") or "").strip())
         row["layer_ids"] = feature_ids(snapshot)
         row["layer_counts"] = snapshot.get("counts") if isinstance(snapshot.get("counts"), dict) else None
+        row["layer_diagnostics"] = layer_diagnostics(snapshot)
         row["production_gate_complete"] = builder.samrad_snapshot_is_complete(snapshot)
         row["reasons"] = eligibility_diagnostics(snapshot)
         row["eligibility"] = "eligible" if row["production_gate_complete"] else "excluded"
         if row["production_gate_complete"]:
             for ids in row["layer_ids"].values():
-                eligible_ids.update({source_id: {source_id} for source_id in ids})
+                for source_id in ids:
+                    eligible_ids[source_id].add(source_id)
         rows.append(row)
     return rows, eligible_ids
 
