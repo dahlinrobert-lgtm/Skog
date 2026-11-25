@@ -33,6 +33,20 @@ def select_county_and_wait(page, county_label, county_value):
   )
 
 
+def build_repeated_page_diagnostic(page_no, diary_numbers, row_text, pager_row_text, pager_html, body_text):
+ """Capture the repeated result page without treating it as a valid new page."""
+ return {
+  "page_number":page_no,
+  "diary_numbers":list(diary_numbers),
+  "row_text":list(row_text),
+  "pager_row_text":pager_row_text,
+  "pager_html":pager_html[:12000],
+  "pager_html_truncated":len(pager_html)>12000,
+  "pager_html_original_length":len(pager_html),
+  "body_text_excerpt":body_text[:1600],
+ }
+
+
 def collect_interval(page, county_label, phrase, start, end):
  page.goto(URL,wait_until="domcontentloaded",timeout=60000)
  page.locator(COUNTY_SELECT).wait_for(state="visible",timeout=30000)
@@ -89,16 +103,11 @@ def collect_interval(page, county_label, phrase, start, end):
    page_no, pager_row_text, candidates, pager_html
   ))
   if ids in page_signatures:
-   repeated_page={
-    "page_number":page_no,
-    "diary_numbers":list(ids),
-    "row_text":[clean(row.inner_text()) for row in page.locator(f"{RESULT_GRID} tr").all()],
-    "pager_row_text":pager_row_text,
-    "pager_html":pager_html[:12000],
-    "pager_html_truncated":len(pager_html)>12000,
-    "pager_html_original_length":len(pager_html),
-    "body_text_excerpt":body[:1600],
-   }
+   repeated_page=build_repeated_page_diagnostic(
+    page_no, ids,
+    [clean(row.inner_text()) for row in page.locator(f"{RESULT_GRID} tr").all()],
+    pager_row_text, pager_html, body
+   )
    return {"from":start,"to":end,"source_total":total,
            "extracted_unique_ids":len(seen),"pager_complete":False,
            "reconciled":False,"records":records,"pages_read":len(diagnostics),
