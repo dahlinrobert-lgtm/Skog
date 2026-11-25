@@ -4,6 +4,10 @@ on:
   pull_request:
     paths:
       - 'scripts/build_police_event_history.py'
+      - 'scripts/ingest_police_events.py'
+      - 'tests/test_police_events_adaptive_pagination.py'
+      - 'scripts/ingest_police_events.py'
+      - 'tests/test_police_events_adaptive_pagination.py'
       - 'tests/test_build_police_event_history.py'
       - '.github/workflows/police-event-history-tests.yml'
   push:
@@ -26,4 +30,4 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run police event history tests
-        run: python -m unittest tests.test_build_police_event_history
+        run: python -m unittest tests.test_build_police_event_history tests.test_police_events_adaptive_pagination
