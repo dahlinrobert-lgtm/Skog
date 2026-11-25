@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source_id": "skogsstyrelsen.samrad",
-  "checked_at": "2026-11-22T15:17:16.128318Z",
+  "checked_at": "2026-11-25T15:19:17.791517Z",
   "status": "success",
   "scope_hash": "9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a",
   "scope": {
@@ -33,14 +33,17 @@
         "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/0/query?where=1%3D1&geometry=%7B%22xmin%22%3A19.451316291506206%2C%22ymin%22%3A63.65147176044871%2C%22xmax%22%3A19.87778370849379%2C%22ymax%22%3A63.84144823955129%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=ObjectId%2CLannr%2CLan%2CKommunnr%2CKommun%2CArendeAr%2CBeteckn%2CStatus%2CInkomdatum%2CAnmaldHa%2CSkogsTyp%2CSamradsatgard%2CUUID&returnGeometry=true&returnTrueCurves=false&outSR=4326&f=geojson&resultRecordCount=300&resultOffset=0&orderByFields=ObjectId"
       ],
       "features": [],
-      "records_in_scope": 0
+      "records_in_scope": 0,
+      "records_outside_scope": 0,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0
     },
     "lines": {
       "layer": "lines",
       "url": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/1/query",
       "status": "success",
       "pages": 1,
-      "records_fetched": 20,
+      "records_fetched": 18,
       "request_urls": [
         "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/1/query?where=1%3D1&geometry=%7B%22xmin%22%3A19.451316291506206%2C%22ymin%22%3A63.65147176044871%2C%22xmax%22%3A19.87778370849379%2C%22ymax%22%3A63.84144823955129%2C%22spatialReference%22%3A%7B%22wkid%22%3A4326%7D%7D&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=ObjectId%2CLannr%2CLan%2CKommunnr%2CKommun%2CArendeAr%2CBeteckn%2CStatus%2CInkomdatum%2CAnmaldHa%2CSkogsTyp%2CSamradsatgard%2CUUID&returnGeometry=true&returnTrueCurves=false&outSR=4326&f=geojson&resultRecordCount=300&resultOffset=0&orderByFields=ObjectId"
       ],
@@ -155,270 +158,6 @@
             "SkogsTyp": "Normal skog",
             "Samradsatgard": "Basväg",
             "UUID": "{34C7406E-C2E0-400D-8347-01776AFBA765}"
-          }
-        },
-        {
-          "type": "Feature",
-          "id": 47112,
-          "geometry": {
-            "type": "MultiLineString",
-            "coordinates": [
-              [
-                [
-                  19.756849414508533,
-                  63.804543790310106
-                ],
-                [
-                  19.756630543164345,
-                  63.80469706347537
-                ],
-                [
-                  19.756354357460925,
-                  63.804727851633125
-                ],
-                [
-                  19.75610152970743,
-                  63.80475238261261
-                ],
-                [
-                  19.755846888948977,
-                  63.804766181120215
-                ],
-                [
-                  19.75567322785346,
-                  63.804680000798086
-                ],
-                [
-                  19.755306159844956,
-                  63.80453527067643
-                ],
-                [
-                  19.754887269815683,
-                  63.804446298450536
-                ],
-                [
-                  19.754719971020876,
-                  63.80439776854238
-                ],
-                [
-                  19.753953337506235,
-                  63.80442305725474
-                ],
-                [
-                  19.753092097974477,
-                  63.804467649522856
-                ],
-                [
-                  19.752650426036283,
-                  63.804460630666895
-                ],
-                [
-                  19.75237819732079,
-                  63.804442537672735
-                ],
-                [
-                  19.752313994980508,
-                  63.80435265444819
-                ],
-                [
-                  19.752418898720016,
-                  63.80417616679722
-                ],
-                [
-                  19.752559868791053,
-                  63.80406872645852
-                ],
-                [
-                  19.75259424406891,
-                  63.803910751970975
-                ],
-                [
-                  19.752559740189586,
-                  63.803706305757046
-                ],
-                [
-                  19.75245638904742,
-                  63.80345556661954
-                ],
-                [
-                  19.752192441938966,
-                  63.8032694777799
-                ],
-                [
-                  19.751726620615365,
-                  63.80304687720597
-                ],
-                [
-                  19.7513732044832,
-                  63.80298280634666
-                ]
-              ],
-              [
-                [
-                  19.75130776377196,
-                  63.80295789430942
-                ],
-                [
-                  19.751173463773746,
-                  63.802886599257356
-                ],
-                [
-                  19.75102932942236,
-                  63.802685856945686
-                ],
-                [
-                  19.751087945597174,
-                  63.80223498591586
-                ],
-                [
-                  19.751181731195093,
-                  63.80184788602659
-                ]
-              ],
-              [
-                [
-                  19.758662385091203,
-                  63.80136851072062
-                ],
-                [
-                  19.757697373847236,
-                  63.80137869805985
-                ],
-                [
-                  19.757348188220934,
-                  63.8014118988841
-                ],
-                [
-                  19.75703177684474,
-                  63.8014223433887
-                ],
-                [
-                  19.75661461647122,
-                  63.801414438840204
-                ],
-                [
-                  19.75640310775662,
-                  63.80139435003006
-                ],
-                [
-                  19.755675332000582,
-                  63.80135892248013
-                ],
-                [
-                  19.7518979227212,
-                  63.80123468129961
-                ]
-              ],
-              [
-                [
-                  19.755337432030593,
-                  63.799720360067006
-                ],
-                [
-                  19.75511371344989,
-                  63.799917048916896
-                ],
-                [
-                  19.754897010309133,
-                  63.800010713650956
-                ],
-                [
-                  19.754716016224812,
-                  63.80009780395555
-                ],
-                [
-                  19.75456690596807,
-                  63.80015686251771
-                ],
-                [
-                  19.754450773210436,
-                  63.80019315935407
-                ],
-                [
-                  19.751667864084204,
-                  63.800160478443814
-                ]
-              ]
-            ]
-          },
-          "properties": {
-            "ObjectId": 47112,
-            "Lannr": "24",
-            "Lan": "VÄSTERBOTTENS LÄN",
-            "Kommunnr": "2460",
-            "Kommun": "VÄNNÄS",
-            "ArendeAr": 2021,
-            "Beteckn": "S 9480-2021",
-            "Status": "Ärendet handlagt",
-            "Inkomdatum": 1637754925000,
-            "AnmaldHa": null,
-            "SkogsTyp": "Normal skog",
-            "Samradsatgard": "Basväg",
-            "UUID": "{D1D323AE-AE2C-4197-A89F-9B9786EEB163}"
-          }
-        },
-        {
-          "type": "Feature",
-          "id": 47734,
-          "geometry": {
-            "type": "MultiLineString",
-            "coordinates": [
-              [
-                [
-                  19.755457820097153,
-                  63.80130206835939
-                ],
-                [
-                  19.751844074199255,
-                  63.80114823381279
-                ]
-              ],
-              [
-                [
-                  19.755337432030593,
-                  63.799720360067006
-                ],
-                [
-                  19.75511371344989,
-                  63.799917048916896
-                ],
-                [
-                  19.754897010309133,
-                  63.800010713650956
-                ],
-                [
-                  19.754716016224812,
-                  63.80009780395555
-                ],
-                [
-                  19.75456690596807,
-                  63.80015686251771
-                ],
-                [
-                  19.754450773210436,
-                  63.80019315935407
-                ],
-                [
-                  19.751667864084204,
-                  63.800160478443814
-                ]
-              ]
-            ]
-          },
-          "properties": {
-            "ObjectId": 47734,
-            "Lannr": "24",
-            "Lan": "VÄSTERBOTTENS LÄN",
-            "Kommunnr": "2460",
-            "Kommun": "VÄNNÄS",
-            "ArendeAr": 2021,
-            "Beteckn": "S 9481-2021",
-            "Status": "Ärendet handlagt",
-            "Inkomdatum": 1637755447000,
-            "AnmaldHa": null,
-            "SkogsTyp": "Normal skog",
-            "Samradsatgard": "Basväg",
-            "UUID": "{7CCC60E8-3AB3-4748-BB13-BD63B34A40B7}"
           }
         },
         {
@@ -1076,7 +815,10 @@
           }
         }
       ],
-      "records_in_scope": 11
+      "records_in_scope": 9,
+      "records_outside_scope": 9,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0
     },
     "areas": {
       "layer": "areas",
@@ -109149,23 +108891,35 @@
           }
         }
       ],
-      "records_in_scope": 12
+      "records_in_scope": 12,
+      "records_outside_scope": 2,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0
     }
   },
   "counts": {
     "points": {
       "records_fetched_in_envelope": 0,
       "records_in_scope": 0,
+      "records_outside_scope": 0,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0,
       "pages": 0
     },
     "lines": {
-      "records_fetched_in_envelope": 20,
-      "records_in_scope": 11,
+      "records_fetched_in_envelope": 18,
+      "records_in_scope": 9,
+      "records_outside_scope": 9,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0,
       "pages": 1
     },
     "areas": {
       "records_fetched_in_envelope": 14,
       "records_in_scope": 12,
+      "records_outside_scope": 2,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0,
       "pages": 1
     }
   },
