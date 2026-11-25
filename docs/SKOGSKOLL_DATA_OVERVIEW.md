@@ -1156,3 +1156,8 @@ Den första jämförelsen mellan de två kompletta snapshotsen från 2026-11-18 
 Detta är en jämförelse av rapporterade kumulativa årsserievärden, inte individuella fälthändelser eller fälldatum. Den första snapshoten är tyst baslinje; inga historiska larm skapas. Originaldata är oförändrade. Rättigheter för permanent lagring, bearbetning, kommersiell användning och kundvisning är fortsatt inte bedömda/godkända.
 
 **Nästa steg:** invänta rättighetsbesked och gör nästa differens först när ytterligare en komplett, integritetskontrollerad snapshot finns. Ofullständiga körningar får aldrig användas som baslinje eller diffunderlag.
+
+
+### Samråd – historik i event bundle under teknisk verifiering (2026-11-25)
+
+De daterade gzip-snapshotsen i `data/samrad_snapshots/` är fortsatt råhistorikens sanningskälla. En separat ändring i `feat/samrad-snapshot-event-history` återanvänder dessa i den befintliga event-bundle-byggaren. Endast strukturellt kompletta snapshots tas med; partiella/okända snapshots används inte för frånvarobedömning. Händelser bevaras när ett objekt inte längre returneras och visar första/senaste observerade tidpunkt. Oläsbara arkivfiler stoppar byggandet. Detta är en härledd historikvy, inte en ny rådatakälla eller ett juridiskt godkännande. Kommersiell användning och kundvisning för Samråd förblir separata, villkorade bedömningar enligt källregistret. Implementationens CI-verifiering återstår.
