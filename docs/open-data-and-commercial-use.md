@@ -57,9 +57,11 @@ Se den maskinläsbara källförteckningen i data-platform/config/sources.yml fö
 
 ### Skogsstyrelsen
 
-Skogsstyrelsen anger att dess geodata är CC0 om inget annat anges. Det ger i normalfallet möjlighet att använda, bearbeta, lagra och distribuera materialet kommersiellt. Den exakta produkten/lagerbeskrivningen måste ändå kontrolleras. Statistikdatabasen har CC0-villkor för statistikdata, medan rapporter och analyser är CC BY och foton/illustrationer inte får återanvändas utan tillstånd.
+Skogsstyrelsen anger uttryckligen att villkoren gäller geodata producerade av myndigheten och att dessa, om inget annat anges, är öppna data under CC0 1.0 Universal. CC0 medger fri användning, inklusive kommersiell användning, kopiering, bearbetning och vidare distribution; attribution är inte ett licenskrav men Skogsstyrelsen rekommenderar att källan anges. Detta är en generell huvudregel för Skogsstyrelsens egenproducerade geodata, inte för allt innehåll på myndighetens webbplats eller automatiskt för data från tredje part. Kontrollera alltid exakt produkt/lager, metadata och produktbeskrivning efter uttryckliga undantag. Teknisk åtkomst, kontokrav, API-/tjänstetillgänglighet och anropsvillkor är separata från licensen. Statistikdatabasen är en separat datatyp med egna villkor: statistikdata CC0, rapporter/analyser CC BY och foton/illustrationer utanför den fria statistikdataanvändningen.
 
-- Geodatavillkor: https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/
+- Geodatavillkor (verifierade 2026-11-25; sidan anger senast uppdaterad 2026-05-13): https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/
+- Licenstext: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed.sv)
+- Samlad geodatakatalog och produktbeskrivningar: https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/skogsstyrelsens-geodata/
 - Öppna data: https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/oppna-data/
 - Statistikvillkor: https://skogsstyrelse.se/statistik/bra-att-veta-om-statistiken/anvandningsvillkor/
 
@@ -100,7 +102,7 @@ EU:s rättsliga meddelande för Sentinel-data tillåter fri och öppen användni
 
 ### Skogsstyrelsens brandområden och återvätningsavtal
 
-Dessa lager är registrerade som separata datakällor eftersom de har egna produktbeskrivningar, attribut och semantik. Skogsstyrelsens generella geodatavillkor anger CC0 om inget annat anges. Innan kundpublicering ska respektive lager metadata och produktbeskrivning kontrolleras. Återvätningsavtal beskriver avtalade områden och ska inte tolkas som bevis på att fysiska åtgärder har genomförts.
+Dessa lager är registrerade som separata datakällor eftersom de har egna produktbeskrivningar, attribut och semantik. Skogsstyrelsens generella geodatavillkor (verifierade 2026-11-25) anger CC0 1.0 för geodata som myndigheten producerat, om inget annat anges. Det ger stöd för fri kommersiell användning, bearbetning, lagring och vidare distribution när den exakta produkten/lagerposten omfattas av huvudregeln. Kontrollera fortfarande produktbeskrivning, metadata och eventuella tredjepartsinslag. Attribution rekommenderas, även om CC0 inte kräver den. Återvätningsavtal beskriver avtalade områden och ska inte tolkas som bevis på att fysiska åtgärder har genomförts.
 
 - Brandområden: https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaBrand/MapServer/0
 - Återvätningsavtal: https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaAtervatningavtal/MapServer/0

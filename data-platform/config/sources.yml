@@ -27,7 +27,7 @@ sources:
     expected_crs: EPSG:3006
     expected_units: m3sk/ha
     rights:
-      licence: "CC0 1.0 as default for Skogsstyrelsen-produced geodata, unless product metadata says otherwise"
+      licence: "CC0 1.0 Universal applies to Skogsstyrelsen-produced geodata unless otherwise stated for the specific product/layer"
       licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
       review_status: conditional_green
       commercial_use: yes_if_product_is_covered_by_default_geodata_terms
@@ -36,8 +36,8 @@ sources:
       redistribution: yes_if_product_is_covered_by_default_geodata_terms
       attribution: "Not required under CC0; recommended: Skogsstyrelsen, product name, source version/acquisition date."
       api_or_service_constraints: "Download and service availability are separate from the licence; confirm the specific product's delivery terms."
-      evidence_checked_on: "2026-11-01"
-      caveat: "Confirm the exact Omdrev 3 asset/product metadata and any product-specific conditions before commercial publication."
+      evidence_checked_on: "2026-11-25"
+      caveat: "Official general geodata terms verified 2026-11-25: Skogsstyrelsen states its produced geodata are CC0 1.0 unless otherwise specified. Check the exact product/layer metadata and product description for exceptions. Confirm the exact Omdrev 3 asset/product metadata and any product-specific conditions before commercial publication."
     provenance:
       producer_name: "Skogsstyrelsen"
       distributor_name: "Skogsstyrelsen – geodatatjänst/nedladdning"
@@ -77,7 +77,7 @@ sources:
     geography: Sweden
     format: [GeoJSON]
     rights:
-      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence: "CC0 1.0 Universal applies to Skogsstyrelsen-produced geodata unless otherwise stated for the specific product/layer"
       licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
       review_status: conditional_green
       commercial_use: yes_if_source_layer_is_covered_by_geodata_terms
@@ -86,8 +86,8 @@ sources:
       redistribution: yes_if_source_layer_is_covered_by_geodata_terms
       attribution: "Recommended: Skogsstyrelsen and layer/product name."
       api_or_service_constraints: "Respect documented service behavior, pagination and reasonable request rates; technical access is not an uptime guarantee."
-      evidence_checked_on: "2026-11-01"
-      caveat: "Verify the exact ArcGIS layer metadata and any layer-specific notices. Do not treat notifications as proof that felling occurred."
+      evidence_checked_on: "2026-11-25"
+      caveat: "Official general geodata terms verified 2026-11-25: Skogsstyrelsen states its produced geodata are CC0 1.0 unless otherwise specified. Check the exact product/layer metadata and product description for exceptions. Verify the exact ArcGIS layer metadata and any layer-specific notices. Do not treat notifications as proof that felling occurred."
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
@@ -124,7 +124,7 @@ sources:
     geography: configured_pilot_area
     format: [GeoJSON]
     rights:
-      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence: "CC0 1.0 Universal applies to Skogsstyrelsen-produced geodata unless otherwise stated for the specific product/layer"
       licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
       review_status: conditional_green
       commercial_use: yes_if_source_layers_are_covered_by_geodata_terms
@@ -133,8 +133,8 @@ sources:
       redistribution: yes_if_source_layers_are_covered_by_geodata_terms
       attribution: "Recommended: Skogsstyrelsen and Samråd layer name."
       api_or_service_constraints: "Respect ArcGIS pagination, documented service behavior and reasonable request rates."
-      evidence_checked_on: "2026-11-02"
-      caveat: "Verify layer-specific metadata for point, line and polygon sublayers before commercial publication; do not infer that a consultation record proves a planned or completed harvest."
+      evidence_checked_on: "2026-11-25"
+      caveat: "Official general geodata terms verified 2026-11-25: Skogsstyrelsen states its produced geodata are CC0 1.0 unless otherwise specified. Check the exact product/layer metadata and product description for exceptions. Verify layer-specific metadata for point, line and polygon sublayers before commercial publication; do not infer that a consultation record proves a planned or completed harvest."
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
@@ -605,7 +605,7 @@ sources:
     geography: Sweden
     format: [GeoJSON]
     rights:
-      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence: "CC0 1.0 Universal applies to Skogsstyrelsen-produced geodata unless otherwise stated for the specific product/layer"
       licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
       review_status: conditional_green
       commercial_use: yes_if_layer_is_covered_by_geodata_terms
@@ -614,8 +614,8 @@ sources:
       redistribution: yes_if_layer_is_covered_by_geodata_terms
       attribution: "Recommended: Skogsstyrelsen, layer name and retrieval date."
       api_or_service_constraints: "Respect ArcGIS service limits and bounded query patterns."
-      evidence_checked_on: "2026-11-01"
-      caveat: "Confirm layer metadata and whether any source attributes originate from third parties. Burn polygons are source observations, not a verified complete fire register."
+      evidence_checked_on: "2026-11-25"
+      caveat: "Official general geodata terms verified 2026-11-25: Skogsstyrelsen states its produced geodata are CC0 1.0 unless otherwise specified. Check the exact product/layer metadata and product description for exceptions. Confirm layer metadata and whether any source attributes originate from third parties. Burn polygons are source observations, not a verified complete fire register."
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
@@ -643,7 +643,7 @@ sources:
     geography: Sweden
     format: [GeoJSON]
     rights:
-      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless otherwise stated"
+      licence: "CC0 1.0 Universal applies to Skogsstyrelsen-produced geodata unless otherwise stated for the specific product/layer"
       licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
       review_status: conditional_green
       commercial_use: yes_if_layer_is_covered_by_geodata_terms
@@ -652,8 +652,8 @@ sources:
       redistribution: yes_if_layer_is_covered_by_geodata_terms
       attribution: "Recommended: Skogsstyrelsen, layer name and retrieval date."
       api_or_service_constraints: "Respect ArcGIS service limits and bounded query patterns."
-      evidence_checked_on: "2026-11-01"
-      caveat: "Confirm exact layer metadata and product description. A signed rewetting agreement polygon is not proof that physical ditch blocking has been completed."
+      evidence_checked_on: "2026-11-25"
+      caveat: "Official general geodata terms verified 2026-11-25: Skogsstyrelsen states its produced geodata are CC0 1.0 unless otherwise specified. Check the exact product/layer metadata and product description for exceptions. Confirm exact layer metadata and product description. A signed rewetting agreement polygon is not proof that physical ditch blocking has been completed."
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
@@ -782,7 +782,7 @@ sources:
     geography: Sweden_coverage_depends_on_laserdata
     format: [GeoTIFF, ImageServer]
     rights:
-      licence: "CC0 1.0 default for Skogsstyrelsen-produced geodata, unless the product description states otherwise"
+      licence: "CC0 1.0 Universal applies to Skogsstyrelsen-produced geodata unless otherwise stated for the specific product/layer"
       licence_url: "https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/"
       product_description_url: "https://www.skogsstyrelsen.se/globalassets/sjalvservice/karttjanster/geodatatjanster/produktbeskrivningar/raster-skogligagrunddata-standortsindexsis---produktbeskrivning.pdf"
       review_status: conditional_green_product_description_check
@@ -793,8 +793,8 @@ sources:
       redistribution: yes_if_product_description_does_not_override_cc0
       attribution: "Recommended: Skogsstyrelsen and SLU; follow the exact product description's acknowledgement wording."
       api_or_service_constraints: "REST/WMS service requires an account. Download catalogue lists separate gran and tall products. Confirm current service limits and available historical versions."
-      evidence_checked_on: "2026-11-01"
-      caveat: "The product description was updated 2026-10-02 and includes a dedicated licence/acknowledgement section; verify its exact wording against the PDF before final commercial approval."
+      evidence_checked_on: "2026-11-25"
+      caveat: "Official general geodata terms verified 2026-11-25: Skogsstyrelsen states its produced geodata are CC0 1.0 unless otherwise specified. Check the exact product/layer metadata and product description for exceptions. The product description was updated 2026-10-02 and includes a dedicated licence/acknowledgement section; verify its exact wording against the PDF before final commercial approval."
     compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
