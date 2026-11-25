@@ -34,6 +34,15 @@ class LansstyrelsenPagerTests(unittest.TestCase):
         candidates = [action("...", "Page$6"), action(">>", "Page$Last")]
         self.assertEqual(select_next_pager_action(candidates, 5), candidates[0])
 
+    def test_forward_page_one_ellipsis_advances_late_sliding_window(self):
+        candidates = [
+            action("1", "Page$1"),
+            action("2", "Page$2"),
+            action("...", "Page$1"),
+        ]
+        self.assertEqual(select_next_pager_action(candidates, 5), candidates[2])
+        self.assertEqual(advance_page_index(5, "...", "Page$1"), 5)
+
     def test_backward_shifted_ellipsis_is_not_selected_after_later_pages(self):
         candidates = [
             action("2", "Page$2"), action("3", "Page$3"),
