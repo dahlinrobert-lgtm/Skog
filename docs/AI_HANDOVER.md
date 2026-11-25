@@ -1877,3 +1877,18 @@ Detta sluter den tidigare öppna verifieringspunkten efter PR #629: inventory #1
 **Säkerhets-/rättighetsgräns:** artifacten anger `read_only=true`, `source_feature_data_downloaded=false` och `source_repository_writes=false`. Inventeringen ändrar inte kommersiell användning, kundvisning eller vidare distributionsrätt. PM-031:s beslut om att bevara och fortsatt exkludera 24 äldre snapshots utan fullständighetsevidens står oförändrat.
 
 **Dokumentationsbedömning:** Documented – inventory #18:s liveverifiering registrerad här. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required i sak: ingen källåtkomst, rättighet, insamlingskadens eller datatäckning har ändrats. Nästa PM-027-arbete är fortsatt breddning av käll-/produkt-/lagerkoppling, freshness/kadens och evidenslänkning; PM-027 som helhet är inte färdig.
+
+
+## 2026-11-25 – PM-027 första evidensbaserade driftprofilen för Samråd
+
+Projektledarrepot har nu en första källspecifik driftprofil för `skogsstyrelsen.samrad`, införd i PM [PR #77](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/77), mergad 2026-11-25 20:55:23 UTC med merge commit `d8fc62ac708cc58dd52eafec021cd65c77e6fcfa`.
+
+Profilen binder källan till exakt workflow `.github/workflows/collect-samrad.yml` och tre lyckade kompletta körningar: [45648958631](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45648958631), [45656496498](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45656496498) och [45664696922](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45664696922). Samtliga delar `scope_hash=9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a` och visar uttömd paginering samt noll saknade/felaktiga geometrier i de tre lagren. Profilens driftklass är `pilot_recurring`, inte produktion. Omfattningen är fortsatt endast Gräsmyr 10 km; `source_total_reconciled=false`.
+
+Verifierad klientkonfiguration är sidstorlek 300, timeout 90 sekunder, sekventiell hämtning, ett jobb åt gången och säkerhetstak 1 000 sidor per lager. Ingen explicit retry/backoff finns i collectorn. Minsta anropsintervall och leverantörens rate limits/maxRecordCount är okända; därför är riskbedömningen partiell och `risk_assessed=false`. Dessa värden ska inte fyllas med antaganden.
+
+PR #77:s första CI-körning föll på att ett befintligt enhetstest använde en syntetisk källregisterpayload samtidigt som den nya globala profilen lästes in. Testet isolerades genom att mocka profilladdaren i just den syntetiska parserkontrollen. Efter korrigeringen passerade [Project manager tests #143](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45699459266) med 79 tester och dashboardens JavaScript-syntaxkontroll samt [Synthetic append-only tests #121](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45699459216). PR #77 mergades därefter.
+
+**Dokumentationsbedömning:** Documented i projektledarrepots profilregister och drift-/PM-dokumentation. Här är ändringen noterad i handover. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required: ingen källa, insamling, källtäckning, rättighet eller kundvisningsstatus har ändrats i Skog.
+
+**Nästa konkreta PM-027-steg:** fortsätt inventera exakta workflowkopplingar och kompletta jämförbara körningar för övriga registrerade source_id och separata produkter/lager. Skapa profiler en källa i taget endast när underlaget räcker; bygg därefter kadensbaserad freshness. Autentiserad dashboard-rendering är fortfarande inte liveverifierad och PM-027 som helhet är inte färdig.
