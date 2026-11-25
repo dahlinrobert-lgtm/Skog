@@ -80,3 +80,8 @@ Generera lokalt med:
 Kontrollera att rapporten är aktuell med:
 
     python data-platform/scripts/build_source_status_report.py --check
+
+
+## Trafikverket – verifierad körning #33 (2026-11-25)
+
+Teknisk körning verifierad: [Actions #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), status complete, 34 lager och 7 674 features inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope. Data-PR [#660](https://github.com/dahlinrobert-lgtm/Skog/pull/660) är ännu öppen; snapshots är därför inte ännu bekräftade som arkiverade på `main`. Rättigheter/kundvisning är oförändrade och villkorade per produkt/lager.
