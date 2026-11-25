@@ -1171,3 +1171,16 @@ Verifierad körning efter #615, [Collect Samråd pilot snapshots #47](https://gi
 Manifestet för körningen var `success` / `complete_for_configured_scope`: punktlager 0 poster och 0 sidor, linjelager 9 poster inom scope och 1 sida, polygonlager 12 poster inom scope och 1 sida. `source_total_reconciled=false`, varför detta inte är nationell täckning eller avstämning mot källans totala antal. Den tekniska publiceringen ändrar inte rättighetsbedömningen för kommersiell användning, kundvisning eller vidare distribution.
 
 **Kvar att verifiera:** nästa körning ska särskilt kontrollera att create/update-PR-steget avslutas framgångsrikt. Fullständighet gäller endast det konfigurerade pilotområdet.
+
+
+### Samråd – run #48 och PR-automation verifierade, snapshot mergad (2026-11-25)
+
+[Collect Samråd pilot snapshots #48](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45656496498) kördes manuellt från `main` och samtliga steg passerade, inklusive skapande av [data-PR #619](https://github.com/dahlinrobert-lgtm/Skog/pull/619). Detta verifierar att create/update-PR-steget fungerade i run #48 efter felet i run #47.
+
+Manifestet för run #48 anger `success` och `complete_for_configured_scope` för Gräsmyr-pilotens befintliga 10 km-scope. Lagerresultat: points 0 poster och 0 sidor; lines 18 poster hämtade i envelope, 9 inom scope och 9 utanför; areas 14 hämtade, 12 inom scope och 2 utanför. Inga saknade geometrier eller geometrifel. `source_total_reconciled=false`; detta är inte nationell fullständighetsverifiering.
+
+Snapshoten `data/samrad_snapshots/samrad_20261125T164133Z.json.gz` är 400 407 byte och har SHA-256 `fe502340f2fc3301e9cb9bc486a0292867c0c8de6f83bd26befa8701c7876c5f`. Event-bundle-byggandet rapporterade 27 arkiverade Samråd-snapshots, 21 Samråd-observationer och 21 Samråd-händelser. Totalt innehöll bundle 186 observationer och 186 händelser. PR #619 granskades och mergades 2026-11-25 16:44:28 UTC (merge commit `e4aaf853f4b16e79c4b744784dabd3bb3295d8e5`); den nya daterade snapshoten är verifierad i `main`.
+
+Detta ändrar inte källans rättighetsstatus. Teknisk åtkomst och arkivering är inte kommersiellt tillstånd, kundvisningsrätt eller distributionsrätt. Historikregeln kvarstår: frånvaro i senare snapshot får inte klassas som avbokning, borttagning eller genomförd åtgärd.
+
+**Nästa kontroll:** verifiera nästa schemalagda Samråd-körning och dess PR-automation. Nationell täckning och avstämning mot källtotaler är fortfarande inte verifierade.
