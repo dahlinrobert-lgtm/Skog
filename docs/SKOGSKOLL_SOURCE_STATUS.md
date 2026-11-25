@@ -84,4 +84,4 @@ Kontrollera att rapporten är aktuell med:
 
 ## Trafikverket – verifierad körning #33 (2026-11-25)
 
-Teknisk körning verifierad: [Actions #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), status complete, 34 lager och 7 674 features inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope. Data-PR [#660](https://github.com/dahlinrobert-lgtm/Skog/pull/660) är ännu öppen; snapshots är därför inte ännu bekräftade som arkiverade på `main`. Rättigheter/kundvisning är oförändrade och villkorade per produkt/lager.
+Teknisk körning verifierad: [Actions #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), status complete, 34 lager och 7 674 features inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope. Data-PR [#660](https://github.com/dahlinrobert-lgtm/Skog/pull/660) mergades 2026-11-25 21:44:22 UTC (merge commit `5ed1a0b62373b1e78a2f994f384a5e4c24506ef0`); manifest och båda produktkatalogerna är verifierade i `main`. Detta är en första baslinje, inte en jämförbar historikserie. Rättigheter/kundvisning är oförändrade och villkorade per produkt/lager.
