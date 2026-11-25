@@ -23,7 +23,8 @@ def collect_interval(page, county_label, phrase, start, end):
  county=next((o for o in opts if o["label"]==county_label),None)
  if not county: raise RuntimeError(f"County option not found: {county_label}")
  page.locator(COUNTY_SELECT).select_option(value=county["value"])
- page.locator(TITLE_INPUT).fill(phrase)
+ if phrase is not None:
+  page.locator(TITLE_INPUT).fill(phrase)
  page.locator(DATE_FROM).fill(start); page.locator(DATE_TO).fill(end)
  try:
   with page.expect_navigation(wait_until="domcontentloaded",timeout=12000):
@@ -34,6 +35,12 @@ def collect_interval(page, county_label, phrase, start, end):
  except PlaywrightTimeoutError: pass
  body=clean(page.locator("body").inner_text(timeout=20000))
  total=parse_total(body)
+ if "Minst ett sökkriterium förutom diarium måste vara angivet" in body:
+  return {"from":start,"to":end,"source_total":total,
+          "extracted_unique_ids":0,"pager_complete":False,"reconciled":False,
+          "records":[],"pages_read":0,"error":"Source rejected date-only search criteria",
+          "validation_message":"Minst ett sökkriterium förutom diarium måste vara angivet",
+          "body_text_excerpt":body[:1600]}
  if grid.count()==0:
   zero=re.search(r"\bSökresultat\s*:\s*0\b",body,re.I) is not None
   return {"from":start,"to":end,"source_total":0 if zero else total,
@@ -88,15 +95,27 @@ def collect_interval(page, county_label, phrase, start, end):
 def main():
  p=argparse.ArgumentParser()
  p.add_argument("--county",required=True)
- p.add_argument("--term",required=True)
+ p.add_argument("--term")
+ p.add_argument("--date-only",action="store_true",
+                help="Search using only county and registration date criteria")
+ p.add_argument("--day",type=int,help="Day of month required with --date-only")
  p.add_argument("--year",type=int,required=True)
  p.add_argument("--month",type=int,required=True)
  p.add_argument("--output",type=Path,default=Path("lansstyrelsen-month-run.json"))
  p.add_argument("--snapshots-root",type=Path,default=Path("data/lansstyrelsen-diary/snapshots"))
  p.add_argument("--manifest",type=Path,default=Path("data/lansstyrelsen-diary/snapshot-runs.jsonl"))
  a=p.parse_args()
- start=f"{a.year:04d}-{a.month:02d}-01"
- end=f"{a.year:04d}-{a.month:02d}-{calendar.monthrange(a.year,a.month)[1]:02d}"
+ if a.date_only:
+  if a.term is not None or a.day is None:
+   p.error("--date-only requires --day and cannot be combined with --term")
+  if not 1 <= a.day <= calendar.monthrange(a.year,a.month)[1]:
+   p.error("--day is outside the selected month")
+  start=end=f"{a.year:04d}-{a.month:02d}-{a.day:02d}"
+ elif a.term is None or a.day is not None:
+  p.error("provide --term for a monthly phrase search, or --date-only with --day")
+ else:
+  start=f"{a.year:04d}-{a.month:02d}-01"
+  end=f"{a.year:04d}-{a.month:02d}-{calendar.monthrange(a.year,a.month)[1]:02d}"
  with sync_playwright() as pw:
   browser=pw.chromium.launch(headless=True); page=browser.new_page(locale="sv-SE")
   try:
@@ -104,7 +123,8 @@ def main():
   finally: browser.close()
  observed=datetime.now(timezone.utc).isoformat()
  run={"run_id":f"diary-{a.year:04d}{a.month:02d}-{uuid.uuid4().hex[:12]}",
-      "observed_at":observed,"source":URL,"county":a.county,"search_term":a.term,
+      "observed_at":observed,"source":URL,"county":a.county,
+      "search_term":a.term,"search_mode":"date_only" if a.date_only else "phrase",
       "intervals":[interval]}
  a.output.parent.mkdir(parents=True,exist_ok=True)
  a.output.write_text(json.dumps(run,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
