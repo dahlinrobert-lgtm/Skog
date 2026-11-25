@@ -35,6 +35,20 @@ class SamradArchiveInventoryTests(unittest.TestCase):
         self.assertEqual(index["lines:47112"]["group_key"], "case:abc-123")
         self.assertTrue(index["lines:47112"]["event_id"].startswith("samrad-case:"))
 
+    def test_legacy_format_without_geometry_counters_is_not_assumed_complete(self):
+        snapshot = complete_snapshot()
+        for count in snapshot["counts"].values():
+            count.pop("records_outside_scope")
+            count.pop("records_missing_geometry")
+            count.pop("records_geometry_error")
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/"samrad_20261101T120000Z.json.gz"
+            with gzip.open(path,"wt",encoding="utf-8") as handle: json.dump(snapshot,handle)
+            rows,_=inventory_snapshot_files(Path(tmp))
+        self.assertEqual(rows[0]["eligibility"],"excluded")
+        self.assertFalse(rows[0]["production_gate_complete"])
+        self.assertTrue(any("records_missing_geometry" in reason for reason in rows[0]["reasons"]))
+
     def test_partial_snapshot_is_excluded_with_reason(self):
         snapshot=complete_snapshot()
         snapshot["layers"]["lines"]["status"]="partial"
