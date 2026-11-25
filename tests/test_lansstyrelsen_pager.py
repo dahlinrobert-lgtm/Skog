@@ -6,7 +6,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from lansstyrelsen_pager import advance_page_index, select_next_pager_action  # noqa: E402
+from lansstyrelsen_pager import (  # noqa: E402
+    advance_page_index, build_pager_action_diagnostic, select_next_pager_action,
+)
 
 
 def action(label: str, argument: str) -> dict:
@@ -14,6 +16,19 @@ def action(label: str, argument: str) -> dict:
 
 
 class LansstyrelsenPagerTests(unittest.TestCase):
+    def test_pager_action_diagnostic_records_exact_postback_and_transition(self):
+        selected = {"label": "...", "target": "ctl00$Main$GridView", "argument": "Page$1"}
+        self.assertEqual(
+            build_pager_action_diagnostic(6, selected, True, True),
+            {"page_from": 6, "label": "...", "target": "ctl00$Main$GridView",
+             "argument": "Page$1", "response_seen": True, "page_changed": True},
+        )
+
+    def test_pager_action_diagnostic_keeps_response_and_page_change_distinct(self):
+        diagnostic = build_pager_action_diagnostic(6, action("...", "Page$1"), False, True)
+        self.assertFalse(diagnostic["response_seen"])
+        self.assertTrue(diagnostic["page_changed"])
+
     def test_first_result_page_chooses_zero_based_page_one(self):
         candidates = [action("1", "Page$1"), action("2", "Page$2")]
         self.assertEqual(select_next_pager_action(candidates, 0), candidates[0])
