@@ -142,7 +142,7 @@ class HarvestEventBundleTests(unittest.TestCase):
             ('data/samrad_snapshots/samrad_20261103T110000Z.json.gz', later),
         ])
         self.assertEqual((len(runs), len(observations), len(events)), (2, 1, 1))
-        self.assertIn('inte tolkas som avslut', events[0]['summary'])
+        self.assertIn('Historisk frånvaro i senare uttag tolkas inte som avslut', events[0]['summary'])
         self.assertEqual(events[0]['last_observed_at'], '2026-11-02T11:00:00Z')
 
     def test_partial_samrad_snapshot_is_excluded_from_history(self):
