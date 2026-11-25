@@ -135,3 +135,12 @@ Verifierad senaste kedja vid felsökningen:
 **Åtgärd i PR:** ändra Pages-klienten till att först läsa `latest.json`, validera att den pekar på förväntad run-scopad blob i samma Azure-container och därefter kontrollera payloadens byteantal och SHA-256 innan data renderas. Sidan visar även källkörning och publiceringstid. JavaScript-syntaxkontroll läggs till i projektledarworkflowet.
 
 Denna ändring återanvänder befintlig inventory → Azure publisher → `latest.json`-arkitektur; ingen ny lagrings- eller publiceringskomponent införs. Liveverifiering av webbläsarens Microsoft-inloggning, Azure CORS och läsning av aktuell `latest.json` krävs efter merge. Ingen skrivbehörighet eller kundpublicering införs.
+
+
+## Projektledarsidan – prioriterad PM-backlogg (2026-11-25)
+
+PR [#633](https://github.com/dahlinrobert-lgtm/Skog/pull/633) och privata projektledarrepo PR [#73](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/73) är mergade. Den befintliga read-only inventory-kedjan hämtar nu strukturerade PM-uppgifter från Skogs auktoritativa `docs/PROJECT_BACKLOG.md` och skickar dem vidare i den run-scopade Azure-snapshoten. Den autentiserade Pages-sidan visar uppgift, prioritet, status och nästa steg. Dubbla PM-ID:n visas separat med varning.
+
+CI verifierat före merge: private Project manager tests #132, private Synthetic append-only tests #114, Skog Website JavaScript syntax #307, Snapshot storage tests #562 och Skogskoll AI project manager run #26 – samtliga success.
+
+Livepublicering av ny payload och autentiserad browser-rendering återstår att verifiera. Backloggen förblir enda sanningskällan; ingen ny lagrings- eller behörighetsmodell infördes.
