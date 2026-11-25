@@ -53,6 +53,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: automation/source-status-report
+          base: main
           delete-branch: true
           add-paths: docs/SKOGSKOLL_SOURCE_STATUS.md
           commit-message: "chore: refresh Skogskoll source status report"
