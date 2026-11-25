@@ -41,9 +41,9 @@ class HarvestEventBundleTests(unittest.TestCase):
             "scope_hash": "samrad-scope-hash",
             "counts": {"points": {"pages": 1, "records_fetched_in_envelope": 0, "records_in_scope": 0, "records_outside_scope": 0, "records_missing_geometry": 0, "records_geometry_error": 0}, "lines": {"pages": 1, "records_fetched_in_envelope": 0, "records_in_scope": 0, "records_outside_scope": 0, "records_missing_geometry": 0, "records_geometry_error": 0}, "areas": {"pages": 1, "records_fetched_in_envelope": 1, "records_in_scope": 1, "records_outside_scope": 0, "records_missing_geometry": 0, "records_geometry_error": 0}},
             "layers": {
-                "points": {"features": []},
-                "lines": {"features": []},
-                "areas": {"features": [{
+                "points": {"status": "success", "features": []},
+                "lines": {"status": "success", "features": []},
+                "areas": {"status": "success", "features": [{
                     "type": "Feature", "id": 456,
                     "geometry": {
                         "type": "Polygon",
