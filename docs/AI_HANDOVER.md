@@ -1693,3 +1693,18 @@ Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-
 - Historikprincipen kvarstår: saknade objekt i senare uttag får inte tolkas som avbokning, borttagning eller genomförd åtgärd.
 
 **Nästa konkreta steg:** verifiera nästa schemalagda Samråd-körning, inklusive att workflowet skapar eller uppdaterar PR utan fel och att snapshot, manifest och event bundle är konsistenta. Granska data-PR:n före varje merge.
+
+
+---
+
+## Gräsmyr – reconciliation av monitoring run #604 mergad (2026-11-25)
+
+- Reconciliation-PR [#623](https://github.com/dahlinrobert-lgtm/Skog/pull/623) är mergad till `main` 2026-11-25 17:04:57 UTC. Merge commit: `af0877f69bc1efa2975fcc161435b7133f56d03c`. PR #530 användes inte; dess äldre bas ersattes av en ny reconciliation från aktuell `main`.
+- Publiceringen omfattar Gräsmyrs planerade snapshot från monitoring run #604 (163 objekt), completed snapshot och tillhörande analys-/vyfiler. Daterad planned snapshot: `data/snapshots/20261125T161908Z.json`; completed snapshot: `data/snapshots/completed_20261125T161924Z.geojson.gz`.
+- Event bundle publicerades i både `data/harvest_event_bundle.json` och `docs/data/harvest_event_bundle.json`. PR-granskningen verifierade 4 source runs, 184 observationer, 184 händelser, 184 evidence-poster, 8 relationer och 163 kedjor; 21 Samråd-händelser och 163 planned-harvest-händelser. ID-unikhet, observationernas run-referenser samt relationers och kedjors event-referenser kontrollerades utan avvikelser. De två bundle-filerna var identiska.
+- Samtliga tre Samråd source runs och den daterade snapshotreferensen `data/samrad_snapshots/samrad_20261125T164133Z.json.gz` finns med i den reconcilerade bundle-versionen. Historiska snapshots bevarades. Observationernas ursprungliga provenance-referenser behölls; händelsernas senaste geometri pekar på den senaste arkiverade snapshoten.
+- Merge bevarar databaslinjen för Gräsmyr 10 km-piloten. Den innebär inte nationell täckning, fullständig nationell avstämning eller rättighetsgodkännande för kommersiell användning/kundvisning. Frånvaro i jämförbara uttag får inte tolkas som avbokning, borttagning eller utförd avverkning.
+- **Verifieringsgräns:** manuell integritetsgranskning genomfördes före merge. PR #623 hade inga registrerade CI-statuskontroller i den tillgängliga kontrollen; ingen ny fullständig testsvit ska därför påstås ha passerat för just denna data-only PR.
+- **Dokumentationsbedömning:** `Assessed – no update required` för `SKOGSKOLL_SOURCE_STATUS.md` och `SKOGSKOLL_DATA_OVERVIEW.md`: ingen källåtkomst, källomfattning, rättighet eller arkitektur ändrades. Denna överlämningsnotering dokumenterar däremot den nya beständiga snapshot-/event-bundle-publiceringen.
+
+**Nästa konkreta steg:** kontrollera nästa schemalagda Gräsmyr-monitoringkörning och verifiera att planned/completed snapshots, analysfiler och event bundle publiceras konsistent ovanpå aktuell `main`. Behåll Samråd-historiken och jämför endast kompletta, jämförbara uttag. Granska eventuell data-PR före merge.
