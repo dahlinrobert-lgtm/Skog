@@ -1,6 +1,6 @@
 # Skog / Skogskoll – överlämning för fortsatt arbete
 
-**Senast uppdaterad:** 2026-11-24  
+**Senast uppdaterad:** 2026-11-25  
 **Syfte:** Detta dokument är en kompakt startpunkt för fortsatt utveckling, även när arbetet fortsätter i en ny ChatGPT-chatt.
 
 > Läs detta dokument först i en ny chatt. Läs därefter den automatiska källstatusrapporten och den fullständiga datakälleöversikten. Kontrollera alltid aktuella filer och GitHub Actions innan du påstår att en körning eller status fortfarande gäller.
@@ -1654,3 +1654,14 @@ Resultat: 73 252 oförändrade och 3 ändrade observationer; inga tillkomna/sakn
 Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-20261118.md](viltdata-kill-statistics-diff-20261118.md). Första snapshoten är tyst baslinje; inga historiska larm har skapats. Original-artifacts och rådata har inte ändrats. GitHub Actions-artifacts är tidsbegränsade och inte permanent arkiv. Rättigheter för permanent lagring, bearbetning, kommersiell användning, kundvisning och distribution är fortsatt inte bedömda/godkända.
 
 **Nästa konkreta steg:** invänta skriftligt rättighetsbesked för exakt Viltdata-statistikprodukt. Vid nästa manuella uttag krävs åter fullständigt manifest, 550/550 (dynamiskt enligt källmodell), råfilernas SHA-256/bytekontroll och jämförbar täckning innan diff. Ingen schedule, permanent arkivering eller kundvisning aktiveras.
+
+
+## 2026-11-25 – Samråd-historik från daterade snapshots (PR under granskning)
+
+- Separat branch `feat/samrad-snapshot-event-history` utökar den befintliga `scripts/build_harvest_event_bundle.py`; ingen parallell historikmodell eller nytt workflow införs.
+- Byggaren läser de oföränderliga `data/samrad_snapshots/samrad_*.json.gz`-filerna. Varje komplett snapshot blir en `source_run` med daterad `snapshot_ref`; varje distinkt innehållsversion blir en `observation` som pekar på rätt gzip-snapshot.
+- Kanoniska Samråd-händelser grupperas med befintliga Beteckn-/UUID-/källobjektsnycklar. `first_observed_at` och `last_observed_at` beskriver arkiverad observationstid. En post som saknas i ett senare uttag tas inte bort ur historiken och får ingen avslutsstatus.
+- Historikbehörighet kräver `status=success`, tidsstämpel, scope-hash, alla tre lager, sidräknare och avstämda antal; saknad geometri och geometrifel måste vara noll. Partiella/okända snapshots hoppas över och används aldrig som frånvaroevidens. En oläsbar gzip-fil avbryter byggandet (fail-closed).
+- Exakt identiskt snapshot dedupliceras. Oförändrade objektversioner dedupliceras enligt befintligt event-bundle-kontrakt; ändrat innehåll ger ny observation.
+- Ändringen påverkar endast härledd event bundle. Rådata, daterade snapshots, insamlingskadens, kundvisning och aviseringar ändras inte.
+- Status: implementation och riktade regressionstester ligger i PR-grenen; CI och full verifiering återstår. Ändra inte källans rättighetsstatus på grund av denna tekniska historikförbättring.

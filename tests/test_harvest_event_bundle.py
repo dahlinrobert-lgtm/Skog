@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "data-platform" / "scripts"))
-from build_harvest_event_bundle import build_bundle  # noqa: E402
+from build_harvest_event_bundle import build_bundle, build_samrad_history  # noqa: E402
 from validate_event_bundle import SCHEMA, validate_bundle  # noqa: E402
 
 
@@ -39,11 +39,11 @@ class HarvestEventBundleTests(unittest.TestCase):
             "checked_at": "2026-11-02T11:00:00Z",
             "status": "success",
             "scope_hash": "samrad-scope-hash",
-            "counts": {"areas": {"records_in_scope": 1}},
+            "counts": {"points": {"pages": 1, "records_fetched_in_envelope": 0, "records_in_scope": 0, "records_outside_scope": 0, "records_missing_geometry": 0, "records_geometry_error": 0}, "lines": {"pages": 1, "records_fetched_in_envelope": 0, "records_in_scope": 0, "records_outside_scope": 0, "records_missing_geometry": 0, "records_geometry_error": 0}, "areas": {"pages": 1, "records_fetched_in_envelope": 1, "records_in_scope": 1, "records_outside_scope": 0, "records_missing_geometry": 0, "records_geometry_error": 0}},
             "layers": {
-                "points": {"features": []},
-                "lines": {"features": []},
-                "areas": {"features": [{
+                "points": {"status": "success", "features": []},
+                "lines": {"status": "success", "features": []},
+                "areas": {"status": "success", "features": [{
                     "type": "Feature", "id": 456,
                     "geometry": {
                         "type": "Polygon",
@@ -114,6 +114,54 @@ class HarvestEventBundleTests(unittest.TestCase):
         latest["cutting_notifications"]["features"].append(latest["cutting_notifications"]["features"][0])
         with self.assertRaises(ValueError):
             build_bundle(latest, {})
+
+
+    def test_samrad_history_keeps_one_case_and_distinct_versions(self):
+        first = self.samrad_fixture()
+        first['checked_at'] = '2026-11-02T11:00:00Z'
+        second = json.loads(json.dumps(first))
+        second['checked_at'] = '2026-11-03T11:00:00Z'
+        second['layers']['areas']['features'][0]['properties']['Status'] = 'Kompletterad i källan'
+        runs, observations, events, evidence, index = build_samrad_history([
+            ('data/samrad_snapshots/samrad_20261102T110000Z.json.gz', first),
+            ('data/samrad_snapshots/samrad_20261103T110000Z.json.gz', second),
+        ])
+        self.assertEqual((len(runs), len(observations), len(events), len(index), len(evidence)), (2, 2, 1, 1, 2))
+        self.assertEqual(events[0]['first_observed_at'], '2026-11-02T11:00:00Z')
+        self.assertEqual(events[0]['last_observed_at'], '2026-11-03T11:00:00Z')
+
+    def test_samrad_history_retains_record_missing_from_later_snapshot(self):
+        first = self.samrad_fixture()
+        first['checked_at'] = '2026-11-02T11:00:00Z'
+        later = json.loads(json.dumps(first))
+        later['checked_at'] = '2026-11-03T11:00:00Z'
+        later['layers']['areas']['features'] = []
+        later['counts']['areas'].update({'records_fetched_in_envelope': 0, 'records_in_scope': 0})
+        runs, observations, events, evidence, index = build_samrad_history([
+            ('data/samrad_snapshots/samrad_20261102T110000Z.json.gz', first),
+            ('data/samrad_snapshots/samrad_20261103T110000Z.json.gz', later),
+        ])
+        self.assertEqual((len(runs), len(observations), len(events)), (2, 1, 1))
+        self.assertIn('Historisk frånvaro i senare uttag tolkas inte som avslut', events[0]['summary'])
+        self.assertEqual(events[0]['last_observed_at'], '2026-11-02T11:00:00Z')
+
+    def test_partial_samrad_snapshot_is_excluded_from_history(self):
+        complete = self.samrad_fixture()
+        partial = json.loads(json.dumps(complete))
+        partial['checked_at'] = '2026-11-03T11:00:00Z'
+        partial['status'] = 'partial'
+        runs, observations, events, evidence, index = build_samrad_history([
+            ('data/samrad_snapshots/samrad_20261102T110000Z.json.gz', complete),
+            ('data/samrad_snapshots/samrad_20261103T110000Z.json.gz', partial),
+        ])
+        self.assertEqual((len(runs), len(observations)), (1, 1))
+        self.assertEqual(events[0]['last_observed_at'], '2026-11-02T11:00:00Z')
+
+    def test_duplicate_samrad_snapshot_is_not_double_counted(self):
+        snapshot = self.samrad_fixture()
+        path = 'data/samrad_snapshots/samrad_20261102T110000Z.json.gz'
+        runs, observations, events, evidence, index = build_samrad_history([(path, snapshot), (path, snapshot)])
+        self.assertEqual((len(runs), len(observations), len(events)), (1, 1, 1))
 
 
 if __name__ == "__main__":

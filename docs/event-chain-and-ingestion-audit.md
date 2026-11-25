@@ -428,3 +428,12 @@ Händelsekedjesidan visar kedjorna och samtliga kandidatrelationer separat. Där
 
 Ändra inte webbgränssnittet eller aktivera externa utskick innan flerkälliga samband kan förklaras och granskas.
 
+
+
+### Historisk Samråd-händelsevy – implementation under granskning 2026-11-25
+
+Den befintliga event-bundle-byggaren utökas i `feat/samrad-snapshot-event-history` för att återanvända de daterade gzip-snapshotsen i `data/samrad_snapshots/`. Varje komplett snapshot representeras som en egen `source_run`; varje distinkt källpostversion blir en observation med direkt referens till rätt arkivfil. Samråd-ärenden grupperas över tid med Beteckn, UUID eller lager-/ObjectID-reservnyckel. Händelsens första och senaste observationstid räknas från arkivet.
+
+Endast snapshots med lyckad status, tidsstämpel, scope-hash, samtliga tre lager, godkända räknare och noll saknad/geometrifel tas med. Partiella/okända snapshots används inte. Oläsbara daterade gzip-filer stoppar byggandet i stället för att skapa en tyst historiklucka. Om en post saknas i ett senare komplett snapshot behålls den äldre händelsen; frånvaro skapar inte avslut, borttagning eller genomförd åtgärd. Samma oförändrade innehållsversion dedupliceras eftersom det gemensamma event-bundle-valideringskontraktet förbjuder dubbla observationer med samma käll-ID och innehållshash.
+
+Ändringen återanvänder befintliga snapshots och event-bundle-kontraktet. Den ändrar inte insamlaren, rättighetsbedömningen, kundvisning eller aviseringar. CI-verifiering återstår innan status kan markeras som implementerad.
