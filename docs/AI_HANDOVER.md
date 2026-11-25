@@ -1892,3 +1892,16 @@ PR #77:s första CI-körning föll på att ett befintligt enhetstest använde en
 **Dokumentationsbedömning:** Documented i projektledarrepots profilregister och drift-/PM-dokumentation. Här är ändringen noterad i handover. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required: ingen källa, insamling, källtäckning, rättighet eller kundvisningsstatus har ändrats i Skog.
 
 **Nästa konkreta PM-027-steg:** fortsätt inventera exakta workflowkopplingar och kompletta jämförbara körningar för övriga registrerade source_id och separata produkter/lager. Skapa profiler en källa i taget endast när underlaget räcker; bygg därefter kadensbaserad freshness. Autentiserad dashboard-rendering är fortfarande inte liveverifierad och PM-027 som helhet är inte färdig.
+
+
+## 2026-11-25 – PM-027 kopplar nationell Älgdata och senaste snapshot
+
+Projektledarrepot har efter Samråd-profilen lagt till en exakt workflowkoppling för `lansstyrelsen.elk_harvest_statistics` i PM [PR #78](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/78), mergad 2026-11-25 21:00:03 UTC (merge commit `f1ecda4ba73cb934bb92defd7f84d308a68c7ae8`). Den pekar på `dahlinrobert-lgtm/alg-grasmyr/.github/workflows/daily-national-afo-avskjutning.yml`.
+
+Profilen har nationellt scope men klassificeras endast som `baseline`: ett komplett Actions-run-ID, [43952789564](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/43952789564), är separat verifierat. Aktuell alg-grasmyr main-dashboard visar däremot `snapshot_date=2026-11-25`, 129/129 aktuella ÄFO och 129/129 med data. Dashboardblobben är `58ec8e1d66170b9bb97400d8d9501490940332de`; bot-commit [62ece755](https://github.com/dahlinrobert-lgtm/alg-grasmyr/commit/62ece75597cb249f6ab618ad12a9a1aec3c46650) uppdaterade snapshoten. Dashboardraderna summerar till `ShotTotal=58 016` och `AssignedTotal=79 727`. Commit-evidens har inte omvandlats till ett påhittat Actions-run-ID.
+
+Riskbedömningen är partiell: insamlingen sker sekventiellt, med upp till tre försök per AFO på en ny Playwright-sida och 90 minuters workflow-timeout. Leverantörens rate limits och minsta anropsintervall är inte verifierade. Profilen uppgraderas inte till återkommande/produktion förrän två kompletta jämförbara run-ID:n är länkade.
+
+**Källregisteruppdatering:** PR:n uppdaterar Älgdata-postens senaste verifieringsdatum och senaste dashboardevidens. Rättighetsstatusen för publicerad statistik ändras inte. JaktAdm-gränsgeometrier är fortsatt en separat produkt med egna villkor.
+
+**Nästa steg:** koppla de exakta Actions-run-ID:na för de senare kompletta Älgdata-snapshotsen och fortsätt PM-027:s käll-/produkt-/lagerkartläggning. PM-027 är inte färdigt.
