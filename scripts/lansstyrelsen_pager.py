@@ -28,16 +28,31 @@ def select_next_pager_action(
     if forward:
         return min(forward, key=lambda pair: pair[0])[1]
 
-    # The portal's forward sliding-window ellipsis is specifically Page$1.
-    # It advances the visible pager window, not the underlying result-page
-    # index, so it remains valid after the first few result pages. Do not
-    # generalize this to every lower Page$N argument: those can be backward
-    # ellipses and would restart an earlier window.
-    for item in candidates:
+    # Page$1 is not enough to determine ellipsis direction. In the live
+    # portal DOM, a forward window ellipsis follows the visible numeric links
+    # (for example: 1 2 3 4 5 ... >>). A backward ellipsis is preceded by the
+    # previous-window control and followed by numeric links (for example:
+    # << ... 2 3 4 5 6). Only accept Page$1 when it is at the right edge of
+    # the pager action sequence and no backward control precedes it.
+    for index, item in enumerate(candidates):
         if (
-            item.get("label", "").strip() in {"...", "…"}
-            and item["argument"].casefold() == "page$1"
+            item.get("label", "").strip() not in {"...", "…"}
+            or item["argument"].casefold() != "page$1"
         ):
+            continue
+        preceding = candidates[:index]
+        following = candidates[index + 1:]
+        has_backward_control = any(
+            candidate.get("label", "").strip() in {"<<", "‹", "«"}
+            or candidate.get("argument", "").casefold() in {"page$first", "first"}
+            for candidate in preceding
+        )
+        has_numeric_after = any(
+            re.fullmatch(r"Page\$(\d+)", candidate.get("argument", ""), re.I)
+            and candidate.get("label", "").strip() not in {"...", "…"}
+            for candidate in following
+        )
+        if not has_backward_control and not has_numeric_after:
             return item
 
     # Other forward ellipses have a Page$N argument beyond the current
