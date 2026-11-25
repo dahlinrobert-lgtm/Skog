@@ -53,7 +53,7 @@ def get_page(page: int, limit: int) -> dict:
 def read_events() -> dict[str, dict]:
     if not EVENTS.exists():
         return {}
-    with EVENTS.open(encoding="utf-8", newline="") as f:
+    with EVENTS.open(encoding="utf-8-sig", newline="") as f:
         return {str(row["event_id"]): row for row in csv.DictReader(f) if row.get("event_id")}
 
 

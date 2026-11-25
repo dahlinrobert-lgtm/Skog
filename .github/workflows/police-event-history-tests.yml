@@ -4,13 +4,17 @@ on:
   pull_request:
     paths:
       - 'scripts/build_police_event_history.py'
+      - 'scripts/ingest_police_events.py'
       - 'tests/test_build_police_event_history.py'
+      - 'tests/test_police_events_adaptive_pagination.py'
       - '.github/workflows/police-event-history-tests.yml'
   push:
     branches: [main]
     paths:
       - 'scripts/build_police_event_history.py'
+      - 'scripts/ingest_police_events.py'
       - 'tests/test_build_police_event_history.py'
+      - 'tests/test_police_events_adaptive_pagination.py'
       - '.github/workflows/police-event-history-tests.yml'
   workflow_dispatch:
 
@@ -25,5 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run police event history tests
-        run: python -m unittest tests.test_build_police_event_history
+      - name: Install ingestion test dependency
+        run: python -m pip install requests
+      - name: Run police event history and ingestion tests
+        run: python -m unittest tests.test_build_police_event_history tests.test_police_events_adaptive_pagination

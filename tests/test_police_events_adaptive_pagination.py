@@ -54,5 +54,62 @@ class AdaptivePolicePaginationTests(unittest.TestCase):
         self.assertEqual(len(raw_lines), 3)
 
 
+    def test_incremental_fetch_preserves_existing_utf8_sig_events(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            existing_event = {
+                "id": "existing-1",
+                "pubdate_iso8601": "2026-08-01T12:00:00Z",
+                "title_type": "Trafikolycka",
+                "headline": "Existing archived event",
+            }
+            existing_row = ingest_police_events.normalize(
+                existing_event, "2026-11-20T00:00:00+00:00"
+            )
+            ingest_police_events.write_csv(
+                root / "events.csv", ingest_police_events.FIELDS, [existing_row]
+            )
+
+            new_event = {
+                "id": "new-1",
+                "pubdate_iso8601": "2026-11-25T12:00:00Z",
+                "title_type": "Trafikolycka",
+                "headline": "New event",
+            }
+
+            with (
+                patch.object(ingest_police_events, "DATA", root),
+                patch.object(ingest_police_events, "EVENTS", root / "events.csv"),
+                patch.object(ingest_police_events, "WILDLIFE", root / "wildlife.csv"),
+                patch.object(
+                    ingest_police_events,
+                    "get_page",
+                    return_value={"data": [new_event], "links": {"last_page": 1}},
+                ),
+                patch.object(ingest_police_events.time, "sleep"),
+            ):
+                ingest_police_events.collect(
+                    full=False,
+                    max_pages=1,
+                    limit=100,
+                    sleep_seconds=0,
+                    raw_path=root / "raw.jsonl",
+                )
+
+            with (root / "events.csv").open(
+                encoding="utf-8-sig", newline=""
+            ) as handle:
+                rows = list(csv.DictReader(handle))
+            raw_records = [
+                __import__("json").loads(line)
+                for line in (root / "raw.jsonl").read_text(encoding="utf-8").splitlines()
+            ]
+
+        self.assertEqual(
+            {row["event_id"] for row in rows}, {"existing-1", "new-1"}
+        )
+        self.assertEqual([record["event_id"] for record in raw_records], ["new-1"])
+
+
 if __name__ == "__main__":
     unittest.main()
