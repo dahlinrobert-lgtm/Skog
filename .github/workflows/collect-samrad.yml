@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - "scripts/collect_samrad.py"
+      - "scripts/inventory_samrad_snapshots.py"
+      - "tests/test_inventory_samrad_snapshots.py"
       - "scripts/build_harvest_event_bundle.py"
       - "tests/test_collect_samrad.py"
       - "tests/test_harvest_event_bundle.py"
@@ -50,6 +52,18 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_collect_samrad.py' -v
           python -m unittest discover -s tests -p 'test_harvest_event_bundle.py' -v
+          python -m unittest discover -s tests -p 'test_inventory_samrad_snapshots.py' -v
+      - name: Read-only inventory of archived Samråd snapshots
+        if: github.event_name == 'pull_request'
+        run: python scripts/inventory_samrad_snapshots.py
+      - name: Upload read-only Samråd inventory evidence
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: samrad-snapshot-inventory-${{ github.run_id }}
+          path: artifacts/samrad-snapshot-inventory.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Collect point, line and polygon layers
         if: github.event_name != 'pull_request'
         run: python scripts/collect_samrad.py
