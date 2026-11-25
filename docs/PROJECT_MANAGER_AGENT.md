@@ -68,3 +68,15 @@ En ny testgren lägger till ett lokalt Git-test i temporär repository. Det veri
 ## v2b – syntetiskt Git-test verifierat
 
 PR #445 är mergad och PR-CI passerade: project-manager tests-job success och Snapshot storage tests-job success (full unittest discovery). Testet validerar en lokal temporär Git-repository, inte GitHub rulesets eller credential-scope. Ingen GitHub-skrivning eller livepersistens ingår.
+
+
+## Prioriterad backlogg i den privata projektledarvyn
+
+Projektledarsidan visar även de strukturerade PM-uppgifterna från den auktoritativa `docs/PROJECT_BACKLOG.md` i Skog-repot. Den privata projektledarens befintliga read-only collector hämtar backloggfilen från `main`, extraherar uppgiftsrubrik, prioritet, status och nästa steg och inkluderar källfilens blob-SHA i inventeringspayloaden.
+
+- Backloggen förblir enda sanningskällan; ingen separat kopia av uppgiftsstatus underhålls i projektledarrepot.
+- Endast PM-avsnitt med uttryckligt strukturerade fält för prioritet och status visas.
+- Dubbletter av PM-ID:n visas separat och markeras; de slås inte ihop eller döljs.
+- Om backloggen inte kan hämtas eller tolkas blir inventeringen partiell. UI visar då att uppgiftslistan inte är verifierad i stället för att visa en tom lista.
+- Uppgiftsvisningen är planeringsinformation. Den ger inte i sig godkännande att starta, ändra eller merge:a arbete.
+
