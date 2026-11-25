@@ -69,17 +69,13 @@ def collect_interval(page, county_label, phrase, start, end):
   grid.wait_for(state="visible",timeout=10000)
   ids=tuple(match for row in page.locator(f"{RESULT_GRID} tr").all()
             for match in re.findall(r"\b\d{1,6}-\d{4}\b",clean(row.inner_text())))
-  if ids in page_signatures: raise RuntimeError(f"Repeated page signature at {page_no}")
-  page_signatures.add(ids)
-  extracted,diag=extract_grid(page,page_no,seen,seen_diary_numbers)
-  records.extend(extracted); diagnostics.append(diag)
   body=clean(page.locator("body").inner_text(timeout=15000))
   if total is None: total=parse_total(body)
   pager=page.locator(f"{RESULT_GRID} tr").last
   controls=pager.locator("a, input, button, [role='button']") if pager.count() else page.locator(f"{RESULT_GRID} a")
   candidates=[]
   for i in range(controls.count()):
-   c=controls.nth(i); tag=c.evaluate("(e)=>e.tagName.toLowerCase()")
+   c=pager_control=controls.nth(i); tag=c.evaluate("(e)=>e.tagName.toLowerCase()")
    label=clean(" ".join([c.inner_text() if tag not in {"input","button"} else "",
     c.get_attribute("value") or "",c.get_attribute("title") or "",
     c.get_attribute("aria-label") or "",c.get_attribute("alt") or ""])).casefold()
@@ -92,6 +88,26 @@ def collect_interval(page, county_label, phrase, start, end):
   pager_states.append(build_pager_state_diagnostic(
    page_no, pager_row_text, candidates, pager_html
   ))
+  if ids in page_signatures:
+   repeated_page={
+    "page_number":page_no,
+    "diary_numbers":list(ids),
+    "row_text":[clean(row.inner_text()) for row in page.locator(f"{RESULT_GRID} tr").all()],
+    "pager_row_text":pager_row_text,
+    "pager_html":pager_html[:12000],
+    "pager_html_truncated":len(pager_html)>12000,
+    "pager_html_original_length":len(pager_html),
+    "body_text_excerpt":body[:1600],
+   }
+   return {"from":start,"to":end,"source_total":total,
+           "extracted_unique_ids":len(seen),"pager_complete":False,
+           "reconciled":False,"records":records,"pages_read":len(diagnostics),
+           "table_diagnostics":diagnostics,"pager_actions":pager_actions,
+           "pager_states":pager_states,"repeated_page":repeated_page,
+           "error":f"Repeated page signature at {page_no}"}
+  page_signatures.add(ids)
+  extracted,diag=extract_grid(page,page_no,seen,seen_diary_numbers)
+  records.extend(extracted); diagnostics.append(diag)
   next_item=select_next_pager_action(candidates,page_no-1)
   if next_item is None:
    pager_complete=True; break
