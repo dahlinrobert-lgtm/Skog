@@ -1224,3 +1224,12 @@ Run [45664696922](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/4566469
 Projektledarens [PM-027 read-only inventory #18](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45697167605), körd efter PR #629, verifierade att read model nu pekar på `data/samrad_snapshots/samrad_20261125T172634Z.json.gz` via `data/samrad_latest_manifest.json`. Artifacten inventerade 28 daterade snapshots och rapporterade 0 punkter, 9 linjer och 12 polygoner inom det konfigurerade Gräsmyr-scope på 10 km; pagineringen var uttömd och inga saknade/felaktiga geometrier rapporterades. Inventeringen var metadata-only; manifestets SHA-256 räknades inte om. `source_total_reconciled=false`, så nationell täckning eller avstämning mot källtotal är inte verifierad.
 
 Publiceringen och read-only-verifieringen ändrar inte Samråds rättighetsstatus. Kommersiell användning, kundvisning och vidare distribution ska fortsatt bedömas separat. PM-031:s 24 äldre snapshots förblir exkluderade från verifierad historik och frånvarobedömning.
+
+
+#### Snapshot 2026-11-25 – körning #33 (tekniskt komplett, arkiv-PR öppen)
+
+[Workflow run #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340) passerade samtliga steg efter merge av PR #659. Manifestet anger `complete`, 34 lager och 7 674 features inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope: Miljöwebb 27 lager / 2 396 features och NVDB Viltolyckor 7 lager / 5 278 features. NVDB-lager-ID:n 3, 5, 7, 9, 11, 13 och 15 verifierades. För varje lager matchar `downloaded_feature_count` `source_object_id_count`; detta verifierar uttaget mot tjänstens objekt-ID-inventering för pilot-envelope, inte nationell täckning eller källans globala total (`source_object_count=null`).
+
+Manifest SHA-256: `a80b7561de79c376ef1d6598d3f486d686f9d025cf943c34cbda5617fbe14b04`. Artifact ID `15063734584`, 11 986 466 byte, SHA-256 `877e917b1bb18109a42966f1a2b37a239e1dbcb174acb47818211e3be9dad345`, utgång 2027-02-23 21:35 UTC. [Data-PR #660](https://github.com/dahlinrobert-lgtm/Skog/pull/660) innehåller 35 filer (manifest + 34 gzip-GeoJSON) och är fortfarande öppen; arkivet är därför ännu inte verifierat i `main`.
+
+Körningen ändrar inte rättighetsbedömning eller tillåten kundvisning. NVDB Viltolyckor är fortsatt aggregerad olycksfrekvens per vägsegment, inte individuella olyckshändelser. Miljöwebb och NVDB Viltolyckor ska bedömas separat per produkt/lager.
