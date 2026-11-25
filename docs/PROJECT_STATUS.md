@@ -125,13 +125,13 @@ PR [#46](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/
 
 ## Projektledarsidan – automatisk latest-snapshot-koppling (2026-11-25)
 
-Den publika GitHub Pages-sidan \`docs/project-manager/\` var fortfarande konfigurerad med en fast Azure-blob för inventeringskörning \`45002255351\` (2026-11-22). Detta gjorde att sidan inte följde senare publiceringar trots att projektledarrepots separata inventory- och Azure-publisher-flöden hade uppdaterats.
+Den publika GitHub Pages-sidan `docs/project-manager/` var fortfarande konfigurerad med en fast Azure-blob för inventeringskörning `45002255351` (2026-11-22). Detta gjorde att sidan inte följde senare publiceringar trots att projektledarrepots separata inventory- och Azure-publisher-flöden hade uppdaterats.
 
 Verifierad senaste kedja vid felsökningen:
-- Read-only inventory #16: [Actions 45644895332](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45644895332), \`success\`, 2026-11-25.
-- Azure publisher #6: [Actions 45645047499](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45645047499), \`success\`, 2026-11-25.
-- Publishern validerar källkörning och artifact, skriver run-scopad snapshot och manifest, gör read-back-kontroll och uppdaterar \`latest.json\` efter verifiering.
+- Read-only inventory #16: [Actions 45644895332](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45644895332), `success`, 2026-11-25.
+- Azure publisher #6: [Actions 45645047499](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45645047499), `success`, 2026-11-25.
+- Publishern validerar källkörning och artifact, skriver run-scopad snapshot och manifest, gör read-back-kontroll och uppdaterar `latest.json` efter verifiering.
 
-**Åtgärd i PR:** ändra Pages-klienten till att först läsa \`latest.json\`, validera att den pekar på förväntad run-scopad blob i samma Azure-container och därefter kontrollera payloadens byteantal och SHA-256 innan data renderas. Sidan visar även källkörning och publiceringstid. JavaScript-syntaxkontroll läggs till i projektledarworkflowet.
+**Åtgärd i PR:** ändra Pages-klienten till att först läsa `latest.json`, validera att den pekar på förväntad run-scopad blob i samma Azure-container och därefter kontrollera payloadens byteantal och SHA-256 innan data renderas. Sidan visar även källkörning och publiceringstid. JavaScript-syntaxkontroll läggs till i projektledarworkflowet.
 
-Denna ändring återanvänder befintlig inventory → Azure publisher → \`latest.json\`-arkitektur; ingen ny lagrings- eller publiceringskomponent införs. Liveverifiering av webbläsarens Microsoft-inloggning, Azure CORS och läsning av aktuell \`latest.json\` krävs efter merge. Ingen skrivbehörighet eller kundpublicering införs.
+Denna ändring återanvänder befintlig inventory → Azure publisher → `latest.json`-arkitektur; ingen ny lagrings- eller publiceringskomponent införs. Liveverifiering av webbläsarens Microsoft-inloggning, Azure CORS och läsning av aktuell `latest.json` krävs efter merge. Ingen skrivbehörighet eller kundpublicering införs.
