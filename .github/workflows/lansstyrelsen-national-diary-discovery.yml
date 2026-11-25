@@ -26,6 +26,14 @@ on:
           - group_05
           - group_06
           - group_07
+      single_county:
+        description: Optional isolated county probe; overrides county_group
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - blekinge
       category:
         description: Search category used when custom search term is empty
         required: true
@@ -90,6 +98,7 @@ jobs:
           YEAR_INPUT: ${{ inputs.year }}
           MONTH_INPUT: ${{ inputs.month }}
           GROUP_INPUT: ${{ inputs.county_group }}
+          SINGLE_COUNTY_INPUT: ${{ inputs.single_county }}
           CATEGORY_INPUT: ${{ inputs.category }}
           CUSTOM_TERM_INPUT: ${{ inputs.search_term }}
           DATE_ONLY_INPUT: ${{ inputs.date_only }}
@@ -104,16 +113,23 @@ jobs:
           print(f"Validated period: {year:04d}-{month:02d}-01 to {year:04d}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}")
           PY
           mkdir -p national-diary-diagnostics
-          case "$GROUP_INPUT" in
-            group_01) counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län" "Länsstyrelsen i Jämtlands län") ;;
-            group_02) counties=("Länsstyrelsen i Västernorrlands län" "Länsstyrelsen i Gävleborgs län" "Länsstyrelsen i Dalarnas län") ;;
-            group_03) counties=("Länsstyrelsen i Värmlands län" "Länsstyrelsen i Örebro län" "Länsstyrelsen i Västmanlands län") ;;
-            group_04) counties=("Länsstyrelsen i Uppsala län" "Länsstyrelsen i Stockholms län" "Länsstyrelsen i Södermanlands län") ;;
-            group_05) counties=("Länsstyrelsen i Östergötlands län" "Länsstyrelsen i Jönköpings län" "Länsstyrelsen i Kronobergs län") ;;
-            group_06) counties=("Länsstyrelsen i Kalmar län" "Länsstyrelsen i Gotlands län" "Länsstyrelsen i Blekinge län") ;;
-            group_07) counties=("Länsstyrelsen i Skåne län" "Länsstyrelsen i Hallands län" "Länsstyrelsen i Västra Götalands län") ;;
-            *) echo "Invalid county group" >&2; exit 2 ;;
-          esac
+          if [[ "$SINGLE_COUNTY_INPUT" == "blekinge" ]]; then
+            counties=("Länsstyrelsen i Blekinge län")
+          elif [[ "$SINGLE_COUNTY_INPUT" == "all" ]]; then
+            case "$GROUP_INPUT" in
+              group_01) counties=("Länsstyrelsen i Norrbottens län" "Länsstyrelsen i Västerbottens län" "Länsstyrelsen i Jämtlands län") ;;
+              group_02) counties=("Länsstyrelsen i Västernorrlands län" "Länsstyrelsen i Gävleborgs län" "Länsstyrelsen i Dalarnas län") ;;
+              group_03) counties=("Länsstyrelsen i Värmlands län" "Länsstyrelsen i Örebro län" "Länsstyrelsen i Västmanlands län") ;;
+              group_04) counties=("Länsstyrelsen i Uppsala län" "Länsstyrelsen i Stockholms län" "Länsstyrelsen i Södermanlands län") ;;
+              group_05) counties=("Länsstyrelsen i Östergötlands län" "Länsstyrelsen i Jönköpings län" "Länsstyrelsen i Kronobergs län") ;;
+              group_06) counties=("Länsstyrelsen i Kalmar län" "Länsstyrelsen i Gotlands län" "Länsstyrelsen i Blekinge län") ;;
+              group_07) counties=("Länsstyrelsen i Skåne län" "Länsstyrelsen i Hallands län" "Länsstyrelsen i Västra Götalands län") ;;
+              *) echo "Invalid county group" >&2; exit 2 ;;
+            esac
+          else
+            echo "Invalid single county selection" >&2
+            exit 2
+          fi
           if [[ "$DATE_ONLY_INPUT" == "true" ]]; then
             python - "$YEAR_INPUT" "$MONTH_INPUT" "$DAY_INPUT" <<'PYDATE'
           import calendar, sys
@@ -122,7 +138,6 @@ jobs:
               raise SystemExit("Invalid day for selected month")
           PYDATE
             terms=("__DATE_ONLY__")
-            expected=3
             mode="date_only"
           elif [[ -n "${CUSTOM_TERM_INPUT//[[:space:]]/}" ]]; then
             custom_term="$(python - "$CUSTOM_TERM_INPUT" <<'PY'
@@ -134,7 +149,6 @@ jobs:
           PY
           )"
             terms=("$custom_term")
-            expected=3
             mode="custom_term"
           else
             case "$CATEGORY_INPUT" in
@@ -142,9 +156,9 @@ jobs:
               B) terms=("vattenverksamhet" "markavvattning" "dikesrensning" "trumma" "våtmarksanläggning" "omgrävning av vattendrag") ;;
               *) echo "Invalid category" >&2; exit 2 ;;
             esac
-            expected=18
             mode="category"
           fi
+          expected=$((${#counties[@]} * ${#terms[@]}))
           failures=0
           for county_index in "${!counties[@]}"; do
             county="${counties[$county_index]}"
@@ -165,10 +179,10 @@ jobs:
               fi
             done
           done
-          python - "$GROUP_INPUT" "$CATEGORY_INPUT" "$YEAR_INPUT" "$MONTH_INPUT" "$failures" "$expected" "$mode" <<'PY'
+          python - "$GROUP_INPUT" "$SINGLE_COUNTY_INPUT" "$CATEGORY_INPUT" "$YEAR_INPUT" "$MONTH_INPUT" "$failures" "$expected" "$mode" <<'PY'
           import json, sys
           from pathlib import Path
-          group, category, year, month, process_failures, expected, mode = sys.argv[1:]
+          group, single_county, category, year, month, process_failures, expected, mode = sys.argv[1:]
           expected = int(expected)
           files = sorted(Path("national-diary-diagnostics").glob("*.json"))
           rows = []
@@ -189,7 +203,7 @@ jobs:
           report = {
               "mode": "diagnostics_only_no_persistence",
               "search_mode": mode,
-              "county_group": group, "category": category,
+              "county_group": group, "single_county": single_county, "category": category,
               "registration_period": f"{year}-{int(month):02d}",
               "expected_intervals": expected, "observed_files": len(files),
               "reconciled_intervals": sum(bool(x.get("reconciled")) for x in rows),

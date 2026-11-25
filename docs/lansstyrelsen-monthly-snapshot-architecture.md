@@ -56,6 +56,7 @@ The separate workflow `.github/workflows/lansstyrelsen-national-diary-discovery.
 - Seven fixed groups of three counties cover the 21 county diaries.
 - One category (A or B) is selected per run; each category has six phrases. A run therefore has at most 18 county/phrase intervals.
 - For a focused pagination probe, an optional single custom search phrase can override the category phrases. In this mode the selected three-county group produces exactly three diagnostic intervals; the phrase is validated to 2–80 characters. This remains manual diagnostics-only and does not persist snapshots.
+- An optional `single_county=blekinge` selector isolates the Blekinge diary while retaining the same collector, validation tests, custom phrase/date filters and diagnostics artifact. It overrides the selected county group and reduces a custom-phrase probe to one interval. The default `all` preserves the existing three-county group behaviour.
 - Run one group at a time and evaluate response times, failures, and source behaviour before proceeding to another group.
 - The workflow uploads diagnostics as a 30-day artifact only. It does not call `persist_lansstyrelsen_snapshots.py`, alter the append-only archive or manifest, or push to `main`.
 - It is a discovery/test facility, not an automated national archive. A successful group does not imply nationwide coverage.
