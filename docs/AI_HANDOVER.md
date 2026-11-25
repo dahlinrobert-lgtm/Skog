@@ -1769,3 +1769,11 @@ PR [#633](https://github.com/dahlinrobert-lgtm/Skog/pull/633) är mergad till `m
 **Inte ännu liveverifierat:** en ny schemalagd inventory-run efter merge, att Azure latest-publiceraren publicerar den nya payloaden, samt att den autentiserade webbläsaren visar den nya uppgiftssektionen. PR-merge och CI bevisar inte detta. Nästa steg är att kontrollera nästa lyckade inventory/publisher-kedja och därefter verifiera sidan efter Microsoft-inloggning.
 
 **Dokumentationsbedömning:** `docs/PROJECT_MANAGER_AGENT.md`, `docs/PROJECT_STATUS.md` och denna handover uppdaterade (Documented). `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedömda Assessed – no update required: ingen datakälla, datatäckning, rättighet eller källinsamling ändrades.
+
+## 2026-11-25 – Skogsstyrelsens generella geodatavillkor verifierade
+
+Skogsstyrelsens officiella sida [Villkor för nyttjande av Skogsstyrelsens geodata](https://www.skogsstyrelsen.se/e-tjanster-och-kartor/karttjanster/geodatatjanster/villkor/) kontrollerades 2026-11-25. Den anger att villkoren gäller geodata producerade av Skogsstyrelsen och att dessa, om inget annat anges, är öppna data under CC0 1.0 Universal. Källan rekommenderar attribution till Skogsstyrelsen; attribution är inte ett krav enligt CC0.
+
+Källregistret och rättighetsdokumentationen uppdateras för berörda geodataprodukter. Huvudregeln innebär fri kommersiell användning, bearbetning, lagring och vidare distribution för produkter/lager som faktiskt omfattas. Produktspecifika undantag, tredje parts material samt tekniska konto-/API-/tjänstevillkor ska fortsatt kontrolleras separat. Skogsstyrelsens statistikdatabas omfattas inte av denna geodataregel utan har en separat rättighetsbedömning.
+
+**Nästa steg:** kör källregistervalidering och rapportgenerering i PR-CI. Behåll produkt-/lagerundantag och SIS-produktbeskrivningens särskilda licenssektion som kontrollpunkter; ändra inte kundvisningsstatus eller teknisk åtkomststatus enbart på grund av den generella licenstexten.
