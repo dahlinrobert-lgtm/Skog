@@ -1800,3 +1800,30 @@ Projektledarrepots manuella read-only inventory [run #16](https://github.com/dah
 **PM-027-status:** den befintliga projektledarens read-only adapter är live-verifierad för avverkningsanmälningarnas Gräsmyr 10 km-manifest och Samråds konfigurerade pilotmanifest. PM-027 som helhet är inte färdig: rapportering för alla registrerade källor och separata produkter/lager, kadensbaserad freshness och fullständiga evidenslänkar återstår. Ingen ny collector eller parallell historikmodell ska införas.
 
 **Dokumentationsbedömning:** Documented – live inventory #16, efterföljande Samråd-run #48/PR #619 och den separata historikfrågan är registrerade. Källstatusrapporten behöver inte ändras: ingen teknisk åtkomst, kommersiell användning eller kundvisningsrätt ändras av denna read-only verifiering.
+
+
+## 2026-11-25 – PM-031: Samråd-arkivet inventerat, äldre format kan inte styrkas kompletta
+
+Read-only-inventeringen i [PR #643](https://github.com/dahlinrobert-lgtm/Skog/pull/643) kördes framgångsrikt i [inventory run #3](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45676077199). Test, Python-kompilering, inventering och artifact-uppladdning passerade. Artifactet klassificerar samtliga 27 daterade gzip-snapshots:
+
+- 3 snapshots är godkända av den oförändrade produktionsfunktionen `samrad_snapshot_is_complete()`: 2026-11-25 15:19:17, 16:03:41 och 16:41:33 UTC.
+- 24 äldre snapshots (2026-11-02–2026-11-22) saknar per lager räknarfälten `records_outside_scope`, `records_missing_geometry` och `records_geometry_error`; 0 filer är oläsbara.
+- De tre godkända snapshotsens 21 stabila `layer:ObjectId`-identiteter och 21 case/event-identiteter matchar event bundle exakt. Inga extra eller saknade ID:n finns inom den nuvarande fullständighetsgrinden.
+
+**Varför äldre snapshots inte kan godkännas retroaktivt:** collector-koden i commit [3dd2fd0](https://github.com/dahlinrobert-lgtm/Skog/commit/3dd2fd0389e920d85bc7cd28acf6abcfca14be9d), som föregår de äldre arkiven, hoppade tyst över features utan geometri och features där geometriprojektionen gav fel. Den sparade endast antal hämtade poster, antal poster inom scope och sidantal. Den registrerade inte hur många poster som hoppats över på grund av saknad geometri eller geometrifel. De äldre snapshotarnas `status=success` bevisar därför att hämtningen/pagineringen lyckades, inte att alla features i envelope kunde klassificeras. Att de features som faktiskt sparades har stabila ID:n och giltiga geometrier bevisar inte att inga andra features tappades före arkivering.
+
+Arkivet innehåller tre äldre Samråd-ärenden som saknas i dagens bundle, men som **inte** får återföras som verifierade historiska händelser utan fullständighetsbevis:
+- `S 9480-2021`: `lines:28009` och `lines:47112`, observerade i 24 äldre snapshots från 2026-11-02 till 2026-11-22.
+- `S 9481-2021`: `lines:28726` och `lines:47734`, observerade i samma 24 snapshots.
+- `S 8667-2021`: `lines:49488`, observerad i fyra snapshots den 2026-11-02.
+
+**Beslut:** ändra inte `build_harvest_event_bundle.py`, lätta inte på fullständighetsgrinden och skapa ingen kompatibilitetsadapter som antar att saknade räknare är noll. Bevara de 24 originalarkiven oförändrade och håll dessa äldre observationer utanför frånvarobedömning och verifierad eventhistorik. PM-031:s inventering är genomförd; frågan om äldre snapshots kan styrkas via annan bevarad körningsevidens är fortfarande öppen. Om sådan evidens saknas ska de förbli exkluderade.
+
+Detta ändrar inte källtäckning, rättighetsstatus, kommersiell användning, kundvisning eller aviseringar.
+
+
+## 2026-11-25 – PM-027 read-only inventory #17 verifierade Samråd-manifestet
+
+Projektledarens [read-only inventory #17](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45674653249) slutfördes `completed/success`. Artifactet verifierar att `skogsstyrelsen.samrad` nu har `latest_complete_snapshot.status=manifest_complete_for_configured_scope` och pekar på `data/samrad_snapshots/samrad_20261125T164133Z.json.gz` med manifest `data/samrad_latest_manifest.json`. Lager: points 0/0, lines 18 hämtade i envelope varav 9 inom scope och 9 utanför, areas 14 hämtade varav 12 inom scope och 2 utanför. Pagineringen är uttömd och manifestet anger noll saknade/felaktiga geometrier. Arkivinventeringen rapporterar 27 daterade snapshots, fortfarande endast metadata-inventering.
+
+Detta verifierar PM-027:s konkreta manifest/read-model-uppföljning efter PR #619. Begränsningarna kvarstår: `source_total_reconciled=false`, ingen nationell täckning hävdas och manifestets SHA-256 har inte räknats om av projektledarens adapter. PM-027:s bredare mål – full käll-/produkt-/lagerkoppling, kadens/freshness och full evidenslänkning för alla registrerade källor – är fortsatt öppet.

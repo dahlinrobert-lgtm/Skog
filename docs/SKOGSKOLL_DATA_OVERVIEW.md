@@ -141,12 +141,12 @@ Separata punkt-, linje- och polygonlager hämtas med paginering inom det konfigu
 - linjer: 20 hämtade i envelope, 11 inom scope, 1 sida,
 - polygoner: 14 hämtade i envelope, 12 inom scope, 1 sida.
 
-Detta är verifierade körningsvärden för den aktuella pilotkonfigurationen, inte nationell täckning eller en avstämning mot en separat auktoritativ källtotal. Den nuvarande `samrad_latest.json` innehåller både metadata och featuredata och är därför för stor för projektledarens metadata-only-adapter att läsa säkert. Projektledarens inventering visar därför fortfarande `latest_complete_snapshot=unknown` och scope unknown, trots att senaste workflow-försöket lyckades.
+Detta är verifierade körningsvärden för den aktuella pilotkonfigurationen, inte nationell täckning eller en avstämning mot en separat auktoritativ källtotal. Den nuvarande `samrad_latest.json` innehåller både metadata och featuredata och är därför för stor för projektledarens metadata-only-adapter att läsa säkert. Det separata lilla manifestet gör nu att projektledaren kan verifiera senaste kompletta snapshot och konfigurerat scope utan att läsa featurepayloaden. Detta verifierades i projektledarens read-only inventory #17 den 2026-11-25.
 
-**Separat litet snapshotmanifest – implementation mergad, liveverifiering återstår**
+**Separat litet snapshotmanifest – implementation mergad och liveverifierad**
 Skog PR [#606](https://github.com/dahlinrobert-lgtm/Skog/pull/606) mergades 2026-11-24 i commit `917fa445559413385a0c995d448c1203d0520c2a`. Insamlingsflödet skapar nu `data/samrad_latest_manifest.json` separat från feature-snapshoten. Manifestet innehåller snapshotreferens, gzip-SHA-256, scope-hash samt per-lager sid-/antal-/geometristatus. Saknad eller felaktig geometri räknas explicit och hindrar `complete_for_configured_scope`. Statusen avser endast paginerad och geometriskt klassificerad data inom konfigurerat scope; `source_total_reconciled=false` betyder att källans totala antal inte är avstämt.
 
-PR #606:s CI körde Samråd-tester och händelsekedjetester med godkänt resultat före merge. En separat körning efter merge behövs för att skapa manifestet på `main` och verifiera faktisk innehållsstruktur. Ingen nationell täckning eller kommersiell/kundvisningsrätt följer av detta.
+PR #606:s CI körde Samråd-tester och händelsekedjetester med godkänt resultat före merge. Liveverifiering skedde genom projektledarens [read-only inventory #17](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45674653249): manifestet `data/samrad_latest_manifest.json` identifierade snapshoten från 2026-11-25 16:41:33.484740 UTC som `manifest_complete_for_configured_scope`. Resultatet omfattade 0 punkter, 9 linjer och 12 polygoner inom det konfigurerade 10 km-scope; pagineringen var uttömd och inga saknade/felaktiga geometrier rapporterades. `source_total_reconciled=false`; ingen nationell täckning eller kommersiell/kundvisningsrätt följer av detta.
 
 **Historik/tidsserie**
 Målet är dagliga snapshots där källans ID, geometri, attribut, hämtningstid och källans egna datum bevaras. Försvunna objekt ska först klassas efter en komplett och godkänd skanning. En lyckad körning eller komplett paginering inom pilotområdet bevisar inte nationell täckning.
@@ -1196,3 +1196,14 @@ Projektledarens read-only inventory #16 verifierade Samråds separata manifest f
 Den härledda event bundle-historiken följs separat i [issue #639](https://github.com/dahlinrobert-lgtm/Skog/issues/639). Frågan gäller varför 27 arkiverade snapshots motsvarar tre Samråd source runs och 21 händelser i aktuell bundle, samt varför två tidigare observerade linjeobjekt saknas. Detta är ännu inte fastställt som en bugg; äldre snapshots kan inte uppfylla dagens fullständighetskrav. Nästa steg är en read-only eligibility-inventering. Daterade gzip-snapshots är fortsatt råhistorikens sanningskälla och ska inte ändras.
 
 Rättighetsstatus, nationell täckning och kundvisningsstatus ändras inte av denna tekniska verifiering.
+
+
+### 2026-11-25 – PM-031 read-only inventering av Samråd-arkivet
+
+[PR #643](https://github.com/dahlinrobert-lgtm/Skog/pull/643), [read-only inventory run #3](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45676077199), klassificerade samtliga 27 daterade gzip-snapshots mot den oförändrade produktionsfunktionen `samrad_snapshot_is_complete()`. Resultatet är 3 historikberättigade snapshots (2026-11-25 15:19:17, 16:03:41 och 16:41:33 UTC), 24 äldre snapshots exkluderade och 0 oläsbara filer. De tre godkända snapshotarnas 21 stabila lager-/objekt-ID:n och 21 case/event-ID:n matchar aktuell event bundle exakt.
+
+De 24 äldre snapshotarna saknar `records_outside_scope`, `records_missing_geometry` och `records_geometry_error` per lager. Detta är en faktisk begränsning i det äldre snapshotformatet, inte ett bevis för att räknarna ska sättas till noll. Collector-versionen i commit [3dd2fd0](https://github.com/dahlinrobert-lgtm/Skog/commit/3dd2fd0389e920d85bc7cd28acf6abcfca14be9d) hoppade tyst över features med saknad geometri och geometrifel och sparade bara `records_fetched`, `records_in_scope` och `pages`. `status=success` för de äldre lagren visar därför inte att inga features tappades före snapshoten. De sparade feature-geometrierna är strukturellt läsbara och giltiga, men detta kan inte styrka vad som eventuellt filtrerades bort.
+
+Tre äldre ärendegrupper finns i arkivet men saknas i aktuell bundle: `S 9480-2021` (linjeobjekten `28009` och `47112`), `S 9481-2021` (linjeobjekten `28726` och `47734`) samt `S 8667-2021` (linjeobjekt `49488`). De är historiska kandidater, inte verifierade kompletta observationer. De får inte återföras till event bundle utan oberoende fullständighetsbevis.
+
+**Beslut:** ingen ändring av historikbyggaren eller fullständighetsgrinden. Ingen adapter får anta att saknade räknare betyder noll. De 24 äldre originalarkiven bevaras oförändrade och hålls utanför frånvarobedömning. PM-031:s filinventering är klar; eventuell komplettering kräver separat bevarad körningsevidens från de äldre insamlingarna. Detta påverkar inte rättighetsstatus, kundvisning eller nationell täckning.
