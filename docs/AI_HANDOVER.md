@@ -1656,7 +1656,7 @@ Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-
 **Nästa konkreta steg:** invänta skriftligt rättighetsbesked för exakt Viltdata-statistikprodukt. Vid nästa manuella uttag krävs åter fullständigt manifest, 550/550 (dynamiskt enligt källmodell), råfilernas SHA-256/bytekontroll och jämförbar täckning innan diff. Ingen schedule, permanent arkivering eller kundvisning aktiveras.
 
 
-## 2026-11-25 – Samråd-historik från daterade snapshots (PR under granskning)
+## 2026-11-25 – Samråd-historik från daterade snapshots (PR #612 mergad)
 
 - Separat branch `feat/samrad-snapshot-event-history` utökar den befintliga `scripts/build_harvest_event_bundle.py`; ingen parallell historikmodell eller nytt workflow införs.
 - Byggaren läser de oföränderliga `data/samrad_snapshots/samrad_*.json.gz`-filerna. Varje komplett snapshot blir en `source_run` med daterad `snapshot_ref`; varje distinkt innehållsversion blir en `observation` som pekar på rätt gzip-snapshot.
@@ -1664,4 +1664,4 @@ Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-
 - Historikbehörighet kräver `status=success`, tidsstämpel, scope-hash, alla tre lager, sidräknare och avstämda antal; saknad geometri och geometrifel måste vara noll. Partiella/okända snapshots hoppas över och används aldrig som frånvaroevidens. En oläsbar gzip-fil avbryter byggandet (fail-closed).
 - Exakt identiskt snapshot dedupliceras. Oförändrade objektversioner dedupliceras enligt befintligt event-bundle-kontrakt; ändrat innehåll ger ny observation.
 - Ändringen påverkar endast härledd event bundle. Rådata, daterade snapshots, insamlingskadens, kundvisning och aviseringar ändras inte.
-- Status: implementation och riktade regressionstester ligger i PR-grenen; CI och full verifiering återstår. Ändra inte källans rättighetsstatus på grund av denna tekniska historikförbättring.
+- Status: PR #612 är mergad till `main`. Regressionstestets textassertion korrigerades i commit `1833f172` utan att ändra historiklogiken. Den mergade implementationen bevarar daterade snapshotreferenser och frånvarande poster utan att skapa avslutsstatus. Ändra inte källans rättighetsstatus på grund av denna tekniska historikförbättring.
