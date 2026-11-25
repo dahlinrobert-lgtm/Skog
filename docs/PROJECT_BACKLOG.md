@@ -19,12 +19,12 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Fält | Värde |
 |---|---|
 | Prioritet | P0 – högsta operativa prioritet |
-| Status | Krav fastställt; inventering av befintliga rapporter/workflows återstår |
+| Status | Read-only adapter för avverkningsanmälningar och Samråd implementerad och live-verifierad för respektive pilotomfattning; full daglig rapport över alla källor/produkter/lager återstår |
 | Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
-| Nästa steg | Inventera befintlig projektledarinventering och snapshot/change-feed-kontrakt; definiera minsta rapportfält och käll-/lagerkoppling utan parallell historikmodell |
+| Nästa steg | Kör/Verifiera nästa read-only project-manager inventory efter Skog PR #619 och kontrollera uppdaterat Samråd-manifest i read model/Azure-publicering. Utöka därefter käll-/lagerkopplingen stegvis med befintliga källmanifest; ingen ny collector eller historikmodell. Samråd event-bundle-historik följs separat i PM-031/issue #639 |
 
 
 #### Arkitekturpassning och inventering – 2026-11-24
@@ -91,6 +91,18 @@ Fortsatt read-only-granskning av kod, workflows och befintliga manifest på `mai
 
 **Nästa steg:** definiera versionsstyrd mapping mellan `source_id`, produkt/lager, workflow path, manifest locator och scope. Därefter bygg en read-only adapter för första två vektorflödena med fixtures från befintliga format och tester för komplett/partial/failed/stale/unknown. Ingen ny snapshotlagring eller ändring av källinsamling behövs för den första leveransen.
 
+
+
+#### PM-027 liveverifiering – 2026-11-25
+
+Projektledarens read-only inventory [run #16](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45644895332) avslutades `completed/success`: 3/3 aktiva repositories, 0 insamlingsfel, 75 Python-tester och dashboardens JS-syntaxkontroll godkända. Alert-jobbet var `skipped`.
+
+- Avverkningsanmälningar: fortsatt verifierat manifestbevis för Gräsmyr 10 km-piloten, 165 poster; inte nationell täckning.
+- Samråd: `manifest_complete_for_configured_scope` i inventory #16, 21 poster (0 punkter, 9 linjer, 12 polygoner), snapshot fångad 15:19:17.791517 UTC. 25 daterade snapshotfiler fanns vid inventorytillfället.
+- Efter inventory #16 mergades Skog PR [#619](https://github.com/dahlinrobert-lgtm/Skog/pull/619), med en ny Samråd-snapshot från 16:41:33.484740 UTC. Aktuellt Skog main-manifest pekar på den snapshoten och arkivet innehåller 27 daterade filer. En ny project-manager inventory krävs för att verifiera uppdateringen i read model/publicering.
+- Samråd-manifestets `source_total_reconciled=false`; inget av detta bevisar nationell täckning. Rättighets- och kundvisningsstatus är oförändrade.
+
+Den separata frågan om event bundle-historik är registrerad som PM-031 och [issue #639](https://github.com/dahlinrobert-lgtm/Skog/issues/639). Den är en undersökning, inte en fastställd bugg.
 
 ### Backloggens långsiktiga täckningsområden
 
@@ -396,3 +408,19 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 **Statusuppdatering 2026-11-24:** PR #600 (fail-closed schema 2.0), PR #603 (ACL-regressionstest) och PR #604 (schema 2.1/path minimization) är mergade. PR #604:s merge commit är `a08163a8bee42848ed27d76c381103105fed9d7d`. Main workflow [Validate storage inventory scripts #45491349781](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45491349781) har genomfört Windows PowerShell 5.1-parsning och regressionstester med success på jobbet; slutlig workflowkonklusion kontrolleras separat.
 
 **Lokal driftsättning återstår:** användaren har ännu inte bekräftat säkerhetskopiering av lokalt skript och faktisk rapportkatalog. Fastställ rapportkatalogens verkliga sökväg innan backup. Task Scheduler ska lämnas oförändrad (dagligen 21:00, removable drives inkluderade) och `-HashFiles` fortsatt avstängt. Första schema 2.1-körningen ska vara tyst baseline eftersom äldre schema 2.0 inte jämförs.
+
+
+## PM-031 – Verifiera ackumulerad Samråd-historik i event bundle
+
+| Fält | Värde |
+|---|---|
+| Prioritet | P1 – historikens integritet och spårbarhet |
+| Status | Öppen – read-only inventering krävs före eventuell kodändring |
+| Evidens | [GitHub issue #639](https://github.com/dahlinrobert-lgtm/Skog/issues/639), [PR #612](https://github.com/dahlinrobert-lgtm/Skog/pull/612), [PR #623](https://github.com/dahlinrobert-lgtm/Skog/pull/623) |
+| Mål | Säkerställa att den härledda Samråd-event-bundlen bevarar alla historiskt kompletta observationer som styrks av de oförändrade daterade snapshotsen |
+| Verifierat nuläge | Byggaren läser `data/samrad_snapshots/samrad_*.json.gz` och använder `samrad_snapshot_is_complete()`. 27 daterade snapshotfiler finns på Skog main; aktuell bundle har tre Samråd source runs och 21 Samråd-händelser. Två tidigare observerade linjeobjekt saknas i bundle. Orsaken är ännu inte fastställd och kan bero på att äldre snapshots inte uppfyller nuvarande fullständighetsgrind. |
+| Acceptanskriterier | Alla arkivfiler klassificerade med eligibility och orsak; äldre format inkluderas endast när fullständighet kan styrkas; partial/unknown/oläsbara filer ger aldrig frånvaroevidens; äldre observationer bevaras; bundle kan reproduceras från råarkivet; tester för äldre format, partial, dubbletter och senare frånvaro |
+| Arkitektur | Utöka befintlig `scripts/build_harvest_event_bundle.py` och event-bundle-kontrakt. Ingen parallell historikmodell eller nytt insamlingsflöde. |
+| Nästa steg | Read-only inventera samtliga 27 arkiverade snapshots mot nuvarande fullständighetsfunktion och jämför stabila objekt-/ärendeidentiteter med event bundle. Dokumentera vilka filer som exkluderas och varför innan kodändring. |
+| Säkerhets-/rättighetsgrind | Bevara råsnapshotar och provenance. Ingen kommersiell rätt, kundvisning eller avisering följer av teknisk historik. |
+

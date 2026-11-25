@@ -1777,3 +1777,22 @@ Skogsstyrelsens officiella sida [Villkor för nyttjande av Skogsstyrelsens geoda
 Källregistret och rättighetsdokumentationen uppdateras för berörda geodataprodukter. Huvudregeln innebär fri kommersiell användning, bearbetning, lagring och vidare distribution för produkter/lager som faktiskt omfattas. Produktspecifika undantag, tredje parts material samt tekniska konto-/API-/tjänstevillkor ska fortsatt kontrolleras separat. Skogsstyrelsens statistikdatabas omfattas inte av denna geodataregel utan har en separat rättighetsbedömning.
 
 **Nästa steg:** kör källregistervalidering och rapportgenerering i PR-CI. Behåll produkt-/lagerundantag och SIS-produktbeskrivningens särskilda licenssektion som kontrollpunkter; ändra inte kundvisningsstatus eller teknisk åtkomststatus enbart på grund av den generella licenstexten.
+
+
+## 2026-11-25 – PM-027 live inventory #16 och Samråd-historikens uppföljning
+
+Projektledarrepots manuella read-only inventory [run #16](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45644895332) avslutades `completed/success`. Artifacten granskades enligt projektledarrepots dokumentation.
+
+- Collector rapporterade 3/3 aktiva repositories och 0 insamlingsfel. 75 Python-tester och `node --check dashboard/app.js` passerade i inventory-jobbet.
+- Det separata write-enabled alert-jobbet var `skipped`. Inventoryn var read-only; inga källfeatures laddades ned och inga källrepon skrevs till.
+- Samråds senaste försök i artifacten var [run 45643662888](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45643662888), `completed/success`, via `.github/workflows/collect-samrad.yml`.
+- Samråds senaste kompletta snapshot i just denna inventory var `manifest_complete_for_configured_scope`, fångad 2026-11-25 15:19:17.791517 UTC. Den omfattade 21 poster inom konfigurerat 10 km-scope: 0 punkter, 9 linjer och 12 polygoner. Alla tre lager hade uttömd paginering och noll saknade/felaktiga geometrier. Vid inventoryn fanns 25 daterade snapshotfiler i Git-trädet.
+- `source_total_reconciled=false`: manifestet styrker endast det konfigurerade pilotområdet, inte nationell täckning eller avstämning mot källans totala antal. Manifestets SHA-256 är ett källpåstående och omräknades inte av adaptern.
+
+**Efter inventory #16:** Skog [Collect Samråd pilot snapshots #48](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45656496498) skapade [data-PR #619](https://github.com/dahlinrobert-lgtm/Skog/pull/619), som mergades 2026-11-25 16:44:28 UTC. Aktuellt manifest på Skog `main` anger nu snapshot `data/samrad_snapshots/samrad_20261125T164133Z.json.gz`, fångad 16:41:33.484740 UTC, och snapshotarkivet omfattar 27 daterade filer. Inventory #16 föregår denna merge; en ny projektledarinventory behöver därför verifiera att den uppdaterade manifestversionen har slagit igenom i read model/Azure-publiceringen.
+
+**Samråd event bundle – separat uppföljning:** den nuvarande härledda bundle-versionen innehåller tre Samråd source runs och 21 Samråd-händelser, medan arkivet har 27 daterade snapshotfiler. Två tidigare observerade objekt (`lines:47112` och `lines:47734`) saknas i aktuell bundle. Detta är ännu inte bevisat vara ett implementeringsfel; äldre snapshots kan falla utanför den strikta fullständighetsgrinden. Read-only-utredningen är registrerad i [issue #639](https://github.com/dahlinrobert-lgtm/Skog/issues/639). Råsnapshotarna är fortsatt sanningskälla och får inte ändras eller ersättas.
+
+**PM-027-status:** den befintliga projektledarens read-only adapter är live-verifierad för avverkningsanmälningarnas Gräsmyr 10 km-manifest och Samråds konfigurerade pilotmanifest. PM-027 som helhet är inte färdig: rapportering för alla registrerade källor och separata produkter/lager, kadensbaserad freshness och fullständiga evidenslänkar återstår. Ingen ny collector eller parallell historikmodell ska införas.
+
+**Dokumentationsbedömning:** Documented – live inventory #16, efterföljande Samråd-run #48/PR #619 och den separata historikfrågan är registrerade. Källstatusrapporten behöver inte ändras: ingen teknisk åtkomst, kommersiell användning eller kundvisningsrätt ändras av denna read-only verifiering.
