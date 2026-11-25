@@ -49,7 +49,7 @@
     notice.textContent = message;
     ["work-list", "runs-list", "scheduled-runs-list", "recovered-runs-list", "failed-runs-list", "projects-list", "source-list"].forEach((id) => empty(id, "Ingen verifierad live-data tillgänglig."));
   };
-  const render = (data) => {
+  const render = (data, publication) => {
     if (!data || data.schema_version !== 1 || !Array.isArray(data.projects) ||
         !Number.isFinite(data.expected_repositories) || !Number.isFinite(data.successful_repositories)) {
       throw new Error("JSON-filen har ett okänt eller ofullständigt schema.");
@@ -73,9 +73,13 @@
     const freshnessText = stale
       ? "VARNING: snapshoten är äldre än 24 timmar. "
       : "Dataålder under 24 timmar. ";
+    const publicationText = publication
+      ? " Publicerad från inventeringskörning #" + publication.source_workflow_run_id +
+        " · " + formatDate(publication.published_at_utc) + "."
+      : "";
     notice.textContent = statusText + registryText + freshnessText +
-      "Observerad: " + formatDate(data.observed_at_utc) +
-      ". Senaste 20 workflow-körningarna per repo visas; detta är inte fullständig körhistorik.";
+      "Observerad: " + formatDate(data.observed_at_utc) + "." + publicationText +
+      " Senaste 20 workflow-körningarna per repo visas; detta är inte fullständig körhistorik.";
     setText("metric-projects", data.successful_repositories + "/" + data.expected_repositories);
     const projects = data.projects;
     const work = projects.flatMap((p) => (p.open_work_items || []).map((item) => ({...item, project: p})));
@@ -287,26 +291,69 @@
     authMessage.textContent = "Hämtar behörighet för Azure Storage …";
     try {
       const tokenResult = await getStorageToken(account);
-      const response = await fetch(authConfig.blobUrl, {
+      const headers = {
+        "Authorization": "Bearer " + tokenResult.accessToken,
+        "x-ms-date": new Date().toUTCString(),
+        "x-ms-version": authConfig.storageApiVersion
+      };
+      const pointerResponse = await fetch(authConfig.latestUrl, {
         method: "GET",
         cache: "no-store",
-        headers: {
-          "Authorization": "Bearer " + tokenResult.accessToken,
-          "x-ms-date": new Date().toUTCString(),
-          "x-ms-version": authConfig.storageApiVersion
-        }
+        headers
+      });
+      if (!pointerResponse.ok) {
+        throw new Error("Azure latest.json svarade HTTP " + pointerResponse.status +
+          ". Kontrollera Storage Blob Data Reader och CORS.");
+      }
+      const publication = await pointerResponse.json();
+      const runId = String(publication.source_workflow_run_id ?? "");
+      const expectedPayload = "snapshots/" + runId + "/dashboard-data.json";
+      const expectedManifest = "snapshots/" + runId + "/manifest.json";
+      if (publication.latest_schema_version !== 1 ||
+          publication.snapshot_type !== "read_only_github_inventory" ||
+          !/^\d+$/.test(runId) ||
+          publication.payload_blob !== expectedPayload ||
+          publication.manifest_blob !== expectedManifest ||
+          !Number.isSafeInteger(publication.payload_bytes) || publication.payload_bytes <= 0 ||
+          !/^[a-f0-9]{64}$/.test(publication.payload_sha256 || "")) {
+        throw new Error("latest.json har fel schema eller en ogiltig snapshotreferens.");
+      }
+
+      const containerUrl = authConfig.containerUrl.replace(/\/+$/, "");
+      const payloadUrl = new URL(expectedPayload, containerUrl + "/");
+      if (payloadUrl.origin !== new URL(containerUrl).origin ||
+          !payloadUrl.href.startsWith(containerUrl + "/snapshots/")) {
+        throw new Error("Snapshotreferensen ligger utanför den konfigurerade Azure-containern.");
+      }
+      const response = await fetch(payloadUrl.href, {
+        method: "GET",
+        cache: "no-store",
+        headers
       });
       if (!response.ok) {
-        throw new Error("Azure Blob svarade HTTP " + response.status +
-          ". Kontrollera Storage Blob Data Reader, CORS och att snapshoten finns.");
+        throw new Error("Azure snapshot svarade HTTP " + response.status +
+          ". Kontrollera behörighet, CORS och att den publicerade snapshoten finns.");
       }
-      const data = await response.json();
-      render(data);
+      const bytes = await response.arrayBuffer();
+      if (bytes.byteLength !== publication.payload_bytes) {
+        throw new Error("Snapshotens byteantal stämmer inte med latest.json.");
+      }
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      const actualSha256 = Array.from(new Uint8Array(digest))
+        .map((value) => value.toString(16).padStart(2, "0")).join("");
+      if (actualSha256 !== publication.payload_sha256) {
+        throw new Error("Snapshotens SHA-256 stämmer inte med latest.json.");
+      }
+      const data = JSON.parse(new TextDecoder("utf-8", {fatal:true}).decode(bytes));
+      if (data.observed_at_utc !== publication.inventory_observed_at_utc) {
+        throw new Error("Snapshotens observationstid stämmer inte med latest.json.");
+      }
+      render(data, publication);
       authPanel.hidden = true;
       dashboard.hidden = false;
     } catch (error) {
-      showAuthError("Kunde inte läsa den privata snapshoten: " + error.message +
-        " Ingen projektdata visas. Kontrollera att kontot finns i rätt Entra-tenant och har läsbehörighet på project-manager-containern.");
+      showAuthError("Kunde inte läsa den senaste verifierade projektögonblicksbilden: " + error.message +
+        " Ingen projektdata visas. Kontrollera Microsoft-kontots läsbehörighet till project-manager-containern.");
     }
   };
 
