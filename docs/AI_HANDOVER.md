@@ -1642,3 +1642,14 @@ Båda beroendeimplementationerna är nu mergade:
 **Nästa konkreta steg:** kör `.github/workflows/collect-samrad.yml` från Skog `main` för att skapa och verifiera `data/samrad_latest_manifest.json`. Kontrollera att manifestets status och per-lagerfält är rimliga och att snapshotreferensen finns. Kör därefter projektledarens read-only inventory från `main` med `manage_alert_issue` avstängd; granska artifacten och verifiera att Samråd exponeras som `manifest_complete_for_configured_scope` endast om manifestet klarar adapterns grindar. Om manifest saknas/är partiellt ska status förbli `unknown`.
 
 **Dokumentationsstatus:** Documentation outstanding tills båda post-merge-körningarna och artifactgranskningen är klara. Rättighetsbedömning, nationell täckning och kundvisning har inte ändrats.
+
+
+## 2026-11-25 – Viltdata första differensanalys verifierad
+
+Två kompletta nationella Viltdata-snapshots från 2026-11-18 har jämförts: baslinje `20261118T204420Z` (Actions #44394070179) och senare observation `20261118T220720Z` (Actions #44408345762). Båda har 49 arter, 21 län, 550/550 statistikförfrågningar och 552 råfiler vars byteantal/SHA-256 har verifierats. Täckningen matchar exakt med 73 255 observationsnycklar per snapshot.
+
+Resultat: 73 252 oförändrade och 3 ändrade observationer; inga tillkomna/saknade nycklar, inga nya värden, inga nya nollvärden och inga värden som blivit saknade. Alla tre ändringar avser Älg 2026: nationellt 18 158→18 163 (+5), län 7 1 025→1 026 (+1), län 17 2 014→2 018 (+4). De två länsdifferenserna summerar till den nationella differensen. Null (3 364) och explicita nollvärden (24 950) är bevarade separat.
+
+Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-20261118.md](viltdata-kill-statistics-diff-20261118.md). Första snapshoten är tyst baslinje; inga historiska larm har skapats. Original-artifacts och rådata har inte ändrats. GitHub Actions-artifacts är tidsbegränsade och inte permanent arkiv. Rättigheter för permanent lagring, bearbetning, kommersiell användning, kundvisning och distribution är fortsatt inte bedömda/godkända.
+
+**Nästa konkreta steg:** invänta skriftligt rättighetsbesked för exakt Viltdata-statistikprodukt. Vid nästa manuella uttag krävs åter fullständigt manifest, 550/550 (dynamiskt enligt källmodell), råfilernas SHA-256/bytekontroll och jämförbar täckning innan diff. Ingen schedule, permanent arkivering eller kundvisning aktiveras.
