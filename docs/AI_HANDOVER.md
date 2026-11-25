@@ -1734,3 +1734,13 @@ PR [#626](https://github.com/dahlinrobert-lgtm/Skog/pull/626) är mergad till `m
 4. Om livekontrollen misslyckas, felsök Entra-inloggning, Azure Blob Data Reader och CORS utan att falla tillbaka till en hårdkodad äldre snapshot.
 
 Ändringen ger inte skrivbehörighet, kundvisningsrätt eller kommersiellt godkännande för datakällor.
+
+## Polisarkivet – UTF-8 BOM-historikbugg identifierad och korrigerings-PR förberedd (2026-11-25)
+
+**Rotorsak verifierad:** data/police_events/events.csv skrivs med UTF-8 BOM (utf-8-sig), men scripts/ingest_police_events.py::read_events() läste den som vanlig UTF-8. Det dolda BOM-tecknet i första kolumnnamnet gjorde att befintliga event-ID:n inte hittades. I [Police events archive run #25](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45639053543) rapporterades därför archive_events=500 och changed_or_new_versions=500. Runnen hämtade 500 API-poster; råsegmentet verifierades i Azure med 500 rader, 1 992 823 bytes och SHA-256 7b8701a7c51c8be478ab3d622acd305e24e23b56f2152f45a2905deb242ef879.
+
+**Dataeffekt och avgränsning:** PR [#448](https://github.com/dahlinrobert-lgtm/Skog/pull/448) har 500 normaliserade händelser från 2026-08-12 till 2026-11-25. Dåvarande main hade 500 från 2026-08-01 till 2026-11-20. Jämförelsen visade 30 ID:n som fanns i main men saknades i PR-versionen och 30 nytillkomna ID:n. PR #448 har inte mergats; därför har main-CSV:n inte ersatts. Det oföränderliga råsegmentet för run #25 finns verifierat i Azure.
+
+**Korrigering i separat branch:** fix/police-events-bom-history-retention ändrar read_events() till utf-8-sig och lägger till regressionstest för inkrementell inläsning av en BOM-skriven CSV. En separat Actions-workflow kör testet vid PR/push. docs/police-events-norrbotten.md beskriver incidenten och återställningsordningen. Source status och data overview bedömda Assessed – no update required: ingen källåtkomst, rättighet eller dataarkitektur ändras; det är en korrigering av CSV-inläsning.
+
+**Nästa steg:** granska och testa korrigerings-PR:n. Efter merge, kör/avvakta nästa Police events archive-run och kontrollera att PR #448 uppdateras från main med tidigare event-ID:n bevarade och nya poster tillagda. Merge:a inte PR #448:s nuvarande data innan den uppdaterats och historikjämförts. Bevara Azure-råsegment och kandidater; frånvaro i en API-sida får inte tolkas som borttagning.
