@@ -19,12 +19,12 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Fält | Värde |
 |---|---|
 | Prioritet | P0 – högsta operativa prioritet |
-| Status | Read-only adapter och inventory live-verifierade för avverkningsanmälningarnas Gräsmyr-pilot och Samråds konfigurerade pilot; två källprofiler finns (Samråd pilot_recurring, Älgdata baseline i main med uppgradering till pilot_recurring föreslagen i PM-repo PR #79). Full daglig rapport över alla källor/produkter/lager återstår |
+| Status | Read-only adapter och inventory live-verifierade för avverkningsanmälningarnas Gräsmyr-pilot och Samråds konfigurerade pilot. PM-repot har fyra källprofiler: Samråd, Älgdata samt separata Trafikverket-profiler för Miljöwebb Landskap och NVDB Viltolyckor. PR #79 och #80 är mergade. Älgdata har två kompletta jämförbara run-ID:n och dokumenteras som pilot_recurring; ny inventory krävs för att verifiera den publicerade read model-statusen. Trafikverkets två profiler är baseline med en komplett run vardera. Full daglig rapport över alla källor/produkter/lager återstår |
 | Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
-| Nästa steg | Efter merge av PM-repo PR #79: kör en ny read-only inventory och verifiera Älgdata som pilot_recurring. Kartlägg därefter Trafikverkets Miljöwebb Landskap och NVDB Viltolyckor separat från befintligt workflow/manifest (run #33 är första kompletta baseline inom Gräsmyr-envelope); lägg till profiler först efter kontroll av produkt-/lagerscope och jämförbarhet. Återanvänd befintliga manifest och källflöden – ingen ny collector eller historikmodell. Samråd event-bundle-historik följs separat i PM-031/issue #639 |
+| Nästa steg | Efter merge av PM-repo PR #79 och #80: kör/invänta nästa read-only inventory och verifiera Älgdata som pilot_recurring samt de två separata Trafikverket-profilerna som baseline. Nästa Trafikverket-snapshot ska jämföras per produkt mot run #33 med samma envelope och lager-ID:n; först därefter kan respektive profil höjas till pilot_recurring. Återanvänd befintligt workflow, manifest och källflöden – ingen ny collector eller historikmodell. Samråd event-bundle-historik följs separat i PM-031/issue #639 |
 
 
 #### Arkitekturpassning och inventering – 2026-11-24
