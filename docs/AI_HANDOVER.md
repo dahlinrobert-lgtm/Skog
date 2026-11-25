@@ -1680,3 +1680,16 @@ Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-
 - Rättighetsstatusen ändras inte: teknisk åtkomst och historik är inte i sig godkännande för kommersiell användning, kundvisning eller vidare distribution.
 
 **Nästa konkreta steg:** kontrollera nästa Samråd-körning efter merge, inklusive insamling, manifest, event-bundle och PR-automationen. Håll nationell täckning och kundrättigheter som separata öppna frågor.
+
+
+## Samråd – PR-automation verifierad och run #48 arkiverad (2026-11-25)
+
+- Efter att PR [#617](https://github.com/dahlinrobert-lgtm/Skog/pull/617) dokumenterat det tidigare arkivet kördes [Collect Samråd pilot snapshots #48](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45656496498) manuellt från `main` (commit `3b1f6a0ee03d078932225ed1c3a9429c323f95da`). Alla jobbets steg passerade, inklusive `Create or update Samråd snapshot pull request`.
+- Loggen bekräftar att workflowet skapade data-PR [#619](https://github.com/dahlinrobert-lgtm/Skog/pull/619). Därmed är felet i sista PR-steget från run #47 inte reproducerat i run #48; run #48 verifierar att steget fungerar för denna körning.
+- Run #48-manifestet: `success`, `complete_for_configured_scope`, scope hash `9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a`, `source_total_reconciled=false`. Gräsmyr-pilotens 10 km-scope: points 0 poster/0 sidor; lines 18 hämtade i envelope, 9 inom scope och 9 utanför; areas 14 hämtade, 12 inom scope och 2 utanför. Inga saknade geometrier eller geometrifel.
+- Snapshot `data/samrad_snapshots/samrad_20261125T164133Z.json.gz`, 400 407 byte, manifest-SHA-256 `fe502340f2fc3301e9cb9bc486a0292867c0c8de6f83bd26befa8701c7876c5f`. Event bundle byggdes med 27 arkiverade Samråd-snapshots, 21 Samråd-observationer och 21 Samråd-händelser; totalt 186 observationer och 186 händelser i bundle.
+- PR #619 granskades före merge. Den lade till en daterad råsnapshot och uppdaterade latest-filer samt härledd event bundle; tidigare arkiverade snapshots behölls. PR:n mergades 2026-11-25 16:44:28 UTC med merge commit `e4aaf853f4b16e79c4b744784dabd3bb3295d8e5`. Snapshoten finns verifierat i `main`.
+- Detta verifierar endast den aktuella manuella körningen och pilot-scope. Det bevisar inte nationell täckning, avstämning mot källans totaler eller kommersiell/kundvisningsrätt. Källstatus och rättighetsbedömning ändras inte av att snapshoten har arkiverats.
+- Historikprincipen kvarstår: saknade objekt i senare uttag får inte tolkas som avbokning, borttagning eller genomförd åtgärd.
+
+**Nästa konkreta steg:** verifiera nästa schemalagda Samråd-körning, inklusive att workflowet skapar eller uppdaterar PR utan fel och att snapshot, manifest och event bundle är konsistenta. Granska data-PR:n före varje merge.
