@@ -1669,3 +1669,14 @@ Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-
 - Exakt identiskt snapshot dedupliceras. Oförändrade objektversioner dedupliceras enligt befintligt event-bundle-kontrakt; ändrat innehåll ger ny observation.
 - Ändringen påverkar endast härledd event bundle. Rådata, daterade snapshots, insamlingskadens, kundvisning och aviseringar ändras inte.
 - Status: PR #612 är mergad till `main`. Regressionstestets textassertion korrigerades i commit `1833f172` utan att ändra historiklogiken. Den mergade implementationen bevarar daterade snapshotreferenser och frånvarande poster utan att skapa avslutsstatus. Ändra inte källans rättighetsstatus på grund av denna tekniska historikförbättring.
+
+## Samråd – historik och snapshotarkiv verifierade efter PR #613 (2026-11-25)
+
+- PR [#613](https://github.com/dahlinrobert-lgtm/Skog/pull/613) är mergad till `main` 2026-11-25 16:20:51 UTC, merge commit `e224a7fd9102095059eb60e8293a4296ab79be3b`. Den uppdaterade snapshotgrenen innehöll daterat snapshot och härledd event bundle.
+- Föregående push-körning [Collect Samråd pilot snapshots #47](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45650638344) hade lyckad insamling, tester och event-bundle-byggande men misslyckades i sista steget för create/update pull request. PR #613 och dess automation-branch hade ändå uppdaterats; PR:n mergades därefter manuellt.
+- I den körningen rapporterade event-bundlen 26 arkiverade Samråd-snapshots, 21 Samråd-observationer och 21 Samråd-händelser. Regressionstesterna för tomt punktlager med 0 sidor passerade. Event bundle contract [#22](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45650638711) och snapshot storage tests [#552](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45650638347) passerade.
+- Snapshotmanifestet var `success` och `complete_for_configured_scope`, med points 0 poster/0 sidor, lines 9 poster inom scope/1 sida och areas 12 poster inom scope/1 sida. `source_total_reconciled=false`; detta är inte nationell avstämning.
+- PR-merge gör snapshots och bundle beständiga i `main`; den bekräftar inte att Samråd-workflowets sista PR-skapandesteg fungerar felfritt. Följ upp nästa schemalagda/manuella körning och kontrollera särskilt det steget.
+- Rättighetsstatusen ändras inte: teknisk åtkomst och historik är inte i sig godkännande för kommersiell användning, kundvisning eller vidare distribution.
+
+**Nästa konkreta steg:** kontrollera nästa Samråd-körning efter merge, inklusive insamling, manifest, event-bundle och PR-automationen. Håll nationell täckning och kundrättigheter som separata öppna frågor.
