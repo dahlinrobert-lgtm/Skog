@@ -1046,11 +1046,15 @@ Detta verifierar inte produktionsingestion, källrättigheter, kundvisning, kund
 **Nästa steg:** fortsätt med befintlig worker-/adapterarkitektur och välj nästa avgränsade validering först efter kontroll av aktuell källstatus och rättigheter. Aktivera inte produktionsingestion eller kundaviseringar enbart på grundval av detta syntetiska test.
 
 
-## Länsstyrelsernas Älgdata – nationell ÄFO-avskjutning (verifierad 2026-11-23)
+## Länsstyrelsernas Älgdata – nationell ÄFO-avskjutning (uppdaterad 2026-11-25)
 
 Den separata insamlaren i `alg-grasmyr` äger den nationella insamlingen. Skog ska återanvända dess arkiverade snapshots och dashboard som källflöde i stället för att bygga en parallell collector.
 
-GitHub Actions [körning #13](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45273303393) passerade på alg-grasmyr `main` och skapade commit `8d78cdfd7eed017040b7ab74ce96b1c724f84d73`. Granskad artifact visar 129/129 aktiva ÄFO för 2026/2027, 3 237 bevarade råa ÄJO-rader och totalsummor `ShotTotal=57 687`, `AssignedTotal=79 704`. Båda totalsummorna stämmer exakt mot dashboarden och summering av råmaterialet. Koden kräver exakt match mellan katalogens ID:n och JaktAdm:s aktuella boundary-ID:n. Daterade snapshots för både 2026-11-21 och 2026-11-23 finns kvar i Git; dashboarden pekar på 2026-11-23.
+Den tidigare verifierade fullständiga körningen [#13](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45273303393) skapade 129/129 aktuella ÄFO-snapshots för 2026/2027. Dess artifact hade 3 237 råa ÄJO-rader och totalsummor `ShotTotal=57 687`, `AssignedTotal=79 704`; dessa värden verifierades mot råmaterialet.
+
+Aktuell `alg-grasmyr/main` har nu dashboarden `data/national_afo_dashboard.json` med `snapshot_date=2026-11-25`, `report_id=3`, `boundary_mode=current`, 129/129 ÄFO och 129/129 med data. Dashboardens blob-SHA är `58ec8e1d66170b9bb97400d8d9501490940332de`; den uppdaterades av bot-commit [62ece755](https://github.com/dahlinrobert-lgtm/alg-grasmyr/commit/62ece75597cb249f6ab618ad12a9a1aec3c46650). Oberoende summering av de 129 dashboardraderna ger `ShotTotal=58 016` och `AssignedTotal=79 727`, med 0 rader som saknar `area_rows_available`. De senaste dashboardvärdena är kumulativa säsongsvärden, inte individuella fälthändelser eller fältdatum.
+
+Den kompletta 2026-11-25-uppdateringen är commit-evidens; dess separata Actions-run-ID har ännu inte kopplats till PM-027-profilen. Projektledarens profil håller därför Älgdata på `baseline` tills minst två kompletta jämförbara Actions-run-ID:n är uttryckligen länkade. Koden kräver exakt match mellan katalogens ID:n och JaktAdm:s aktuella boundary-ID:n.
 
 **Status:** en nationell baslinje plus en andra daterad observation finns. Jämförbarheten för 2026-11-21 och 2026-11-23 är verifierad för 129/129 ÄFO, samma säsong och stabila portal-ID:n inom `afo_id`. Den fullständiga råa ÄJO-radjämförelsen är dokumenterad nedan. Aggregerade säsongsvärden får inte beskrivas som dagliga fälldatum eller individuella händelser. Insamlingen är tekniskt verifierad, men kundvisning, vidare distribution och rätt till historisk lagring/bearbetning ska bedömas separat med attribution. Ingen Skogskoll-worker, kundfeed eller avisering har aktiverats.
 
