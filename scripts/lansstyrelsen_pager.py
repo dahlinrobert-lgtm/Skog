@@ -10,10 +10,11 @@ def select_next_pager_action(
     """Select the next safe forward action from an ASP.NET GridView pager.
 
     Numeric Page$N postbacks are zero-based result-page indexes. When the
-    visible numeric window is exhausted, this portal exposes an ellipsis
-    postback whose Page$N argument can be lower than the logical page index.
-    In that position the ellipsis advances the pager window; it is distinct
-    from a numeric page link. Never use Page$Last because it can skip pages.
+    visible numeric window is exhausted, this portal exposes a special
+    forward-window ellipsis using Page$1, even when the logical result-page
+    index is later. Other ellipses are accepted only when their Page$N
+    argument is ahead of the current index, which avoids following a
+    backward-window ellipsis. Never use Page$Last because it can skip pages.
     """
     forward = []
     for item in candidates:
@@ -27,11 +28,21 @@ def select_next_pager_action(
     if forward:
         return min(forward, key=lambda pair: pair[0])[1]
 
-    # The portal renders both forward and backward ellipses with the
-    # same visible label. Their Page$N argument is the direction signal:
-    # only an argument beyond the current logical page can advance safely.
-    # Treating every ellipsis as forward can send a late page (e.g. index 10)
-    # back to an earlier page (e.g. Page$5), creating a 5-page loop.
+    # The portal's forward sliding-window ellipsis is specifically Page$1.
+    # It advances the visible pager window, not the underlying result-page
+    # index, so it remains valid after the first few result pages. Do not
+    # generalize this to every lower Page$N argument: those can be backward
+    # ellipses and would restart an earlier window.
+    for item in candidates:
+        if (
+            item.get("label", "").strip() in {"...", "…"}
+            and item["argument"].casefold() == "page$1"
+        ):
+            return item
+
+    # Other forward ellipses have a Page$N argument beyond the current
+    # logical page. A lower/equal argument (except the portal's special
+    # Page$1 forward-window command above) is a backward window.
     for item in candidates:
         match = re.fullmatch(r"Page\$(\d+)", item["argument"], re.I)
         if (
@@ -56,8 +67,10 @@ def advance_page_index(current_page_index: int, label: str, argument: str) -> in
     if match:
         target_index = int(match.group(1))
         if normalized_label in {"...", "…"}:
-            # Only a forward Page$N ellipsis advances. A lower/equal argument
-            # represents a backward pager window and must not change our index.
+            # Page$1 is a pager-window transition, not a result-page index.
+            # Keep the logical index stable while the visible window advances.
+            if target_index == 1:
+                return current_page_index
             return target_index if target_index > current_page_index else current_page_index
         if target_index > current_page_index:
             return target_index
