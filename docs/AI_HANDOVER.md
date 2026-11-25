@@ -1905,3 +1905,12 @@ Riskbedömningen är partiell: insamlingen sker sekventiellt, med upp till tre f
 **Källregisteruppdatering:** PR:n uppdaterar Älgdata-postens senaste verifieringsdatum och senaste dashboardevidens. Rättighetsstatusen för publicerad statistik ändras inte. JaktAdm-gränsgeometrier är fortsatt en separat produkt med egna villkor.
 
 **Nästa steg:** koppla de exakta Actions-run-ID:na för de senare kompletta Älgdata-snapshotsen och fortsätt PM-027:s käll-/produkt-/lagerkartläggning. PM-027 är inte färdigt.
+
+
+## 2026-11-25 – korrigering av automatiserad source-status-PR-bas
+
+Vid uppdateringen av Älgdata-källposten skapade workflowet `.github/workflows/validate-source-registry.yml` felbaserade automatiska rapport-PR:er eftersom `create-pull-request` saknade explicit `base: main`. PR [#637](https://github.com/dahlinrobert-lgtm/Skog/pull/637) och [#652](https://github.com/dahlinrobert-lgtm/Skog/pull/652) hade felaktiga basgrenar och stängdes som dubbletter; de mergades inte. Den korrekta rapport-PR:n [#571](https://github.com/dahlinrobert-lgtm/Skog/pull/571) hade `main` som bas och mergades 2026-11-25 21:03:27 UTC (merge commit `035cecb0e2b520a9a9b7dd558a3a47c7f6bb7965`). Den uppdaterade genererade rapporten är nu i `main`, med Älgdata senast verifierad 2026-11-25.
+
+Fixgren `fix/source-status-report-pr-base-main` lägger till explicit `base: main` i actionens `with`-block. Syftet är att framtida push-utlösta rapportuppdateringar alltid skapar/uppdaterar PR mot auktoritativ `main`, inte mot den branch som råkade utlösa workflowet. PR-kontroller ska verifiera källregistervalidering och kund-UI-regression innan merge.
+
+**Dokumentationsstatus:** Documentation in progress i denna fixgren. Inga källdata, rättigheter eller kundvisningsinställningar ändras.
