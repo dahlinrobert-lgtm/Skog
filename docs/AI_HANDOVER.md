@@ -1841,6 +1841,17 @@ Efter PR [#643](https://github.com/dahlinrobert-lgtm/Skog/pull/643) och inventor
 
 **Slutsats/beslut:** PM-031:s konservativa beslut står fast. De 24 äldre arkivfilerna ska bevaras oförändrade och förbli exkluderade från verifierad eventhistorik och frånvarobedömning. Äldre `status=success`, sidantal och giltigheten hos sparade geometrier får inte användas som ersättning för de saknade räknarna. De tre äldre ärendegrupperna `S 9480-2021`, `S 9481-2021` och `S 8667-2021` får inte återföras utan oberoende fullständighetsbevis.
 
-**Nästa konkreta steg:** granska och vid behov merge:a Samråd data-PR #629 efter kontroll av snapshot, manifest och event bundle. Kör därefter en ny PM-027 read-only inventory för att verifiera att manifestets senaste snapshot i Skog `main` motsvarar den publicerade snapshoten. Håll PM-031 äldre arkivbeslut oförändrat om ingen ny evidens tillkommer.
+**Nästa konkreta steg efter merge:** kör/avvakta en ny PM-027 read-only inventory efter Skog PR #629 och verifiera att projektledarens read model pekar på manifestets snapshot `samrad_20261125T172634Z.json.gz`. Inventory #17 föregick denna publicering och räknas inte som verifiering av den. Håll PM-031:s beslut om de 24 äldre arkiven oförändrat om ingen ny oberoende fullständighetsevidens tillkommer.
 
 **Dokumentationsstatus:** Documented i denna handover. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required: den här åtgärden är en evidens-/logggranskning; den ändrar inte källa, datatäckning, källrättighet, insamlingsflöde eller kundvisningsstatus.
+
+
+## 2026-11-25 – Samråd snapshot från run #49 publicerad (PR #629)
+
+Samråd data-PR [#629](https://github.com/dahlinrobert-lgtm/Skog/pull/629) är mergad till `main` 2026-11-25 20:22:32 UTC. Merge commit: `29f0d38a649584e308d0a04391a44d0f2f15176d`. GitHub compare bekräftar att denna merge commit är identisk med aktuell `main`.
+
+Manifestet i `main` pekar nu på snapshoten `data/samrad_snapshots/samrad_20261125T172634Z.json.gz`, kontrollerad 2026-11-25 17:26:34.567268 UTC. Snapshotstorlek 400 407 byte; SHA-256 `c65398097cfa2fc9881457790a31432ea41984dbd67537adad627bf3103125ff`. Status `success`, `complete_for_configured_scope`; alla tre lager har uttömd paginering och noll saknade/felaktiga geometrier. Inom Gräsmyr-pilotens oförändrade 10 km-scope: points 0, lines 9 (18 hämtade i envelope, 9 utanför scope), areas 12 (14 hämtade i envelope, 2 utanför scope). `source_total_reconciled=false`; detta är inte nationell fullständighet eller avstämning mot källans total.
+
+Run [45664696922](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45664696922) passerade insamling, bundle-byggande och skapande av PR #629. Workflowet rapporterade 28 arkiverade Samråd-snapshots och 21 Samråd-observationer/händelser i event bundle. Originalarkiv och den befintliga event-bundle-byggaren återanvänds; ingen parallell historikmodell införs.
+
+**Kvar att verifiera:** PM-027 inventory #17 föregick PR #629 och verifierar därför inte den nya manifestversionen. Kör/avvakta nästa read-only inventory och kontrollera att den refererar till snapshoten 17:26:34 UTC. Ingen ändring av PM-031-beslutet om 24 äldre snapshots. Kommersiell användning, kundvisning och vidare distribution förblir separata och inte godkända genom denna tekniska publicering.
