@@ -74,7 +74,7 @@ Validerare: `data-platform/scripts/validate_source_registry.py`
 Rapportgenerator: `data-platform/scripts/build_source_status_report.py`  
 Rapport: `docs/SKOGSKOLL_SOURCE_STATUS.md`
 
-Registret har 51 källposter och 14 poster med ett operativt `operations`-block enligt den senast hämtade källstatusrapporten (rapportens registerkontrolldatum är 2026-11-18). Övriga källor saknar ännu operativ status; det betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
+Källregistret har 52 källposter. Den aktuella genererade källstatusrapporten redovisar 15 poster med ett operativt `operations`-block och 37 utan. Rapportens `registry_checked_on` är fortfarande 2026-11-18; enskilda källrader har verifierats/uppdaterats senare, bland annat Älgdata 2026-11-25. Datumet ska därför inte tolkas som senaste verifieringsdatum för varje rad. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 Rapporten visar åtkomst, snapshots, historik, kommersiell användning, kundvisning och nästa åtgärd. Den ska uppdateras automatiskt när källregistret ändras via workflowet för källregistervalidering. Om rapporten blir inaktuell kan den byggas lokalt:
 
@@ -1914,3 +1914,18 @@ Vid uppdateringen av Älgdata-källposten skapade workflowet `.github/workflows/
 Fixgren `fix/source-status-report-pr-base-main` lägger till explicit `base: main` i actionens `with`-block. Syftet är att framtida push-utlösta rapportuppdateringar alltid skapar/uppdaterar PR mot auktoritativ `main`, inte mot den branch som råkade utlösa workflowet. PR #653 [fix: target source status report PRs at main](https://github.com/dahlinrobert-lgtm/Skog/pull/653) är nu mergad 2026-11-25 21:05:00 UTC med merge commit `b1c5515dad22b04c3ae3c67e13cbe8eb56a21613`. Den mergade main-workflowfilen har verifierat `base: main`. PR-kontrollerna passerade: [Validate source registry #111](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45700918422) (källregistervalidering och rapportbygge) samt [Skogskoll customer UI tests #296](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45700918400).
 
 **Dokumentationsstatus:** Documented. Inga källdata, rättigheter eller kundvisningsinställningar ändrades.
+
+## 2026-11-25 – PM-027 två källprofiler och inventory #18-uppföljning
+
+Projektledarrepot har nu två evidensbaserade poster i `data/source_operations_profiles.json`:
+
+- `skogsstyrelsen.samrad`: `pilot_recurring`, tre kompletta jämförbara körningar, exakt workflow `.github/workflows/collect-samrad.yml`, Gräsmyr 10 km. Nationell täckning är inte verifierad och riskbedömningen är partiell eftersom leverantörens minimiintervall/rate limits är okända.
+- `lansstyrelsen.elk_harvest_statistics`: `baseline`, nationellt scope för Älgdata rapport 3, säsong 2026/2027, 129 aktuella ÄFO. Ett separat komplett Actions-run-ID är verifierat. Dashboard/snapshot från 2026-11-25 har också verifierats, men den senare körningens exakta Actions-run-ID:n är ännu inte kopplade i profilen. Därför höjs inte status till återkommande drift eller produktion.
+
+Projektledarens senaste read-only inventory vid kontrollen är [#18](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45697167605), avslutad med success 2026-11-25 20:40 UTC. Den startade före merge av projektledar-PR [#78](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/78) (Älgdata-profilen; merge commit `f1ecda4ba73cb934bb92defd7f84d308a68c7ae8`, cirka 21:00 UTC). Inventory #18 kan därför inte verifiera att Älgdata-profilen är inläst i read model. Ingen senare inventory #19 fanns i Actions-listan vid denna kontroll. Nästa verifiering är en ny read-only inventory efter PR #78; kontrollera artifact/read model för båda profilerna. Inventoryn ska förbli read-only.
+
+**PM-027-status:** källstatusrapporten redovisar 52 källor, 15 med operativt `operations`-block och 37 utan. Endast två av de 15 operativa källorna har nu fullständiga driftprofiler i projektledarrepot; 13 återstår att profilera/bedöma. De 37 övriga saknar fortfarande operativt block och behöver kartläggas per exakt källa, produkt och lager. Detta är alltså en avgränsad första leverans, inte färdig PM-027.
+
+**Nästa källspår:** Trafikverkets befintliga workflow `.github/workflows/trafikverket-weekly-snapshots.yml` och `scripts/snapshot_trafikverket.py` hämtar både Miljöwebb Landskap och NVDB Viltolyckor i separata tjänster/lager, inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope. Workflowet kör veckovis, har 45 minuters job-timeout och collectorn har fem försök per request med begränsad exponentiell väntan samt adaptiv spatial uppdelning. Detta är en gemensam teknisk insamlingsväg för två separata source_id – inte bevis för nationell täckning eller två kompletta jämförbara körningar. Nästa steg är att verifiera exakta workflow-run-ID:n, manifestens scope och lagernivåer innan profiler skapas. Rättigheter för varje exakt produkt/lager förblir separata och villkorade.
+
+Dokumentationsbedömning: denna handover-uppdatering är `Documented`; ingen källåtkomst, insamlingskadens eller rättighetsstatus ändras av dokumentationsändringen.
