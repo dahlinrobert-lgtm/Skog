@@ -1207,3 +1207,14 @@ De 24 äldre snapshotarna saknar `records_outside_scope`, `records_missing_geome
 Tre äldre ärendegrupper finns i arkivet men saknas i aktuell bundle: `S 9480-2021` (linjeobjekten `28009` och `47112`), `S 9481-2021` (linjeobjekten `28726` och `47734`) samt `S 8667-2021` (linjeobjekt `49488`). De är historiska kandidater, inte verifierade kompletta observationer. De får inte återföras till event bundle utan oberoende fullständighetsbevis.
 
 **Beslut:** ingen ändring av historikbyggaren eller fullständighetsgrinden. Ingen adapter får anta att saknade räknare betyder noll. De 24 äldre originalarkiven bevaras oförändrade och hålls utanför frånvarobedömning. PM-031:s filinventering är klar; eventuell komplettering kräver separat bevarad körningsevidens från de äldre insamlingarna. Detta påverkar inte rättighetsstatus, kundvisning eller nationell täckning.
+
+
+### Samråd – snapshot från 2026-11-25 17:26 UTC publicerad efter PR #629
+
+Samråd data-PR [#629](https://github.com/dahlinrobert-lgtm/Skog/pull/629) mergades till `main` 2026-11-25 20:22:32 UTC (merge commit `29f0d38a649584e308d0a04391a44d0f2f15176d`). Aktuell `main` verifierades mot merge committen.
+
+Senaste manifestet pekar på `data/samrad_snapshots/samrad_20261125T172634Z.json.gz` (400 407 byte; SHA-256 `c65398097cfa2fc9881457790a31432ea41984dbd67537adad627bf3103125ff`). Manifeststatus är `success` / `complete_for_configured_scope`. Pagineringen är uttömd för punkt-, linje- och polygonlagren; inga saknade eller felaktiga geometrier rapporteras. Inom befintligt Gräsmyr-scope på 10 km: 0 punkter, 9 linjer och 12 polygoner. Linjelagret hämtade 18 poster i envelope (9 utanför scope); polygonlagret hämtade 14 (2 utanför scope). `source_total_reconciled=false`, så resultatet innebär inte nationell täckning eller full avstämning mot källans total.
+
+Run [45664696922](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45664696922) byggde och validerade event bundle samt skapade PR #629. Workflowloggen rapporterade 28 arkiverade Samråd-snapshots och 21 Samråd-observationer/händelser. Snapshotarkivet är fortsatt råhistorikens sanningskälla och event bundle är en härledd vy. PM-027 inventory #17 föregick denna publicering; en ny inventory krävs för att verifiera att read model har hämtat det nya manifestet.
+
+Publiceringen ändrar inte Samråds rättighetsstatus. Kommersiell användning, kundvisning och vidare distribution ska fortsatt bedömas separat. PM-031:s 24 äldre snapshots förblir exkluderade från verifierad historik och frånvarobedömning.
