@@ -78,3 +78,17 @@ def advance_page_index(current_page_index: int, label: str, argument: str) -> in
     if normalized_argument in {"next", "page$next"}:
         return current_page_index + 1
     return current_page_index
+
+
+def build_pager_action_diagnostic(
+    page_from: int, action: dict, response_seen: bool, page_changed: bool
+) -> dict:
+    """Return explicit evidence for one completed pager transition."""
+    return {
+        "page_from": page_from,
+        "label": action.get("label", ""),
+        "target": action.get("target", ""),
+        "argument": action.get("argument", ""),
+        "response_seen": bool(response_seen),
+        "page_changed": bool(page_changed),
+    }
