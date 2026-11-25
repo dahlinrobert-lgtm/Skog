@@ -27,13 +27,18 @@ on:
           - group_06
           - group_07
       category:
-        description: Search category (one category per run)
+        description: Search category used when custom search term is empty
         required: true
         default: B
         type: choice
         options:
           - A
           - B
+      search_term:
+        description: Optional single diagnostic phrase; overrides category phrases
+        required: false
+        default: ""
+        type: string
 
 # This workflow is deliberately read-only with respect to the repository.
 # It never calls the snapshot persistence script and never pushes to main.
@@ -76,6 +81,7 @@ jobs:
           MONTH_INPUT: ${{ inputs.month }}
           GROUP_INPUT: ${{ inputs.county_group }}
           CATEGORY_INPUT: ${{ inputs.category }}
+          CUSTOM_TERM_INPUT: ${{ inputs.search_term }}
         run: |
           set -euo pipefail
           python - "$YEAR_INPUT" "$MONTH_INPUT" <<'PY'
@@ -96,11 +102,27 @@ jobs:
             group_07) counties=("Länsstyrelsen i Skåne län" "Länsstyrelsen i Hallands län" "Länsstyrelsen i Västra Götalands län") ;;
             *) echo "Invalid county group" >&2; exit 2 ;;
           esac
-          case "$CATEGORY_INPUT" in
-            A) terms=("skogsbilväg" "vägbyggnad" "ledningsdragning" "schaktning" "utfyllnad" "massupplag") ;;
-            B) terms=("vattenverksamhet" "markavvattning" "dikesrensning" "trumma" "våtmarksanläggning" "omgrävning av vattendrag") ;;
-            *) echo "Invalid category" >&2; exit 2 ;;
-          esac
+          if [[ -n "${CUSTOM_TERM_INPUT//[[:space:]]/}" ]]; then
+            custom_term="$(python - "$CUSTOM_TERM_INPUT" <<'PY'
+          import sys
+          term = sys.argv[1].strip()
+          if not 2 <= len(term) <= 80 or any(ord(c) < 32 for c in term):
+              raise SystemExit("Custom search term must be 2-80 characters without control characters")
+          print(term)
+          PY
+          )"
+            terms=("$custom_term")
+            expected=3
+            mode="custom_term"
+          else
+            case "$CATEGORY_INPUT" in
+              A) terms=("skogsbilväg" "vägbyggnad" "ledningsdragning" "schaktning" "utfyllnad" "massupplag") ;;
+              B) terms=("vattenverksamhet" "markavvattning" "dikesrensning" "trumma" "våtmarksanläggning" "omgrävning av vattendrag") ;;
+              *) echo "Invalid category" >&2; exit 2 ;;
+            esac
+            expected=18
+            mode="category"
+          fi
           failures=0
           for county_index in "${!counties[@]}"; do
             county="${counties[$county_index]}"
@@ -117,10 +139,11 @@ jobs:
               fi
             done
           done
-          python - "$GROUP_INPUT" "$CATEGORY_INPUT" "$YEAR_INPUT" "$MONTH_INPUT" "$failures" <<'PY'
+          python - "$GROUP_INPUT" "$CATEGORY_INPUT" "$YEAR_INPUT" "$MONTH_INPUT" "$failures" "$expected" "$mode" <<'PY'
           import json, sys
           from pathlib import Path
-          group, category, year, month, process_failures = sys.argv[1:]
+          group, category, year, month, process_failures, expected, mode = sys.argv[1:]
+          expected = int(expected)
           files = sorted(Path("national-diary-diagnostics").glob("*.json"))
           rows = []
           for path in files:
@@ -140,6 +163,7 @@ jobs:
           expected = 18
           report = {
               "mode": "diagnostics_only_no_persistence",
+              "search_mode": mode,
               "county_group": group, "category": category,
               "registration_period": f"{year}-{int(month):02d}",
               "expected_intervals": expected, "observed_files": len(files),
