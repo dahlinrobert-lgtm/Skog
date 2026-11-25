@@ -1855,3 +1855,23 @@ Manifestet i `main` pekar nu på snapshoten `data/samrad_snapshots/samrad_202611
 Run [45664696922](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45664696922) passerade insamling, bundle-byggande och skapande av PR #629. Workflowet rapporterade 28 arkiverade Samråd-snapshots och 21 Samråd-observationer/händelser i event bundle. Originalarkiv och den befintliga event-bundle-byggaren återanvänds; ingen parallell historikmodell införs.
 
 **Kvar att verifiera:** PM-027 inventory #17 föregick PR #629 och verifierar därför inte den nya manifestversionen. Kör/avvakta nästa read-only inventory och kontrollera att den refererar till snapshoten 17:26:34 UTC. Ingen ändring av PM-031-beslutet om 24 äldre snapshots. Kommersiell användning, kundvisning och vidare distribution förblir separata och inte godkända genom denna tekniska publicering.
+
+
+## 2026-11-25 – PM-027 read-only inventory #18 verifierade Samråd PR #629 i read model
+
+Projektledarens manuellt startade [read-only inventory #18](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45697167605) avslutades `completed/success` 2026-11-25 20:40:43 UTC. Artifacten `project-manager-inventory-45697167605` granskades direkt. Collector-jobbet och dess teststeg passerade; 3/3 registrerade repositories insamlades utan fel. Det separata skrivaktiverade alert-jobbet var `skipped`, i enlighet med read-only-körningen.
+
+För `skogsstyrelsen.samrad` pekar projektledarens read model nu på samma snapshot som publicerades genom Skog PR [#629](https://github.com/dahlinrobert-lgtm/Skog/pull/629):
+
+- Snapshot: `data/samrad_snapshots/samrad_20261125T172634Z.json.gz`, fångad 2026-11-25 17:26:34.567268 UTC.
+- Manifest: `data/samrad_latest_manifest.json`.
+- Git blob för snapshot: `e9d70e578617c8b13e6946afb59890995213df6c`; manifestblob: `79e06dfe7b4133173a6b54ac393a78e52b10a28f`.
+- Manifestets påstådda SHA-256: `c65398097cfa2fc9881457790a31432ea41984dbd67537adad627bf3103125ff`; adaptern räknade inte om kontrollsumman.
+- 28 daterade snapshots inventerade (metadata-only).
+- Lagerstatus: points 0 inom scope; lines 9 inom scope (18 hämtade i envelope, 9 utanför); areas 12 inom scope (14 hämtade, 2 utanför). Pagineringen är uttömd och alla lager rapporterar noll saknade/felaktiga geometrier.
+
+Detta sluter den tidigare öppna verifieringspunkten efter PR #629: inventory #17 pekade ännu på snapshoten 16:41 UTC, medan inventory #18 nu verifierar 17:26-snapshoten i projektledarens read model. Samråds scope är fortfarande Gräsmyr-pilotens 10 km; `source_total_reconciled=false`, vilket inte styrker nationell täckning eller avstämning mot källtotal.
+
+**Säkerhets-/rättighetsgräns:** artifacten anger `read_only=true`, `source_feature_data_downloaded=false` och `source_repository_writes=false`. Inventeringen ändrar inte kommersiell användning, kundvisning eller vidare distributionsrätt. PM-031:s beslut om att bevara och fortsatt exkludera 24 äldre snapshots utan fullständighetsevidens står oförändrat.
+
+**Dokumentationsbedömning:** Documented – inventory #18:s liveverifiering registrerad här. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required i sak: ingen källåtkomst, rättighet, insamlingskadens eller datatäckning har ändrats. Nästa PM-027-arbete är fortsatt breddning av käll-/produkt-/lagerkoppling, freshness/kadens och evidenslänkning; PM-027 som helhet är inte färdig.
