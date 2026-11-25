@@ -160,7 +160,6 @@ jobs:
                   })
               except Exception as exc:
                   rows.append({"file": path.name, "reconciled": False, "error": str(exc)})
-          expected = 18
           report = {
               "mode": "diagnostics_only_no_persistence",
               "search_mode": mode,
