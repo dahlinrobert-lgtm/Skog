@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "source_id": "skogsstyrelsen.samrad",
+  "status": "success",
+  "completeness_status": "complete_for_configured_scope",
+  "completeness_basis": "all three configured layers paginated to exhaustion; all fetched features assigned to in-scope/outside-scope with no missing or failed geometries",
+  "source_total_reconciled": false,
+  "checked_at": "2026-11-25T15:19:17.791517Z",
+  "scope_hash": "9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a",
+  "scope": {
+    "latitude": 63.74646,
+    "longitude": 19.66455,
+    "radius_m": 10000.0,
+    "query_envelope": {
+      "xmin": 19.451316291506206,
+      "ymin": 63.65147176044871,
+      "xmax": 19.87778370849379,
+      "ymax": 63.84144823955129
+    },
+    "fields": "ObjectId,Lannr,Lan,Kommunnr,Kommun,ArendeAr,Beteckn,Status,Inkomdatum,AnmaldHa,SkogsTyp,Samradsatgard,UUID",
+    "layers": {
+      "points": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/0/query",
+      "lines": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/1/query",
+      "areas": "https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer/2/query"
+    }
+  },
+  "snapshot": {
+    "path": "data/samrad_snapshots/samrad_20261125T151917Z.json.gz",
+    "bytes": 400407,
+    "sha256": "48ea3527b170798ded8eb0daa04b005c09d71b8be161aeb71fdab1964dfca50c"
+  },
+  "layers": {
+    "points": {
+      "status": "complete_for_configured_scope",
+      "pagination_status": "exhausted",
+      "pages": 0,
+      "records_fetched_in_envelope": 0,
+      "records_in_scope": 0,
+      "records_outside_scope": 0,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0
+    },
+    "lines": {
+      "status": "complete_for_configured_scope",
+      "pagination_status": "exhausted",
+      "pages": 1,
+      "records_fetched_in_envelope": 18,
+      "records_in_scope": 9,
+      "records_outside_scope": 9,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0
+    },
+    "areas": {
+      "status": "complete_for_configured_scope",
+      "pagination_status": "exhausted",
+      "pages": 1,
+      "records_fetched_in_envelope": 14,
+      "records_in_scope": 12,
+      "records_outside_scope": 2,
+      "records_missing_geometry": 0,
+      "records_geometry_error": 0
+    }
+  }
+}
