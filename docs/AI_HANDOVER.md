@@ -1816,3 +1816,10 @@ Arkivet innehåller tre äldre Samråd-ärenden som saknas i dagens bundle, men 
 **Beslut:** ändra inte `build_harvest_event_bundle.py`, lätta inte på fullständighetsgrinden och skapa ingen kompatibilitetsadapter som antar att saknade räknare är noll. Bevara de 24 originalarkiven oförändrade och håll dessa äldre observationer utanför frånvarobedömning och verifierad eventhistorik. PM-031:s inventering är genomförd; frågan om äldre snapshots kan styrkas via annan bevarad körningsevidens är fortfarande öppen. Om sådan evidens saknas ska de förbli exkluderade.
 
 Detta ändrar inte källtäckning, rättighetsstatus, kommersiell användning, kundvisning eller aviseringar.
+
+
+## 2026-11-25 – PM-027 read-only inventory #17 verifierade Samråd-manifestet
+
+Projektledarens [read-only inventory #17](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45674653249) slutfördes `completed/success`. Artifactet verifierar att `skogsstyrelsen.samrad` nu har `latest_complete_snapshot.status=manifest_complete_for_configured_scope` och pekar på `data/samrad_snapshots/samrad_20261125T164133Z.json.gz` med manifest `data/samrad_latest_manifest.json`. Lager: points 0/0, lines 18 hämtade i envelope varav 9 inom scope och 9 utanför, areas 14 hämtade varav 12 inom scope och 2 utanför. Pagineringen är uttömd och manifestet anger noll saknade/felaktiga geometrier. Arkivinventeringen rapporterar 27 daterade snapshots, fortfarande endast metadata-inventering.
+
+Detta verifierar PM-027:s konkreta manifest/read-model-uppföljning efter PR #619. Begränsningarna kvarstår: `source_total_reconciled=false`, ingen nationell täckning hävdas och manifestets SHA-256 har inte räknats om av projektledarens adapter. PM-027:s bredare mål – full käll-/produkt-/lagerkoppling, kadens/freshness och full evidenslänkning för alla registrerade källor – är fortsatt öppet.
