@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-22T18:56:42.640484Z",
+  "generated_at": "2026-11-25T16:20:41.862199Z",
   "schema_version": 3,
-  "snapshot_count_compared": 384,
-  "case_count": 445,
+  "snapshot_count_compared": 385,
+  "case_count": 450,
   "event_log_semantics": "Derived from successful saved snapshots and rewritten on each run; saved snapshots are the source of truth.",
   "source_status_semantics": {
     "observed": "Returned by the latest processed successful query.",
@@ -68,10 +68,10 @@
     "3529804": {
       "notification_id": "3529804",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 3529804,
         "Lannr": "24",
@@ -112,9 +112,9 @@
       "notification_id": "3819225",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
       "last_seen_at": "2026-11-22T18:55:26.353227Z",
-      "observation_status": "observed",
+      "observation_status": "not_returned",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 3819225,
         "Lannr": "24",
@@ -137,7 +137,7 @@
       },
       "geometry_sha256": "ebcf9fe20fe047cde36a5a110a9c5da21b355a1d0d8e28c54fa81369a37aee2b",
       "attribute_sha256": "470d00fac4315d983aed58021b85fba9dee5908a6f1dbc4699c7a7784cdb879f",
-      "status_interpretation": "current_source_observation_only",
+      "status_interpretation": "not_returned_is_not_felling_or_cancellation",
       "tracked_attributes": {
         "Beteckn": "A 67534-2021",
         "Kommun": "VÄNNÄS",
@@ -149,7 +149,9 @@
         "SkogsodlHa": 1,
         "NatforHa": null,
         "AvvHa": null
-      }
+      },
+      "first_not_returned_at": "2026-11-25T16:19:08.059838Z",
+      "last_not_returned_at": "2026-11-25T16:19:08.059838Z"
     },
     "3952679": {
       "notification_id": "3952679",
@@ -202,10 +204,10 @@
     "4065469": {
       "notification_id": "4065469",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4065469,
         "Lannr": "24",
@@ -245,10 +247,10 @@
     "4071666": {
       "notification_id": "4071666",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4071666,
         "Lannr": "24",
@@ -337,9 +339,9 @@
       "notification_id": "4906505",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
       "last_seen_at": "2026-11-22T18:55:26.353227Z",
-      "observation_status": "observed",
+      "observation_status": "not_returned",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4906505,
         "Lannr": "24",
@@ -362,7 +364,7 @@
       },
       "geometry_sha256": "aac3f7c73b4921059107f40f1dafda9974b4e79a29a859c7b070bb50d89b8417",
       "attribute_sha256": "25ce1ae9734c04e74741739b2e817ad749028512155b86a5913b53eb39d2fbd7",
-      "status_interpretation": "current_source_observation_only",
+      "status_interpretation": "not_returned_is_not_felling_or_cancellation",
       "tracked_attributes": {
         "Beteckn": "A 67514-2021",
         "Kommun": "VÄNNÄS",
@@ -374,7 +376,9 @@
         "SkogsodlHa": 2.7,
         "NatforHa": null,
         "AvvHa": 1.9
-      }
+      },
+      "first_not_returned_at": "2026-11-25T16:19:08.059838Z",
+      "last_not_returned_at": "2026-11-25T16:19:08.059838Z"
     },
     "4925919": {
       "notification_id": "4925919",
@@ -471,10 +475,10 @@
     "4928107": {
       "notification_id": "4928107",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4928107,
         "Lannr": "24",
@@ -517,10 +521,10 @@
     "4930235": {
       "notification_id": "4930235",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4930235,
         "Lannr": "24",
@@ -563,10 +567,10 @@
     "4936018": {
       "notification_id": "4936018",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4936018,
         "Lannr": "24",
@@ -655,10 +659,10 @@
     "4938624": {
       "notification_id": "4938624",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4938624,
         "Lannr": "24",
@@ -701,10 +705,10 @@
     "4940109": {
       "notification_id": "4940109",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4940109,
         "Lannr": "24",
@@ -747,10 +751,10 @@
     "4945547": {
       "notification_id": "4945547",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4945547,
         "Lannr": "24",
@@ -839,10 +843,10 @@
     "4966733": {
       "notification_id": "4966733",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4966733,
         "Lannr": "24",
@@ -885,10 +889,10 @@
     "4968307": {
       "notification_id": "4968307",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4968307,
         "Lannr": "24",
@@ -931,10 +935,10 @@
     "4971938": {
       "notification_id": "4971938",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4971938,
         "Lannr": "24",
@@ -977,10 +981,10 @@
     "4975329": {
       "notification_id": "4975329",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4975329,
         "Lannr": "24",
@@ -1023,10 +1027,10 @@
     "4976216": {
       "notification_id": "4976216",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4976216,
         "Lannr": "24",
@@ -1117,10 +1121,10 @@
     "4982072": {
       "notification_id": "4982072",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4982072,
         "Lannr": "24",
@@ -1163,10 +1167,10 @@
     "4985464": {
       "notification_id": "4985464",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 4985464,
         "Lannr": "24",
@@ -1537,10 +1541,10 @@
     "5003856": {
       "notification_id": "5003856",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5003856,
         "Lannr": "24",
@@ -1583,10 +1587,10 @@
     "5007005": {
       "notification_id": "5007005",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5007005,
         "Lannr": "24",
@@ -1909,10 +1913,10 @@
     "5027672": {
       "notification_id": "5027672",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5027672,
         "Lannr": "24",
@@ -1955,10 +1959,10 @@
     "5030691": {
       "notification_id": "5030691",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5030691,
         "Lannr": "24",
@@ -2233,10 +2237,10 @@
     "5048260": {
       "notification_id": "5048260",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5048260,
         "Lannr": "24",
@@ -2371,10 +2375,10 @@
     "5053259": {
       "notification_id": "5053259",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5053259,
         "Lannr": "24",
@@ -2463,10 +2467,10 @@
     "5061590": {
       "notification_id": "5061590",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5061590,
         "Lannr": "24",
@@ -2555,10 +2559,10 @@
     "5073320": {
       "notification_id": "5073320",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5073320,
         "Lannr": "24",
@@ -2647,10 +2651,10 @@
     "5077527": {
       "notification_id": "5077527",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5077527,
         "Lannr": "24",
@@ -2739,10 +2743,10 @@
     "5079538": {
       "notification_id": "5079538",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5079538,
         "Lannr": "24",
@@ -2879,10 +2883,10 @@
     "5084989": {
       "notification_id": "5084989",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5084989,
         "Lannr": "24",
@@ -3069,10 +3073,10 @@
     "5090061": {
       "notification_id": "5090061",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5090061,
         "Lannr": "24",
@@ -3351,10 +3355,10 @@
     "5101097": {
       "notification_id": "5101097",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5101097,
         "Lannr": "24",
@@ -3397,10 +3401,10 @@
     "5110193": {
       "notification_id": "5110193",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5110193,
         "Lannr": "24",
@@ -3491,10 +3495,10 @@
     "5114635": {
       "notification_id": "5114635",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5114635,
         "Lannr": "24",
@@ -3819,10 +3823,10 @@
     "5121369": {
       "notification_id": "5121369",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5121369,
         "Lannr": "24",
@@ -3913,10 +3917,10 @@
     "5122706": {
       "notification_id": "5122706",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5122706,
         "Lannr": "24",
@@ -4051,10 +4055,10 @@
     "5126669": {
       "notification_id": "5126669",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5126669,
         "Lannr": "24",
@@ -4097,10 +4101,10 @@
     "5128360": {
       "notification_id": "5128360",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5128360,
         "Lannr": "24",
@@ -4143,10 +4147,10 @@
     "5129096": {
       "notification_id": "5129096",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5129096,
         "Lannr": "24",
@@ -4235,10 +4239,10 @@
     "5133782": {
       "notification_id": "5133782",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5133782,
         "Lannr": "24",
@@ -4421,10 +4425,10 @@
     "5139027": {
       "notification_id": "5139027",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5139027,
         "Lannr": "24",
@@ -4515,10 +4519,10 @@
     "5141242": {
       "notification_id": "5141242",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5141242,
         "Lannr": "24",
@@ -4561,10 +4565,10 @@
     "5143974": {
       "notification_id": "5143974",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5143974,
         "Lannr": "24",
@@ -4745,10 +4749,10 @@
     "5149738": {
       "notification_id": "5149738",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5149738,
         "Lannr": "24",
@@ -4837,10 +4841,10 @@
     "5149993": {
       "notification_id": "5149993",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5149993,
         "Lannr": "24",
@@ -4883,10 +4887,10 @@
     "5151544": {
       "notification_id": "5151544",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5151544,
         "Lannr": "24",
@@ -4975,10 +4979,10 @@
     "5152519": {
       "notification_id": "5152519",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5152519,
         "Lannr": "24",
@@ -5021,10 +5025,10 @@
     "5153787": {
       "notification_id": "5153787",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5153787,
         "Lannr": "24",
@@ -5159,10 +5163,10 @@
     "5156559": {
       "notification_id": "5156559",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5156559,
         "Lannr": "24",
@@ -5299,10 +5303,10 @@
     "5162889": {
       "notification_id": "5162889",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5162889,
         "Lannr": "24",
@@ -5623,10 +5627,10 @@
     "5191504": {
       "notification_id": "5191504",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5191504,
         "Lannr": "24",
@@ -5669,10 +5673,10 @@
     "5199946": {
       "notification_id": "5199946",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5199946,
         "Lannr": "24",
@@ -5947,10 +5951,10 @@
     "5227009": {
       "notification_id": "5227009",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5227009,
         "Lannr": "24",
@@ -5993,10 +5997,10 @@
     "5228166": {
       "notification_id": "5228166",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5228166,
         "Lannr": "24",
@@ -6131,10 +6135,10 @@
     "5238238": {
       "notification_id": "5238238",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5238238,
         "Lannr": "24",
@@ -6223,10 +6227,10 @@
     "5241304": {
       "notification_id": "5241304",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5241304,
         "Lannr": "24",
@@ -6363,10 +6367,10 @@
     "5242073": {
       "notification_id": "5242073",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5242073,
         "Lannr": "24",
@@ -6503,10 +6507,10 @@
     "5244844": {
       "notification_id": "5244844",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5244844,
         "Lannr": "24",
@@ -6597,10 +6601,10 @@
     "5245889": {
       "notification_id": "5245889",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5245889,
         "Lannr": "24",
@@ -6643,10 +6647,10 @@
     "5248124": {
       "notification_id": "5248124",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5248124,
         "Lannr": "24",
@@ -6689,10 +6693,10 @@
     "5249615": {
       "notification_id": "5249615",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5249615,
         "Lannr": "24",
@@ -6827,10 +6831,10 @@
     "5253037": {
       "notification_id": "5253037",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5253037,
         "Lannr": "24",
@@ -6873,10 +6877,10 @@
     "5253038": {
       "notification_id": "5253038",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5253038,
         "Lannr": "24",
@@ -6919,10 +6923,10 @@
     "5256760": {
       "notification_id": "5256760",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5256760,
         "Lannr": "24",
@@ -6965,10 +6969,10 @@
     "5257126": {
       "notification_id": "5257126",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5257126,
         "Lannr": "24",
@@ -7243,10 +7247,10 @@
     "5265336": {
       "notification_id": "5265336",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5265336,
         "Lannr": "24",
@@ -7337,10 +7341,10 @@
     "5268030": {
       "notification_id": "5268030",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5268030,
         "Lannr": "24",
@@ -7429,10 +7433,10 @@
     "5270299": {
       "notification_id": "5270299",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5270299,
         "Lannr": "24",
@@ -7475,10 +7479,10 @@
     "5270300": {
       "notification_id": "5270300",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5270300,
         "Lannr": "24",
@@ -7567,10 +7571,10 @@
     "5274652": {
       "notification_id": "5274652",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5274652,
         "Lannr": "24",
@@ -7847,10 +7851,10 @@
     "5304503": {
       "notification_id": "5304503",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5304503,
         "Lannr": "24",
@@ -7893,10 +7897,10 @@
     "5305521": {
       "notification_id": "5305521",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5305521,
         "Lannr": "24",
@@ -8081,10 +8085,10 @@
     "5307154": {
       "notification_id": "5307154",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5307154,
         "Lannr": "24",
@@ -8219,10 +8223,10 @@
     "5312578": {
       "notification_id": "5312578",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5312578,
         "Lannr": "24",
@@ -8311,10 +8315,10 @@
     "5321186": {
       "notification_id": "5321186",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5321186,
         "Lannr": "24",
@@ -8451,10 +8455,10 @@
     "5330604": {
       "notification_id": "5330604",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5330604,
         "Lannr": "24",
@@ -8639,10 +8643,10 @@
     "5341385": {
       "notification_id": "5341385",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5341385,
         "Lannr": "24",
@@ -8731,10 +8735,10 @@
     "5352203": {
       "notification_id": "5352203",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5352203,
         "Lannr": "24",
@@ -8777,10 +8781,10 @@
     "5352650": {
       "notification_id": "5352650",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5352650,
         "Lannr": "24",
@@ -8823,10 +8827,10 @@
     "5353370": {
       "notification_id": "5353370",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5353370,
         "Lannr": "24",
@@ -8869,10 +8873,10 @@
     "5353374": {
       "notification_id": "5353374",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5353374,
         "Lannr": "24",
@@ -9099,10 +9103,10 @@
     "5396400": {
       "notification_id": "5396400",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 5396400,
         "Lannr": "24",
@@ -9285,10 +9289,10 @@
     "6010956": {
       "notification_id": "6010956",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6010956,
         "Lannr": "24",
@@ -9331,10 +9335,10 @@
     "6051883": {
       "notification_id": "6051883",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6051883,
         "Lannr": "24",
@@ -9471,10 +9475,10 @@
     "6065369": {
       "notification_id": "6065369",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6065369,
         "Lannr": "24",
@@ -9517,10 +9521,10 @@
     "6065981": {
       "notification_id": "6065981",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6065981,
         "Lannr": "24",
@@ -9563,10 +9567,10 @@
     "6068346": {
       "notification_id": "6068346",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6068346,
         "Lannr": "24",
@@ -9747,10 +9751,10 @@
     "6073477": {
       "notification_id": "6073477",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6073477,
         "Lannr": "24",
@@ -9793,10 +9797,10 @@
     "6075324": {
       "notification_id": "6075324",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6075324,
         "Lannr": "24",
@@ -9933,10 +9937,10 @@
     "6079291": {
       "notification_id": "6079291",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6079291,
         "Lannr": "24",
@@ -9979,10 +9983,10 @@
     "6080668": {
       "notification_id": "6080668",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6080668,
         "Lannr": "24",
@@ -10211,10 +10215,10 @@
     "6105682": {
       "notification_id": "6105682",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6105682,
         "Lannr": "24",
@@ -10257,10 +10261,10 @@
     "6105976": {
       "notification_id": "6105976",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6105976,
         "Lannr": "24",
@@ -10303,10 +10307,10 @@
     "6106199": {
       "notification_id": "6106199",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6106199,
         "Lannr": "24",
@@ -10679,10 +10683,10 @@
     "6121794": {
       "notification_id": "6121794",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6121794,
         "Lannr": "24",
@@ -10725,10 +10729,10 @@
     "6122989": {
       "notification_id": "6122989",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6122989,
         "Lannr": "24",
@@ -10863,10 +10867,10 @@
     "6131449": {
       "notification_id": "6131449",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6131449,
         "Lannr": "24",
@@ -10909,10 +10913,10 @@
     "6132414": {
       "notification_id": "6132414",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6132414,
         "Lannr": "24",
@@ -11287,10 +11291,10 @@
     "6150320": {
       "notification_id": "6150320",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6150320,
         "Lannr": "24",
@@ -11333,10 +11337,10 @@
     "6156216": {
       "notification_id": "6156216",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6156216,
         "Lannr": "24",
@@ -11379,10 +11383,10 @@
     "6156606": {
       "notification_id": "6156606",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6156606,
         "Lannr": "24",
@@ -11471,10 +11475,10 @@
     "6161094": {
       "notification_id": "6161094",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6161094,
         "Lannr": "24",
@@ -11517,10 +11521,10 @@
     "6161943": {
       "notification_id": "6161943",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6161943,
         "Lannr": "24",
@@ -11563,10 +11567,10 @@
     "6162514": {
       "notification_id": "6162514",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6162514,
         "Lannr": "24",
@@ -11609,10 +11613,10 @@
     "6162571": {
       "notification_id": "6162571",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6162571,
         "Lannr": "24",
@@ -11655,10 +11659,10 @@
     "6162646": {
       "notification_id": "6162646",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6162646,
         "Lannr": "24",
@@ -11701,10 +11705,10 @@
     "6162647": {
       "notification_id": "6162647",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6162647,
         "Lannr": "24",
@@ -11747,10 +11751,10 @@
     "6162680": {
       "notification_id": "6162680",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6162680,
         "Lannr": "24",
@@ -12207,10 +12211,10 @@
     "6187166": {
       "notification_id": "6187166",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6187166,
         "Lannr": "24",
@@ -12299,10 +12303,10 @@
     "6193975": {
       "notification_id": "6193975",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6193975,
         "Lannr": "24",
@@ -12345,10 +12349,10 @@
     "6200131": {
       "notification_id": "6200131",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6200131,
         "Lannr": "24",
@@ -12391,10 +12395,10 @@
     "6200299": {
       "notification_id": "6200299",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6200299,
         "Lannr": "24",
@@ -12483,10 +12487,10 @@
     "6203585": {
       "notification_id": "6203585",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6203585,
         "Lannr": "24",
@@ -12621,10 +12625,10 @@
     "6210885": {
       "notification_id": "6210885",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6210885,
         "Lannr": "24",
@@ -12667,10 +12671,10 @@
     "6210997": {
       "notification_id": "6210997",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6210997,
         "Lannr": "24",
@@ -12759,10 +12763,10 @@
     "6213574": {
       "notification_id": "6213574",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6213574,
         "Lannr": "24",
@@ -12805,10 +12809,10 @@
     "6213737": {
       "notification_id": "6213737",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6213737,
         "Lannr": "24",
@@ -12899,10 +12903,10 @@
     "6219517": {
       "notification_id": "6219517",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6219517,
         "Lannr": "24",
@@ -12945,10 +12949,10 @@
     "6220200": {
       "notification_id": "6220200",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6220200,
         "Lannr": "24",
@@ -13175,10 +13179,10 @@
     "6232803": {
       "notification_id": "6232803",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6232803,
         "Lannr": "24",
@@ -13361,10 +13365,10 @@
     "6238812": {
       "notification_id": "6238812",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6238812,
         "Lannr": "24",
@@ -13595,10 +13599,10 @@
     "6263183": {
       "notification_id": "6263183",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6263183,
         "Lannr": "24",
@@ -13641,10 +13645,10 @@
     "6268324": {
       "notification_id": "6268324",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6268324,
         "Lannr": "24",
@@ -13735,10 +13739,10 @@
     "6273323": {
       "notification_id": "6273323",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6273323,
         "Lannr": "24",
@@ -13781,10 +13785,10 @@
     "6275644": {
       "notification_id": "6275644",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6275644,
         "Lannr": "24",
@@ -13919,10 +13923,10 @@
     "6284928": {
       "notification_id": "6284928",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6284928,
         "Lannr": "24",
@@ -13965,10 +13969,10 @@
     "6285774": {
       "notification_id": "6285774",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6285774,
         "Lannr": "24",
@@ -14429,10 +14433,10 @@
     "6376570": {
       "notification_id": "6376570",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6376570,
         "Lannr": "24",
@@ -14569,10 +14573,10 @@
     "6381821": {
       "notification_id": "6381821",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6381821,
         "Lannr": "24",
@@ -14615,10 +14619,10 @@
     "6382743": {
       "notification_id": "6382743",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6382743,
         "Lannr": "24",
@@ -14803,10 +14807,10 @@
     "6401466": {
       "notification_id": "6401466",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6401466,
         "Lannr": "24",
@@ -14989,10 +14993,10 @@
     "6408177": {
       "notification_id": "6408177",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6408177,
         "Lannr": "24",
@@ -15173,10 +15177,10 @@
     "6430092": {
       "notification_id": "6430092",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6430092,
         "Lannr": "24",
@@ -15219,10 +15223,10 @@
     "6434510": {
       "notification_id": "6434510",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6434510,
         "Lannr": "24",
@@ -15265,10 +15269,10 @@
     "6435561": {
       "notification_id": "6435561",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6435561,
         "Lannr": "24",
@@ -15453,10 +15457,10 @@
     "6442021": {
       "notification_id": "6442021",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6442021,
         "Lannr": "24",
@@ -15545,10 +15549,10 @@
     "6447006": {
       "notification_id": "6447006",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6447006,
         "Lannr": "24",
@@ -16071,10 +16075,10 @@
     "6460683": {
       "notification_id": "6460683",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6460683,
         "Lannr": "24",
@@ -16117,10 +16121,10 @@
     "6463502": {
       "notification_id": "6463502",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6463502,
         "Lannr": "24",
@@ -16672,10 +16676,10 @@
     "6495322": {
       "notification_id": "6495322",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6495322,
         "Lannr": "24",
@@ -17135,10 +17139,10 @@
     "6515768": {
       "notification_id": "6515768",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6515768,
         "Lannr": "24",
@@ -17325,10 +17329,10 @@
     "6516232": {
       "notification_id": "6516232",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6516232,
         "Lannr": "24",
@@ -17371,10 +17375,10 @@
     "6516233": {
       "notification_id": "6516233",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6516233,
         "Lannr": "24",
@@ -17417,10 +17421,10 @@
     "6516234": {
       "notification_id": "6516234",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6516234,
         "Lannr": "24",
@@ -17463,10 +17467,10 @@
     "6516235": {
       "notification_id": "6516235",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6516235,
         "Lannr": "24",
@@ -17509,10 +17513,10 @@
     "6516236": {
       "notification_id": "6516236",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6516236,
         "Lannr": "24",
@@ -17745,10 +17749,10 @@
     "6516872": {
       "notification_id": "6516872",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6516872,
         "Lannr": "24",
@@ -18533,10 +18537,10 @@
     "6536474": {
       "notification_id": "6536474",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6536474,
         "Lannr": "24",
@@ -18809,10 +18813,10 @@
     "6541018": {
       "notification_id": "6541018",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6541018,
         "Lannr": "24",
@@ -18948,9 +18952,9 @@
       "notification_id": "6542638",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
       "last_seen_at": "2026-11-22T18:55:26.353227Z",
-      "observation_status": "observed",
+      "observation_status": "not_returned",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6542638,
         "Lannr": "24",
@@ -18973,7 +18977,7 @@
       },
       "geometry_sha256": "041c12cd2469917eeacfb39826fcd1fe284059e5aee2b99c5f087a62a96320ee",
       "attribute_sha256": "6eea1e9c719fe7bbfe5606ffc88aea11f8d8afa8880e4de7ae2096d648cdbfa8",
-      "status_interpretation": "current_source_observation_only",
+      "status_interpretation": "not_returned_is_not_felling_or_cancellation",
       "tracked_attributes": {
         "Beteckn": "A 42369-2026",
         "Kommun": "NORDMALING",
@@ -18986,17 +18990,17 @@
         "NatforHa": null,
         "AvvHa": null
       },
-      "first_not_returned_at": "2026-11-17T21:40:15.085634Z",
-      "last_not_returned_at": "2026-11-17T21:40:15.085634Z",
+      "first_not_returned_at": "2026-11-25T16:19:08.059838Z",
+      "last_not_returned_at": "2026-11-25T16:19:08.059838Z",
       "last_reappeared_at": "2026-11-18T21:24:04.320159Z"
     },
     "6542685": {
       "notification_id": "6542685",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
       "last_seen_at": "2026-11-22T18:55:26.353227Z",
-      "observation_status": "observed",
+      "observation_status": "not_returned",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6542685,
         "Lannr": "24",
@@ -19019,7 +19023,7 @@
       },
       "geometry_sha256": "d6892b31ad786adf89d5e54a2dbe1f0fb74c0d23129c45563d7bb8e150046d80",
       "attribute_sha256": "0a030cc9febf548a4ae74d38ecb09f079339d46c0b5294f59d0f48aba4a23503",
-      "status_interpretation": "current_source_observation_only",
+      "status_interpretation": "not_returned_is_not_felling_or_cancellation",
       "tracked_attributes": {
         "Beteckn": "A 42519-2026",
         "Kommun": "UMEÅ",
@@ -19032,17 +19036,17 @@
         "NatforHa": null,
         "AvvHa": null
       },
-      "first_not_returned_at": "2026-11-17T21:40:15.085634Z",
-      "last_not_returned_at": "2026-11-17T21:40:15.085634Z",
+      "first_not_returned_at": "2026-11-25T16:19:08.059838Z",
+      "last_not_returned_at": "2026-11-25T16:19:08.059838Z",
       "last_reappeared_at": "2026-11-18T21:24:04.320159Z"
     },
     "6542909": {
       "notification_id": "6542909",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
       "last_seen_at": "2026-11-22T18:55:26.353227Z",
-      "observation_status": "observed",
+      "observation_status": "not_returned",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6542909,
         "Lannr": "24",
@@ -19065,7 +19069,7 @@
       },
       "geometry_sha256": "48f7d44eebf08b86f402080a3e588b9bceee2379e7ba7af19e687b2f432480cb",
       "attribute_sha256": "5b695705dfdeab9250bd428b70b4451e1579b2ef87fad2dfe6b7424d77abd563",
-      "status_interpretation": "current_source_observation_only",
+      "status_interpretation": "not_returned_is_not_felling_or_cancellation",
       "tracked_attributes": {
         "Beteckn": "A 42510-2026",
         "Kommun": "UMEÅ",
@@ -19078,17 +19082,17 @@
         "NatforHa": null,
         "AvvHa": null
       },
-      "first_not_returned_at": "2026-11-17T21:40:15.085634Z",
-      "last_not_returned_at": "2026-11-17T21:40:15.085634Z",
+      "first_not_returned_at": "2026-11-25T16:19:08.059838Z",
+      "last_not_returned_at": "2026-11-25T16:19:08.059838Z",
       "last_reappeared_at": "2026-11-18T21:24:04.320159Z"
     },
     "6542977": {
       "notification_id": "6542977",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6542977,
         "Lannr": "24",
@@ -19132,9 +19136,9 @@
       "notification_id": "6542981",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
       "last_seen_at": "2026-11-22T18:55:26.353227Z",
-      "observation_status": "observed",
+      "observation_status": "not_returned",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6542981,
         "Lannr": "24",
@@ -19157,7 +19161,7 @@
       },
       "geometry_sha256": "a9ec7ed33ebbb9e5257402e75f0f2987cdbeda7af2d3d1b9d681a8db8b000060",
       "attribute_sha256": "0b0a1b0e8bfdc9675b1fb92ae34ce7a843c65eee498b61c4cd0a52f983840b44",
-      "status_interpretation": "current_source_observation_only",
+      "status_interpretation": "not_returned_is_not_felling_or_cancellation",
       "tracked_attributes": {
         "Beteckn": "A 42506-2026",
         "Kommun": "UMEÅ",
@@ -19170,8 +19174,8 @@
         "NatforHa": null,
         "AvvHa": null
       },
-      "first_not_returned_at": "2026-11-17T21:40:15.085634Z",
-      "last_not_returned_at": "2026-11-17T21:40:15.085634Z",
+      "first_not_returned_at": "2026-11-25T16:19:08.059838Z",
+      "last_not_returned_at": "2026-11-25T16:19:08.059838Z",
       "last_reappeared_at": "2026-11-18T21:24:04.320159Z"
     },
     "6545743": {
@@ -19543,10 +19547,10 @@
     "6548126": {
       "notification_id": "6548126",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6548126,
         "Lannr": "24",
@@ -19589,10 +19593,10 @@
     "6549446": {
       "notification_id": "6549446",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6549446,
         "Lannr": "24",
@@ -19635,10 +19639,10 @@
     "6549451": {
       "notification_id": "6549451",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6549451,
         "Lannr": "24",
@@ -19681,10 +19685,10 @@
     "6552328": {
       "notification_id": "6552328",
       "first_seen_at": "2026-10-24T09:31:49.412209+00:00",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6552328,
         "Lannr": "24",
@@ -19955,10 +19959,10 @@
     "6564386": {
       "notification_id": "6564386",
       "first_seen_at": "2026-10-30T11:23:25.696989Z",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6564386,
         "Lannr": "24",
@@ -20001,10 +20005,10 @@
     "6564932": {
       "notification_id": "6564932",
       "first_seen_at": "2026-10-30T11:23:25.696989Z",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6564932,
         "Lannr": "24",
@@ -20227,10 +20231,10 @@
     "6570456": {
       "notification_id": "6570456",
       "first_seen_at": "2026-11-04T20:32:00.408473Z",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6570456,
         "Lannr": "24",
@@ -20273,10 +20277,10 @@
     "6570691": {
       "notification_id": "6570691",
       "first_seen_at": "2026-11-04T20:32:00.408473Z",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6570691,
         "Lannr": "24",
@@ -20364,10 +20368,10 @@
     "6573730": {
       "notification_id": "6573730",
       "first_seen_at": "2026-11-06T20:23:27.741881Z",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6573730,
         "Lannr": "24",
@@ -20456,9 +20460,9 @@
       "notification_id": "6576899",
       "first_seen_at": "2026-11-10T20:50:33.753516Z",
       "last_seen_at": "2026-11-22T18:55:26.353227Z",
-      "observation_status": "observed",
+      "observation_status": "not_returned",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6576899,
         "Lannr": "24",
@@ -20493,18 +20497,18 @@
       },
       "geometry_sha256": "13aad1075be4833033e47f0f539fa4f00ce10dba15e1796dfa69789a73a73eb6",
       "attribute_sha256": "eccf7beb5cde47501f7eb202dd127f4d8c54954d6a5e9df041f1dbb748d39375",
-      "status_interpretation": "current_source_observation_only",
-      "first_not_returned_at": "2026-11-17T21:40:15.085634Z",
-      "last_not_returned_at": "2026-11-17T21:40:15.085634Z",
+      "status_interpretation": "not_returned_is_not_felling_or_cancellation",
+      "first_not_returned_at": "2026-11-25T16:19:08.059838Z",
+      "last_not_returned_at": "2026-11-25T16:19:08.059838Z",
       "last_reappeared_at": "2026-11-18T21:24:04.320159Z"
     },
     "6577197": {
       "notification_id": "6577197",
       "first_seen_at": "2026-11-10T20:50:33.753516Z",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6577197,
         "Lannr": "24",
@@ -20592,10 +20596,10 @@
     "6579587": {
       "notification_id": "6579587",
       "first_seen_at": "2026-11-12T21:11:49.371137Z",
-      "last_seen_at": "2026-11-22T18:55:26.353227Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
       "observation_status": "observed",
       "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
-      "last_snapshot": "20261122T185526Z.json",
+      "last_snapshot": "20261125T161908Z.json",
       "attributes": {
         "OBJECTID": 6579587,
         "Lannr": "24",
@@ -20634,6 +20638,221 @@
       "first_not_returned_at": "2026-11-17T21:40:15.085634Z",
       "last_not_returned_at": "2026-11-17T21:40:15.085634Z",
       "last_reappeared_at": "2026-11-18T21:24:04.320159Z"
+    },
+    "6593206": {
+      "notification_id": "6593206",
+      "first_seen_at": "2026-11-25T16:19:08.059838Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
+      "observation_status": "observed",
+      "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
+      "last_snapshot": "20261125T161908Z.json",
+      "attributes": {
+        "OBJECTID": 6593206,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2401",
+        "Kommun": "NORDMALING",
+        "ArendeAr": 2026,
+        "Beteckn": "A 42369-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1791817982000,
+        "AnmaldHa": 6.8,
+        "SkogsodlHa": 6.8,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      },
+      "tracked_attributes": {
+        "Beteckn": "A 42369-2026",
+        "Kommun": "NORDMALING",
+        "Kommunnr": "2401",
+        "ArendeStatus": "Anmält för avverkning",
+        "Avverktyp": "Föryngringsavverkning",
+        "Inkomdatum": 1791817982000,
+        "AnmaldHa": 6.8,
+        "SkogsodlHa": 6.8,
+        "NatforHa": null,
+        "AvvHa": null
+      },
+      "geometry_sha256": "041c12cd2469917eeacfb39826fcd1fe284059e5aee2b99c5f087a62a96320ee",
+      "attribute_sha256": "65def50cfbc1a1c55dd189ab25f9c640d14c61dac1b8aa6c9a4b23cc7256628f",
+      "status_interpretation": "current_source_observation_only"
+    },
+    "6593375": {
+      "notification_id": "6593375",
+      "first_seen_at": "2026-11-25T16:19:08.059838Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
+      "observation_status": "observed",
+      "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
+      "last_snapshot": "20261125T161908Z.json",
+      "attributes": {
+        "OBJECTID": 6593375,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2401",
+        "Kommun": "NORDMALING",
+        "ArendeAr": 2026,
+        "Beteckn": "A 20163-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1777273801000,
+        "AnmaldHa": 1.7,
+        "SkogsodlHa": 1.7,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      },
+      "tracked_attributes": {
+        "Beteckn": "A 20163-2026",
+        "Kommun": "NORDMALING",
+        "Kommunnr": "2401",
+        "ArendeStatus": "Anmält för avverkning",
+        "Avverktyp": "Föryngringsavverkning",
+        "Inkomdatum": 1777273801000,
+        "AnmaldHa": 1.7,
+        "SkogsodlHa": 1.7,
+        "NatforHa": null,
+        "AvvHa": null
+      },
+      "geometry_sha256": "13aad1075be4833033e47f0f539fa4f00ce10dba15e1796dfa69789a73a73eb6",
+      "attribute_sha256": "e75894ab66486affe75a322edcb6ba3bf415799c65907be4f8e974d8be900011",
+      "status_interpretation": "current_source_observation_only"
+    },
+    "6593851": {
+      "notification_id": "6593851",
+      "first_seen_at": "2026-11-25T16:19:08.059838Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
+      "observation_status": "observed",
+      "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
+      "last_snapshot": "20261125T161908Z.json",
+      "attributes": {
+        "OBJECTID": 6593851,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2480",
+        "Kommun": "UMEÅ",
+        "ArendeAr": 2026,
+        "Beteckn": "A 42519-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1791899503000,
+        "AnmaldHa": 2.8,
+        "SkogsodlHa": 2.8,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      },
+      "tracked_attributes": {
+        "Beteckn": "A 42519-2026",
+        "Kommun": "UMEÅ",
+        "Kommunnr": "2480",
+        "ArendeStatus": "Anmält för avverkning",
+        "Avverktyp": "Föryngringsavverkning",
+        "Inkomdatum": 1791899503000,
+        "AnmaldHa": 2.8,
+        "SkogsodlHa": 2.8,
+        "NatforHa": null,
+        "AvvHa": null
+      },
+      "geometry_sha256": "d6892b31ad786adf89d5e54a2dbe1f0fb74c0d23129c45563d7bb8e150046d80",
+      "attribute_sha256": "4c4b2bb991210edc6c0e0f9d94228b65c8cce32f50d91b33b175b108eb90a104",
+      "status_interpretation": "current_source_observation_only"
+    },
+    "6593934": {
+      "notification_id": "6593934",
+      "first_seen_at": "2026-11-25T16:19:08.059838Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
+      "observation_status": "observed",
+      "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
+      "last_snapshot": "20261125T161908Z.json",
+      "attributes": {
+        "OBJECTID": 6593934,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2480",
+        "Kommun": "UMEÅ",
+        "ArendeAr": 2026,
+        "Beteckn": "A 42506-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1791896668000,
+        "AnmaldHa": 1.7,
+        "SkogsodlHa": 1.7,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      },
+      "tracked_attributes": {
+        "Beteckn": "A 42506-2026",
+        "Kommun": "UMEÅ",
+        "Kommunnr": "2480",
+        "ArendeStatus": "Anmält för avverkning",
+        "Avverktyp": "Föryngringsavverkning",
+        "Inkomdatum": 1791896668000,
+        "AnmaldHa": 1.7,
+        "SkogsodlHa": 1.7,
+        "NatforHa": null,
+        "AvvHa": null
+      },
+      "geometry_sha256": "a9ec7ed33ebbb9e5257402e75f0f2987cdbeda7af2d3d1b9d681a8db8b000060",
+      "attribute_sha256": "d0f31ca715d032b2f7f6eb677a293fce00ba942800fd4a29e1ccacb7549e7164",
+      "status_interpretation": "current_source_observation_only"
+    },
+    "6593936": {
+      "notification_id": "6593936",
+      "first_seen_at": "2026-11-25T16:19:08.059838Z",
+      "last_seen_at": "2026-11-25T16:19:08.059838Z",
+      "observation_status": "observed",
+      "last_query_scope_hash": "62affa8ec2b0a3ad40a33ba273f73573de02a0598356dc81f6c80648195274c9",
+      "last_snapshot": "20261125T161908Z.json",
+      "attributes": {
+        "OBJECTID": 6593936,
+        "Lannr": "24",
+        "Lan": "VÄSTERBOTTENS LÄN",
+        "Kommunnr": "2480",
+        "Kommun": "UMEÅ",
+        "ArendeAr": 2026,
+        "Beteckn": "A 42510-2026",
+        "Avverktyp": "Föryngringsavverkning",
+        "Andamal": "Uppgift saknas",
+        "Skogstyp": "Normal skog",
+        "Inkomdatum": 1791897969000,
+        "AnmaldHa": 4.4,
+        "SkogsodlHa": 4.4,
+        "NatforHa": null,
+        "ArendeStatus": "Anmält för avverkning",
+        "AvvSasong": "Uppgift saknas",
+        "AvvHa": null,
+        "AvverkningsanmalanKlass": "Avverkningsamalan"
+      },
+      "tracked_attributes": {
+        "Beteckn": "A 42510-2026",
+        "Kommun": "UMEÅ",
+        "Kommunnr": "2480",
+        "ArendeStatus": "Anmält för avverkning",
+        "Avverktyp": "Föryngringsavverkning",
+        "Inkomdatum": 1791897969000,
+        "AnmaldHa": 4.4,
+        "SkogsodlHa": 4.4,
+        "NatforHa": null,
+        "AvvHa": null
+      },
+      "geometry_sha256": "48f7d44eebf08b86f402080a3e588b9bceee2379e7ba7af19e687b2f432480cb",
+      "attribute_sha256": "9d5d35ffbee74445822be45eb36105745e54e1147fae43d3db844dd78c5be9af",
+      "status_interpretation": "current_source_observation_only"
     }
   },
   "events": [
@@ -76291,6 +76510,119 @@
       "previous_observed_at": "2026-11-18T17:26:03.067341Z",
       "previous_snapshot": "20261118T172603Z.json",
       "snapshot": "20261118T212404Z.json",
+      "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
+    },
+    {
+      "event_type": "reappeared_or_newly_observed",
+      "notification_id": "6593206",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "previously_seen_in_scope_run": false,
+      "meaning": "Returned in the current query after being absent from the prior comparable query; application date is not inferred."
+    },
+    {
+      "event_type": "reappeared_or_newly_observed",
+      "notification_id": "6593375",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "previously_seen_in_scope_run": false,
+      "meaning": "Returned in the current query after being absent from the prior comparable query; application date is not inferred."
+    },
+    {
+      "event_type": "reappeared_or_newly_observed",
+      "notification_id": "6593851",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "previously_seen_in_scope_run": false,
+      "meaning": "Returned in the current query after being absent from the prior comparable query; application date is not inferred."
+    },
+    {
+      "event_type": "reappeared_or_newly_observed",
+      "notification_id": "6593934",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "previously_seen_in_scope_run": false,
+      "meaning": "Returned in the current query after being absent from the prior comparable query; application date is not inferred."
+    },
+    {
+      "event_type": "reappeared_or_newly_observed",
+      "notification_id": "6593936",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "previously_seen_in_scope_run": false,
+      "meaning": "Returned in the current query after being absent from the prior comparable query; application date is not inferred."
+    },
+    {
+      "event_type": "not_returned",
+      "notification_id": "3819225",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
+    },
+    {
+      "event_type": "not_returned",
+      "notification_id": "4906505",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
+    },
+    {
+      "event_type": "not_returned",
+      "notification_id": "6542638",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
+    },
+    {
+      "event_type": "not_returned",
+      "notification_id": "6542685",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
+    },
+    {
+      "event_type": "not_returned",
+      "notification_id": "6542909",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
+    },
+    {
+      "event_type": "not_returned",
+      "notification_id": "6542981",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
+      "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
+    },
+    {
+      "event_type": "not_returned",
+      "notification_id": "6576899",
+      "observed_at": "2026-11-25T16:19:08.059838Z",
+      "previous_observed_at": "2026-11-22T18:55:26.353227Z",
+      "previous_snapshot": "20261122T185526Z.json",
+      "snapshot": "20261125T161908Z.json",
       "meaning": "Absent from this successful comparable query only; not evidence of felling, cancellation, deletion, or expiry."
     }
   ]
