@@ -1140,3 +1140,19 @@ Test:
     python -m unittest discover -s tests -p "test_inspect_lansstyrelsen_fire_ban_service.py" -v
 
 Ingen featuredata hämtas av dessa kommandon.
+
+
+### Viltdata – första nationella differensanalys (2026-11-25)
+
+Den första jämförelsen mellan de två kompletta snapshotsen från 2026-11-18 är genomförd och dokumenterad i [viltdata-kill-statistics-diff-20261118.md](viltdata-kill-statistics-diff-20261118.md).
+
+- Baslinje: `20261118T204420Z`, Actions [#44394070179](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44394070179).
+- Senare observation: `20261118T220720Z`, Actions [#44408345762](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/44408345762).
+- Båda snapshots har 49 arter, 21 län, 550/550 lyckade statistikförfrågningar och 552 råfiler verifierade med byteantal och SHA-256.
+- Samma täckning verifierades: 73 255 observationsnycklar per snapshot. 73 252 var oförändrade och 3 ändrades; inga nycklar tillkom eller saknades.
+- Samtliga tre ändringar avser Älg 2026: nationellt 18 158→18 163, län 7 1 025→1 026 och län 17 2 014→2 018. Nationell differens +5 motsvarar de två redovisade länsdifferenserna tillsammans.
+- Båda snapshots innehöll 3 364 null-värden och 24 950 explicita nollvärden. Null och noll har hållits åtskilda.
+
+Detta är en jämförelse av rapporterade kumulativa årsserievärden, inte individuella fälthändelser eller fälldatum. Den första snapshoten är tyst baslinje; inga historiska larm skapas. Originaldata är oförändrade. Rättigheter för permanent lagring, bearbetning, kommersiell användning och kundvisning är fortsatt inte bedömda/godkända.
+
+**Nästa steg:** invänta rättighetsbesked och gör nästa differens först när ytterligare en komplett, integritetskontrollerad snapshot finns. Ofullständiga körningar får aldrig användas som baslinje eller diffunderlag.
