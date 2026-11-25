@@ -1708,3 +1708,29 @@ Detaljer och reproducerbar körinstruktion: [docs/viltdata-kill-statistics-diff-
 - **Dokumentationsbedömning:** `Assessed – no update required` för `SKOGSKOLL_SOURCE_STATUS.md` och `SKOGSKOLL_DATA_OVERVIEW.md`: ingen källåtkomst, källomfattning, rättighet eller arkitektur ändrades. Denna överlämningsnotering dokumenterar däremot den nya beständiga snapshot-/event-bundle-publiceringen.
 
 **Nästa konkreta steg:** kontrollera nästa schemalagda Gräsmyr-monitoringkörning och verifiera att planned/completed snapshots, analysfiler och event bundle publiceras konsistent ovanpå aktuell `main`. Behåll Samråd-historiken och jämför endast kompletta, jämförbara uttag. Granska eventuell data-PR före merge.
+
+## Projektledarsidan – latest-snapshot-koppling mergad (2026-11-25)
+
+PR [#626](https://github.com/dahlinrobert-lgtm/Skog/pull/626) är mergad till `main` 2026-11-25 kl. 17:13:38 UTC. Merge commit: `787482dc22c20d0742834f5c52876a844d59f73a`.
+
+**Verifierad implementation på main:**
+- `docs/project-manager/auth-config.js` pekar nu på Azure-containern och `latest.json`, inte längre på den fasta snapshoten `45002255351`.
+- `docs/project-manager/app.js` hämtar den senaste publiceringspekaren, validerar schema och run-scopade blobreferenser, kontrollerar payloadens byteantal och SHA-256 samt observationstid innan den renderar data. Vid fel visas ingen projektdata.
+- Sidan visar inventeringskörning och publiceringstid.
+- `docs/project-manager/index.html` har versionsparametrar för cache-busting.
+- `.github/workflows/project-manager.yml` inkluderar dashboardfilerna i relevanta triggers och kör Node syntaxkontroll.
+- `docs/PROJECT_STATUS.md` innehåller rotorsak, implementation och verifieringsgräns.
+
+**CI före merge:** projektledartester och Website JavaScript syntax passerade för PR #626 (Actions runs [45662337875](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45662337875) och [45662337807](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45662337807)). Även de två tidigare körningarna för föregående PR-commit passerade.
+
+**Post-merge ännu inte verifierat vid dokumentationstillfället:** workflowet för projektledartester och GitHub Pages deployment hade startat på merge commit `787482d` men var fortfarande pågående. Kontrollera att båda slutförs framgångsrikt. Därefter krävs livekontroll i webbläsare av Microsoft-inloggning, Azure CORS, hämtning av `latest.json` och visning av aktuell snapshot. Publisher-run #6 hade före merge bekräftat att snapshot `45644895332` och `latest.json` laddats upp och lästs tillbaka byte-för-byte.
+
+**Dokumentationsbedömning:** `docs/PROJECT_STATUS.md` och denna handover uppdaterade (Documented). `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedömda Assessed – no update required: ändringen gäller projektledarens read-only driftvy, inte källåtkomst, datatäckning, rättigheter eller kundvisning.
+
+**Nästa konkreta steg:**
+1. Kontrollera post-merge Actions för projektledartester och Pages deployment.
+2. Öppna [projektledarsidan](https://dahlinrobert-lgtm.github.io/Skog/project-manager/) i webbläsare, logga in och verifiera att senaste publicerade snapshot läses från `latest.json`.
+3. Kontrollera att sidan visar aktuell inventeringskörning/publiceringstid och att SHA-256-verifieringen släpper igenom payloaden.
+4. Om livekontrollen misslyckas, felsök Entra-inloggning, Azure Blob Data Reader och CORS utan att falla tillbaka till en hårdkodad äldre snapshot.
+
+Ändringen ger inte skrivbehörighet, kundvisningsrätt eller kommersiellt godkännande för datakällor.
