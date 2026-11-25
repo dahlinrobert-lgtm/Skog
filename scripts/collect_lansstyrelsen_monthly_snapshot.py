@@ -15,6 +15,24 @@ from search_lansstyrelsen_diary_browser import (
 DATE_FROM="#SearchPlaceHolder_CaseSearch_ddDatefrom"
 DATE_TO="#SearchPlaceHolder_CaseSearch_ddDateto"
 
+def select_county_and_wait(page, county_label, county_value):
+ """Select a diary and wait for its full or asynchronous ASP.NET postback."""
+ try:
+  with page.expect_navigation(wait_until="domcontentloaded",timeout=15000):
+   page.locator(COUNTY_SELECT).select_option(value=county_value)
+ except PlaywrightTimeoutError:
+  # Some portal responses use an asynchronous postback instead.
+  pass
+ page.locator(COUNTY_SELECT).wait_for(state="visible",timeout=45000)
+ page.locator(TITLE_INPUT).wait_for(state="visible",timeout=45000)
+ selected=page.locator(f"{COUNTY_SELECT} option:checked").inner_text()
+ if clean(selected)!=county_label:
+  raise RuntimeError(
+   "County selection was not retained after the portal postback: "
+   f"expected {county_label!r}, got {clean(selected)!r}"
+  )
+
+
 def collect_interval(page, county_label, phrase, start, end):
  page.goto(URL,wait_until="domcontentloaded",timeout=60000)
  page.locator(COUNTY_SELECT).wait_for(state="visible",timeout=30000)
@@ -22,7 +40,7 @@ def collect_interval(page, county_label, phrase, start, end):
        for o in page.locator(f"{COUNTY_SELECT} option").all()]
  county=next((o for o in opts if o["label"]==county_label),None)
  if not county: raise RuntimeError(f"County option not found: {county_label}")
- page.locator(COUNTY_SELECT).select_option(value=county["value"])
+ select_county_and_wait(page,county_label,county["value"])
  if phrase is not None:
   page.locator(TITLE_INPUT).fill(phrase)
  page.locator(DATE_FROM).fill(start); page.locator(DATE_TO).fill(end)
