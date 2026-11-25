@@ -131,7 +131,7 @@
         const nextStep = task.next_step ? " · Nästa steg: " + task.next_step : "";
         const meta = "Status: " + (task.status || "ej angiven") + nextStep + duplicateNote;
         const priority = task.priority || "Prioritet ej angiven";
-        const priorityClass = /^P[01](?:\\b|\\s)/i.test(priority) ? "next" : "";
+        const priorityClass = priority.toUpperCase().startsWith("P0") || priority.toUpperCase().startsWith("P1") ? "next" : "";
         renderItem(backlogEl, task.id + " · " + task.title, meta, priority, priorityClass, task.source_url);
       });
       if (backlog.duplicate_ids?.length) {
