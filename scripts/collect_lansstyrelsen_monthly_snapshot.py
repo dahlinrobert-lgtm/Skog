@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
 
-from lansstyrelsen_pager import build_pager_action_diagnostic, select_next_pager_action
+from lansstyrelsen_pager import (build_pager_action_diagnostic, build_pager_state_diagnostic, select_next_pager_action)
 from search_lansstyrelsen_diary_browser import (
  URL, COUNTY_SELECT, TITLE_INPUT, SEARCH_BUTTON, RESULT_GRID, clean, parse_total,
  extract_grid
@@ -64,7 +64,7 @@ def collect_interval(page, county_label, phrase, start, end):
   return {"from":start,"to":end,"source_total":0 if zero else total,
           "extracted_unique_ids":0,"pager_complete":zero,"reconciled":zero,
           "records":[],"pages_read":0,"pager_actions":[],"error":None if zero else "No result grid and no explicit zero"}
- seen=set(); seen_diary_numbers=set(); page_signatures=set(); records=[]; diagnostics=[]; pager_actions=[]; pager_complete=False
+ seen=set(); seen_diary_numbers=set(); page_signatures=set(); records=[]; diagnostics=[]; pager_actions=[]; pager_states=[]; pager_complete=False
  for page_no in range(1,101):
   grid.wait_for(state="visible",timeout=10000)
   ids=tuple(match for row in page.locator(f"{RESULT_GRID} tr").all()
@@ -87,6 +87,11 @@ def collect_interval(page, county_label, phrase, start, end):
    event=re.search(r"""__doPostBack\(['"]([^'"]+)['"]\s*,\s*['"]([^'"]*)['"]\)"""," ".join((href,onclick)))
    if event:
     target,arg=event.groups(); candidates.append({"label":label,"target":target,"argument":arg})
+  pager_row_text=clean(pager.inner_text()) if pager.count() else ""
+  pager_html=pager.evaluate("(e)=>e.outerHTML") if pager.count() else ""
+  pager_states.append(build_pager_state_diagnostic(
+   page_no, pager_row_text, candidates, pager_html
+  ))
   next_item=select_next_pager_action(candidates,page_no-1)
   if next_item is None:
    pager_complete=True; break
@@ -112,7 +117,7 @@ def collect_interval(page, county_label, phrase, start, end):
  return {"from":start,"to":end,"source_total":total,"extracted_unique_ids":len(seen),
          "pager_complete":pager_complete,"reconciled":total is not None and len(seen)==total and pager_complete,
          "records":records,"pages_read":len(diagnostics),"table_diagnostics":diagnostics,
-         "pager_actions":pager_actions,"error":None}
+         "pager_actions":pager_actions,"pager_states":pager_states,"error":None}
 
 def main():
  p=argparse.ArgumentParser()

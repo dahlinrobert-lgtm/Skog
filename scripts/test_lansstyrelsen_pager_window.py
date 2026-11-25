@@ -3,7 +3,7 @@
 from __future__ import annotations
 import unittest
 from unittest.mock import Mock
-from scripts.lansstyrelsen_pager import select_next_pager_action
+from scripts.lansstyrelsen_pager import (\n    build_pager_state_diagnostic, select_next_pager_action,\n)
 
 
 class SlidingPagerWindowTests(unittest.TestCase):
@@ -32,6 +32,23 @@ class SlidingPagerWindowTests(unittest.TestCase):
             {"label": "6", "target": "grid", "argument": "Page$6"},
         ]
         self.assertEqual(select_next_pager_action(actions, 4)["argument"], "Page$6")
+
+    def test_pager_state_captures_candidates_and_row_text(self):
+        state = build_pager_state_diagnostic(
+            7, "1 2 ... 8", [{"label": "...", "target": "grid", "argument": "Page$1"}],
+            "<tr>pager</tr>",
+        )
+        self.assertEqual(state["page_from"], 7)
+        self.assertEqual(state["row_text"], "1 2 ... 8")
+        self.assertEqual(state["candidate_actions"][0]["argument"], "Page$1")
+        self.assertEqual(state["pager_html"], "<tr>pager</tr>")
+        self.assertFalse(state["pager_html_truncated"])
+
+    def test_pager_html_is_capped_and_reports_truncation(self):
+        state = build_pager_state_diagnostic(1, "row", [], "x" * 12001)
+        self.assertEqual(len(state["pager_html"]), 12000)
+        self.assertTrue(state["pager_html_truncated"])
+        self.assertEqual(state["pager_html_original_length"], 12001)
 
     def test_no_continuation_is_terminal(self):
         self.assertIsNone(select_next_pager_action([], 5))

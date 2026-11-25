@@ -92,3 +92,19 @@ def build_pager_action_diagnostic(
         "response_seen": bool(response_seen),
         "page_changed": bool(page_changed),
     }
+
+
+def build_pager_state_diagnostic(
+    page_from: int, row_text: str, candidates: list[dict], pager_html: str,
+    html_limit: int = 12000,
+) -> dict:
+    """Capture bounded, read-only evidence of the visible pager before a transition."""
+    html = pager_html or ""
+    return {
+        "page_from": page_from,
+        "row_text": row_text or "",
+        "candidate_actions": [dict(item) for item in candidates],
+        "pager_html": html[:html_limit],
+        "pager_html_truncated": len(html) > html_limit,
+        "pager_html_original_length": len(html),
+    }
