@@ -1,7 +1,7 @@
 from __future__ import annotations
 import gzip, json, tempfile, unittest
 from pathlib import Path
-from scripts.inventory_samrad_snapshots import inventory_snapshot_files
+from scripts.inventory_samrad_snapshots import case_identity_index, inventory_snapshot_files
 
 def complete_snapshot():
     def layer(features):
@@ -27,6 +27,13 @@ class SamradArchiveInventoryTests(unittest.TestCase):
         self.assertEqual(rows[0]["eligibility"],"eligible")
         self.assertTrue(rows[0]["production_gate_complete"])
         self.assertEqual(rows[0]["layer_ids"]["lines"],["lines:47112"])
+
+    def test_case_identity_uses_the_production_grouping_rule(self):
+        snapshot = complete_snapshot()
+        snapshot["layers"]["lines"]["features"][0]["properties"]["Beteckn"] = "ABC-123"
+        index = case_identity_index(snapshot)
+        self.assertEqual(index["lines:47112"]["group_key"], "case:abc-123")
+        self.assertTrue(index["lines:47112"]["event_id"].startswith("samrad-case:"))
 
     def test_partial_snapshot_is_excluded_with_reason(self):
         snapshot=complete_snapshot()
