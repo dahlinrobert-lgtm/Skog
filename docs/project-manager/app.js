@@ -47,7 +47,7 @@
     const notice = byId("data-notice");
     notice.className = "notice bad";
     notice.textContent = message;
-    ["work-list", "runs-list", "scheduled-runs-list", "recovered-runs-list", "failed-runs-list", "projects-list", "source-list"].forEach((id) => empty(id, "Ingen verifierad live-data tillgänglig."));
+    ["work-list", "priority-backlog-list", "runs-list", "scheduled-runs-list", "recovered-runs-list", "failed-runs-list", "projects-list", "source-list"].forEach((id) => empty(id, "Ingen verifierad live-data tillgänglig."));
   };
   const render = (data, publication) => {
     if (!data || data.schema_version !== 1 || !Array.isArray(data.projects) ||
@@ -60,7 +60,8 @@
     const partial = data.status !== "success" ||
       data.successful_repositories !== data.expected_repositories ||
       data.failed_repositories !== 0 ||
-      !data.source_registry || data.source_registry.status !== "success";
+      !data.source_registry || data.source_registry.status !== "success" ||
+      !data.priority_backlog || data.priority_backlog.status !== "success";
     const stale = ageHours > 24;
     const notice = byId("data-notice");
     notice.className = "notice " + (partial || stale ? "bad" : "good");
@@ -113,6 +114,31 @@
         item.draft ? "Utkast" : "Öppen", "", item.html_url);
     });
     if (work.length > 25) workEl.appendChild(make("div", "meta", "Visar 25 av " + work.length + " öppna poster."));
+
+    const backlog = data.priority_backlog;
+    const backlogSummary = byId("priority-backlog-summary");
+    const backlogEl = byId("priority-backlog-list");
+    backlogEl.replaceChildren();
+    if (!backlog || backlog.status !== "success" || !Array.isArray(backlog.tasks)) {
+      backlogSummary.textContent = "Den prioriterade backloggen kunde inte hämtas komplett. Uppgifter visas inte som om listan vore tom.";
+      empty("priority-backlog-list", "Ingen verifierad prioriterad backlogg tillgänglig.");
+    } else {
+      backlogSummary.textContent = backlog.task_count + " strukturerade uppgifter · källa " +
+        backlog.source_repository + "/" + backlog.source_path +
+        (backlog.source_commit ? " · commit " + backlog.source_commit.slice(0, 7) : "");
+      backlog.tasks.forEach((task) => {
+        const duplicateNote = task.duplicate_id ? " · VARNING: ID förekommer på flera uppgifter" : "";
+        const nextStep = task.next_step ? " · Nästa steg: " + task.next_step : "";
+        const meta = "Status: " + (task.status || "ej angiven") + nextStep + duplicateNote;
+        const priority = task.priority || "Prioritet ej angiven";
+        const priorityClass = priority.toUpperCase().startsWith("P0") || priority.toUpperCase().startsWith("P1") ? "next" : "";
+        renderItem(backlogEl, task.id + " · " + task.title, meta, priority, priorityClass, task.source_url);
+      });
+      if (backlog.duplicate_ids?.length) {
+        backlogEl.appendChild(make("div", "meta", "Dubblett-ID i källbackloggen: " + backlog.duplicate_ids.join(", ") +
+          ". Uppgifterna visas separat och har inte slagits ihop."));
+      }
+    }
 
     const runsEl = byId("runs-list");
     runsEl.replaceChildren();

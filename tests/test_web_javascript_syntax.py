@@ -82,6 +82,10 @@ def test_project_manager_source_registry_section_is_present():
     assert 'data.source_registry' in app
     assert "Källregistret kunde inte hämtas komplett" in app
     assert "Ej operativt bedömd" in app
+    assert 'id="priority-backlog-summary"' in html
+    assert 'id="priority-backlog-list"' in html
+    assert "data.priority_backlog" in app
+    assert "Ingen verifierad prioriterad backlogg tillgänglig." in app
 
 def test_project_manager_external_javascript_syntax():
     for relative in ("docs/project-manager/app.js", "docs/project-manager/auth-config.js"):
