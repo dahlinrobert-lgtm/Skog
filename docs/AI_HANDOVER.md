@@ -1919,21 +1919,29 @@ Fixgren `fix/source-status-report-pr-base-main` lägger till explicit `base: mai
 
 **Dokumentationsstatus:** Documented. Inga källdata, rättigheter eller kundvisningsinställningar ändrades.
 
-## 2026-11-25 – PM-027 två källprofiler och inventory #18-uppföljning
+## 2026-11-25 – PM-027 inventory #19 och Älgdata två-run-verifiering
 
-Projektledarrepot har nu två evidensbaserade poster i `data/source_operations_profiles.json`:
+Projektledarrepots read-only inventory [#19](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45702596272) kördes efter merge av PR [#78](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/78), från commit `f1ecda4ba73cb934bb92defd7f84d308a68c7ae8`, och avslutades `completed/success`. Artifact ID `15062948640` (SHA-256 `b18f0a53bf18b6de4d55f3d86e77ed583b5944fd0416faf0cb7c78650692d9b1`) granskades:
 
-- `skogsstyrelsen.samrad`: `pilot_recurring`, tre kompletta jämförbara körningar, exakt workflow `.github/workflows/collect-samrad.yml`, Gräsmyr 10 km. Nationell täckning är inte verifierad och riskbedömningen är partiell eftersom leverantörens minimiintervall/rate limits är okända.
-- `lansstyrelsen.elk_harvest_statistics`: `baseline`, nationellt scope för Älgdata rapport 3, säsong 2026/2027, 129 aktuella ÄFO. Ett separat komplett Actions-run-ID är verifierat. Dashboard/snapshot från 2026-11-25 har också verifierats, men den senare körningens exakta Actions-run-ID:n är ännu inte kopplade i profilen. Därför höjs inte status till återkommande drift eller produktion.
+- 3/3 registrerade repositories lyckades, 0 insamlingsfel; 52 source_id, varav 15 med operations-block och 37 utan.
+- Två kuraterade driftprofiler fanns i read model. Python-tester och dashboardens JavaScript-syntaxkontroll passerade; write-enabled alert-jobbet var `skipped`.
+- Artifactens säkerhetsfält: `read_only=true`, `no_repository_writes=true`, `no_secrets_in_output=true`.
 
-Projektledarens senaste read-only inventory vid kontrollen är [#18](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45697167605), avslutad med success 2026-11-25 20:40 UTC. Den startade före merge av projektledar-PR [#78](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/78) (Älgdata-profilen; merge commit `f1ecda4ba73cb934bb92defd7f84d308a68c7ae8`, cirka 21:00 UTC). Inventory #18 kan därför inte verifiera att Älgdata-profilen är inläst i read model. Ingen senare inventory #19 fanns i Actions-listan vid denna kontroll. Nästa verifiering är en ny read-only inventory efter PR #78; kontrollera artifact/read model för båda profilerna. Inventoryn ska förbli read-only.
+Inventory #19 verifierade att Älgdata-profilen från PR #78 var inläst, men den visades då som `baseline` eftersom endast ett komplett Actions-run-ID var länkat. En separat granskning av run-jobb och båda arkiverade artifacten styrker nu två jämförbara kompletta körningar:
 
-**PM-027-status:** källstatusrapporten redovisar 52 källor, 15 med operativt `operations`-block och 37 utan. Endast två av de 15 operativa källorna har nu fullständiga driftprofiler i projektledarrepot; 13 återstår att profilera/bedöma. De 37 övriga saknar fortfarande operativt block och behöver kartläggas per exakt källa, produkt och lager. Detta är alltså en avgränsad första leverans, inte färdig PM-027.
+- [Run 43952789564](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/43952789564): samtliga snapshotsteg passerade; artifact ID `14271201667`; 129 daterade ÄFO-filer för 2026-11-16, 129 unika ID:n, report 3, säsong 2026/2027, aktuella gränser och 3 237 råa ÄJO-rader.
+- [Run 45273303393](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45273303393): samtliga snapshotsteg passerade; artifact ID `14867345764`; 129 unika ÄFO-filer för 2026-11-23 (artifacten innehåller också den separata tidigare batchen 2026-11-21), samma report/säsong/gränsläge och 3 237 råa ÄJO-rader.
+- Jämförelse 2026-11-16 mot 2026-11-23: exakt samma 129 ÄFO-ID:n, 0 saknade och 0 tillkomna. Gemensam jämförbarhetsnyckel: `report=3|season=2026/2027|boundary=current|afo_count=129`.
 
-**Nästa källspår:** Trafikverkets befintliga workflow `.github/workflows/trafikverket-weekly-snapshots.yml` och `scripts/snapshot_trafikverket.py` hämtar både Miljöwebb Landskap och NVDB Viltolyckor i separata tjänster/lager, inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope. Workflowet kör veckovis, har 45 minuters job-timeout och collectorn har fem försök per request med begränsad exponentiell väntan samt adaptiv spatial uppdelning. Detta är en gemensam teknisk insamlingsväg för två separata source_id – inte bevis för nationell täckning eller två kompletta jämförbara körningar. Nästa steg är att verifiera exakta workflow-run-ID:n, manifestens scope och lagernivåer innan profiler skapas. Rättigheter för varje exakt produkt/lager förblir separata och villkorade.
+PM-repo PR [#79](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/79) lägger till run `45273303393` i den befintliga profilen och ändrar `rollout_stage` från `baseline` till `pilot`. Efter merge ska read model klassificera Älgdata som `pilot_recurring` vid nästa inventory. PR:n är ännu inte mergad vid denna dokumentationsuppdatering. Ingen production-status hävdas: leverantörens rate limits och minsta anropsintervall är fortsatt okända och riskbedömningen är partiell.
 
-Dokumentationsbedömning: denna handover-uppdatering är `Documented`; ingen källåtkomst, insamlingskadens eller rättighetsstatus ändras av dokumentationsändringen.
+Den 2026-11-25-dashboard som dokumenteras via bot-commit `62ece75597cb249f6ab618ad12a9a1aec3c46650` är separat commit-/snapshot-evidens; dess exakta Actions-run-ID är inte fastställt och ska inte härledas från committen.
 
+**PM-027-status:** två profiler finns i projektledarrepots main (Samråd och Älgdata), men full daglig käll-/produkt-/lageröversikt, freshness per kadens och full evidenslänkning återstår. Källstatusrapporten visar 52 källor, 15 med operations-block och 37 utan; 13 av de 15 operativa källorna saknar ännu driftprofil.
+
+**Nästa konkreta steg:** efter merge av PM-repo PR #79, kör en ny read-only inventory och verifiera att Älgdata visas som `pilot_recurring`. Därefter kartlägg Trafikverkets två separata produkter – Miljöwebb Landskap och NVDB Viltolyckor – mot befintligt workflow och manifest. Run #33 är en första komplett baseline inom Gräsmyrs ungefärliga 75 × 75 km-envelope, inte nationell täckning eller en historisk jämförelseserie. Skapa separata produktprofiler först när lager-/scope-evidensen är genomgången. Rättigheter för respektive produkt/lager förblir separata och villkorade.
+
+**Dokumentationsstatus:** Documented för inventory #19 och de två verifierade Älgdata-körningarna. PM-027 som helhet är fortfarande öppen.
 
 ### Trafikverket – produktionskörning #33 och arkiverad snapshot verifierade (2026-11-25)
 
