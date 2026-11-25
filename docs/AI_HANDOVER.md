@@ -1966,3 +1966,22 @@ Båda Trafikverket-profilerna har en komplett baseline-observation från run [45
 **Nästa konkreta steg:** granska nästa schemalagda read-only Project Manager inventory efter merge av PM PR #79/#80 och Skog PR #667. Workflowet triggas var femte minut och schedule-gaten samlar in var femte minut under vardagar 16:00–01:00 och helger 10:00–01:00 (Europe/Stockholm), samt varje hel timme utanför dessa fönster. Verifiera i artifacten att Älgdata klassas `pilot_recurring`, att båda Trafikverket-profilerna finns som baseline och att source-/workflow-kopplingarna visas korrekt. Därefter invänta nästa veckovisa kompletta Trafikverket-snapshot och jämför varje produkt separat mot sin baseline. PM-027 som helhet är fortfarande öppen.
 
 **Dokumentationsstatus:** Documented. Ingen ny collector, snapshotmodell, rättighetsstatus eller kundvisningsrätt har införts.
+
+
+## 2026-11-25 – PM-027 read-only inventory #20 verifierad
+
+Projektledarens [inventory #20](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45712438496) kördes manuellt från PM-repots main-commit `7450cd72f66a13544289d01e7afaf38f60aab4f5` och avslutades `completed/success`. Artifact `project-manager-inventory-45712438496`, ID `15068286448`, SHA-256 `09f860249d451b64f581c4ce67983e66a425e2d4cb5b0f3b91a070173fa80212`, granskades. Payloadens observationstid är `2026-11-25T22:21:10.992689Z`: 3/3 aktiva repositories, 0 fel, status `success`. Collector-tester, JS-syntax, tokenkontroll, insamling och artifact-upload passerade; det skrivande central-alert-jobbet var `skipped`. Security assertions: read-only, inga repository writes och inga secrets i output.
+
+Read model bekräftar:
+- Samråd: `pilot_recurring`, 3 jämförbara kompletta körningar.
+- Länsstyrelsernas Älgdata: `pilot_recurring`, 2 jämförbara kompletta nationella körningar med 129 ÄFO.
+- Trafikverket Miljöwebb Landskap: `baseline`, 1 komplett körning, 27 lager/2 396 features.
+- Trafikverket NVDB Viltolyckor: `baseline`, 1 komplett körning, 7 lager/5 278 features.
+
+PM-backloggen lästes in (10 uppgifter) men innehåller fortfarande duplicerade PM-ID:n PM-023, PM-024 och PM-027. Inventeringen slår inte ihop dessa automatiskt.
+
+**Adapterlucka:** artifactens `source_snapshot_evidence` för Skog innehåller fortfarande endast avverkningsanmälningar och Samråd. Älgdata samt de två Trafikverket-profilerna saknar därmed ännu adapterfält för senaste försök/snapshotinventering. Profilklassningarna ovan kommer från source registry och driftprofiler, inte från en full snapshotadapter för respektive produkt. Ingen ny collector eller historikmodell ska byggas; nästa tekniska steg är att utöka den befintliga read-only adaptern med exakta workflowkopplingar och manifest-/dashboardmetadata för dessa tre source_id, och testa fail-closed.
+
+**Nästa konkreta steg:** utöka befintlig `scripts/source_snapshot_adapters.py` och dess tester i projektledarrepot. Älgdata ska behålla skillnaden mellan dashboard/blob-evidens och exakt Actions-run-ID. Trafikverkets två tjänster ska valideras separat mot samma manifest men respektive lager-ID och featuretotal. Metadata-only; inga GeoJSON-featurecollections ska hämtas. Därefter kör ny inventory och granska artifacten.
+
+PM-027 är fortsatt P0 och inte färdig.

@@ -1247,3 +1247,16 @@ Projektledarrepots [PR #80](https://github.com/dahlinrobert-lgtm/skogskoll-proje
 Båda är baseline inom Gräsmyrs ungefärliga 75 × 75 km-envelope. En andra komplett körning med samma envelope och exakta lager-ID:n krävs innan återkommande pilotdrift kan hävdas. Detta är inte nationell täckning och source total är inte verifierad. NVDB Viltolyckor avser aggregerad olycksfrekvens per väglänk, inte enskilda olyckor. Rättighets- och kundvisningsbedömningar är oförändrade.
 
 Nästa steg är en read-only inventory efter merge av PR #79 och #80 för att verifiera den publicerade read model-statusen. Därefter ska nästa Trafikverket-snapshot jämföras med respektive produktbaslinje. Ingen ny collector eller historikmodell behövs.
+
+
+## PM-027 – read-only inventory #20 (2026-11-25)
+
+[Project manager read-only inventory #20](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45712438496) avslutades success med 3/3 repositories och 0 fel. Artifact ID `15068286448`, SHA-256 `09f860249d451b64f581c4ce67983e66a425e2d4cb5b0f3b91a070173fa80212`, observationstid `2026-11-25T22:21:10.992689Z`.
+
+Den publicerade read model klassar Samråd och Älgdata som `pilot_recurring` (3 respektive 2 jämförbara kompletta körningar). Miljöwebb Landskap och NVDB Viltolyckor är separata `baseline`-profiler med en komplett körning vardera.
+
+**Begränsning:** Skogs `source_snapshot_evidence` innehåller i artifact #20 fortfarande endast avverkningsanmälningar och Samråd. Älgdata samt de två Trafikverket-produkterna har alltså profilklassning och workflowmetadata men ännu ingen egen adapterpost för senaste försök och snapshotinventering. Detta ska inte förväxlas med att snapshoten saknas. Nästa steg är att utöka befintlig metadata-only-adapter och tester, med exakt workflowkoppling per repository och manifest-/dashboardmetadata. Älgdatas dashboard-commit får inte omvandlas till ett gissat Actions-run-ID. Trafikverkets två produkter ska valideras separat mot tjänstnyckel, lager-ID:n och featuretotaler i manifestet. Inga featurecollections ska hämtas.
+
+Inventeringen läste 52 source_id (15 operations-block, 37 utan) och PM-backloggen med 10 uppgifter. Duplicerade PM-ID:n PM-023, PM-024 och PM-027 flaggades och förblev separata.
+
+Rättigheter och kundvisning är oförändrade. PM-027 som helhet är fortfarande öppen.
