@@ -1748,3 +1748,24 @@ PR [#626](https://github.com/dahlinrobert-lgtm/Skog/pull/626) är mergad till `m
 **Dokumentationsbedömning:** docs/police-events-norrbotten.md och denna handover uppdateras (Documented). docs/SKOGSKOLL_SOURCE_STATUS.md och docs/SKOGSKOLL_DATA_OVERVIEW.md bedöms Assessed – no update required: ingen källåtkomst, rättighet eller dataarkitektur har ändrats.
 
 **Nästa konkreta steg:** invänta nästa schemalagda Police events archive-körning och kontrollera att PR #448 uppdateras från main med tidigare event-ID:n bevarade och nya poster tillagda. Kontrollera även att kandidatutdrag och kvalitetsrapport räknas om från den bevarade normaliserade händelselistan. Merge:a inte PR #448 förrän denna historikjämförelse är verifierad. Bevara Azure-råsegment och kandidater; frånvaro i en API-sida får inte tolkas som borttagning.
+
+## 2026-11-25 – Projektledarsidan visar prioriterad PM-backlogg
+
+PR [#633](https://github.com/dahlinrobert-lgtm/Skog/pull/633) är mergad till `main` med squash-commit `65b62308950323e9e83fa262ea1fec22c30e8422`. Den kompletterar den privata projektledarens read-only inventory med en separat vy för strukturerade PM-uppgifter.
+
+- Collector-förändringen är mergad i privata [skogskoll-project-manager-history PR #73](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/73), merge commit `b21a850e691f964f1a0ed50f7a46162877475ce3`.
+- Den privata collectorn läser `docs/PROJECT_BACKLOG.md` från Skog `main`, extraherar PM-avsnitt med uttrycklig prioritet/status/nästa steg och lägger med backloggens blob-SHA i inventory-payloaden.
+- Projektledarsidan visar nu PM-ID, titel, prioritet, status och nästa steg i sektionen **Prioriterade utvecklingsuppgifter**. Den visar också källa/commit och markerar dubbla ID:n i stället för att slå ihop uppgifter.
+- Backloggen i Skog-repot är fortsatt enda sanningskälla. Ingen parallell task-lista, ny datalagring, ny credential eller direkt GitHub-anrop från webbläsaren har införts.
+- Om backloggen inte kan hämtas eller tolkas markeras inventory som `partial`; en saknad uppgiftslista visas inte som en tom/komplett lista.
+
+**Verifierade CI-kontroller före merge:**
+- Private collector: [Project manager tests #132](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45666872858) – success.
+- Private append-only regression: [Synthetic append-only tests #114](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45666872860) – success.
+- Skog Pages: [Website JavaScript syntax #307](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45666813070) – success.
+- Skog regression suite: [Snapshot storage tests #562](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45666812959) – success.
+- Skog project manager tests: [run #26](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45666813045) – success.
+
+**Inte ännu liveverifierat:** en ny schemalagd inventory-run efter merge, att Azure latest-publiceraren publicerar den nya payloaden, samt att den autentiserade webbläsaren visar den nya uppgiftssektionen. PR-merge och CI bevisar inte detta. Nästa steg är att kontrollera nästa lyckade inventory/publisher-kedja och därefter verifiera sidan efter Microsoft-inloggning.
+
+**Dokumentationsbedömning:** `docs/PROJECT_MANAGER_AGENT.md`, `docs/PROJECT_STATUS.md` och denna handover uppdaterade (Documented). `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedömda Assessed – no update required: ingen datakälla, datatäckning, rättighet eller källinsamling ändrades.
