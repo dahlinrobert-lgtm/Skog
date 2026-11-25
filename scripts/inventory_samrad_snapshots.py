@@ -119,6 +119,8 @@ def layer_diagnostics(snapshot: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(features, list):
             result[name] = {"layer_status": layer.get("status") if isinstance(layer, dict) else None,
                             "features_count": None, "count_fields_present": sorted(count) if isinstance(count, dict) else [],
+                            "layer_fields_present": sorted(key for key in layer if key != "features") if isinstance(layer, dict) else [],
+                            "layer_numeric_metadata": {key: value for key, value in layer.items() if key != "features" and isinstance(value, int) and not isinstance(value, bool)} if isinstance(layer, dict) else {},
                             "geometry_missing_or_empty": None, "geometry_unparseable": None, "geometry_invalid": None}
             continue
         missing = unparseable = invalid = 0
@@ -147,6 +149,8 @@ def layer_diagnostics(snapshot: dict[str, Any]) -> dict[str, Any]:
             "layer_status": layer.get("status") if isinstance(layer, dict) else None,
             "features_count": len(features),
             "count_fields_present": sorted(count) if isinstance(count, dict) else [],
+            "layer_fields_present": sorted(key for key in layer if key != "features") if isinstance(layer, dict) else [],
+            "layer_numeric_metadata": {key: value for key, value in layer.items() if key != "features" and isinstance(value, int) and not isinstance(value, bool)} if isinstance(layer, dict) else {},
             "feature_ids_unique": len(ids) == len(set(ids)),
             "feature_ids_without_stable_id": len(features) - len(ids),
             "geometry_missing_or_empty": missing,
