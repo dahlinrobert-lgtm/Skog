@@ -145,6 +145,27 @@ class HarvestEventBundleTests(unittest.TestCase):
         self.assertIn('Historisk frånvaro i senare uttag tolkas inte som avslut', events[0]['summary'])
         self.assertEqual(events[0]['last_observed_at'], '2026-11-02T11:00:00Z')
 
+    def test_samrad_history_accepts_empty_layer_without_request_pages(self):
+        snapshot = self.samrad_fixture()
+        snapshot["counts"]["points"].update({
+            "pages": 0,
+            "records_fetched_in_envelope": 0,
+            "records_in_scope": 0,
+            "records_outside_scope": 0,
+        })
+        runs, observations, events, evidence, index = build_samrad_history([
+            ("data/samrad_snapshots/samrad_20261102T110000Z.json.gz", snapshot),
+        ])
+        self.assertEqual((len(runs), len(observations), len(events)), (1, 1, 1))
+
+    def test_samrad_history_rejects_zero_page_layer_with_records(self):
+        snapshot = self.samrad_fixture()
+        snapshot["counts"]["areas"]["pages"] = 0
+        runs, observations, events, evidence, index = build_samrad_history([
+            ("data/samrad_snapshots/samrad_20261102T110000Z.json.gz", snapshot),
+        ])
+        self.assertEqual((len(runs), len(observations), len(events)), (0, 0, 0))
+
     def test_partial_samrad_snapshot_is_excluded_from_history(self):
         complete = self.samrad_fixture()
         partial = json.loads(json.dumps(complete))
