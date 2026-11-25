@@ -1187,3 +1187,12 @@ Snapshoten `data/samrad_snapshots/samrad_20261125T164133Z.json.gz` är 400 407 b
 Detta ändrar inte källans rättighetsstatus. Teknisk åtkomst och arkivering är inte kommersiellt tillstånd, kundvisningsrätt eller distributionsrätt. Historikregeln kvarstår: frånvaro i senare snapshot får inte klassas som avbokning, borttagning eller genomförd åtgärd.
 
 **Nästa kontroll:** verifiera nästa schemalagda Samråd-körning och dess PR-automation. Nationell täckning och avstämning mot källtotaler är fortfarande inte verifierade.
+
+
+## 2026-11-25 – Samråd: PM-027-manifest verifierat och historikfråga avgränsad
+
+Projektledarens read-only inventory #16 verifierade Samråds separata manifest för det konfigurerade Gräsmyr 10 km-scope: 21 poster (0 punkter, 9 linjer, 12 polygoner), uttömd paginering i samtliga lager och noll saknade/felaktiga geometrier. Inventoryn föregick Skog PR [#619](https://github.com/dahlinrobert-lgtm/Skog/pull/619). Efter PR #619 pekar Skog `main`-manifestet på snapshoten från 2026-11-25 16:41:33.484740 UTC; 27 daterade snapshotfiler finns i arkivet. Ny projektledarinventory krävs för att verifiera att den senaste manifestversionen har nått read model/publiceringen.
+
+Den härledda event bundle-historiken följs separat i [issue #639](https://github.com/dahlinrobert-lgtm/Skog/issues/639). Frågan gäller varför 27 arkiverade snapshots motsvarar tre Samråd source runs och 21 händelser i aktuell bundle, samt varför två tidigare observerade linjeobjekt saknas. Detta är ännu inte fastställt som en bugg; äldre snapshots kan inte uppfylla dagens fullständighetskrav. Nästa steg är en read-only eligibility-inventering. Daterade gzip-snapshots är fortsatt råhistorikens sanningskälla och ska inte ändras.
+
+Rättighetsstatus, nationell täckning och kundvisningsstatus ändras inte av denna tekniska verifiering.
