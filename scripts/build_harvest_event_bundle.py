@@ -125,8 +125,19 @@ def samrad_snapshot_is_complete(snapshot: dict[str, Any]) -> bool:
                          "records_outside_scope", "records_missing_geometry", "records_geometry_error")
         if any(not isinstance(count.get(key), int) for key in required_ints):
             return False
-        if count["pages"] < 1 or count["records_in_scope"] != len(features):
+        if count["records_in_scope"] != len(features):
             return False
+        if count["pages"] < 1:
+            # A successful empty layer may require no request pages at all.
+            # Accept this only when every fetched/in-scope/outside count is zero.
+            if not (
+                count["pages"] == 0
+                and features == []
+                and count["records_fetched_in_envelope"] == 0
+                and count["records_in_scope"] == 0
+                and count["records_outside_scope"] == 0
+            ):
+                return False
         if count["records_missing_geometry"] != 0 or count["records_geometry_error"] != 0:
             return False
         if count["records_fetched_in_envelope"] != count["records_in_scope"] + count["records_outside_scope"]:
