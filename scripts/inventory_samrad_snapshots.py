@@ -160,6 +160,43 @@ def layer_diagnostics(snapshot: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+
+def case_identity_index(snapshot: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    result: dict[str, dict[str, Any]] = {}
+    layers = snapshot.get("layers")
+    if not isinstance(layers, dict):
+        return result
+    for layer_name in ("points", "lines", "areas"):
+        layer = layers.get(layer_name)
+        features = layer.get("features") if isinstance(layer, dict) else None
+        if not isinstance(features, list):
+            continue
+        for feature in features:
+            if not isinstance(feature, dict):
+                continue
+            props = feature.get("properties") or {}
+            object_id = feature.get("id")
+            if object_id in (None, ""):
+                object_id = props.get("ObjectId")
+            if object_id in (None, ""):
+                object_id = props.get("OBJECTID")
+            if object_id in (None, ""):
+                continue
+            source_record_id = f"{layer_name}:{object_id}"
+            case_number = builder.usable_case_number(props.get("Beteckn"))
+            uuid = str(props.get("UUID") or "").strip()
+            group_key = (f"case:{case_number.casefold()}" if case_number
+                         else f"uuid:{uuid.casefold()}" if uuid
+                         else f"feature:{source_record_id}")
+            result[source_record_id] = {
+                "group_key": group_key,
+                "event_id": f"samrad-case:{builder.canonical_hash(group_key)[:20]}",
+                "case_number": case_number,
+                "uuid_present": bool(uuid),
+            }
+    return result
+
+
 def inventory_snapshot_files(directory: Path) -> tuple[list[dict[str, Any]], dict[str, set[str]]]:
     rows: list[dict[str, Any]] = []
     eligible_ids: dict[str, set[str]] = defaultdict(set)
@@ -188,6 +225,7 @@ def inventory_snapshot_files(directory: Path) -> tuple[list[dict[str, Any]], dic
         row["status"] = snapshot.get("status")
         row["scope_hash_present"] = bool(str(snapshot.get("scope_hash") or "").strip())
         row["layer_ids"] = feature_ids(snapshot)
+        row["case_identity_index"] = case_identity_index(snapshot)
         row["layer_counts"] = snapshot.get("counts") if isinstance(snapshot.get("counts"), dict) else None
         row["layer_diagnostics"] = layer_diagnostics(snapshot)
         row["production_gate_complete"] = builder.samrad_snapshot_is_complete(snapshot)
@@ -212,6 +250,15 @@ def main() -> int:
         str(row.get("source_record_id"))
         for row in bundle.get("observations", [])
         if row.get("source_id") == builder.SAMRAD_SOURCE and row.get("source_record_id")
+    }
+    eligible_event_ids = {
+        identity["event_id"]
+        for row in rows if row["eligibility"] == "eligible"
+        for identity in (row.get("case_identity_index") or {}).values()
+    }
+    bundle_event_ids = {
+        str(row.get("event_id")) for row in bundle.get("events", [])
+        if str(row.get("event_id", "")).startswith("samrad-case:")
     }
     eligible_ids = {
         source_id
@@ -238,6 +285,10 @@ def main() -> int:
         "bundle_unique_samrad_source_record_ids": len(bundle_ids),
         "archive_ids_not_in_bundle": archive_only,
         "bundle_ids_not_in_eligible_archive": bundle_only,
+        "eligible_archive_case_event_ids": len(eligible_event_ids),
+        "bundle_samrad_case_event_ids": len(bundle_event_ids),
+        "eligible_archive_case_events_not_in_bundle": sorted(eligible_event_ids - bundle_event_ids),
+        "bundle_case_events_not_in_eligible_archive": sorted(bundle_event_ids - eligible_event_ids),
         "snapshots": rows,
         "interpretation": [
             "Only snapshots accepted by the unchanged production gate contribute archive IDs.",
