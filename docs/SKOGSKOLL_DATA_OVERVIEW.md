@@ -457,6 +457,9 @@ Den publika webbdiarievyn har testats med länsvisa och frasavgränsade sökning
 
 En separat manuell discovery-workflow finns nu i `main` efter merge av PR #406: sju grupper om tre län, en kategori per körning och högst 18 län/frasintervall. Den delar länen i sju grupper om tre, kör en kategori per körning (högst 18 län/frasintervall) och sparar endast diagnostikartefakter i 30 dagar. Den skriver inte snapshots eller manifest till repot. Workflowen är ännu inte live-testad; länsnamn och CLI-beteende måste bekräftas i första kontrollerade körningen. Den befintliga månadsworkflowen publicerar däremot kompletta snapshots direkt till `main` och ska inte användas för nationell discovery.
 
+**Pagerdiagnostik – kodändring under granskning**
+En uppföljande ändring ska logga varje genomförd sidövergång med logiskt sidnummer före övergång, vald pager-etikett, postback-target och argument, observerad POST-respons samt om resultattabellen faktiskt ändrades. Detta behövs för att skilja verifierad flersideshämtning från bevis för att portalens särskilda framåtriktade `Page$1`-ellipsis användes. Ändringen är ännu inte CI- eller liveverifierad och innebär ingen ändring av snapshot-/manifestflödet.
+
 **Historik**
 Bevara metadata, dokument-ID, källa och hämtningstid. Månatliga snapshots kan bevara observationer som senare försvinner ur webbdiariet. Ofullständiga sökningar får inte behandlas som kompletta, och frånvaro är inte bevis för att ett ärende har tagits bort. Dokumentbilagor ska hanteras separat från metadata.
 

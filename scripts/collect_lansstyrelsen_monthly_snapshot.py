@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
 
-from lansstyrelsen_pager import select_next_pager_action
+from lansstyrelsen_pager import build_pager_action_diagnostic, select_next_pager_action
 from search_lansstyrelsen_diary_browser import (
  URL, COUNTY_SELECT, TITLE_INPUT, SEARCH_BUTTON, RESULT_GRID, clean, parse_total,
  extract_grid
@@ -38,15 +38,15 @@ def collect_interval(page, county_label, phrase, start, end):
  if "Minst ett sökkriterium förutom diarium måste vara angivet" in body:
   return {"from":start,"to":end,"source_total":total,
           "extracted_unique_ids":0,"pager_complete":False,"reconciled":False,
-          "records":[],"pages_read":0,"error":"Source rejected date-only search criteria",
+          "records":[],"pages_read":0,"pager_actions":[],"error":"Source rejected date-only search criteria",
           "validation_message":"Minst ett sökkriterium förutom diarium måste vara angivet",
           "body_text_excerpt":body[:1600]}
  if grid.count()==0:
   zero=re.search(r"\bSökresultat\s*:\s*0\b",body,re.I) is not None
   return {"from":start,"to":end,"source_total":0 if zero else total,
           "extracted_unique_ids":0,"pager_complete":zero,"reconciled":zero,
-          "records":[],"pages_read":0,"error":None if zero else "No result grid and no explicit zero"}
- seen=set(); seen_diary_numbers=set(); page_signatures=set(); records=[]; diagnostics=[]; pager_complete=False
+          "records":[],"pages_read":0,"pager_actions":[],"error":None if zero else "No result grid and no explicit zero"}
+ seen=set(); seen_diary_numbers=set(); page_signatures=set(); records=[]; diagnostics=[]; pager_actions=[]; pager_complete=False
  for page_no in range(1,101):
   grid.wait_for(state="visible",timeout=10000)
   ids=tuple(match for row in page.locator(f"{RESULT_GRID} tr").all()
@@ -87,10 +87,14 @@ def collect_interval(page, county_label, phrase, start, end):
    }""",arg={"selector":RESULT_GRID,"previous":list(before)},timeout=25000)
   except PlaywrightTimeoutError as exc:
    raise RuntimeError(f"Pager postback failed at {page_no} response_seen={response_seen}") from exc
+  pager_actions.append(build_pager_action_diagnostic(
+   page_no, next_item, response_seen=response_seen, page_changed=True
+  ))
  else: raise RuntimeError("Safety cap: 100 page transitions")
  return {"from":start,"to":end,"source_total":total,"extracted_unique_ids":len(seen),
          "pager_complete":pager_complete,"reconciled":total is not None and len(seen)==total and pager_complete,
-         "records":records,"pages_read":len(diagnostics),"table_diagnostics":diagnostics,"error":None}
+         "records":records,"pages_read":len(diagnostics),"table_diagnostics":diagnostics,
+         "pager_actions":pager_actions,"error":None}
 
 def main():
  p=argparse.ArgumentParser()
