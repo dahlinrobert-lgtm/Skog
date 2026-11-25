@@ -122,7 +122,7 @@ Statusorden nedan är avsiktligt försiktiga:
 - Första baslinjen får inte skapa nyhetlarm för gamla poster.
 
 **Rättigheter**
-Skogsstyrelsens geodata anges generellt som CC0 om inget annat anges. Kontrollera ändå exakt lager, metadata och produktbeskrivning före extern användning.
+Skogsstyrelsens officiella geodatavillkor verifierades 2026-11-25: myndighetens egenproducerade geodata är öppna data under CC0 1.0 Universal om inget annat anges. Det medger fri kommersiell användning, bearbetning, lagring och vidare distribution för produkter/lager som omfattas av huvudregeln. Ange gärna Skogsstyrelsen som källa (rekommenderat, inte ett CC0-krav). Kontrollera alltid exakt produkt/lager och eventuella undantag eller tredjepartsinslag. Tekniska kontokrav och tjänstevillkor är separata från licensen.
 
 **Framtida användning**
 En ny avverkningsanmälan som matchar ett bevakat område ska kunna visas som en ny upptäckt händelse. En anmälan är inte bevis för att avverkning har genomförts.
@@ -152,7 +152,7 @@ PR #606:s CI körde Samråd-tester och händelsekedjetester med godkänt resulta
 Målet är dagliga snapshots där källans ID, geometri, attribut, hämtningstid och källans egna datum bevaras. Försvunna objekt ska först klassas efter en komplett och godkänd skanning. En lyckad körning eller komplett paginering inom pilotområdet bevisar inte nationell täckning.
 
 **Rättigheter**
-Skogsstyrelsens generella CC0-villkor är utgångspunkt, med kontroll av varje specifik produkt.
+Skogsstyrelsens officiella villkor bekräftar CC0 1.0 för egenproducerade geodata om inget annat anges. Fri kommersiell användning, bearbetning, lagring och distribution följer för lager som omfattas. Kontrollera undantag i respektive produktmetadata och håll teknisk tjänsteåtkomst separat från licensrätten.
 
 **Framtida användning**
 Visa samråd som kan beröra en fastighet och skilj tydligt mellan ärende, planerad åtgärd och genomförd åtgärd.
@@ -169,7 +169,7 @@ Rasterprodukter har laddats ned eller undersökts och används som skogligt anal
 Spara varje tillgänglig produktversion med produktnamn, version, publicerings-/produktionsdatum, hämtningstid, CRS, upplösning, filstorlek och SHA-256. Jämförelser mellan versioner ska göras först när deras semantik och täckning är jämförbara.
 
 **Rättigheter**
-Generella geodatavillkor anger CC0 om inget annat anges. Kontrollera den exakta produktens metadata.
+Skogsstyrelsens generella villkor anger CC0 1.0 om inget annat anges. Det omfattar fri kommersiell användning, bearbetning, lagring och vidare distribution av den produkt som omfattas. Kontrollera produktens metadata och eventuella undantag eller tredjepartsinslag.
 
 **Framtida användning**
 Skogligt grundunderlag, volymindikatorer och jämförelser över tid. Ingen komplett nationell tidsserie ska påstås finnas innan den är verifierad.
@@ -187,7 +187,7 @@ Produkten och tjänsten är identifierade. Metadataövervakning och återkommand
 Målet är återkommande metadata- och rasterversioner. Bevara produktversion och rasterfil, och jämför endast versioner med kompatibel täckning, upplösning och definition.
 
 **Rättigheter**
-Skogsstyrelsens generella CC0-villkor är utgångspunkt, men den särskilda produktbeskrivningens licens- och erkännandesektion ska kontrolleras.
+De generella geodatavillkoren anger CC0 1.0 om inget annat anges. SIS-produktbeskrivningen har en särskild licens-/erkännandesektion; den ska fortfarande kontrolleras mot den generella huvudregeln innan produkten slutligt klassas för kommersiell distribution. Källhänvisning rekommenderas.
 
 **Framtida användning**
 Ståndortsunderlag för fastighetsspecifik skoglig analys. SIS ska inte blandas ihop med SIH, som baseras på mätningar i befintligt bestånd.
