@@ -2,14 +2,19 @@ name: Trafikverket weekly geodata snapshots
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/snapshot_trafikverket.py"
+      - ".github/workflows/trafikverket-weekly-snapshots.yml"
   schedule:
     - cron: "50 5 * * 1"
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
-  group: trafikverket-weekly-snapshots
+  group: trafikverket-weekly-geodata-snapshots
   cancel-in-progress: false
 
 jobs:
@@ -24,46 +29,92 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install spatial projection dependency
+        if: github.event_name != 'pull_request'
         run: python -m pip install pyproj
       - name: Validate collector syntax
         run: python -m py_compile scripts/snapshot_trafikverket.py
       - name: Download weekly source snapshots
+        if: github.event_name != 'pull_request'
         run: python scripts/snapshot_trafikverket.py
       - name: Check snapshot completeness
+        if: github.event_name != 'pull_request'
         run: |
           python - <<'PY'
-          import json, pathlib, sys
-          p=pathlib.Path("data/trafikverket/snapshots")
-          manifests=list(p.glob("*/manifest.json"))
+          import json
+          import pathlib
+
+          root = pathlib.Path("data/trafikverket/snapshots")
+          manifests = sorted(root.glob("*/manifest.json"), key=lambda p: p.parent.name)
           if not manifests:
               raise SystemExit("No snapshot manifest created")
-          m=json.loads(manifests[-1].read_text())
-          assert m["total_feature_layers"] > 0
-          assert m["total_downloaded_features"] > 0
-          for service in m["services"]:
+          manifest_path = manifests[-1]
+          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+          assert manifest["total_feature_layers"] > 0
+          assert manifest["total_downloaded_features"] > 0
+
+          services = {service["key"]: service for service in manifest["services"]}
+          if "miljowebb" not in services or "viltolyckor" not in services:
+              raise SystemExit(
+                  "Expected separate miljowebb and viltolyckor services in manifest"
+              )
+
+          expected_wildlife_layer_ids = {3, 5, 7, 9, 11, 13, 15}
+          wildlife_layers = services["viltolyckor"]["layers"]
+          actual_wildlife_layer_ids = {layer["id"] for layer in wildlife_layers}
+          if actual_wildlife_layer_ids != expected_wildlife_layer_ids:
+              raise SystemExit(
+                  "NVDB Viltolyckor layer inventory mismatch: "
+                  f"expected={sorted(expected_wildlife_layer_ids)}, "
+                  f"actual={sorted(actual_wildlife_layer_ids)}"
+              )
+
+          for service in manifest["services"]:
               for layer in service["layers"]:
-                  f=pathlib.Path(layer["file"])
-                  assert f.exists() and f.stat().st_size > 0, f"Missing/empty {f}"
-                  assert layer["downloaded_feature_count"] == layer["source_object_id_count"], (
-                      f"Partial download in {f}: {layer['downloaded_feature_count']} / {layer['source_object_id_count']}"
+                  file_path = pathlib.Path(layer["file"])
+                  assert file_path.exists() and file_path.stat().st_size > 0, (
+                      f"Missing/empty {file_path}"
                   )
-          print(f"Validated {m['total_feature_layers']} layers and {m['total_downloaded_features']} features")
+                  assert layer["downloaded_feature_count"] == layer["source_object_id_count"], (
+                      f"Partial download in {file_path}: "
+                      f"{layer['downloaded_feature_count']} / "
+                      f"{layer['source_object_id_count']}"
+                  )
+
+          print(
+              f"Validated {manifest['total_feature_layers']} total layers, "
+              f"{manifest['total_downloaded_features']} features, and "
+              f"{len(actual_wildlife_layer_ids)}/7 NVDB Viltolyckor layers "
+              f"in {manifest_path}"
+          )
           PY
-      - name: Commit immutable dated snapshot
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/trafikverket/snapshots/
-          if git diff --cached --quiet; then
-            echo "No snapshot changes to commit."
-          else
-            git commit -m "data: Trafikverket snapshot $(date -u +%F)"
-            git push
-          fi
       - name: Upload snapshot bundle
+        if: always() && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: trafikverket-geodata-snapshot-${{ github.run_id }}
           path: data/trafikverket/snapshots/
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 90
+      - name: Create or update snapshot data pull request
+        if: success() && github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: automation/trafikverket-weekly-geodata-snapshots
+          delete-branch: true
+          add-paths: |
+            data/trafikverket/snapshots/
+          commit-message: "Archive Trafikverket weekly geodata snapshot"
+          title: "data: archive Trafikverket weekly geodata snapshot"
+          body: |
+            Automated weekly snapshot of the two separate Trafikverket services:
+            Miljöwebb Landskap and NVDB Viltolyckor.
+
+            The manifest and layer files have passed the workflow completeness checks.
+            NVDB Viltolyckor is checked against its seven expected layer IDs
+            (3, 5, 7, 9, 11, 13, 15). The configured Gräsmyr envelope is a pilot
+            scope, not national coverage.
+
+            Review the dated files, manifest, counts and SHA-256 values before merge.
+            This PR does not change product-specific rights or authorize customer display.
