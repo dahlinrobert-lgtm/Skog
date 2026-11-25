@@ -1161,3 +1161,13 @@ Detta är en jämförelse av rapporterade kumulativa årsserievärden, inte indi
 ### Samråd – historik i event bundle (PR #612 mergad, 2026-11-25)
 
 De daterade gzip-snapshotsen i `data/samrad_snapshots/` är fortsatt råhistorikens sanningskälla. PR [#612](https://github.com/dahlinrobert-lgtm/Skog/pull/612) återanvänder dessa i den befintliga event-bundle-byggaren. Endast strukturellt kompletta snapshots tas med; partiella/okända snapshots används inte för frånvarobedömning. Händelser bevaras när ett objekt inte längre returneras och visar första/senaste observerade tidpunkt. Oläsbara arkivfiler stoppar byggandet. Regressionstestets textassertion korrigerades i commit `1833f172` utan att ändra historiklogiken. Detta är en härledd historikvy, inte en ny rådatakälla eller ett juridiskt godkännande. Kommersiell användning och kundvisning för Samråd förblir separata, villkorade bedömningar enligt källregistret.
+
+### Samråd – snapshotarkiv och historik publicerade (2026-11-25)
+
+PR [#613](https://github.com/dahlinrobert-lgtm/Skog/pull/613) mergades till `main` 2026-11-25 16:20:51 UTC med merge commit `e224a7fd9102095059eb60e8293a4296ab79be3b`. PR:n publicerade det uppdaterade pilotarkivet och den härledda event-bundlen efter att PR #615 hade korrigerat historikbyggarens hantering av ett korrekt tomt lager.
+
+Verifierad körning efter #615, [Collect Samråd pilot snapshots #47](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45650638344), rapporterade 26 arkiverade snapshots, 21 Samråd-observationer och 21 Samråd-händelser. Event bundle contract [#22](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45650638711) och snapshot storage tests [#552](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45650638347) passerade. Själva Samråd-körningen fick ändå failure i sista create/update-PR-steget, trots att insamling och bundle-byggande passerade och automationens PR-branch uppdaterades. PR #613 granskades och mergades manuellt.
+
+Manifestet för körningen var `success` / `complete_for_configured_scope`: punktlager 0 poster och 0 sidor, linjelager 9 poster inom scope och 1 sida, polygonlager 12 poster inom scope och 1 sida. `source_total_reconciled=false`, varför detta inte är nationell täckning eller avstämning mot källans totala antal. Den tekniska publiceringen ändrar inte rättighetsbedömningen för kommersiell användning, kundvisning eller vidare distribution.
+
+**Kvar att verifiera:** nästa körning ska särskilt kontrollera att create/update-PR-steget avslutas framgångsrikt. Fullständighet gäller endast det konfigurerade pilotområdet.
