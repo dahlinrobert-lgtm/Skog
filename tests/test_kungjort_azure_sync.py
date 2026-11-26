@@ -35,6 +35,66 @@ class KungjortApiRetryTests(unittest.TestCase):
         self.assertEqual(len(calls), 2)
         self.assertEqual(len(sleeps), 1)
 
+    def test_retries_remote_disconnect_then_succeeds(self):
+        from http.client import RemoteDisconnected
+        from scripts.sync_kungjort_azure import KungjortApi
+
+        class Response:
+            headers = {}
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self): return b'{"changes": []}'
+
+        calls = []
+        def opener(req, timeout=90):
+            calls.append(req)
+            if len(calls) == 1:
+                raise RemoteDisconnected("Remote end closed connection without response")
+            return Response()
+
+        sleeps = []
+        api = KungjortApi("test-key", opener=opener, sleep=sleeps.append)
+        payload, _ = api.get("/changes")
+        self.assertEqual(payload, {"changes": []})
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(len(sleeps), 1)
+
+    def test_retries_connection_reset_and_timeout(self):
+        from scripts.sync_kungjort_azure import KungjortApi
+
+        class Response:
+            headers = {}
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self): return b'{"changes": []}'
+
+        for failure in (ConnectionResetError("connection reset"), TimeoutError("timed out")):
+            calls = []
+            def opener(req, timeout=90):
+                calls.append(req)
+                if len(calls) == 1:
+                    raise failure
+                return Response()
+
+            api = KungjortApi("test-key", opener=opener, sleep=lambda delay: None)
+            payload, _ = api.get("/changes")
+            self.assertEqual(payload, {"changes": []})
+            self.assertEqual(len(calls), 2)
+
+    def test_stops_after_seven_transport_failures(self):
+        from http.client import RemoteDisconnected
+        from scripts.sync_kungjort_azure import KungjortApi
+
+        calls = []
+        def opener(req, timeout=90):
+            calls.append(req)
+            raise RemoteDisconnected("connection closed")
+
+        api = KungjortApi("test-key", opener=opener, sleep=lambda delay: None)
+        with self.assertRaisesRegex(RuntimeError, "transport failure after 7 attempts"):
+            api.get("/changes")
+        self.assertEqual(len(calls), 7)
+
     def test_does_not_retry_http_400(self):
         from scripts.sync_kungjort_azure import KungjortApi
         headers = Message()
