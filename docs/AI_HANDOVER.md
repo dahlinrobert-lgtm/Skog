@@ -2034,3 +2034,23 @@ Trafikverkets två manifestposter gäller endast Gräsmyrs ungefärliga 75 × 75
 **Nästa konkreta steg:** (1) utred och återställ Trafikverkets workflowregistrering/Actions-synlighet utan att röra snapshotdatan; (2) kör ny inventory och verifiera faktiska latest-attempt-run-ID:n för båda Trafikverket-profilerna; (3) fortsätt PM-027:s käll-för-käll-mappning mot befintliga manifest/snapshotindex och prioritera full rapportering. Ingen ny collector eller historikmodell behövs för den nu stängda adapterluckan.
 
 **Dokumentationsstatus:** inventory #25 och kvarstående workflowupptäcktsavvikelse dokumenteras här. Ingen källcollector, snapshotdata, rättighetsstatus eller kundvisningsrätt har ändrats.
+
+
+## 2026-11-26 – PM-027 inventory #26 verifierar Trafikverkets workflow-run-history-fallback
+
+Projektledarens [read-only inventory #26](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45869038578) kördes manuellt från `main` efter merge av PM PR [#83](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/83) (merge commit `915eed8bc554855b6a76308fc0928f254a6ba131`). Körningen avslutades `completed/success` den 2026-11-26 17:35:53 UTC. 3/3 repositories lyckades, 0 insamlingsfel. Collector-jobbet och PM-029 schedule gate passerade; write-enabled central alert-job kördes `skipped` eftersom `manage_alert_issue` var avstängt. Artifact [project-manager-inventory-45869038578](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45869038578), ID `15141926416`, har granskats lokalt.
+
+I Skogs `source_snapshot_evidence` finns fem separata evidensposter: avverkningsanmälningar, Samråd, Länsstyrelsernas Älgdata, Trafikverket Miljöwebb Landskap och Trafikverket NVDB Viltolyckor. För båda Trafikverket-produkterna returnerar `latest_attempt`:
+
+- run [45705661340](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), `completed/success`, workflow path `.github/workflows/trafikverket-weekly-snapshots.yml`, `workflow_discovery=repository_run_history_exact_path_fallback`.
+- GitHub Actions historik bekräftar att run [45705067474](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705067474) är den föregående matchande körningen och att [45705661340](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340) är den senaste exakta sökvägsmatchningen.
+
+Fallbacken accepterar endast `run.path` som exakt motsvarar den konfigurerade workflow-sökvägen. Workflowfilen saknas fortfarande i GitHubs workflow-inventory-lista, vilket syns separat i `workflows_not_found`; det betyder inte att run history saknar matchning. Ingen run-ID härleds från manifest, commit eller orelaterat workflow.
+
+`latest_attempt` är inte samma sak som `latest_complete_snapshot`. Båda Trafikverket-produkternas senaste kompletta snapshot är fortfarande manifestet från 2026-11-25, inom Gräsmyr-envelope: Miljöwebb 27 lager/2 396 features och NVDB Viltolyckor 7 lager/5 278 features. Run #33 är fortsatt en enda komplett baseline per produkt. Run #32 är också en lyckad workflow-körning, men har inte separat verifierats som en andra komplett, jämförbar produkt-snapshot. Ingen uppgradering till `pilot_recurring` görs.
+
+Inventory #26 visar 52 registrerade `source_id`, varav 15 har operations-block och 37 saknar det. Källregistret är daterat 2026-11-18 och ska inte betraktas som en ny inventering av samtliga källor. PM-backloggen innehåller 10 uppgifter och fortsatt duplicerade ID:n PM-023, PM-024 och PM-027; inga dubbletter slogs ihop. PM-027 är fortfarande P0/öppen eftersom endast fem adapterposter finns och full daglig rapport per alla källor/produkter/lager, kadensbaserad freshness och full evidenslänkning återstår.
+
+Read-only-säkerhetsfält i artifacten: `read_only=true`, `no_repository_writes=true`, `no_secrets_in_output=true`. Inga source feature collections hämtades, inga källrepositorier skrevs och rättigheter, historisk lagring, kundvisning och vidare distribution ändrades inte.
+
+**Nästa konkreta steg:** invänta nästa veckovisa Trafikverket-körning och kontrollera att den skapar en ny komplett produkt-snapshot med jämförbart envelope och exakt samma lager-ID:n. Först därefter kan respektive produkt bedömas för `pilot_recurring`. Fortsätt parallellt käll-för-käll-mappningen i PM-027; prioritera befintliga manifest, snapshotindex och workflowkopplingar framför nya collectors.
