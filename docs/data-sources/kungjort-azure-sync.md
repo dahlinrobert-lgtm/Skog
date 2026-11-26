@@ -66,3 +66,16 @@ It reads:
 - The four migrated historical document batches under `kungjort-raw/bootstrap/`, extracting listing metadata and using the already archived document detail only for classification.
 
 Versioned results are written under `metadata/kungjort/index/reclassified-v2/`; the summary is `metadata/kungjort/index/reclassified-v2/summary.json`. The legacy full text is not copied into the metadata index. The summary reports priority/category counts, common organs and document types, sample records, and whether all discovered source batches were processed. Re-running is idempotent for unchanged source blobs.
+
+
+## Transient API transport failures
+
+The API client retries transient transport failures in addition to the existing HTTP 429/5xx handling. The retryable transport exceptions are `urllib.error.URLError`, `TimeoutError` and `ConnectionError`; this covers remote disconnects and connection resets. Retries use bounded exponential backoff and stop after seven total attempts. Ordinary HTTP client errors such as 400/401/403/404 are not retried.
+
+A transport failure after all attempts aborts the run. It does not skip the current page or advance the saved cursor. The page archive and its source-hash/integrity checks still complete before the continuation cursor is committed. The retry change was merged in [PR #675](https://github.com/dahlinrobert-lgtm/Skog/pull/675) (2026-11-26).
+
+Regression and CI evidence:
+- [Kungjort Azure Sync #128](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45861545510) – passed.
+- [Snapshot storage tests #593](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45861545514) – passed.
+
+These are code/test checks, not proof of a successful post-merge live Azure sync. Verify the next scheduled run and its cursor/page counts before treating the operational recovery as confirmed.
