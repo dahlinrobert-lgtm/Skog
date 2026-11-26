@@ -5,6 +5,7 @@ on:
     - cron: "23 4 * * 1"
 permissions:
   contents: write
+  pull-requests: write
 concurrency:
   group: skogsdatalabbet-weekly-timeline
   cancel-in-progress: false
@@ -25,14 +26,25 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_geodata_timeline*.py' -v
       - name: Capture weekly baseline or changes
         run: python scripts/geodata_timeline.py
-      - name: Commit timeline snapshots and events
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/geodata_timeline
-          if ! git diff --cached --quiet; then
-            git commit -m "Update weekly Skogsdatalabbet geodata timeline"
-            git fetch origin main
-            git rebase --strategy-option=theirs origin/main
-            git push origin HEAD:main
-          fi
+      - name: Create or update geodata timeline snapshot pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: automation/geodata-timeline-snapshots
+          base: main
+          delete-branch: true
+          add-paths: |
+            data/geodata_timeline/
+          commit-message: "Archive Skogsdatalabbet geodata timeline snapshot"
+          title: "data: update Skogsdatalabbet geodata timeline snapshot"
+          body: |
+            Automated metadata and raster-sample snapshot for the configured
+            Gräsmyr pilot area.
+
+            Review the dated snapshot manifest, latest.json and NPZ samples before
+            merging. This workflow monitors the configured pilot sample only; it
+            does not establish national coverage or full-source completeness.
+
+            A failed or incomplete run must not be interpreted as missing source
+            data. This PR does not change commercial-use, storage, customer-display
+            or redistribution rights.
