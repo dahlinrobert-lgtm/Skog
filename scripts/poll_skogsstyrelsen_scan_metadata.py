@@ -26,8 +26,21 @@ LAYER = (
 BATCH_SIZE = 500
 
 
-def request_json(session: requests.Session, url: str, params: dict) -> dict:
-    response = session.get(url, params=params, timeout=(30, 180))
+def request_json(
+    session: requests.Session,
+    url: str,
+    params: dict,
+    *,
+    method: str = "GET",
+) -> dict:
+    if method == "POST":
+        # Large objectIds lists can exceed intermediary URL limits. ArcGIS query
+        # accepts POST form data, keeping the request URL short and stable.
+        response = session.post(url, data=params, timeout=(30, 180))
+    elif method == "GET":
+        response = session.get(url, params=params, timeout=(30, 180))
+    else:
+        raise ValueError(f"Unsupported HTTP method: {method}")
     response.raise_for_status()
     payload = response.json()
     if "error" in payload:
@@ -78,7 +91,7 @@ def main() -> None:
             "outFields": "*",
             "returnGeometry": "true",
             "outSR": 3006,
-        })
+        }, method="POST")
         batch_features = result.get("features") or []
         returned = {f.get("attributes", {}).get(oid_field) for f in batch_features}
         missing = set(batch) - returned
