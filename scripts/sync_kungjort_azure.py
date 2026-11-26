@@ -94,6 +94,16 @@ class KungjortApi:
                 except ValueError:
                     delay = min(120, 2 ** attempt + random.random())
                 self.sleep(delay)
+            except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+                # Treat connection drops, resets and timeouts as transient
+                # transport failures. The sync loop commits its cursor only
+                # after the page archive is verified, so retrying this GET
+                # cannot advance or skip the change feed.
+                if attempt == 6:
+                    raise RuntimeError(
+                        f"Kungjort API transport failure after {attempt + 1} attempts: {exc}"
+                    ) from exc
+                self.sleep(min(120, 2 ** attempt + random.random()))
         raise RuntimeError("API retry loop exhausted")
 
 
