@@ -2034,3 +2034,18 @@ Trafikverkets två manifestposter gäller endast Gräsmyrs ungefärliga 75 × 75
 **Nästa konkreta steg:** (1) utred och återställ Trafikverkets workflowregistrering/Actions-synlighet utan att röra snapshotdatan; (2) kör ny inventory och verifiera faktiska latest-attempt-run-ID:n för båda Trafikverket-profilerna; (3) fortsätt PM-027:s käll-för-käll-mappning mot befintliga manifest/snapshotindex och prioritera full rapportering. Ingen ny collector eller historikmodell behövs för den nu stängda adapterluckan.
 
 **Dokumentationsstatus:** inventory #25 och kvarstående workflowupptäcktsavvikelse dokumenteras här. Ingen källcollector, snapshotdata, rättighetsstatus eller kundvisningsrätt har ändrats.
+
+
+## PM-027 – inventory #26 efter PR #83 (2026-11-26)
+
+[Project manager read-only inventory #26](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45869038578) kördes 2026-11-26 17:35:34 UTC från projektledarrepots `main` efter merge av [PR #83](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/83), merge commit `915eed8bc554855b6a76308fc0928f254a6ba131`. Körningen avslutades success 17:35:53 UTC. Artifact ID `15141926416` (`project-manager-inventory-45869038578`, 23 299 byte) laddades ned och granskades.
+
+Verifierat: 3/3 repos, 0 insamlingsfel; source registry 52 source_id (15 med operations-block, 37 utan); Skogs source_snapshot_evidence status success, `tree_truncated=false`, fem separata källposter. Read-only-skydd: inga käll-featuredata hämtades, inga källrepositorier skrevs, inga secrets i output. Central alert-job var skipped.
+
+PR #83:s exact-path run-history fallback fungerar live för båda Trafikverket-profilerna. Både `trafikverket.miljoweb_landskap` och `trafikverket.nvdb.wildlife_collision_frequency` har `latest_attempt.status=completed`, `conclusion=success`, run-ID `45705661340`, path `.github/workflows/trafikverket-weekly-snapshots.yml` och `workflow_discovery=repository_run_history_exact_path_fallback`. Det är Skog Actions [run #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), äldre exakt path-match är [run #32](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705067474). Orelaterade workflow-körningar väljs inte.
+
+Snapshotbaslinjen är oförändrad: Miljöwebb 27 lager/2 396 features, NVDB Viltolyckor 7 lager/5 278 features, båda från manifest 2026-11-25 och endast inom Gräsmyrs ungefärliga 75 × 75 km discovery-envelope. Båda produkter är fortfarande baseline, eftersom endast en komplett jämförbar snapshot är verifierad per produkt. Nationell täckning och global källtotal saknas; NVDB-frekvenser är aggregerade per vägsegment, inte individuella olyckor.
+
+PM-027 förblir P0/öppen: inventory #26 visar fem adapterposter, inte full rapportering över samtliga 52 registrerade källor och separata produkter/lager. Nästa konkreta steg är att jämföra nästa kompletta Trafikverket-snapshot separat per produkt mot 2026-11-25-baslinjen och fortsätta mappningen av övriga källor. Kommersiell användning, historisk lagring, bearbetning, kundvisning och vidare distribution är oförändrade.
+
+**Dokumentationsstatus:** Documented – inventory #26 och liveverifierad workflow fallback är dokumenterade; full PM-027-omfattning återstår.
