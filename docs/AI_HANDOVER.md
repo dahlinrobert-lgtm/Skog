@@ -2049,3 +2049,22 @@ Snapshotbaslinjen är oförändrad: Miljöwebb 27 lager/2 396 features, NVDB Vil
 PM-027 förblir P0/öppen: inventory #26 visar fem adapterposter, inte full rapportering över samtliga 52 registrerade källor och separata produkter/lager. Nästa konkreta steg är att jämföra nästa kompletta Trafikverket-snapshot separat per produkt mot 2026-11-25-baslinjen och fortsätta mappningen av övriga källor. Kommersiell användning, historisk lagring, bearbetning, kundvisning och vidare distribution är oförändrade.
 
 **Dokumentationsstatus:** Documented – inventory #26 och liveverifierad workflow fallback är dokumenterade; full PM-027-omfattning återstår.
+
+
+## 2026-11-26 – Skogsdatalabbet geodata timeline: PR-publicering verifierad live
+
+Workflow [Weekly Skogsdatalabbet data timeline, run #8](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278) kördes från `main` efter merge av [PR #682](https://github.com/dahlinrobert-lgtm/Skog/pull/682) och avslutades `completed/success`. Samtliga steg passerade: installation av beroenden, `Test weekly delta logic`, `Capture weekly baseline or changes` och `Create or update geodata timeline snapshot pull request`. PR-actionen skapade automation-branchen `automation/geodata-timeline-snapshots` och [data-PR #683](https://github.com/dahlinrobert-lgtm/Skog/pull/683).
+
+PR #683 mergades 2026-11-26 22:59:43 UTC, merge commit `7b6504f3f80fa8b6fcee39f9b5c078ac39d119f1`. Den publicerade fyra filer:
+- `data/geodata_timeline/latest.json`
+- `data/geodata_timeline/snapshots/20261126T225821Z.json`
+- `data/geodata_timeline/samples/20261126T225821Z_torvkarta.npz`
+- `data/geodata_timeline/samples/20261126T225821Z_sis.npz`
+
+Efter merge verifierades `latest.json` direkt på `main`: JSON-parsning lyckas, filen slutar med en riktig newline och anger snapshot `20261126T225821Z`, observationstid `2026-11-26T22:58:21.035242+00:00`. Båda tjänsterna har `status=ok`, `change_status=unchanged` och föregående jämförda snapshot `20261116T125756Z`. Torvkarta jämfördes över två band med 250 000 giltiga pixlar per band; SIS över två band med 6 400 giltiga pixlar per band. Samtliga fyra band rapporterade 0 ändrade pixlar. Detta är endast det konfigurerade 1 km × 1 km Gräsmyr-provet och styrker inte nationell täckning eller fullständig källjämförelse.
+
+**Arkitektur/verifiering:** PR #682:s etablerade PR-baserade publicering fungerar live. Ingen direktpush till skyddad `main` behövs. Snapshot, manifest och provfiler publiceras efter manuell PR-granskning/merge; historiska snapshots skrivs inte om. Den tidigare ogiltiga `latest.json` ersattes genom den nya data-PR:n och är nu giltig på `main`.
+
+**Dokumentationsbedömning:** Documented här i handover. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required: verifieringen ändrar inte källans nationella täckning, källstatus, kommersiella användningsvillkor, historisk lagringsrätt, kundvisning eller vidare distributionsrätt. SIS-villkor måste fortsatt bedömas separat; teknisk åtkomst och snapshotarkivering är inte ett rättighetsbesked.
+
+**Nästa konkreta steg:** kör en ny read-only PM-027-inventering i `skogskoll-project-manager-history` för att verifiera att adaptrarna läser den nu giltiga `latest.json` och snapshotmanifestet för `slu.peat_map.v1`/Torvkarta och `skogsstyrelsen.standortsindex_sis`/SIS. Granska inventory-resultat och eventuella fel innan PM-027-evidens dokumenteras eller källstatus ändras.
