@@ -85,3 +85,14 @@ Kontrollera att rapporten är aktuell med:
 ## Trafikverket – verifierad körning #33 (2026-11-25)
 
 Teknisk körning verifierad: [Actions #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), status complete, 34 lager och 7 674 features inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope. Data-PR [#660](https://github.com/dahlinrobert-lgtm/Skog/pull/660) mergades 2026-11-25 21:44:22 UTC (merge commit `5ed1a0b62373b1e78a2f994f384a5e4c24506ef0`); manifest och båda produktkatalogerna är verifierade i `main`. Detta är en första baslinje, inte en jämförbar historikserie. Rättigheter/kundvisning är oförändrade och villkorade per produkt/lager.
+
+
+## Projektledarens read-only inventory #25 (2026-11-26)
+
+[Inventory #25](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45866881837) kördes 2026-11-26 17:20 UTC efter merge av PM PR #81 och #82. Körningen avslutades success med 3/3 repositories och 0 insamlingsfel. Artifact ID `15141206837`, digest `sha256:d055bee4f6e4a163e7536ca2b2a9e7434c78eacef365c02e6fe10849cfd1604b`. Read-only-säkerhetsfält visar att inga käll-featuredata hämtades och inga källrepositorier skrevs.
+
+Inventory-artifactens `source_snapshot_evidence` för Skog innehåller fem separata adapterposter: avverkningsanmälningar, Samråd, Länsstyrelsernas Älgdata, Trafikverket Miljöwebb Landskap och Trafikverket NVDB Viltolyckor. Älgdata-dashboarden är daterad 2026-11-26 (report 3, säsong 2026/2027, current boundaries, 129/129 ÄFO) med senaste exakta workflowförsök [45837084941](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45837084941). Samråds senaste attempt är [45864838781](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45864838781), success; senaste kompletta manifest är 2026-11-25 inom konfigurerat 10 km-scope.
+
+Trafikverkets separata produktposter validerar manifestet 2026-11-25: Miljöwebb 27 lager/2 396 features och NVDB Viltolyckor 7 lager/5 278 features. Båda är baseline inom Gräsmyrs ungefärliga 75 × 75 km-envelope; nationell täckning och global källtotal är inte verifierade. NVDB Viltolyckor avser aggregerad frekvens per vägsegment, inte individuella olyckor.
+
+**Kvarstående teknisk avvikelse:** båda Trafikverket-posternas `latest_attempt` är `unknown`, eftersom sökvägen `.github/workflows/trafikverket-weekly-snapshots.yml` inte återfinns i GitHub Actions workflow inventory trots att YAML-filen finns i Skogs `main`. PR #82 gör felorsaken explicit och regressionstestad; run-ID får inte härledas från manifest eller commit. Utred workflowregistreringen och kör därefter ny inventory. Teknisk snapshotkompletthet ändrar inte kommersiella villkor, lagringsrätt, kundvisning eller vidare distributionsrätt.
