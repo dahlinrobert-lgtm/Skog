@@ -96,3 +96,14 @@ Inventory-artifactens `source_snapshot_evidence` för Skog innehåller fem separ
 Trafikverkets separata produktposter validerar manifestet 2026-11-25: Miljöwebb 27 lager/2 396 features och NVDB Viltolyckor 7 lager/5 278 features. Båda är baseline inom Gräsmyrs ungefärliga 75 × 75 km-envelope; nationell täckning och global källtotal är inte verifierade. NVDB Viltolyckor avser aggregerad frekvens per vägsegment, inte individuella olyckor.
 
 **Kvarstående teknisk avvikelse:** båda Trafikverket-posternas `latest_attempt` är `unknown`, eftersom sökvägen `.github/workflows/trafikverket-weekly-snapshots.yml` inte återfinns i GitHub Actions workflow inventory trots att YAML-filen finns i Skogs `main`. PR #82 gör felorsaken explicit och regressionstestad; run-ID får inte härledas från manifest eller commit. Utred workflowregistreringen och kör därefter ny inventory. Teknisk snapshotkompletthet ändrar inte kommersiella villkor, lagringsrätt, kundvisning eller vidare distributionsrätt.
+
+
+## Projektledarens read-only inventory #26 – verifierad workflow fallback (2026-11-26)
+
+[Inventory #26](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45869038578) avslutades completed/success 2026-11-26 17:35:53 UTC, 3/3 repositories, 0 insamlingsfel. Artifact ID `15141926416` granskades. Read-only-skydd verifierat: inga käll-featuredata hämtades, inga källrepositorier skrevs och inga secrets förekom i output.
+
+PR [#83](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/83) är mergad i commit `915eed8bc554855b6a76308fc0928f254a6ba131`. Exact-path run-history fallback identifierar för båda Trafikverket-profilerna senaste workflowförsök som Skog Actions [run #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), completed/success, med path `.github/workflows/trafikverket-weekly-snapshots.yml` och `workflow_discovery=repository_run_history_exact_path_fallback`. Äldre exakt path-match är run #32. Workflowfil och källsnapshotflöde ändrades inte.
+
+Källprodukterna förblir separata baslinjer med manifest 2026-11-25: Miljöwebb 27 lager/2 396 features; NVDB Viltolyckor 7 lager/5 278 features. Omfattningen är en ungefärlig 75 × 75 km Gräsmyr-envelope, inte nationell täckning; global källtotal är inte verifierad. NVDB-värden gäller aggregerad olycksfrekvens per vägsegment. En andra komplett jämförbar körning krävs innan någon produkt kan klassas `pilot_recurring`.
+
+PM-027 är fortsatt P0/öppen eftersom endast fem källposter har adapterevidens och full daglig rapport för samtliga relevanta källor/produkter/lager återstår. Rättigheter, historisk lagring, kundvisning och vidare distribution är oförändrade.
