@@ -2068,3 +2068,23 @@ Efter merge verifierades `latest.json` direkt på `main`: JSON-parsning lyckas, 
 **Dokumentationsbedömning:** Documented här i handover. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required: verifieringen ändrar inte källans nationella täckning, källstatus, kommersiella användningsvillkor, historisk lagringsrätt, kundvisning eller vidare distributionsrätt. SIS-villkor måste fortsatt bedömas separat; teknisk åtkomst och snapshotarkivering är inte ett rättighetsbesked.
 
 **Nästa konkreta steg:** kör en ny read-only PM-027-inventering i `skogskoll-project-manager-history` för att verifiera att adaptrarna läser den nu giltiga `latest.json` och snapshotmanifestet för `slu.peat_map.v1`/Torvkarta och `skogsstyrelsen.standortsindex_sis`/SIS. Granska inventory-resultat och eventuella fel innan PM-027-evidens dokumenteras eller källstatus ändras.
+
+
+## 2026-11-26 – PM-027 inventory #36: Torvkarta och SIS-adaptrar verifierade
+
+[Project manager read-only inventory #36](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45908520069) avslutades `completed/success` 2026-11-26 23:03 UTC. Körningen läste Skogs `main`; artifact `project-manager-inventory-45908520069`, ID `15158946831`, 24 150 byte, digest `sha256:8d8cbe460f7df9ab92b36e5e6a4386aef69548d2516d20d56f6389d84c72a0b6`. Artifactens observationstid är `2026-11-26T23:02:59.644079Z`. 3/3 repositories lyckades, 0 fel. Schemagaten och collector-jobbet passerade; collector-tester, dashboard-JavaScript, read-only-tokenkontroll, insamling och artifact-upload lyckades. Central inventory alert-jobbet var `skipped`.
+
+Artifacten innehåller nu sex separata `source_snapshot_evidence`-poster. De nya posterna är:
+
+- `slu.peat_map.v1` / Torvkarta: senaste attempt är Skog Actions [run #8](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278), `completed/success`, exakt workflow path `.github/workflows/geodata-timeline.yml`. Senaste snapshot är `20261126T225821Z`, `sample_complete_for_service`, `change_status=unchanged`, föregående snapshot `20261116T125756Z`. Manifestet är `data/geodata_timeline/snapshots/20261126T225821Z.json`, blob SHA `a7628c626690480ab0a56868f2d6ae8320ea7e5e`. Provfilen är `data/geodata_timeline/samples/20261126T225821Z_torvkarta.npz`, array `500 × 500 × 2`, dtype `uint8`.
+- `skogsstyrelsen.standortsindex_sis` / SIS: samma senaste attempt och exakta workflow path. Senaste snapshot är `20261126T225821Z`, `sample_complete_for_service`, `change_status=unchanged`, föregående snapshot `20261116T125756Z`. Samma manifest/blob SHA som ovan. Provfilen är `data/geodata_timeline/samples/20261126T225821Z_sis.npz`, array `80 × 80 × 2`, dtype `int16`.
+
+Båda adaptrarna inventerar sex snapshotmanifest, rapporterar `pixel_comparison_status=compared` och `comparable_grid=true`. Deras scope är samma Gräsmyr-prov på 1 km × 1 km i EPSG:3006. Adaptern är metadata-only: den verifierar att NPZ-filerna finns i Git-trädet men laddar inte ned filerna eller räknar om pixelhasharna. Detta är inte fullständig rasterhämtning eller bevis på nationell täckning. SIS-produktens exakta produktbeskrivning och återanvändningsvillkor kräver fortsatt separat rättighetsgranskning.
+
+Read-only-fält i artifacten är verifierade: `read_only=true`, `no_repository_writes=true`, `no_secrets_in_output=true`. Skogens adapterposter anger dessutom `source_feature_data_downloaded=false` och `source_repository_writes=false`. Artifactens source registry omfattar 52 source_id; source_snapshot_evidence har sex poster och är `status=success`, `tree_truncated=false`.
+
+**PM-027-status:** den tidigare adapterluckan för Torvkarta och SIS är stängd och JSON-felet från inventory #33 är inte längre reproducerat. PM-027 förblir P0/öppen eftersom sex evidensposter inte är en fullständig käll-/produkt-/lagerinventering av hela registret. Kommersiella rättigheter, historisk lagring, kundvisning och vidare distribution ändras inte.
+
+**Nästa konkreta steg:** fortsätt PM-027:s käll-för-käll-mappning och prioritera resterande relevanta produkter/lager. Följ nästa schemalagda geodata-timeline-körning och verifiera att ny snapshot/PR publiceras utan att skriva om historiken. Granska SIS-villkoren separat innan någon kommersiell användning eller kundvisning övervägs.
+
+**Dokumentationsbedömning:** inventory #36 dokumenteras här. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required; ingen källtäckning, fullständighet, kommersiell rättighet eller kundvisningsstatus har ändrats.
