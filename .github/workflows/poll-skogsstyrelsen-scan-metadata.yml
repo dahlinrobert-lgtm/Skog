@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: skogsstyrelsen-scan-metadata-poll
@@ -20,6 +21,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -35,15 +37,28 @@ jobs:
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
-      - name: Commit new source snapshot
+      - name: Create or update metadata snapshot pull request
         if: steps.poll.outputs.changed == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/skogsstyrelsen/laser_scan_metadata/
-          if git diff --cached --quiet; then
-            echo "No metadata files staged; nothing to commit."
-            exit 0
-          fi
-          git commit -m "Archive changed Skogsstyrelsen scan metadata"
-          git push origin main
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: automation/skogsstyrelsen-laser-scan-metadata-snapshots
+          base: main
+          delete-branch: true
+          add-paths: |
+            data/skogsstyrelsen/laser_scan_metadata/
+          commit-message: "Archive changed Skogsstyrelsen laser-scan metadata"
+          title: "data: archive Skogsstyrelsen laser-scan metadata snapshot"
+          body: |
+            Automated complete metadata snapshot from Skogsstyrelsen's national
+            laser-scan metadata layer.
+
+            Review the feature count, content SHA-256, dated gzip snapshot and
+            latest.json before merging. The first complete observation is a quiet
+            baseline and must not generate historical alerts. Later differences
+            represent observed source-content changes, not source publication
+            timestamps or proof of a specific real-world event.
+
+            The collector refuses to write a snapshot when ID inventory or feature
+            retrieval is incomplete. This PR does not authorize commercial use,
+            customer display or redistribution.
