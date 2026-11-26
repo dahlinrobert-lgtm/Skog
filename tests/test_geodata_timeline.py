@@ -13,7 +13,7 @@ class TestTimeline(unittest.TestCase):
    write_latest_manifest(path,payload)
    raw=path.read_text(encoding="utf-8")
    self.assertTrue(raw.endswith("\n"))
-   self.assertFalse(raw.endswith("\\\\n"))
+   self.assertFalse(raw.endswith("\\n"))
    self.assertEqual(json.loads(raw),payload)
  def test_same_pixels_same_hash(self):
   a=np.arange(16,dtype=np.uint8).reshape(4,4); self.assertEqual(pixel_hash(a),pixel_hash(a.copy()))
