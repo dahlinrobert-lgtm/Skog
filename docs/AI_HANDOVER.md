@@ -1995,3 +1995,20 @@ PM-backloggen lästes in (10 uppgifter) men innehåller fortfarande duplicerade 
 **Nästa konkreta steg:** utöka befintlig `scripts/source_snapshot_adapters.py` och dess tester i projektledarrepot. Älgdata ska behålla skillnaden mellan dashboard/blob-evidens och exakt Actions-run-ID. Trafikverkets två tjänster ska valideras separat mot samma manifest men respektive lager-ID och featuretotal. Metadata-only; inga GeoJSON-featurecollections ska hämtas. Därefter kör ny inventory och granska artifacten.
 
 PM-027 är fortsatt P0 och inte färdig.
+
+
+## 2026-11-26 – Kungjort API transport-retry fix mergad
+
+Kungjort Azure-synkronisering [run #127](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45834845260) misslyckades efter att två ändringssidor hade arkiverats. Azure OIDC-inloggningen lyckades; felet var `http.client.RemoteDisconnected: Remote end closed connection without response` från Kungjort-API:t vid nästa anrop. Den befintliga klienten återförsökte HTTP 429/5xx men inte tillfälliga transportfel.
+
+PR [#675](https://github.com/dahlinrobert-lgtm/Skog/pull/675) mergades 2026-11-26 16:45:57 UTC med merge commit `af012f63bc81993d8c9cdf4f578aa5ea79827610`. Ändringen i `scripts/sync_kungjort_azure.py` återförsöker nu `urllib.error.URLError`, timeout och anslutningsfel (inklusive RemoteDisconnected och connection reset), med högst sju försök och exponential backoff. Vanliga HTTP-klientfel återförsöks inte. Efter uttömda transportförsök avbryts körningen; ingen sida hoppas över.
+
+Regressionstester lades till i `tests/test_kungjort_azure_sync.py` för RemoteDisconnected följt av framgång, connection reset, timeout och sju uttömda försök. PR-kontrollerna passerade:
+- [Kungjort Azure Sync #128](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45861545510) – success.
+- [Snapshot storage tests #593](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45861545514) – success.
+
+Azure-arkivets schema, rådata, blobnamn och cursor-/checkpointordning ändrades inte. Varje sida arkiveras och integritetsverifieras fortfarande innan dess fortsättningscursor sparas. Om ett anrop misslyckas efter alla försök avbryts körningen utan att flytta cursor för den sidan.
+
+**Verifieringsgräns:** PR-kontrollerna verifierar kod och tester, men ingen schemalagd/live Azure-synkronisering efter merge har ännu verifierats. Run #127 är fortfarande den senaste observerade schemalagda körningen i den kontrollerade workflowhistoriken. Nästa konkreta steg är att granska nästa schemalagda körning: kontrollera om den slutförs, antal arkiverade sidor, cursorförflyttning och att inga befintliga batcher skrivs över. Om den misslyckas ska felorsaken granskas innan någon manuell cursorändring eller återställning övervägs.
+
+**Dokumentationsstatus:** Documented i denna handover och i [Kungjort Azure-sync runbook](data-sources/kungjort-azure-sync.md). `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required: ingen källtäckning, rättighetsbedömning, kommersiell användning eller kundvisningsstatus har ändrats. Teknisk åtkomst/arkivering innebär inte ett nytt rättighetsbesked.
