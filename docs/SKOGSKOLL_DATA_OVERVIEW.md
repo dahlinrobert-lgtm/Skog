@@ -1260,3 +1260,14 @@ Den publicerade read model klassar Samråd och Älgdata som `pilot_recurring` (3
 Inventeringen läste 52 source_id (15 operations-block, 37 utan) och PM-backloggen med 10 uppgifter. Duplicerade PM-ID:n PM-023, PM-024 och PM-027 flaggades och förblev separata.
 
 Rättigheter och kundvisning är oförändrade. PM-027 som helhet är fortfarande öppen.
+
+
+## PM-027 – adapterevidens verifierad i inventory #25 (2026-11-26)
+
+[Project manager read-only inventory #25](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45866881837) avslutades success 2026-11-26 17:20 UTC: 3/3 repositories, 0 fel. Artifact ID `15141206837`, digest `sha256:d055bee4f6e4a163e7536ca2b2a9e7434c78eacef365c02e6fe10849cfd1604b`. Insamlingen är read-only; inga featurecollections hämtades och inga källrepositorier skrevs.
+
+Skogs `source_snapshot_evidence` har fem separata adapterposter: avverkningsanmälningar, Samråd, Älgdata, Miljöwebb Landskap och NVDB Viltolyckor. Inventory #25 visar Älgdata-dashboard 2026-11-26 med 129/129 ÄFO (report 3, säsong 2026/2027, current boundaries) och senaste exakta workflowförsök [45837084941](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45837084941). Samråds senaste försök [45864838781](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45864838781) är success; senaste kompletta snapshot är fortsatt 2026-11-25 inom 10 km-piloten.
+
+Trafikverkets två produkter är separat validerade mot manifestet 2026-11-25: Miljöwebb 27 lager/2 396 features och NVDB Viltolyckor 7 lager/5 278 features. Båda är baseline i Gräsmyrs ungefärliga 75 × 75 km-envelope. De har ännu inget verifierat latest-attempt-run-ID: GitHub Actions workflow inventory saknar sökvägen `.github/workflows/trafikverket-weekly-snapshots.yml`, trots att workflowfilen finns i Skogs `main`. Detta ska utredas utan att fabricera run-ID. Global källtotal och nationell täckning är inte verifierade; Viltolyckor avser aggregerad frekvens per vägsegment, inte enskilda olyckor.
+
+PM-027 förblir P0/öppen. Fem adapterposter innebär inte full täckning av målet om en daglig rapport över alla relevanta källor/produkter/lager. Nästa steg är att återställa/verifiera Trafikverkets workflowregistrering, köra ny inventory och fortsätta käll-för-käll-mappning. Rättigheter, kundvisning, historisk lagring och vidare distribution är oförändrade.
