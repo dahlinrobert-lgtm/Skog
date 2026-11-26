@@ -110,6 +110,10 @@ def previous(key):
    return {"snapshot_id":d.get("snapshot_id"),"item":x,"sample_path":sample if sample.exists() else None}
  return None
 
+
+def write_latest_manifest(path, payload):
+ path.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
 def main():
  if not USER or not PASS: raise SystemExit("Required geodata account secrets are missing")
  now=datetime.now(timezone.utc); sid=now.strftime("%Y%m%dT%H%M%SZ"); bbox,centre=get_bbox()
@@ -165,7 +169,7 @@ def main():
   except Exception as exc: cur={"service_key":key,"status":"error","error_type":type(exc).__name__}
   out["services"].append(cur)
  (SNAP/f"{sid}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- (DATA/"latest.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+ (DATA/"latest.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  print(json.dumps({"snapshot_id":sid,"services":[{k:x.get(k) for k in ("service_key","status","change_status","changes","pixel_comparison","error_type")} for x in out["services"]]},ensure_ascii=False,indent=2))
  return int(any(x.get("status")!="ok" for x in out["services"]))
 if __name__=="__main__": raise SystemExit(main())
