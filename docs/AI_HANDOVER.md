@@ -93,6 +93,8 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Samråd: punkt-, linje- och polygonlager samlas separat. Kontrollera täckning och fullständighet per lager.
 - SIS: metadataövervakningen hade misslyckade körningar 13–14 november 2026. Felsök workflow och verifiera rasterhämtning och produktvillkor.
 - Skogliga grunddata/volym: bevara produktversioner och metadata; jämför endast jämförbara raster.
+- **Laserskanningsmetadata – incident run #23 (2026-11-26):** [Actions #23](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45846159692) hämtade ID-inventeringen men fick HTTP 404 på en GET-fråga med 500 `objectIds` i URL:en. Jobbet saknade dessutom `pipefail`, så Python-felet maskerades av `tee` och workflowet försökte committa tomt. Åtgärdsgren `fix/skogsstyrelsen-scan-metadata-post-query` flyttar feature-batcher till ArcGIS POST-formulärdata, gör pipelinefel synliga och gör commit-steget idempotent när inget har stage:ats. Ingen snapshot skrevs i run #23; historiken är oförändrad. Nästa steg efter PR är att köra workflowet manuellt och verifiera komplett featureantal, hash, snapshot och commit innan återkommande drift betraktas som återställd.
+
 
 ### SLU Torvkarta
 - SLU lämnade 2026-11-02 ett skriftligt besked om fri kommersiell användning av nuvarande Torvkarta med angiven källhänvisning.
