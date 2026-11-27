@@ -477,7 +477,7 @@ Flödena delar concurrency group `lansstyrelsen-diary-archive` och PR-branch `au
 
 CI för merge-PR: [daglig diarievalidering #147](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226420), [månadssnapshotvalidering #21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226402) och [diariehistorikaudit #81](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226313) passerade. Ett initialt CI-fel visade att Playwright-Pythonpaketet behövs även vid PR-tester; paketinstallation körs nu i båda workflows medan Chromium-installation och webbläsarkörning är avstängda för PR-validering.
 
-**Post-merge verifiering pågår:** [daglig workflow #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) startade automatiskt efter merge och ska bekräfta att sökning, validering, latest-main rebuild, audit och PR-skapande fungerar i liveflödet. Ingen data-PR eller ny snapshot betraktas som publicerad förrän den har skapats och granskats/mergats.
+**Post-merge utfall:** [daglig workflow #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) passerade tester och history audit men misslyckades under källinsamling: 37 av 38 queryintervall lyckades; Västra Götaland / `vattenverksamhet` fick HTTP 500 vid `Page$6` efter 240 extraherade rader. Persistence och PR-skapande hoppades över; ingen data-PR skapades och arkivet ändrades inte. PR-publiceringen är CI-validerad men inte liveverifierad med en komplett data-PR.
 
 Källinsamling, sökfraser, paginerings-/avstämningsregler, snapshotformat och rättighetsbedömning ändras inte. `SKOGSKOLL_SOURCE_STATUS.md` bedöms inte behöva ändras.
 
