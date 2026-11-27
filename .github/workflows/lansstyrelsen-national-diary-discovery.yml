@@ -47,6 +47,11 @@ on:
         required: false
         default: ""
         type: string
+      extra_search_term:
+        description: Optional second diagnostic phrase; run separately after search_term
+        required: false
+        default: ""
+        type: string
       date_only:
         description: Search using registration date only (no title phrase)
         required: true
@@ -102,6 +107,7 @@ jobs:
           SINGLE_COUNTY_INPUT: ${{ inputs.single_county }}
           CATEGORY_INPUT: ${{ inputs.category }}
           CUSTOM_TERM_INPUT: ${{ inputs.search_term }}
+          EXTRA_TERM_INPUT: ${{ inputs.extra_search_term }}
           DATE_ONLY_INPUT: ${{ inputs.date_only }}
           DAY_INPUT: ${{ inputs.day }}
         run: |
@@ -132,6 +138,10 @@ jobs:
             exit 2
           fi
           if [[ "$DATE_ONLY_INPUT" == "true" ]]; then
+            if [[ -n "${EXTRA_TERM_INPUT//[[:space:]]/}" ]]; then
+              echo "extra_search_term cannot be combined with date_only" >&2
+              exit 2
+            fi
             python - "$YEAR_INPUT" "$MONTH_INPUT" "$DAY_INPUT" <<'PYDATE'
           import calendar, sys
           year, month, day = map(int, sys.argv[1:])
@@ -151,6 +161,21 @@ jobs:
           )"
             terms=("$custom_term")
             mode="custom_term"
+            if [[ -n "${EXTRA_TERM_INPUT//[[:space:]]/}" ]]; then
+              extra_term="$(python - "$EXTRA_TERM_INPUT" <<'PYEXTRA'
+          import sys
+          term = sys.argv[1].strip()
+          if not 2 <= len(term) <= 80 or any(ord(c) < 32 for c in term):
+              raise SystemExit("Extra search term must be 2-80 characters without control characters")
+          print(term)
+          PYEXTRA
+          )"
+              if [[ "$extra_term" == "$custom_term" ]]; then
+                echo "extra_search_term must differ from search_term" >&2
+                exit 2
+              fi
+              terms+=("$extra_term")
+            fi
           else
             case "$CATEGORY_INPUT" in
               A) terms=("skogsbilväg" "vägbyggnad" "ledningsdragning" "schaktning" "utfyllnad" "massupplag") ;;
@@ -158,6 +183,17 @@ jobs:
               *) echo "Invalid category" >&2; exit 2 ;;
             esac
             mode="category"
+            if [[ -n "${EXTRA_TERM_INPUT//[[:space:]]/}" ]]; then
+              extra_term="$(python - "$EXTRA_TERM_INPUT" <<'PYEXTRA'
+          import sys
+          term = sys.argv[1].strip()
+          if not 2 <= len(term) <= 80 or any(ord(c) < 32 for c in term):
+              raise SystemExit("Extra search term must be 2-80 characters without control characters")
+          print(term)
+          PYEXTRA
+          )"
+              terms+=("$extra_term")
+            fi
           fi
           expected=$((${#counties[@]} * ${#terms[@]}))
           failures=0
@@ -180,10 +216,10 @@ jobs:
               fi
             done
           done
-          python - "$GROUP_INPUT" "$SINGLE_COUNTY_INPUT" "$CATEGORY_INPUT" "$YEAR_INPUT" "$MONTH_INPUT" "$failures" "$expected" "$mode" <<'PY'
+          python - "$GROUP_INPUT" "$SINGLE_COUNTY_INPUT" "$CATEGORY_INPUT" "$YEAR_INPUT" "$MONTH_INPUT" "$failures" "$expected" "$mode" "${terms[@]}" <<'PY'
           import json, sys
           from pathlib import Path
-          group, single_county, category, year, month, process_failures, expected, mode = sys.argv[1:]
+          group, single_county, category, year, month, process_failures, expected, mode, *terms = sys.argv[1:]
           expected = int(expected)
           files = sorted(Path("national-diary-diagnostics").glob("*.json"))
           rows = []
@@ -203,7 +239,7 @@ jobs:
                   rows.append({"file": path.name, "reconciled": False, "error": str(exc)})
           report = {
               "mode": "diagnostics_only_no_persistence",
-              "search_mode": mode,
+              "search_mode": mode, "search_terms": terms,
               "county_group": group, "single_county": single_county, "category": category,
               "registration_period": f"{year}-{int(month):02d}",
               "expected_intervals": expected, "observed_files": len(files),
