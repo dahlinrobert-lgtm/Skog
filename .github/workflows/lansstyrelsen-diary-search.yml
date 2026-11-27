@@ -62,7 +62,7 @@ permissions:
 
 concurrency:
   # Shared with the monthly snapshot workflow because both update the same append-only diary archive.
-  group: lansstyrelsen-diary-archive
+  group: ${{ github.event_name == 'pull_request' && format('lansstyrelsen-validation-{0}', github.workflow) || 'lansstyrelsen-diary-archive' }}
   cancel-in-progress: false
 
 jobs:
