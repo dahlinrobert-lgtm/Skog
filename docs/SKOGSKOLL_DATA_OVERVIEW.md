@@ -497,8 +497,7 @@ Identifiera relevanta myndighetsärenden och beslut. Börja eventuell nationell 
 | NVR | Dagligt 30-dagarstest, fullständighet och dokumenterat godkännande | Kontrollera dagliga arkiv och exportjämförelser |
 | Skogsstyrelsen avverkningsanmälningar | Fullständig ingestion och validerad baslinje | Jämför kompletta skanningar |
 | Samråd | Verifiera snapshotstatus per lager | Kontrollera manifests, körningar och täckning |
-| Miljöwebb Landskap | Verifiera täckning och senaste kompletta snapshots för Gräsmyr-piloten | Kontrollera måndagskörning, manifest, antal och lagervillkor |
-| NVDB Viltolyckor | Verifiera frekvensdefinition, referensperiod och jämförbar historik | Kontrollera sju lager, produktmetadata och snapshots |
+| Miljöwebb Landskap | Verifiera täckning och senaste kompletta snapshots för Gräsmyr-piloten | Kontrollera måndagskörning, manifest, antal och lagervillkor || NVDB Viltolyckor | Verifiera frekvensdefinition, referensperiod och jämförbar historik | Kontrollera sju lager, produktmetadata och snapshots |
 | NVDB vägnät/Lastkajen | Verifiera produktversion, beställningsvillkor och återkommande uppdatering | Dokumentera lokal baslinje och bygg versionsstyrt uppdateringsflöde |
 | NVDB vägnät | Automatiskt uppdateringsflöde saknas | Planera versionsbaserad uppdatering |
 | Viltdata älg | Nationell täckning saknas | Utöka från regional pilot efter källinventering |
@@ -997,7 +996,6 @@ Kontrollen verifierar endast antal. De separata resultatuppsättningarna för sc
 
 
 ## 2026-11-23 – Detaljerad read-only SQL-granskning av första syntetiska worker-körningen
-
 Användarens SQL-resultat från `skogskoll-test` verifierar för scan `1a53c3b2-fad4-47d1-afb4-9340dc50f15c`:
 
 - Scan `status=complete`, `source_count=2`, `next_offset=2`, `fetched_count=2`.
@@ -1280,3 +1278,16 @@ PM-027 förblir P0/öppen. Fem adapterposter innebär inte full täckning av må
 Detta ändrar endast upptäckt/rapportering av workflowförsök; snapshotdata, Skogs workflow och rättighetsstatus ändras inte. Produktbaslinjerna är fortsatt 2026-11-25: Miljöwebb 27 lager/2 396 features och NVDB Viltolyckor 7 lager/5 278 features, båda inom Gräsmyrs ungefärliga 75 × 75 km-envelope. De är fortfarande baseline med en komplett körning vardera; global källtotal och nationell täckning är inte verifierade. NVDB Viltolyckor avser aggregerad frekvens per vägsegment.
 
 Inventory #26 var read-only: 3/3 repos, 0 fel, inga featurecollections hämtade och inga källrepo-writes. PM-027 förblir öppen tills full käll-/produkt-/lagerkartläggning och återkommande jämförbara snapshots är verifierade. Kommersiell användning, lagring, bearbetning, kundvisning och vidare distribution är oförändrade.
+
+## Polismyndighetens officiella händelse-API – parallell utvärdering (2026-11-27)
+
+Polisens officiella API `https://polisen.se/api/events` utvärderas parallellt med befintlig Brottsplatskartan-insamling. Polisens dokumentation anger att API:et innehåller 500 aktuella notiser som representerar ett urval av polisens utryckningar. Innehållet är preliminärt och kan uppdateras. Koordinaterna representerar läns-/kommuncentrum och får inte behandlas som exakta händelsepositioner.
+
+Polismyndighetens IT-kansli bekräftade 2026-11-27 i diarienummer A698.287/2026 att det inte finns mer händelsedata att tillhandahålla än det som publiceras på webbplatsen. Det officiella API:et är därmed en strukturerad åtkomstväg till publicerade notiser, inte en åtkomstväg till ett större internt händelseregister.
+
+Utvärderingen använder separata, dagliga snapshots från båda källorna under 30 kalenderdagar från första lyckade officiella snapshot. Målet är minst 25 lyckade snapshots. Rådata, ID:n och historik hålls separata. Överlappning och kompletterande poster bedöms senare med kandidatmatchning och manuellt granskat urval. Inga poster slås samman automatiskt och inga kundlarm eller kundvisningsfunktioner ändras under piloten.
+
+Polisens API-regler ska följas: korrekt User-Agent, HTTPS, minst 10 sekunder mellan anrop, högst 60 anrop per timme och 1 440 per dygn. HTTP 404 är permanent och webbskrapning ska inte användas när API finns. Den separata workflowen gör ett anrop per dygn och arkiverar den fullständiga aktuella listan immutable i Azure under ett eget prefix. Norrbottenposter räknas via `location.name`; koordinaterna används inte som exakta händelsepositioner.
+
+Kommersiell användning, historisk lagring, bearbetning, kundvisning och vidare distribution bedöms separat. Se [utvärderingsprotokollet](police-source-evaluation.md) och [Polisens händelseflöde](police-events-norrbotten.md).
+
