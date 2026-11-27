@@ -7,14 +7,14 @@
 
 ## Sammanfattning
 
-- Registrerade datakällor: **52**
-- Källor med operativ status: **15**
+- Registrerade datakällor: **53**
+- Källor med operativ status: **16**
 - Källor som ännu inte har operativ status: **37**
-- Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 2, Teknisk probe: 1, Verifierad: 6
-- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 4, Metadatabevakning behöver repareras: 1, Pilot: 8
-- Historik: Delvis historik: 6, Delvis historiskt arkiv: 1, Ej verifierad: 4, Endast metadataserie: 1, Ingen: 3
-- Kommersiellt: Inväntar produktvillkor: 1, Okänd: 2, Verifierad med källhänvisning: 2, Villkorad: 4, Villkorad av attribution/källomfattning: 1, Villkorad per handling/post: 1, Villkorad per produkt: 4
-- Kundvisning: Ej bedömd: 2, Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 4, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 3
+- Åtkomst: Auktoriserad åtkomst använd: 1, Delvis verifierad: 5, Ej verifierad: 2, Teknisk probe: 1, Verifierad: 7
+- Snapshots: 30-dagars dagligt test: 1, Endast baslinje: 1, Inte startad: 4, Metadatabevakning behöver repareras: 1, Pilot: 9
+- Historik: Delvis historik: 6, Delvis historiskt arkiv: 1, Ej verifierad: 5, Endast metadataserie: 1, Ingen: 3
+- Kommersiellt: Inväntar produktvillkor: 1, Okänd: 2, Verifierad med källhänvisning: 2, Villkorad: 5, Villkorad av attribution/källomfattning: 1, Villkorad per handling/post: 1, Villkorad per produkt: 4
+- Kundvisning: Ej bedömd: 2, Inväntar dokumentgranskning: 1, Inväntar lagerkontroll: 2, Inväntar produktbedömning: 5, Inväntar produktbeskrivning: 1, Inväntar skriftligt/beställt scope: 1, Villkorad: 1, Villkorad av attribution/källomfattning: 3
 - Uttryckligen godkända för kundvisning i registret: **0**
 
 ## Operativ status per datakälla
@@ -36,6 +36,7 @@
 | Trafikverket – NVDB vägnät och Lastkajen | trafikverket.nvdb.road_network_lastkajen | Delvis verifierad | Endast baslinje | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Viltdata.se – nationell avskjutningsstatistik | viltdata.kill_statistics | Verifierad | Pilot | Ej verifierad | Okänd | Ej bedömd | 2026-11-18 |
 | Länsstyrelserna – eldningsförbud i skog och mark (EXT) | lansstyrelsen.fire_ban | Ej verifierad | Inte startad | Ingen | Okänd | Ej bedömd | 2026-11-24 |
+| Polismyndigheten – officiellt API över polisens händelser | polisen.events_official_api | Verifierad | Pilot | Ej verifierad | Villkorad | Inväntar produktbedömning | 2026-11-27 |
 
 ## Nästa åtgärd
 
@@ -54,6 +55,7 @@
 - **Trafikverket – NVDB vägnät och Lastkajen:** Dokumentera vilken NVDB-produktversion som finns lokalt, kontrollera Lastkajens beställnings- och licensvillkor och bygg ett versionsstyrt uppdateringsflöde innan vägnätsförändringar används i kundhistorik.
 - **Viltdata.se – nationell avskjutningsstatistik:** Fortsätt manuella kompletta snapshots med tidsbegränsad GitHub Actions-artifact. Invänta skriftligt besked om historisk lagring/arkivering av exakt avskjutningsstatistikprodukt och avsedda användningar. Azure-region är verifierad som swedencentral; GitHub OIDC-identiteten har Storage Blob Data Contributor på Storage Account-scope. Efter dokumenterat rättighetsbesked: besluta om arkivering och eventuell separat least-privilege-identitet, kör därefter upload, audit och restore live. Ingen schemaläggning eller kundvisning före separat bedömning.
 - **Länsstyrelserna – eldningsförbud i skog och mark (EXT):** Kör den manuella metadata-only-inspektionen, verifiera lager, fält, täckning, objektidentitet och tjänstegränser. Planera separat beslut om första baslinje och schemaläggning tidigast 2027-01-24.
+- **Polismyndigheten – officiellt API över polisens händelser:** Run the 30-day parallel source evaluation with immutable daily snapshots; compare overlap, unique events, freshness, schema quality, availability and source-specific limitations before deciding whether to retain both sources.
 
 ## Tolkning och begränsningar
 
@@ -80,30 +82,3 @@ Generera lokalt med:
 Kontrollera att rapporten är aktuell med:
 
     python data-platform/scripts/build_source_status_report.py --check
-
-
-## Trafikverket – verifierad körning #33 (2026-11-25)
-
-Teknisk körning verifierad: [Actions #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), status complete, 34 lager och 7 674 features inom Gräsmyr-pilotens ungefärliga 75 × 75 km-envelope. Data-PR [#660](https://github.com/dahlinrobert-lgtm/Skog/pull/660) mergades 2026-11-25 21:44:22 UTC (merge commit `5ed1a0b62373b1e78a2f994f384a5e4c24506ef0`); manifest och båda produktkatalogerna är verifierade i `main`. Detta är en första baslinje, inte en jämförbar historikserie. Rättigheter/kundvisning är oförändrade och villkorade per produkt/lager.
-
-
-## Projektledarens read-only inventory #25 (2026-11-26)
-
-[Inventory #25](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45866881837) kördes 2026-11-26 17:20 UTC efter merge av PM PR #81 och #82. Körningen avslutades success med 3/3 repositories och 0 insamlingsfel. Artifact ID `15141206837`, digest `sha256:d055bee4f6e4a163e7536ca2b2a9e7434c78eacef365c02e6fe10849cfd1604b`. Read-only-säkerhetsfält visar att inga käll-featuredata hämtades och inga källrepositorier skrevs.
-
-Inventory-artifactens `source_snapshot_evidence` för Skog innehåller fem separata adapterposter: avverkningsanmälningar, Samråd, Länsstyrelsernas Älgdata, Trafikverket Miljöwebb Landskap och Trafikverket NVDB Viltolyckor. Älgdata-dashboarden är daterad 2026-11-26 (report 3, säsong 2026/2027, current boundaries, 129/129 ÄFO) med senaste exakta workflowförsök [45837084941](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/45837084941). Samråds senaste attempt är [45864838781](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45864838781), success; senaste kompletta manifest är 2026-11-25 inom konfigurerat 10 km-scope.
-
-Trafikverkets separata produktposter validerar manifestet 2026-11-25: Miljöwebb 27 lager/2 396 features och NVDB Viltolyckor 7 lager/5 278 features. Båda är baseline inom Gräsmyrs ungefärliga 75 × 75 km-envelope; nationell täckning och global källtotal är inte verifierade. NVDB Viltolyckor avser aggregerad frekvens per vägsegment, inte individuella olyckor.
-
-**Kvarstående teknisk avvikelse:** båda Trafikverket-posternas `latest_attempt` är `unknown`, eftersom sökvägen `.github/workflows/trafikverket-weekly-snapshots.yml` inte återfinns i GitHub Actions workflow inventory trots att YAML-filen finns i Skogs `main`. PR #82 gör felorsaken explicit och regressionstestad; run-ID får inte härledas från manifest eller commit. Utred workflowregistreringen och kör därefter ny inventory. Teknisk snapshotkompletthet ändrar inte kommersiella villkor, lagringsrätt, kundvisning eller vidare distributionsrätt.
-
-
-## Projektledarens read-only inventory #26 – verifierad workflow fallback (2026-11-26)
-
-[Inventory #26](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/45869038578) avslutades completed/success 2026-11-26 17:35:53 UTC, 3/3 repositories, 0 insamlingsfel. Artifact ID `15141926416` granskades. Read-only-skydd verifierat: inga käll-featuredata hämtades, inga källrepositorier skrevs och inga secrets förekom i output.
-
-PR [#83](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/83) är mergad i commit `915eed8bc554855b6a76308fc0928f254a6ba131`. Exact-path run-history fallback identifierar för båda Trafikverket-profilerna senaste workflowförsök som Skog Actions [run #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), completed/success, med path `.github/workflows/trafikverket-weekly-snapshots.yml` och `workflow_discovery=repository_run_history_exact_path_fallback`. Äldre exakt path-match är run #32. Workflowfil och källsnapshotflöde ändrades inte.
-
-Källprodukterna förblir separata baslinjer med manifest 2026-11-25: Miljöwebb 27 lager/2 396 features; NVDB Viltolyckor 7 lager/5 278 features. Omfattningen är en ungefärlig 75 × 75 km Gräsmyr-envelope, inte nationell täckning; global källtotal är inte verifierad. NVDB-värden gäller aggregerad olycksfrekvens per vägsegment. En andra komplett jämförbar körning krävs innan någon produkt kan klassas `pilot_recurring`.
-
-PM-027 är fortsatt P0/öppen eftersom endast fem källposter har adapterevidens och full daglig rapport för samtliga relevanta källor/produkter/lager återstår. Rättigheter, historisk lagring, kundvisning och vidare distribution är oförändrade.
