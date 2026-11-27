@@ -136,12 +136,15 @@ Slutför källverifiering och fullständig ingestion, etablera baslinje och jäm
 **Datatyper:** punkt-, linje- och polygonlager.
 
 **Nuvarande läge**
-Separata punkt-, linje- och polygonlager hämtas med paginering inom det konfigurerade pilotområdet. Workflow [collect-samrad.yml](../.github/workflows/collect-samrad.yml) körde senast 2026-11-24 i [run 45454250815](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45454250815), med status `completed/success`. Jobbloggen redovisade:
+Separata punkt-, linje- och polygonlager hämtas med paginering inom det konfigurerade pilotområdet. En tidigare dokumenterad körning av workflow [collect-samrad.yml](../.github/workflows/collect-samrad.yml) genomfördes 2026-11-24 i [run 45454250815](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45454250815), med status `completed/success`. Jobbloggen redovisade:
 - punkter: 0 hämtade i envelope, 0 inom scope, 0 sidor,
 - linjer: 20 hämtade i envelope, 11 inom scope, 1 sida,
 - polygoner: 14 hämtade i envelope, 12 inom scope, 1 sida.
 
 Detta är verifierade körningsvärden för den aktuella pilotkonfigurationen, inte nationell täckning eller en avstämning mot en separat auktoritativ källtotal. Den nuvarande `samrad_latest.json` innehåller både metadata och featuredata och är därför för stor för projektledarens metadata-only-adapter att läsa säkert. Det separata lilla manifestet gör nu att projektledaren kan verifiera senaste kompletta snapshot och konfigurerat scope utan att läsa featurepayloaden. Detta verifierades i projektledarens read-only inventory #17 den 2026-11-25.
+
+**Senaste kompletta snapshot – 2026-11-27**
+[Run 46036924262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46036924262) avslutades completed/success. Manifestet `data/samrad_latest_manifest.json` pekar på `data/samrad_snapshots/samrad_20261127T165048Z.json.gz` (400 407 byte; SHA-256 `a1dbf827259537d4680af1f650ee483d5fea4331d8b82726fa9a444f8f505a2a`). Alla tre lager är paginerade till uttömning och har noll saknade/felaktiga geometrier: 0 punkter, 9 linjer och 12 polygoner inom scope; linjelagret hämtade 18 poster i envelope (9 utanför scope), polygonlagret 14 (2 utanför scope). `source_total_reconciled=false`; detta bevisar inte nationell täckning eller avstämning mot källtotal.
 
 **Separat litet snapshotmanifest – implementation mergad och liveverifierad**
 Skog PR [#606](https://github.com/dahlinrobert-lgtm/Skog/pull/606) mergades 2026-11-24 i commit `917fa445559413385a0c995d448c1203d0520c2a`. Insamlingsflödet skapar nu `data/samrad_latest_manifest.json` separat från feature-snapshoten. Manifestet innehåller snapshotreferens, gzip-SHA-256, scope-hash samt per-lager sid-/antal-/geometristatus. Saknad eller felaktig geometri räknas explicit och hindrar `complete_for_configured_scope`. Statusen avser endast paginerad och geometriskt klassificerad data inom konfigurerat scope; `source_total_reconciled=false` betyder att källans totala antal inte är avstämt.
