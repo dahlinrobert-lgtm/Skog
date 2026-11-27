@@ -40,6 +40,47 @@ class DiaryHistoryTests(unittest.TestCase):
             }],
         }
 
+    def test_persists_deduplicated_records_when_raw_portal_rows_reconcile(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state, events, summary = root / "state.json", root / "events.jsonl", root / "summary.json"
+            run = self.make_run("vattenverksamhet")
+            records = [
+                {**run["results"][0], "diary_number": f"{index + 1}-2026"}
+                for index in range(135)
+            ]
+            run.update({
+                "result_count": 135,
+                "reported_total_results": 135,
+                "total_reconciled": True,
+                "pagination": {
+                    "pages_read": 3, "has_next_page": False,
+                    "raw_result_rows_seen": 143, "unique_records_extracted": 135,
+                },
+                "results": records,
+                "queries": [{
+                    "search_term": "vattenverksamhet",
+                    "requested_county": "Länsstyrelsen i Blekinge län",
+                    "request_ok": True, "error": None,
+                    "result_count": 135, "reported_total_results": 143,
+                    "total_reconciled": True,
+                    "pagination": {
+                        "pages_read": 3, "has_next_page": False,
+                        "raw_result_rows_seen": 143, "unique_records_extracted": 135,
+                    },
+                    "results": records,
+                }],
+                "per_query_counts": [{
+                    "county": "Länsstyrelsen i Blekinge län",
+                    "search_term": "vattenverksamhet",
+                    "extracted_count": 135, "reported_total_results": 143,
+                    "raw_result_rows_seen": 143, "total_reconciled": True,
+                }],
+            })
+            self.invoke(run, state, events, summary)
+            saved = json.loads(state.read_text(encoding="utf-8"))
+            self.assertEqual(len(saved["records"]), 135)
+
     def invoke(self, run: dict, state: Path, events: Path, summary: Path) -> dict:
         input_path = state.parent / "input.json"
         input_path.write_text(json.dumps(run, ensure_ascii=False), encoding="utf-8")
