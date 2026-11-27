@@ -1346,3 +1346,15 @@ Flödena serialiseras genom gemensam concurrency group `lansstyrelsen-diary-arch
 PR-validering kör tester men skippar Chromium-installation, källsökning, persistence och publicering. CI passerade på PR #709: daglig diarievalidering [#147](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226420), månadssnapshotvalidering [#21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226402) och diariehistorikaudit [#81](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226313).
 
 Post-merge liveverifiering [daglig run #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) pågår. Ingen ny snapshot räknas som publicerad förrän dess data-PR har granskats och mergats. Källans söklogik, snapshot-/historikformat och rättighetsstatus är oförändrade.
+
+
+## Länsstyrelsens diarier – diagnostics-only högvolymspaginering (2026-11-27)
+
+Två nya manuella diagnostics-only-körningar utökade den tekniska pagineringsutvärderingen utan att ändra källarkivet:
+
+- [Run #24](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073035588) körde `vattenverksamhet` för oktober 2026 i Skåne, Halland och Västra Götaland. Källtal och unika extraherade diarienummer var 14/14, 11/11 och 46/46; ett sidsteg per intervall.
+- [Run #25](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073391186) körde bred testfras `an` för oktober 2026 i Norrbotten, Västerbotten och Jämtland. Resultat: 848, 874 och 820 unika diarienummer på 17, 18 respektive 17 sidor. Pagineringen följde flyttande ellipsfönster via `Page$6`, `Page$11` och `Page$16`; 16/17/16 postbacks gav bekräftade sidbyten. Inga duplicerade diarienummer eller case-ID:n hittades.
+
+Båda körningarna var uttryckligen diagnostics-only och persisterade inga resultat. Arkivets 36 kompletta query-intervall, 36 snapshotfiler och två län är oförändrade. Testfrasen `an` är en teknisk pagination-probe, inte en godkänd produktionssökfras. Resultaten bevisar inte nationell/fullständig diarietäckning eller att leverantörens rate limits/SLA är kända. `risk_assessed=false` kvarstår.
+
+Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/106) har registrerat evidensen. Post-merge daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) återstår att följa för verifiering av PR-publiceringen efter [Skog PR #709](https://github.com/dahlinrobert-lgtm/Skog/pull/709).

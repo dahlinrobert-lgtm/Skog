@@ -84,3 +84,13 @@ Både `.github/workflows/lansstyrelsen-monthly-snapshots.yml` och `.github/workf
 Flödena delar concurrency group `lansstyrelsen-diary-archive` och branch `automation/lansstyrelsen-diary-history` eftersom de skriver till samma append-only-arkiv. Den dagliga sökningen hämtar senaste `main`, applicerar de validerade sökresultaten på nytt, auditerar state/events och skapar/uppdaterar PR. Månadskörningen lägger till immutable snapshotfiler och manifestrader i samma PR. PR-validering kör regressionstester men hoppar över browserinsamling och persistence.
 
 Efter merge av PR #709 startade daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) automatiskt. Dess slutresultat och eventuell data-PR måste granskas innan PR-publiceringen betraktas som liveverifierad. En data-PR kräver normal granskning/merge; workflow-success i sig innebär inte att data har publicerats på `main`.
+
+
+## Högvolymstest av paginering – diagnostics-only (2026-11-27)
+
+- [Run #24](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073035588) avstämde `vattenverksamhet` för oktober 2026 i Skåne, Halland och Västra Götaland: 14, 11 och 46 poster, en sida per län.
+- [Run #25](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073391186) använde den breda tekniska testfrasen `an` för oktober 2026 i Norrbotten, Västerbotten och Jämtland. 848/874/820 unika diarienummer hämtades på 17/18/17 sidor. Pagerfönstret flyttade sig via `Page$6`, `Page$11` och `Page$16`; alla 16/17/16 sidbyten bekräftades och inga dubbletter av diarienummer eller case-ID:n hittades.
+
+Båda körningarna var diagnostics-only och persisterade inga resultat. De utökar inte de 36 arkiverade manifestintervallen eller arkivets två län. Testfrasen `an` är endast en teknisk pagination-probe. Paginering över 17–18 sidor har nu observerats i dessa tre län, men det verifierar inte samtliga 21 län, andra fraser, provider rate limits eller återkommande stabilitet.
+
+Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/106) har registrerat resultatet; `risk_assessed=false` kvarstår.

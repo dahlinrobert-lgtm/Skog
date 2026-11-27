@@ -24,7 +24,7 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
-| Nästa steg | Verifiera post-merge daglig diariekörning #148 och att den skapar/uppdaterar PR i stället för att pusha till main; granska och mergea endast komplett, auditerad data-PR. Bekräfta därefter sjunde PM-profilen i nästa read-only inventory. Fortsätt käll-för-käll-mappningen, granska Trafikverkets nästa snapshot per produkt mot 2026-11-25-baslinjen och verifiera Torvkarta/SIS schemalagda körning 2026-11-30 04:23 UTC. Behåll risk- och rättighetsgrindarna. |
+| Nästa steg | Följ post-merge daglig diariekörning #148 och granska eventuell data-PR mot audit innan merge. PM-PR #106 har kompletterat diariets profil med högvolymspaginering från diagnostics-only; bekräfta den sjunde profilen i nästa read-only inventory (inventory #45 verifierar fortfarande sex). Fortsätt käll-för-käll-mappningen, granska Trafikverkets nästa snapshot per produkt mot 2026-11-25-baslinjen och verifiera Torvkarta/SIS schemalagda körning 2026-11-30 04:23 UTC. Behåll risk- och rättighetsgrindarna. |
 
 
 #### PM-027 inventory #44 och workflow-discovery-korrigering – 2026-11-27
@@ -480,3 +480,15 @@ CI för merge-PR: [daglig diarievalidering #147](https://github.com/dahlinrobert
 **Post-merge verifiering pågår:** [daglig workflow #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) startade automatiskt efter merge och ska bekräfta att sökning, validering, latest-main rebuild, audit och PR-skapande fungerar i liveflödet. Ingen data-PR eller ny snapshot betraktas som publicerad förrän den har skapats och granskats/mergats.
 
 Källinsamling, sökfraser, paginerings-/avstämningsregler, snapshotformat och rättighetsbedömning ändras inte. `SKOGSKOLL_SOURCE_STATUS.md` bedöms inte behöva ändras.
+
+
+#### PM-027 – Länsstyrelsens högvolymspaginering verifierad – 2026-11-27
+
+[PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/106) är mergad i projektledarrepos commit [9aa4e59](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/commit/9aa4e59a9bf01573cb1f91ca292722829a3edd95). Den uppdaterade profilen innehåller två nya diagnostics-only observationer, utan att ändra den arkiverade täckningen:
+
+- [Run #24](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073035588): Skåne/Halland/Västra Götaland, `vattenverksamhet`, 14/11/46 poster, en sida per intervall.
+- [Run #25](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073391186): Norrbotten/Västerbotten/Jämtland, testfras `an`, 848/874/820 poster på 17/18/17 sidor. Pagerfönster och ellipsnavigering genom `Page$6`, `Page$11`, `Page$16` fungerade; alla sidbyten bekräftades och inga duplicerade ID:n hittades.
+
+Båda körningarna var diagnostics-only, utan persistence. De 36 kompletta manifestintervallen och 36 snapshotfilerna är oförändrade. Ingen utökad arkivgeografi eller kund-/kommersiell rätt följer av diagnostiken. `risk_assessed=false` kvarstår.
+
+**Nästa steg:** verifiera run #148 och dess eventuella data-PR; därefter körs/avvaktas nästa read-only inventory för att bekräfta att sju manuellt kuraterade profiler läses in. Inventory #45 föregår PM-PR #105/#106.
