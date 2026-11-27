@@ -2172,3 +2172,19 @@ Efter inventory #41 har de väntande källkörningarna granskats mot respektive 
 - `docs/AI_HANDOVER.md`: uppdateras med den manuellt verifierade evidensen och nästa steg.
 - `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md`: `Assessed – no update required`; inga källidentiteter, insamlingsbeteenden, rättigheter eller kommersiella/kundvisningsbeslut ändrades.
 - Nästa steg: granska och merge:a Samråds data-PR #677 först efter sedvanlig kontroll av datafiler och diff. Därefter kan körning #65 registreras manuellt i driftprofilen. Fortsätt bevaka riskgrindar och håll Torvkarta/SIS som lokala prover tills bredare täckning och riskprofil har verifierats.
+
+
+## 2026-11-27 – Slutstatus efter arkivering och driftprofiluppdatering
+
+Uppföljning till föregående manuella pilotgranskning:
+
+- Samråds data-PR [#677](https://github.com/dahlinrobert-lgtm/Skog/pull/677) är mergad i commit [b90f38f](https://github.com/dahlinrobert-lgtm/Skog/commit/b90f38fc7bdd44b6b1583c46b9934525b14e2c9d). Snapshoten för 2026-11-27 ligger på `main`; filens byte length (400 407) och SHA-256 matchar manifestet exakt. Event bundle innehåller 6 source runs och 184 observationer; samtliga 21 Samrådsobservationer bevarar ursprungligt `first_observed_at`.
+- Projektledarrepots [PR #97](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/97) är mergad i commit `6b28b85f28cf6db7ca1293324a74c630bfd4a5a4`. Samråd run #65 är nu manuellt registrerad som fjärde kompletta körning med samma 10 km scope-hash. Driftprofilen visar fortfarande `pilot_recurring`, `risk_assessed=false` och ingen teknisk uppskalningsbehörighet.
+- Älgdata run #17 är manuellt registrerad via projektledarrepots [PR #96](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/96), mergad i commit `05ee6714aa895a8e031648a605fe2cb600701c6a`. Profilen har tre kompletta jämförbara nationella observationer (129 ÄFO, report 3, säsong 2026/2027, aktuella gränser); riskprofilen är fortsatt partiell och teknisk uppskalning inte godkänd.
+- Torvkarta/SIS:s data-PR [#683](https://github.com/dahlinrobert-lgtm/Skog/pull/683) är mergad. 1 km-proven från 2026-11-26 är oförändrade jämfört med 2026-11-16. Detta är sampleevidens, inte full rasterhämtning eller nationell täckning.
+
+**Samlad pilotbedömning:** Samråd och Älgdata har nått tipping point för expansionsgranskning. Det är inte ett beslut om uppskalning. Båda har `risk_assessed=false` eftersom leverantörsgränser/minimiintervall ännu är okända. Scope, cadence, kommersiell användning, kundvisning och vidare distribution har inte ändrats eller godkänts.
+
+**Nästa konkreta steg:** gör en separat, evidensbaserad riskgenomgång av Samråds och Älgdatas anropspolicy (leverantörsdokumentation, minimiintervall, rate limits, retry/backoff och stoppvillkor). För Torvkarta/SIS: hitta exakt workflow-run-ID för den föregående 2026-11-16-snapshoten innan någon driftprofil eller tipping-point-status registreras. Fortsätt därefter med ordinarie inventory och manuell granskning av nya lyckade försök.
+
+**Dokumentationsstatus:** Documented – Skogs AI_HANDOVER uppdateras. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är fortsatt bedömda utan uppdateringsbehov eftersom källidentiteter, ingestion, rättigheter och kundvisning inte ändrats.
