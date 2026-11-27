@@ -1357,4 +1357,11 @@ Två nya manuella diagnostics-only-körningar utökade den tekniska pagineringsu
 
 Båda körningarna var uttryckligen diagnostics-only och persisterade inga resultat. Arkivets 36 kompletta query-intervall, 36 snapshotfiler och två län är oförändrade. Testfrasen `an` är en teknisk pagination-probe, inte en godkänd produktionssökfras. Resultaten bevisar inte nationell/fullständig diarietäckning eller att leverantörens rate limits/SLA är kända. `risk_assessed=false` kvarstår.
 
-Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/106) har registrerat evidensen. Post-merge daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) återstår att följa för verifiering av PR-publiceringen efter [Skog PR #709](https://github.com/dahlinrobert-lgtm/Skog/pull/709).
+Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/106) har registrerat evidensen. Post-merge daglig [run #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) avslutades med HTTP 500 / Runtime Error vid Västra Götaland / `vattenverksamhet`, WebForms `Page$6`, efter 240 extraherade rader. 37 av 38 queryintervall lyckades, men batchen avbröts före persistence och PR-skapande; ingen ny snapshot eller delmängd publicerades. Det tidigare kompletta arkivet är oförändrat. PR-publiceringsvägen är därmed fortfarande inte liveverifierad med en komplett data-PR.
+
+
+### Liveförsök #148 – fail-closed vid källans HTTP 500
+
+Artefakten från [run #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) innehåller 38 queryintervall: 37 lyckade och ett misslyckat. Felet inträffade för Västra Götaland / `vattenverksamhet` vid postback `Page$6`; Länsstyrelsens webbserver svarade HTTP 500 efter 240 extraherade källrader. Källtotal saknades och sidan ändrades inte. Batchen avbröts före persistence och PR-skapande. Inga delresultat publicerades; de 36 tidigare kompletta manifestintervallen och snapshots är bevarade.
+
+Ingen automatisk retry/backoff infördes eftersom provider rate limits och återhämtningspolicy är okända. Nästa felsökning bör vara en avgränsad diagnostics-only-reproduktion av samma län/fras, inte en bredare produktionsinsamling. `risk_assessed=false` kvarstår.
