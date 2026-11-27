@@ -2148,3 +2148,27 @@ Projektledarrepots [PR #95](https://github.com/dahlinrobert-lgtm/skogskoll-proje
 
 **Dokumentationsstatus:** Documented – aktuell liveverifiering och nya väntande granskningar registreras här. `SKOGSKOLL_SOURCE_STATUS.md` och `SKOGSKOLL_DATA_OVERVIEW.md` ändras inte: inga datakällor, ingestionbeteenden eller rättigheter har ändrats.
 
+
+
+## 2026-11-27 – Manuell granskning av väntande pilotkörningar
+
+Efter inventory #41 har de väntande källkörningarna granskats mot respektive workflow, manifest/dataartifact och jämförbarhetsscope.
+
+**Älgdata – komplett tredje nationell observation verifierad**
+- [Actions run #17](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/46013595922) completed/success. Artifact [15205477400](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/46013595922/artifacts/15205477400), SHA-256 `23680afbbc0840833e0c73bf998ec2b23e22d0b2bc7bb513b804a639534f6be7`.
+- Artifacten innehåller 129 unika ÄFO-filer för 2026-11-27; samtliga har `area_rows_available`, report ID 3, säsong 2026/2027, aktuella gränser och obligatoriska totalvärden. Dashboard på `main` anger 129/129 områden. Dashboardcommit: [48b962a](https://github.com/dahlinrobert-lgtm/alg-grasmyr/commit/48b962a993bf6e27979024f669bcfa860ca9c805).
+- Körningen är nu manuellt registrerad som tredje kompletta jämförbara run i projektledarrepots driftprofil via [PR #96](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/96), mergad 2026-11-27 (commit `05ee6714aa895a8e031648a605fe2cb600701c6a`). Profilen har fortsatt `rollout_stage=pilot`; tipping point för expansionsgranskning är nådd, men `risk_assessed=false` eftersom leverantörens rate limits/minimiintervall är okända. `scale_up_eligible=false`. Kommersiell användning, kundvisning och vidare distribution är separata och inte godkända av denna tekniska evidens.
+- PR #96:s Python-enhetstester och syntetiska append-only/Git-integrationstester passerade.
+
+**Samråd – komplett nytt snapshot men väntar på data-PR**
+- [Actions run #65](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46036924262) completed/success. Samma scope-hash `9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a`, samtliga tre lager paginerade till uttömning, 21 giltiga observationer, 0 avvisade och 0 saknade/felaktiga geometrier.
+- Snapshot och manifest ligger i [data-PR #677](https://github.com/dahlinrobert-lgtm/Skog/pull/677), som fortfarande är öppen. Den räknas därför inte som arkiverad på `main` eller tillagd i `complete_runs`. Befintliga tre manuellt registrerade körningar står kvar; ingen tipping-point-status ändras.
+
+**Torvkarta/SIS – verifierad samplejämförelse, ej full källtäckning**
+- Data-PR [#683](https://github.com/dahlinrobert-lgtm/Skog/pull/683) är mergad. Snapshot `20261126T225821Z` jämfördes med `20261116T125756Z` på samma 1 km × 1 km-ruta i Gräsmyr.
+- Båda tjänsterna svarade HTTP 200, metadata och pixelhashar var oförändrade och båda banden i respektive prov hade 0 ändrade pixlar. Torvkarta-provet är 500 × 500 × 2 och SIS-provet 80 × 80 × 2. Detta verifierar endast dessa provfönster, inte full rasterhämtning eller nationell täckning. Ingen separat driftprofil eller uppskalningsstatus registreras här.
+
+**Dokumentationsbedömning**
+- `docs/AI_HANDOVER.md`: uppdateras med den manuellt verifierade evidensen och nästa steg.
+- `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md`: `Assessed – no update required`; inga källidentiteter, insamlingsbeteenden, rättigheter eller kommersiella/kundvisningsbeslut ändrades.
+- Nästa steg: granska och merge:a Samråds data-PR #677 först efter sedvanlig kontroll av datafiler och diff. Därefter kan körning #65 registreras manuellt i driftprofilen. Fortsätt bevaka riskgrindar och håll Torvkarta/SIS som lokala prover tills bredare täckning och riskprofil har verifierats.
