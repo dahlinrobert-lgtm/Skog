@@ -1374,3 +1374,12 @@ Ingen automatisk retry/backoff infördes eftersom provider rate limits och åter
 Artefakt [15234882262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46076543847) bekräftar numerisk paginering och framåtriktade sidfönsterellipser med `Page$6`, `Page$11`, `Page$16` och fortsatta femsidiga steg. Bakåtriktade ellipser valdes inte. Alla 80 sidövergångar hade registrerat svar och ändrat sida (13 Uppsala, 54 Stockholm, 13 Södermanland).
 
 Ingen framåtriktad `Page$1`-ellips observerades live. `Page$1` förekom som normal sidlänk tillbaka till resultatsida ett. Den specialvariant som testas syntetiskt är därför fortsatt obekräftad live. Inga sidöverlapp observerades; 143 råa rader/135 unika kvarstår som separat testfall. Körningen var `diagnostics_only_no_persistence` och ändrade inte de 36 arkiverade kompletta query-intervallen eller snapshots. `an` är en teknisk testfras, inte godkänd produktionsfråga.
+
+
+## Länsstyrelsens diagnostics-workflow – två separata sökfraser (2026-11-27)
+
+[PR #715](https://github.com/dahlinrobert-lgtm/Skog/pull/715) är mergad (merge commit `616f86f20b4005a2daa3229c9c4db36898732251`). Den manuella workflowen `.github/workflows/lansstyrelsen-national-diary-discovery.yml` stöder nu valfri `extra_search_term` utöver `search_term`. Fraserna körs var för sig för varje valt län och månad och redovisas i `summary.json` under `search_terms`.
+
+Detta gör det möjligt att diagnostisera den historiska Blekinge-sökningen med både `naturvårdsbränning` och `vattenverksamhet`, utan att ändra produktionscollectorn eller arkivet. Workflowen är fortsatt read-only/diagnostics-only och skriver inga snapshots eller historikposter. PR-merge är verifierad, men runtime-beteendet med två fraser är ännu inte liveverifierat.
+
+**Nästa steg:** kör Blekinge, oktober 2026, med de två fraserna som separata indata. Jämför respektive källtal, unika diarienummer och pagerövergångar. Särskilt framåtriktad `Page$1` och överlapp mellan råa rader och unika ID:n är fortfarande öppna verifieringspunkter.
