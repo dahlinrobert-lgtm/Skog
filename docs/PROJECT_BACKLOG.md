@@ -19,7 +19,7 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Fält | Värde |
 |---|---|
 | Prioritet | P0 – högsta operativa prioritet |
-| Status | Inventory #45 verifierar sex driftprofiler. Samråd: 4 kompletta jämförbara körningar; Älgdata: 3; Torvkarta/SIS: 2 vardera och pilot_recurring med review_expansion; Trafikverkets två produkter: 1 baslinje vardera. Avverkningsanmälningarnas workflow-discovery ger nu korrekt unknown med candidate_run separat. Full daglig rapport för samtliga 53 source_id och relevanta produkter/lager återstår; registry_status=seed. |
+| Status | PM-profilregistret innehåller nu sju manuellt kuraterade drift-/riskprofiler efter PM-PR #105 för Länsstyrelsens diarier. Inventory #45 verifierar fortfarande sex (före #105); nästa inventory ska bekräfta den sjunde profilen. Samråd: 4 kompletta jämförbara körningar; Älgdata: 3; Torvkarta/SIS: 2 vardera och pilot_recurring med review_expansion; Trafikverkets två produkter: 1 baslinje vardera. Avverkningsanmälningarnas workflow-discovery ger korrekt unknown med candidate_run separat. Full daglig rapport för samtliga 53 source_id och relevanta produkter/lager återstår; registry_status=seed. |
 | Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
@@ -456,3 +456,14 @@ PR #540 är mergad och migration 006 är installerad i `skogskoll-test`. PR #541
 | Nästa steg | Read-only inventera samtliga 27 arkiverade snapshots mot nuvarande fullständighetsfunktion och jämför stabila objekt-/ärendeidentiteter med event bundle. Dokumentera vilka filer som exkluderas och varför innan kodändring. |
 | Säkerhets-/rättighetsgrind | Bevara råsnapshotar och provenance. Ingen kommersiell rätt, kundvisning eller avisering följer av teknisk historik. |
 
+
+
+#### PM-027 – Länsstyrelsens diarier får kuraterad driftprofil – 2026-11-27
+
+[PM-PR #105](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/105) är mergad i projektledarrepos commit [327a04a](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/commit/327a04a1d9fc945f254b71777e5b3055a76fb76a). Profilen för `lansstyrelsen.public_diary` skiljer nu mellan den manuellt startade månadssnapshoten och den dagliga webbläsarsökningen. CI passerade: [Project manager tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46072821790) och [Synthetic append-only tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46072821619).
+
+Profilen registrerar 36 kompletta manifestintervall och 36 snapshotfiler, 30 unika län/fras/period-grupper och två län. Detta är avgränsade sökintervall, inte nationell eller fullständig diarietäckning. Månadskörning #16 är en verifierad komplett baslinje för sex Norrbottenintervall i kategori B/oktober 2026. Daglig sökning #143 passerade sökning, persistence-validering och audit men publiceringssteget avvisades av GH013 eftersom workflowen försökte direktpush till skyddad main. Diagnostik #22 verifierade en femsidig sökning med 250/250 poster men sparade inga snapshots.
+
+Profilen är pilot-only, `risk_assessed=false`, utan uppskalningsgodkännande. Leverantörsgränser och generell retry/backoff är okända. Senaste kompletta arkiv ska bevaras; misslyckade eller begränsade sökningar får inte tolkas som borttagningar. Rättigheter för metadata, handlingar, bilagor, lagring, kommersiell användning och kundvisning är fortsatt separata.
+
+**Nästa steg:** verifiera att nästa read-only inventory läser in den sjunde profilen och håller daily run #143 som failed latest attempt skild från senaste kompletta manifestobservation. Åtgärda därefter direktpush/publiceringsproblemet i diariets dagliga workflow separat genom PR-baserad publicering; ingen insamlings- eller historikmodell ska bytas.
