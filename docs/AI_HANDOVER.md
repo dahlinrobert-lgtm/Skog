@@ -2459,4 +2459,13 @@ Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-proj
 
 Detta stärker teknisk evidens för paginering över fem sidor, men bevisar inte full länstäckning, leverantörsgränser, SLA eller kommersiella rättigheter. Profilen är fortsatt `pilot`, `risk_assessed=false`.
 
-**Nästa steg:** verifiera post-merge daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) och eventuell data-PR; bekräfta sedan sjunde PM-profilen i nästa read-only inventory. Inventory #45 föregår PM-PR #105/#106 och verifierar fortfarande sex profiler.
+**Nästa steg:** utred om HTTP 500-felet i Västra Götaland / `vattenverksamhet` kan reproduceras med en avgränsad diagnostics-only-körning; lägg inte till retry/backoff innan providergränser och återhämtningsbeteende bedömts. Verifiera därefter nästa kompletta dagliga körning och att PR-publiceringen skapar en data-PR. Bekräfta den sjunde PM-profilen i nästa read-only inventory (inventory #45 föregår PM-PR #105–#107). Följ därefter Trafikverkets nästa veckosnapshot per produkt och Torvkarta/SIS schemalagda körning 2026-11-30 04:23 UTC.
+
+
+## 2026-11-27 – Länsstyrelsens post-merge run #148 fail-closed vid HTTP 500
+
+[Daglig run #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) efter [PR #709](https://github.com/dahlinrobert-lgtm/Skog/pull/709) avslutades med källfel under sökning. Workflowtester och history audit passerade. Batchen omfattade 21 län och två fraser; artefakten innehåller 38 queryintervall: 37 lyckades och ett misslyckades. Västra Götaland / `vattenverksamhet` fick HTTP 500 / Runtime Error vid WebForms `Page$6` efter 240 extraherade källrader. Inget källtotal kunde stämmas av.
+
+Persistence och PR-skapande hoppades över. Ingen delmängd publicerades; arkivets 36 kompletta manifestintervall och 36 snapshotfiler är oförändrade. Detta verifierar fail-closed-beteendet men inte PR-publiceringens liveväg. [PM-PR #107](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/107) är mergad i commit `e9135321ecd136ef3ad3e2d634de5f40279a0224` och registrerar #148 som senaste försök.
+
+**Nästa konkreta steg:** vid behov gör en avgränsad diagnostics-only-reproduktion av Västra Götaland / `vattenverksamhet`. Lägg inte till retry/backoff innan leverantörens anropsgränser och återhämtningsbeteende bedömts. Bekräfta sedan en komplett daglig körning och data-PR; uppdatera PM-profilen igen först när ny evidens finns.
