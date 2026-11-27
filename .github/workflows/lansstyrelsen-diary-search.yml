@@ -44,9 +44,26 @@ on:
       - "scripts/audit_lansstyrelsen_diary_history.py"
       - "scripts/test_audit_lansstyrelsen_diary_history.py"
       - ".github/workflows/lansstyrelsen-diary-search.yml"
+  pull_request:
+    paths:
+      - "scripts/lansstyrelsen_pager.py"
+      - "tests/test_lansstyrelsen_pager.py"
+      - "scripts/search_lansstyrelsen_diary.py"
+      - "scripts/search_lansstyrelsen_diary_browser.py"
+      - "scripts/persist_lansstyrelsen_diary.py"
+      - "scripts/test_persist_lansstyrelsen_diary.py"
+      - "scripts/audit_lansstyrelsen_diary_history.py"
+      - "scripts/test_audit_lansstyrelsen_diary_history.py"
+      - ".github/workflows/lansstyrelsen-diary-search.yml"
 
 permissions:
   contents: write
+  pull-requests: write
+
+concurrency:
+  # Shared with the monthly snapshot workflow because both update the same append-only diary archive.
+  group: ${{ github.event_name == 'pull_request' && format('lansstyrelsen-validation-{0}', github.workflow) || 'lansstyrelsen-diary-archive' }}
+  cancel-in-progress: false
 
 jobs:
   search:
@@ -54,22 +71,26 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || 'main' }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test diary history and source-response validation
-        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history scripts.test_diary_county_coverage tests.test_lansstyrelsen_pager tests.test_lansstyrelsen_action_leads
+      - name: Test diary history, source-response validation and publication contract
+        run: python -m unittest scripts.test_persist_lansstyrelsen_diary scripts.test_lansstyrelsen_diary_validation scripts.test_audit_lansstyrelsen_diary_history scripts.test_diary_county_coverage scripts.test_lansstyrelsen_workflow_publication tests.test_lansstyrelsen_pager tests.test_lansstyrelsen_action_leads
       - name: Audit persisted diary history
         run: |
           python scripts/audit_lansstyrelsen_diary_history.py \
             --state data/lansstyrelsen-diary/state.json \
             --events data/lansstyrelsen-diary/events.jsonl \
             --output diary-history-audit.json
-      - name: Install browser dependencies
-        run: |
-          python -m pip install playwright
-          python -m playwright install --with-deps chromium
+      - name: Install Playwright Python package
+        run: python -m pip install playwright
+      - name: Install Chromium browser dependencies
+        if: github.event_name != 'pull_request'
+        run: python -m playwright install --with-deps chromium
       - name: Submit public diary search in Chromium
+        if: github.event_name != 'pull_request'
         env:
           COUNTY_INPUT: ${{ inputs.county }}
           CONFIRM_ALL_COUNTIES_INPUT: ${{ inputs.confirm_all_counties }}
@@ -90,8 +111,8 @@ jobs:
             --search-term "$search_term" \
             --extra-search-terms "$extra_terms" \
             --output diary-search.json
-      - name: Persist validated result rows
-        if: success()
+      - name: Persist validated result rows for diagnostics
+        if: success() && github.event_name != 'pull_request'
         run: |
           python scripts/persist_lansstyrelsen_diary.py \
             --input diary-search.json \
@@ -124,44 +145,43 @@ jobs:
               "table_diagnostics": data.get("table_diagnostics", [])[:12],
           }, ensure_ascii=False, indent=2))
           PY
-      - name: Publish validated diary history with concurrency-safe retry
-        if: success() && github.ref == 'refs/heads/main'
+      - name: Rebuild validated diary history against latest main
+        if: success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for attempt in 1 2 3 4 5; do
-            # Rebuild the state against the latest main instead of rebasing generated
-            # JSON snapshots, which can conflict when two diary searches finish together.
-            git fetch origin main
-            git reset --hard origin/main
-            python scripts/persist_lansstyrelsen_diary.py \
-              --input diary-search.json \
-              --state data/lansstyrelsen-diary/state.json \
-              --events data/lansstyrelsen-diary/events.jsonl \
-              --summary data/lansstyrelsen-diary/last-run-summary.json
-            # Audit the exact latest-main-derived files that this attempt will publish.
-            python scripts/audit_lansstyrelsen_diary_history.py \
-              --state data/lansstyrelsen-diary/state.json \
-              --events data/lansstyrelsen-diary/events.jsonl \
-              --output diary-history-audit.json
-            git add data/lansstyrelsen-diary/
-            if git diff --cached --quiet; then
-              echo "Diary history unchanged."
-              exit 0
-            fi
-            git commit -m "Update Länsstyrelsen diary history"
-            if git push origin HEAD:main; then
-              echo "Published validated diary history."
-              exit 0
-            fi
-            if [ "$attempt" -eq 5 ]; then
-              echo "Could not publish diary history after five attempts." >&2
-              exit 1
-            fi
-            sleep 2
-          done
+          set -euo pipefail
+          # Rebuild from the newest main so concurrent source changes are never overwritten.
+          git fetch origin main
+          git reset --hard origin/main
+          python scripts/persist_lansstyrelsen_diary.py \
+            --input diary-search.json \
+            --state data/lansstyrelsen-diary/state.json \
+            --events data/lansstyrelsen-diary/events.jsonl \
+            --summary data/lansstyrelsen-diary/last-run-summary.json
+          python scripts/audit_lansstyrelsen_diary_history.py \
+            --state data/lansstyrelsen-diary/state.json \
+            --events data/lansstyrelsen-diary/events.jsonl \
+            --output diary-history-audit.json
+      - name: Create or update diary history pull request
+        if: success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: automation/lansstyrelsen-diary-history
+          delete-branch: true
+          add-paths: |
+            data/lansstyrelsen-diary/
+          commit-message: "Archive Länsstyrelsen diary search observations"
+          title: "data: archive Länsstyrelsen diary search history"
+          body: |
+            Automated, validated public-diary observations.
+
+            - Search and pagination validation completed before this PR was created.
+            - State and event history were rebuilt against the latest main and audited.
+            - The append-only event history and immutable query snapshots are retained.
+
+            Review query scope, coverage, and audit output before merging. A missing case in a limited search is not interpreted as removal. This PR does not authorize customer display, commercial reuse, or redistribution.
       - name: Upload public search results, history summary and audit report
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: lansstyrelsen-diary-search
