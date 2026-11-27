@@ -2193,7 +2193,7 @@ sources:
       snapshot_status: pilot
       history_status: not_verified
       commercial_use_status: conditional
-      customer_display_status: pending_product_assessment
+      customer_display_status: pending_per_product
       last_verified: "2026-11-27"
       next_action: "Run the 30-day parallel source evaluation with immutable daily snapshots; compare overlap, unique events, freshness, schema quality, availability and source-specific limitations before deciding whether to retain both sources."
       evidence_reference: "docs/police-source-evaluation.md; official API probe 2026-11-27; Polismyndigheten case A698.287/2026"
