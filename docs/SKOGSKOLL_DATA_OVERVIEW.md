@@ -1474,3 +1474,18 @@ En direkt jämförelse av diarienummerlistorna i artefakterna från [historisk r
 Av diarienumren i de båda körningarnas unioner återfinns 119 i båda. 16 finns endast i den historiska listan och 7 endast i den nya. Båda körningarna använde `Page$2` och `Page$3`; de råa sidstorlekarna och källtalet var alltså lika, men sidornas innehåll och överlappsmönster skiljde sig.
 
 **Tolkning:** detta är evidens för att källans resultat-/sidfördelning inte var identisk vid de två tillfällena. Artefakterna visar inte om orsaken är ändrad ärendemängd, sorteringsordning eller portalens sidvisning. Skillnaderna får inte tolkas som borttagningar och ska inte skapa historiska events. Ingen kodändring eller historikskrivning har gjorts. Framåtriktad `Page$1` har inte observerats i någon av dessa två körningar.
+
+
+## Länsstyrelsen – återtest av tidigare HTTP 500, diagnostics-only run #31 (2026-11-27)
+
+[Workflow run #31](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46080266678) återanvände exakt den tidigare felande sökningen från daglig run #148: grupp `group_07`, kategori B, frasen `vattenverksamhet`, registreringsperiod oktober 2026 och alla tre län (Skåne, Halland, Västra Götaland). Körningen avslutades `completed/success`; samtliga fokuserade tester, liveinsamling och artifact-upload passerade.
+
+Artefakt [15237021862](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46080266678/artifacts/15237021862), SHA-256 `4bc6d1c17b5b703b8751006e005252464ef3c8d7a6b55b1c2ed8d1ffccf81d1a`, innehåller:
+- Skåne: 14/14 unika diarienummer, komplett och avstämt.
+- Halland: 11/11, komplett och avstämt.
+- Västra Götaland: 46/46, komplett och avstämt.
+- Sammanfattning: 3 förväntade/observerade/avstämda intervall, 0 misslyckade intervall och 0 processfel.
+
+**Tolkning:** HTTP 500-felet från Västra Götaland i run #148 kunde inte reproduceras när samma sökning kördes igen. Detta är evidens för en lyckad återhämtning vid ett senare försök, men inte bevis för att felet var rent tillfälligt eller att källan är stabil över tid. Run #31 var uttryckligen `diagnostics_only_no_persistence`; inga snapshots, manifest, state eller events skrevs och rättighetsstatus ändras inte.
+
+**Nästa steg:** betrakta 500-felet som icke-reproducerat i en avgränsad omkörning, men behåll en öppen operativ risk. Ingen generell retry/backoff eller uppskalning införs utan evidens för leverantörens tekniska gränser. Vid nästa naturliga körning ska fel, län, sökparametrar, sidsteg och eventuell partiell extraktion bevaras separat. Först efter flera kompletta jämförbara återkommande körningar kan diariet omprövas för stabil återkommande drift.
