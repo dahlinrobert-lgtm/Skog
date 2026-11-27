@@ -2204,6 +2204,29 @@ Uppföljning till föregående manuella pilotgranskning:
 **Dokumentationsstatus:** Documented – Skogs AI_HANDOVER uppdateras. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är fortsatt bedömda utan uppdateringsbehov eftersom källidentiteter, ingestion, rättigheter och kundvisning inte ändrats.
 
 
+## 2026-11-27 – Project manager read-only inventory #43: adapterverifiering efter PR #98
+
+[Inventory #43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46065968120) avslutades completed/success 2026-11-27 20:47:47 UTC från projektledarrepots `main`, commit `4706bb76496538bc62fc73368841345c48f59880` (PR #99). Båda jobben för PM-029 schedule gate och collector passerade; central inventory alert/write-job var skipped. Artifact [15230274599](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46065968120/artifacts/15230274599), 26 933 byte, SHA-256 `d2e77234357a0085063c2084aef37e603500b442abaeeb034c7564e76d227207`, innehåller `dashboard-data.json`.
+
+Read model: success, 3/3 repositories, 0 repositoryfel, source registry success, 53 källor (16 med operations-block, 37 utan) och fyra riskprofiler. Säkerhetsmetadata anger `read_only=true`, `no_repository_writes=true` och `no_secrets_in_output=true`.
+
+**PR #98 – adapterresultatet verifierat efter merge**
+- För både `skogsstyrelsen.torvkarta` och `skogsstyrelsen.standortsindex_sis` redovisas senaste sample nu som `sample_complete_for_service`, med `valid_sample=true` och `sample_scope_complete=true`.
+- Snapshot-ID `20261126T225821Z`; jämförelsen mot `20261116T125756Z` är `unchanged` för båda tjänsterna. Torvkarta-provet är 500 × 500 × 2 (uint8), SIS-provet 80 × 80 × 2 (int16); båda avser samma 1 km × 1 km Gräsmyr-ruta.
+- Adaptern verifierar att NPZ-samplefilen finns i Git-trädet men laddar inte ned filinnehållet och räknar inte om pixelhashen. Detta är giltig tjänsteprovsevidens för metadata-/pixelövervakning, inte full rasterhämtning, nationell täckning eller en fullständig återkommande driftprofil. Ingen tipping point eller uppskalning ska härledas för Torvkarta/SIS.
+
+**Övriga pilotprofiler bekräftade**
+- Samråd: fyra kompletta jämförbara körningar med samma 10 km scope-hash; `pilot_recurring`, tipping point nådd och `review_expansion`. `risk_assessed=false`, `scale_up_eligible=false`, kundanvändning inte godkänd och separat rättighetsgrind kvarstår.
+- Älgdata: tre kompletta jämförbara nationella körningar, 129/129 ÄFO för report 3 och säsong 2026/2027 med aktuella gränser; `pilot_recurring`, tipping point nådd och `review_expansion`. Riskbedömning är fortsatt partiell, `scale_up_eligible=false` och kundanvändning inte godkänd. Att kommersiell användning i källprofilen anges som villkorad/godkänd tar inte bort den separata kundvisnings- och distributionsgrinden.
+- Trafikverkets Miljöwebb Landskap och NVDB Viltolyckor har fortsatt varsin komplett baslinje från 2026-11-25. Senaste workflowförsök är fortsatt unknown eftersom den konfigurerade exakta workflow-sökvägen inte hittas i workflow inventory/recent run history. Ingen run-ID kopplas in på antagande.
+
+**Nästa konkreta steg**
+1. Fortsätt ordinarie read-only inventory och kontrollera att samplefält för Torvkarta/SIS kvarstår; ingen ytterligare adapterändring behövs utifrån #43.
+2. Felsök separat Trafikverkets exakta workflow-discovery mot faktisk workflowfil och run history. Behåll senaste manifest som baseline tills exakt run-evidens finns.
+3. Genomför riskgenomgång av Samråds och Älgdatas leverantörsgränser, minimiintervall, retry/backoff och stoppvillkor innan riskstatus eller scope kan höjas.
+
+**Dokumentationsstatus:** Documented – inventory #43 bekräftar adapterändringen och uppdaterar nästa steg. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är `Assessed – no update required`: inga source identities, källstatusar, insamlingsbeteenden, cadence, rättigheter eller kundvisningsbeslut ändrades.
+
 ## 2026-11-27 – Project manager read-only inventory #42 verifierad
 
 [Inventory #42](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483) avslutades completed/success 2026-11-27 20:31:51 UTC. Artifact [15230022338](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483/artifacts/15230022338), SHA-256 `6d7abed530b231923d33374ffb68d4bbff7139c3dca6508f8ae0d07b4311ab31`, innehåller `dashboard-data.json`. Read model rapporterar success, 3/3 repositories, 0 repositoryfel, source registry success, 53 registrerade källor, 16 med operationsfält, 37 utan operationsfält och fyra driftprofiler. Alert-jobbet var skipped (ingen issue-skrivning).
