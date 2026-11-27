@@ -2519,3 +2519,31 @@ Detta reproducerar källtalet 143 från den historiska körningen #142, men **in
 Artefakt: [lansstyrelsen-blekinge-unbounded-two-term-diagnostics](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745), SHA-256 `e8d373ddc11b1f742ff0cc5d2d6d78abef87148d099bad2f4f31e60c29eb80c4`.
 
 **Nästa steg:** jämför postidentiteterna och tids-/statusförändringar mellan run #142:s artefakt och run #1, om båda artefakterna kan läsas. Därefter avgör om 135/8 var ett tillfälligt källsnapshot eller en tidigare insamlingsskillnad. Håll framåtriktad `Page$1` som obevisad; kör #1 använde vanliga numeriska sidargument och innehöll ingen ellips.
+
+
+## Länsstyrelsen – identitetsjämförelse run #142 mot unbounded run #1 (2026-11-27)
+
+Båda artefakterna har hämtats och jämförts på diarienummernivå för Blekinge, sökfras `vattenverksamhet`.
+
+**Historisk run #142** ([artifact 15203258666](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069/artifacts/15203258666)) innehåller en misslyckad sökning men fel-/diagnostiktexten bevarar sidornas diarienummerlistor och pagerövergångar. Dessa listor ger:
+- sida 1: 50 råa diarienummer, 50 unika
+- sida 2: 50 råa diarienummer, 45 unika
+- sida 3: 43 råa diarienummer, 40 unika
+- överlapp sida 1–2: 5; sida 1–3: 0; sida 2–3: 3
+- union: 135 unika diarienummer; 8 upprepningar totalt.
+
+**Unbounded run #1** ([artifact 15236345745](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745)) ger:
+- sida 1: 50 råa diarienummer, 50 unika
+- sida 2: 50 råa diarienummer, 46 unika
+- sida 3: 43 råa diarienummer, 30 unika
+- överlapp sida 1–2: 4; sida 1–3: 12; sida 2–3: 1
+- union: 126 unika diarienummer; 17 upprepningar totalt.
+
+Identitetsjämförelse av sidornas diarienummerlistor:
+- 119 diarienummer finns i båda körningarnas unioner.
+- 16 finns endast i run #142: `2851-2026`, `2953-2026`, `2956-2026`, `3030-2026`, `3112-2026`, `3118-2026`, `3124-2024`, `3169-2026`, `3299-2026`, `3310-2026`, `3314-2026`, `3450-2026`, `3501-2026`, `3510-2026`, `3567-2026`, `3652-2026`.
+- 7 finns endast i run #1: `2620-2026`, `3767-2024`, `3843-2026`, `4509-2026`, `4921-2024`, `5004-2025`, `504-2025`.
+
+Båda körningarna hade samma råa sidstorlekar (50/50/43), samma källtal (143) och samma vanliga numeriska pagerövergångar `Page$2` och `Page$3`. Men sidornas innehåll och överlapp skiljer sig kraftigt, särskilt sida 3. Det visar att skillnaden 135/8 mot 126/17 inte bara är ett räknefel i totalsumman. Det kan bero på att källans resultatmängd eller sorterings-/sidvisning förändrats mellan tidpunkterna; artefakterna kan inte isolera orsaken. Vi ska därför inte behandla skillnaderna som borttagningar eller historiska händelser.
+
+**Nästa steg:** om en ny insamling behövs, gör en enda avgränsad diagnostikkörning och jämför om resultatordning/siduppdelning stabiliserats. Ingen kodändring motiveras av denna jämförelse. Framåtriktad pager-`Page$1` är fortsatt obevisad. Historik, snapshots, manifest och events har inte ändrats.
