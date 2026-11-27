@@ -2188,3 +2188,24 @@ Uppföljning till föregående manuella pilotgranskning:
 **Nästa konkreta steg:** gör en separat, evidensbaserad riskgenomgång av Samråds och Älgdatas anropspolicy (leverantörsdokumentation, minimiintervall, rate limits, retry/backoff och stoppvillkor). För Torvkarta/SIS: hitta exakt workflow-run-ID för den föregående 2026-11-16-snapshoten innan någon driftprofil eller tipping-point-status registreras. Fortsätt därefter med ordinarie inventory och manuell granskning av nya lyckade försök.
 
 **Dokumentationsstatus:** Documented – Skogs AI_HANDOVER uppdateras. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är fortsatt bedömda utan uppdateringsbehov eftersom källidentiteter, ingestion, rättigheter och kundvisning inte ändrats.
+
+
+## 2026-11-27 – Project manager read-only inventory #42 verifierad
+
+[Inventory #42](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483) avslutades completed/success 2026-11-27 20:31:51 UTC. Artifact [15230022338](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483/artifacts/15230022338), SHA-256 `6d7abed530b231923d33374ffb68d4bbff7139c3dca6508f8ae0d07b4311ab31`, innehåller `dashboard-data.json`. Read model rapporterar success, 3/3 repositories, 0 repositoryfel, source registry success, 53 registrerade källor, 16 med operationsfält, 37 utan operationsfält och fyra driftprofiler. Alert-jobbet var skipped (ingen issue-skrivning).
+
+**Live pilotbedömning i artifacten**
+- Samråd: fyra kompletta jämförbara körningar, tipping point nådd, `review_expansion`; `risk_assessed=false`, `scale_up_eligible=false`, `rights_gate=separate_review_required`.
+- Älgdata: tre kompletta jämförbara nationella körningar med 129 ÄFO, tipping point nådd, `review_expansion`; `risk_assessed=false`, `scale_up_eligible=false`, rättighetsgrinden är separat.
+- Trafikverkets Miljöwebb Landskap och NVDB Viltolyckor: fortsatt en komplett baslinjekörning vardera; ingen tipping point.
+- Torvkarta/SIS: read model behöll historisk pending-workflow-granskning i #42. Senaste samplemanifestet är dock arkiverat och har jämförbara 1 km-prov med 0 % pixeländring på båda banden. Ingen återkommande driftprofil eller nationell/full rasterkompletthet ska härledas från detta.
+
+**Verifierad korrigering i projektledaradaptern**
+[PR #98](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/98) är mergad i commit `ba402f84d29c4bf12049a87076e858dd326aad17`. Den gör geodata-adaptern tydligare med explicit samplekompletthet för enskild tjänst utan att ladda ned NPZ-innehåll eller skapa en fullständig raster-/nationell driftprofil. Regressionstester täcker giltigt sample, oberoende workflowupptäckt och risk-/rättighetsgrindar. Slutliga PR-kontroller: Python unit tests och synthetic append-only tests, båda success. PR:en ändrar inte insamling eller källscope.
+
+**Nästa steg**
+1. Kör en ny read-only inventory på main efter PR #98 och verifiera att Torvkarta/SIS sample status exponeras tydligt, utan att de räknas som återkommande komplett drift.
+2. Följ upp eventuell ny veckokörning av Trafikverket. Den exakta workflowfilen `.github/workflows/trafikverket-weekly-snapshots.yml` återfinns fortfarande inte i main workflow-run-listan; inga nya körningar får kopplas dit utan exakt path/run-evidens.
+3. Utred provider rate limits/minimiintervall för Samråd och Älgdata innan riskprofil kan bedömas som komplett.
+
+**Dokumentation:** `docs/AI_HANDOVER.md` uppdateras. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` har lästs på main och bedömts `Assessed – no update required`: ingen källstatus, source registry, cadence, ingestion, rättighet eller kundvisning ändrades i detta arbete.
