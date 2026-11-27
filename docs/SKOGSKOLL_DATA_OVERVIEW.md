@@ -1374,3 +1374,21 @@ Ingen automatisk retry/backoff infördes eftersom provider rate limits och åter
 Artefakt [15234882262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46076543847) bekräftar numerisk paginering och framåtriktade sidfönsterellipser med `Page$6`, `Page$11`, `Page$16` och fortsatta femsidiga steg. Bakåtriktade ellipser valdes inte. Alla 80 sidövergångar hade registrerat svar och ändrat sida (13 Uppsala, 54 Stockholm, 13 Södermanland).
 
 Ingen framåtriktad `Page$1`-ellips observerades live. `Page$1` förekom som normal sidlänk tillbaka till resultatsida ett. Den specialvariant som testas syntetiskt är därför fortsatt obekräftad live. Inga sidöverlapp observerades; 143 råa rader/135 unika kvarstår som separat testfall. Körningen var `diagnostics_only_no_persistence` och ändrade inte de 36 arkiverade kompletta query-intervallen eller snapshots. `an` är en teknisk testfras, inte godkänd produktionsfråga.
+
+
+## Länsstyrelsens diarier – tvåfras-diagnostikrun #30 (2026-11-27)
+
+[Run #30](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46078595702) kördes från main efter [PR #715](https://github.com/dahlinrobert-lgtm/Skog/pull/715) med Blekinge, oktober 2026 och två separata fraser: `naturvårdsbränning` och `vattenverksamhet`. Jobbet, fokuserade valideringstester, insamling och artifact-upload avslutades `success`.
+
+Artefakt [15236172620](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46078595702/artifacts/15236172620) (SHA-256 `10d9395022af39d07ac7c7fe140993790a0c704b68e9d4f9f0d2c55c83e83487`) visar:
+
+| Sökfras | Källtal | Unika diarienummer | Sidor | Avstämning |
+|---|---:|---:|---:|---|
+| `naturvårdsbränning` | 0 | 0 | 0 | Komplett, avstämd |
+| `vattenverksamhet` | 18 | 18 | 1 | Komplett, avstämd |
+
+Summary rapporterar 2/2 förväntade intervall, 2/2 avstämda och inga intervall-/processfel. För `vattenverksamhet` visar sidans diagnostik 18 råa matchande rader och inga duplicerade diarienummer eller case-ID:n.
+
+**Begränsning:** denna körning bekräftar exekvering av två fraser, inte högvolymspaginering eller den framåtriktade `Page$1`-specialvarianten. Ett intervall gav inga sidor och det andra endast en sida utan pagerkontroller. Det historiska fallet 143 råa rader/135 unika reproducerades inte. Ingen snapshot, manifestpost eller historik skrevs; källarkiv och rättighetsstatus är oförändrade.
+
+**Nästa steg:** använd endast en exakt dokumenterad äldre sökparameteruppsättning eller ett konkret intervall som tidigare producerat 143/135 för ny avgränsad diagnostik. Undvik fler generiska upprepningar som inte kan ge ny pager- eller överlappsevidens.
