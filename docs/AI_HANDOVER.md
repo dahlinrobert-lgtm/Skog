@@ -104,6 +104,20 @@ Statusar är operativ projektinformation, inte juridiska beslut.
   - **Nästa konkreta steg:** låt den schemalagda pollern fortsätta. Vid nästa observerade ändring ska körningen granskas för fullständighet, förändringstyp, feature count och hash; granska den automatiskt skapade data-PR:n innan merge. Bevara baslinjen och tidigare snapshots oförändrade.
 
 
+### 2026-11-27 – PM-027 inventory #42: Länsstyrelsens diarier
+
+[Project manager read-only inventory #42](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483) avslutades `success` 2026-11-27 20:31 UTC: 3/3 repositories, 0 fel. Collector-tester, JavaScript-syntaxkontroll, repository-insamling och artifactuppladdning passerade. Artifact [15230022338](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483/artifacts/15230022338) granskades. Inventeringen använde Skog `main`-commit `66a1eb32b9b908cebc79c8dd6090e7d6c2fd31bc` och var read-only; inga feature collections hämtades och inga källrepositorier skrevs.
+
+För `lansstyrelsen.public_diary` hittade metadata-only-adaptern 36 manifestrader och 36 daterade snapshotfiler. Samtliga 36 intervall klarade adaptervillkoren: en query per manifestrad, komplett körning, publicerad snapshot som finns i Git-trädet, uttömd paginering, avstämt intervall utan fel samt `source_total = extracted_unique_ids = snapshot_unique_record_count`. Detta är 36 kompletta läns-/fras-/registreringsperiodintervall i arkivet; det är inte nationell täckning, inte en uttömmande diarieförteckning och inte 36 jämförbara återkommande driftkörningar.
+
+Senaste exakta workflowförsök är [Skog run #46011210069](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069), `failure`. Loggen visar att sökningen `vattenverksamhet` för Länsstyrelsen i Blekinge rapporterade 143 träffar men att insamlaren hade extraherat 135 när portalen inte längre visade en fortsättning vid iteration 3. Persistenssteget hoppades över; körningen skapade alltså inte ett komplett snapshot och får inte användas för frånvarobedömning.
+
+Senaste kompletta arkiverade observation förblir 2026-11-16: Norrbotten, frasen `omgrävning av vattendrag`, registreringsperiod 2026-09-01–2026-09-30, 0/0 poster. Det är ett komplett nollresultat för just det avgränsade intervallet, inte belägg för frånvaro i andra fraser, perioder eller län.
+
+Den registrerade källprofilen saknar fortfarande `operations_profile`; drift-/riskbedömning och pilot readiness är därför `unknown/not_assessed`. Inventory #42 ändrar inte källans kommersiella villkor, rättighet till historisk lagring, kundvisning eller distributionsrätt. Dessa ska fortsätta bedömas separat.
+
+Pager-arbetsbranchen `fix/lansstyrelsen-pager-ellipsis-direction` har 0 commits före aktuell `main`, ligger 69 commits efter och saknar PR. Den är inte en färdig eller aktuell korrigering och ska inte mergas direkt. Nästa steg är att återbasera/återskapa den relevanta pager-korrigeringen mot aktuell `main`, lägga till regressionstest för felet med 143/135 träffar och genomföra en kontrollerad livekörning. Behåll den senaste kompletta observationen och alla tidigare snapshots oförändrade.
+
 ### SLU Torvkarta
 - SLU lämnade 2026-11-02 ett skriftligt besked om fri kommersiell användning av nuvarande Torvkarta med angiven källhänvisning.
 - Beskedet innebär inte automatiskt rätt att distribuera underliggande Lantmäteriets originaldata.
