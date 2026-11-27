@@ -2101,3 +2101,26 @@ En separat utvärderingsgren `feat/polisen-official-api-evaluation` har skapats.
 Befintlig Brottsplatskartan-insamling och dess Azure-historik är inte ändrad. Ingen automatisk sammanslagning, kundvisning eller kundavisering införs. Den officiella snapshoten bevarar hela aktuella listan (upp till 500 enligt dokumentationen); Norrbottenurvalet härleds ur `location.name`. Tomt/ogiltigt svar ska faila i stället för att skapa falsk borttagning eller baslinje.
 
 **Verifieringsstatus vid dokumentation:** PR [#686](https://github.com/dahlinrobert-lgtm/Skog/pull/686) mergades 2026-11-27 i commit `338feab915c6332ba18c6af0d7d882b4fe209501`. Källregistervalidering och statusrapportgenerator passerade, samtliga 405 Python-tester passerade och kundgränssnittstester passerade. Första schemalagda officiella API-snapshot är ännu inte genomförd; workflowen är schemalagd dagligen 04:55 UTC och första förväntade körning efter merge är 2026-11-28. 30-dagarsperioden börjar först vid första lyckade verifierade snapshot. Källan är inte klassad som komplett register eller godkänd för kommersiell kundvisning.
+
+
+## 2026-11-27 – Piloternas tipping point mergad i projektledaren
+
+Projektledarrepots [PR #94](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/94) är mergad till main 2026-11-27 19:40:41 UTC. Merge commit: `eeb1306dc7459a0e586e489489eb9d970733e641`.
+
+**Implementation på projektledarens main:**
+- Den befintliga read-only källregisterbedömningen kompletteras med en deterministisk pilotbedömning.
+- Tipping point för expansionsgranskning kräver minst två unika lyckade, kompletta körningar med samma icke-tomma jämförbarhetsnyckel och exakt workflowkoppling.
+- Teknisk uppskalningskandidat kräver minst tre jämförbara kompletta körningar, bedömd request-/återhämtningsrisk och explicit geografiskt scope.
+- Nya lyckade workflowförsök som ännu inte finns i den manuellt granskade complete_runs-evidensen flaggas för granskning. De räknas inte automatiskt som kompletta.
+- Kommersiell användning och kundvisning förblir separata rättighetsgrindar. Ingen cadence, källscope, insamling eller kundpublicering ändras automatiskt.
+- Dashboarden visar pilotrekommendation, tipping point, teknisk uppskalningsstatus, rättighetsgrind och eventuella väntande körningsgranskningar.
+
+**Verifiering:**
+- PR-körningarna för Python-tester och syntetiska append-only/Git-integrationstester passerade på slutlig PR-commit `2dabd8a02142d3f67ef918717038bbcba1112f3d`.
+- Efter merge passerade projektledarens main-testworkflow [run 46058375432](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46058375432).
+- Senaste verifierade read-only inventory är fortfarande [run 46020579522](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46020579522), före merge (2026-11-27 14:57 UTC). Ingen read-only inventory efter merge har ännu verifierats. Den nya dashboardbedömningen är därför mergad och testad, men ännu inte verifierad i en ny publicerad inventory/read model.
+- Denna arbetsuppgift ändrar inte källregister, datakälleåtkomst, snapshots eller rättigheter. docs/SKOGSKOLL_SOURCE_STATUS.md och docs/SKOGSKOLL_DATA_OVERVIEW.md har kontrollerats på main och lämnas oförändrade.
+
+**Nästa konkreta steg:** verifiera nästa schemalagda read-only inventory på projektledarens main. Kontrollera artifacten och dashboardens read model för Samråd/Älgdata tipping point, Trafikverkets två baslinjer och eventuella new_successful_attempt_pending_review-flaggor. Om ingen schemalagd körning dyker upp behöver PM-029:s schedule-trigger/gate felsökas innan liveverifiering kan slutföras.
+
+**Dokumentationsstatus:** Documented – PR #94:s implementation, tester, merge och kvarstående liveverifiering är registrerade här. Ingen källdokumentation eller rättighetsstatus ändras.
