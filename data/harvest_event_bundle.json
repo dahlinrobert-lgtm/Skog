@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-25T17:26:34.567268Z",
+  "generated_at": "2026-11-27T16:50:48.761443Z",
   "source_runs": [
     {
       "run_id": "skogsstyrelsen.harvest_notifications:2026-11-25T16:19:08.059838Z:0ab75d7b12ac",
@@ -166,6 +166,50 @@
       "records_rejected": 0,
       "snapshot_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz",
       "checksum": "sha256:88a803bd76dfdd6044aa46e8e1aed9bf3e5266af87e3db7961ca94305cd94e76",
+      "diagnostics": {
+        "layer_counts": {
+          "points": {
+            "records_fetched_in_envelope": 0,
+            "records_in_scope": 0,
+            "records_outside_scope": 0,
+            "records_missing_geometry": 0,
+            "records_geometry_error": 0,
+            "pages": 0
+          },
+          "lines": {
+            "records_fetched_in_envelope": 18,
+            "records_in_scope": 9,
+            "records_outside_scope": 9,
+            "records_missing_geometry": 0,
+            "records_geometry_error": 0,
+            "pages": 1
+          },
+          "areas": {
+            "records_fetched_in_envelope": 14,
+            "records_in_scope": 12,
+            "records_outside_scope": 2,
+            "records_missing_geometry": 0,
+            "records_geometry_error": 0,
+            "pages": 1
+          }
+        },
+        "history_eligibility": "complete_for_configured_scope",
+        "note": "Complete archived observation; absence is not interpreted as cancellation, deletion or completion."
+      }
+    },
+    {
+      "run_id": "skogsstyrelsen.samrad:2026-11-27T16:50:48.761443Z:9c5977588972:ce3d42304b0a",
+      "source_id": "skogsstyrelsen.samrad",
+      "started_at": "2026-11-27T16:50:48.761443Z",
+      "finished_at": "2026-11-27T16:50:48.761443Z",
+      "status": "success",
+      "scope_hash": "9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a",
+      "source_snapshot_at": "2026-11-27T16:50:48.761443Z",
+      "records_seen": 21,
+      "records_valid": 21,
+      "records_rejected": 0,
+      "snapshot_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz",
+      "checksum": "sha256:ce3d42304b0a192f50fda3d81e084e7624f40dc8408378224ea9ba833e371645",
       "diagnostics": {
         "layer_counts": {
           "points": {
@@ -8827,8 +8871,8 @@
       "event_time_start": "2021-12-29T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/5585/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/5585/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8841,8 +8885,8 @@
       "event_time_start": "2023-04-27T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/55796/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/55796/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8855,8 +8899,8 @@
       "event_time_start": "2023-05-02T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/63054/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/63054/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8869,8 +8913,8 @@
       "event_time_start": "2021-12-29T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/6069/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/6069/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8883,8 +8927,8 @@
       "event_time_start": "2026-10-06T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/92825/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/92825/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8897,8 +8941,8 @@
       "event_time_start": "2021-12-29T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/5648/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/5648/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8911,8 +8955,8 @@
       "event_time_start": "2025-10-14T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/72934/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/72934/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8925,8 +8969,8 @@
       "event_time_start": "2025-11-16T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/73950/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/73950/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8939,8 +8983,8 @@
       "event_time_start": "2025-12-05T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/74376/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/74376/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8953,8 +8997,8 @@
       "event_time_start": "2022-01-20T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/26356/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/26356/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8967,8 +9011,8 @@
       "event_time_start": "2023-11-20T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/10473/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/10473/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8981,8 +9025,8 @@
       "event_time_start": "2023-11-20T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/10828/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/10828/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -8995,8 +9039,8 @@
       "event_time_start": "2023-11-20T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/12788/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/12788/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9009,8 +9053,8 @@
       "event_time_start": "2026-02-17T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/22976/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/22976/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9023,8 +9067,8 @@
       "event_time_start": "2026-02-17T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/23033/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/23033/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9037,8 +9081,8 @@
       "event_time_start": "2022-08-03T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/60641/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/60641/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9051,8 +9095,8 @@
       "event_time_start": "2026-02-17T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/23032/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/23032/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9065,8 +9109,8 @@
       "event_time_start": "2026-02-18T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/23116/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/23116/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9079,8 +9123,8 @@
       "event_time_start": "2025-02-13T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/16379/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/16379/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9093,8 +9137,8 @@
       "event_time_start": "2022-12-19T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/lines/features/54667/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/lines/features/54667/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     },
@@ -9107,8 +9151,8 @@
       "event_time_start": "2021-11-19T00:00:00Z",
       "event_time_end": null,
       "first_observed_at": "2026-11-25T15:19:17.791517Z",
-      "last_observed_at": "2026-11-25T17:26:34.567268Z",
-      "geometry_ref": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz#/layers/areas/features/2232/geometry",
+      "last_observed_at": "2026-11-27T16:50:48.761443Z",
+      "geometry_ref": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz#/layers/areas/features/2232/geometry",
       "confidence_class": "verified",
       "interpretation_version": "samrad-event-history-v2"
     }
