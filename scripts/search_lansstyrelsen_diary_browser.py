@@ -816,6 +816,7 @@ def main() -> None:
                 batch["per_query_counts"] = [
                     {"county": q["requested_county"], "search_term": q["search_term"],
                      "extracted_count": q["result_count"], "reported_total_results": q["reported_total_results"],
+                     "raw_result_rows_seen": q["pagination"].get("raw_result_rows_seen", 0),
                      "total_reconciled": q["total_reconciled"]}
                     for q in batch["queries"]
                 ]
