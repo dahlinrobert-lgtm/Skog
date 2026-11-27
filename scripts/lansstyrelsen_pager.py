@@ -4,6 +4,11 @@ from __future__ import annotations
 import re
 
 
+def source_total_reconciled(reported_total: int | None, raw_result_rows_seen: int) -> bool:
+    """Compare the portal total with result rows read, before cross-page deduplication."""
+    return reported_total is not None and raw_result_rows_seen == reported_total
+
+
 def select_next_pager_action(
     candidates: list[dict], current_page_index: int
 ) -> dict | None:
