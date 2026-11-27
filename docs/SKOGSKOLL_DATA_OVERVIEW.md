@@ -253,6 +253,14 @@ Innehåller bland annat viltpassager, artrika väg- och järnvägsmiljöer, inva
 **Nuvarande läge**
 Inventering och geometrisk snapshotinsamling för Gräsmyr-pilotområdet har utvecklats. Dokumenterat workflow körs varje måndag 05:50 UTC. Daterade gzip-komprimerade GeoJSON-filer och manifest sparas under `data/trafikverket/snapshots/YYYY-MM-DD/`, med kontrollsummor och validering av täckning.
 
+**Read-only inventory #42 – verifiering 2026-11-27**
+
+Projektledarens [inventory #42](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483) verifierade Skogs diarier via metadata-only-adaptern. Arkivet innehåller 36 manifestrader och 36 motsvarande snapshotfiler; 36/36 intervall uppfyller adapterkraven för komplett query-intervall, inklusive uttömd paginering och avstämning mot unika diarienummer. Det betyder inte att samtliga 21 län eller alla diarier/fraser täcks. Adaptern hämtar inte handlingar eller bilagor och inventeringen hämtar inga feature collections.
+
+Senaste workflowförsök är [run #46011210069](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069), som misslyckades i Blekinge för frasen `vattenverksamhet`: källan rapporterade 143 träffar, medan 135 hade extraherats när pagineringen inte längre visade en fortsättning. Resultatet publicerades inte som komplett. Senaste kompletta observation ligger kvar från 2026-11-16 och gäller endast Norrbotten, frasen `omgrävning av vattendrag`, registreringsperiod september 2026, 0 träffar. Behåll skillnaden mellan senaste försök och senaste kompletta observation; använd inte det ofullständiga försöket för att markera ärenden som saknade.
+
+Den tidigare pager-branchen `fix/lansstyrelsen-pager-ellipsis-direction` är 69 commits efter aktuell `main` och har ingen PR. Återskapa/återbasera fixen mot aktuell kod och verifiera med regressionstest samt kontrollerad livekörning innan den används. Källans rättighetsbedömning och kundvisningsstatus ändras inte av inventory #42.
+
 **Historik**
 Snapshots är veckovisa observationer av tjänsten; det innebär inte att Trafikverket uppdaterar varje lager varje vecka. Pilotområdet är en ungefärlig geografisk sökruta, inte en fastighetsgräns.
 
