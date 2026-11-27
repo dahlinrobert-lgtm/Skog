@@ -5,7 +5,7 @@
   "completeness_status": "complete_for_configured_scope",
   "completeness_basis": "all three configured layers paginated to exhaustion; all fetched features assigned to in-scope/outside-scope with no missing or failed geometries",
   "source_total_reconciled": false,
-  "checked_at": "2026-11-25T17:26:34.567268Z",
+  "checked_at": "2026-11-27T16:50:48.761443Z",
   "scope_hash": "9c597758897297d34eb6ae733e56c5998587de4ff478fd8e82ae1a510dcfa76a",
   "scope": {
     "latitude": 63.74646,
@@ -25,9 +25,9 @@
     }
   },
   "snapshot": {
-    "path": "data/samrad_snapshots/samrad_20261125T172634Z.json.gz",
+    "path": "data/samrad_snapshots/samrad_20261127T165048Z.json.gz",
     "bytes": 400407,
-    "sha256": "c65398097cfa2fc9881457790a31432ea41984dbd67537adad627bf3103125ff"
+    "sha256": "a1dbf827259537d4680af1f650ee483d5fea4331d8b82726fa9a444f8f505a2a"
   },
   "layers": {
     "points": {
