@@ -2256,7 +2256,7 @@ Read model: success, 3/3 repositories, 0 repositoryfel, source registry success,
 **Nästa konkreta steg**
 1. Fortsätt ordinarie read-only inventory och kontrollera att samplefält för Torvkarta/SIS kvarstår; ingen ytterligare adapterändring behövs utifrån #43.
 2. Verifiera den mergade projektledar-PR #100:s paginerade exact-path fallback i nästa read-only inventory. Bekräfta senaste Trafikverket-försök med exakt workflow-sökväg; behåll manifestet från 2026-11-25 som baseline tills en ny komplett jämförbar snapshot finns.
-3. Genomför riskgenomgång av Samråds och Älgdatas leverantörsgränser, minimiintervall, retry/backoff och stoppvillkor innan riskstatus eller scope kan höjas.
+3. Följ upp återstående okända leverantörsgränser för Samråd och Älgdata med respektive leverantör. PR #102 verifierar Samråds MaxRecordCount=2000 och paginering, men rate limits/minimiintervall är fortsatt okända; Älgdatas portal saknar identifierat publikt API-/rate-limitavtal. Båda riskprofilerna förblir partial och uppskalning spärrad tills detta klargjorts.
 
 **Dokumentationsstatus:** Documented – inventory #43 bekräftar adapterändringen och uppdaterar nästa steg. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är `Assessed – no update required`: inga source identities, källstatusar, insamlingsbeteenden, cadence, rättigheter eller kundvisningsbeslut ändrades.
 
