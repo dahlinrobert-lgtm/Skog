@@ -2435,6 +2435,19 @@ Profilen är `pilot`, en enda verifierad månadskörning, `risk_assessed=false`;
 
 **Nästa konkreta steg:** följ run #148 till slut, granska eventuell diary data-PR, uppdatera PM-profilen för senaste attempt och verifiera den i nästa read-only inventory. Följ därefter Trafikverkets nästa veckosnapshot per produkt och Torvkarta/SIS schemalagda körning 2026-11-30 04:23 UTC.
 
+### Länsstyrelsens diarier – nationell grupp 01, diagnostikrun #25 (2026-11-27)
+
+[Discover Länsstyrelsen national diary groups #25](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073391186) avslutades `success` i `diagnostics_only_no_persistence`. Sökningen `an` för oktober 2026 gav:
+- Norrbotten: 848 av 848 unika diarienummer över 17 sidor.
+- Västerbotten: 874 av 874 över 18 sidor.
+- Jämtland: 820 av 820 över 17 sidor.
+Totalt 2 542 källträffar och 2 542 extraherade unika diarienummer. Samtliga tre intervall hade `pager_complete=true`, `reconciled=true`, inga rapporterade processfel och inga duplicerade diarienummer/case-ID:n i respektive insamling.
+
+Artefakt [15233382741](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073391186/artifacts/15233382741) visar liveförflyttning av sidfönstret med framåtriktade ellipser: `Page$6` från logisk sida 5, `Page$11` från sida 10 och `Page$16` från sida 15, i samtliga tre län. Varje övergång hade `response_seen=true` och `page_changed=true`. På senare sidfönster fanns även bakåtriktade ellipser (`Page$5`, `Page$10` eller `Page$12`) intill framåtriktade ellipser; collectorn valde rätt framåtriktad postback. Detta är stark live-evidens för vanlig framåtriktad ellipsnavigering och avvisande av bakåtriktade val.
+
+**Kvarstående skillnad:** ingen av de livevalda framåtriktade ellipserna använde `Page$1`; portalen använde `Page$6`, `Page$11` och `Page$16`. Den speciella framåtriktade `Page$1`-varianten är därför fortfarande endast täckt av syntetiska regressionstester. Run #25 hade inte heller överlapp mellan sidornas diarienummer; 143 råa rader/135 unika efter PR #695 är fortsatt en separat live-verifieringspunkt. Körningen var diagnostisk och publicerade inga snapshots eller ändrade historik.
+
+**Nästa steg:** undersök om det finns ett reproducerbart sökintervall/län där portalens framåtriktade ellips faktiskt använder `Page$1`. Behåll read-only-diagnostik. Överlappsfallet testas separat om källan åter producerar överlapp.
 
 ## 2026-11-27 – Länsstyrelsens högvolymspaginering verifierad i diagnostics-only
 
