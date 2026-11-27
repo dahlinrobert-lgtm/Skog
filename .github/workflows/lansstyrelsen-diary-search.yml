@@ -84,11 +84,11 @@ jobs:
             --state data/lansstyrelsen-diary/state.json \
             --events data/lansstyrelsen-diary/events.jsonl \
             --output diary-history-audit.json
-      - name: Install browser dependencies
+      - name: Install Playwright Python package
+        run: python -m pip install playwright
+      - name: Install Chromium browser dependencies
         if: github.event_name != 'pull_request'
-        run: |
-          python -m pip install playwright
-          python -m playwright install --with-deps chromium
+        run: python -m playwright install --with-deps chromium
       - name: Submit public diary search in Chromium
         if: github.event_name != 'pull_request'
         env:
