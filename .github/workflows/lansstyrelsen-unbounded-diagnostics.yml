@@ -1,0 +1,147 @@
+name: Länsstyrelsen unbounded historical reproduction (diagnostics only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      search_term:
+        description: First title phrase (searched without a registration-date filter)
+        required: true
+        default: "naturvårdsbränning"
+        type: string
+      extra_search_term:
+        description: Second title phrase (searched separately, without a registration-date filter)
+        required: true
+        default: "vattenverksamhet"
+        type: string
+
+# Read-only: this workflow only creates a diagnostics artifact.
+permissions:
+  contents: read
+
+concurrency:
+  group: lansstyrelsen-unbounded-diagnostics
+  cancel-in-progress: false
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate diagnostic phrases
+        env:
+          SEARCH_TERM: ${{ inputs.search_term }}
+          EXTRA_SEARCH_TERM: ${{ inputs.extra_search_term }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          terms = [os.environ["SEARCH_TERM"].strip(), os.environ["EXTRA_SEARCH_TERM"].strip()]
+          for term in terms:
+              if not 2 <= len(term) <= 80 or any(ord(c) < 32 for c in term):
+                  raise SystemExit("Each phrase must contain 2-80 characters without control characters")
+          if terms[0].casefold() == terms[1].casefold():
+              raise SystemExit("The two phrases must be different")
+          print("Validated two distinct phrases; each will be searched separately.")
+          PY
+
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Run focused pager and diary validation tests
+        env:
+          PYTHONPATH: scripts
+        run: |
+          python -m unittest \
+            scripts.test_lansstyrelsen_diary_validation \
+            scripts.test_lansstyrelsen_diary_pagination \
+            tests.test_lansstyrelsen_pager
+
+      - name: Search Blekinge without a registration-date filter
+        env:
+          SEARCH_TERM: ${{ inputs.search_term }}
+          EXTRA_SEARCH_TERM: ${{ inputs.extra_search_term }}
+        run: |
+          set -euo pipefail
+          mkdir -p lansstyrelsen-unbounded-diagnostics
+          python scripts/search_lansstyrelsen_diary_browser.py \
+            --county "Länsstyrelsen i Blekinge län" \
+            --search-term "$SEARCH_TERM" \
+            --extra-search-terms "$EXTRA_SEARCH_TERM" \
+            --output lansstyrelsen-unbounded-diagnostics/raw-diagnostics.json
+
+      - name: Build concise diagnostic summary
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source = Path("lansstyrelsen-unbounded-diagnostics/raw-diagnostics.json")
+          if not source.exists():
+              report = {
+                  "mode": "diagnostics_only_no_persistence",
+                  "county": "Länsstyrelsen i Blekinge län",
+                  "date_filter": None,
+                  "status": "no_output",
+                  "error": "Browser collector did not produce an output file",
+                  "queries": [],
+              }
+          else:
+              batch = json.loads(source.read_text(encoding="utf-8"))
+              queries = []
+              for query in batch.get("queries", []):
+                  pagination = query.get("pagination") or {}
+                  tables = query.get("table_diagnostics") or []
+                  queries.append({
+                      "search_term": query.get("search_term"),
+                      "request_ok": query.get("request_ok"),
+                      "source_total": query.get("reported_total_results"),
+                      "raw_result_rows_seen": pagination.get("raw_result_rows_seen"),
+                      "unique_records_extracted": query.get("result_count"),
+                      "pages_read": pagination.get("pages_read"),
+                      "total_reconciled": query.get("total_reconciled"),
+                      "duplicate_diary_number_count": sum(
+                          int(table.get("duplicate_diary_number_count", 0)) for table in tables
+                      ),
+                      "duplicate_case_id_count": sum(
+                          int(table.get("duplicate_case_id_count", 0)) for table in tables
+                      ),
+                      "pager_transitions": pagination.get("transitions", []),
+                      "error": query.get("error"),
+                  })
+              report = {
+                  "mode": "diagnostics_only_no_persistence",
+                  "county": batch.get("requested_county"),
+                  "date_filter": None,
+                  "search_terms": batch.get("search_terms", []),
+                  "request_ok": batch.get("request_ok"),
+                  "total_reconciled": batch.get("total_reconciled"),
+                  "batch_error": batch.get("error"),
+                  "query_count": len(queries),
+                  "reconciled_queries": sum(bool(q.get("total_reconciled")) for q in queries),
+                  "queries": queries,
+              }
+          Path("lansstyrelsen-unbounded-diagnostics/summary.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Upload diagnostics only (no snapshots or history publication)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lansstyrelsen-blekinge-unbounded-two-term-diagnostics
+          path: lansstyrelsen-unbounded-diagnostics/
+          if-no-files-found: warn
+          retention-days: 30
