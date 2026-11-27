@@ -79,12 +79,15 @@ def main() -> None:
                 not query.get("request_ok")
                 or query.get("error")
                 or query_total is None
-                or query.get("result_count") != query_total
+                or query.get("result_count") != len(query.get("results") or [])
+                or query.get("pagination", {}).get(
+                    "raw_result_rows_seen", query.get("result_count")
+                ) != query_total
                 or not query.get("total_reconciled")
                 or query.get("pagination", {}).get("has_next_page") is not False
             ):
                 raise SystemExit(
-                    f"Refusing to persist: query failed validation: "
+                    f"Refusing to persist: query rows, unique records or pagination total failed validation: "
                     f"{query.get('requested_county', '')} / {query.get('search_term', '')}"
                 )
         unique_keys = {
