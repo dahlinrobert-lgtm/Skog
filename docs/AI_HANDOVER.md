@@ -2405,3 +2405,17 @@ Projektledarens read-only inventory [#45](https://github.com/dahlinrobert-lgtm/s
 **PM-027 nästa steg:** fortsätt käll-för-käll-mappningen för kvarvarande källor/produkter/lager. Prioritera Trafikverkets nästa kompletta veckosnapshot separat per produkt mot 2026-11-25-baslinjen; behåll exakta envelope/lager-ID. Följ Torvkarta/SIS schemalagda körning måndag 2026-11-30 04:23 UTC för att verifiera post-fix schemalagd drift. Behåll fail-closed-reglerna, senaste kompletta snapshot separat från latest attempt, och alla rättighetsgrindar.
 
 **Dokumentationsbedömning:** Documented – inventory #45 och verifiering efter PM-PR #103/#104 är dokumenterade här. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är Assessed – no update required: ingen källa, fullständighet, geografi, insamlingskadens eller rättighetsstatus har ändrats.
+
+
+## 2026-11-27 – PM-027 Länsstyrelsens diarier får kuraterad driftprofil
+
+Projektledarens privata repo har nu sju manuellt kuraterade drift-/riskprofiler efter [PM-PR #105](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/105), mergad i commit `327a04a1d9fc945f254b71777e5b3055a76fb76a`. CI passerade [Project manager tests #46072821790](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46072821790) och [Synthetic append-only #46072821619](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46072821619). Profilen skiljer mellan månatliga manuella snapshots och daglig diarieförfrågan.
+
+- 36 kompletta manifestintervall och 36 snapshotfiler finns, över 30 unika län/fras/registreringsperiod-grupper, två län och tolv sökfraser. Det är inte nationell eller uttömmande täckning.
+- Månadskörning [#16](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43964781619) är en komplett verifierad baslinje för sex Norrbotten/category-B/oktoberintervall.
+- Daglig sökning [#143](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066600104) passerade sökning, validering och audit men misslyckades vid publicering när GH013-regeln avvisade direktpush till skyddad `main`. Ingen ny snapshot publicerades.
+- Diagnostik [#22](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46071304504) verifierade en femsidig sökning med 250/250 poster men var uttryckligen utan persistence.
+
+Profilen är `pilot`, en enda verifierad månadskörning, `risk_assessed=false`; leverantörsgränser och generell retry/backoff är okända. Bevara senaste kompletta snapshot och tolka inte frånvaro i begränsade sökningar som borttagning. Metadata, handlingar/bilagor, historisk lagring, kommersiell användning och kundvisning förblir separata rättighetsgrindar.
+
+**Nästa konkreta steg:** verifiera profilen i nästa read-only inventory (inventory #45 föregår PM-PR #105). Därefter hantera GH013-publiceringsfelet i dagliga diarieworkflowen separat med PR-baserad publicering. Trafikverkets nästa veckosnapshot per produkt och Torvkarta/SIS schemalagda körning 2026-11-30 ska fortfarande följas enligt tidigare handover.
