@@ -497,7 +497,8 @@ sources:
       licence: "Copernicus Sentinel data policy – free, full and open access, subject to applicable attribution and security restrictions"
       licence_url: "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice"
       review_status: conditional_green_for_sentinel_data
-      commercial_use: yes      historical_storage: yes
+      commercial_use: yes
+      historical_storage: yes
       derivatives: yes
       redistribution: yes_for_sentinel_data_subject_to_lawful_use_and_restrictions
       attribution: "Follow the current Sentinel legal notice and applicable product/processing attribution."
@@ -996,7 +997,8 @@ sources:
       attribution: "Not required by CC0; recommended: Källa: SGU – Jorddjupsmodell."
       api_or_service_constraints: "Model is an overview/interpolation of known observations; retain resolution and uncertainty information."
       evidence_checked_on: "2026-11-01"
-      caveat: "Overview model; not a substitute for site-specific geotechnical investigation."    compliance:
+      caveat: "Overview model; not a substitute for site-specific geotechnical investigation."
+    compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
       gdpr_lawful_basis: required_if_personal_data_is_processed
@@ -1495,7 +1497,8 @@ sources:
     cadence: to_be_verified
     geography: Sweden
     format: [JSON]
-    rights:      licence: "Published Kolada API terms; no separate agreement required"
+    rights:
+      licence: "Published Kolada API terms; no separate agreement required"
       licence_url: "https://kolada.se/om-oss/api/"
       review_status: green_commercial_use_explicit
       commercial_use: yes
@@ -1994,7 +1997,8 @@ sources:
       historical_storage: conditional_on_product_terms
       derivatives: conditional_on_product_terms
       redistribution: pending_exact_product_confirmation
-      attribution: "Follow product-specific metadata and retain product version and Trafikverket provenance."      api_or_service_constraints: "Record download order, product/version identifiers, delivery date and any restrictions on storage or redistribution."
+      attribution: "Follow product-specific metadata and retain product version and Trafikverket provenance."
+      api_or_service_constraints: "Record download order, product/version identifiers, delivery date and any restrictions on storage or redistribution."
       evidence_checked_on: "2026-11-14"
       caveat: "A local index and archived geometry do not establish that a recurring update workflow or a complete historical road-network series is operational."
     compliance:
