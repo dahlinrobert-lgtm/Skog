@@ -2429,7 +2429,7 @@ Profilen är `pilot`, en enda verifierad månadskörning, `risk_assessed=false`;
 - Daglig workflow rebuildar state/events mot senaste `main`, kör audit och skapar/uppdaterar sedan en data-PR.
 - Månadskörningen publicerar immutable snapshotfiler och manifestrader via samma PR-branch.
 - PR-validering kör tester men samlar inte in källdata och skriver inga snapshots.
-- Tester passerade: [daglig #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226420), [månadssnapshot #21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226402), [diariehistorikaudit #81](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226313).
+- Tester passerade: [daglig #147](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226420), [månadssnapshot #21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226402), [diariehistorikaudit #81](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226313).
 
 [Post-merge daglig körning #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) startade automatiskt efter merge och var vid denna dokumentationsuppdatering fortfarande pågående. Verifiera hela flödet inklusive PR-skapande innan publiceringsfixen klassas som liveverifierad. Om data-PR skapas ska den granskas mot audit, omfattning och append-only-historik innan merge.
 
