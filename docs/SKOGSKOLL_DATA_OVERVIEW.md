@@ -1412,6 +1412,24 @@ Körningen var read-only/diagnostics-only och skrev ingen snapshot eller histori
 **Nästa steg:** jämför postidentiteterna i artefakten från run #1 med historiska run #142. Fastställ därefter om skillnaden 135/8 kontra 126/17 beror på förändrad källdata eller sidvisning. Framåtriktad `Page$1` förblir obevisad.
 
 
+
+## Länsstyrelsen – unbounded diagnostics run #2 (2026-11-27)
+
+[Run #2](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46080208217) kördes från `main` efter PR #721 och avslutades success. Samtliga steg passerade: frasvalidering, Chromium, fokuserade pager-/diarietester, live-sökning och artifact-upload. Artefakt [15237355728](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46080208217/artifacts/15237355728), SHA-256 `7f3668b74555e19fdb0f3e3366baa1f8efbacf1e3c55373130d4294ca0597a40`.
+
+För Blekinge utan registreringsdatumfilter:
+- `naturvårdsbränning`: 0/0, bekräftat nollresultat.
+- `vattenverksamhet`: källtal 143, 143 råa rader över tre sidor, 131 unika diarienummer och 12 upprepningar. Av dessa upprepningar ligger 3 på sida 2 och 9 på sida 3; inga dubbletter på sida 1. Samma 12 upprepade diarienummer motsvarar 12 upprepade case-ID:n.
+- Alla tre sidor lästes; `total_reconciled=true` och inga query-/batchfel. Sidbytena `Page$2` och `Page$3` ändrade sidornas signatur.
+
+Jämfört med run #1 (126 unika) har run #2 116 diarienummer gemensamma, 10 endast i run #1 och 15 endast i run #2. De 116 gemensamma diarienumren har oförändrade case-ID:n, status, datum och rubriker i artefakterna. Detta är en ny observation av ändrad resultat-/sidfördelning, inte bevis för att de 10/15 ärenden har skapats eller försvunnit. De 12 sidöverlappen bör behandlas som käll-/pagerbeteende och inte som separata händelser.
+
+Run #2:s resultat har noll överlapp mellan de tre **deduplicerade** sidlistorna efter insamlarens unika extraktion, men råa siddiagnostikrader visar 3 upprepningar sida 2 och 9 sida 3. Bevara därför rå siddiagnostik när överlapp analyseras; summera inte enbart resultatlistans unika poster.
+
+Körningen var diagnostics-only: inga snapshots, manifest, state eller events ändrades. Source status och källregister är oförändrade. Rättighetsbedömningar är oförändrade.
+
+**Nästa steg:** ingen kodändring ännu. Den andra reproduktionen visar att instabiliteten kvarstår i sidindelningen (run #1: 126 unika/17 upprepningar; run #2: 131/12) samtidigt som det gemensamma urvalets metadata är stabilt. Undersök först om skillnaderna kan förklaras av källans ändrade sökresultat/sortering eller genom att jämföra de råa sid-ID-listorna från båda artefakterna. Undvik en fjärde körning innan den jämförelsen är gjord. Håll all frånvaro och identitetsdifferens utanför historiska events.
+
 ## Länsstyrelsen – jämförelse av historiska och nya Blekinge-resultat
 
 En direkt jämförelse av diarienummerlistorna i artefakterna från [historisk run #142](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069/artifacts/15203258666) och [unbounded run #1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745) har genomförts för `vattenverksamhet`.
