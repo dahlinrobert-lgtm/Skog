@@ -74,7 +74,7 @@ Validerare: `data-platform/scripts/validate_source_registry.py`
 Rapportgenerator: `data-platform/scripts/build_source_status_report.py`  
 Rapport: `docs/SKOGSKOLL_SOURCE_STATUS.md`
 
-Källregistret har 52 källposter. Den aktuella genererade källstatusrapporten redovisar 15 poster med ett operativt `operations`-block och 37 utan. Rapportens `registry_checked_on` är fortfarande 2026-11-18; enskilda källrader har verifierats/uppdaterats senare, bland annat Älgdata 2026-11-25. Datumet ska därför inte tolkas som senaste verifieringsdatum för varje rad. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
+Källregistret har 53 källposter. Den aktuella genererade källstatusrapporten redovisar 16 poster med ett operativt `operations`-block och 37 utan. Rapportens `registry_checked_on` är fortfarande 2026-11-18; enskilda källrader har verifierats/uppdaterats senare, bland annat Älgdata 2026-11-25. Datumet ska därför inte tolkas som senaste verifieringsdatum för varje rad. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
 
 Rapporten visar åtkomst, snapshots, historik, kommersiell användning, kundvisning och nästa åtgärd. Den ska uppdateras automatiskt när källregistret ändras via workflowet för källregistervalidering. Om rapporten blir inaktuell kan den byggas lokalt:
 
@@ -2204,6 +2204,16 @@ Uppföljning till föregående manuella pilotgranskning:
 **Dokumentationsstatus:** Documented – Skogs AI_HANDOVER uppdateras. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är fortsatt bedömda utan uppdateringsbehov eftersom källidentiteter, ingestion, rättigheter och kundvisning inte ändrats.
 
 
+## 2026-11-27 – PM-027: paginerad Trafikverket workflow-discovery efter PR #100
+
+Projektledarrepots [PR #100](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/100) är mergad 2026-11-27 i commit `b8ae75dc594aede6bf298823b5b64c37a142cab4`. Den read-only källsnapshotadapterns fallback för workflows som saknas i GitHubs workflow inventory söker nu repository-wide Actions-run history i upp till tio sidor (1 000 körningar), nyast först. Endast exakt `workflow.path` accepteras. Sökningen avslutas när alla saknade konfigurerade sökvägar hittats eller historiken är uttömd. Om 1 000-gränsen nås utan träff kvarstår fail-closed `unknown`, med explicit markering att sökningen trunkerats.
+
+Regressionstestet placerar Trafikverkets exakta workflow-sökväg på sida två efter 100 orelaterade körningar och verifierar att run #33 hittas via den exakta sökvägen. PR-kontrollerna passerade: Python unit tests, dashboard JavaScript syntax och synthetic append-only tests. Ändringen är metadata-only och ändrar inte Skogs insamling, snapshots, källscope, rättigheter eller kundvisning.
+
+**Ännu inte liveverifierat efter merge:** nästa read-only inventory behöver bekräfta att fallbacken hittar senaste Trafikverket-försöket i den aktuella run history. Tills en ny komplett jämförbar snapshot finns kvarstår båda Trafikverket-produkterna på baseline 2026-11-25.
+
+**Dokumentationsstatus:** Documented – projektledaradaptern och dess tester är uppdaterade i PM-repot; denna handover anger merge, verifierad CI och kvarstående livekontroll. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är `Assessed – no update required`: ingen källstatus, ingestion, cadence, rättighet eller kundvisning ändrades.
+
 ## 2026-11-27 – Project manager read-only inventory #43: adapterverifiering efter PR #98
 
 [Inventory #43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46065968120) avslutades completed/success 2026-11-27 20:47:47 UTC från projektledarrepots `main`, commit `4706bb76496538bc62fc73368841345c48f59880` (PR #99). Båda jobben för PM-029 schedule gate och collector passerade; central inventory alert/write-job var skipped. Artifact [15230274599](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46065968120/artifacts/15230274599), 26 933 byte, SHA-256 `d2e77234357a0085063c2084aef37e603500b442abaeeb034c7564e76d227207`, innehåller `dashboard-data.json`.
@@ -2222,7 +2232,7 @@ Read model: success, 3/3 repositories, 0 repositoryfel, source registry success,
 
 **Nästa konkreta steg**
 1. Fortsätt ordinarie read-only inventory och kontrollera att samplefält för Torvkarta/SIS kvarstår; ingen ytterligare adapterändring behövs utifrån #43.
-2. Felsök separat Trafikverkets exakta workflow-discovery mot faktisk workflowfil och run history. Behåll senaste manifest som baseline tills exakt run-evidens finns.
+2. Verifiera den mergade projektledar-PR #100:s paginerade exact-path fallback i nästa read-only inventory. Bekräfta senaste Trafikverket-försök med exakt workflow-sökväg; behåll manifestet från 2026-11-25 som baseline tills en ny komplett jämförbar snapshot finns.
 3. Genomför riskgenomgång av Samråds och Älgdatas leverantörsgränser, minimiintervall, retry/backoff och stoppvillkor innan riskstatus eller scope kan höjas.
 
 **Dokumentationsstatus:** Documented – inventory #43 bekräftar adapterändringen och uppdaterar nästa steg. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är `Assessed – no update required`: inga source identities, källstatusar, insamlingsbeteenden, cadence, rättigheter eller kundvisningsbeslut ändrades.
