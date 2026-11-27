@@ -136,12 +136,15 @@ Slutför källverifiering och fullständig ingestion, etablera baslinje och jäm
 **Datatyper:** punkt-, linje- och polygonlager.
 
 **Nuvarande läge**
-Separata punkt-, linje- och polygonlager hämtas med paginering inom det konfigurerade pilotområdet. Workflow [collect-samrad.yml](../.github/workflows/collect-samrad.yml) körde senast 2026-11-24 i [run 45454250815](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45454250815), med status `completed/success`. Jobbloggen redovisade:
+Separata punkt-, linje- och polygonlager hämtas med paginering inom det konfigurerade pilotområdet. En tidigare dokumenterad körning av workflow [collect-samrad.yml](../.github/workflows/collect-samrad.yml) genomfördes 2026-11-24 i [run 45454250815](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45454250815), med status `completed/success`. Jobbloggen redovisade:
 - punkter: 0 hämtade i envelope, 0 inom scope, 0 sidor,
 - linjer: 20 hämtade i envelope, 11 inom scope, 1 sida,
 - polygoner: 14 hämtade i envelope, 12 inom scope, 1 sida.
 
 Detta är verifierade körningsvärden för den aktuella pilotkonfigurationen, inte nationell täckning eller en avstämning mot en separat auktoritativ källtotal. Den nuvarande `samrad_latest.json` innehåller både metadata och featuredata och är därför för stor för projektledarens metadata-only-adapter att läsa säkert. Det separata lilla manifestet gör nu att projektledaren kan verifiera senaste kompletta snapshot och konfigurerat scope utan att läsa featurepayloaden. Detta verifierades i projektledarens read-only inventory #17 den 2026-11-25.
+
+**Senaste kompletta snapshot – 2026-11-27**
+[Run 46036924262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46036924262) avslutades completed/success. Manifestet `data/samrad_latest_manifest.json` pekar på `data/samrad_snapshots/samrad_20261127T165048Z.json.gz` (400 407 byte; SHA-256 `a1dbf827259537d4680af1f650ee483d5fea4331d8b82726fa9a444f8f505a2a`). Alla tre lager är paginerade till uttömning och har noll saknade/felaktiga geometrier: 0 punkter, 9 linjer och 12 polygoner inom scope; linjelagret hämtade 18 poster i envelope (9 utanför scope), polygonlagret 14 (2 utanför scope). `source_total_reconciled=false`; detta bevisar inte nationell täckning eller avstämning mot källtotal.
 
 **Separat litet snapshotmanifest – implementation mergad och liveverifierad**
 Skog PR [#606](https://github.com/dahlinrobert-lgtm/Skog/pull/606) mergades 2026-11-24 i commit `917fa445559413385a0c995d448c1203d0520c2a`. Insamlingsflödet skapar nu `data/samrad_latest_manifest.json` separat från feature-snapshoten. Manifestet innehåller snapshotreferens, gzip-SHA-256, scope-hash samt per-lager sid-/antal-/geometristatus. Saknad eller felaktig geometri räknas explicit och hindrar `complete_for_configured_scope`. Statusen avser endast paginerad och geometriskt klassificerad data inom konfigurerat scope; `source_total_reconciled=false` betyder att källans totala antal inte är avstämt.
@@ -156,6 +159,9 @@ Skogsstyrelsens officiella villkor bekräftar CC0 1.0 för egenproducerade geoda
 
 **Framtida användning**
 Visa samråd som kan beröra en fastighet och skilj tydligt mellan ärende, planerad åtgärd och genomförd åtgärd.
+
+**Tjänstegränser och anropsrisk (verifierat 2026-11-27)**
+Skogsstyrelsens ArcGIS REST-metadata anger `MaxRecordCount=2000` på tjänsten och på vart och ett av de tre Samråd-lagren (punkt, linje och polygon). Alla tre lager stöder paginering. Collectorn använder `PAGE_SIZE=300` och hämtar lagren sekventiellt. Minsta anropsintervall och rate limits är inte publicerade/verifierade; collectorn har ingen explicit retry/backoff. Serverns postgräns är alltså känd, men säker maximal anropsfrekvens är det inte. Riskbedömningen förblir partial och uppskalning är inte godkänd.
 
 ### 4.3 Skogsstyrelsen – skogliga grunddata och volym omdrev 3
 
@@ -1076,6 +1082,16 @@ Två jämförbara kompletta Actions-run-ID:n är verifierade och länkade i PM-r
 
 **Nästa steg:** kör/invänta nästa read-only inventory efter merge av PM-repo PR #79 och #80 och verifiera att Älgdata visas som `pilot_recurring`. Fortsätt bevara jämförbara nationella snapshots i alg-grasmyr och granska framtida förändringar med samma stabila identitet och fail-closed-kontroller. Gör separat rättighetsbedömning före produktintegration.
 
+
+## Länsstyrelsernas Älgdata – teknisk risk och portalvillkor (uppdaterad 2026-11-27)
+
+Senaste nationella insamling [run 46013595922](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/46013595922) avslutades completed/success 2026-11-27. Den omfattade 129/129 ÄFO för report 3, säsong 2026/2027 och aktuella gränser. Tre kompletta jämförbara körningar är verifierade (2026-11-16, 2026-11-23 och 2026-11-27).
+
+Collectorn använder den publika statistikportalens webbgränssnitt och POST-rutten `/LoadData/GetData`, sekventiellt för 129 ÄFO, med upp till tre försök per område. Denna rutt är observerad i portalens klientflöde men är inte dokumenterad som ett publikt API-kontrakt. I de granskade officiella sidorna hittades ingen publicerad rate limit, minsta anropsintervall eller throughput-/SLA-specifikation. Tre försök per ÄFO och sekventiell körning är verifierat klientbeteende, inte leverantörsgränser.
+
+Länsstyrelsens [öppna data-sida](https://www.lansstyrelsen.se/vasterbotten/om-oss/vara-tjanster/oppna-data.html) anger att Älgdata-databasen kan användas fritt, utan angivna villkor, och listar XLSX som format. Älgdatas [statistikportal](https://algdata-apps.lansstyrelsen.se/algdata-apps-stat/) beskriver export av synlig statistik till Excel. Detta är användnings-/exportinformation, inte ett tekniskt API-avtal eller en rate-limit-specifikation. Kundvisning av härledd produkt, historisk lagring och vidare distribution ska fortsatt bedömas separat.
+
+**Riskbeslut:** riskbedömningen är fortsatt partial. Inga parallella anrop eller aggressiva retries införs. Behåll nuvarande sekventiella flöde och fail-closed-publicering; begär leverantörsbesked om tekniska gränser innan uppskalning. Ingen kundfeed eller avisering aktiveras av denna bedömning.
 
 ## Första jämförelsen av nationella ÄFO-snapshots (2026-11-21–2026-11-23)
 
