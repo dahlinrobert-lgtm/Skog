@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from lansstyrelsen_pager import (  # noqa: E402
     advance_page_index, build_pager_action_diagnostic, select_next_pager_action,
+    source_total_reconciled,
 )
 
 
@@ -16,6 +17,20 @@ def action(label: str, argument: str) -> dict:
 
 
 class LansstyrelsenPagerTests(unittest.TestCase):
+    def test_source_total_reconciles_raw_rows_even_when_unique_records_are_deduplicated(self):
+        # Observed Blekinge query: 143 source rows across pages, 8 repeated case IDs.
+        raw_result_rows_seen = 50 + 50 + 43
+        unique_records_extracted = 135
+        self.assertEqual(raw_result_rows_seen, 143)
+        self.assertEqual(unique_records_extracted, 135)
+        self.assertTrue(source_total_reconciled(143, raw_result_rows_seen))
+
+    def test_source_total_does_not_reconcile_when_any_result_rows_are_unread(self):
+        self.assertFalse(source_total_reconciled(143, 142))
+
+    def test_source_total_unknown_never_reconciles(self):
+        self.assertFalse(source_total_reconciled(None, 143))
+
     def test_pager_action_diagnostic_records_exact_postback_and_transition(self):
         selected = {"label": "...", "target": "ctl00$Main$GridView", "argument": "Page$1"}
         self.assertEqual(
