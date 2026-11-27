@@ -24,7 +24,7 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
-| Nästa steg | Fortsätt käll-för-käll-mappning för resterande source_id/produkter/lager. Granska nästa kompletta Trafikverket-snapshot separat per produkt mot 2026-11-25-baslinjen. Verifiera Torvkarta/SIS nästa schemalagda körning 2026-11-30 04:23 UTC; bedöm inte uppskalning innan risk- och rättighetsgrindar är uppfyllda. |
+| Nästa steg | Verifiera post-merge daglig diariekörning #148 och att den skapar/uppdaterar PR i stället för att pusha till main; granska och mergea endast komplett, auditerad data-PR. Bekräfta därefter sjunde PM-profilen i nästa read-only inventory. Fortsätt käll-för-käll-mappningen, granska Trafikverkets nästa snapshot per produkt mot 2026-11-25-baslinjen och verifiera Torvkarta/SIS schemalagda körning 2026-11-30 04:23 UTC. Behåll risk- och rättighetsgrindarna. |
 
 
 #### PM-027 inventory #44 och workflow-discovery-korrigering – 2026-11-27
@@ -467,3 +467,16 @@ Profilen registrerar 36 kompletta manifestintervall och 36 snapshotfiler, 30 uni
 Profilen är pilot-only, `risk_assessed=false`, utan uppskalningsgodkännande. Leverantörsgränser och generell retry/backoff är okända. Senaste kompletta arkiv ska bevaras; misslyckade eller begränsade sökningar får inte tolkas som borttagningar. Rättigheter för metadata, handlingar, bilagor, lagring, kommersiell användning och kundvisning är fortsatt separata.
 
 **Nästa steg:** verifiera att nästa read-only inventory läser in den sjunde profilen och håller daily run #143 som failed latest attempt skild från senaste kompletta manifestobservation. Åtgärda därefter direktpush/publiceringsproblemet i diariets dagliga workflow separat genom PR-baserad publicering; ingen insamlings- eller historikmodell ska bytas.
+
+
+#### PM-027 – Länsstyrelsens diarieworkflows övergår till PR-publicering – 2026-11-27
+
+[Skog PR #709](https://github.com/dahlinrobert-lgtm/Skog/pull/709) är mergad i commit [0fa8491](https://github.com/dahlinrobert-lgtm/Skog/commit/0fa8491ac402635c38e8efaf8c5e7c2df5baf030). Både den dagliga diariekörningen och den manuella månadssnapshoten använder nu `peter-evans/create-pull-request@v7` i stället för direktpush till skyddad `main`.
+
+Flödena delar concurrency group `lansstyrelsen-diary-archive` och PR-branch `automation/lansstyrelsen-diary-history`, eftersom båda skriver till samma källägda append-only-arkiv. Den dagliga workflowen bygger om state/events mot senaste `main`, auditerar resultatet och skapar/uppdaterar därefter data-PR. Månadskörningen lägger till immutable snapshots och manifestrader i samma PR. PR-validering kör tester men hoppar över webbläsarinsamling, persistence och publicering.
+
+CI för merge-PR: [daglig diarievalidering #147](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226420), [månadssnapshotvalidering #21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226402) och [diariehistorikaudit #81](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226313) passerade. Ett initialt CI-fel visade att Playwright-Pythonpaketet behövs även vid PR-tester; paketinstallation körs nu i båda workflows medan Chromium-installation och webbläsarkörning är avstängda för PR-validering.
+
+**Post-merge verifiering pågår:** [daglig workflow #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) startade automatiskt efter merge och ska bekräfta att sökning, validering, latest-main rebuild, audit och PR-skapande fungerar i liveflödet. Ingen data-PR eller ny snapshot betraktas som publicerad förrän den har skapats och granskats/mergats.
+
+Källinsamling, sökfraser, paginerings-/avstämningsregler, snapshotformat och rättighetsbedömning ändras inte. `SKOGSKOLL_SOURCE_STATUS.md` bedöms inte behöva ändras.

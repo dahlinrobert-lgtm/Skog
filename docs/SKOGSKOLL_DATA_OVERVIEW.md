@@ -1335,3 +1335,14 @@ Polisens API-regler ska följas: korrekt User-Agent, HTTPS, minst 10 sekunder me
 
 Kommersiell användning, historisk lagring, bearbetning, kundvisning och vidare distribution bedöms separat. Se [utvärderingsprotokollet](police-source-evaluation.md) och [Polisens händelseflöde](police-events-norrbotten.md).
 
+
+
+## Länsstyrelsens diarier – PR-baserad publicering (2026-11-27)
+
+Efter att [daglig workflow #143](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066600104) misslyckades vid direktpush med GH013 har [PR #709](https://github.com/dahlinrobert-lgtm/Skog/pull/709) mergats. Både `.github/workflows/lansstyrelsen-diary-search.yml` och `.github/workflows/lansstyrelsen-monthly-snapshots.yml` använder nu `peter-evans/create-pull-request@v7`.
+
+Flödena serialiseras genom gemensam concurrency group `lansstyrelsen-diary-archive` och använder samma PR-branch `automation/lansstyrelsen-diary-history`, eftersom båda uppdaterar `data/lansstyrelsen-diary/`. Den dagliga sökningen rebuildar state/events mot senaste `main` och auditerar resultatet före PR-skapande. Månadskörningen lägger till sina immutable snapshots och manifestrader. Ingen workflow pushar längre direkt till `main`.
+
+PR-validering kör tester men skippar Chromium-installation, källsökning, persistence och publicering. CI passerade på PR #709: daglig diarievalidering [#147](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226420), månadssnapshotvalidering [#21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226402) och diariehistorikaudit [#81](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226313).
+
+Post-merge liveverifiering [daglig run #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) pågår. Ingen ny snapshot räknas som publicerad förrän dess data-PR har granskats och mergats. Källans söklogik, snapshot-/historikformat och rättighetsstatus är oförändrade.

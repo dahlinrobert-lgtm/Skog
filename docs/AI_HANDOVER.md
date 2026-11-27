@@ -2419,3 +2419,18 @@ Projektledarens privata repo har nu sju manuellt kuraterade drift-/riskprofiler 
 Profilen är `pilot`, en enda verifierad månadskörning, `risk_assessed=false`; leverantörsgränser och generell retry/backoff är okända. Bevara senaste kompletta snapshot och tolka inte frånvaro i begränsade sökningar som borttagning. Metadata, handlingar/bilagor, historisk lagring, kommersiell användning och kundvisning förblir separata rättighetsgrindar.
 
 **Nästa konkreta steg:** verifiera profilen i nästa read-only inventory (inventory #45 föregår PM-PR #105). Därefter hantera GH013-publiceringsfelet i dagliga diarieworkflowen separat med PR-baserad publicering. Trafikverkets nästa veckosnapshot per produkt och Torvkarta/SIS schemalagda körning 2026-11-30 ska fortfarande följas enligt tidigare handover.
+
+
+## 2026-11-27 – Länsstyrelsens diarieworkflows använder PR-publicering
+
+[PR #709](https://github.com/dahlinrobert-lgtm/Skog/pull/709) är mergad i [commit 0fa8491](https://github.com/dahlinrobert-lgtm/Skog/commit/0fa8491ac402635c38e8efaf8c5e7c2df5baf030). Den dagliga diarieworkflowen och den manuella månadssnapshot-workflowen använder nu PR-baserad publicering i stället för direktpush till skyddad `main`.
+
+- Båda delar concurrency group `lansstyrelsen-diary-archive` och branch `automation/lansstyrelsen-diary-history`, så de inte konkurrerar om samma append-only manifest/state/events.
+- Daglig workflow rebuildar state/events mot senaste `main`, kör audit och skapar/uppdaterar sedan en data-PR.
+- Månadskörningen publicerar immutable snapshotfiler och manifestrader via samma PR-branch.
+- PR-validering kör tester men samlar inte in källdata och skriver inga snapshots.
+- Tester passerade: [daglig #147](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226420), [månadssnapshot #21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226402), [diariehistorikaudit #81](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073226313).
+
+[Post-merge daglig körning #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) startade automatiskt efter merge och var vid denna dokumentationsuppdatering fortfarande pågående. Verifiera hela flödet inklusive PR-skapande innan publiceringsfixen klassas som liveverifierad. Om data-PR skapas ska den granskas mot audit, omfattning och append-only-historik innan merge.
+
+**Nästa konkreta steg:** följ run #148 till slut, granska eventuell diary data-PR, uppdatera PM-profilen för senaste attempt och verifiera den i nästa read-only inventory. Följ därefter Trafikverkets nästa veckosnapshot per produkt och Torvkarta/SIS schemalagda körning 2026-11-30 04:23 UTC.
