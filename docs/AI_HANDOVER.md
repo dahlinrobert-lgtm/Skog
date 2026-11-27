@@ -2210,7 +2210,11 @@ Projektledarrepots [PR #100](https://github.com/dahlinrobert-lgtm/skogskoll-proj
 
 Regressionstestet placerar Trafikverkets exakta workflow-sökväg på sida två efter 100 orelaterade körningar och verifierar att run #33 hittas via den exakta sökvägen. PR-kontrollerna passerade: Python unit tests, dashboard JavaScript syntax och synthetic append-only tests. Ändringen är metadata-only och ändrar inte Skogs insamling, snapshots, källscope, rättigheter eller kundvisning.
 
-**Ännu inte liveverifierat efter merge:** nästa read-only inventory behöver bekräfta att fallbacken hittar senaste Trafikverket-försöket i den aktuella run history. Tills en ny komplett jämförbar snapshot finns kvarstår båda Trafikverket-produkterna på baseline 2026-11-25.
+**Direkt verifierad run-history-evidens (2026-11-27):** GitHubs repository-wide Actions-historik för Skog innehöll 100 körningar på sida 1 (äldsta i sidan 2026-11-26 22:49:45 UTC) och 100 på sida 2 (äldsta 2026-11-25 21:41:55 UTC). På sida 3 hittades de exakta workflow-path-träffarna:
+- [Run #33](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), completed/success, 2026-11-25 21:35:00 UTC.
+- [Run #32](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705067474), completed/success, 2026-11-25 21:31:03 UTC.
+- [Run #31](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45703502732), completed/failure, 2026-11-25 21:20:54 UTC.
+Detta visar konkret varför en ensidig fallback missade #33: 200 nyare orelaterade körningar låg före den. #33 är senaste verifierade exakta path-match. Den nya paginerade adaptern ska hitta den på sida 3, men liveverifiering genom en ny read-only inventory efter merge återstår. Tills en ny komplett jämförbar snapshot finns kvarstår båda Trafikverket-produkterna på baseline 2026-11-25.
 
 **Dokumentationsstatus:** Documented – projektledaradaptern och dess tester är uppdaterade i PM-repot; denna handover anger merge, verifierad CI och kvarstående livekontroll. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är `Assessed – no update required`: ingen källstatus, ingestion, cadence, rättighet eller kundvisning ändrades.
 
