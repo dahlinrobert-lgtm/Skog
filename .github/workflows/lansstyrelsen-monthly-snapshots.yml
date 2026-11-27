@@ -50,7 +50,7 @@ permissions:
 
 concurrency:
   # Shared with the daily diary workflow; both append to the same source-owned archive.
-  group: lansstyrelsen-diary-archive
+  group: ${{ github.event_name == 'pull_request' && format('lansstyrelsen-validation-{0}', github.workflow) || 'lansstyrelsen-diary-archive' }}
   cancel-in-progress: false
 
 jobs:
