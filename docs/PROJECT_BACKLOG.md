@@ -19,13 +19,21 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Fält | Värde |
 |---|---|
 | Prioritet | P0 – högsta operativa prioritet |
-| Status | Read-only-adaptern har fem separata evidensposter live-verifierade. PR #83 har mergats och inventory #26 verifierar exakt latest-attempt run #33 för båda Trafikverket-profilerna via repository run-history fallback. Full daglig rapport för alla registrerade källor/produkter/lager återstår |
+| Status | Inventory #44 visar åtta separata käll-/produktposter i read-only source evidence och fyra kuraterade riskprofiler. Samråd och Älgdata har återkommande jämförbara kompletta pilotobservationer; Trafikverkets två produkter är fortsatt baslinjer. Avverkningsanmälningarnas workflow-discovery var trunkerad vid 1 000 körningar och hanteras nu fail-closed genom mergad PM-PR #103. Full daglig rapport över samtliga 53 source_id och relevanta produkter/lager återstår; inventory #44 har registry_status=seed |
 | Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
-| Nästa steg | Jämför nästa kompletta Trafikverket-snapshot separat per produkt mot 2026-11-25-baslinjen med samma envelope och lager-ID:n. Fortsätt därefter käll-för-käll-mappningen för återstående source_id/produkter/lager. Behåll unknown vid saknat eller ofullständigt bevis; utöka inte till featuredata eller ny historikmodell. |
+| Nästa steg | Kör ny read-only inventory efter mergad PM-PR #103 och verifiera att avverkningsanmälningarnas latest attempt är unknown med känd run under candidate_run. Granska därefter pending-run #45908028278 för Torvkarta/SIS och fortsätt käll-för-käll-mappningen för återstående source_id/produkter/lager. Behåll unknown vid ofullständigt bevis; utöka inte till featuredata eller ny historikmodell. |
 
+
+#### PM-027 inventory #44 och workflow-discovery-korrigering – 2026-11-27
+
+Projektledarens [inventory #44](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46068427140) avslutades success med 3/3 repositories, 0 fel och åtta separata Skog source-evidence-poster. Källregistret innehöll 53 source_id, varav 16 med operations-block och 37 utan; fyra drift-/riskprofiler var kuraterade. `registry_status=seed` kvarstår, så detta är inte en fullständigt etablerad daglig rapport.
+
+[PM-PR #103](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/103) är mergad. Om repository-wide workflowhistorik når 1 000-körningsgränsen innan alla konfigurerade exact paths hittas blir aggregate `latest_attempt=unknown`; kända träffar bevaras endast som `candidate_run`. CI passerade: [unit tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46069797977) och [synthetic append-only](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46069797976).
+
+**Nästa verifiering:** kör en ny read-only inventory efter merge och bekräfta fail-closed-resultatet för avverkningsanmälningar. Granska även pending-run #45908028278 för Torvkarta/SIS innan den räknas in bland kuraterade kompletta körningar. Samråd och Älgdata har fortsatt fyra respektive tre jämförbara kompletta körningar; Trafikverkets två produkter är fortfarande varsin baslinje.
 
 #### Arkitekturpassning och inventering – 2026-11-24
 
