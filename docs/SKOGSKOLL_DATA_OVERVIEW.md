@@ -1410,3 +1410,22 @@ Run [#1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744) (20
 Körningen var read-only/diagnostics-only och skrev ingen snapshot eller historik. Artefakt [#15236345745](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745), SHA-256 `e8d373ddc11b1f742ff0cc5d2d6d78abef87148d099bad2f4f31e60c29eb80c4`.
 
 **Nästa steg:** jämför postidentiteterna i artefakten från run #1 med historiska run #142. Fastställ därefter om skillnaden 135/8 kontra 126/17 beror på förändrad källdata eller sidvisning. Framåtriktad `Page$1` förblir obevisad.
+
+
+## Länsstyrelsen – jämförelse av historiska och nya Blekinge-resultat
+
+En direkt jämförelse av diarienummerlistorna i artefakterna från [historisk run #142](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069/artifacts/15203258666) och [unbounded run #1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745) har genomförts för `vattenverksamhet`.
+
+| Mått | Historisk #142 | Ny run #1 |
+|---|---:|---:|
+| Källtal | 143 | 143 |
+| Råa rader per sida | 50 / 50 / 43 | 50 / 50 / 43 |
+| Unika diarienummer | 135 | 126 |
+| Överlapp sida 1–2 | 5 | 4 |
+| Överlapp sida 1–3 | 0 | 12 |
+| Överlapp sida 2–3 | 3 | 1 |
+| Totala upprepningar | 8 | 17 |
+
+Av diarienumren i de båda körningarnas unioner återfinns 119 i båda. 16 finns endast i den historiska listan och 7 endast i den nya. Båda körningarna använde `Page$2` och `Page$3`; de råa sidstorlekarna och källtalet var alltså lika, men sidornas innehåll och överlappsmönster skiljde sig.
+
+**Tolkning:** detta är evidens för att källans resultat-/sidfördelning inte var identisk vid de två tillfällena. Artefakterna visar inte om orsaken är ändrad ärendemängd, sorteringsordning eller portalens sidvisning. Skillnaderna får inte tolkas som borttagningar och ska inte skapa historiska events. Ingen kodändring eller historikskrivning har gjorts. Framåtriktad `Page$1` har inte observerats i någon av dessa två körningar.
