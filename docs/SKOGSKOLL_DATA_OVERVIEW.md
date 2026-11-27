@@ -1430,6 +1430,33 @@ Körningen var diagnostics-only: inga snapshots, manifest, state eller events ä
 
 **Nästa steg:** ingen kodändring ännu. Den andra reproduktionen visar att instabiliteten kvarstår i sidindelningen (run #1: 126 unika/17 upprepningar; run #2: 131/12) samtidigt som det gemensamma urvalets metadata är stabilt. Undersök först om skillnaderna kan förklaras av källans ändrade sökresultat/sortering eller genom att jämföra de råa sid-ID-listorna från båda artefakterna. Undvik en fjärde körning innan den jämförelsen är gjord. Håll all frånvaro och identitetsdifferens utanför historiska events.
 
+
+## Länsstyrelsen – analys av rå sidordning mellan unbounded run #1 och #2 (2026-11-28)
+
+Efter merge av dokumentations-PR #722 har de fullständiga rådiagnostikartefakterna för [run #1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744) och [run #2](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46080208217) jämförts på sid- och diarienummernivå för Blekinge / `vattenverksamhet`.
+
+**Sidöverlapp per körning:**
+
+| Sidpar | Run #1 | Run #2 |
+|---|---:|---:|
+| 1–2 | 4 | 3 |
+| 1–3 | 12 | 9 |
+| 2–3 | 1 | 0 |
+| Unika diarienummer i unionen | 126 | 131 |
+| Råa rader | 143 | 143 |
+
+De råa listorna innehåller 50/50/43 diarienummer per sida i båda körningarna. Dubbletterna är mellan sidor, inte upprepade rader inom en enskild sidas ID-lista. Run #1 har 17 upprepade identiteter (4+12+1) och run #2 har 12 (3+9+0).
+
+Av 116 gemensamma diarienummer låg 43 kvar på sida 1, 45 kvar på sida 2 och 22 kvar på sida 3. Sex gemensamma ärenden flyttade från sida 3 i run #1 till sida 1 i run #2: `3389-2026`, `3708-2026`, `3717-2026`, `3765-2026`, `3769-2026` och `3913-2026`. 10 diarienummer finns endast i run #1 och 15 endast i run #2. Alla 116 gemensamma poster har identiskt case-ID, status, datum och ärenderubrik i båda artefakterna.
+
+Den relativa ordningen för de 116 gemensamma identiteterna ändrades också: vid jämförelse av deras sammanfogade sidordning finns 1 374 omkastade par av 8 256 möjliga par (16,6 %). Detta är en jämförelse av observerad ordning, inte en förklaring till varför portalen ändrade den.
+
+**Kodgranskning:** `scripts/search_lansstyrelsen_diary_browser.py` läser den ordning som redan renderas i resultatgriden och anger ingen egen sorteringsordning. Collectorn använder portalens `caseID` som primär identitet och diarienummer som fallback; redan sedda identiteter dedupliceras, medan råa diarienummer och siddiagnostik bevaras. De observerade överlappen är därmed synliga i artefakten och förklarar skillnaden mellan 143 råa rader och 126/131 unika poster. Pagineringen nådde tre sidor i båda körningarna med lyckade sidbyten `Page$2` och `Page$3`.
+
+**Bedömning:** evidensen visar instabil ordning och sidplacering i källans renderade resultat mellan två tidpunkter. Den isolerar inte om orsaken är en ändrad ärendemängd, portalens sorteringsordning eller annan server-/databasvariation. Ingen kodändring motiveras nu: dedupliceringen skyddar mot dubbla events och källans 143 råa rader stäms av. Ändringar mellan körningar får inte tolkas som borttagningar eller skapa historiska events. Behåll diagnostics-only som verifieringsmetod; undvik fler identiska körningar tills en konkret hypotes eller ett nytt källbeteende motiverar dem.
+
+**Nästa steg:** fortsätt med ordinarie daglig körning och kontrollera att den fortfarande fail-closed vid ofullständiga resultat och att upprepade case-ID:n inte skapar dubbla historikposter. Ingen ny unbounded probe eller sorteringsändring planeras utan ny evidens.
+
 ## Länsstyrelsen – jämförelse av historiska och nya Blekinge-resultat
 
 En direkt jämförelse av diarienummerlistorna i artefakterna från [historisk run #142](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069/artifacts/15203258666) och [unbounded run #1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745) har genomförts för `vattenverksamhet`.
