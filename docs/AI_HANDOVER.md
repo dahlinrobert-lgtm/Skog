@@ -2448,3 +2448,15 @@ Artefakt [15233382741](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46
 **Kvarstående skillnad:** ingen av de livevalda framåtriktade ellipserna använde `Page$1`; portalen använde `Page$6`, `Page$11` och `Page$16`. Den speciella framåtriktade `Page$1`-varianten är därför fortfarande endast täckt av syntetiska regressionstester. Run #25 hade inte heller överlapp mellan sidornas diarienummer; 143 råa rader/135 unika efter PR #695 är fortsatt en separat live-verifieringspunkt. Körningen var diagnostisk och publicerade inga snapshots eller ändrade historik.
 
 **Nästa steg:** undersök om det finns ett reproducerbart sökintervall/län där portalens framåtriktade ellips faktiskt använder `Page$1`. Behåll read-only-diagnostik. Överlappsfallet testas separat om källan åter producerar överlapp.
+
+## 2026-11-27 – Länsstyrelsens högvolymspaginering verifierad i diagnostics-only
+
+Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/106) är mergad i commit `9aa4e59a9bf01573cb1f91ca292722829a3edd95`. Den kompletterar Länsstyrelsens driftprofil med diagnostics-only runs #24 och #25. CI passerade [Project manager tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46073786626) och [Synthetic append-only tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46073786669).
+
+- Run [#24](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073035588): tre avstämda oktoberintervall för `vattenverksamhet` i Skåne, Halland och Västra Götaland: 14/11/46 poster, en sida per län.
+- Run [#25](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073391186): bred teknisk testfras `an` i Norrbotten, Västerbotten och Jämtland: 848/874/820 unika diarienummer på 17/18/17 sidor. Pagerfönstret flyttade sig via `Page$6`, `Page$11`, `Page$16`; 16/17/16 sidbyten bekräftades och inga duplicerade diarienummer eller case-ID:n hittades.
+- Båda var diagnostics-only utan persistence. Arkivet ligger kvar på 36 kompletta manifestintervall och 36 snapshotfiler; de diagnostiska länen/frågorna räknas inte som arkiverad täckning.
+
+Detta stärker teknisk evidens för paginering över fem sidor, men bevisar inte full länstäckning, leverantörsgränser, SLA eller kommersiella rättigheter. Profilen är fortsatt `pilot`, `risk_assessed=false`.
+
+**Nästa steg:** verifiera post-merge daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) och eventuell data-PR; bekräfta sedan sjunde PM-profilen i nästa read-only inventory. Inventory #45 föregår PM-PR #105/#106 och verifierar fortfarande sex profiler.
