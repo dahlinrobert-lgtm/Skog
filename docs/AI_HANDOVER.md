@@ -2484,3 +2484,17 @@ I samtliga tre län följde collectorn numeriska länkar och framåtriktade fön
 **Avgränsning:** ingen framåtriktad `Page$1`-ellips observerades. `Page$1` förekom som vanlig länk till första resultatsidan; den specialvariant som täcks av syntetiskt test är fortsatt inte liveverifierad. Inga sidöverlapp observerades och 143 råa/135 unika är fortsatt separat verifieringspunkt. Körningen skrev inga snapshots eller historikposter. Testfrasen `an` är en teknisk pagination-probe, inte en godkänd produktionssökfras.
 
 **Nästa steg:** behåll pager-`Page$1` som en avgränsad öppen live-verifieringspunkt. Undersök annan portal-/sökvariant endast om det finns konkret evidens för att den ger annat pager-DOM; upprepa inte högvolymssökningar enbart för att samla fler `Page$6/11/16`-exempel. Överlappsfallet testas separat om källan åter producerar överlapp. Källstatus, snapshotarkiv och rättighetsbedömningar ändras inte.
+
+
+### Diagnostics-only run #30 – två sökfraser i Blekinge (2026-11-27)
+
+[Run #30](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46078595702) kördes från main-commit `616f86f20b4005a2daa3229c9c4db36898732251` efter merge av PR #715. Båda fraserna kördes som separata intervall för Blekinge, oktober 2026. Jobbet och samtliga steg inklusive fokuserade valideringstester avslutades `success`.
+
+Artefakt [15236172620](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46078595702/artifacts/15236172620), SHA-256 `10d9395022af39d07ac7c7fe140993790a0c704b68e9d4f9f0d2c55c83e83487`, innehåller två JSON-intervall och summary:
+- `naturvårdsbränning`: 0 källträffar, 0 extraherade ID:n, 0 sidor; `pager_complete=true`, `reconciled=true`.
+- `vattenverksamhet`: 18 källträffar, 18 unika diarienummer på en sida; 18 råa matchande diarienummerrader, 0 duplicerade diarienummer och 0 duplicerade case-ID:n. `pager_complete=true`, `reconciled=true`.
+- Summary: 2 förväntade och 2 observerade intervall, 2 avstämda, 0 fel och 0 processfel.
+
+Körningen bekräftar att multi-term-workflowen exekverar båda fraserna separat och att båda resultaten avstäms. Den ger däremot **ingen** ny evidens om pagerövergångar, framåtriktad `Page$1` eller sidöverlapp: första frasen gav noll sidor och andra en sida utan pagerkontroller. Det historiska fallet 143 råa rader/135 unika reproducerades inte. Körningen var diagnostics-only; snapshots, manifest och historik påverkades inte. Det går inte att dra slutsatser om bredare källtäckning från dessa två begränsade intervall.
+
+**Nästa steg:** återgå inte till upprepade generella testfraser. Om det finns en dokumenterad äldre sökparameteruppsättning eller en specifik länk/period som producerade 143/135, använd exakt den för en avgränsad diagnostics-only-reproduktion. Håll pager-`Page$1` och överlapp som öppna frågor tills faktisk live-evidens finns.
