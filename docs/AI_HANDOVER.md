@@ -2498,3 +2498,24 @@ Artefakt [15236172620](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46
 Körningen bekräftar att multi-term-workflowen exekverar båda fraserna separat och att båda resultaten avstäms. Den ger däremot **ingen** ny evidens om pagerövergångar, framåtriktad `Page$1` eller sidöverlapp: första frasen gav noll sidor och andra en sida utan pagerkontroller. Det historiska fallet 143 råa rader/135 unika reproducerades inte. Körningen var diagnostics-only; snapshots, manifest och historik påverkades inte. Det går inte att dra slutsatser om bredare källtäckning från dessa två begränsade intervall.
 
 **Nästa steg:** återgå inte till upprepade generella testfraser. Om det finns en dokumenterad äldre sökparameteruppsättning eller en specifik länk/period som producerade 143/135, använd exakt den för en avgränsad diagnostics-only-reproduktion. Håll pager-`Page$1` och överlapp som öppna frågor tills faktisk live-evidens finns.
+
+
+## Länsstyrelsen – första obegränsade live-reproduktion #1 (2026-11-27)
+
+[Workflow run #1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744) slutfördes med success. Samtliga steg inklusive fokuserade validerings-/pager-tester, två separata sökningar och uppladdning av diagnostikartefakt lyckades. Körningen använde workflowets standardfraser, utan registreringsdatumfilter, och var diagnostics-only.
+
+För Blekinge:
+- `naturvårdsbränning`: 0 träffar, 0 sidor; källan bekräftade nollresultat.
+- `vattenverksamhet`: källtal 143, 143 råa resultatrader över tre sidor, men endast 126 unika diarienummer. Dubbletter: 17 diarienummer och 17 case-ID:n.
+- Pager: `Page$2` följt av `Page$3`; båda gav ändrad sid-signatur. Ingen ellips eller framåtriktad `Page$1` observerades.
+
+Överlapp i diagnostikens diarienummer:
+- sida 1–2: 4 (4921-2024, 504-2025, 5286-2025, 5820-2025)
+- sida 1–3: 12
+- sida 2–3: 1 (2970-2026)
+
+Detta reproducerar källtalet 143 från den historiska körningen #142, men **inte** dess tidigare observerade 135 unika/8 överlapp. Den nya körningen visar 126 unika/17 dubbletter. Skillnaden kan bero på att källans resultatmängd eller sidindelning förändrats sedan den historiska körningen; den här körningen ensam kan inte avgöra orsaken. Viktigt är att insamlaren nådde tre sidor och stämde av 143 råa rader mot källtalet, men det finns överlapp mellan sidor som måste dedupliceras för lagring. Ingen historik, snapshot, manifest eller event ändrades.
+
+Artefakt: [lansstyrelsen-blekinge-unbounded-two-term-diagnostics](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745), SHA-256 `e8d373ddc11b1f742ff0cc5d2d6d78abef87148d099bad2f4f31e60c29eb80c4`.
+
+**Nästa steg:** jämför postidentiteterna och tids-/statusförändringar mellan run #142:s artefakt och run #1, om båda artefakterna kan läsas. Därefter avgör om 135/8 var ett tillfälligt källsnapshot eller en tidigare insamlingsskillnad. Håll framåtriktad `Page$1` som obevisad; kör #1 använde vanliga numeriska sidargument och innehöll ingen ellips.
