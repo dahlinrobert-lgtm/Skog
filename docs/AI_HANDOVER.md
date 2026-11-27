@@ -497,7 +497,6 @@ PR #432 är mergad i `main` (merge commit `9c8be18276396f3c53ff30d0dbe91c57e69a2
 
 **Nästa steg:** granska inventeringens avgränsningar, förbättra pagination och lägg till jämförelse mot föregående inventering med tydlig historik/proveniens. Separat modell-/kostnads-/databehandlingsbeslut krävs innan LLM eller schedule övervägs.
 
-
 ## AI-projektledare – v2 planerad (2026-11-18)
 
 - PR #434 är mergad i `main`; merge commit `57453875cff3f1e7d5e0597deed1ae2cc0bdb3a7` dokumenterar liveverifierad v1.
@@ -995,7 +994,6 @@ Metadatarevision mot `data-platform/config/sources.yml`, `skogskoll/src/supabase
 ## Produktutvecklingsprincip – iterativ kundupplevelse
 
 Skogskolls webb/app ska kunna itereras ofta utan att dataplattformen behöver ändras. UI/navigation/designsystem hålls frikopplade från worker, DB och rättighetslogik via stabila kontrakt och klientgräns. Bygg små vertikala, reversibla steg; prototypa med syntetiska data; testa centrala uppgifter, responsivitet och tillgänglighet; använd manuell UX-feedback utöver CI. Webb först och eventuell PWA/native app efter verifierat behov. Detaljerade regler finns i `PROJECT_MANAGER_RULES.md` avsnitt 4B och PM-021 i `PROJECT_BACKLOG.md`.
-
 
 
 PR [#531](https://github.com/dahlinrobert-lgtm/Skog/pull/531) är mergad till `main` (merge commit `3db38bd8198eefc8c57d572e39663fe4963c362a`). Den rena adaptern `skogskoll/src/snapshot-envelope-adapter.mjs` mappar befintliga `poll_runs` + `scan_sessions` till change-feed-kontraktets snapshot-envelope. PR #535 är mergad (merge commit `429c15a000bdbe22f80275b2e55c042c82b30400`) och dess customer UI-test passerade. Jämförbarhetsnyckeln omfattar source, product, endpoint, layer, query definition, coverage, schema och identity version. Metadata måste vara explicit; saknad metadata kan inte ge complete. `customer_visibility` defaultar till `not_assessed`. Ingen DB-migration, ingestion, kundfeed eller avisering har aktiverats.
@@ -1497,7 +1495,6 @@ Main innehåller nu:
 **Nästa konkreta steg:** kör manuellt från en miljö med nätverksåtkomst:
 
     python data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py --out /tmp/lansstyrelsen-fire-ban-metadata.json
-
 Granska resultatet och uppdatera `SKOGSKOLL_DATA_OVERVIEW.md` och källregistrets evidens först när de faktiska metadataresultaten finns. Behåll källstatus fail-closed tills dess.
 
 Ingen feature-query, geometrihämtning, snapshot, schemaläggning eller kundvisning är aktiverad. Enligt användarens beslut får schemaläggning och operativa snapshots tidigast övervägas 2027-01-24, efter separat beslut. Första operativa snapshot ska vara en tyst baslinje utan historiska larm.
@@ -1998,7 +1995,6 @@ PM-027 är fortsatt P0 och inte färdig.
 
 
 ## 2026-11-26 – Kungjort API transport-retry fix mergad
-
 Kungjort Azure-synkronisering [run #127](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45834845260) misslyckades efter att två ändringssidor hade arkiverats. Azure OIDC-inloggningen lyckades; felet var `http.client.RemoteDisconnected: Remote end closed connection without response` från Kungjort-API:t vid nästa anrop. Den befintliga klienten återförsökte HTTP 429/5xx men inte tillfälliga transportfel.
 
 PR [#675](https://github.com/dahlinrobert-lgtm/Skog/pull/675) mergades 2026-11-26 16:45:57 UTC med merge commit `af012f63bc81993d8c9cdf4f578aa5ea79827610`. Ändringen i `scripts/sync_kungjort_azure.py` återförsöker nu `urllib.error.URLError`, timeout och anslutningsfel (inklusive RemoteDisconnected och connection reset), med högst sju försök och exponential backoff. Vanliga HTTP-klientfel återförsöks inte. Efter uttömda transportförsök avbryts körningen; ingen sida hoppas över.
@@ -2088,3 +2084,22 @@ Read-only-fält i artifacten är verifierade: `read_only=true`, `no_repository_w
 **Nästa konkreta steg:** fortsätt PM-027:s käll-för-käll-mappning och prioritera resterande relevanta produkter/lager. Följ nästa schemalagda geodata-timeline-körning och verifiera att ny snapshot/PR publiceras utan att skriva om historiken. Granska SIS-villkoren separat innan någon kommersiell användning eller kundvisning övervägs.
 
 **Dokumentationsbedömning:** inventory #36 dokumenteras här. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` bedöms Assessed – no update required; ingen källtäckning, fullständighet, kommersiell rättighet eller kundvisningsstatus har ändrats.
+
+## 2026-11-27 – parallell utvärdering av Polisens officiella händelse-API
+
+Polismyndighetens IT-kansli svarade 2026-11-27 i diarienummer A698.287/2026 att de händelser som publiceras på polisen.se är vad som finns tillgängligt och att det inte finns mer data att tillhandahålla. Detta ska inte tolkas som att ett publikt API saknas: Polisen har en officiell dokumenterad endpoint `https://polisen.se/api/events`.
+
+Polisens dokumentation anger att API:et innehåller 500 aktuella händelsenotiser som utgör ett urval av utryckningar. Uppgifter är preliminära och kan ändras. Publicering sker ofta inom några timmar men varierar. Koordinaterna är mittkoordinater för län/kommun, inte exakta händelsepositioner. API-reglerna kräver korrekt identifierande User-Agent, HTTPS, minst 10 sekunder mellan anrop, max 60 anrop/timme och 1 440/dygn; 404 är permanent och webbskrapning är inte tillåten där API finns.
+
+En separat utvärderingsgren `feat/polisen-official-api-evaluation` har skapats. Den lägger till:
+- `scripts/capture_polisen_official_events.py`: ett dagligt API-anrop, validerar JSON-array och unika ID:n, bevarar hela svaret och räknar Norrbottenposter separat.
+- `scripts/upload_polisen_official_snapshot.py`: gzippar och lagrar snapshots immutable i befintlig Azure-container `police-events`, separat under `polisen-official/runs/{run_id}/attempt-{attempt}/`, med manifest och read-back SHA-256/byteverifiering.
+- `.github/workflows/polisen-official-api-evaluation.yml`: daglig körning 04:55 UTC, 14 minuter efter befintlig Brottsplatskartan-körning 04:41 UTC. Endast read access till GitHub och OIDC till Azure.
+- `tests/test_capture_polisen_official_events.py`: schema-, ID- och snapshot-envelope-tester.
+- `docs/police-source-evaluation.md`: 30-dagars jämförelseprotokoll med minst 25 lyckade snapshots som mål.
+- `data-platform/config/sources.yml`: separat source_id `polisen.events_official_api`, med kommersiell användning, historisk lagring och kundvisning kvar som separata bedömningsfrågor.
+
+Befintlig Brottsplatskartan-insamling och dess Azure-historik är inte ändrad. Ingen automatisk sammanslagning, kundvisning eller kundavisering införs. Den officiella snapshoten bevarar hela aktuella listan (upp till 500 enligt dokumentationen); Norrbottenurvalet härleds ur `location.name`. Tomt/ogiltigt svar ska faila i stället för att skapa falsk borttagning eller baslinje.
+
+**Verifieringsstatus vid dokumentation:** endpoint och schema har inspekterats via officiell dokumentation och ett live-svar 2026-11-27; kod och workflow är tillagda i PR-gren men GitHub Actions-tester och första schemalagda Azure-snapshot återstår. 30-dagarsperioden börjar först vid första lyckade verifierade snapshot. Källan är inte klassad som komplett register eller godkänd för kommersiell kundvisning.
+
