@@ -65,11 +65,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install Python and browser dependencies
+      - name: Install Playwright Python package
+        run: python -m pip install playwright
+      - name: Install Chromium browser dependencies
         if: github.event_name != 'pull_request'
-        run: |
-          python -m pip install playwright
-          python -m playwright install --with-deps chromium
+        run: python -m playwright install --with-deps chromium
       - name: Test snapshot, pagination, persistence and publication rules
         env:
           PYTHONPATH: scripts
