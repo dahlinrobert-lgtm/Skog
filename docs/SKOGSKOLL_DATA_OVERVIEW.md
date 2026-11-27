@@ -1365,3 +1365,12 @@ Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-proj
 Artefakten från [run #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) innehåller 38 queryintervall: 37 lyckade och ett misslyckat. Felet inträffade för Västra Götaland / `vattenverksamhet` vid postback `Page$6`; Länsstyrelsens webbserver svarade HTTP 500 efter 240 extraherade källrader. Källtotal saknades och sidan ändrades inte. Batchen avbröts före persistence och PR-skapande. Inga delresultat publicerades; de 36 tidigare kompletta manifestintervallen och snapshots är bevarade.
 
 Ingen automatisk retry/backoff infördes eftersom provider rate limits och återhämtningspolicy är okända. Nästa felsökning bör vara en avgränsad diagnostics-only-reproduktion av samma län/fras, inte en bredare produktionsinsamling. `risk_assessed=false` kvarstår.
+
+
+## Länsstyrelsens diarier – ytterligare högvolymspaginering, grupp 04 (2026-11-27)
+
+[Diagnostics-only run #28](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46076543847), grupp 04 (Uppsala, Stockholm, Södermanland), oktober 2026 och teknisk testfras `an` gav 684/684, 2 740/2 740 respektive 661/661 unika diarienummer på 14, 55 respektive 14 sidor. Totalt 4 085/4 085 över 83 sidor. Samtliga tre intervall var kompletta och avstämda; inga processfel.
+
+Artefakt [15234882262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46076543847) bekräftar numerisk paginering och framåtriktade sidfönsterellipser med `Page$6`, `Page$11`, `Page$16` och fortsatta femsidiga steg. Bakåtriktade ellipser valdes inte. Alla 80 sidövergångar hade registrerat svar och ändrat sida (13 Uppsala, 54 Stockholm, 13 Södermanland).
+
+Ingen framåtriktad `Page$1`-ellips observerades live. `Page$1` förekom som normal sidlänk tillbaka till resultatsida ett. Den specialvariant som testas syntetiskt är därför fortsatt obekräftad live. Inga sidöverlapp observerades; 143 råa rader/135 unika kvarstår som separat testfall. Körningen var `diagnostics_only_no_persistence` och ändrade inte de 36 arkiverade kompletta query-intervallen eller snapshots. `an` är en teknisk testfras, inte godkänd produktionsfråga.
