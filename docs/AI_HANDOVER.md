@@ -2362,6 +2362,13 @@ PR-kontroller passerade: [unit tests](https://github.com/dahlinrobert-lgtm/skogs
 
 **Dokumentationsbedömning:** Documented – denna handover registrerar återkommande pilotprofiler och verifierad samplejämförelse. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är Assessed – no update required: inga source identities, full källtäckning, insamlingskadens, kommersiella rättigheter eller kundvisningsstatus har ändrats.
 
+### Länsstyrelsens diarier – diagnostikkörning #22 (2026-11-27)
+
+[Discover Länsstyrelsen national diary groups #22](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46071304504) avslutades `success`. Körningen var `diagnostics_only_no_persistence` för Blekinge, kategori B, oktober 2026, med den anpassade söktermen `en`. Diagnostikartefakt [15232378740](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46071304504/artifacts/15232378740) visar källtotal 250, 250 extraherade unika diarienummer, `pager_complete=true`, `reconciled=true` och noll processfel.
+
+Detaljgranskning av artefakten visar fem sidor med 50 giltiga diarienummerrader vardera. Inga duplicerade diarienummer eller case-ID:n observerades. Övergångarna var numeriska `Page$2`, `Page$3`, `Page$4` och `Page$5`; sidfönstret flyttades inte och ingen ellipsåtgärd observerades. Körningen ger därför ingen ny live-evidens för framåtriktad `Page$1` eller för överlappsfallet 143 råa/135 unika. Den bekräftar däremot komplett avstämning för en femsidig sökning.
+
+Körningen publicerade inga snapshots och ändrade inte diariedatabas eller historik. Den ursprungliga ofullständiga körningen med åtta överlapp ska fortsatt inte användas för frånvarobedömning. Nästa diagnostiska test behöver ge fler än fem sidor och ett pagerfönster som faktiskt flyttas; överlappsfallet ska verifieras separat om källan åter ger ett sådant resultat. Ingen kod- eller källstatusändring följer av run #22.
 
 ## 2026-11-27 – PM-027 inventory #45 verifierar källstatus efter PR #103/#104
 
