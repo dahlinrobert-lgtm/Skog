@@ -2469,3 +2469,18 @@ Detta stärker teknisk evidens för paginering över fem sidor, men bevisar inte
 Persistence och PR-skapande hoppades över. Ingen delmängd publicerades; arkivets 36 kompletta manifestintervall och 36 snapshotfiler är oförändrade. Detta verifierar fail-closed-beteendet men inte PR-publiceringens liveväg. [PM-PR #107](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/107) är mergad i commit `e9135321ecd136ef3ad3e2d634de5f40279a0224` och registrerar #148 som senaste försök.
 
 **Nästa konkreta steg:** vid behov gör en avgränsad diagnostics-only-reproduktion av Västra Götaland / `vattenverksamhet`. Lägg inte till retry/backoff innan leverantörens anropsgränser och återhämtningsbeteende bedömts. Bekräfta sedan en komplett daglig körning och data-PR; uppdatera PM-profilen igen först när ny evidens finns.
+
+
+### Länsstyrelsens diarier – diagnostikrun #28, högvolymspaginering i grupp 04 (2026-11-27)
+
+[Discover Länsstyrelsen national diary groups #28](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46076543847) kördes i `diagnostics_only_no_persistence` med grupp 04, oktober 2026 och anpassad teknisk sökfras `an`. Tre intervall avstämdes:
+- Uppsala: 684/684 unika diarienummer över 14 sidor.
+- Stockholm: 2 740/2 740 över 55 sidor.
+- Södermanland: 661/661 över 14 sidor.
+Totalt 4 085 källträffar/unika diarienummer över 83 sidor. Alla tre intervall hade `pager_complete=true` och `reconciled=true`; noll intervallfel och noll processfel. Artefakt [15234882262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46076543847/artifacts/15234882262) verifierades.
+
+I samtliga tre län följde collectorn numeriska länkar och framåtriktade fönsterellipser (`Page$6`, `Page$11`, `Page$16` och därefter femsidiga steg). På sidor med både bakåt- och framåtriktad ellips valdes framåtriktad postback; varje registrerad postback hade `response_seen=true` och `page_changed=true`. Stockholm gav 54 bekräftade övergångar, Uppsala 13 och Södermanland 13.
+
+**Avgränsning:** ingen framåtriktad `Page$1`-ellips observerades. `Page$1` förekom som vanlig länk till första resultatsidan; den specialvariant som täcks av syntetiskt test är fortsatt inte liveverifierad. Inga sidöverlapp observerades och 143 råa/135 unika är fortsatt separat verifieringspunkt. Körningen skrev inga snapshots eller historikposter. Testfrasen `an` är en teknisk pagination-probe, inte en godkänd produktionssökfras.
+
+**Nästa steg:** behåll pager-`Page$1` som en avgränsad öppen live-verifieringspunkt. Undersök annan portal-/sökvariant endast om det finns konkret evidens för att den ger annat pager-DOM; upprepa inte högvolymssökningar enbart för att samla fler `Page$6/11/16`-exempel. Överlappsfallet testas separat om källan åter producerar överlapp. Källstatus, snapshotarkiv och rättighetsbedömningar ändras inte.
