@@ -19,12 +19,12 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Fält | Värde |
 |---|---|
 | Prioritet | P0 – högsta operativa prioritet |
-| Status | Inventory #44 visar åtta separata käll-/produktposter i read-only source evidence. Projektledarens driftprofiler har nu utökats från fyra till sex: Samråd (4 jämförbara körningar), Älgdata (3), Torvkarta/SIS (2 vardera) och Trafikverkets två produkter (1 vardera). Torvkarta/SIS är återkommande Gräsmyr sample-piloter, inte full rasterhämtning eller nationell täckning. Avverkningsanmälningarnas ofullständiga workflow-discovery hanteras fail-closed genom mergad PM-PR #103. Full daglig rapport över samtliga 53 source_id och relevanta produkter/lager återstår; inventory #44 har registry_status=seed |
+| Status | Inventory #45 verifierar sex driftprofiler. Samråd: 4 kompletta jämförbara körningar; Älgdata: 3; Torvkarta/SIS: 2 vardera och pilot_recurring med review_expansion; Trafikverkets två produkter: 1 baslinje vardera. Avverkningsanmälningarnas workflow-discovery ger nu korrekt unknown med candidate_run separat. Full daglig rapport för samtliga 53 source_id och relevanta produkter/lager återstår; registry_status=seed. |
 | Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
-| Nästa steg | Kör ny read-only inventory efter mergad PM-PR #104 och verifiera Torvkarta/SIS som pilot_recurring med två jämförbara körningar och utan pending-review-flagga. Verifiera samtidigt PM-PR #103:s unknown/candidate_run för avverkningsanmälningar. Följ geodata timeline måndag 2026-11-30 04:23 UTC och Trafikverkets separata veckokörning 05:50 UTC. Fortsätt därefter käll-för-käll-mappningen; behåll pilot-scope och rights gates. |
+| Nästa steg | Fortsätt käll-för-käll-mappning för resterande source_id/produkter/lager. Granska nästa kompletta Trafikverket-snapshot separat per produkt mot 2026-11-25-baslinjen. Verifiera Torvkarta/SIS nästa schemalagda körning 2026-11-30 04:23 UTC; bedöm inte uppskalning innan risk- och rättighetsgrindar är uppfyllda. |
 
 
 #### PM-027 inventory #44 och workflow-discovery-korrigering – 2026-11-27
@@ -47,6 +47,18 @@ Runs #6 och #7 klarade capture men misslyckades vid direktpush till skyddad main
 
 **Nästa verifiering:** ny read-only inventory efter PM-PR #104, följd av den schemalagda geodata timeline-körningen 2026-11-30 04:23 UTC. Verifiera även PM-PR #103:s fail-closed-resultat för avverkningsanmälningar. Rättighetsstatus och sample-scope förblir oförändrade.
 
+#### PM-027 inventory #45 – verifiering efter PR #103 och #104 – 2026-11-27
+
+[Inventory #45](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46071347643) avslutades success. Artifactens observationstid är `2026-11-27T21:36:11.704663Z`. PM-029 schedule gate och collector job passerade; 3/3 repositories, 0 fel. Read-only-säkerhetsfält passerade och central alert/write-job var skipped.
+
+- Avverkningsanmälningar: latest attempt är `unknown` på grund av trunkerad 1 000-run discovery. Run 43881404640 bevaras endast som candidate_run. Senaste kompletta Gräsmyr-manifest (165 poster, 2026-11-22) är oförändrat.
+- Torvkarta/SIS: båda har två jämförbara kompletta körningar, `pilot_recurring`, tipping point nådd och `review_expansion`. Latest attempt run 45908028278 success; senaste sample snapshot 20261126T225821Z jämförd med 20261116T125756Z. `risk_assessed=false`, `scale_up_eligible=false` och pending-review false.
+- Samråd: fyra kompletta jämförbara Gräsmyr-pilotkörningar.
+- Älgdata: tre kompletta jämförbara nationella körningar för report 3, säsong 2026/2027, 129 aktuella ÄFO.
+- Trafikverkets två separata produkter: fortfarande varsin Gräsmyr-baslinje (27 respektive 7 lager).
+- Länsstyrelsens diarier: senaste attempt failure, senast kompletta query-intervall bevarat separat.
+
+**Nästa steg:** fortsätt käll-för-käll-mappningen. Verifiera Torvkarta/SIS:s första schemalagda körning efter PR #682 och jämför Trafikverkets nästa kompletta snapshots per produkt med 2026-11-25-baslinjen. Behåll scope och rättighetsgrindar oförändrade.
 #### Arkitekturpassning och inventering – 2026-11-24
 
 **Inventering genomförd mot aktuell `main` i Skog och det privata `skogskoll-project-manager-history`-repot.**
