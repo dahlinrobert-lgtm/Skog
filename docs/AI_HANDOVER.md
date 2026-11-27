@@ -2246,3 +2246,20 @@ Read model: success, 3/3 repositories, 0 repositoryfel, source registry success,
 3. Utred provider rate limits/minimiintervall för Samråd och Älgdata innan riskprofil kan bedömas som komplett.
 
 **Dokumentation:** `docs/AI_HANDOVER.md` uppdateras. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` har lästs på main och bedömts `Assessed – no update required`: ingen källstatus, source registry, cadence, ingestion, rättighet eller kundvisning ändrades i detta arbete.
+
+
+## 2026-11-27 – Länsstyrelsens diarier: PR #695 mergad och CI/audit verifierade
+
+[PR #695](https://github.com/dahlinrobert-lgtm/Skog/pull/695) är mergad i `main` med merge commit `621aa168ef975a5030071b5b662434e7453437b7`. Ändringen skiljer portalens råa resultatrader från unika diarienummer efter deduplicering. Källans rapporterade total stäms av mot summan av giltiga diarienummerrader som faktiskt lästs över sidorna; unika län/diarienummer fortsätter vara identiteten för poster som lagras. Okänd total, olästa rader eller ej uttömd paginering får fortsatt inte godkännas. Persistensvalideringen har motsvarande separata kontroller för råa rader och unika poster.
+
+**Verifierade kontroller**
+- [Snapshot storage tests #607](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066108336): hela `python -m unittest discover -s tests -v` passerade.
+- [Länsstyrelsen diary history audit #75](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066108277): regressionstester och historikaudit passerade.
+- Audit-artifact [15231096142](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066108277/artifacts/15231096142): 3 910 state records, 41 565 eventrader, inga duplicerade event-ID:n, inga eventnycklar utan state record, inga okända eventtyper och inga poster som tolkas som borttagna. Audit rapporterar 18 observation_count-mismatchar som uttryckligen klassas som äldre historikluckor; inga retroaktiva händelser ska skapas för att dölja dessa. Auditens `ok=true`.
+
+**Avgränsning och nästa steg**
+Den ursprungliga Blekinge-körningen [#46011210069](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069) visade 143 råa rader på tre sidor (50 + 50 + 43), men 135 unika diarienummer efter åtta överlapp. PR #695 korrigerar avstämningslogiken för detta mönster. Ingen ny livehämtning efter merge har ännu verifierat att portalen nu ger en komplett godkänd körning; detta är nästa konkreta steg. Den ofullständiga historiska körningen får inte omtolkas som komplett och får inte användas för frånvarobedömning.
+
+Källstatusen är oförändrad: pilot, delvis verifierad åtkomst/historik, kommersiell användning villkorad per handling/post och kundvisning inväntar dokumentgranskning. Ingen rättighets- eller täckningsslutsats följer av PR #695.
+
+**Dokumentationsstatus:** Documented – kodändringen, CI och historikaudit är dokumenterade här och i `SKOGSKOLL_DATA_OVERVIEW.md`. `SKOGSKOLL_SOURCE_STATUS.md` är `Assessed – no update required`: källans åtkomst-/rättighetsstatus och kundvisning har inte ändrats.
