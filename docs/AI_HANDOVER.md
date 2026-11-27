@@ -173,6 +173,18 @@ Statusar är operativ projektinformation, inte juridiska beslut.
 - Källornas historik är ojämn; äldre ärenden kan försvinna ur webbdiariet. Bevara metadata, skilj dokument/bilagor från metadata och granska sekretess, personuppgifter, upphovsrätt och tredje mans rättigheter per handling.
 - Länsstyrelsens tidigare besked om tekniska begränsningar kvarstår. Teknisk åtkomst är inte ett godkännande för obevakad insamling, kommersiell användning eller kundvisning. Frånvaro i ett senare sökresultat får aldrig tolkas som att ett ärende har tagits bort.
 
+### 2026-11-27 – Länsstyrelsen: live flersidespaginering verifierad i run #21
+
+[Discovery run #21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46068669201) kördes från `main` commit `1e350af783f0195fe89ddacafd2c434924a0a5dc`, med Blekinge, sökfrasen `an` och registreringsperiod oktober 2026. Fokuserade valideringstester, insamling, avstämning och artifactuppladdning passerade.
+
+Artifact [15231658044](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46068669201/artifacts/15231658044) verifierades: källtotal 392, 392 unika diarienummer, åtta sidor, `pager_complete=true`, `reconciled=true` och noll processfel. Råa resultatrader per sida var 50, 50, 50, 50, 50, 50, 50 och 42 (summa 392); inga dubbletter av diarienummer eller case-ID rapporterades. Två icke-diarienummerrader per sida var pager-/navigationsrader och ingick inte i resultaträknaren.
+
+**Pagerbeteende:** på sida 1–5 valdes nästa numeriska sida fram till att framåtriktad ellips med argument `Page$6` blev nästa kontroll. Den valdes från logisk sida 5; diagnostiken visar `response_seen=true` och `page_changed=true`. Portalen visade därefter det senare fönstret med `<< ... 4 5 6 7 8`; dess `Page$3`-ellipsis låg efter bakåtknappen `Page$First` och valdes inte. Sidorna 6, 7 och 8 hämtades via numeriska länkar och uttaget stämdes av komplett.
+
+Detta är ett verkligt livebevis för vanlig flersidespaginering, framåtriktad fönsterförflyttning med portalens `Page$6`-kommando samt avvisning av bakåtriktad ellips. Det bevisar **inte** en liveövergång med särskilt `Page$1`-argument: den syntetiska regressionstesten finns, men just den kommandovarianten observerades inte i denna körning. Run #21 innehöll inte heller dubblettöverlapp och återtestade därför inte ursprungliga 143 råa rader/135 unika poster. De separata avstämningsreglerna har dock nu passerat live för 392 råa rader = 392 unika poster.
+
+Körningen var `diagnostics_only_no_persistence`; inga snapshots eller manifest publicerades och ingen historik ändrades. Den ändrar inte källans kommersiella villkor, historiska lagringsrätt, kundvisningsrätt eller distributionsrätt.
+
 ### 2026-11-27 – PM-027 inventory #42: Länsstyrelsens diarier
 
 [Project manager read-only inventory #42](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483) avslutades `success` 2026-11-27 20:31 UTC: 3/3 repositories, 0 fel. Collector-tester, JavaScript-syntaxkontroll, repository-insamling och artifactuppladdning passerade. Artifact [15230022338](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46064154483/artifacts/15230022338) granskades. Inventeringen använde Skog `main`-commit `66a1eb32b9b908cebc79c8dd6090e7d6c2fd31bc` och var read-only; inga feature collections hämtades och inga källrepositorier skrevs.

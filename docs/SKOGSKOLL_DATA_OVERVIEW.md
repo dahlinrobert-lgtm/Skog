@@ -482,7 +482,13 @@ Efter PR #695 jämförs källtotalen med kumulativa råa resultatrader; unika l�
 - [Run #20](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46067888304), Blekinge/`vattenverksamhet`/oktober 2026: källan rapporterade 18 träffar och 18 unika poster extraherades på en sida, `pager_complete=true`, inga dubbletter och inga pager-actions. Den tidigare avvikelsen 143 råa rader/135 unika poster kunde inte återtestas eftersom källresultatet nu var 18.
 - Båda körningarna använde `diagnostics_only_no_persistence`; inga snapshots eller manifest publicerades.
 
-**Kvarstående verifiering:** kör ett känt flersidesresultat där framåtriktad `Page$1` verkligen finns i pager-DOM. Bekräfta att rätt action väljs, att postback-svar tas emot, att sidfönstret flyttas framåt och att råa resultatrader stäms av mot källtotal före deduplicering. Försök fånga 143/135 igen endast om källan åter erbjuder ett jämförbart uttag; ändrade källtotaler får inte jämföras som samma population.
+**Liveprov #21 – åtta sidor och framåtriktat pagerfönster (2026-11-27)**
+
+[GitHub Actions #21](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46068669201), Blekinge, frasen `an`, oktober 2026: källtotal 392 och 392 unika diarienummer extraherades över åtta sidor. Råa rader per sida: 50, 50, 50, 50, 50, 50, 50 och 42 (summa 392). Inga dubbletter av diarienummer eller case-ID. `pager_complete=true`, `reconciled=true`, noll processfel.
+
+På logisk sida 5 valdes portalens framåtriktade ellips `Page$6`; diagnostiken visar både `response_seen=true` och `page_changed=true`. Efter fönsterförflyttningen visade portalen `<< ... 4 5 6 7 8`; bakåtriktade ellipsen `Page$3` efter `Page$First` valdes inte. Därefter hämtades sidorna 6–8 via numeriska länkar. Pager-/navigationsrader (två per sida) räknades inte som diarierader.
+
+**Avgränsning:** liveverifieringen visar framåtriktad ellipsfunktion med `Page$6`, inte specifikt specialkommandot `Page$1`. Det ursprungliga 143 råa/135 unika-fallet med överlapp testades inte här, eftersom run #21 hade 392 råa och 392 unika poster utan dubbletter. Den framåtriktade `Page$1`-varianten och ett livefall med överlapp är därför fortsatt separata verifieringspunkter. Run #21 var diagnostics-only; inga snapshots eller manifest skrevs.
 
 **Read-only inventory #42 – verifiering 2026-11-27**
 
