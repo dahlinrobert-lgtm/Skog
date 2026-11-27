@@ -368,6 +368,7 @@ def main() -> None:
                 visited_page_signatures: set[tuple[str, ...]] = set()
                 visited_pager_actions: set[tuple[tuple[str, ...], str, str]] = set()
                 seen_diary_numbers: set[str] = set()
+                raw_result_rows_seen = 0
                 current_page_index = 0
                 for iteration in range(1, 501):
                     page.locator(RESULT_GRID).wait_for(state="visible", timeout=10000)
@@ -437,9 +438,8 @@ def main() -> None:
                     # another pager control. Some regional GridViews leave an
                     # ellipsis (Page$1) visible after the final result page; clicking
                     # it again restarts the sliding pager window instead of advancing.
-                    if (
-                        result["reported_total_results"] is not None
-                        and len(seen) == result["reported_total_results"]
+                    if source_total_reconciled(
+                        result["reported_total_results"], raw_result_rows_seen
                     ):
                         result["pagination"]["has_next_page"] = False
                         result["pagination"]["terminal_action"] = "source_total_reconciled"
@@ -449,6 +449,9 @@ def main() -> None:
                     rows, diag = extract_grid(page, iteration, seen, seen_diary_numbers)
                     result["results"].extend(rows)
                     result["table_diagnostics"].append(diag)
+                    raw_result_rows_seen += diag["raw_matching_diary_number_rows"]
+                    result["pagination"]["raw_result_rows_seen"] = raw_result_rows_seen
+                    result["pagination"]["unique_records_extracted"] = len(seen)
                     result["pagination"]["pages_read"] = iteration
                     result["pagination"]["current_page_index"] = current_page_index
 
@@ -499,10 +502,13 @@ def main() -> None:
 
                     if next_item is None:
                         reported_now = parse_total(current_body)
-                        if reported_now is not None and len(seen) < reported_now:
+                        if reported_now is not None and not source_total_reconciled(
+                            reported_now, raw_result_rows_seen
+                        ):
                             raise RuntimeError(
-                                "Portal pager exposes no continuation although source total is larger: "
-                                f"iteration={iteration}, extracted={len(seen)}, reported={reported_now}, "
+                                "Portal pager exposes no continuation before source result rows reconcile: "
+                                f"iteration={iteration}, raw_rows_seen={raw_result_rows_seen}, "
+                                f"unique_extracted={len(seen)}, reported={reported_now}, "
                                 f"current_page_index={current_page_index}, "
                                 f"visible_diary_numbers={list(visible_ids)!r}, "
                                 f"table_diagnostics_by_page={result['table_diagnostics']!r}, "
@@ -640,7 +646,7 @@ def main() -> None:
                         if argument.casefold() in {"last", "page$last"}:
                             stable_body = clean(page.locator("body").inner_text(timeout=15000))
                             stable_total = parse_total(stable_body)
-                            if stable_total is not None and len(seen) == stable_total:
+                            if source_total_reconciled(stable_total, raw_result_rows_seen):
                                 result["reported_total_results"] = stable_total
                                 result["pagination"]["terminal_action"] = argument
                                 result["pagination"]["terminal_same_page_confirmed"] = True
@@ -673,15 +679,17 @@ def main() -> None:
                     raise RuntimeError("Safety cap reached after 500 result-page transitions")
 
             result["result_count"] = len(result["results"])
+            result["pagination"]["raw_result_rows_seen"] = raw_result_rows_seen
+            result["pagination"]["unique_records_extracted"] = result["result_count"]
             result["total_reconciled"] = (
-                result["reported_total_results"] is not None
-                and result["reported_total_results"] == result["result_count"]
+                source_total_reconciled(result["reported_total_results"], raw_result_rows_seen)
                 and result["pagination"]["has_next_page"] is False
             )
             if not result["total_reconciled"]:
                 raise RuntimeError(
-                    f"Query '{term}' / '{county_label}' extracted {result['result_count']} records "
-                    f"but source reported {result['reported_total_results']}"
+                    f"Query '{term}' / '{county_label}' read {raw_result_rows_seen} source rows "
+                    f"and extracted {result['result_count']} unique records; "
+                    f"source reported {result['reported_total_results']} rows"
                 )
             result["validation_warning"] = None
             return result
