@@ -2369,3 +2369,39 @@ PR-kontroller passerade: [unit tests](https://github.com/dahlinrobert-lgtm/skogs
 Detaljgranskning av artefakten visar fem sidor med 50 giltiga diarienummerrader vardera. Inga duplicerade diarienummer eller case-ID:n observerades. Övergångarna var numeriska `Page$2`, `Page$3`, `Page$4` och `Page$5`; sidfönstret flyttades inte och ingen ellipsåtgärd observerades. Körningen ger därför ingen ny live-evidens för framåtriktad `Page$1` eller för överlappsfallet 143 råa/135 unika. Den bekräftar däremot komplett avstämning för en femsidig sökning.
 
 Körningen publicerade inga snapshots och ändrade inte diariedatabas eller historik. Den ursprungliga ofullständiga körningen med åtta överlapp ska fortsatt inte användas för frånvarobedömning. Nästa diagnostiska test behöver ge fler än fem sidor och ett pagerfönster som faktiskt flyttas; överlappsfallet ska verifieras separat om källan åter ger ett sådant resultat. Ingen kod- eller källstatusändring följer av run #22.
+
+## 2026-11-27 – PM-027 inventory #45 verifierar källstatus efter PR #103/#104
+
+Projektledarens read-only inventory [#45](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46071347643) avslutades `completed/success` 2026-11-27 21:37 UTC. Artifact [15232274708](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46071347643/artifacts/15232274708) har laddats ned och granskats. Observationstid `2026-11-27T21:36:11.704663Z`.
+
+**Workflow och säkerhet**
+- PM-029 Europe/Stockholm schedule gate passerade.
+- Collector job passerade tester, JavaScript-syntaxkontroll, tokenkontroll, 3/3 registrerade repositories och artifactuppladdning.
+- Central alert/write-job var `skipped` (manuell inventory).
+- 0 repositoryfel; `registry_status=seed`.
+- Säkerhetsfält: `read_only=true`, `no_repository_writes=true`, `no_secrets_in_output=true`. Källornas featuredata hämtades inte.
+
+**Verifiering av PM-PR #103 – avverkningsanmälningar**
+- `latest_attempt.status=unknown`, med `workflow_discovery=repository_run_history_scan_incomplete`.
+- Exakt tio sidor / 1 000 repository runs genomsöktes utan att hitta `.github/workflows/skogsstyrelsen-complete-harvest-pilot.yml`.
+- Den identifierade run [43881404640](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43881404640) ligger endast under `candidate_run` (completed/failure, `.github/workflows/national-monitor.yml`).
+- Senaste kompletta manifest och snapshot är oförändrade: Gräsmyr 10 km-pilot, 165 poster, fångad 2026-11-22. Ingen frånvaro eller borttagning har härletts från ofullständig workflow-sökning.
+
+**Verifiering av PM-PR #104 – Torvkarta och SIS**
+- Projektledarens källregister läste sex manuellt kuraterade riskprofiler från Skog main.
+- Både `slu.peat_map.v1` / Torvkarta och `skogsstyrelsen.standortsindex_sis` visar `operations_assessment.state=pilot_recurring`, två jämförbara kompletta körningar, `pilot_readiness.tipping_point_reached=true`, `recommendation=review_expansion`, `risk_assessed=false`, `scale_up_eligible=false` och `new_successful_attempt_pending_review=false`.
+- Latest attempt för båda är run [45908028278](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278), `workflow_dispatch/completed/success`, exakt workflow `.github/workflows/geodata-timeline.yml`.
+- Latest complete sample för båda är snapshot `20261126T225821Z`, jämförd med `20261116T125756Z`, med `valid_sample=true`, `sample_scope_complete=true`, `comparable_grid=true`, `change_status=unchanged`. Torvkarta: 500 × 500 × 2 uint8; SIS: 80 × 80 × 2 int16.
+- Kommersiell och kundvisningsstatus är separata. Torvkarta har kommersiell status `verified_with_attribution` men kundvisning villkorad av attribution och scope; SIS har fortsatt separat rättighetsgranskning. Ingen rättighetsstatus ändrades av inventory.
+
+**Övrig käll-/produktöversikt i inventory #45**
+- Källregistret omfattar 53 source_id: 16 med operations-block, 37 utan; sex drift-/riskprofiler.
+- Samråd har fyra kompletta jämförbara körningar och senaste manifest för Gräsmyr 10 km-pilot.
+- Älgdata har tre kompletta jämförbara nationella observationer för report 3, säsong 2026/2027 och 129 aktuella ÄFO. Det är kumulativ statistik.
+- Trafikverkets Miljöwebb Landskap och NVDB Viltolyckor har varsin separat Gräsmyr-baslinje (27 respektive 7 lager); återkommande körning är inte verifierad.
+- Länsstyrelsens diarier har fortsatt senaste attempt failure medan senaste kompletta snapshot för ett query-intervall bevaras separat.
+- Åtta source/product-evidence poster finns; inventory är fortsatt `seed`, inte full daglig rapport för alla 53 source_id.
+
+**PM-027 nästa steg:** fortsätt käll-för-käll-mappningen för kvarvarande källor/produkter/lager. Prioritera Trafikverkets nästa kompletta veckosnapshot separat per produkt mot 2026-11-25-baslinjen; behåll exakta envelope/lager-ID. Följ Torvkarta/SIS schemalagda körning måndag 2026-11-30 04:23 UTC för att verifiera post-fix schemalagd drift. Behåll fail-closed-reglerna, senaste kompletta snapshot separat från latest attempt, och alla rättighetsgrindar.
+
+**Dokumentationsbedömning:** Documented – inventory #45 och verifiering efter PM-PR #103/#104 är dokumenterade här. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är Assessed – no update required: ingen källa, fullständighet, geografi, insamlingskadens eller rättighetsstatus har ändrats.
