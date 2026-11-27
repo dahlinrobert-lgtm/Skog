@@ -476,7 +476,13 @@ Efter PR #695 jämförs källtotalen med kumulativa råa resultatrader; unika l�
 - [Diary history audit #75](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066108277): regressionstester och historikaudit passerade.
 - Audit-artifact [15231096142](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066108277/artifacts/15231096142): 3 910 state records och 41 565 eventrader; inga duplicerade event-ID:n, eventnycklar utan state record, okända eventtyper eller borttagningsslutsatser. 18 äldre observation_count-mismatchar kvarstår som historikluckor och ska inte fyllas med påhittade retroaktiva events. Auditens `ok=true`.
 
-Ingen ny livehämtning efter merge har ännu verifierat att Blekinge-sökningen nu passerar. Nästa steg är en avgränsad, read-only livekontroll av samma län/fras/period med kontroll av råa rader, unika diarienummer, sidövergångar och terminalstatus. Körningen får inte skriva snapshots/manifest om inte den uttryckligen körs genom godkänd persistensväg.
+**Liveverifiering efter merge (2026-11-27)**
+
+- [Run #19](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46067066036), Blekinge/`av`/oktober 2026: 253/253 unika diarienummer, sex sidor, `pager_complete=true`, inga processfel. Den sista pager-DOM:en visade en bakåtriktad `Page$1`-ellipsis; den valdes inte. Detta verifierar vanlig flersidespaginering men inte framåtriktad fönsterövergång.
+- [Run #20](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46067888304), Blekinge/`vattenverksamhet`/oktober 2026: källan rapporterade 18 träffar och 18 unika poster extraherades på en sida, `pager_complete=true`, inga dubbletter och inga pager-actions. Den tidigare avvikelsen 143 råa rader/135 unika poster kunde inte återtestas eftersom källresultatet nu var 18.
+- Båda körningarna använde `diagnostics_only_no_persistence`; inga snapshots eller manifest publicerades.
+
+**Kvarstående verifiering:** kör ett känt flersidesresultat där framåtriktad `Page$1` verkligen finns i pager-DOM. Bekräfta att rätt action väljs, att postback-svar tas emot, att sidfönstret flyttas framåt och att råa resultatrader stäms av mot källtotal före deduplicering. Försök fånga 143/135 igen endast om källan åter erbjuder ett jämförbart uttag; ändrade källtotaler får inte jämföras som samma population.
 
 **Read-only inventory #42 – verifiering 2026-11-27**
 
