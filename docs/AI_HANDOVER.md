@@ -2124,3 +2124,27 @@ Projektledarrepots [PR #94](https://github.com/dahlinrobert-lgtm/skogskoll-proje
 **Nästa konkreta steg:** verifiera nästa schemalagda read-only inventory på projektledarens main. Kontrollera artifacten och dashboardens read model för Samråd/Älgdata tipping point, Trafikverkets två baslinjer och eventuella new_successful_attempt_pending_review-flaggor. Om ingen schemalagd körning dyker upp behöver PM-029:s schedule-trigger/gate felsökas innan liveverifiering kan slutföras.
 
 **Dokumentationsstatus:** Documented – PR #94:s implementation, tester, merge och kvarstående liveverifiering är registrerade här. Ingen källdokumentation eller rättighetsstatus ändras.
+
+## 2026-11-27 – Inventory #41 verifierad efter autentiseringsfix och pilotbedömning live
+
+Projektledarrepots [PR #95](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/95) åtgärdade HTTP 403-felet i källregisterhämtningen genom att återanvända den befintliga read-only `PROJECTS_READ_TOKEN` i `collect_source_registry(token)`. PR #95 mergades 2026-11-27 i commit `f0b1f77a7724ba6dba65b1b891dc887e53b242cf`. En regressionstest verifierar nu att token skickas till källregisteranropet.
+
+**Verifierad komplett inventory:** [Project manager read-only inventory #41](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46060358632), workflow_dispatch, completed/success 2026-11-27 19:58:14 UTC. Artifact `project-manager-inventory-46060358632`, ID `15227828739`, SHA-256 `e64252ac8e9a7d27d3fc85b7765d96c0c23a58b09a055270a9847af233a4e529`. Inventory JSON rapporterar status success, 3/3 aktiva repositories, 0 repositoryfel, källregisterstatus success med 53 källor (16 med operationsfält, 37 utan) och fyra driftprofiler. Projektbackloggen kunde också läsas. Inga fel på källregister eller backlogg.
+
+**Pilotbedömning från artifacten (inte en ny källinsamling):**
+- `skogsstyrelsen.samrad`: 3 manuellt granskade jämförbara kompletta körningar; tipping point nådd för expansionsgranskning. Rekommendation `review_expansion`; teknisk uppskalning inte godkänd eftersom riskprofilen fortfarande är partiell/ej bedömd. Ny lyckad körning [46036924262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46036924262) flaggas `new_successful_attempt_pending_review` och räknas inte automatiskt in.
+- `lansstyrelsen.elk_harvest_statistics`: 2 manuellt granskade jämförbara kompletta nationella körningar (129 ÄFO); tipping point nådd för expansionsgranskning. Rekommendation `review_expansion`; teknisk uppskalning inte godkänd eftersom rate limits/minimiintervall och fullständig riskprofil är okända. Ny lyckad körning [46013595922](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/46013595922) väntar på manuell granskning och räknas inte in automatiskt.
+- `trafikverket.miljoweb_landskap`: en komplett Gräsmyr-baslinje, 27 lager/2 396 features; tipping point ej nådd.
+- `trafikverket.nvdb.wildlife_collision_frequency`: en komplett Gräsmyr-baslinje, 7 lager/5 278 features; tipping point ej nådd. Detta är aggregerad olycksfrekvens per vägsegment, inte individuella olyckor.
+- Torvkarta/SIS: lyckade metadata/sampleförsök [45908028278](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278) flaggas för manuell evidensgranskning; de är inte automatiskt registrerade som kompletta körningar eller tipping point.
+  
+**Källspecifik latest-attempt signal:** Samråds senaste försök är success; Älgdata senaste försök är success. Länsstyrelsens diariekörning [46011210069](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46011210069) är failure, medan tidigare kompletta query-interval snapshots kvarstår. Trafikverkets latest-attempt lookup är fortfarande unknown eftersom workflowfilen inte finns i GitHubs workflow inventory/run history, även om kompletta baslinjemanifest finns. Harvest notifications senaste attempt är failure; senaste kompletta snapshot kvarstår. Dessa signaler ändrar inte complete-run-evidensen.
+
+**Publicering:** Efter inventory #41 passerade Azure publisher [run #46060438135](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46060438135), completed/success, och validerade/publicerade en run-scoped snapshot. Detta verifierar publiceringskedjan för inventory #41; det innebär inte att en kunddashboard eller extern publicering aktiverats.
+
+**Säkerhet och avgränsning:** Inventory #41 är read-only mot källrepositorierna. Artifacten bygger på metadata/små manifest och hämtar inte feature collections. Partiell körning #40 [46059822293](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46059822293) förblir en misslyckad historisk körning och behandlas inte som komplett. Inga source data, käll-cadence, geografiska scope eller rättighetsgrindar ändrades.
+
+**Nästa konkreta steg:** granska manifests/fullständighet/jämförbarhetsnycklar för väntande Samråd #46036924262 och Älgdata #46013595922 samt Torvkarta/SIS #45908028278. Uppdatera manuellt kuraterade complete_runs endast där varje enskild snapshot verifieras mot exakt workflow, manifest och oförändrat jämförbarhetsscope. Felsök separat Trafikverkets workflow-discovery och Länsstyrelsens diariefel. Behåll risk- och rättighetsgrindarna oförändrade.
+
+**Dokumentationsstatus:** Documented – aktuell liveverifiering och nya väntande granskningar registreras här. `SKOGSKOLL_SOURCE_STATUS.md` och `SKOGSKOLL_DATA_OVERVIEW.md` ändras inte: inga datakällor, ingestionbeteenden eller rättigheter har ändrats.
+
