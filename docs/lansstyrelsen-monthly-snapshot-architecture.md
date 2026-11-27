@@ -60,7 +60,7 @@ The separate workflow `.github/workflows/lansstyrelsen-national-diary-discovery.
 - Run one group at a time and evaluate response times, failures, and source behaviour before proceeding to another group.
 - The workflow uploads diagnostics as a 30-day artifact only. It does not call `persist_lansstyrelsen_snapshots.py`, alter the append-only archive or manifest, or push to `main`.
 - It is a discovery/test facility, not an automated national archive. A successful group does not imply nationwide coverage.
-- Do not use the existing publishing workflow for national discovery: that workflow persists reconciled snapshots and pushes them to `main`.
+- Do not use the existing publishing workflow for national discovery: that workflow persists reconciled snapshots and proposes them through a pull request; it does not publish directly to `main`.
 
 No recurring schedule is enabled or approved. Do not start a full national sequence until the source's technical limitations and applicable access conditions have been clarified. Do not interpret pre-deployment absences as removals.
 
@@ -75,3 +75,12 @@ No recurring schedule is enabled or approved. Do not start a full national seque
 ## Operational caution
 
 The date filter has been observed to affect search totals in one Norrbotten `vattenverksamhet` comparison (253 all-time vs 155 in 2026). Per-month paging has passed the six configured intervals in each of two Norrbotten pilot months. This does not validate all counties, all phrases, or nationwide reliability. National discovery remains manual and diagnostics-only until portal behaviour and technical limitations are assessed.
+
+
+## PR-baserad arkivering (2026-11-27)
+
+Både `.github/workflows/lansstyrelsen-monthly-snapshots.yml` och `.github/workflows/lansstyrelsen-diary-search.yml` publicerar nu via `peter-evans/create-pull-request@v7`. Direktpush till skyddad `main` är inte tillåten (GH013).
+
+Flödena delar concurrency group `lansstyrelsen-diary-archive` och branch `automation/lansstyrelsen-diary-history` eftersom de skriver till samma append-only-arkiv. Den dagliga sökningen hämtar senaste `main`, applicerar de validerade sökresultaten på nytt, auditerar state/events och skapar/uppdaterar PR. Månadskörningen lägger till immutable snapshotfiler och manifestrader i samma PR. PR-validering kör regressionstester men hoppar över browserinsamling och persistence.
+
+Efter merge av PR #709 startade daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) automatiskt. Dess slutresultat och eventuell data-PR måste granskas innan PR-publiceringen betraktas som liveverifierad. En data-PR kräver normal granskning/merge; workflow-success i sig innebär inte att data har publicerats på `main`.
