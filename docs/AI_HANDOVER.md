@@ -2218,6 +2218,25 @@ Detta visar konkret varför en ensidig fallback missade #33: 200 nyare orelatera
 
 **Dokumentationsstatus:** Documented – projektledaradaptern och dess tester är uppdaterade i PM-repot; denna handover anger merge, verifierad CI och kvarstående livekontroll. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är `Assessed – no update required`: ingen källstatus, ingestion, cadence, rättighet eller kundvisning ändrades.
 
+## 2026-11-27 – PM-027 riskgenomgång: Samråd och Älgdata
+
+Projektledarrepots [PR #102](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/102) är mergad i commit `baa68e6c121483c8c960f7f2d1a9d0b636944f7c`. Källprofilerna och `docs/PM027_ADAPTER_SPIKE.md` har uppdaterats med verifierad leverantörsmetadata och tydligare gräns mellan dokumenterade gränser och okända rate limits.
+
+**Samråd**
+- [Skogsstyrelsens ArcGIS REST-tjänst](https://geodpags.skogsstyrelsen.se/arcgis/rest/services/Geodataportal/GeodataportalVisaSamrad/MapServer) anger `MaxRecordCount=2000`; samtliga tre lager (punkt, linje, polygon) anger samma gräns och `Supports Pagination=true`.
+- Collectorn använder `PAGE_SIZE=300`, under publicerad maxgräns. Fyra kompletta jämförbara körningar med samma scope-hash är verifierade; senaste [run 46036924262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46036924262) passerade och publicerade snapshot/manifest 2026-11-27 16:50 UTC.
+- Minsta anropsintervall och rate limits är inte publicerade/verifierade. Collectorn saknar explicit retry/backoff. Riskstatus kvarstår därför som partial; `risk_assessed=false`.
+
+**Älgdata**
+- Senaste [run 46013595922](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/46013595922) passerade 2026-11-27 och samlade 129/129 ÄFO för report 3, säsong 2026/2027, aktuella gränser.
+- Collectorn använder statistikportalens webbgränssnitt och POST-rutten `/LoadData/GetData`, sekventiellt för 129 ÄFO med upp till tre försök per område. Ingen offentlig API-kontrakt, rate limit eller minsta anropsintervall identifierades i de granskade officiella sidorna.
+- Länsstyrelsens öppna data-sida beskriver Älgdata-statistiken som fritt användbar utan särskilda villkor och listar XLSX som format. Detta ändrar inte separat bedömning av historisk lagring, härledd produkt, kundvisning och vidare distribution.
+- Riskstatus kvarstår som partial; `risk_assessed=false` och `scale_up_eligible=false`.
+
+**Beslut:** inga ändringar av insamlingsintervall, parallellitet, retry-policy eller kundvisning. Behåll nuvarande sekventiella insamling och fail-closed-beteende. Nästa steg är att inhämta skriftligt besked om minsta intervall/rate limits från respektive leverantör innan uppskalning. 
+
+**Dokumentationsstatus:** Documented – PM-repots profiler och risknotering är uppdaterade. `docs/SKOGSKOLL_SOURCE_STATUS.md` är `Assessed – no update required` eftersom åtkomst-, licens-, kundvisnings- och rolloutstatus inte ändrats.
+
 ## 2026-11-27 – Project manager read-only inventory #43: adapterverifiering efter PR #98
 
 [Inventory #43](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46065968120) avslutades completed/success 2026-11-27 20:47:47 UTC från projektledarrepots `main`, commit `4706bb76496538bc62fc73368841345c48f59880` (PR #99). Båda jobben för PM-029 schedule gate och collector passerade; central inventory alert/write-job var skipped. Artifact [15230274599](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46065968120/artifacts/15230274599), 26 933 byte, SHA-256 `d2e77234357a0085063c2084aef37e603500b442abaeeb034c7564e76d227207`, innehåller `dashboard-data.json`.
