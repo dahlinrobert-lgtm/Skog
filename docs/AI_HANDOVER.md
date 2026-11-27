@@ -2332,3 +2332,32 @@ Projektledarens [read-only inventory #44](https://github.com/dahlinrobert-lgtm/s
 **Nästa konkreta steg:** kör en ny manuell read-only inventory från projektledarrepots `main` efter PR #103 och kontrollera att avverkningsanmälningarnas latest attempt nu är `unknown` med den kända runnen under `candidate_run`. Granska därefter pending-run [45908028278](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278) för Torvkarta/SIS och fortsätt PM-027:s käll-för-käll-mappning. Behåll senaste kompletta snapshot oförändrad. Ingen källinsamling, källstatus, rättighet, kundvisning eller alert har ändrats av PR #103.
 
 **Dokumentationsbedömning:** Documented – denna handover registrerar inventory #44, adapterkorrigeringen och verifierade CI-resultat. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är Assessed – no update required eftersom källidentiteter, insamlingskadens, datatäckning, rättigheter och kundvisningsstatus inte ändrades.
+
+
+## 2026-11-27 – PM-027: Torvkarta/SIS får återkommande pilotprofiler
+
+Den tidigare saknade föregående workflow-runnen för snapshot `20261116T125756Z` har identifierats som [Skog Actions run #5](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43871258272), `schedule/completed/success`, exakt workflow `.github/workflows/geodata-timeline.yml`. Den andra publicerade kompletta observationen är [run #8](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278), `workflow_dispatch/completed/success`.
+
+**Jämförbarhet verifierad direkt mot Skog main:**
+- Båda snapshots använder samma Gräsmyr-ruta på 1 km × 1 km, samma EPSG:3006-bbox och samma exakta workflow.
+- Torvkarta: 500 × 500 × 2, uint8. Två band med 250 000 giltiga pixlar vardera och 0 ändrade pixlar.
+- SIS: 80 × 80 × 2, int16. Två band med 6 400 giltiga pixlar vardera och 0 ändrade pixlar.
+- Metadata- och pixelhashar är identiska mellan 16 och 26 november. Båda snapshotmanifesten och de fyra NPZ-provfilerna (två datum × två tjänster) finns i Skog main-trädet.
+- Detta är kompletthet för det konfigurerade samplefönstret, inte full rasterhämtning eller nationell täckning.
+
+**Mellanliggande publiceringsfel:**
+- Schemalagda [run #6](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45200233833) och manuella [run #7](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45907306447) klarade capture-steget men misslyckades vid commit/push mot skyddad main (`GH013`). De räknas inte som publicerade kompletta snapshotar.
+- [PR #682](https://github.com/dahlinrobert-lgtm/Skog/pull/682) införde PR-baserad publicering. [Run #8](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278) skapade data-PR [#683](https://github.com/dahlinrobert-lgtm/Skog/pull/683), som mergades.
+- Endast run #5 är en lyckad schemalagd observation; run #8 är manuell. Nästa schemalagda körning efter publiceringsfixen är ännu inte verifierad.
+
+Projektledarrepots [PR #104](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/104) är mergad i commit `6bd807248a14a2e4c5c5a7ddfc5a58929b779834`. Två separata profiler har lagts till:
+- `slu.peat_map.v1` / Torvkarta: `pilot_recurring`, två jämförbara kompletta provkörningar.
+- `skogsstyrelsen.standortsindex_sis` / SIS: `pilot_recurring`, två jämförbara kompletta provkörningar.
+
+Båda når tipping point för expansionsgranskning men har `risk_assessed=false`, `scale_up_eligible=false` och separat rättighetsgrind. Request policy är sekventiell, max concurrency 1, timeout (20,120), utan retry/backoff. Leverantörens minsta intervall och rate limits är okända. Ingen kadens, geografi eller parallellitet har ändrats.
+
+PR-kontroller passerade: [unit tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46070273959) och [synthetic append-only](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46070273970).
+
+**Nästa konkreta steg:** kör en ny read-only inventory efter PM-PR #104 och verifiera att båda profilerna visas som `pilot_recurring`, med två jämförbara körningar och utan `new_successful_attempt_pending_review`. Verifiera samtidigt PM-PR #103:s fail-closed-resultat för avverkningsanmälningar. Följ sedan den schemalagda geodata timeline-körningen måndag 2026-11-30 04:23 UTC och Trafikverkets separata veckokörning 05:50 UTC. Behåll Gräsmyr-scope och alla rättighetsgrindar oförändrade.
+
+**Dokumentationsbedömning:** Documented – denna handover registrerar återkommande pilotprofiler och verifierad samplejämförelse. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är Assessed – no update required: inga source identities, full källtäckning, insamlingskadens, kommersiella rättigheter eller kundvisningsstatus har ändrats.
