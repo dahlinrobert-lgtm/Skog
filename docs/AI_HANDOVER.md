@@ -1,6 +1,6 @@
 # Skog / Skogskoll – överlämning för fortsatt arbete
 
-**Senast uppdaterad:** 2026-11-25  
+**Senast uppdaterad:** 2026-11-27  
 **Syfte:** Detta dokument är en kompakt startpunkt för fortsatt utveckling, även när arbetet fortsätter i en ny ChatGPT-chatt.
 
 > Läs detta dokument först i en ny chatt. Läs därefter den automatiska källstatusrapporten och den fullständiga datakälleöversikten. Kontrollera alltid aktuella filer och GitHub Actions innan du påstår att en körning eller status fortfarande gäller.
@@ -2308,3 +2308,27 @@ Den ursprungliga Blekinge-körningen [#46011210069](https://github.com/dahlinrob
 Källstatusen är oförändrad: pilot, delvis verifierad åtkomst/historik, kommersiell användning villkorad per handling/post och kundvisning inväntar dokumentgranskning. Ingen rättighets- eller täckningsslutsats följer av PR #695.
 
 **Dokumentationsstatus:** Documented – kodändringen, CI och historikaudit är dokumenterade här och i `SKOGSKOLL_DATA_OVERVIEW.md`. `SKOGSKOLL_SOURCE_STATUS.md` är `Assessed – no update required`: källans åtkomst-/rättighetsstatus och kundvisning har inte ändrats.
+
+
+## 2026-11-27 – PM-027 inventory #44 och fail-closed-korrigering av workflow discovery
+
+Projektledarens [read-only inventory #44](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46068427140) avslutades `completed/success` 2026-11-27. Artifact [15230944588](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46068427140/artifacts/15230944588) har granskats lokalt. Observationstid: `2026-11-27T21:09:45.751930Z`.
+
+- 3/3 repositories lyckades, 0 repositoryfel. Collector-tester och dashboardens JavaScript-syntaxkontroll passerade. PM-029 schedule gate passerade. Central alert/write-job var `skipped`.
+- Säkerhetsfält: `read_only=true`, `no_repository_writes=true`, `no_secrets_in_output=true`.
+- Källregistret lästes från Skog `main`, commit `66a1eb32b9b908cebc79c8dd6090e7d6c2fd31bc`: 53 source_id, 16 med operations-block, 37 utan och fyra kuraterade drift-/riskprofiler. Inventoryens `registry_status=seed`; detta är en lyckad inventeringsinsamling, inte bevis för att den fullständiga dagliga rapporten är etablerad.
+- Skogs `source_snapshot_evidence` innehåller åtta separata käll-/produktposter: avverkningsanmälningar, Samråd, Älgdata, Trafikverkets två produkter, Torvkarta, Länsstyrelsens diarier och SIS.
+- Samråd: senaste attempt run [46036924262](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46036924262) success; manifest `manifest_complete_for_configured_scope` från 2026-11-27 16:50:48 UTC. Fyra jämförbara kompletta körningar finns i den manuellt kuraterade profilen. Omfattningen är fortsatt Gräsmyr 10 km-pilot, inte nationell.
+- Älgdata: run [46013595922](https://github.com/dahlinrobert-lgtm/alg-grasmyr/actions/runs/46013595922) success; dashboard och 129 snapshotfiler finns. Tre jämförbara kompletta nationella observationer för report 3, säsong 2026/2027 och aktuella gränser. Detta är kumulativ statistik, inte individuella fälthändelser.
+- Trafikverket: Miljöwebb Landskap och NVDB Viltolyckor pekar separat på run [45705661340](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45705661340), success, med respektive 27 och 7 lager. Båda är fortfarande Gräsmyr-baslinjer, inte återkommande eller nationellt verifierad drift.
+- Torvkarta och SIS: senaste gemensamma workflowförsök [45908028278](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278) success. Båda är markerade `new_successful_attempt_pending_review`; körningen ska inte räknas som en ny kuraterad komplett observation innan manifest/jämförbarhet har granskats.
+- Länsstyrelsens diarier: senaste attempt [46066600104](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46066600104) failure. Read model behåller separat den senaste kompletta snapshoten för ett query-intervall; den är inte en garanti för komplett nationell månad.
+- Avverkningsanmälningar: senaste kompletta manifest är fortsatt Gräsmyr 10 km-pilotens 165 poster från 2026-11-22. Inventory #44 hittade run [43881404640](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43881404640) för `.github/workflows/national-monitor.yml`, men sökningen nådde 1 000-körningsgränsen utan att hitta den andra konfigurerade workflow-sökvägen `.github/workflows/skogsstyrelsen-complete-harvest-pilot.yml`. Den hittade körningen kan därför inte ensam fastställa senaste attempt över hela workflowuppsättningen.
+
+**Korrigering:** projektledarrepots [PR #103](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/103) är mergad i commit `f5b6c2b19cfae53d2c0c95dc3a4094c84eb789f4`. När exact-path-fallback når 1 000 körningar innan alla konfigurerade paths hittats returneras nu aggregate `latest_attempt.status=unknown`; den kända körningen bevaras som `candidate_run`, inte som definitiv senaste körning. Regressionstestet och båda CI-jobben passerade: [unit tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46069797977) och [synthetic append-only](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46069797976).
+
+**Leverantörsgränser – uppföljd dokumentation:** Skogsstyrelsens officiella ArcGIS-metadata bekräftar `MaxRecordCount=2000` och paginering för Samråds tre lager. Collectorns sidstorlek 300 ligger under denna gräns. De granskade officiella sidorna anger däremot inget minsta anropsintervall eller numerisk rate limit. För Älgdata anger Länsstyrelsens öppna data-sida fri användning utan särskilda villkor och användarorienterad XLSX-export, men inget publikt API-kontrakt eller anrops-SLA. Portalens POST-rutt, sekventiella 129 ÄFO och tre klientförsök per område är implementationsegenskaper, inte leverantörsgränser. Båda riskprofilerna förblir därför partiella; ingen parallellitet eller kadens har ökats.
+
+**Nästa konkreta steg:** kör en ny manuell read-only inventory från projektledarrepots `main` efter PR #103 och kontrollera att avverkningsanmälningarnas latest attempt nu är `unknown` med den kända runnen under `candidate_run`. Granska därefter pending-run [45908028278](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278) för Torvkarta/SIS och fortsätt PM-027:s käll-för-käll-mappning. Behåll senaste kompletta snapshot oförändrad. Ingen källinsamling, källstatus, rättighet, kundvisning eller alert har ändrats av PR #103.
+
+**Dokumentationsbedömning:** Documented – denna handover registrerar inventory #44, adapterkorrigeringen och verifierade CI-resultat. `docs/SKOGSKOLL_SOURCE_STATUS.md` och `docs/SKOGSKOLL_DATA_OVERVIEW.md` är Assessed – no update required eftersom källidentiteter, insamlingskadens, datatäckning, rättigheter och kundvisningsstatus inte ändrades.
