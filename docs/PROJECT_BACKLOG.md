@@ -19,12 +19,12 @@ Detta är en daglig informationsprodukt och driftkontroll – inte ett krav att 
 | Fält | Värde |
 |---|---|
 | Prioritet | P0 – högsta operativa prioritet |
-| Status | Inventory #44 visar åtta separata käll-/produktposter i read-only source evidence och fyra kuraterade riskprofiler. Samråd och Älgdata har återkommande jämförbara kompletta pilotobservationer; Trafikverkets två produkter är fortsatt baslinjer. Avverkningsanmälningarnas workflow-discovery var trunkerad vid 1 000 körningar och hanteras nu fail-closed genom mergad PM-PR #103. Full daglig rapport över samtliga 53 source_id och relevanta produkter/lager återstår; inventory #44 har registry_status=seed |
+| Status | Inventory #44 visar åtta separata käll-/produktposter i read-only source evidence. Projektledarens driftprofiler har nu utökats från fyra till sex: Samråd (4 jämförbara körningar), Älgdata (3), Torvkarta/SIS (2 vardera) och Trafikverkets två produkter (1 vardera). Torvkarta/SIS är återkommande Gräsmyr sample-piloter, inte full rasterhämtning eller nationell täckning. Avverkningsanmälningarnas ofullständiga workflow-discovery hanteras fail-closed genom mergad PM-PR #103. Full daglig rapport över samtliga 53 source_id och relevanta produkter/lager återstår; inventory #44 har registry_status=seed |
 | Mål | Daglig read-only status över snapshots och insamlingsflöden för alla registrerade källor och separata produkter/lager |
 | Ska visa | Senaste kompletta snapshot; senaste körningsförsök; running/success/partial/failed; stale-status; källans kadens; scope/täckning; antal; jämförbarhet; förändringar; blockerare; granskningsbehov; evidenslänkar |
 | Acceptanskriterier | Daglig rapport; alla källor/lager med; senaste kompletta snapshot skild från senaste försök; okända statusar förblir okända; fel/partial synliggörs; read-only; inga kundwrites eller kundaviseringar |
 | Beroenden | Källregister, workflow-run inventory, snapshotinventering, manifest/artifactlänkar, normaliserad statusmodell |
-| Nästa steg | Kör ny read-only inventory efter mergad PM-PR #103 och verifiera att avverkningsanmälningarnas latest attempt är unknown med känd run under candidate_run. Granska därefter pending-run #45908028278 för Torvkarta/SIS och fortsätt käll-för-käll-mappningen för återstående source_id/produkter/lager. Behåll unknown vid ofullständigt bevis; utöka inte till featuredata eller ny historikmodell. |
+| Nästa steg | Kör ny read-only inventory efter mergad PM-PR #104 och verifiera Torvkarta/SIS som pilot_recurring med två jämförbara körningar och utan pending-review-flagga. Verifiera samtidigt PM-PR #103:s unknown/candidate_run för avverkningsanmälningar. Följ geodata timeline måndag 2026-11-30 04:23 UTC och Trafikverkets separata veckokörning 05:50 UTC. Fortsätt därefter käll-för-käll-mappningen; behåll pilot-scope och rights gates. |
 
 
 #### PM-027 inventory #44 och workflow-discovery-korrigering – 2026-11-27
@@ -34,6 +34,18 @@ Projektledarens [inventory #44](https://github.com/dahlinrobert-lgtm/skogskoll-p
 [PM-PR #103](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/103) är mergad. Om repository-wide workflowhistorik når 1 000-körningsgränsen innan alla konfigurerade exact paths hittas blir aggregate `latest_attempt=unknown`; kända träffar bevaras endast som `candidate_run`. CI passerade: [unit tests](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46069797977) och [synthetic append-only](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/actions/runs/46069797976).
 
 **Nästa verifiering:** kör en ny read-only inventory efter merge och bekräfta fail-closed-resultatet för avverkningsanmälningar. Granska även pending-run #45908028278 för Torvkarta/SIS innan den räknas in bland kuraterade kompletta körningar. Samråd och Älgdata har fortsatt fyra respektive tre jämförbara kompletta körningar; Trafikverkets två produkter är fortfarande varsin baslinje.
+
+#### PM-027 – Torvkarta/SIS två kompletta jämförbara pilotprov – 2026-11-27
+
+Den tidigare saknade föregående workflow-runnen för snapshot `20261116T125756Z` är verifierad som [run #5](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/43871258272), schemalagd och success. [Run #8](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/45908028278) är den andra publicerade kompletta observationen, manuell och success. Båda har samma exakta workflow och samma Gräsmyr 1 km × 1 km samplegeometri i EPSG:3006.
+
+Torvkarta jämfördes som 500 × 500 × 2 uint8 och SIS som 80 × 80 × 2 int16. Metadata- och pixelhashar är oförändrade och samtliga fyra band visar 0 ändrade pixlar. Snapshotmanifest och NPZ-filer för båda datumen finns i Skog `main`. Detta styrker två jämförbara kompletta sample-observationer, inte full rasterhämtning eller nationell täckning.
+
+[PM-PR #104](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/104) är mergad. Torvkarta och SIS har separata `pilot_recurring`-profiler med två kompletta körningar vardera. Båda når endast tipping point för expansionsgranskning; leverantörsgränser är okända, retry/backoff saknas, `risk_assessed=false` och `scale_up_eligible=false`. Endast run #5 var schemalagd; post-fix schemalagd drift återstår.
+
+Runs #6 och #7 klarade capture men misslyckades vid direktpush till skyddad main och räknas inte som publicerade kompletta snapshotar. PR #682 ersatte direktpush med PR-publicering; run #8 skapade data-PR #683, som mergades.
+
+**Nästa verifiering:** ny read-only inventory efter PM-PR #104, följd av den schemalagda geodata timeline-körningen 2026-11-30 04:23 UTC. Verifiera även PM-PR #103:s fail-closed-resultat för avverkningsanmälningar. Rättighetsstatus och sample-scope förblir oförändrade.
 
 #### Arkitekturpassning och inventering – 2026-11-24
 
