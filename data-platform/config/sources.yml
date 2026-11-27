@@ -497,8 +497,7 @@ sources:
       licence: "Copernicus Sentinel data policy – free, full and open access, subject to applicable attribution and security restrictions"
       licence_url: "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice"
       review_status: conditional_green_for_sentinel_data
-      commercial_use: yes
-      historical_storage: yes
+      commercial_use: yes      historical_storage: yes
       derivatives: yes
       redistribution: yes_for_sentinel_data_subject_to_lawful_use_and_restrictions
       attribution: "Follow the current Sentinel legal notice and applicable product/processing attribution."
@@ -997,8 +996,7 @@ sources:
       attribution: "Not required by CC0; recommended: Källa: SGU – Jorddjupsmodell."
       api_or_service_constraints: "Model is an overview/interpolation of known observations; retain resolution and uncertainty information."
       evidence_checked_on: "2026-11-01"
-      caveat: "Overview model; not a substitute for site-specific geotechnical investigation."
-    compliance:
+      caveat: "Overview model; not a substitute for site-specific geotechnical investigation."    compliance:
       secrecy_review: check_if_source_contains_protected_information
       personal_data_review: check_fields_and_linkage_risk
       gdpr_lawful_basis: required_if_personal_data_is_processed
@@ -1497,8 +1495,7 @@ sources:
     cadence: to_be_verified
     geography: Sweden
     format: [JSON]
-    rights:
-      licence: "Published Kolada API terms; no separate agreement required"
+    rights:      licence: "Published Kolada API terms; no separate agreement required"
       licence_url: "https://kolada.se/om-oss/api/"
       review_status: green_commercial_use_explicit
       commercial_use: yes
@@ -1998,162 +1995,52 @@ sources:
       derivatives: conditional_on_product_terms
       redistribution: pending_exact_product_confirmation
       attribution: "Follow product-specific metadata and retain product version and Trafikverket provenance."
-      api_or_service_constraints: "Record download order, product/version identifiers, delivery date and any restrictions on storage or redistribution."
-      evidence_checked_on: "2026-11-14"
-      caveat: "A local index and archived geometry do not establish that a recurring update workflow or a complete historical road-network series is operational."
-    compliance:
-      secrecy_review: check_if_source_contains_protected_information
-      personal_data_review: check_fields_and_linkage_risk
-      gdpr_lawful_basis: required_if_personal_data_is_processed
-      map_and_geodata_rights: review_exact_product_and_embedded_assets
-      research_material_status: not_assumed_research_data_check_if_applicable
-      third_party_rights: check_provider_chain_and_delivery_terms
-      publication_gate: block_external_publication_when_relevant_review_is_unresolved
-      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: record_order_confirmation_delivery_metadata_and_terms
-      reviewed_on: "2026-11-14"
-      next_review: when_product_terms_or_use_changes_and_at_least_annually
-    operations:
-      access_status: partial
-      snapshot_status: baseline_only
-      history_status: not_verified
-      commercial_use_status: conditional_per_product
-      customer_display_status: pending_per_product
-      last_verified: "2026-11-14"
-      next_action: "Dokumentera vilken NVDB-produktversion som finns lokalt, kontrollera Lastkajens beställnings- och licensvillkor och bygg ett versionsstyrt uppdateringsflöde innan vägnätsförändringar används i kundhistorik."
-      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; local NVDB index/geometry archive and Lastkajen investigation"
-    notes:
-      - "Use as a reference network for geospatial matching and routing context, not as an event feed."
-      - "Keep product versions immutable and compare only compatible network releases."
-      - "Do not mark a road segment as removed until a complete, comparable network release has been processed."
 
-  - source_id: lansstyrelsen.elk_management_areas
-    name: "Länsstyrelserna – nationella älgförvaltningsområden (ÄFO)"
-    source_type: vector_boundaries
-    provider: Länsstyrelserna
-    access_method: arcgis_rest_wms
-    connector: public_wms
+  - source_id: polisen.events_official_api
+    name: "Polismyndigheten – officiellt API över polisens händelser"
+    source_type: public_police_event_notifications
+    provider: Polismyndigheten
+    access_method: public_json_api
+    connector: polisen_official_events_api
     status: pilot
-    cadence: on_demand
-    geography: Sweden
-    format: [WMS, ArcGIS REST]
-    expected_crs: EPSG:3006
+    cadence: daily_snapshot
+    geography: Sweden_current_publication_window
+    format: [JSON]
     rights:
-      licence: unknown
-      licence_url: "https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/GetMetaDataById?id=93a41eff-e847-4db8-8c7e-154ddfdc34ad"
-      review_status: amber_rights_owner_and_project_terms
-      commercial_use: unknown
-      historical_storage: unknown
-      derivatives: unknown
-      redistribution: unknown
-      attribution: "Recommended: Länsstyrelserna – nationella karttjänsten för beslutade älgförvaltningsområden."
-      api_or_service_constraints: "Use the published MapServer/WMS for map display; confirm service availability and dataset-specific reuse terms in metadata before caching, extracting, republishing or commercial use."
-      evidence_checked_on: "2026-11-16"
-      caveat: "The public MapServer metadata confirms current nationwide ÄFO polygons and WMS/Map Service access. Dataset-specific licence and rights for extraction, caching, derivatives and customer display have not yet been verified. WMS display in this prototype is not a conclusion about those rights."
+      licence: "Polisens öppna data och API-regler gäller; exakt omfattning för kommersiell kundvisning och vidare distribution ska bedömas separat."
+      licence_url: "https://polisen.se/om-polisen/om-webbplatsen/oppna-data/regler-for-oppna-data"
+      review_status: conditional_open_data_terms_require_use_specific_assessment
+      commercial_use: pending_exact_use_assessment
+      historical_storage: pending_exact_use_assessment
+      derivatives: pending_exact_use_assessment
+      redistribution: pending_exact_use_assessment
+      attribution: "Polismyndigheten; retain original notice URL and retrieval timestamp."
+      api_or_service_constraints: "Use HTTPS and a correct identifying User-Agent; at least 10 seconds between requests, maximum 60 requests/hour and 1,440/day. Treat HTTP 404 as permanent. Do not use web scraping where the API exists."
+      evidence_checked_on: "2026-11-27"
+      caveat: "Polisen documents a maximum/current set of 500 notices representing a selection of call-outs. Notice content may change. Coordinates represent the centre of the county/municipality, not the incident location. The IT department confirmed in case A698.287/2026 that no additional event data beyond the website publications are available."
     compliance:
-      secrecy_review: check_if_source_contains_protected_information
+      secrecy_review: source_states_no_personal_data_but_recheck_payload_and_linkage_risk
       personal_data_review: assess_fields_and_linkage_risk
       gdpr_lawful_basis: required_if_personal_data_is_processed
-      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
+      map_and_geodata_rights: review_if_maps_or_geospatial_assets_are_embedded
       research_material_status: not_assumed_research_data_check_if_applicable
       third_party_rights: check_provider_chain_attachments_and_embedded_material
       publication_gate: block_external_publication_when_relevant_review_is_unresolved
       assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: "ArcGIS MapServer metadata and Länsstyrelsernas Geodatakatalog metadata record 93a41eff-e847-4db8-8c7e-154ddfdc34ad"
-      reviewed_on: "2026-11-16"
-      next_review: when_source_product_terms_or_use_changes_and_at_least_annually
-    notes:
-      - "MapServer: https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer"
-      - "Layer 1 is named LST Älgförvaltningsområden and has polygon geometry in EPSG:3006."
-      - "Service description identifies the content as the latest decided ÄFO and states that a new decision becomes visible the following day."
-      - "Current boundary display is separate from the regional 2026/2027 hunting-statistics pilot; no statistical join to ÄFO polygons is implemented."
-      - "Do not use the Skogsstyrelsen ÄBIN layer as a substitute for the current national decision layer; its scope is inventory-related ÄFO."
-
-  - source_id: viltdata.kill_statistics
-    name: "Viltdata.se – nationell avskjutningsstatistik"
-    source_type: reported_hunting_bag_statistics
-    provider: "Svenska Jägareförbundet (Viltdata.se)"
-    access_method: public_api
-    connector: viltdata_statistics_api
-    status: pilot
-    cadence: manual_on_demand
-    geography: Sweden
-    format: [JSON]
-    rights:
-      licence: unknown
-      review_status: not_assessed
-      commercial_use: unknown
-      historical_storage: unknown
-      derivatives: unknown
-      redistribution: unknown
-      attribution: "Not yet established from reviewed product-specific terms; verify Viltdata.se attribution requirements."
-      api_or_service_constraints: "Use the public StatisticsApi report type kill; respect service behaviour and request pacing. Technical access does not establish permission for permanent archiving, commercial use, derivatives, customer display or redistribution."
-      evidence_checked_on: "2026-11-18"
-      caveat: "A complete manual technical snapshot has been verified, but dataset-specific licence terms and permissions for historical storage, commercial use, processing, customer display and redistribution have not been assessed."
+      evidence_reference: "docs/police-source-evaluation.md; Polismyndigheten case A698.287/2026"
+      reviewed_on: "2026-11-27"
+      next_review: when_source_terms_or_product_use_changes_and_at_least_annually
     operations:
       access_status: verified
       snapshot_status: pilot
       history_status: not_verified
-      commercial_use_status: unknown
-      customer_display_status: not_assessed
-      last_verified: "2026-11-18"
-      next_action: "Fortsätt manuella kompletta snapshots med tidsbegränsad GitHub Actions-artifact. Invänta skriftligt besked om historisk lagring/arkivering av exakt avskjutningsstatistikprodukt och avsedda användningar. Azure-region är verifierad som swedencentral; GitHub OIDC-identiteten har Storage Blob Data Contributor på Storage Account-scope. Efter dokumenterat rättighetsbesked: besluta om arkivering och eventuell separat least-privilege-identitet, kör därefter upload, audit och restore live. Ingen schemaläggning eller kundvisning före separat bedömning."
-      evidence_reference: "GitHub Actions runs 44394070179 and 44408345762; snapshots 20261118T204420Z and 20261118T220720Z; artifacts 14470426808 and 14475804318; latest ZIP SHA-256 31ef0b6ac7c16fa524adaa9f1e5ed9037f19bd3a9cb714bdea16e6ad8264e0b2; docs/viltdata-kill-statistics-workflow.md; docs/viltdata-azure-storage.md"
+      commercial_use_status: conditional
+      customer_display_status: pending_product_assessment
+      last_verified: "2026-11-27"
+      next_action: "Run the 30-day parallel source evaluation with immutable daily snapshots; compare overlap, unique events, freshness, schema quality, availability and source-specific limitations before deciding whether to retain both sources."
+      evidence_reference: "docs/police-source-evaluation.md; official API probe 2026-11-27; Polismyndigheten case A698.287/2026"
     notes:
-      - "This is reported hunting-bag/kill statistics, not NVR wildlife-collision incidents and not a population inventory."
-      - "Manifest complete=true means technical request and file completeness; it does not mean all reporting years are final."
-      - "The first complete snapshot must be treated as a baseline and must not generate historical alerts."
-      - "Incomplete snapshots must never be used as evidence of missing observations or as diff/baseline input."
+      - "Endpoint: https://polisen.se/api/events; one daily request in the evaluation workflow."
+      - "The raw response is archived separately from the Brottsplatskartan source history."
+      - "Do not interpret the 500 current notices as a complete historical register or the location coordinate as an incident coordinate."
 
-
-  - source_id: lansstyrelsen.fire_ban
-    name: "Länsstyrelserna – eldningsförbud i skog och mark (EXT)"
-    source_type: public_authority_fire_restriction_status
-    provider: Länsstyrelserna
-    access_method: arcgis_feature_service
-    connector: lansstyrelsen_fire_ban_metadata_inspector
-    status: metadata_probe_pending
-    cadence: manual_metadata_only_until_2027_01_24
-    geography: coverage_to_be_verified
-    format: [ArcGIS_FeatureServer, WMS, Map_Service]
-    rights:
-      licence: "Geodatakatalogens metadata-skärmbild visar inga tillämpliga användnings- eller åtkomstvillkor. Metadatarecordens maskinläsbara innehåll och eventuella lager-/komponentvillkor har ännu inte verifierats separat; detta är inte ett generellt publiceringsgodkännande."
-      licence_url: "https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/srv/api/records/GetMetaDataById?id=53514d5d-b1ea-4162-bc56-58e496f0f4f7"
-      review_status: metadata_terms_seen_exact_layer_review_pending
-      commercial_use: unknown_pending_exact_layer_review
-      historical_storage: unknown_pending_exact_layer_review
-      derivatives: unknown_pending_exact_layer_review
-      redistribution: unknown_pending_exact_layer_review
-      attribution: "Länsstyrelserna – Eldningsförbud i skog och mark (EXT); bekräfta eventuell attribution per lager."
-      api_or_service_constraints: "Endast manuell metadata-inspektion i första etappen. Ingen feature-query, geometrihämtning, schemaläggning eller snapshot före separat beslut. Respektera tjänstens publicerade gränser och använd metadata för maxRecordCount/paginering när datainsamling senare utreds."
-      evidence_checked_on: "2026-11-24"
-      caveat: "WebbGIS-metadata anger årlig och kontinuerlig underhållsfrekvens. Den exakta geografiska täckningen, lageridentiteten, stabila objekt-ID:n och användningsvillkoren behöver verifieras på FeatureServer-/lagernivå."
-    compliance:
-      secrecy_review: check_if_source_contains_protected_information
-      personal_data_review: check_fields_and_linkage_risk
-      gdpr_lawful_basis: required_if_personal_data_is_processed
-      map_and_geodata_rights: review_exact_product_layer_background_and_underlying_data
-      research_material_status: not_assumed_research_data_check_if_applicable
-      third_party_rights: check_provider_chain_and_layer_metadata
-      publication_gate: block_external_publication_when_relevant_review_is_unresolved
-      assessment_scope: access_storage_derivatives_customer_display_and_redistribution_separately
-      evidence_reference: "Geodatakatalogens metadata-ID 53514d5d-b1ea-4162-bc56-58e496f0f4f7; user-provided metadata screenshot; FeatureServer endpoint"
-      reviewed_on: "2026-11-24"
-      next_review: "After metadata-only connector probe and before any feature extraction or external publication"
-    operations:
-      access_status: not_verified
-      snapshot_status: not_started
-      history_status: none
-      commercial_use_status: unknown
-      customer_display_status: not_assessed
-      last_verified: "2026-11-24"
-      next_action: "Kör den manuella metadata-only-inspektionen, verifiera lager, fält, täckning, objektidentitet och tjänstegränser. Planera separat beslut om första baslinje och schemaläggning tidigast 2027-01-24."
-      evidence_reference: "docs/SKOGSKOLL_DATA_OVERVIEW.md; metadata ID 53514d5d-b1ea-4162-bc56-58e496f0f4f7; data-platform/scripts/inspect_lansstyrelsen_fire_ban_service.py"
-    notes:
-      - "Metadata beskriver fem statusvärden: eldningsförbud, inget eldningsförbud, skärpt eldningsförbud, annat eldningsförbud och ej angivet."
-      - "Avsaknad av information eller statusen ej angivet betyder inte att eldningsförbud saknas."
-      - "Metadata anger att information kan omfatta beslutsfattare, startdatum, besluts-/informationslänk och kommunstatus."
-      - "Service: https://ext-geodata-nationella-visning.lansstyrelsen.se/arcgis/rest/services/LST/LST_eldningsforbud_EXT/FeatureServer"
-      - "WebbGIS: https://ext-webbgis.lansstyrelsen.se/lst_eldningsforbud/"
-      - "Första etappen är en metadata-connector. Den får inte hämta feature-poster eller geometrier och skapar inga snapshots."
-      - "Planerad tidigaste start för schemaläggning och operativa snapshots: 2027-01-24; datumet är en plan, inte en aktiverad workflow."
