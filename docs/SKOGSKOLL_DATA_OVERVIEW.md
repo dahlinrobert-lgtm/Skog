@@ -1392,3 +1392,21 @@ Summary rapporterar 2/2 förväntade intervall, 2/2 avstämda och inga intervall
 **Begränsning:** denna körning bekräftar exekvering av två fraser, inte högvolymspaginering eller den framåtriktade `Page$1`-specialvarianten. Ett intervall gav inga sidor och det andra endast en sida utan pagerkontroller. Det historiska fallet 143 råa rader/135 unika reproducerades inte. Ingen snapshot, manifestpost eller historik skrevs; källarkiv och rättighetsstatus är oförändrade.
 
 **Nästa steg:** använd endast en exakt dokumenterad äldre sökparameteruppsättning eller ett konkret intervall som tidigare producerat 143/135 för ny avgränsad diagnostik. Undvik fler generiska upprepningar som inte kan ge ny pager- eller överlappsevidens.
+
+
+## Länsstyrelsen – live-reproduktion utan datumfilter, run #1
+
+Run [#1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744) (2026-11-27) genomfördes framgångsrikt via det diagnostics-only-workflow som tillkom i PR #718. Den använde Blekinge och två separata sökfraser utan registreringsdatumfilter.
+
+| Sökfras | Källtal | Råa rader | Unika diarienummer | Dubbletter | Sidor |
+|---|---:|---:|---:|---:|---:|
+| `naturvårdsbränning` | 0 | 0 | 0 | 0 | 0 |
+| `vattenverksamhet` | 143 | 143 | 126 | 17 | 3 |
+
+`vattenverksamhet` gick via `Page$2` och `Page$3`. Överlapp: 4 diarienummer mellan sida 1–2, 12 mellan sida 1–3 och 1 mellan sida 2–3. Totalt 17 dubbla diarienummer och 17 dubbla case-ID:n. Alla tre sidor lästes och de 143 råa raderna stämdes av mot källtalet.
+
+**Tolkning:** källtalet 143 från historisk körning #142 återkommer, men inte den tidigare observerade fördelningen 135 unika/8 överlapp. Run #1 visar 126 unika/17 dubbletter. Det visar att resultatmängd eller sidöverlapp varierar mellan körningarna; det bevisar inte varför. Vanliga numeriska sidargument användes, ingen ellips eller framåtriktad `Page$1` observerades.
+
+Körningen var read-only/diagnostics-only och skrev ingen snapshot eller historik. Artefakt [#15236345745](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46079282744/artifacts/15236345745), SHA-256 `e8d373ddc11b1f742ff0cc5d2d6d78abef87148d099bad2f4f31e60c29eb80c4`.
+
+**Nästa steg:** jämför postidentiteterna i artefakten från run #1 med historiska run #142. Fastställ därefter om skillnaden 135/8 kontra 126/17 beror på förändrad källdata eller sidvisning. Framåtriktad `Page$1` förblir obevisad.
