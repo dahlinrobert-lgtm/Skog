@@ -11,7 +11,9 @@ from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
-from lansstyrelsen_pager import advance_page_index, select_next_pager_action
+from lansstyrelsen_pager import (
+    advance_page_index, select_next_pager_action, source_total_reconciled,
+)
 
 from lansstyrelsen_diary_validation import (
     has_explicit_zero_results,
