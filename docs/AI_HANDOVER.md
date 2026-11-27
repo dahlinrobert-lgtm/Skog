@@ -2484,3 +2484,12 @@ I samtliga tre län följde collectorn numeriska länkar och framåtriktade fön
 **Avgränsning:** ingen framåtriktad `Page$1`-ellips observerades. `Page$1` förekom som vanlig länk till första resultatsidan; den specialvariant som täcks av syntetiskt test är fortsatt inte liveverifierad. Inga sidöverlapp observerades och 143 råa/135 unika är fortsatt separat verifieringspunkt. Körningen skrev inga snapshots eller historikposter. Testfrasen `an` är en teknisk pagination-probe, inte en godkänd produktionssökfras.
 
 **Nästa steg:** behåll pager-`Page$1` som en avgränsad öppen live-verifieringspunkt. Undersök annan portal-/sökvariant endast om det finns konkret evidens för att den ger annat pager-DOM; upprepa inte högvolymssökningar enbart för att samla fler `Page$6/11/16`-exempel. Överlappsfallet testas separat om källan åter producerar överlapp. Källstatus, snapshotarkiv och rättighetsbedömningar ändras inte.
+
+
+## 2026-11-27 – Länsstyrelsens diagnostics stödjer två separata sökfraser
+
+[PR #715](https://github.com/dahlinrobert-lgtm/Skog/pull/715) mergades i commit `616f86f20b4005a2daa3229c9c4db36898732251`. Workflowen `.github/workflows/lansstyrelsen-national-diary-discovery.yml` har fått det valfria indatafältet `extra_search_term`. En primär och en extra fras körs som separata sökintervall per valt län och månad; detta motsvarar den befintliga collectorns söksemantik och är inte en kombinerad sökfråga. `summary.json` redovisar nu `search_terms`.
+
+Valideringen avvisar identiska fraser, fraser utanför 2–80 tecken eller med kontrolltecken samt extra fras tillsammans med `date_only`. Workflowen är fortsatt diagnostics-only med `contents: read`; den skriver inte snapshots, manifest, state eller events. Merge verifierar implementationen på `main`, men ingen runtime-körning har ännu verifierat den nya tvåfrasvägen.
+
+**Nästa konkreta steg:** kör en avgränsad live-diagnostik för Blekinge, oktober 2026, med `naturvårdsbränning` som `search_term` och `vattenverksamhet` som `extra_search_term`. Granska båda separata intervallen och pager-DOM för att se om det ursprungliga överlappsfallet kan återskapas. Bevara diagnostics-only; ingen arkiv- eller historikändring ska göras.
