@@ -11,7 +11,8 @@ class DiaryWorkflowPublicationTests(unittest.TestCase):
     def test_both_writers_use_the_same_serialized_pr_publication_branch(self):
         for workflow in (DAILY, MONTHLY):
             self.assertIn("pull-requests: write", workflow)
-            self.assertIn("group: lansstyrelsen-diary-archive", workflow)
+            self.assertIn("lansstyrelsen-diary-archive", workflow)
+            self.assertIn("lansstyrelsen-validation-", workflow)
             self.assertIn("uses: peter-evans/create-pull-request@v7", workflow)
             self.assertIn("branch: automation/lansstyrelsen-diary-history", workflow)
             self.assertIn("pull_request:", workflow)
