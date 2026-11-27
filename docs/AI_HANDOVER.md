@@ -2498,3 +2498,14 @@ Artefakt [15236172620](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46
 Körningen bekräftar att multi-term-workflowen exekverar båda fraserna separat och att båda resultaten avstäms. Den ger däremot **ingen** ny evidens om pagerövergångar, framåtriktad `Page$1` eller sidöverlapp: första frasen gav noll sidor och andra en sida utan pagerkontroller. Det historiska fallet 143 råa rader/135 unika reproducerades inte. Körningen var diagnostics-only; snapshots, manifest och historik påverkades inte. Det går inte att dra slutsatser om bredare källtäckning från dessa två begränsade intervall.
 
 **Nästa steg:** återgå inte till upprepade generella testfraser. Om det finns en dokumenterad äldre sökparameteruppsättning eller en specifik länk/period som producerade 143/135, använd exakt den för en avgränsad diagnostics-only-reproduktion. Håll pager-`Page$1` och överlapp som öppna frågor tills faktisk live-evidens finns.
+
+
+## Länsstyrelsen – obegränsad historisk diagnostik (workflow tillagt 2026-11-27)
+
+PR [#718](https://github.com/dahlinrobert-lgtm/Skog/pull/718) är mergad (merge commit `e51436e56fe1467f75c8e9c9386c456792ab3135`). Nytt workflow: [lansstyrelsen-unbounded-diagnostics.yml](../.github/workflows/lansstyrelsen-unbounded-diagnostics.yml).
+
+Workflowet är avgränsat till Länsstyrelsen i Blekinge län och söker två titeluttryck separat utan registreringsdatumfilter. Standarduttrycken är `naturvårdsbränning` och `vattenverksamhet`, samma uttryck som i den historiska körningen #142. Det återanvänder `scripts/search_lansstyrelsen_diary_browser.py` och bevarar sidövergångar, råa matchande diarienummerrader, unika poster och duplicerade diarienummer/case-ID:n.
+
+**Säkerhetsgräns:** workflowet har endast `contents: read`, skriver endast diagnostikartefakt och anropar inte snapshot-/persistensflöden. Ingen körning är ännu genomförd efter merge.
+
+**Nästa steg:** starta workflowet manuellt med standarduttrycken. Granska båda fraserna var för sig, särskilt om `vattenverksamhet` åter ger 143 råa rader och 135 unika diarienummer. Jämför pagertext, valda postback-argument och sidöverlapp med artefakten från historisk körning #142. En misslyckad eller ofullständig sökning får inte publiceras eller tolkas som borttagningar. Den särskilda framåtriktade `Page$1`-varianten förblir en separat öppen fråga om den inte faktiskt observeras live.

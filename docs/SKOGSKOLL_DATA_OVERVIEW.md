@@ -1392,3 +1392,15 @@ Summary rapporterar 2/2 förväntade intervall, 2/2 avstämda och inga intervall
 **Begränsning:** denna körning bekräftar exekvering av två fraser, inte högvolymspaginering eller den framåtriktade `Page$1`-specialvarianten. Ett intervall gav inga sidor och det andra endast en sida utan pagerkontroller. Det historiska fallet 143 råa rader/135 unika reproducerades inte. Ingen snapshot, manifestpost eller historik skrevs; källarkiv och rättighetsstatus är oförändrade.
 
 **Nästa steg:** använd endast en exakt dokumenterad äldre sökparameteruppsättning eller ett konkret intervall som tidigare producerat 143/135 för ny avgränsad diagnostik. Undvik fler generiska upprepningar som inte kan ge ny pager- eller överlappsevidens.
+
+
+## Länsstyrelsen – obegränsad historisk diagnostik
+
+PR [#718](https://github.com/dahlinrobert-lgtm/Skog/pull/718) lade till [`lansstyrelsen-unbounded-diagnostics.yml`](../.github/workflows/lansstyrelsen-unbounded-diagnostics.yml), ett manuellt diagnostics-only-workflow för Länsstyrelsen i Blekinge län.
+
+- Söker två titeluttryck separat utan registreringsdatumfilter; standard: `naturvårdsbränning` och `vattenverksamhet`.
+- Återanvänder den dagliga browser-collectorn för att få samma typ av allhistorisk sökning som den historiska körningen #142.
+- Artefakten innehåller rådiagnostik och sammanfattning med källtal, råa rader, unika diarienummer, sidantal, överlapp och pagerövergångar.
+- Workflowet har endast `contents: read` och skriver inte snapshots, manifest, state eller events.
+
+**Status 2026-11-27:** workflowet är mergat men ännu inte livekört. Historiska 143 råa rader/135 unika i Blekinge är därför fortfarande inte reproducerade av den nya diagnostikkörningen. Nästa steg är manuell körning med standarduttrycken och granskning av artefakten. Separat framåtriktad pager-`Page$1` är fortsatt obevisad live.
