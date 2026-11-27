@@ -1,15 +1,15 @@
 {
-  "observed_at": "2026-11-17T16:30:27.213548+00:00",
+  "observed_at": "2026-11-27T17:00:14.497195+00:00",
   "source": "https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13",
   "query_endpoint": "https://ext-hostedgeodata.lansstyrelsen.se/arcgis/rest/services/Hosted/Life2Taiga_v3_Extern/FeatureServer/13/query",
   "layer_name": "WP_2_Restoration_measures",
   "expected_feature_count": 339,
   "returned_feature_count": 339,
   "baseline_created": false,
-  "new_features": 1,
+  "new_features": 0,
   "updated_features": 0,
   "removed_from_source": 0,
-  "history_events_written": 1,
+  "history_events_written": 0,
   "features_without_geometry": 1,
   "geometry_warning": "Source records without polygon geometry are retained with their attributes; inspect before using the layer for spatial analysis.",
   "action_category_counts": {
