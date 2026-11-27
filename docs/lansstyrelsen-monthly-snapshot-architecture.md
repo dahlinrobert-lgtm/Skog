@@ -83,7 +83,7 @@ Både `.github/workflows/lansstyrelsen-monthly-snapshots.yml` och `.github/workf
 
 Flödena delar concurrency group `lansstyrelsen-diary-archive` och branch `automation/lansstyrelsen-diary-history` eftersom de skriver till samma append-only-arkiv. Den dagliga sökningen hämtar senaste `main`, applicerar de validerade sökresultaten på nytt, auditerar state/events och skapar/uppdaterar PR. Månadskörningen lägger till immutable snapshotfiler och manifestrader i samma PR. PR-validering kör regressionstester men hoppar över browserinsamling och persistence.
 
-Efter merge av PR #709 startade daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) automatiskt. Dess slutresultat och eventuell data-PR måste granskas innan PR-publiceringen betraktas som liveverifierad. En data-PR kräver normal granskning/merge; workflow-success i sig innebär inte att data har publicerats på `main`.
+Efter merge av PR #709 startade daglig run [#148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) automatiskt men misslyckades under källinsamlingen. 37 av 38 queryintervall lyckades; Västra Götaland / `vattenverksamhet` fick HTTP 500 vid `Page$6` efter 240 extraherade rader. Persistence och PR-skapande hoppades över, så ingen ny data-PR skapades och arkivet ändrades inte. PR-publiceringen är därför ännu inte liveverifierad. En data-PR kräver normal granskning/merge; workflow-success i sig innebär inte att data har publicerats på `main`.
 
 
 ## Högvolymstest av paginering – diagnostics-only (2026-11-27)
@@ -94,3 +94,10 @@ Efter merge av PR #709 startade daglig run [#148](https://github.com/dahlinrober
 Båda körningarna var diagnostics-only och persisterade inga resultat. De utökar inte de 36 arkiverade manifestintervallen eller arkivets två län. Testfrasen `an` är endast en teknisk pagination-probe. Paginering över 17–18 sidor har nu observerats i dessa tre län, men det verifierar inte samtliga 21 län, andra fraser, provider rate limits eller återkommande stabilitet.
 
 Projektledarens [PM-PR #106](https://github.com/dahlinrobert-lgtm/skogskoll-project-manager-history/pull/106) har registrerat resultatet; `risk_assessed=false` kvarstår.
+
+
+## Liveförsök #148 – källfel på sida 6 (2026-11-27)
+
+[Run #148](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46073390751) körde 21 län med två fraser och registrerade 38 queryintervall: 37 lyckade, ett misslyckat. Västra Götaland / `vattenverksamhet` gav HTTP 500 / Runtime Error på WebForms `Page$6` efter 240 extraherade rader. Källtotal kunde inte stämmas av. Workflowen avbröt före persistence och PR-skapande; ingen delmängd publicerades och senaste kompletta arkiv bevarades.
+
+Detta verifierar fail-closed-beteendet men inte PR-publiceringen. Providergränser är okända och ingen retry/backoff har införts. Reproduktion bör ske med en separat diagnostics-only-körning för samma län/fras.
