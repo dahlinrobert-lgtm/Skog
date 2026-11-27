@@ -31,12 +31,26 @@ on:
           - A
           - B
           - both
+  pull_request:
+    paths:
+      - "scripts/collect_lansstyrelsen_monthly_snapshot.py"
+      - "scripts/persist_lansstyrelsen_snapshots.py"
+      - "scripts/lansstyrelsen_pager.py"
+      - "scripts/test_lansstyrelsen_snapshot_extraction.py"
+      - "scripts/test_lansstyrelsen_diary_pagination.py"
+      - "scripts/test_lansstyrelsen_diary_validation.py"
+      - "scripts/test_lansstyrelsen_snapshot_persistence.py"
+      - "scripts/test_lansstyrelsen_monthly_snapshot.py"
+      - "scripts/test_lansstyrelsen_workflow_publication.py"
+      - ".github/workflows/lansstyrelsen-monthly-snapshots.yml"
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
-  group: lansstyrelsen-monthly-snapshot
+  # Shared with the daily diary workflow; both append to the same source-owned archive.
+  group: lansstyrelsen-diary-archive
   cancel-in-progress: false
 
 jobs:
@@ -46,21 +60,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.event.pull_request.head.sha || 'main' }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install Python and browser dependencies
+        if: github.event_name != 'pull_request'
         run: |
           python -m pip install playwright
           python -m playwright install --with-deps chromium
-      - name: Test snapshot, pagination and persistence rules
+      - name: Test snapshot, pagination, persistence and publication rules
         env:
           PYTHONPATH: scripts
         run: |
-          python -m unittest scripts.test_lansstyrelsen_snapshot_extraction scripts.test_lansstyrelsen_diary_pagination scripts.test_lansstyrelsen_diary_validation scripts.test_lansstyrelsen_snapshot_persistence scripts.test_lansstyrelsen_monthly_snapshot
+          python -m unittest scripts.test_lansstyrelsen_snapshot_extraction scripts.test_lansstyrelsen_diary_pagination scripts.test_lansstyrelsen_diary_validation scripts.test_lansstyrelsen_snapshot_persistence scripts.test_lansstyrelsen_monthly_snapshot scripts.test_lansstyrelsen_workflow_publication
       - name: Resolve target month
+        if: github.event_name != 'pull_request'
         id: setup
         env:
           YEAR_INPUT: ${{ inputs.year }}
@@ -78,6 +94,7 @@ jobs:
           echo "month=$MONTH_INPUT" >> "$GITHUB_OUTPUT"
           mkdir -p monthly-snapshot-runs
       - name: Collect configured county and category intervals
+        if: github.event_name != 'pull_request'
         env:
           YEAR: ${{ steps.setup.outputs.year }}
           MONTH: ${{ steps.setup.outputs.month }}
@@ -123,6 +140,7 @@ jobs:
           test "$actual" -eq "$expected"
           echo "Collected all $actual expected query intervals."
       - name: Persist each reconciled query as immutable snapshot
+        if: success() && github.event_name != 'pull_request'
         env:
           PYTHONPATH: scripts
         run: |
@@ -146,38 +164,27 @@ jobs:
               raise SystemExit("At least one query was not persisted as a complete snapshot")
           print(f"Verified {len(recent)} complete snapshot manifests")
           PY
-      - name: Publish immutable snapshots and manifests
-        if: success() && github.ref == 'refs/heads/main'
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/lansstyrelsen-diary/snapshots data/lansstyrelsen-diary/snapshot-runs.jsonl
-          if git diff --cached --quiet; then
-            echo "No new snapshot data to publish."
-            exit 0
-          fi
-          git commit -m "Archive monthly Länsstyrelsen diary snapshots"
-          # Other Skog workflows may update main while this long browser run is
-          # collecting. Rebase the local snapshot commit onto the newest main
-          # without resetting or discarding generated files.
-          for attempt in 1 2 3 4 5; do
-            git fetch origin main
-            if git rebase origin/main; then
-              if git push origin HEAD:main; then
-                exit 0
-              fi
-              git rebase --abort || true
-            else
-              git rebase --abort || true
-              exit 1
-            fi
-            sleep $((attempt * 3))
-          done
-          echo "Could not publish snapshot commit after rebasing onto latest main." >&2
-          exit 1
+      - name: Create or update monthly diary snapshot pull request
+        if: success() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: automation/lansstyrelsen-diary-history
+          delete-branch: true
+          add-paths: |
+            data/lansstyrelsen-diary/snapshots/
+            data/lansstyrelsen-diary/snapshot-runs.jsonl
+          commit-message: "Archive monthly Länsstyrelsen diary snapshots"
+          title: "data: archive monthly Länsstyrelsen diary snapshots"
+          body: |
+            Automated monthly public-diary snapshots.
+
+            - Each configured county/search-term/registration-period interval was validated and reconciled.
+            - All immutable snapshots and their append-only manifest rows are included.
+
+            Review exact county, category, registration period, pagination and counts before merging. A missing case in a query interval is not interpreted as removal. This PR does not authorize customer display, commercial reuse, or redistribution.
       - name: Upload monthly collection diagnostics
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: lansstyrelsen-monthly-snapshot-diagnostics
