@@ -1489,3 +1489,13 @@ Artefakt [15237021862](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46
 **Tolkning:** HTTP 500-felet från Västra Götaland i run #148 kunde inte reproduceras när samma sökning kördes igen. Detta är evidens för en lyckad återhämtning vid ett senare försök, men inte bevis för att felet var rent tillfälligt eller att källan är stabil över tid. Run #31 var uttryckligen `diagnostics_only_no_persistence`; inga snapshots, manifest, state eller events skrevs och rättighetsstatus ändras inte.
 
 **Nästa steg:** betrakta 500-felet som icke-reproducerat i en avgränsad omkörning, men behåll en öppen operativ risk. Ingen generell retry/backoff eller uppskalning införs utan evidens för leverantörens tekniska gränser. Vid nästa naturliga körning ska fel, län, sökparametrar, sidsteg och eventuell partiell extraktion bevaras separat. Först efter flera kompletta jämförbara återkommande körningar kan diariet omprövas för stabil återkommande drift.
+
+## Polismyndighetens officiella API – kontroll av första schemalagda körningen (2026-11-28)
+
+GitHub Actions schedule-historiken för Skog-repot granskades genom samtliga 467 tillgängliga schemalagda körningar från 2026-10-24 till 2026-11-28. Ingen körning för `.github/workflows/polisen-official-api-evaluation.yml` hittades. Däremot finns ordinarie schemalagda körningar för Brottsplatskartan-flödet `.github/workflows/police-events.yml`, senast 2026-11-27, med success. Orsaken till att den officiella workflowen inte har någon synlig körning är inte fastställd.
+
+Workflowen saknade tidigare `workflow_dispatch`. En separat PR lägger till den manuella triggern utan att ändra schemat, API-anropet eller snapshot-/uploadlogiken. Efter merge ska en manuell körning från `main` utföras och dess loggar, Azure-objekt och manifest verifieras. 30-dagarsperioden börjar först vid första lyckade, fullständigt verifierade snapshot.
+
+PM-027:s nuvarande Azure OIDC-identitet är dokumenterad med åtkomst endast till containern `project-manager`; den har inte verifierad läsbehörighet till `police-events`. Skogs befintliga OIDC-identitet har bred Storage Account-scope och delas av andra workflows; den ska inte återanvändas av projektledaren. Föreslagen lösning är en separat PM-identitet med `Storage Blob Data Reader` på endast `police-events`, federerad till PM-repot och ett särskilt GitHub Actions environment. Azure-identitet och RBAC är ännu inte konfigurerade eller live-verifierade.
+
+Ingen snapshot, manifest, historik, källpost, kundvisning eller rättighetsstatus ändrades i denna granskning.

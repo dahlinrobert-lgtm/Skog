@@ -2592,3 +2592,19 @@ Identitetsjämförelse av sidornas diarienummerlistor:
 Båda körningarna hade samma råa sidstorlekar (50/50/43), samma källtal (143) och samma vanliga numeriska pagerövergångar `Page$2` och `Page$3`. Men sidornas innehåll och överlapp skiljer sig kraftigt, särskilt sida 3. Det visar att skillnaden 135/8 mot 126/17 inte bara är ett räknefel i totalsumman. Det kan bero på att källans resultatmängd eller sorterings-/sidvisning förändrats mellan tidpunkterna; artefakterna kan inte isolera orsaken. Vi ska därför inte behandla skillnaderna som borttagningar eller historiska händelser.
 
 **Nästa steg:** om en ny insamling behövs, gör en enda avgränsad diagnostikkörning och jämför om resultatordning/siduppdelning stabiliserats. Ingen kodändring motiveras av denna jämförelse. Framåtriktad pager-`Page$1` är fortsatt obevisad. Historik, snapshots, manifest och events har inte ändrats.
+
+## Polismyndighetens officiella API – första liveverifiering blockerad av saknad workflow-run (2026-11-28)
+
+Aktuell Skog main vid granskning: `2fca09680e0a44a5877f4ff19ec5007650f521fb`. De tre obligatoriska nulägesdokumenten har lästs från main.
+
+- Den separata workflowen `.github/workflows/polisen-official-api-evaluation.yml` och capture-/uploadskripten finns i main.
+- Samtliga 467 tillgängliga schedule-runs i GitHub Actions API granskades (2026-10-24–2026-11-28). Ingen run för den officiella API-workflowen hittades. Brottsplatskartan `.github/workflows/police-events.yml` har däremot schemalagda lyckade körningar, senast 2026-11-27. Orsaken till saknad officiell run är inte fastställd.
+- Workflowen saknade `workflow_dispatch`; PR lägger till en manuell trigger utan att ändra dagligt schema, API-request eller arkiveringsbeteende.
+- Efter merge: starta en manuell körning från main. Verifiera HTTP-status/antal poster, capture-output, Azure `snapshot.json.gz` och `manifest.json`, metadata, read-back och SHA-256. Räkna inte startdatum för 30-dagarsutvärderingen förrän snapshoten och manifestet har verifierats.
+- PM-repots befintliga `project-manager-publisher`-identitet har endast dokumenterad `Storage Blob Data Contributor` på `project-manager`-containern. Den kan inte antas läsa `police-events`.
+- Skogs delade `skogskoll-github-actions`-identitet har dokumenterad Storage Account-scope med `Storage Blob Data Contributor`; återanvänd den inte i PM-repot. Föreslagen least-privilege-lösning är separat PM-OIDC-identitet med `Storage Blob Data Reader` på endast `police-events`, men Azure federation/RBAC kräver administrativ konfiguration och är ännu inte verifierad.
+- Tills både faktisk snapshot och läsbehörighet finns ska PM-027 visa officiella Polisen-snapshotfält som unknown, inte som noll eller frånvaro.
+
+Ingen snapshot, manifest, rådata, historik, alert eller kundvisning ändrades under granskningen. Kommersiella rättigheter, historisk lagring, bearbetning, kundvisning och vidare distribution förblir separata bedömningsgrindar.
+
+**Nästa konkreta steg:** merge PR med `workflow_dispatch`, kör workflowen manuellt från main och granska första Azure-manifestet. Parallellt behöver en separat PM-OIDC-läsidentitet provisioneras med container-scope till `police-events`.
