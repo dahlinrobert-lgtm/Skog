@@ -2199,7 +2199,7 @@ sources:
       commercial_use_status: conditional
       customer_display_status: pending_per_product
       last_verified: "2026-11-27"
-      next_action: "Run the 30-day parallel source evaluation with immutable daily snapshots; compare overlap, unique events, freshness, schema quality, availability and source-specific limitations before deciding whether to retain both sources."
+      next_action: "Continue the 30-day parallel source evaluation from first verified immutable snapshot 2026-11-28 (run 46134508242; 500 records, 43 Norrbotten). Target at least 25 successful daily snapshots; compare content and operational quality without merging source history."
       evidence_reference: "docs/police-source-evaluation.md; official API probe 2026-11-27; Polismyndigheten case A698.287/2026"
     notes:
       - "Endpoint: https://polisen.se/api/events; one daily request in the evaluation workflow."
