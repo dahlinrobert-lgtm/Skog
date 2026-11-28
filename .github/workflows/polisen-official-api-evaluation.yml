@@ -1,6 +1,7 @@
 name: Police official API evaluation snapshots
 
 on:
+  workflow_dispatch:
   schedule:
     # Existing Brottsplatskartan archive runs at 04:41 UTC.
     # This separate source is sampled 14 minutes later.
