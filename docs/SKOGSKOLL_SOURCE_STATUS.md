@@ -1,6 +1,6 @@
 # Skogskoll – automatisk status för datakällor
 
-**Register kontrollerat:** 2026-11-18  
+**Register kontrollerat:** 2026-11-28  
 **Underlag:** data-platform/config/sources.yml
 
 > Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
@@ -36,7 +36,7 @@
 | Trafikverket – NVDB vägnät och Lastkajen | trafikverket.nvdb.road_network_lastkajen | Delvis verifierad | Endast baslinje | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Viltdata.se – nationell avskjutningsstatistik | viltdata.kill_statistics | Verifierad | Pilot | Ej verifierad | Okänd | Ej bedömd | 2026-11-18 |
 | Länsstyrelserna – eldningsförbud i skog och mark (EXT) | lansstyrelsen.fire_ban | Ej verifierad | Inte startad | Ingen | Okänd | Ej bedömd | 2026-11-24 |
-| Polismyndigheten – officiellt API över polisens händelser | polisen.events_official_api | Verifierad | Pilot | Ej verifierad | Villkorad | Inväntar produktbedömning | 2026-11-27 |
+| Polismyndigheten – officiellt API över polisens händelser | polisen.events_official_api | Verifierad | Pilot | Ej verifierad | Villkorad | Inväntar produktbedömning | 2026-11-28 |
 
 ## Nästa åtgärd
 
