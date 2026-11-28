@@ -361,3 +361,6 @@ PR [#604](https://github.com/dahlinrobert-lgtm/Skog/pull/604) mergades 2026-11-2
 | Datum | Ändring | Underlag |
 |---|---|---|
 | 2026-11-28 | GH-17 registrerad: nationellt avverkningsarkiv i GitHub med fyra stora gzip-filer, cirka 387 MiB i aktuell trädyta. Senaste filer cirka 99,76 MiB vardera och nära GitHubs hårda 100 MiB-gräns. Azure-målbild och migreringsgrind dokumenterade; ingen flytt eller radering utförd. | PR #733; Actions #10; GitHub repository metadata; GitHub dokumentation om filstorlek |
+
+
+| 2026-11-28 | Nationellt avverkningsarkiv: dokumenterad designgranskning av fulla snapshots, befintliga feature-deltan/checkpoints, innehållsadresserad deduplicering och databasalternativ. Rekommenderar återanvändning av befintligt deltaformat och framtida Azure Blob-arkiv med små manifest/pekare efter read-only benchmark, rättighets- och RBAC-grind. Ingen lagringsplats, container, identitet eller data har ändrats. | Branch `docs/national-harvest-delta-storage-design`; `docs/NATIONAL_HARVEST_ARCHIVE_STORAGE_DESIGN.md` |
