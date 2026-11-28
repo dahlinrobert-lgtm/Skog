@@ -2674,3 +2674,10 @@ Uploaderkoden laddar ned blobben inom samma körning, gzip-dekomprimerar och ver
 - Befintlig Azure-identitet `skogskoll-github-actions` har enligt lagringsinventeringen bred Storage Account-scope och delas av andra workflows. Återanvänd eller ändra inte dess RBAC utan separat konsekvensanalys. Teknisk lagring är dessutom en separat rättighetsfråga; kommersiell användning, historisk lagring och kundvisning är inte godkända genom denna körning.
 
 **Nästa konkreta steg:** utforma separat PR för Azure Blob-arkivering av nationella avverkningsanmälningar. Krav: separat/avgränsad behörighet, immutable daterade snapshots, liten aktuell pekare/manifest i GitHub, SHA-256 och byte count, readback-audit samt restore-test. Bevara befintliga Git-snapshots och historik; skriv inte om Git-historiken. Stoppa inte befintlig Git-publicering förrän Azure-flödet är verifierat end-to-end och en kontrollerad övergång är godkänd.
+
+
+## Nationellt avverkningsarkiv – delta-/Azure-design (2026-11-28)
+
+PR #734 är mergad. En efterföljande designgranskning finns i [NATIONAL_HARVEST_ARCHIVE_STORAGE_DESIGN.md](NATIONAL_HARVEST_ARCHIVE_STORAGE_DESIGN.md). Viktig upptäckt: `scripts/monitor_national.py` har redan feature-delta, återspelning och 30-dagars full checkpoint. Rekommendationen är att återanvända detta format och flytta framtida råpayloads till Azure Blob efter read-only benchmark, rättighetsbedömning och separat least-privilege-behörighet. Den stora `latest.json.gz`-kopian bör på sikt ersättas av en liten manifestpekare, men endast efter konsumentinventering och verifierad restore. Inga kod-/workflow-/Azure-/RBAC- eller datalagringsändringar har gjorts i denna design-PR.
+
+**Nästa steg:** Fas 1 read-only: benchmarka faktiska full-/deltafiler, granska rekonstruktionskedjan och verifiera konsumenter av `latest.json.gz`. Behåll Git-publiceringen och alla historiska filer oförändrade.
