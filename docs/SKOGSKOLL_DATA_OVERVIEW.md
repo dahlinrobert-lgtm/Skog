@@ -1532,7 +1532,7 @@ Körning [#7](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46143160009
 
 Det enskilda bortfallet är inte bevis för avregistrering, borttagning eller avverkning. Ingen ofullständig snapshot ska publiceras och historiska objekt ska inte tas bort på denna grund.
 
-Uppföljningsändringen på branch `fix/national-harvest-missing-id-diagnostics` gör upp till tre individuella försök per saknat ID och sparar försök/status/senaste felorsak i kördiagnostiken. Om ett ID fortfarande inte kan hämtas avbryts hela snapshoten fortsatt före skrivning. Ändringen fyller inte luckan med data från föregående snapshot. Enhetsfallen täcker både återhämtning och fortsatt olöst ID. Orsaken hos källsystemet är ännu okänd; ändringen ska först granskas och CI-verifieras innan ny skarp körning.
+Uppföljningsändringen på branch `fix/national-harvest-missing-id-diagnostics` gör upp till tre individuella försök per saknat ID och sparar försök/status/senaste felorsak i kördiagnostiken. Om ett ID fortfarande inte kan hämtas avbryts hela snapshoten fortsatt före skrivning. Ändringen fyller inte luckan med data från föregående snapshot. Enhetsfallen täcker både återhämtning och fortsatt olöst ID. Orsaken hos källsystemet är ännu okänd. PR #731 är mergad och CI samt första nationella körningen efter merge verifierades i Actions #10; se avsnittet nedan för resultat och lagringsbedömning.
 
 
 ## Nationella avverkningsanmälningar – första kompletta snapshot och lagringsgranskning (2026-11-28)
