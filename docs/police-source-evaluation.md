@@ -129,3 +129,19 @@ The PM repository's existing `project-manager-publisher` identity is documented 
 Preferred design for PM-027 is a separate Entra service principal/federated credential restricted to the PM repository and a dedicated GitHub Actions environment, with `Storage Blob Data Reader` scoped only to container `police-events`. This is a required Azure administrator setup and live authorization check, not yet configured or verified. Until then, PM-027 must leave the official Police API's snapshot evidence as unknown rather than infer that no snapshots exist.
 
 No source data, snapshot, manifest, history, customer view, alert, or rights status was changed by this investigation.
+
+## Polismyndighetens officiella API – första verifierade snapshot (2026-11-28)
+
+Den manuella körningen [Police official API evaluation snapshots #1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46134508242) genomfördes från `main` efter merge av [PR #725](https://github.com/dahlinrobert-lgtm/Skog/pull/725). Workflow-run ID: `46134508242`; commit: `0c0f2f4a9c235a91b69dd252a5e5464428b160b2`; event: `workflow_dispatch`; status `completed/success`.
+
+Capture-steget rapporterade `status=complete`, **500 poster**, varav **43 Norrbottenposter** (`location.name=Norrbottens län`), hämtade `2026-11-28T10:18:33.505969+00:00`. Azure OIDC-inloggningen lyckades. Uploaderloggen rapporterade:
+- blob: `polisen-official/runs/46134508242/attempt-1/snapshot.json.gz`
+- råstorlek: `179666` bytes
+- rå SHA-256: `b1dbd8e467d9987115d493034f0d264ab4d9887664c658ebf32a583c4412498a`
+- `snapshot_verified=true`, 500 poster och 43 Norrbottenposter.
+
+Verifieringsgräns: uploaderkoden laddar ned den komprimerade blobben i samma jobb, gzip-dekomprimerar och jämför rå byte count samt SHA-256 innan den skapar `manifest.json`. Jobbloggen visar därefter `snapshot_verified=true`, och hela steget avslutades success. Manifestobjektets exakta JSON-innehåll och Azure-systemmetadata har däremot inte lästs separat i denna granskning, eftersom aktuell ansluten GitHub-/SharePoint-integration inte erbjuder Azure Blob-läsning. Detta ska inte beskrivas som en oberoende Azure-manifestinspektion.
+
+**Utvärderingsstart:** första lyckade, kompletta och uploader-verifierade snapshot är 2026-11-28. 30 kalenderdagarsperioden räknas från denna snapshot; målet är minst 25 lyckade dagliga snapshots. Denna första snapshot är baslinje och ska inte skapa retroaktiva händelser eller kundlarm. Nästa dags snapshot behövs för att börja bedöma kontinuitet och förändringar.
+
+Ingen sammanfogning med Brottsplatskartan-historiken görs. API:ets 500 aktuella poster är ett begränsat publicerat urval, inte ett komplett historiskt polisregister. Koordinater behandlas inte som exakta händelsepositioner. Kommersiell användning, historisk lagring, bearbetning, kundvisning och vidare distribution förblir separata rättighetsgrindar.
