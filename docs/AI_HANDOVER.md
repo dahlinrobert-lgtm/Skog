@@ -2648,3 +2648,16 @@ Uploaderkoden laddar ned blobben inom samma körning, gzip-dekomprimerar och ver
 - Verifierat efter merge: ändringarna finns i `main`; ingen nationell insamling startades av PR-körningen. Faktisk nationell datainsamling, senaste arkivmanifest och schemalagd drift efter ändringen är fortfarande inte verifierade.
 
 **Nästa steg:** invänta uttryckligt godkännande innan en manuell nationell insamling startas. Vid godkännande: granska fullständighetsdiagnostiken och data-PR:n utan att tolka instabil inventering som borttagningar. Verifiera därefter nästa schemalagda körning separat.
+
+
+## Nationell avverkningsinsamling – diagnostik för saknat enskilt ID (2026-11-28)
+
+- Första körningen efter merge av PR #729: [workflow run #7](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46143160009) (`46143160009`) på commit `36b1abf62dea09106d8bca13c6e0a528df13d121`.
+- Testjobbet avslutades `success`. Arkivjobbet misslyckades i steget `Fetch all planned notifications nationwide` efter att 133 467 av 133 468 inventerade ID:n hämtats. Ett ID saknades även efter den dåvarande riktade retry. Data-PR-steget kördes inte.
+- Loggens fel: `Incomplete nationwide result: 133467/133468 IDs fetched; 1 IDs were still missing after retry. Last known-good data preserved.`
+- Det betyder inte att objektet har avregistrerats, avverkats eller att det ska tas bort ur historiken. Insamlaren stoppade före skrivning; senaste kända kompletta data bevarades.
+- Ny uppföljningsändring på branch `fix/national-harvest-missing-id-diagnostics`: riktade omförsök per enskilt saknat ID, med begränsade försök, diagnostik per ID och felmeddelande som anger ID samt senaste felorsak. Fortfarande fail-closed: inget snapshot/arkiv skrivs om något ID kvarstår olöst och ingen gammal feature fylls in i aktuell körning.
+- Testfall tillagda för att en saknad feature återhämtas vid individuellt återförsök och för att olöst ID rapporteras med identifierare/felorsak.
+- Ändringen är ännu inte mergad eller körd mot Skogsstyrelsens tjänst. Källorsak till det tidigare enskilda bortfallet är därför inte fastställd.
+
+**Nästa steg:** granska och köra CI för PR med enhetsfallen. Efter merge, gör en ny kontrollerad manuell insamling; granska fullständighetsdiagnostik och data-PR innan någon arkivuppdatering accepteras.
