@@ -348,3 +348,16 @@ PR [#604](https://github.com/dahlinrobert-lgtm/Skog/pull/604) mergades 2026-11-2
 - Regressionstesterna kontrollerar att absoluta testvägar/datornamn inte förekommer i rapporterna, att komplett jämförelse upptäcker tillagda filer och att scope-/åtkomstfel undertrycker diffen.
 
 **Lokal status:** schema 2.1 är ännu inte installerat/verifierat på användarens Windows-dator. Före lokal uppdatering ska befintligt skript och hela faktiska rapportkatalogen säkerhetskopieras separat. Rapportkatalogens verkliga sökväg måste först fastställas; tidigare backupinstruktion får inte antas ha kopierat rapporterna korrekt. Ändra inte Task Scheduler och aktivera inte `-HashFiles`.
+
+
+## Nationellt avverkningsarkiv – lagringsinventering (2026-11-28)
+
+| ID | Innehåll | Plattform | Plats | Status | Kommentar |
+|---|---|---|---|---|---|
+| GH-17 | Skogsstyrelsen – nationella avverkningsanmälningar | GitHub | `dahlinrobert-lgtm/Skog/data/national/` | Bekräftad, storleksrisk | Efter PR #733 finns `latest.json.gz` (104 609 986 byte) och daterade snapshots 20261024 (99 824 572 byte), 20261101 (96 754 321 byte) och 20261128 (104 609 996 byte). Nuvarande filer omfattar cirka 387 MiB. GitHub varnade för filer över 50 MiB; båda senaste filerna ligger cirka 242 KiB under hård gräns 100 MiB. GitHub API rapporterade repo-storlek 671 115 KB vid inventeringen. Git-historiken kan innehålla ytterligare versioner av den ändrade latest-filen. Azure-arkiv för denna källa är inte etablerat/verifierat. |
+
+**Bedömning och åtgärd:** GH-17 är en befintlig lagringsplats som behöver migreringsplan, inte en plats som ska raderas omedelbart. Målbilden i avsnitt 1 är Azure Blob Storage för stora/historiska snapshots och GitHub för kod samt små manifest/pekare. Före flytt ska en särskild container och minsta nödvändiga RBAC verifieras, därefter immutable upload, SHA-256/byte count, readback-audit och restore-test genomföras. Den befintliga gemensamma identiteten `skogskoll-github-actions` har bred Storage Account-scope och ska inte återanvändas/ändras utan separat konsekvensanalys. Behåll alla befintliga Git-filer och historik tills Azure-arkivet är verifierat och övergången godkänd. Rättigheter till historisk lagring och kundvisning är separata bedömningar.
+
+| Datum | Ändring | Underlag |
+|---|---|---|
+| 2026-11-28 | GH-17 registrerad: nationellt avverkningsarkiv i GitHub med fyra stora gzip-filer, cirka 387 MiB i aktuell trädyta. Senaste filer cirka 99,76 MiB vardera och nära GitHubs hårda 100 MiB-gräns. Azure-målbild och migreringsgrind dokumenterade; ingen flytt eller radering utförd. | PR #733; Actions #10; GitHub repository metadata; GitHub dokumentation om filstorlek |
