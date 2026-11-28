@@ -1,4 +1,4 @@
-name: Gräsmyr monitoring
+name: Regional forest-change monitoring validation
 on:
   workflow_dispatch:
   push:
@@ -14,7 +14,7 @@ permissions:
   contents: write
   pull-requests: write
 concurrency:
-  group: grasmyr-monitor-${{ github.ref }}
+  group: regional-forest-change-monitoring-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   monitor:
@@ -43,7 +43,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automation/grasmyr-monitor-snapshot
+          branch: automation/regional-forest-change-monitoring-snapshot
           delete-branch: true
           add-paths: |
             data/latest.json
@@ -56,9 +56,10 @@ jobs:
             data/harvest_event_bundle.json
             docs/data/harvest_event_bundle.json
             data/snapshots
-          commit-message: "Update Gräsmyr monitoring snapshot"
-          title: "data: update Gräsmyr monitoring snapshot"
+          commit-message: "Update regional forest-change monitoring snapshot"
+          title: "data: update regional forest-change monitoring snapshot"
           body: |
-            Automated Gräsmyr monitoring output.
+            Automated regional forest-change monitoring output.
+            Current validation geography: Gräsmyr 10 km scope.
             Review snapshot changes and historical event updates before merging.
           labels: automated, data

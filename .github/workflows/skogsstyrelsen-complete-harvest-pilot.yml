@@ -1,4 +1,4 @@
-name: Skogsstyrelsen complete planned-harvest pilot snapshot
+name: Harvest notification completeness validation
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: skogsstyrelsen-complete-harvest-pilot
+  group: harvest-notification-completeness-validation
   cancel-in-progress: false
 
 jobs:
@@ -29,14 +29,14 @@ jobs:
         run: python -m pip install requests
       - name: Test complete-scan safeguards
         run: python -m unittest tests.test_snapshot_harvest_notifications_pilot -v
-      - name: Collect complete Gräsmyr 10 km pilot snapshot
+      - name: Capture complete snapshot for completeness validation
         if: github.event_name == 'workflow_dispatch'
         run: python scripts/snapshot_harvest_notifications_pilot.py
       - name: Upload snapshot report
         if: always() && github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
-          name: skogsstyrelsen-complete-harvest-pilot-${{ github.run_id }}
+          name: harvest-notification-completeness-validation-${{ github.run_id }}
           path: data/skogsstyrelsen/harvest_notifications/grasmyr/
           if-no-files-found: warn
           retention-days: 90
@@ -45,15 +45,15 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ github.token }}
-          branch: automation/skogsstyrelsen-complete-harvest-pilot
+          branch: automation/harvest-notification-completeness-validation
           delete-branch: true
           add-paths: |
             data/skogsstyrelsen/harvest_notifications/grasmyr/
-          commit-message: "Archive complete Gräsmyr planned-harvest snapshot"
-          title: "data: archive complete Gräsmyr planned-harvest snapshot"
+          commit-message: "Archive harvest-notification completeness snapshot"
+          title: "data: archive harvest-notification completeness snapshot"
           body: |
-            Complete read-only snapshot for the existing Gräsmyr 10 km pilot scope.
-            Review the manifest, count reconciliation, stable ID inventory and SHA-256
-            before merge. No alerts or customer database writes are performed.
-            A failed/partial scan does not write a latest manifest and must never
-            be interpreted as removals.
+            Complete read-only snapshot for completeness and comparability validation before wider scaling.
+            Geographic test scope: Gräsmyr, 10 km radius. This is a bounded validation area,
+            not national coverage. Review the manifest, count reconciliation, stable ID inventory
+            and SHA-256 before merge. No alerts or customer database writes are performed.
+            A failed/partial scan does not write a latest manifest and must never be interpreted as removals.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a complete, read-only Gräsmyr pilot snapshot of planned harvest notices.
+"""Create a complete read-only harvest-notification snapshot for completeness validation.
 
 This is deliberately separate from the existing bounded source probe and does not
 write to customer databases, generate alerts, or classify missing records.
@@ -140,7 +140,7 @@ def fetch_complete_features(session: requests.Session, oid_field: str, object_id
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
-    session.headers["User-Agent"] = "Skogskoll-complete-harvest-pilot/1.0"
+    session.headers["User-Agent"] = "Skogskoll-Harvest-Completeness-Validation/1.0"
 
     layer = request_json(session, SERVICE, {"f": "pjson"})
     oid_field = layer.get("objectIdField") or next(
@@ -216,7 +216,7 @@ def main() -> None:
         "snapshot_bytes_uncompressed": len(raw),
         "snapshot_sha256": digest,
         "status": "success",
-        "mode": "read-only pilot archive; no alerts; no customer database writes",
+        "mode": "read-only completeness-validation archive for a bounded geographic test scope; no alerts; no customer database writes",
     }
     latest_path = OUT_DIR / "latest.json"
     atomic_write_text(latest_path, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
