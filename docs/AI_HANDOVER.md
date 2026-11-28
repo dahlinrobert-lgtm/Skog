@@ -2661,3 +2661,16 @@ Uploaderkoden laddar ned blobben inom samma körning, gzip-dekomprimerar och ver
 - Ändringen är ännu inte mergad eller körd mot Skogsstyrelsens tjänst. Källorsak till det tidigare enskilda bortfallet är därför inte fastställd.
 
 **Nästa steg:** granska och köra CI för PR med enhetsfallen. Efter merge, gör en ny kontrollerad manuell insamling; granska fullständighetsdiagnostik och data-PR innan någon arkivuppdatering accepteras.
+
+
+## Nationell avverkningsinsamling – första kompletta snapshot och lagringsgranskning (2026-11-28)
+
+- PR [#731](https://github.com/dahlinrobert-lgtm/Skog/pull/731) är mergad. Därefter kördes [Nationwide planned harvest archive #10](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46144482820) från merge-commit `be359c39a36afa9245c49f58bad99914864a0a38`; både test- och arkivjobbet avslutades `success`.
+- Källdiagnostiken: 133 468/133 468 ID:n hämtade, två identiska ID-inventeringar, 0 saknade, 0 dubbletter och 0 oväntade ID:n. Inga individuella ID-retries behövdes. Körningen rapporterade `inventory_stable=true`.
+- Körningen skapade en full snapshot `data/national/snapshots/20261128T124344Z.json.gz` (104 609 996 byte) och uppdaterade `data/national/latest.json.gz` (104 609 986 byte). Arkivdiagnostiken rapporterade 133 468 added, 0 updated och 0 removed. Data-PR [#733](https://github.com/dahlinrobert-lgtm/Skog/pull/733) mergades 2026-11-28 12:57:31 UTC med merge commit `24d1cdf17e7cc523dff3d4241a56a251ceb808b2`.
+- Fullständighetskontrollen och workflow-resultatet är verifierade. Gzip-binärernas interna innehåll/hash och en separat restore har inte oberoende verifierats efter merge; diffverktyget kan inte visa binärdiffen.
+- **Lagringsrisk:** de två aktuella filerna är cirka 99,76 MiB vardera. GitHub varnar över 50 MiB och blockerar filer över 100 MiB; filerna ligger bara cirka 242 KiB under den hårda gränsen. GitHub API rapporterade repo-storlek 671 115 KB vid granskningen. Nuvarande `data/national/` innehåller fyra stora gzip-filer om totalt cirka 387 MiB (latest plus tre daterade snapshots). Varje uppdatering av `latest.json.gz` lägger ytterligare binärhistorik i Git.
+- `docs/STORAGE_INVENTORY.md` anger redan GitHub för kod/dokumentation/små manifest och Azure Blob Storage för stora/historiska snapshots. Den nationella avverkningsinsamlingen använder ännu Git som dataarkiv; ingen Azure-container, avgränsad identitet, upload, readback eller restore är verifierad för denna källa.
+- Befintlig Azure-identitet `skogskoll-github-actions` har enligt lagringsinventeringen bred Storage Account-scope och delas av andra workflows. Återanvänd eller ändra inte dess RBAC utan separat konsekvensanalys. Teknisk lagring är dessutom en separat rättighetsfråga; kommersiell användning, historisk lagring och kundvisning är inte godkända genom denna körning.
+
+**Nästa konkreta steg:** utforma separat PR för Azure Blob-arkivering av nationella avverkningsanmälningar. Krav: separat/avgränsad behörighet, immutable daterade snapshots, liten aktuell pekare/manifest i GitHub, SHA-256 och byte count, readback-audit samt restore-test. Bevara befintliga Git-snapshots och historik; skriv inte om Git-historiken. Stoppa inte befintlig Git-publicering förrän Azure-flödet är verifierat end-to-end och en kontrollerad övergång är godkänd.
