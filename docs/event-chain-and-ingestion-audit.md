@@ -30,7 +30,7 @@ Varje steg ska gå att granska i efterhand. Originaluppgifter ska bevaras och Sk
 
 ## 2. Vad som faktiskt finns i repot
 
-### 2.1 Gräsmyrflödet
+### 2.1 Regionalt verifieringsflöde för avverkningsbevakning
 
 Workflow `.github/workflows/monitor.yml` körs schemalagt dagligen (05:17 UTC) och kör i ordning:
 
@@ -61,7 +61,7 @@ Workflow `.github/workflows/national-monitor.yml` körs den 1:a och 16:e varje m
 - sparar ett nationellt aktuellt uttag samt fullständiga snapshots/deltan,
 - sparar räknare och insamlingsdiagnostik.
 
-Detta är en viktig nationell historikbas, men den körs inte i samma frekvens som Gräsmyrflödet. I nuläget finns ingen motsvarande nationell, samordnad kedja i de granskade filerna för utförda avverkningar, satellitindikationer, samråd och andra åtgärder.
+Detta är en viktig nationell historikbas, men den körs inte i samma frekvens som det regionala verifieringsflödet. I nuläget finns ingen motsvarande nationell, samordnad kedja i de granskade filerna för utförda avverkningar, satellitindikationer, samråd och andra åtgärder.
 
 ### 2.3 Historik och analys
 
@@ -267,7 +267,7 @@ En möjlig kedja för samma område:
 
 ### P0 – stabilisera och exponera befintlig historik
 
-1. Behåll Gräsmyrs dagliga pipeline och nationella anmälningsarkiv separat tills deras scope och kvalitet är tydliga.
+1. Behåll det regionala verifieringsflödet och det nationella anmälningsarkivet separat tills deras scope och kvalitet är tydliga.
 2. Standardisera manifest för varje körning: source_id, scope_hash, tider, status, antal, checksumma och fel.
 3. Gör snapshots och källobservationer till sanningskälla; bygg händelser som reproducerbara derivat.
 4. Gör det möjligt att återskapa samma händelselogg från samma snapshots och samma regelversion.
@@ -328,7 +328,7 @@ Skapa scheman för `source_run`, `source_observation`, `canonical_event`, `event
 ### Leverans 2 – avverkningskedjan som första vertikala pilot
 Återanvänd nuvarande snapshots och analys:
 - nationella anmälningsposter som källobservationer,
-- Gräsmyrs utförda polygoner och satellitförändringar som separata observationstyper,
+- Utförda-avverkning-polygoner och satellitförändringar inom det regionala verifieringsområdet som separata observationstyper,
 - historikens ändringar/återkomster som livscykelhändelser,
 - befintlig rumslig analys som kandidatgenerator för relationer.
 
@@ -362,7 +362,7 @@ Följande finns nu i repot:
 - Varje händelse har primärt källbelägg, original-ID, snapshotreferens, geometrireferens, källstatus, registreringsdatum och observationstider.
 - Händelsetexten säger uttryckligen att en registrerad anmälan inte är belägg för utförd avverkning.
 - Byggaren validerar paketet mot det gemensamma JSON-schemat innan det skrivs.
-- Gräsmyrs ordinarie workflow kör byggaren efter historik och analys och committar `data/harvest_event_bundle.json`.
+- Det regionala verifieringsworkflowet kör byggaren efter historik och analys och committar `data/harvest_event_bundle.json`.
 - CI testar både schemat och byggaren.
 
 Detta är första vertikala snittet, inte den färdiga flerkälliga kedjan. Det producerar ännu ingen länk mellan anmälan och en oberoende registrerad utförd åtgärd.
