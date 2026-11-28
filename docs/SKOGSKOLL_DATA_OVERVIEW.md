@@ -1515,3 +1515,12 @@ Verifieringsgräns: uploaderkoden laddar ned den komprimerade blobben i samma jo
 **Utvärderingsstart:** första lyckade, kompletta och uploader-verifierade snapshot är 2026-11-28. 30 kalenderdagarsperioden räknas från denna snapshot; målet är minst 25 lyckade dagliga snapshots. Denna första snapshot är baslinje och ska inte skapa retroaktiva händelser eller kundlarm. Nästa dags snapshot behövs för att börja bedöma kontinuitet och förändringar.
 
 Ingen sammanfogning med Brottsplatskartan-historiken görs. API:ets 500 aktuella poster är ett begränsat publicerat urval, inte ett komplett historiskt polisregister. Koordinater behandlas inte som exakta händelsepositioner. Kommersiell användning, historisk lagring, bearbetning, kundvisning och vidare distribution förblir separata rättighetsgrindar.
+
+
+## Nationell avverkningsinsamling – stabilitet vid skanning (2026-11-28)
+
+Den nationella insamlaren `scripts/monitor_national.py` har kompletterats med en andra oberoende ArcGIS `returnIdsOnly`-inventering efter att samtliga feature-batcher har hämtats. Den första och andra ID-mängden måste vara identiska. En förändring under skanningen, dubbletter i ID-inventeringen, dubbla feature-ID:n eller oväntade feature-ID:n gör att körningen avbryts innan `latest.json.gz` eller en daterad snapshot skrivs. Den befintliga kontrollen av saknade ID:n och riktade retry behålls.
+
+Testerna utökas för batchning över 250 poster, stabil andra inventering, förändrad inventering, dubbletter och oväntade ID:n. Workflowen kör testjobbet vid pull request men kör inte nationell insamling i PR-event. Vid schemalagd eller manuell körning skapas en data-PR för ändrade arkivfiler i stället för direkt push till `main`. Befintligt schema (1:a och 16:e varje månad kl. 05:47 UTC), snapshotformat, arkivvägar och full-/deltaformat behålls.
+
+Detta är en skyddsåtgärd mot att en rörlig källinventering publiceras som en skenbart komplett snapshot. En skillnad mellan två ID-inventeringar bevisar inte att objekt har avregistrerats eller avverkats och ska inte skapa borttagningshändelser eller larm. Ändringen startar ingen insamling och ändrar inte rättighets- eller kundvisningsstatus. Test- och workflowresultat måste granskas från PR-körningen innan implementationen betraktas som verifierad.
