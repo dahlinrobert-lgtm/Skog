@@ -1548,3 +1548,10 @@ Körningen skapade full snapshot `data/national/snapshots/20261128T124344Z.json.
 Befintliga Git-snapshots och historik ska bevaras. Ingen historikomskrivning eller borttagning görs. Befintlig Git-publicering ska inte stängas av förrän Azure-flödet är verifierat end-to-end och övergången är godkänd. Gzip-binärernas interna innehåll/hash och restore har inte oberoende verifierats efter PR #733.
 
 **Nästa steg:** utveckla en separat, avgränsad Azure-arkiveringslösning med immutable snapshots, SHA-256/byte count, readback-audit och restore-test. Ingen kundavisering eller ändrad källrättighetsstatus följer av denna snapshot.
+
+
+## Nationellt avverkningsarkiv – deltaformat och lagringsdesign (2026-11-28)
+
+Den nationella insamlaren har redan feature-baserad deltafunktion (`added`, `updated`, `removed`), geometriutelämning när geometri är oförändrad, deltaåterspelning och full checkpoint minst var 30:e dag. Detta ska återanvändas, inte ersättas av en parallell snapshotmotor. Se [NATIONAL_HARVEST_ARCHIVE_STORAGE_DESIGN.md](NATIONAL_HARVEST_ARCHIVE_STORAGE_DESIGN.md) för jämförelse av fulla snapshots, delta/checkpoints, innehållsadresserad deduplicering och databasbaserad historik.
+
+Rekommenderad målbild är Azure Blob för oföränderliga full-/delta-payloads och små manifest, GitHub för kod och en liten aktuell pekare. `latest.json.gz` är i nuläget en redundant fullständig kopia som skrivs om; ersättning med liten pekare kräver först verifiering av alla konsumenter och en byte-/hash-verifierad återställningsväg. Faktiska delta-storlekar, återställning från nuvarande binärarkiv, Azure-resurser/RBAC och rätt till permanent historisk lagring är ännu inte verifierade. Ingen implementation eller migrering aktiveras genom denna designgranskning.
