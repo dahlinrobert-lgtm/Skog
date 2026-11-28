@@ -2658,9 +2658,9 @@ Uploaderkoden laddar ned blobben inom samma körning, gzip-dekomprimerar och ver
 - Det betyder inte att objektet har avregistrerats, avverkats eller att det ska tas bort ur historiken. Insamlaren stoppade före skrivning; senaste kända kompletta data bevarades.
 - Ny uppföljningsändring på branch `fix/national-harvest-missing-id-diagnostics`: riktade omförsök per enskilt saknat ID, med begränsade försök, diagnostik per ID och felmeddelande som anger ID samt senaste felorsak. Fortfarande fail-closed: inget snapshot/arkiv skrivs om något ID kvarstår olöst och ingen gammal feature fylls in i aktuell körning.
 - Testfall tillagda för att en saknad feature återhämtas vid individuellt återförsök och för att olöst ID rapporteras med identifierare/felorsak.
-- Ändringen är ännu inte mergad eller körd mot Skogsstyrelsens tjänst. Källorsak till det tidigare enskilda bortfallet är därför inte fastställd.
+- PR #731 är mergad till `main` (merge commit `be359c39a36afa9245c49f58bad99914864a0a38`). Första nationella körningen efter merge, Actions #10, hämtade 133 468/133 468 ID:n med stabil dubbelinventering och 0 saknade ID:n. Källorsaken till det tidigare enskilda bortfallet är fortfarande inte fastställd.
 
-**Nästa steg:** granska och köra CI för PR med enhetsfallen. Efter merge, gör en ny kontrollerad manuell insamling; granska fullständighetsdiagnostik och data-PR innan någon arkivuppdatering accepteras.
+**Nästa steg:** följ upp nästa jämförbara nationella körning och prioritera separat Azure-arkivering enligt lagringsgranskningen nedan. Behåll fullständighetsgrindarna och granska varje data-PR före merge.
 
 
 ## Nationell avverkningsinsamling – första kompletta snapshot och lagringsgranskning (2026-11-28)
