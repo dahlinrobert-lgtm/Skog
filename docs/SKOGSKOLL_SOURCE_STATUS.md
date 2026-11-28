@@ -1,6 +1,6 @@
 # Skogskoll – automatisk status för datakällor
 
-**Register kontrollerat:** 2026-11-18  
+**Register kontrollerat:** 2026-11-28  
 **Underlag:** data-platform/config/sources.yml
 
 > Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
@@ -36,7 +36,7 @@
 | Trafikverket – NVDB vägnät och Lastkajen | trafikverket.nvdb.road_network_lastkajen | Delvis verifierad | Endast baslinje | Ej verifierad | Villkorad per produkt | Inväntar produktbedömning | 2026-11-14 |
 | Viltdata.se – nationell avskjutningsstatistik | viltdata.kill_statistics | Verifierad | Pilot | Ej verifierad | Okänd | Ej bedömd | 2026-11-18 |
 | Länsstyrelserna – eldningsförbud i skog och mark (EXT) | lansstyrelsen.fire_ban | Ej verifierad | Inte startad | Ingen | Okänd | Ej bedömd | 2026-11-24 |
-| Polismyndigheten – officiellt API över polisens händelser | polisen.events_official_api | Verifierad | Pilot | Ej verifierad | Villkorad | Inväntar produktbedömning | 2026-11-27 |
+| Polismyndigheten – officiellt API över polisens händelser | polisen.events_official_api | Verifierad | Pilot | Ej verifierad | Villkorad | Inväntar produktbedömning | 2026-11-28 |
 
 ## Nästa åtgärd
 
@@ -55,7 +55,7 @@
 - **Trafikverket – NVDB vägnät och Lastkajen:** Dokumentera vilken NVDB-produktversion som finns lokalt, kontrollera Lastkajens beställnings- och licensvillkor och bygg ett versionsstyrt uppdateringsflöde innan vägnätsförändringar används i kundhistorik.
 - **Viltdata.se – nationell avskjutningsstatistik:** Fortsätt manuella kompletta snapshots med tidsbegränsad GitHub Actions-artifact. Invänta skriftligt besked om historisk lagring/arkivering av exakt avskjutningsstatistikprodukt och avsedda användningar. Azure-region är verifierad som swedencentral; GitHub OIDC-identiteten har Storage Blob Data Contributor på Storage Account-scope. Efter dokumenterat rättighetsbesked: besluta om arkivering och eventuell separat least-privilege-identitet, kör därefter upload, audit och restore live. Ingen schemaläggning eller kundvisning före separat bedömning.
 - **Länsstyrelserna – eldningsförbud i skog och mark (EXT):** Kör den manuella metadata-only-inspektionen, verifiera lager, fält, täckning, objektidentitet och tjänstegränser. Planera separat beslut om första baslinje och schemaläggning tidigast 2027-01-24.
-- **Polismyndigheten – officiellt API över polisens händelser:** Run the 30-day parallel source evaluation with immutable daily snapshots; compare overlap, unique events, freshness, schema quality, availability and source-specific limitations before deciding whether to retain both sources.
+- **Polismyndigheten – officiellt API över polisens händelser:** Första kompletta snapshot verifierad 2026-11-28 (500 poster, 43 Norrbotten; run 46134508242). Fortsätt 30-dagarsutvärderingen från 2026-11-28 med minst 25 lyckade dagliga snapshots som mål. Jämför överlapp, unika händelser, aktualitet, schema, tillgänglighet och källbegränsningar. Första snapshoten är en tyst baslinje utan historiska larm.
 
 ## Tolkning och begränsningar
 

@@ -2608,3 +2608,15 @@ Aktuell Skog main vid granskning: `2fca09680e0a44a5877f4ff19ec5007650f521fb`. De
 Ingen snapshot, manifest, rådata, historik, alert eller kundvisning ändrades under granskningen. Kommersiella rättigheter, historisk lagring, bearbetning, kundvisning och vidare distribution förblir separata bedömningsgrindar.
 
 **Nästa konkreta steg:** merge PR med `workflow_dispatch`, kör workflowen manuellt från main och granska första Azure-manifestet. Parallellt behöver en separat PM-OIDC-läsidentitet provisioneras med container-scope till `police-events`.
+
+## Polismyndighetens officiella API – första verifierade snapshot #1 (2026-11-28)
+
+[Workflow run #1](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46134508242) kördes manuellt från main efter merge av PR #725. Run ID `46134508242`, commit `0c0f2f4a9c235a91b69dd252a5e5464428b160b2`, `workflow_dispatch`, `completed/success`.
+
+Capture-steget rapporterade `status=complete`, 500 poster och 43 Norrbottenposter. Hämtningstid: `2026-11-28T10:18:33.505969+00:00`. Azure OIDC-login lyckades. Uploaderloggen rapporterade blob `polisen-official/runs/46134508242/attempt-1/snapshot.json.gz`, 179 666 råbytes och rå SHA-256 `b1dbd8e467d9987115d493034f0d264ab4d9887664c658ebf32a583c4412498a`, följt av `snapshot_verified=true`.
+
+Uploaderkoden laddar ned blobben inom samma körning, gzip-dekomprimerar och verifierar rå storlek och SHA-256 innan manifestet skapas. Hela upload-/verification-steget avslutades success. **Begränsning:** den exakta manifest-JSON:en och Azure-objektets metadata har inte oberoende lästs via en separat Azure-klient; verktygsanslutningen saknar Azure Blob-läsning. Dokumentera därför verifieringen som uploaderns read-back i samma jobb, inte som en separat Azure-inspektion.
+
+30-dagarsutvärderingen startar vid första lyckade, kompletta snapshot 2026-11-28, med mål minst 25 lyckade snapshots. Första snapshot är tyst baslinje: inga historiska events eller kundlarm genereras. Fortsätt bevara officiella API och Brottsplatskartan separat och slå inte ihop råhistorik. 500-poststaket innebär att API:t inte representerar ett komplett historiskt register. Koordinater är inte exakta händelsepositioner. Rättigheter för kommersiell användning, historisk lagring, bearbetning, kundvisning och distribution är oförändrat separata.
+
+**PM-027 nästa steg:** ordna en separat federerad PM-identitet med `Storage Blob Data Reader` på enbart containern `police-events`, begränsad till PM-repot och ett dedikerat Actions environment. Den befintliga PM-publisher-identiteten är endast dokumenterad för containern `project-manager`; Skogs delade Storage Account-scope-identitet ska inte återanvändas. Fram tills Azure-identitet/RBAC och live-läsning testats ska PM-inventeringen visa manifest/snapshot-bevis som unknown, inte som noll.
