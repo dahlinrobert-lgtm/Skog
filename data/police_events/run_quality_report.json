@@ -1,30 +1,30 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-20T13:57:32.946053+00:00",
+  "generated_at": "2026-11-28T13:34:36.620641+00:00",
   "scope": "Norrbottens län",
   "source": "Brottsplatskartan API; public Police event material",
   "interpretation": "Successful workflow and counts do not attest complete historical API coverage. Extracted wildlife rows are candidates, not confirmed collisions.",
   "archive": {
-    "event_count": 500,
-    "unique_event_ids": 500,
+    "event_count": 542,
+    "unique_event_ids": 542,
     "missing_publication_date_count": 0,
     "publication_year_counts": {
-      "2026": 500
+      "2026": 542
     },
     "oldest_publication_date": "2026-08-01",
-    "newest_publication_date": "2026-11-20",
+    "newest_publication_date": "2026-11-28",
     "event_type_counts": {
-      "Arbetsplatsolycka": 15,
-      "Bedrägeri": 1,
+      "Arbetsplatsolycka": 16,
+      "Bedrägeri": 4,
       "Brand": 13,
       "Bråk": 2,
-      "Fjällräddning": 8,
-      "Fylleri": 21,
+      "Fjällräddning": 9,
+      "Fylleri": 26,
       "Försvunnen person": 5,
       "Häleri": 1,
       "Inbrott": 4,
       "Knivlagen": 4,
-      "Misshandel": 14,
+      "Misshandel": 16,
       "Mord/dråp": 2,
       "Mord/dråp,  försök": 1,
       "Motorfordon,  anträffat stulet": 1,
@@ -34,43 +34,44 @@
       "Olaga hot": 4,
       "Olaga intrång": 3,
       "Olovlig körning": 7,
-      "Rattfylleri": 26,
-      "Sammanfattning natt": 110,
+      "Rattfylleri": 30,
+      "Sammanfattning natt": 118,
       "Skadegörelse": 4,
       "Skyddslagen": 2,
-      "Stöld": 20,
+      "Stöld": 21,
       "Stöld/inbrott": 3,
-      "Trafikbrott": 15,
+      "Trafikbrott": 19,
       "Trafikhinder": 2,
-      "Trafikkontroll": 93,
-      "Trafikolycka": 74,
-      "Trafikolycka,  singel": 5,
-      "Trafikolycka,  smitning från": 5,
-      "Trafikolycka,  vilt": 20,
+      "Trafikkontroll": 95,
+      "Trafikolycka": 79,
+      "Trafikolycka,  singel": 6,
+      "Trafikolycka,  smitning från": 6,
+      "Trafikolycka,  vilt": 23,
+      "Vållande till kroppsskada": 1,
       "Övrigt": 4
     }
   },
   "wildlife_text": {
-    "broad_candidate_count": 63,
-    "individual_incident_candidate_count": 105,
+    "broad_candidate_count": 70,
+    "individual_incident_candidate_count": 134,
     "candidate_year_counts": {
-      "2026": 23
+      "2026": 24
     },
-    "candidate_missing_occurrence_date_count": 82,
+    "candidate_missing_occurrence_date_count": 110,
     "extraction_method_counts": {
-      "explicit_count_v1": 35,
-      "wildlife_text_line_v1": 45,
-      "wildlife_time_segment_v2": 25
+      "explicit_count_v1": 43,
+      "wildlife_text_line_v1": 65,
+      "wildlife_time_segment_v2": 26
     },
     "confidence_counts": {
-      "low": 35,
-      "review": 70
+      "low": 43,
+      "review": 91
     },
     "species_mentions": {
-      "(missing)": 67,
-      "ren": 16,
-      "rådjur": 9,
-      "älg": 13
+      "(missing)": 80,
+      "ren": 21,
+      "rådjur": 16,
+      "älg": 17
     }
   }
 }
