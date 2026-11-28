@@ -1533,3 +1533,18 @@ Körning [#7](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46143160009
 Det enskilda bortfallet är inte bevis för avregistrering, borttagning eller avverkning. Ingen ofullständig snapshot ska publiceras och historiska objekt ska inte tas bort på denna grund.
 
 Uppföljningsändringen på branch `fix/national-harvest-missing-id-diagnostics` gör upp till tre individuella försök per saknat ID och sparar försök/status/senaste felorsak i kördiagnostiken. Om ett ID fortfarande inte kan hämtas avbryts hela snapshoten fortsatt före skrivning. Ändringen fyller inte luckan med data från föregående snapshot. Enhetsfallen täcker både återhämtning och fortsatt olöst ID. Orsaken hos källsystemet är ännu okänd; ändringen ska först granskas och CI-verifieras innan ny skarp körning.
+
+
+## Nationella avverkningsanmälningar – första kompletta snapshot och lagringsgranskning (2026-11-28)
+
+[Workflow #10](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46144482820) kördes efter merge av PR #731. Test- och arkivjobbet avslutades `success`. ArcGIS-lagret gav 133 468 ID:n före och efter hämtningen; inventeringarna var identiska. Alla 133 468 features hämtades, med 0 saknade, 0 dubbla och 0 oväntade ID:n. Inga individuella återförsök behövdes.
+
+Körningen skapade full snapshot `data/national/snapshots/20261128T124344Z.json.gz` (104 609 996 byte) och uppdaterade `data/national/latest.json.gz` (104 609 986 byte). Diagnostiken rapporterade 133 468 added, 0 updated och 0 removed. Data-PR [#733](https://github.com/dahlinrobert-lgtm/Skog/pull/733) mergades 2026-11-28 12:57:31 UTC; merge commit `24d1cdf17e7cc523dff3d4241a56a251ceb808b2`.
+
+**Lagringsbedömning:** GitHub varnade eftersom båda filerna överstiger 50 MiB. De är cirka 99,76 MiB, endast cirka 242 KiB under GitHubs hårda gräns på 100 MiB. GitHub API rapporterade repo-storlek 671 115 KB. De fyra nuvarande filerna under `data/national/` (latest samt tre daterade snapshots) omfattar cirka 387 MiB. Uppdateringar av `latest.json.gz` skapar dessutom nya Git-objekt i historiken. GitHub-dokumentationen rekommenderar att stora genererade filer lagras utanför Git, exempelvis i objektlagring. [GitHub: About large files](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github) och [Repository limits](https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits).
+
+**Rekommenderad målbild:** Azure Blob Storage för oföränderliga daterade full-/delta-snapshots och GitHub endast för kod, tester, dokumentation samt ett litet manifest/pekare med snapshot-ID, status, antal, byte count och SHA-256. En flytt kräver separat verifierad container/behörighet, upload, readback-audit och restore-test. Befintlig gemensam Azure-identitet har bred Storage Account-scope enligt `STORAGE_INVENTORY.md`; den ska inte återanvändas eller få ändrad RBAC utan separat konsekvensanalys. Rättigheter till historisk lagring och kundvisning måste bedömas separat.
+
+Befintliga Git-snapshots och historik ska bevaras. Ingen historikomskrivning eller borttagning görs. Befintlig Git-publicering ska inte stängas av förrän Azure-flödet är verifierat end-to-end och övergången är godkänd. Gzip-binärernas interna innehåll/hash och restore har inte oberoende verifierats efter PR #733.
+
+**Nästa steg:** utveckla en separat, avgränsad Azure-arkiveringslösning med immutable snapshots, SHA-256/byte count, readback-audit och restore-test. Ingen kundavisering eller ändrad källrättighetsstatus följer av denna snapshot.
