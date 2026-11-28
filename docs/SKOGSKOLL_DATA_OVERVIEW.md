@@ -854,23 +854,23 @@ PR #498 är mergad till `main` med merge commit `21cfa30af358588eb6889d27f78b4e8
 Samråd-data-PR #496 och Life2Taiga-data-PR #497 är båda mergade till `main`. Publiceringsfixarna #494/#495 har verifierats med push-utlösta körningar, men faktisk schemalagd drift efter fixarna återstår att bekräfta. Ingen kundvisningsrätt följer av att data finns i `main`.
 
 
-### Gräsmyr – uppdaterad planerad-avverkning snapshot publicerad (2026-11-22)
+### Planerade avverkningsanmälningar – regional verifieringssnapshot publicerad (2026-11-22)
 
 Ersättnings-PR [#502](https://github.com/dahlinrobert-lgtm/Skog/pull/502) mergades till `main` 2026-11-22 kl. 15:50:22 UTC (merge commit `62a4d0d471409ae4af544128bc1dcef6bf30ae94`). Den äldre PR #485 stängdes utan merge eftersom den låg efter aktuell `main` och riskerade att skriva över nyare gemensamma data.
 
-- Gräsmyr 10 km-snapshot av planerade avverkningsanmälningar: 165 objekt, 165 unika ID:n, källstatus `ok`, hämtad 2026-11-22 13:20:19 UTC. Snapshoten är inte en initial baslinje; föregående snapshot var `20261121T155530Z.json`. Antalet var 165 både före och efter och delta innehöll inga tillägg, ändringar eller borttagningar.
+- Snapshot inom det regionala verifieringsområdet (Gräsmyr, 10 km): 165 objekt, 165 unika ID:n, källstatus `ok`, hämtad 2026-11-22 13:20:19 UTC. Snapshoten är inte en initial baslinje; föregående snapshot var `20261121T155530Z.json`. Antalet var 165 både före och efter och delta innehöll inga tillägg, ändringar eller borttagningar.
 - Change analysis läste 381 snapshots utan oläsbara snapshots och laddade 1 631 genomförda geometrier.
 - Händelsepaketet innehåller 188 observationer/händelser/evidensposter, 11 relationer och 165 uppföljningskedjor. Det består av 165 planerade-avverkningsobservationer och 23 Samrådsobservationer. Senare Samrådsdata och relationer från aktuell `main` bevarades.
 - En daterad gzip-snapshot av genomförda avverkningar från 2026-11-22 lades till som arkiv. Befintlig aktuell genomförd-avverkningsdata från `main` behölls.
 
-Detta verifierar en lyckad, avgränsad Gräsmyr-pilotpublicering via PR. Det verifierar inte nationell täckning eller fullständig paginering av planerade avverkningsanmälningar. Inga frånvarobaserade borttagningsslutsatser eller kundlarm får dras från denna enskilda körning. Rättighets- och kundvisningsstatus är oförändrad.
+Detta verifierar en lyckad, avgränsad publicering för fullständighets- och jämförbarhetsvalidering via PR. Det verifierar inte nationell täckning eller fullständig paginering av planerade avverkningsanmälningar. Inga frånvarobaserade borttagningsslutsatser eller kundlarm får dras från denna enskilda körning. Rättighets- och kundvisningsstatus är oförändrad.
 
 **Nästa steg:** fullständig paginering och fullständighetskontroll av planerade avverkningsanmälningar, följt av minst två kompletta jämförbara körningar. Fortsätt samtidigt verifiera faktisk schemalagd drift och PR-publicering.
 
 
 ### Komplett paginering av planerade avverkningsanmälningar – kod mergad (2026-11-22)
 
-PR [#504](https://github.com/dahlinrobert-lgtm/Skog/pull/504) mergades till `main` 2026-11-22 kl. 16:02:26 UTC (merge commit `f75f5ac0832c4823da18fe88de1f516b5d7774f5`). Den lägger till en separat manuell komplett snapshot för Gräsmyr 10 km-piloten:
+PR [#504](https://github.com/dahlinrobert-lgtm/Skog/pull/504) mergades till `main` 2026-11-22 kl. 16:02:26 UTC (merge commit `f75f5ac0832c4823da18fe88de1f516b5d7774f5`). Den lägger till en separat manuell komplett snapshot för fullständighetsvalidering inom ett geografiskt testområde (Gräsmyr, 10 km):
 
 - `scripts/snapshot_harvest_notifications_pilot.py`: ArcGIS `returnIdsOnly` följt av object-ID-batcher, count- och ID-inventeringskontroll både före och efter hämtning, strikt batchvalidering och avbrott vid källförändring eller ofullständighet. En misslyckad körning skriver inte latest-manifest och raderar/ersätter inga tidigare snapshots.
 - `.github/workflows/skogsstyrelsen-complete-harvest-pilot.yml`: manuell `workflow_dispatch`, separat data-PR och artifact. Flödet är fristående från den befintliga sex­timmarsproben.
