@@ -1,6 +1,6 @@
 # Skogskoll – automatisk status för datakällor
 
-**Register kontrollerat:** 2026-11-28  
+**Register kontrollerat:** 2026-11-18  
 **Underlag:** data-platform/config/sources.yml
 
 > Rapporten är maskinellt sammanställd från källregistret. Den är en operativ översikt, inte ett juridiskt godkännande. Saknat operations-block betyder **inte bedömd**, inte nekad åtkomst eller förbjuden användning.
@@ -55,7 +55,7 @@
 - **Trafikverket – NVDB vägnät och Lastkajen:** Dokumentera vilken NVDB-produktversion som finns lokalt, kontrollera Lastkajens beställnings- och licensvillkor och bygg ett versionsstyrt uppdateringsflöde innan vägnätsförändringar används i kundhistorik.
 - **Viltdata.se – nationell avskjutningsstatistik:** Fortsätt manuella kompletta snapshots med tidsbegränsad GitHub Actions-artifact. Invänta skriftligt besked om historisk lagring/arkivering av exakt avskjutningsstatistikprodukt och avsedda användningar. Azure-region är verifierad som swedencentral; GitHub OIDC-identiteten har Storage Blob Data Contributor på Storage Account-scope. Efter dokumenterat rättighetsbesked: besluta om arkivering och eventuell separat least-privilege-identitet, kör därefter upload, audit och restore live. Ingen schemaläggning eller kundvisning före separat bedömning.
 - **Länsstyrelserna – eldningsförbud i skog och mark (EXT):** Kör den manuella metadata-only-inspektionen, verifiera lager, fält, täckning, objektidentitet och tjänstegränser. Planera separat beslut om första baslinje och schemaläggning tidigast 2027-01-24.
-- **Polismyndigheten – officiellt API över polisens händelser:** Första kompletta snapshot verifierad 2026-11-28 (500 poster, 43 Norrbotten; run 46134508242). Fortsätt 30-dagarsutvärderingen från 2026-11-28 med minst 25 lyckade dagliga snapshots som mål. Jämför överlapp, unika händelser, aktualitet, schema, tillgänglighet och källbegränsningar. Första snapshoten är en tyst baslinje utan historiska larm.
+- **Polismyndigheten – officiellt API över polisens händelser:** Continue the 30-day parallel source evaluation from first verified immutable snapshot 2026-11-28 (run 46134508242; 500 records, 43 Norrbotten). Target at least 25 successful daily snapshots; compare content and operational quality without merging source history.
 
 ## Tolkning och begränsningar
 
