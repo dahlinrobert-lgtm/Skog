@@ -91,6 +91,42 @@ class NationalCollectorTests(unittest.TestCase):
         self.assertEqual(get_json.call_args_list[1].kwargs, {"use_post": True})
         self.assertEqual(get_json.call_args_list[2].kwargs, {"use_post": True})
 
+    @patch("scripts.monitor_national.time.sleep", return_value=None)
+    @patch("scripts.monitor_national.get_json")
+    def test_missing_id_is_retried_individually_and_recovered(self, get_json, _sleep):
+        get_json.side_effect = [
+            {"objectIds": [1, 2]},
+            {"features": [feature(1)]},
+            {"features": []},
+            {"features": [feature(2)]},
+            {"objectIds": [1, 2]},
+        ]
+
+        features, diagnostics = fetch_nationwide_features()
+
+        self.assertEqual({item["id"] for item in features}, {"1", "2"})
+        self.assertEqual(diagnostics["missing_id_retry_count"], 1)
+        self.assertEqual(
+            diagnostics["missing_id_retry_diagnostics"],
+            [{"object_id": "2", "attempts": 2, "status": "recovered"}],
+        )
+        self.assertEqual(get_json.call_count, 5)
+
+    @patch("scripts.monitor_national.time.sleep", return_value=None)
+    @patch("scripts.monitor_national.get_json")
+    def test_unresolved_id_reports_identifier_and_last_error(self, get_json, _sleep):
+        get_json.side_effect = [
+            {"objectIds": [11]},
+            {"features": []},
+            {"features": []},
+            {"features": []},
+            {"features": []},
+        ]
+
+        with self.assertRaisesRegex(RuntimeError, r"11: ArcGIS returned an empty feature list"):
+            fetch_nationwide_features()
+        self.assertEqual(get_json.call_count, 5)
+
     @patch("scripts.monitor_national.get_json")
     def test_duplicate_feature_ids_fail_closed(self, get_json):
         get_json.side_effect = [

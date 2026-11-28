@@ -1524,3 +1524,12 @@ Den nationella insamlaren `scripts/monitor_national.py` har kompletterats med en
 Testerna utökas för batchning över 250 poster, stabil andra inventering, förändrad inventering, dubbletter och oväntade ID:n. Workflowen kör testjobbet vid pull request men kör inte nationell insamling i PR-event. Vid schemalagd eller manuell körning skapas en data-PR för ändrade arkivfiler i stället för direkt push till `main`. Befintligt schema (1:a och 16:e varje månad kl. 05:47 UTC), snapshotformat, arkivvägar och full-/deltaformat behålls.
 
 Detta är en skyddsåtgärd mot att en rörlig källinventering publiceras som en skenbart komplett snapshot. En skillnad mellan två ID-inventeringar bevisar inte att objekt har avregistrerats eller avverkats och ska inte skapa borttagningshändelser eller larm. Ändringen startade ingen insamling och ändrar inte rättighets- eller kundvisningsstatus. PR #729 är mergad till `main` (merge commit `36b1abf62dea09106d8bca13c6e0a528df13d121`). PR-körningens testjobb avslutades `success`; arkivjobbet var `skipped` på PR-event, vilket bekräftar att ingen nationell insamling startades av testkörningen. Faktisk insamling, senaste arkivmanifest och schemalagd drift efter ändringen är ännu inte verifierade.
+
+
+## Nationell avverkningsinsamling – uppföljning av ett saknat ID (2026-11-28)
+
+Körning [#7](https://github.com/dahlinrobert-lgtm/Skog/actions/runs/46143160009) hämtade 133 467 av 133 468 ID:n. Ett ID saknades efter det tidigare riktade återförsöket. Testjobbet var godkänt, insamlingssteget misslyckades och publiceringssteget kördes inte. Loggen anger att senaste kända kompletta data bevarades.
+
+Det enskilda bortfallet är inte bevis för avregistrering, borttagning eller avverkning. Ingen ofullständig snapshot ska publiceras och historiska objekt ska inte tas bort på denna grund.
+
+Uppföljningsändringen på branch `fix/national-harvest-missing-id-diagnostics` gör upp till tre individuella försök per saknat ID och sparar försök/status/senaste felorsak i kördiagnostiken. Om ett ID fortfarande inte kan hämtas avbryts hela snapshoten fortsatt före skrivning. Ändringen fyller inte luckan med data från föregående snapshot. Enhetsfallen täcker både återhämtning och fortsatt olöst ID. Orsaken hos källsystemet är ännu okänd; ändringen ska först granskas och CI-verifieras innan ny skarp körning.

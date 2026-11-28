@@ -222,8 +222,7 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
                 continue
             found[key] = feature
 
-    for batch_index, start in enumerate(range(0, len(object_ids), BATCH_SIZE), start=1):
-        batch = object_ids[start:start + BATCH_SIZE]
+    def fetch_batch(batch: list[int], label: str) -> None:
         params = {
             "objectIds": ",".join(map(str, batch)),
             "outFields": "*",
@@ -235,9 +234,12 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
         try:
             data = get_json(params, use_post=True)
         except Exception as exc:
-            print(f"Batch {batch_index}/{batch_count} GeoJSON failed: {exc}; retrying as ArcGIS JSON.", flush=True)
+            print(f"{label} GeoJSON failed: {exc}; retrying as ArcGIS JSON.", flush=True)
             data = get_json({**params, "f": "json"}, use_post=True)
-        accept_features(data.get("features"), f"batch {batch_index}/{batch_count}")
+        accept_features(data.get("features"), label)
+
+    for batch_index, start in enumerate(range(0, len(object_ids), BATCH_SIZE), start=1):
+        fetch_batch(object_ids[start:start + BATCH_SIZE], f"batch {batch_index}/{batch_count}")
         if batch_index < batch_count:
             time.sleep(0.15)
 
@@ -246,31 +248,72 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
     if unexpected_ids:
         raise RuntimeError(f"ArcGIS returned IDs outside the discovered inventory: {sorted(unexpected_ids)[:20]}")
 
+    # A missing feature is not immediately evidence of a permanently absent
+    # source record. Probe IDs individually, with bounded retries, and retain
+    # per-ID diagnostics. Never fill a gap with stale data or publish a
+    # snapshot unless every ID is represented in this run.
     missing = sorted(expected - set(found))
-    if missing:
-        for retry_index, start in enumerate(range(0, len(missing), BATCH_SIZE), start=1):
-            batch = missing[start:start + BATCH_SIZE]
-            retry_params = {
-                "objectIds": ",".join(batch), "outFields": "*",
-                "returnGeometry": "true", "returnTrueCurves": "false",
-                "outSR": "4326", "f": "geojson",
+    missing_retry_diagnostics: list[dict[str, Any]] = []
+    for missing_id in missing:
+        received = False
+        last_error: str | None = None
+        attempts = 3
+        for attempt in range(1, attempts + 1):
+            params = {
+                "objectIds": missing_id,
+                "outFields": "*",
+                "returnGeometry": "true",
+                "returnTrueCurves": "false",
+                "outSR": "4326",
+                "f": "geojson",
             }
             try:
-                data = get_json(retry_params, use_post=True)
+                data = get_json(params, use_post=True)
+                items = data.get("features")
+                if not isinstance(items, list):
+                    raise RuntimeError("ArcGIS response had no feature list")
+                before = len(found)
+                accept_features(items, f"single-ID retry {missing_id} attempt {attempt}")
+                if str(missing_id) in found:
+                    received = True
+                    missing_retry_diagnostics.append({
+                        "object_id": missing_id,
+                        "attempts": attempt,
+                        "status": "recovered",
+                    })
+                    break
+                if len(found) > before:
+                    raise RuntimeError("ArcGIS returned a feature that did not match the requested ID")
+                last_error = "ArcGIS returned an empty feature list for this ID"
             except Exception as exc:
-                print(f"Missing-ID retry batch {retry_index} failed: {exc}; retrying as ArcGIS JSON.", flush=True)
-                data = get_json({**retry_params, "f": "json"}, use_post=True)
-            accept_features(data.get("features"), f"missing-ID retry batch {retry_index}")
-        if duplicate_ids or unexpected_ids:
-            raise RuntimeError(
-                "ArcGIS returned duplicate or unexpected IDs during missing-ID retry; "
-                "refusing to publish the archive."
-            )
-        missing = sorted(expected - set(found))
-    if missing:
+                last_error = f"{type(exc).__name__}: {exc}"
+            if attempt < attempts:
+                time.sleep(attempt * 1.0)
+        if not received:
+            missing_retry_diagnostics.append({
+                "object_id": missing_id,
+                "attempts": attempts,
+                "status": "unresolved",
+                "last_error": last_error,
+            })
+
+    if duplicate_ids or unexpected_ids:
+        raise RuntimeError(
+            "ArcGIS returned duplicate or unexpected IDs during missing-ID retry; "
+            "refusing to publish."
+        )
+    unresolved = [item for item in missing_retry_diagnostics if item["status"] == "unresolved"]
+    if unresolved:
+        object_ids_text = ", ".join(str(item["object_id"]) for item in unresolved[:20])
+        error_detail = "; ".join(
+            f'{item["object_id"]}: {item.get("last_error", "unknown error")}'
+            for item in unresolved[:20]
+        )
         raise RuntimeError(
             f"Incomplete nationwide result: {len(found)}/{len(object_ids)} IDs fetched; "
-            f"{len(missing)} IDs were still missing after retry. Last known-good data preserved."
+            f"{len(unresolved)} IDs unresolved after individual retries. "
+            f"Unresolved IDs: {object_ids_text}. Details: {error_detail}. "
+            "Last known-good data preserved."
         )
 
     # A second independent inventory detects additions/removals while the feature
@@ -292,11 +335,13 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "batch_size": BATCH_SIZE,
         "batch_count": batch_count,
         "missing_after_retry": 0,
+        "missing_id_retry_count": len(missing_retry_diagnostics),
+        "missing_id_retry_diagnostics": missing_retry_diagnostics,
         "duplicate_feature_ids": 0,
         "unexpected_feature_ids": 0,
         "inventory_checks": 2,
         "inventory_stable": True,
-        "query_method": "returnIdsOnly + objectIds batches + final returnIdsOnly verification",
+        "query_method": "returnIdsOnly + objectIds batches + per-ID retry + final returnIdsOnly verification",
     }
 
 def main() -> None:
