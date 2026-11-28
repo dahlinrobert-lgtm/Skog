@@ -173,19 +173,55 @@ def get_json(params: dict[str, Any], timeout: int = 90, use_post: bool = False) 
     return data
 
 
-def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """Discover all current object IDs, then fetch every ID in small batches."""
-    id_response = get_json({"where": "1=1", "returnIdsOnly": "true", "returnGeometry": "false", "f": "json"})
-    object_ids = id_response.get("objectIds")
-    if not isinstance(object_ids, list):
+def _read_object_ids() -> list[int]:
+    """Read and validate one source-layer ID inventory."""
+    response = get_json({
+        "where": "1=1",
+        "returnIdsOnly": "true",
+        "returnGeometry": "false",
+        "f": "json",
+    })
+    raw_ids = response.get("objectIds")
+    if not isinstance(raw_ids, list):
         raise RuntimeError("ArcGIS did not return an objectIds list; refusing to publish a partial archive.")
-    object_ids = sorted({int(x) for x in object_ids})
-    if not object_ids:
-        # Empty national results are suspicious for this national layer; fail closed.
+    try:
+        ids = [int(value) for value in raw_ids]
+    except (TypeError, ValueError) as exc:
+        raise RuntimeError("ArcGIS returned a non-numeric object ID; refusing to publish.") from exc
+    if len(ids) != len(set(ids)):
+        raise RuntimeError("ArcGIS returned duplicate object IDs in its inventory; refusing to publish.")
+    if not ids:
         raise RuntimeError("ArcGIS returned zero object IDs; refusing to overwrite the archive with an empty baseline.")
+    return sorted(ids)
+
+
+def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Fetch every discovered ID and verify that the source inventory stayed stable."""
+    object_ids = _read_object_ids()
+    expected = {str(value) for value in object_ids}
 
     found: dict[str, dict[str, Any]] = {}
+    duplicate_ids: set[str] = set()
+    unexpected_ids: set[str] = set()
     batch_count = (len(object_ids) + BATCH_SIZE - 1) // BATCH_SIZE
+
+    def accept_features(features: Any, batch_label: str) -> None:
+        if not isinstance(features, list):
+            raise RuntimeError(f"ArcGIS {batch_label} had no feature list.")
+        for feature in features:
+            if not isinstance(feature, dict):
+                raise RuntimeError(f"ArcGIS {batch_label} returned a malformed feature.")
+            key = feature_id(feature)
+            if not key:
+                raise RuntimeError(f"ArcGIS {batch_label} returned a feature without a stable ID.")
+            if key not in expected:
+                unexpected_ids.add(key)
+                continue
+            if key in found:
+                duplicate_ids.add(key)
+                continue
+            found[key] = feature
+
     for batch_index, start in enumerate(range(0, len(object_ids), BATCH_SIZE), start=1):
         batch = object_ids[start:start + BATCH_SIZE]
         params = {
@@ -199,25 +235,20 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
         try:
             data = get_json(params, use_post=True)
         except Exception as exc:
-            # Some ArcGIS deployments intermittently return HTTP 404 for GeoJSON
-            # batches. Retry the same IDs as ArcGIS JSON, with smaller batches if needed.
             print(f"Batch {batch_index}/{batch_count} GeoJSON failed: {exc}; retrying as ArcGIS JSON.", flush=True)
             data = get_json({**params, "f": "json"}, use_post=True)
-        features = data.get("features")
-        if not isinstance(features, list):
-            raise RuntimeError(f"ArcGIS batch {batch_index}/{batch_count} had no feature list.")
-        for feature in features:
-            key = feature_id(feature)
-            if key:
-                found[key] = feature
+        accept_features(data.get("features"), f"batch {batch_index}/{batch_count}")
         if batch_index < batch_count:
             time.sleep(0.15)
 
-    expected = {str(x) for x in object_ids}
+    if duplicate_ids:
+        raise RuntimeError(f"ArcGIS returned duplicate feature IDs across batches: {sorted(duplicate_ids)[:20]}")
+    if unexpected_ids:
+        raise RuntimeError(f"ArcGIS returned IDs outside the discovered inventory: {sorted(unexpected_ids)[:20]}")
+
     missing = sorted(expected - set(found))
     if missing:
-        # Retry once in case records changed while the ID list was being fetched.
-        for start in range(0, len(missing), BATCH_SIZE):
+        for retry_index, start in enumerate(range(0, len(missing), BATCH_SIZE), start=1):
             batch = missing[start:start + BATCH_SIZE]
             retry_params = {
                 "objectIds": ",".join(batch), "outFields": "*",
@@ -227,12 +258,14 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             try:
                 data = get_json(retry_params, use_post=True)
             except Exception as exc:
-                print(f"Missing-ID retry batch failed: {exc}; retrying as ArcGIS JSON.", flush=True)
+                print(f"Missing-ID retry batch {retry_index} failed: {exc}; retrying as ArcGIS JSON.", flush=True)
                 data = get_json({**retry_params, "f": "json"}, use_post=True)
-            for feature in data.get("features", []):
-                key = feature_id(feature)
-                if key:
-                    found[key] = feature
+            accept_features(data.get("features"), f"missing-ID retry batch {retry_index}")
+        if duplicate_ids or unexpected_ids:
+            raise RuntimeError(
+                "ArcGIS returned duplicate or unexpected IDs during missing-ID retry; "
+                "refusing to publish the archive."
+            )
         missing = sorted(expected - set(found))
     if missing:
         raise RuntimeError(
@@ -240,16 +273,31 @@ def fetch_nationwide_features() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             f"{len(missing)} IDs were still missing after retry. Last known-good data preserved."
         )
 
-    features = sorted(found.values(), key=lambda f: feature_id(f))
+    # A second independent inventory detects additions/removals while the feature
+    # batches were being read. Any mismatch is ambiguous and must fail closed.
+    final_ids = _read_object_ids()
+    final_set = {str(value) for value in final_ids}
+    if final_set != expected:
+        added = sorted(final_set - expected)
+        removed = sorted(expected - final_set)
+        raise RuntimeError(
+            "ArcGIS source inventory changed during the scan; refusing to publish. "
+            f"Added since initial inventory: {len(added)}; no longer listed: {len(removed)}."
+        )
+
+    features = sorted(found.values(), key=lambda feature: feature_id(feature))
     return features, {
         "object_id_count": len(object_ids),
         "feature_count": len(features),
         "batch_size": BATCH_SIZE,
         "batch_count": batch_count,
         "missing_after_retry": 0,
-        "query_method": "returnIdsOnly + objectIds batches",
+        "duplicate_feature_ids": 0,
+        "unexpected_feature_ids": 0,
+        "inventory_checks": 2,
+        "inventory_stable": True,
+        "query_method": "returnIdsOnly + objectIds batches + final returnIdsOnly verification",
     }
-
 
 def main() -> None:
     DATA.mkdir(parents=True, exist_ok=True)

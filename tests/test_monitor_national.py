@@ -1,9 +1,10 @@
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from scripts.monitor_national import (
-    apply_delta, create_delta, read_archive_rows, write_gzip_json
+    apply_delta, create_delta, fetch_nationwide_features, read_archive_rows, write_gzip_json
 )
 
 
@@ -66,6 +67,67 @@ class NationalArchiveTests(unittest.TestCase):
             write_gzip_json(path, expected)
             self.assertTrue(path.stat().st_size > 0)
             self.assertEqual(read_archive_rows(path.parent)[0][1]["checked_at"], expected["checked_at"])
+
+
+class NationalCollectorTests(unittest.TestCase):
+    @patch("scripts.monitor_national.time.sleep", return_value=None)
+    @patch("scripts.monitor_national.get_json")
+    def test_fetch_uses_batches_and_verifies_second_inventory(self, get_json, _sleep):
+        ids = list(range(1, 252))
+        get_json.side_effect = [
+            {"objectIds": ids},
+            {"features": [feature(value) for value in ids[:250]]},
+            {"features": [feature(value) for value in ids[250:]]},
+            {"objectIds": ids},
+        ]
+
+        features, diagnostics = fetch_nationwide_features()
+
+        self.assertEqual(len(features), 251)
+        self.assertEqual(diagnostics["batch_count"], 2)
+        self.assertEqual(diagnostics["inventory_checks"], 2)
+        self.assertTrue(diagnostics["inventory_stable"])
+        self.assertEqual(get_json.call_count, 4)
+        self.assertEqual(get_json.call_args_list[1].kwargs, {"use_post": True})
+        self.assertEqual(get_json.call_args_list[2].kwargs, {"use_post": True})
+
+    @patch("scripts.monitor_national.get_json")
+    def test_duplicate_feature_ids_fail_closed(self, get_json):
+        get_json.side_effect = [
+            {"objectIds": [1]},
+            {"features": [feature(1), feature(1)]},
+        ]
+        with self.assertRaisesRegex(RuntimeError, "duplicate feature IDs"):
+            fetch_nationwide_features()
+        self.assertEqual(get_json.call_count, 2)
+
+    @patch("scripts.monitor_national.get_json")
+    def test_source_inventory_change_during_scan_fails_closed(self, get_json):
+        get_json.side_effect = [
+            {"objectIds": [1]},
+            {"features": [feature(1)]},
+            {"objectIds": [1, 2]},
+        ]
+        with self.assertRaisesRegex(RuntimeError, "inventory changed during the scan"):
+            fetch_nationwide_features()
+        self.assertEqual(get_json.call_count, 3)
+
+    @patch("scripts.monitor_national.get_json")
+    def test_duplicate_ids_in_initial_inventory_fail_closed(self, get_json):
+        get_json.return_value = {"objectIds": [1, 1]}
+        with self.assertRaisesRegex(RuntimeError, "duplicate object IDs"):
+            fetch_nationwide_features()
+        self.assertEqual(get_json.call_count, 1)
+
+    @patch("scripts.monitor_national.get_json")
+    def test_unexpected_feature_id_fails_closed(self, get_json):
+        get_json.side_effect = [
+            {"objectIds": [1]},
+            {"features": [feature(1), feature(2)]},
+        ]
+        with self.assertRaisesRegex(RuntimeError, "outside the discovered inventory"):
+            fetch_nationwide_features()
+        self.assertEqual(get_json.call_count, 2)
 
 
 if __name__ == "__main__":
