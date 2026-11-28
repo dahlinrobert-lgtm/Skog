@@ -2634,3 +2634,16 @@ Uploaderkoden laddar ned blobben inom samma körning, gzip-dekomprimerar och ver
 - PR för namnändring uppdaterar användarsynliga etiketter för regional avverkningsbevakning och fullständighetsvalidering. Den ändrar inte källfrågor, geometrier, lagringsformat, snapshotinnehåll, frekvens eller larmbeteende.
 
 **Nästa konkreta steg:** verifiera nationella workflow-körningar och senaste arkivmanifest; komplettera testerna för nationell paginering/stabilitet och ändra publicering till granskad PR om repository rules kräver det. Därefter verifiera en andra jämförbar komplett regional avverkningsanmälan-snapshot och fortsätt uppskalningsbedömningen.
+
+
+## Nationell avverkningsinsamling – stabilitetskontroll och PR-publicering (2026-11-28)
+
+- Utvecklingsarbetet utgår från main efter merge av PR #728 (merge commit `602eabd3e72fa416715cb8261feb3ad187c4c949`). De tre obligatoriska nulägesdokumenten hämtades från aktuell main innan ändringar.
+- `scripts/monitor_national.py` gör nu två oberoende `returnIdsOnly`-inventeringar: före och efter featurehämtningen. Om ID-mängden skiljer sig avbryts körningen innan latest/archive skrivs.
+- Insamlaren avbryter också vid dubbletter i ID-inventeringen, dubbla feature-ID:n eller feature-ID:n utanför den ursprungliga inventeringen. Befintlig kontroll av saknade ID:n och en riktad retry finns kvar.
+- `tests/test_monitor_national.py` utökas med tester för fler än en batch, andra ID-inventeringen, förändrad källinventering, dubbletter och oväntade feature-ID:n.
+- `.github/workflows/national-monitor.yml` kör tester separat även vid pull request. Själva insamlingen körs inte för PR-event. Schemat (1:a och 16:e kl. 05:47 UTC) och manuell dispatch behålls. Arkivuppdateringar föreslås nu via automatiserad data-PR i stället för direkt push till main.
+- Ingen nationell insamling har startats av denna kodändring. Snapshotformat, full/delta-arkiv, filvägar, historik och alert-/kundbeteende är oförändrade. En instabil/partiell skanning avbryts före skrivning; skillnader i källans ID-inventering tolkas inte som borttagningar.
+- Testresultat och workflowkontroller ska bekräftas från PR-körningen innan ändringen betraktas som verifierad. Faktisk schemalagd drift och senaste nationella arkivmanifest är fortsatt inte verifierade.
+
+**Nästa steg:** granska PR-körningens tester och YAML/workflowstatus. Efter godkänd merge: kör en manuell nationell insamling, kontrollera fullständighetsdiagnostik och granska arkivuppdateringen som PR. Verifiera därefter nästa schemalagda körning separat.
