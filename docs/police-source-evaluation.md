@@ -115,3 +115,17 @@ Polisens öppna data-regler och publiceringsvillkor ska följas. API-åtkomst ä
 - [Polisens händelse-API](https://polisen.se/api/events)
 - E-post från Polismyndighetens IT-kansli 2026-11-27, diarienummer A698.287/2026.
 - Befintlig pipeline: [police-events-norrbotten.md](police-events-norrbotten.md).
+
+## Initial live-run and Azure access gate (2026-11-28)
+
+A read-only review of GitHub Actions schedule history retrieved all 467 scheduled runs currently exposed by the repository API (2026-10-24 through 2026-11-28). It found **no run** for `.github/workflows/polisen-official-api-evaluation.yml`. Existing scheduled runs for `.github/workflows/police-events.yml` are present and successful on 2026-11-22 through 2026-11-27. The official API workflow is present on `main`, but its expected daily execution has not yet been evidenced. The reason for the missing run is not established.
+
+The workflow previously had only a `schedule` trigger, so an operator could not start a controlled first run from the Actions UI. PR adds `workflow_dispatch` without changing the daily schedule, API request, capture validation, storage path, or upload behavior. After merge, trigger one manual run from `main` and inspect its job logs and Azure objects before counting the first snapshot or starting the 30-day clock.
+
+### Azure access boundary for PM-027
+
+The PM repository's existing `project-manager-publisher` identity is documented as `Storage Blob Data Contributor` on the `project-manager` container only. It cannot be assumed to read the Skog `police-events` container. The Skog repository's existing `skogskoll-github-actions` identity is documented with `Storage Blob Data Contributor` at Storage Account scope and is shared by several workflows; it must not be reused in the PM repository or have its scope changed as part of this work.
+
+Preferred design for PM-027 is a separate Entra service principal/federated credential restricted to the PM repository and a dedicated GitHub Actions environment, with `Storage Blob Data Reader` scoped only to container `police-events`. This is a required Azure administrator setup and live authorization check, not yet configured or verified. Until then, PM-027 must leave the official Police API's snapshot evidence as unknown rather than infer that no snapshots exist.
+
+No source data, snapshot, manifest, history, customer view, alert, or rights status was changed by this investigation.
